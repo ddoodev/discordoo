@@ -3,5 +3,11 @@
   "version": "0.0.1",
   "description": "Discordoo/ws is a module for discordoo to interact with the Discord API web socket.",
   "main": "dist/src/index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "ws": "^7.4.3"
+  },
+  "devDependencies": {
+    "@types/ws": "^7.4.0"
+  }
 }
