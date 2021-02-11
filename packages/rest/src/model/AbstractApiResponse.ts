@@ -1,7 +1,7 @@
-export default class AbstractApiResponse {
+export default abstract class AbstractApiResponse {
   value: any
 
-  constructor(data?: any) {
+  protected constructor(data?: any) {
     if (data) this.value = data
   }
 
