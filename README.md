@@ -1,8 +1,19 @@
-Discordoo
-=
-Discordoo is a new level node.js library for interacting 
-with the Discord API.
+# Discordoo
+A new level node.js library for interacting with Discord!
 
-Status
--
-Coverage of Discord API: `0`%
+## Table of contents
+- [About](#about)
+- [Contributing](#contributing)
+- [Help](#help)
+
+## About
+Discordoo is a powerful, modular Discord-library.
+- Powerful types
+- Cache management
+- Modular
+
+## Contributing
+Feel free to create a PR, but check if there is an existing one.
+
+## Help
+Pls help(write smth here)
