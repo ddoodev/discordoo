@@ -3,5 +3,8 @@
   "version": "0.0.1",
   "description": "Discordoo/rest is a module for discordoo to interact with the Discord API.",
   "main": "dist/src/index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.21.1"
+  }
 }
