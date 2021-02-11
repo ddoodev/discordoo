@@ -1,5 +1,5 @@
 # Discordoo
-A new level node.js library for interacting with Discord!
+A new level node.js library for interacting with the Discord API!
 
 ## Table of contents
 - [About](#about)
