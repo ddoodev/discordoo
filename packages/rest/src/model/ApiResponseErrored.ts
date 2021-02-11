@@ -2,7 +2,6 @@ import AbstractApiResponse from './AbstractApiResponse'
 import { AxiosError } from 'axios'
 
 export default class ApiResponseErrored extends AbstractApiResponse {
-  public code: string | undefined
   public message: string
   public name: string
 
