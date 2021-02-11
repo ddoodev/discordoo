@@ -1,4 +1,4 @@
-export default class AbstractApiResponse {
+export default abstract class AbstractApiResponse {
   value: any
   code: string | undefined
 
