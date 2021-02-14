@@ -24,3 +24,4 @@ Discord API Coverage: 0%
 
 ## Contributing
 Feel free to create a PR, but check if there is an existing one.
+See [Contributing Guide](https://github.com/Discordoo/discordoo/blob/master/CONTRIBUTING.md).
