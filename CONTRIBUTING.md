@@ -1,6 +1,6 @@
 # Discordoo Contribution guide
 Hello and first of all thanks for your interest in contributing to Discordoo! Discordoo hasn't grown up yet, however we have some plans to develop it into stable and production-ready library.
-Further in this document we'll describe all the aspects of contributing to Discordoo.
+Further, in this document we'll describe all the aspects of contributing to Discordoo.
 
 ## General
 Please, follow [our code of conduct](CODE_OF_CONDUCT.md). You'll be treated the same way you treat others.
