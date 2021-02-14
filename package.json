@@ -4,11 +4,11 @@
   "description": "Discordoo is a new level node.js library for interacting with the Discord API.",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "lerna run build",
+    "bootstrap": "lerna bootstrap",
+    "create": "lerna create",
+    "deploy": "lerna publish"
   },
-  "workspaces": [
-    "./packages/*"
-  ],
   "keywords": [
     "discord",
     "api",
