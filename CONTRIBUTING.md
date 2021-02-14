@@ -19,7 +19,7 @@ Discordoo uses [conventional commits](https://www.conventionalcommits.org/en/v1.
 
 ### Branching
 Discordoo uses three types of branches: features, master and release. 
-* Features(`feat-feature-name-in-kebab-case`) branches are branches which include any changes to library itself.
+* Features(`feat-feature-name-in-kebab-case`) branches are branches which include any major changes to library itself.
 * Master(`master`) branch in the main branch. It is the current version being developed and is usually unstable.
 * Release(`release-v1.5.3`) branches are branches that are forked from master branch each library release. Changes in them are not allowed.
 
