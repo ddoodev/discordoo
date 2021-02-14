@@ -1,5 +1,5 @@
-import AbstractApiResponse from './AbstractApiResponse';
-import { AxiosError } from 'axios';
+import AbstractApiResponse from './AbstractApiResponse'
+import { AxiosError } from 'axios'
 export default class ApiResponseErrored extends AbstractApiResponse {
     code: string | undefined;
     message: string;

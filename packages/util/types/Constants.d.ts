@@ -16,7 +16,7 @@ export declare const WSCodes: {
     4011: string;
     4013: string;
     4014: string;
-};
+}
 export default class Constants {
     static Statuses: typeof Statuses;
     static WSCodes: {

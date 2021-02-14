@@ -1,1 +1,1 @@
-declare const methods: string[];
+declare const methods: string[]
