@@ -6,7 +6,6 @@
   "scripts": {
     "build": "lerna run build",
     "bootstrap": "lerna bootstrap",
-    "create": "lerna create",
     "deploy": "lerna publish"
   },
   "keywords": [
