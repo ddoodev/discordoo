@@ -8,6 +8,7 @@ node_modules
 # Build
 dist
 typings
+types
 
 # Environment
 .env
