@@ -4,18 +4,42 @@
     "moduleResolution": "node",
     "module": "commonjs",
     "target": "es2019",
-    "lib": ["esnext", "esnext.array", "esnext.asynciterable", "esnext.intl", "esnext.symbol"],
-    "declaration": true,
+    "lib": ["esnext", "esnext.array", "esnext.asynciterable", "esnext.intl", "esnext.symbol", "es6"],
     "sourceMap": true,
     "removeComments": false,
     "alwaysStrict": true,
     "pretty": true,
-    "outDir": "dist",
     "incremental": true,
     "noEmitHelpers": true,
     "importHelpers": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "experimentalDecorators": true
-  }
+    "experimentalDecorators": true,
+    "outDir": "./dist",
+    "declaration": true,
+    "declarationDir": "./types",
+    "composite": true,
+    "noImplicitAny": true
+  },
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
+  "references": [
+    {
+      "path": "./src/ws"
+    },
+    {
+      "path": "./src/util"
+    },
+    {
+      "path": "./src/rest"
+    },
+    {
+      "path": "./src/discordoo"
+    },
+    {
+      "path": "./src/client"
+    }
+  ]
 }

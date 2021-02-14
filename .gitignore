@@ -11,3 +11,5 @@ typings
 
 # Environment
 .env
+
+tsconfig.tsbuildinfo

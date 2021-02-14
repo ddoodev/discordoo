@@ -2,12 +2,18 @@
   "name": "@discordoo/ws",
   "version": "0.0.1",
   "description": "Discordoo/ws is a module for discordoo to interact with the Discord API web socket.",
-  "main": "dist/src/index.js",
+  "main": "dist/index.js",
+  "types": "types/index.d.ts",
   "license": "MIT",
   "dependencies": {
     "ws": "^7.4.3"
   },
   "devDependencies": {
     "@types/ws": "^7.4.0"
+  },
+  "scripts": {
+    "build": "npm run clean && npm run compile",
+    "clean": "rm -rf ./dist && rm -rf tsconfig.tsbuildinfo",
+    "compile": "tsc -b tsconfig.json"
   }
 }

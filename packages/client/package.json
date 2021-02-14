@@ -2,6 +2,12 @@
   "name": "@discordoo/client",
   "version": "0.0.1",
   "description": "Discordoo/client is a client module for discordoo.",
-  "main": "dist/src/index.js",
-  "license": "MIT"
+  "main": "dist/index.js",
+  "types": "types/index.d.ts",
+  "license": "MIT",
+  "scripts": {
+    "build": "npm run clean && npm run compile",
+    "clean": "rm -rf ./dist && rm -rf tsconfig.tsbuildinfo",
+    "compile": "tsc -b tsconfig.json"
+  }
 }

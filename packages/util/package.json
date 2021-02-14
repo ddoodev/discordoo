@@ -3,6 +3,11 @@
   "version": "0.0.1",
   "private": true,
   "description": "Discordoo/util is a module that contains some utilities for discordoo work.",
-  "main": "dist/src/index.js",
-  "license": "MIT"
+  "main": "dist/index.js",
+  "license": "MIT",
+  "scripts": {
+  "build": "npm run clean && npm run compile",
+  "clean": "rm -rf ./dist && rm -rf tsconfig.tsbuildinfo",
+  "compile": "tsc -b tsconfig.json"
+}
 }
