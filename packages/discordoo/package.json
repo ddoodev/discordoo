@@ -8,6 +8,9 @@
   "scripts": {
     "build": "npm run clean && npm run compile",
     "clean": "rm -rf ./dist && rm -rf tsconfig.tsbuildinfo",
-    "compile": "tsc -b tsconfig.json"
+    "compile": "tsc"
+  },
+  "dependencies": {
+    "@discordoo/client": "*"
   }
 }

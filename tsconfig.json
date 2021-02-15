@@ -1,0 +1,15 @@
+// tsconfig.json is used for IDE support and TypeDoc whereas tsconfig.build.json is used for production build
+{
+  "extends": "./tsconfig.build.json",
+  "compilerOptions": {
+    "baseUrl": "./packages",
+    "paths": {
+      "@discordoo/client": ["client/src"],
+      "@discordoo/discordoo": ["discordoo/src"],
+      "@discordoo/rest": ["rest/src"],
+      "@discordoo/util": ["util/src"],
+      "@discordoo/ws": ["ws/src"],
+      "@discordoo/*": ["*/src"]
+    }
+  }
+}
