@@ -27,7 +27,7 @@ Discordoo uses three types of branches: features, master and release.
 ### Documentation
 Discordoo uses `typedoc` package for documentation generation. Each method or class have to be documentated as precise as possible
 ### Style
-We use `eslint` package for code style enforcement. It is automatically run on each commit.
+We use `eslint` package for code style enforcement.
 ### Mono repository
 Discordoo uses Lerna for monorepo management. We have some minor neat scripts to simplify development:
 * npm run build - build all packages
