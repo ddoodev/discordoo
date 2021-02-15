@@ -8,7 +8,8 @@
     "bootstrap": "lerna bootstrap",
     "deploy": "lerna publish",
     "lint": "eslint packages/**/src --fix",
-    "pre-commit": "npm run lint"
+    "pre-commit": "npm run lint",
+    "commitlint": "npx --no-install commitlint --edit $1"
   },
   "keywords": [
     "api",
@@ -17,6 +18,8 @@
   "author": "Mirdukkk",
   "license": "MIT",
   "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
     "@types/node": "^14.14.25",
     "@typescript-eslint/eslint-plugin": "^4.15.0",
     "@typescript-eslint/parser": "^4.15.0",
