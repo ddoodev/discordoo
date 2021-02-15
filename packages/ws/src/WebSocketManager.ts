@@ -4,8 +4,6 @@ export default class WebSocketManager extends EventEmitter {
 
   constructor() {
     super()
-
-
   }
 
 }
