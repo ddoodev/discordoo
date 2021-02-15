@@ -1,3 +1,3 @@
-import Client from "@discordoo/client";
+import Client from '@discordoo/client'
 
-export default Client;
+export default Client
