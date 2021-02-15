@@ -16,7 +16,14 @@
     "api",
     "bot"
   ],
-  "author": "Mirdukkk",
+  "contributors": [
+    {
+      "name" : "Mirdukkk"
+    },
+    {
+      "name": "KislBall"
+    }
+  ],
   "license": "MIT",
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
