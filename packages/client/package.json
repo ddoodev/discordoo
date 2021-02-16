@@ -6,7 +6,7 @@
   "types": "types/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "build": "npm run clean && npm run compile",
+    "build": "npm run compile",
     "clean": "rm -r ./dist && rm -r tsconfig.tsbuildinfo",
     "compile": "tsc"
   }

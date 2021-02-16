@@ -9,7 +9,7 @@
     "axios": "^0.21.1"
   },
   "scripts": {
-    "build": "npm run clean && npm run compile",
+    "build": "npm run compile",
     "clean": "rm -r ./dist && rm -r tsconfig.tsbuildinfo",
     "compile": "tsc"
   },
