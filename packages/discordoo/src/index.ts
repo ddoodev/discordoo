@@ -1,3 +1,6 @@
-import Client from '@discordoo/client'
+import createPreloadedClient from './createPreloadedClient'
 
-export default Client
+// TODO: add here default modules
+export default createPreloadedClient()
+
+export { createPreloadedClient }
