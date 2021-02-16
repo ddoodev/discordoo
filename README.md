@@ -1,5 +1,7 @@
-# Discordoo
-A new level node.js library for interacting with the Discord API!
+<div align="center">
+<br>
+<img src="media/ddoo.png">
+</div>
 
 ## Table of contents
 - [About](#about)
