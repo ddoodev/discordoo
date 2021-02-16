@@ -5,8 +5,8 @@ import CoreModule from './CoreModule'
  *
  * @template T - cache types
  */
-export default interface CacheModule<T> extends CoreModule {
+export default interface CacheModule extends CoreModule {
   type: 'cache'
-  createCache<K>(type: T): K
-  getCache<K>(type: T): K
+  createCache<K>(type: string): K
+  getCache<K>(type: string): K
 }
