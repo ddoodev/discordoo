@@ -6,11 +6,12 @@
   "types": "types/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "build": "npm run clean && npm run compile",
+    "build": "npm run compile",
     "clean": "rm -r ./dist && rm - tsconfig.tsbuildinfo",
     "compile": "tsc"
   },
   "dependencies": {
-    "@discordoo/client": "*"
+    "@discordoo/client": "*",
+    "@discordoo/ws": "*"
   }
 }

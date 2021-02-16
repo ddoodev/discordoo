@@ -1,2 +1,7 @@
-export * from './WebSocketManager'
-export * from './WebSocketShard'
+import WebSocketManager from './WebSocketManager'
+import WebSocketShard from './WebSocketShard'
+
+export {
+  WebSocketManager,
+  WebSocketShard
+}
