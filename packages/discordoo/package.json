@@ -1,5 +1,5 @@
 {
-  "name": "@discordoo/discordoo",
+  "name": "discordoo",
   "version": "0.0.1",
   "description": "Discordoo/discordoo is public facing 'full build' of all Discordoo.",
   "main": "dist/index.js",
