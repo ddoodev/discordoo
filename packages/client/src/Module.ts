@@ -1,5 +1,6 @@
 import ModuleInitContext from './ModuleInitContext'
 import ModuleMeta from './ModuleMeta'
+import Client from './Client';
 
 /**
  * Represents a single module
@@ -27,4 +28,8 @@ export default interface Module {
    * Unique module id
    */
   id: string
+  /**
+   * Emits once the module is destroyed
+   */
+  destroyed: (client: Client) => void | Promise<void>
 }
