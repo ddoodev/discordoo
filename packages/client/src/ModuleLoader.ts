@@ -5,7 +5,7 @@ export default class ModuleLoader {
   /**
    * Modules loaded by this module
    */
-  public modules: Record<string, Module> = {}
+  public modules: Map<string, Module> = new Map()
   /**
    * Client this module belongs to
    */
@@ -26,11 +26,26 @@ export default class ModuleLoader {
     if(modules.length == 0) throw new Error('No modules were provided to ModuleLoader#use')
     for(const module of modules) {
       const id = module.isCore ? module.type : module.id
-      if(Object.keys(this.modules).includes(id)) {
-        this.modules[id].destroyed(this.client)
+      if([...this.modules.keys()].includes(id)) {
+        this.modules.get(id)!.destroyed(this.client)
       }
-      this.modules[id] = module
-      module.init({ client: this.client })
+      this.modules.set(id, module)
+    }
+  }
+
+  /**
+   * Initialize all modules
+   *
+   * @param async - load all modules in parallel or not
+   */
+  async initAllModules(async: boolean): Promise<void> {
+    if(async) {
+      const promises = [...this.modules.values()].map((e: Module) => e.init({ client: this.client }))
+      await Promise.all(promises)
+    } else {
+      for(const m of this.modules.values()) {
+        await m.init({ client: this.client })
+      }
     }
   }
 }
