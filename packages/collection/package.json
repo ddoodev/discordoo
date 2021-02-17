@@ -9,8 +9,5 @@
     "build": "npm run compile",
     "clean": "rm -r ./dist && rm - tsconfig.tsbuildinfo",
     "compile": "tsc"
-  },
-  "dependencies": {
-    "@discordoo/client": "^0.0.1"
   }
 }
