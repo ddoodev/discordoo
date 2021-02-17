@@ -1,7 +1,6 @@
 import createPreloadedClient from './createPreloadedClient'
-import CacheModule from '@discordoo/cache'
+import { CacheModule } from '@discordoo/cache'
 
-// TODO: add here default modules
-export default createPreloadedClient(new CacheModule())
+const Client = createPreloadedClient(new CacheModule())
 
-export { createPreloadedClient }
+export { createPreloadedClient, Client }
