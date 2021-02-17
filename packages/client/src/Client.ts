@@ -12,6 +12,14 @@ export default class Client {
     return this.moduleLoader.use
   }
 
+  $(moduleName: string): Module | undefined {
+    return this.modules.get(moduleName)
+  }
+  
+  get getModule() {
+    return this.$
+  }
+
   async start(async = false) {
     await this.moduleLoader.initAllModules(async)
   }
