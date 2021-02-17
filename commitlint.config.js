@@ -9,6 +9,7 @@ module.exports = {
       'ref',
       'docs',
       'ver',
+      'dep',
       'ci'
     ]]
   }
