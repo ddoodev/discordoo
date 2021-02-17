@@ -15,7 +15,7 @@ export default class Client {
   $(moduleName: string): Module | undefined {
     return this.modules.get(moduleName)
   }
-  
+
   get getModule() {
     return this.$
   }
