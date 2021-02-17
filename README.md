@@ -1,6 +1,6 @@
 <div align="center">
 <br>
-<img src="media/ddoo.png">
+<img src="media/ddoo.png" height="350" width="350">
 </div>
 
 ## Table of contents
