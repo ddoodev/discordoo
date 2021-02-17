@@ -9,6 +9,8 @@
       "@discordoo/rest": ["rest/src"],
       "@discordoo/util": ["util/src"],
       "@discordoo/ws": ["ws/src"],
+      "@discordoo/cache": ["cache/src"],
+      "@discordoo/collection": ["collection/src"],
       "@discordoo/*": ["*/src"]
     }
   }

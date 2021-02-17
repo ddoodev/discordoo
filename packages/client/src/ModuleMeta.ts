@@ -5,17 +5,17 @@ export default interface ModuleMeta {
   /**
    * Author of the module
    */
-  author: string
+  author?: string
   /**
    * Description of the module
    */
-  description: string
+  description?: string
   /**
    * Version of the module
    */
-  version: string
+  version?: string
   /**
    * Name of the module
    */
-  name: string
+  name?: string
 }

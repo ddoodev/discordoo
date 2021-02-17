@@ -1,6 +1,6 @@
 import ModuleInitContext from './ModuleInitContext'
 import ModuleMeta from './ModuleMeta'
-import Client from './Client';
+import Client from './Client'
 
 /**
  * Represents a single module
@@ -19,11 +19,11 @@ export default interface Module {
    * Initialization function
    * @param ctx - init context
    */
-  init: (ctx: ModuleInitContext) => void | Promise<void>
+  init?: (ctx: ModuleInitContext) => void | Promise<void>
   /**
    * Meta data for module
    */
-  meta: ModuleMeta
+  meta?: ModuleMeta
   /**
    * Unique module id
    */
@@ -31,5 +31,5 @@ export default interface Module {
   /**
    * Emits once the module is destroyed
    */
-  destroyed: (client: Client) => void | Promise<void>
+  destroyed?: (client: Client) => void | Promise<void>
 }

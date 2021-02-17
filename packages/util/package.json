@@ -6,8 +6,8 @@
   "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
-  "build": "npm run compile",
-  "clean": "rm -r ./dist && rm -r tsconfig.tsbuildinfo",
-  "compile": "tsc"
-}
+    "build": "npm run compile",
+    "clean": "rm -r ./dist && rm -r tsconfig.tsbuildinfo",
+    "compile": "tsc"
+  }
 }

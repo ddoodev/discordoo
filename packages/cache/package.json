@@ -1,17 +1,17 @@
 {
-  "name": "discordoo",
+  "name": "@discordoo/cache",
   "version": "0.0.1",
-  "description": "Discordoo/discordoo is public facing 'full build' of all Discordoo.",
+  "description": "Discordoo/cache is a cache module for discordoo.",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
   "license": "MIT",
   "scripts": {
     "build": "npm run compile",
-    "clean": "rm -r ./dist && rm - tsconfig.tsbuildinfo",
+    "clean": "rm -r ./dist && rm -r tsconfig.tsbuildinfo",
     "compile": "tsc"
   },
   "dependencies": {
     "@discordoo/client": "^0.0.1",
-    "@discordoo/ws": "^0.0.1"
+    "@discordoo/collection": "^0.0.1"
   }
 }
