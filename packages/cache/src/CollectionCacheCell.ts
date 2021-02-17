@@ -35,8 +35,8 @@ export default class CollectionCacheCell<K, V> implements CacheCell<K, V> {
     return this._data.get(key)
   }
 
-  has(key: K): Promise<boolean> {
-    return Promise.resolve(false)
+  async has(key: K): Promise<boolean> {
+    return this._data.has(key)
   }
 
 
