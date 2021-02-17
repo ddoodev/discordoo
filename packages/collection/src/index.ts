@@ -1,3 +1,5 @@
+import _ from 'lodash'
+
 export default class Collection<K, V> extends Map<K, V>   {
   random(amount?: number): V[] | V {
     const getRandomElement = () => this.get([...this.keys()][Math.floor(Math.random() * this.size)])
@@ -22,5 +24,15 @@ export default class Collection<K, V> extends Map<K, V>   {
 
   clone(): Collection<K, V> {
     return new Collection<K, V>([...this])
+  }
+
+  equal(collection: Collection<K, V>): boolean {
+    if(this.size !== collection.size) return false
+    for(const [key, val] of this) {
+      if(!collection.has(key)) return false
+      const testValue = collection.get(key)!
+      if(!_.isEqual(val, testValue)) return false
+    }
+    return true
   }
 }
