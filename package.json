@@ -10,6 +10,7 @@
   },
   "keywords": [
     "api",
+    "discord",
     "bot"
   ],
   "contributors": [
@@ -19,6 +20,9 @@
     {
       "name": "KislBall"
     }
+  ],
+  "workspaces": [
+    "packages/*"
   ],
   "license": "MIT",
   "devDependencies": {
