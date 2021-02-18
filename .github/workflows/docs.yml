@@ -12,8 +12,8 @@ jobs:
       - name: Install packages etc
         run: |
           npm i
-          npx lerna run build
           npx lerna bootstrap
+          npx lerna run build
       - name: Create local changes
         run: |
           npm run docs
