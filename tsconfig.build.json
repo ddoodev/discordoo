@@ -3,7 +3,7 @@
   "compilerOptions": {
     "strict": true,
     "module": "commonjs",
-    "target": "es2019",
+    "target": "es6",
     "lib": ["esnext", "esnext.array", "esnext.asynciterable", "esnext.intl", "esnext.symbol", "es6"],
     "sourceMap": true,
     "removeComments": false,
