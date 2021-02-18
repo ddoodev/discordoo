@@ -1,7 +1,7 @@
 /**
  * A DTO cache cell. The thing, that is used by end-user
  */
-import Collection from '@discordoo/collection'
+import { Collection } from '@discordoo/collection'
 
 export default interface CacheCell<K, V> {
   get: (key: K) => Promise<V | undefined>

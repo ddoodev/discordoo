@@ -1,4 +1,4 @@
-import Client, { Module } from '@discordoo/core'
+import { Module, Client } from '@discordoo/core'
 
 /**
  * Returns a new client class which has preloaded modules

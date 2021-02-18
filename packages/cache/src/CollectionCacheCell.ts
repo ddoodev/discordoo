@@ -1,5 +1,5 @@
 import { CacheCell } from '@discordoo/core'
-import Collection from '@discordoo/collection'
+import { Collection } from '@discordoo/collection'
 
 export default class CollectionCacheCell<K, V> implements CacheCell<K, V> {
   private _data?: Collection<K, V> = new Collection<K, V>() // the other way tsc argues for some reason

@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-export default class Collection<K, V> extends Map<K, V>   {
+class Collection<K, V> extends Map<K, V> {
   random(amount?: number): V[] | V {
     const getRandomElement = () => this.get([...this.keys()][Math.floor(Math.random() * this.size)])
     if(amount === undefined) {
@@ -36,3 +36,5 @@ export default class Collection<K, V> extends Map<K, V>   {
     return true
   }
 }
+
+export { Collection }

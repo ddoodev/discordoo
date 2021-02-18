@@ -1,6 +1,6 @@
 import { CacheCell, CacheModule as ICacheModule } from '@discordoo/core'
 import CollectionCacheCell from './CollectionCacheCell'
-import Collection from '@discordoo/collection'
+import { Collection } from '@discordoo/collection'
 
 export default class CacheModule implements ICacheModule {
   isCore = true

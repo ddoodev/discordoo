@@ -14,6 +14,6 @@ export {
   CacheModule,
   CoreModule,
   ModuleMeta,
-  ModuleInitContext
+  ModuleInitContext,
+  Client
 }
-export default Client
