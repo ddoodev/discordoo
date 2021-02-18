@@ -1,5 +1,4 @@
 {
-  "version": "0.0.1",
   "description": "Discordoo is a new level node.js library for interacting with the Discord API.",
   "private": true,
   "scripts": {

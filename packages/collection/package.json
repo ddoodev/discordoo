@@ -1,6 +1,6 @@
 {
   "name": "@discordoo/collection",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Discordoo/collection is custom map wrapper for it to work",
   "main": "dist/index.js",
   "types": "types/index.d.ts",

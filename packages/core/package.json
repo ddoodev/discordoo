@@ -1,6 +1,6 @@
 {
   "name": "@discordoo/core",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Discordoo/client is a client module for discordoo.",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
@@ -11,6 +11,6 @@
     "compile": "tsc"
   },
   "dependencies": {
-    "@discordoo/collection": "^0.0.1"
+    "@discordoo/collection": "^0.1.0"
   }
 }

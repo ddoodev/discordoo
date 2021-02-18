@@ -11,8 +11,8 @@
     "compile": "tsc"
   },
   "dependencies": {
-    "@discordoo/core": "^0.0.1",
-    "@discordoo/ws": "^0.0.1",
-    "@discordoo/cache": "^0.0.1"
+    "@discordoo/core": "^0.1.0",
+    "@discordoo/ws": "^0.1.0",
+    "@discordoo/cache": "^0.1.0"
   }
 }

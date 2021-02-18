@@ -1,6 +1,6 @@
 {
   "name": "@discordoo/rest",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Discordoo/rest is a module for discordoo to interact with the Discord API.",
   "main": "dist/index.js",
   "types": "types/index.d.ts",

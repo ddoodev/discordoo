@@ -1,6 +1,6 @@
 {
   "name": "@discordoo/ws",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Discordoo/ws is a module for discordoo to interact with the Discord API web socket.",
   "main": "dist/index.js",
   "types": "types/index.d.ts",

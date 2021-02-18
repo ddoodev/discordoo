@@ -1,6 +1,6 @@
 {
   "name": "@discordoo/util",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "private": true,
   "description": "Discordoo/util is a module that contains some utilities for discordoo work.",
   "main": "dist/index.js",
