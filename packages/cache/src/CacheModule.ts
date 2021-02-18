@@ -6,7 +6,8 @@ export default class CacheModule implements ICacheModule {
   isCore = true
   type: 'cache' | 'gateway' | 'rest' = 'cache'
   id = 'discordoo.modules.cache'
-  private _caches: Collection<string, CollectionCacheCell<any, any>> = new Collection<string, CollectionCacheCell<any, any>>()
+  private _caches: Collection<string, CollectionCacheCell<any, any>> =
+    new Collection<string, CollectionCacheCell<any, any>>()
 
   constructor() { // TODO: add here cache policies
 

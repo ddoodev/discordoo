@@ -11,7 +11,7 @@ export default class CollectionCacheCell<K, V> implements CacheCell<K, V> {
   async filter(filter: (value: V, key: K, cell: CollectionCacheCell<K, V>) => boolean): Promise<Collection<K, V>> {
     filter = filter.bind(this)
     const results = new Collection<K, V>()
-    // eslint-disable-next-line
+
     this._data!.forEach(async (v, k) => {
       if (await filter(v, k, this)) {
         await results.set(k, v)

@@ -18,6 +18,7 @@
   "rules": {
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
     "indent": [
       "error",
       2
@@ -29,6 +30,17 @@
     "semi": [
       "warn",
       "never"
-    ]
+    ],
+    "block-spacing": [
+      "error",
+      "always"
+    ],
+    "array-bracket-spacing": [
+      "error",
+      "always"
+    ],
+    "keyword-spacing": ["error", { "before": true, "after": true }],
+    "max-len": ["error", { "code": 120, "ignoreComments": true }],
+    "spaced-comment": ["error", "always"]
   }
 }
