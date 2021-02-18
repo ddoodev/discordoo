@@ -17,6 +17,7 @@ Discordoo uses [conventional commits](https://www.conventionalcommits.org/en/v1.
 * ver - a new version release
 * dep - dependencies change
 * ci - GitHub actions changes
+* tests - tests update
 
 ### Branching
 Discordoo uses three types of branches: features, master and release. 
