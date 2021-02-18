@@ -7,7 +7,7 @@
     "deploy": "lerna publish",
     "lint": "eslint packages/**/src/**/* --fix",
     "test": "jest",
-    "docs": "typedoc ./packages/discordoo/src/index.ts --tsconfig ./tsconfig.json --exclude \"types/**/*\" --json ./docs.json"
+    "docs": "typedoc ./packages/discordoo/src/index.ts --tsconfig ./tsconfig.json --exclude \"*.d.ts\" --json ./docs.json"
   },
   "keywords": [
     "api",
