@@ -1,5 +1,5 @@
 import { CacheModule, CollectionCacheCell } from '../packages/cache'
-import Collection from '../packages/collection'
+import { Collection } from '../packages/collection'
 
 describe('Cache', () => {
   let testModule: CacheModule

@@ -1,4 +1,4 @@
-import Collection from '../packages/collection'
+import { Collection } from '../packages/collection'
 
 describe('Collection', () => {
   test('clone', () => {

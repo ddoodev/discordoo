@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>CacheCell | @discordoo/core</title>
-	<meta name="description" content="Documentation for @discordoo/core">
+	<title>CacheCell | discordoo</title>
+	<meta name="description" content="Documentation for discordoo">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 	<script async src="../assets/js/search.js" id="search-script"></script>
@@ -23,7 +23,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">@discordoo/core</a>
+					<a href="../index.html" class="title">discordoo</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -52,10 +52,13 @@
 		<div class="container">
 			<ul class="tsd-breadcrumb">
 				<li>
-					<a href="../modules.html">@discordoo/core</a>
+					<a href="../modules.html">discordoo</a>
 				</li>
 				<li>
-					<a href="cachecell.html">CacheCell</a>
+					<a href="../modules/core.html">Core</a>
+				</li>
+				<li>
+					<a href="core.cachecell.html">CacheCell</a>
 				</li>
 			</ul>
 			<h1>Interface CacheCell&lt;K, V&gt;</h1>
@@ -84,6 +87,12 @@
 					</li>
 				</ul>
 			</section>
+			<section class="tsd-panel">
+				<h3>Implemented by</h3>
+				<ul class="tsd-hierarchy">
+					<li><a href="../classes/cache.collectioncachecell.html" class="tsd-signature-type" data-tsd-kind="Class">CollectionCacheCell</a></li>
+				</ul>
+			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
@@ -91,14 +100,14 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="cachecell.html#delete" class="tsd-kind-icon">delete</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="cachecell.html#destroy" class="tsd-kind-icon">destroy</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="cachecell.html#filter" class="tsd-kind-icon">filter</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="cachecell.html#get" class="tsd-kind-icon">get</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="cachecell.html#has" class="tsd-kind-icon">has</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="cachecell.html#random" class="tsd-kind-icon">random</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="cachecell.html#set" class="tsd-kind-icon">set</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="cachecell.html#size" class="tsd-kind-icon">size</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="core.cachecell.html#delete" class="tsd-kind-icon">delete</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="core.cachecell.html#destroy" class="tsd-kind-icon">destroy</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="core.cachecell.html#filter" class="tsd-kind-icon">filter</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="core.cachecell.html#get" class="tsd-kind-icon">get</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="core.cachecell.html#has" class="tsd-kind-icon">has</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="core.cachecell.html#random" class="tsd-kind-icon">random</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="core.cachecell.html#set" class="tsd-kind-icon">set</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="core.cachecell.html#size" class="tsd-kind-icon">size</a></li>
 							</ul>
 						</section>
 					</div>
@@ -112,7 +121,7 @@
 					<div class="tsd-signature tsd-kind-icon">delete<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/discordoo/discordoo/blob/2257d30/packages/core/src/CacheCell.ts#L9">CacheCell.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/discordoo/discordoo/blob/ad5d8fe/packages/core/src/CacheCell.ts#L9">Documents/discordoo/packages/core/src/CacheCell.ts:9</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -143,7 +152,7 @@
 					<div class="tsd-signature tsd-kind-icon">destroy<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/discordoo/discordoo/blob/2257d30/packages/core/src/CacheCell.ts#L13">CacheCell.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/discordoo/discordoo/blob/ad5d8fe/packages/core/src/CacheCell.ts#L13">Documents/discordoo/packages/core/src/CacheCell.ts:13</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -165,10 +174,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="filter" class="tsd-anchor"></a>
 					<h3>filter</h3>
-					<div class="tsd-signature tsd-kind-icon">filter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>filter<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span>, key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span>, cell<span class="tsd-signature-symbol">: </span><a href="cachecell.html" class="tsd-signature-type" data-tsd-kind="Interface">CacheCell</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">default</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<div class="tsd-signature tsd-kind-icon">filter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>filter<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span>, key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span>, cell<span class="tsd-signature-symbol">: </span><a href="core.cachecell.html" class="tsd-signature-type" data-tsd-kind="Interface">CacheCell</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../classes/collection.collection-1.html" class="tsd-signature-type" data-tsd-kind="Class">Collection</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/discordoo/discordoo/blob/2257d30/packages/core/src/CacheCell.ts#L11">CacheCell.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/discordoo/discordoo/blob/ad5d8fe/packages/core/src/CacheCell.ts#L11">Documents/discordoo/packages/core/src/CacheCell.ts:11</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -176,18 +185,18 @@
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter-signature">
 								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-interface">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>filter<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span>, key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span>, cell<span class="tsd-signature-symbol">: </span><a href="cachecell.html" class="tsd-signature-type" data-tsd-kind="Interface">CacheCell</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">default</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>filter<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span>, key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span>, cell<span class="tsd-signature-symbol">: </span><a href="core.cachecell.html" class="tsd-signature-type" data-tsd-kind="Interface">CacheCell</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../classes/collection.collection-1.html" class="tsd-signature-type" data-tsd-kind="Class">Collection</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 								</ul>
 								<ul class="tsd-descriptions">
 									<li class="tsd-description">
 										<h4 class="tsd-parameters-title">Parameters</h4>
 										<ul class="tsd-parameters">
 											<li>
-												<h5>filter: <span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span>, key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span>, cell<span class="tsd-signature-symbol">: </span><a href="cachecell.html" class="tsd-signature-type" data-tsd-kind="Interface">CacheCell</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></h5>
+												<h5>filter: <span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span>, key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span>, cell<span class="tsd-signature-symbol">: </span><a href="core.cachecell.html" class="tsd-signature-type" data-tsd-kind="Interface">CacheCell</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span></h5>
 												<ul class="tsd-parameters">
 													<li class="tsd-parameter-signature">
 														<ul class="tsd-signatures tsd-kind-type-literal">
-															<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span>, key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span>, cell<span class="tsd-signature-symbol">: </span><a href="cachecell.html" class="tsd-signature-type" data-tsd-kind="Interface">CacheCell</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+															<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span>, key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span>, cell<span class="tsd-signature-symbol">: </span><a href="core.cachecell.html" class="tsd-signature-type" data-tsd-kind="Interface">CacheCell</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 														</ul>
 														<ul class="tsd-descriptions">
 															<li class="tsd-description">
@@ -200,7 +209,7 @@
 																		<h5>key: <span class="tsd-signature-type">K</span></h5>
 																	</li>
 																	<li>
-																		<h5>cell: <a href="cachecell.html" class="tsd-signature-type" data-tsd-kind="Interface">CacheCell</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h5>
+																		<h5>cell: <a href="core.cachecell.html" class="tsd-signature-type" data-tsd-kind="Interface">CacheCell</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></h5>
 																	</li>
 																</ul>
 																<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -210,7 +219,7 @@
 												</ul>
 											</li>
 										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">default</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="../classes/collection.collection-1.html" class="tsd-signature-type" data-tsd-kind="Class">Collection</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 									</li>
 								</ul>
 							</li>
@@ -223,7 +232,7 @@
 					<div class="tsd-signature tsd-kind-icon">get<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/discordoo/discordoo/blob/2257d30/packages/core/src/CacheCell.ts#L7">CacheCell.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/discordoo/discordoo/blob/ad5d8fe/packages/core/src/CacheCell.ts#L7">Documents/discordoo/packages/core/src/CacheCell.ts:7</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -254,7 +263,7 @@
 					<div class="tsd-signature tsd-kind-icon">has<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/discordoo/discordoo/blob/2257d30/packages/core/src/CacheCell.ts#L10">CacheCell.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/discordoo/discordoo/blob/ad5d8fe/packages/core/src/CacheCell.ts#L10">Documents/discordoo/packages/core/src/CacheCell.ts:10</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -285,7 +294,7 @@
 					<div class="tsd-signature tsd-kind-icon">random<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>amount<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/discordoo/discordoo/blob/2257d30/packages/core/src/CacheCell.ts#L12">CacheCell.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/discordoo/discordoo/blob/ad5d8fe/packages/core/src/CacheCell.ts#L12">Documents/discordoo/packages/core/src/CacheCell.ts:12</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -313,10 +322,10 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="set" class="tsd-anchor"></a>
 					<h3>set</h3>
-					<div class="tsd-signature tsd-kind-icon">set<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="cachecell.html" class="tsd-signature-type" data-tsd-kind="Interface">CacheCell</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<div class="tsd-signature tsd-kind-icon">set<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="core.cachecell.html" class="tsd-signature-type" data-tsd-kind="Interface">CacheCell</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/discordoo/discordoo/blob/2257d30/packages/core/src/CacheCell.ts#L8">CacheCell.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/discordoo/discordoo/blob/ad5d8fe/packages/core/src/CacheCell.ts#L8">Documents/discordoo/packages/core/src/CacheCell.ts:8</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -324,7 +333,7 @@
 						<ul class="tsd-parameters">
 							<li class="tsd-parameter-signature">
 								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-interface">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="cachecell.html" class="tsd-signature-type" data-tsd-kind="Interface">CacheCell</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">K</span>, value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="core.cachecell.html" class="tsd-signature-type" data-tsd-kind="Interface">CacheCell</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 								</ul>
 								<ul class="tsd-descriptions">
 									<li class="tsd-description">
@@ -337,7 +346,7 @@
 												<h5>value: <span class="tsd-signature-type">V</span></h5>
 											</li>
 										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="cachecell.html" class="tsd-signature-type" data-tsd-kind="Interface">CacheCell</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="core.cachecell.html" class="tsd-signature-type" data-tsd-kind="Interface">CacheCell</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">V</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 									</li>
 								</ul>
 							</li>
@@ -350,7 +359,7 @@
 					<div class="tsd-signature tsd-kind-icon">size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/discordoo/discordoo/blob/2257d30/packages/core/src/CacheCell.ts#L14">CacheCell.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/discordoo/discordoo/blob/ad5d8fe/packages/core/src/CacheCell.ts#L14">Documents/discordoo/packages/core/src/CacheCell.ts:14</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -377,63 +386,75 @@
 					<li class=" ">
 						<a href="../modules.html">Exports</a>
 					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/cache.html">Cache</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/collection.html">Collection</a>
+					</li>
+					<li class="current tsd-kind-namespace">
+						<a href="../modules/core.html">Core</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/ws.html">WS</a>
+					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class">
-						<a href="../classes/moduleloader.html" class="tsd-kind-icon">Module<wbr>Loader</a>
+					<li class=" tsd-kind-class tsd-parent-kind-namespace">
+						<a href="../classes/core.client.html" class="tsd-kind-icon">Client</a>
 					</li>
-					<li class=" tsd-kind-class">
-						<a href="../classes/default.html" class="tsd-kind-icon">default</a>
+					<li class=" tsd-kind-class tsd-parent-kind-namespace">
+						<a href="../classes/core.moduleloader.html" class="tsd-kind-icon">Module<wbr>Loader</a>
 					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface tsd-has-type-parameter">
-						<a href="cachecell.html" class="tsd-kind-icon">Cache<wbr>Cell</a>
+					<li class="current tsd-kind-interface tsd-parent-kind-namespace tsd-has-type-parameter">
+						<a href="core.cachecell.html" class="tsd-kind-icon">Cache<wbr>Cell</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="cachecell.html#delete" class="tsd-kind-icon">delete</a>
+								<a href="core.cachecell.html#delete" class="tsd-kind-icon">delete</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="cachecell.html#destroy" class="tsd-kind-icon">destroy</a>
+								<a href="core.cachecell.html#destroy" class="tsd-kind-icon">destroy</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="cachecell.html#filter" class="tsd-kind-icon">filter</a>
+								<a href="core.cachecell.html#filter" class="tsd-kind-icon">filter</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="cachecell.html#get" class="tsd-kind-icon">get</a>
+								<a href="core.cachecell.html#get" class="tsd-kind-icon">get</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="cachecell.html#has" class="tsd-kind-icon">has</a>
+								<a href="core.cachecell.html#has" class="tsd-kind-icon">has</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="cachecell.html#random" class="tsd-kind-icon">random</a>
+								<a href="core.cachecell.html#random" class="tsd-kind-icon">random</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="cachecell.html#set" class="tsd-kind-icon">set</a>
+								<a href="core.cachecell.html#set" class="tsd-kind-icon">set</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="cachecell.html#size" class="tsd-kind-icon">size</a>
+								<a href="core.cachecell.html#size" class="tsd-kind-icon">size</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface">
-						<a href="cachemodule.html" class="tsd-kind-icon">Cache<wbr>Module</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="core.cachemodule.html" class="tsd-kind-icon">Cache<wbr>Module</a>
 					</li>
-					<li class=" tsd-kind-interface">
-						<a href="coremodule.html" class="tsd-kind-icon">Core<wbr>Module</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="core.coremodule.html" class="tsd-kind-icon">Core<wbr>Module</a>
 					</li>
-					<li class=" tsd-kind-interface">
-						<a href="module.html" class="tsd-kind-icon">Module</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="core.module.html" class="tsd-kind-icon">Module</a>
 					</li>
-					<li class=" tsd-kind-interface">
-						<a href="moduleinitcontext.html" class="tsd-kind-icon">Module<wbr>Init<wbr>Context</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="core.moduleinitcontext.html" class="tsd-kind-icon">Module<wbr>Init<wbr>Context</a>
 					</li>
-					<li class=" tsd-kind-interface">
-						<a href="modulemeta.html" class="tsd-kind-icon">Module<wbr>Meta</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-namespace">
+						<a href="core.modulemeta.html" class="tsd-kind-icon">Module<wbr>Meta</a>
 					</li>
 				</ul>
 			</nav>
@@ -444,11 +465,6 @@
 	<div class="container">
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
-			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
-			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
 			</ul>
