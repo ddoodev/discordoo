@@ -23,8 +23,8 @@ export default class ModuleLoader {
    * @param modules - array of modules
    */
   use(...modules: Module[]): void {
-    if (modules.length == 0) throw new Error('No modules were provided to ModuleLoader#use')
-    for (const module of modules) {
+    if(modules.length == 0) throw new Error('No modules were provided to ModuleLoader#use')
+    for(const module of modules) {
       const id = module.isCore ? module.type : module.id
       if([ ...this.modules.keys() ].includes(id)) {
         this.modules.get(id)?.destroyed?.(this.client)
