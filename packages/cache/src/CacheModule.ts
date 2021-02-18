@@ -1,4 +1,4 @@
-import { CacheModule as ICacheModule } from '@discordoo/core'
+import { CacheCell, CacheModule as ICacheModule } from '@discordoo/core'
 import CollectionCacheCell from './CollectionCacheCell'
 import Collection from '@discordoo/collection'
 
@@ -12,8 +12,8 @@ export default class CacheModule implements ICacheModule {
 
   }
 
-  createCache<K extends CollectionCacheCell<any, any>>(type: string): K {
-    this._caches.set(type, new CollectionCacheCell<any, any>(this) as unknown as K)
+  createCache<K extends CacheCell<any, any>>(type: string): K {
+    this._caches.set(type, new CollectionCacheCell<any, any>() as unknown as K)
     return this._caches.get(type) as unknown as K
   }
 

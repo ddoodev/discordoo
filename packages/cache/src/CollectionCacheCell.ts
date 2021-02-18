@@ -1,14 +1,8 @@
 import { CacheCell } from '@discordoo/core'
-import CacheModule from './CacheModule'
 import Collection from '@discordoo/collection'
 
 export default class CollectionCacheCell<K, V> implements CacheCell<K, V> {
   private _data?: Collection<K, V> = new Collection<K, V>() // the other way tsc argues for some reason
-  //module: CacheModule
-
-  constructor(module: CacheModule) {
-    //this.module = module
-  }
 
   async delete(key: K): Promise<boolean> {
     return this._data!.delete(key)
@@ -44,7 +38,8 @@ export default class CollectionCacheCell<K, V> implements CacheCell<K, V> {
     return this._data!.random(amount)
   }
 
-  async set(key: K, value: V): Promise<Collection<K, V>> {
-    return this._data!.set(key, value)
+  async set(key: K, value: V): Promise<CollectionCacheCell<K, V>> {
+    this._data!.set(key, value)
+    return this
   }
 }
