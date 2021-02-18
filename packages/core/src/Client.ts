@@ -1,5 +1,5 @@
-import ModuleLoader from './ModuleLoader'
-import Module from './Module'
+import ModuleLoader from './modules/ModuleLoader'
+import Module from './modules/Module'
 
 export default class Client {
   public moduleLoader: ModuleLoader = new ModuleLoader(this)

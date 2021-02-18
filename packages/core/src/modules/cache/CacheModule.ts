@@ -1,4 +1,4 @@
-import CoreModule from './CoreModule'
+import CoreModule from '../CoreModule'
 import CacheCell from './CacheCell'
 
 /**

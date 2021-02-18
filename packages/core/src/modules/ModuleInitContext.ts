@@ -1,4 +1,4 @@
-import Client from './Client'
+import Client from '../Client'
 
 /**
  * Context passed to module on its initialization

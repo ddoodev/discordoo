@@ -1,5 +1,5 @@
 import Module from './Module'
-import Client from './Client'
+import Client from '../Client'
 
 export default class ModuleLoader {
   /**

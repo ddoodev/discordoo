@@ -1,6 +1,6 @@
 import ModuleInitContext from './ModuleInitContext'
 import ModuleMeta from './ModuleMeta'
-import Client from './Client'
+import Client from '../Client'
 
 /**
  * Represents a single module
