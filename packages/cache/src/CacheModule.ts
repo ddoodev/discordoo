@@ -1,4 +1,4 @@
-import { CacheModule as ICacheModule } from '@discordoo/client'
+import { CacheModule as ICacheModule } from '@discordoo/core'
 import CollectionCacheCell from './CollectionCacheCell'
 import Collection from '@discordoo/collection'
 

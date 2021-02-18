@@ -1,5 +1,5 @@
 {
-  "name": "@discordoo/client",
+  "name": "@discordoo/core",
   "version": "0.0.1",
   "description": "Discordoo/client is a client module for discordoo.",
   "main": "dist/index.js",

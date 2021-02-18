@@ -1,5 +1,5 @@
 /**
- * A DAO cache cell. The thing, that is used by end-user
+ * A DTO cache cell. The thing, that is used by end-user
  */
 import CacheModule from './CacheModule'
 import Collection from '@discordoo/collection'
@@ -12,5 +12,5 @@ export default interface CacheCell<K, V> {
   filter: (filter: (value: V, key: K, cell: CacheCell<K, V>) => boolean) => Promise<Collection<K, V>>
   random: (amount?: number) => Promise<V | V[]>
   destroy: () => Promise<void>
-  //module: CacheModule
+  module: CacheModule
 }

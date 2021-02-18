@@ -4,7 +4,7 @@
   "compilerOptions": {
     "baseUrl": "./packages",
     "paths": {
-      "@discordoo/client": ["client/src"],
+      "@discordoo/core": ["core/src"],
       "discordoo": ["discordoo/src"],
       "@discordoo/rest": ["rest/src"],
       "@discordoo/util": ["util/src"],

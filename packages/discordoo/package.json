@@ -11,7 +11,7 @@
     "compile": "tsc"
   },
   "dependencies": {
-    "@discordoo/client": "^0.0.1",
+    "@discordoo/core": "^0.0.1",
     "@discordoo/ws": "^0.0.1",
     "@discordoo/cache": "^0.0.1"
   }
