@@ -1,3 +1,5 @@
+name: Documentation generation
+
 on:
   - push
 
