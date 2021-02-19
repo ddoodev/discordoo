@@ -10,7 +10,7 @@
     "clean": "rm -r ./dist && rm - tsconfig.tsbuildinfo",
     "compile": "tsc"
   },
-  "dependencies": {
+  "peerDependencies": {
     "@discordoo/core": "^0.1.0",
     "@discordoo/ws": "^0.1.0",
     "@discordoo/cache": "^0.1.0",
