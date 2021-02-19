@@ -40,7 +40,7 @@ describe('Cache', () => {
     test('filter', async () => {
       await testingCache.set('test2', 'test555')
       await testingCache.set('test3', 'test5755')
-      const expected = new Collection<string, string>([['test2', 'test555'], ['test3', 'test5755']])
+      const expected = new Collection<string, string>([ [ 'test2', 'test555' ], [ 'test3', 'test5755' ] ])
       expect((await testingCache.filter(e => e.length > 5)).equal(expected)).toBe(true)
     })
 
