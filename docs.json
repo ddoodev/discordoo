@@ -2561,7 +2561,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "packages/core/src/ModuleLoader.ts",
+									"fileName": "packages/core/src/modules/ModuleLoader.ts",
 									"line": 12,
 									"character": 15
 								}
@@ -2585,7 +2585,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "packages/core/src/ModuleLoader.ts",
+									"fileName": "packages/core/src/modules/ModuleLoader.ts",
 									"line": 8,
 									"character": 16
 								}
@@ -2615,7 +2615,7 @@
 							"flags": {},
 							"sources": [
 								{
-									"fileName": "packages/core/src/ModuleLoader.ts",
+									"fileName": "packages/core/src/modules/ModuleLoader.ts",
 									"line": 41,
 									"character": 22
 								}
@@ -2667,7 +2667,7 @@
 							"flags": {},
 							"sources": [
 								{
-									"fileName": "packages/core/src/ModuleLoader.ts",
+									"fileName": "packages/core/src/modules/ModuleLoader.ts",
 									"line": 25,
 									"character": 5
 								}
@@ -2739,7 +2739,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "packages/core/src/ModuleLoader.ts",
+							"fileName": "packages/core/src/modules/ModuleLoader.ts",
 							"line": 4,
 							"character": 33
 						}
@@ -2760,7 +2760,7 @@
 							"flags": {},
 							"sources": [
 								{
-									"fileName": "packages/core/src/CacheCell.ts",
+									"fileName": "packages/core/src/modules/cache/CacheCell.ts",
 									"line": 9,
 									"character": 8
 								}
@@ -2816,7 +2816,7 @@
 							"flags": {},
 							"sources": [
 								{
-									"fileName": "packages/core/src/CacheCell.ts",
+									"fileName": "packages/core/src/modules/cache/CacheCell.ts",
 									"line": 13,
 									"character": 9
 								}
@@ -2859,7 +2859,7 @@
 							"flags": {},
 							"sources": [
 								{
-									"fileName": "packages/core/src/CacheCell.ts",
+									"fileName": "packages/core/src/modules/cache/CacheCell.ts",
 									"line": 11,
 									"character": 8
 								}
@@ -2991,7 +2991,7 @@
 							"flags": {},
 							"sources": [
 								{
-									"fileName": "packages/core/src/CacheCell.ts",
+									"fileName": "packages/core/src/modules/cache/CacheCell.ts",
 									"line": 7,
 									"character": 5
 								}
@@ -3056,7 +3056,7 @@
 							"flags": {},
 							"sources": [
 								{
-									"fileName": "packages/core/src/CacheCell.ts",
+									"fileName": "packages/core/src/modules/cache/CacheCell.ts",
 									"line": 10,
 									"character": 5
 								}
@@ -3112,7 +3112,7 @@
 							"flags": {},
 							"sources": [
 								{
-									"fileName": "packages/core/src/CacheCell.ts",
+									"fileName": "packages/core/src/modules/cache/CacheCell.ts",
 									"line": 12,
 									"character": 8
 								}
@@ -3182,7 +3182,7 @@
 							"flags": {},
 							"sources": [
 								{
-									"fileName": "packages/core/src/CacheCell.ts",
+									"fileName": "packages/core/src/modules/cache/CacheCell.ts",
 									"line": 8,
 									"character": 5
 								}
@@ -3260,7 +3260,7 @@
 							"flags": {},
 							"sources": [
 								{
-									"fileName": "packages/core/src/CacheCell.ts",
+									"fileName": "packages/core/src/modules/cache/CacheCell.ts",
 									"line": 14,
 									"character": 6
 								}
@@ -3314,7 +3314,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "packages/core/src/CacheCell.ts",
+							"fileName": "packages/core/src/modules/cache/CacheCell.ts",
 							"line": 6,
 							"character": 34
 						}
@@ -3373,7 +3373,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "packages/core/src/Module.ts",
+									"fileName": "packages/core/src/modules/Module.ts",
 									"line": 34,
 									"character": 11
 								}
@@ -3456,7 +3456,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "packages/core/src/Module.ts",
+									"fileName": "packages/core/src/modules/Module.ts",
 									"line": 30,
 									"character": 4
 								}
@@ -3491,7 +3491,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "packages/core/src/Module.ts",
+									"fileName": "packages/core/src/modules/Module.ts",
 									"line": 22,
 									"character": 6
 								}
@@ -3574,7 +3574,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "packages/core/src/Module.ts",
+									"fileName": "packages/core/src/modules/Module.ts",
 									"line": 13,
 									"character": 8
 								}
@@ -3602,7 +3602,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "packages/core/src/Module.ts",
+									"fileName": "packages/core/src/modules/Module.ts",
 									"line": 26,
 									"character": 6
 								}
@@ -3635,7 +3635,7 @@
 							"flags": {},
 							"sources": [
 								{
-									"fileName": "packages/core/src/CoreModule.ts",
+									"fileName": "packages/core/src/modules/CoreModule.ts",
 									"line": 7,
 									"character": 6
 								}
@@ -3819,7 +3819,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "packages/core/src/CacheModule.ts",
+							"fileName": "packages/core/src/modules/cache/CacheModule.ts",
 							"line": 9,
 							"character": 36
 						}
@@ -3862,7 +3862,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "packages/core/src/Module.ts",
+									"fileName": "packages/core/src/modules/Module.ts",
 									"line": 34,
 									"character": 11
 								}
@@ -3945,7 +3945,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "packages/core/src/Module.ts",
+									"fileName": "packages/core/src/modules/Module.ts",
 									"line": 30,
 									"character": 4
 								}
@@ -3980,7 +3980,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "packages/core/src/Module.ts",
+									"fileName": "packages/core/src/modules/Module.ts",
 									"line": 22,
 									"character": 6
 								}
@@ -4063,7 +4063,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "packages/core/src/Module.ts",
+									"fileName": "packages/core/src/modules/Module.ts",
 									"line": 13,
 									"character": 8
 								}
@@ -4091,7 +4091,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "packages/core/src/Module.ts",
+									"fileName": "packages/core/src/modules/Module.ts",
 									"line": 26,
 									"character": 6
 								}
@@ -4127,7 +4127,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "packages/core/src/CoreModule.ts",
+									"fileName": "packages/core/src/modules/CoreModule.ts",
 									"line": 7,
 									"character": 6
 								}
@@ -4172,7 +4172,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "packages/core/src/CoreModule.ts",
+							"fileName": "packages/core/src/modules/CoreModule.ts",
 							"line": 6,
 							"character": 35
 						}
@@ -4215,7 +4215,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "packages/core/src/Module.ts",
+									"fileName": "packages/core/src/modules/Module.ts",
 									"line": 34,
 									"character": 11
 								}
@@ -4293,7 +4293,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "packages/core/src/Module.ts",
+									"fileName": "packages/core/src/modules/Module.ts",
 									"line": 30,
 									"character": 4
 								}
@@ -4323,7 +4323,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "packages/core/src/Module.ts",
+									"fileName": "packages/core/src/modules/Module.ts",
 									"line": 22,
 									"character": 6
 								}
@@ -4401,7 +4401,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "packages/core/src/Module.ts",
+									"fileName": "packages/core/src/modules/Module.ts",
 									"line": 13,
 									"character": 8
 								}
@@ -4424,7 +4424,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "packages/core/src/Module.ts",
+									"fileName": "packages/core/src/modules/Module.ts",
 									"line": 26,
 									"character": 6
 								}
@@ -4455,7 +4455,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "packages/core/src/Module.ts",
+									"fileName": "packages/core/src/modules/Module.ts",
 									"line": 17,
 									"character": 6
 								}
@@ -4499,7 +4499,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "packages/core/src/Module.ts",
+							"fileName": "packages/core/src/modules/Module.ts",
 							"line": 9,
 							"character": 31
 						}
@@ -4533,7 +4533,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "packages/core/src/ModuleInitContext.ts",
+									"fileName": "packages/core/src/modules/ModuleInitContext.ts",
 									"line": 10,
 									"character": 8
 								}
@@ -4556,7 +4556,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "packages/core/src/ModuleInitContext.ts",
+							"fileName": "packages/core/src/modules/ModuleInitContext.ts",
 							"line": 6,
 							"character": 42
 						}
@@ -4585,7 +4585,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "packages/core/src/ModuleMeta.ts",
+									"fileName": "packages/core/src/modules/ModuleMeta.ts",
 									"line": 8,
 									"character": 8
 								}
@@ -4617,7 +4617,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "packages/core/src/ModuleMeta.ts",
+									"fileName": "packages/core/src/modules/ModuleMeta.ts",
 									"line": 12,
 									"character": 13
 								}
@@ -4649,7 +4649,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "packages/core/src/ModuleMeta.ts",
+									"fileName": "packages/core/src/modules/ModuleMeta.ts",
 									"line": 20,
 									"character": 6
 								}
@@ -4681,7 +4681,7 @@
 							},
 							"sources": [
 								{
-									"fileName": "packages/core/src/ModuleMeta.ts",
+									"fileName": "packages/core/src/modules/ModuleMeta.ts",
 									"line": 16,
 									"character": 9
 								}
@@ -4715,7 +4715,7 @@
 					],
 					"sources": [
 						{
-							"fileName": "packages/core/src/ModuleMeta.ts",
+							"fileName": "packages/core/src/modules/ModuleMeta.ts",
 							"line": 4,
 							"character": 35
 						}
