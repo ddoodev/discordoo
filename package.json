@@ -5,8 +5,8 @@
     "build": "lerna run build",
     "bootstrap": "lerna bootstrap",
     "deploy": "lerna publish",
-    "lint": "eslint packages/**/src/**/*",
-    "lint:fix": "eslint packages/**/src/**/* --fix",
+    "lint": "eslint packages/**/src/**/* tests/*",
+    "lint:fix": "eslint packages/**/src/**/* tests/* --fix",
     "test": "jest",
     "docs": "typedoc ./packages/discordoo/src/index.ts --readme README.md --tsconfig ./tsconfig.json --exclude \"*.d.ts\" --json ./docs.json",
     "docs:html": "typedoc ./packages/discordoo/src/index.ts --readme README.md --tsconfig ./tsconfig.json --exclude \"*.d.ts\""
