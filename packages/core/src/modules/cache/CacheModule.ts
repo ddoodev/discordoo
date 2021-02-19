@@ -18,11 +18,11 @@ import {
 export default interface CacheModule extends CoreModule {
   createCache<K extends CacheCell<any, any>>(type: string): K
   getCache<K extends CacheCell<any, any>>(type: string): K | undefined
-  getChannelCache(guild?: string): CacheCell<string, APIChannel>
-  getGuildEmojiCache(guild: string): CacheCell<string, APIEmoji>
-  getGuildCache(): CacheCell<string, APIGuild>
-  getMemberCache(guild: string): CacheCell<string, APIGuildMember>
-  getUserCache(): CacheCell<string, APIUser>
+  getChannelsCache(guild?: string): CacheCell<string, APIChannel>
+  getGuildEmojisCache(guild: string): CacheCell<string, APIEmoji>
+  getGuildsCache(): CacheCell<string, APIGuild>
+  getMembersCache(guild: string): CacheCell<string, APIGuildMember>
+  getUsersCache(): CacheCell<string, APIUser>
   getPresencesCache(): CacheCell<string, GatewayActivity>
   getMessagesCache(channel: string): CacheCell<string, APIMessage>
 }
