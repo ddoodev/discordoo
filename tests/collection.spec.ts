@@ -21,11 +21,7 @@ describe('Collection', () => {
   })
 
   test('filter', () => {
-    const testCol = new Collection<string, any>(
-      [ [ 'test', 5 ], [ 'test3', 10 ], [ 'test4', 2 ], [ 'test5', 1 ] ]
-    )
-    expect(
-      testCol.filter(i => i >= 5).equal(new Collection<string, any>([ [ 'test', 5 ], [ 'test3', 10 ] ]))
-    ).toBe(true)
+    const testCol = new Collection<string, any>([['test', 5], ['test3', 10], ['test4', 2], ['test5', 1]])
+    expect(testCol.filter(i => i >= 5).equal(new Collection<string, any>([['test', 5], ['test3', 10]]))).toBe(true)
   })
 })

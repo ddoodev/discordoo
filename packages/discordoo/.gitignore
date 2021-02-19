@@ -14,7 +14,3 @@ types
 
 # Misc
 tsconfig.tsbuildinfo
-
-# Due to the specific resolver of local packages from npm,
-# package-lock should be ignored so that there are no conflicts when installing by third-party developers via npm.
-package-lock.json

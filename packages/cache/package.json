@@ -11,8 +11,7 @@
     "compile": "tsc"
   },
   "dependencies": {
-    "@discordoo/collection": "^0.1.0",
     "@discordoo/core": "^0.1.0",
-    "discord-api-types": "^0.12.1"
+    "@discordoo/collection": "^0.1.0"
   }
 }
