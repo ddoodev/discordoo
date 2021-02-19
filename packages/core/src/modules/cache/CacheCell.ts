@@ -12,4 +12,5 @@ export default interface CacheCell<K, V> {
   random: (amount?: number) => Promise<V | V[]>
   destroy: () => Promise<void>
   size: () => Promise<number>
+  type: string
 }
