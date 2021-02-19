@@ -12,5 +12,8 @@
   },
   "peerDependencies": {
     "@discordoo/collection": "^0.1.0"
+  },
+  "devDependencies": {
+    "@discordoo/collection": "^0.1.0"
   }
 }
