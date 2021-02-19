@@ -3,6 +3,11 @@ import { Collection } from '@discordoo/collection'
 
 export default class CollectionCacheCell<K, V> implements CacheCell<K, V> {
   private _data?: Collection<K, V> = new Collection<K, V>() // the other way tsc argues for some reason
+  public type: string
+
+  constructor(type: string) {
+    this.type = type
+  }
 
   async delete(key: K): Promise<boolean> {
     return this._data!.delete(key)
