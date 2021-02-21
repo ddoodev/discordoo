@@ -4,6 +4,6 @@ import Shard from './Shard'
 
 export default interface ShardsManager<C> {
   readonly all: ShardLike
-  module: GatewayModule
+  module: GatewayModule<C>
   get(id: string): Shard<C>
 }
