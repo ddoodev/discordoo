@@ -6,4 +6,5 @@ export default interface Shard<C> extends ShardLike {
   connection: C
   token: string
   manager: ShardsManager<C>
+  connect(): Promise<void> | void
 }
