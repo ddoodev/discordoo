@@ -1,5 +1,3 @@
-import {IntegrationExpireBehavior} from 'discord-api-types'
-
 export enum Statuses {
   READY = 0,
   CONNECTING = 1,
