@@ -5,5 +5,5 @@ export default interface Shard<C> extends ShardLike {
   id: string
   connection: C
   token: string
-  manager: ShardsManager
+  manager: ShardsManager<C>
 }
