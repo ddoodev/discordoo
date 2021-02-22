@@ -9,7 +9,13 @@
     "ws": "^7.4.3"
   },
   "devDependencies": {
-    "@types/ws": "^7.4.0"
+    "@types/ws": "^7.4.0",
+    "@discordoo/core": "^0.1.0",
+    "@discordoo/collection": "^0.1.0"
+  },
+  "peerDependencies": {
+    "@discordoo/core": "^0.1.0",
+    "@discordoo/collection": "^0.1.0"
   },
   "scripts": {
     "build": "npm run compile",
