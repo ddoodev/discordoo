@@ -6,4 +6,5 @@ export default interface ShardsManager<C> {
   readonly all: ShardLike
   module: GatewayModule<C>
   get(id: number): Shard<C> | undefined
+  startShards(): Promise<void>
 }
