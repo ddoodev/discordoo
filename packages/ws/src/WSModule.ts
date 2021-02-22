@@ -8,13 +8,12 @@ export default class WSModule implements GatewayModule<WebSocket> {
   isCore = true
   shards: WebSocketManager = new WebSocketManager(this)
   type: 'gateway' | 'rest' | 'cache' = 'gateway'
-  client?: Client
 
   constructor(config: GatewayModuleConfig) {
     this.config = config
   }
 
-  init(ctx: ModuleInitContext) {
-    this.client = ctx.client
+  async init(ctx: ModuleInitContext) {
+    await this.shards.startShards(this.config.file)
   }
 }

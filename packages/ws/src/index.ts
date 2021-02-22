@@ -1,7 +1,9 @@
 import WebSocketManager from './WebSocketManager'
-import WebSocketShard from './WebSocketShard'
+import WSShard from './WSShard'
+import WSModule from './WSModule'
 
 export {
   WebSocketManager,
-  WebSocketShard
+  WSShard,
+  WSModule
 }
