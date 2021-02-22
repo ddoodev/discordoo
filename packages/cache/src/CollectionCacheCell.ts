@@ -51,4 +51,8 @@ export default class CollectionCacheCell<K, V> implements CacheCell<K, V> {
   async size() {
     return this._data!.size
   }
+
+  async entries() {
+    return [ ...this._data!.entries() ]
+  }
 }

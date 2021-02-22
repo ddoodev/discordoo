@@ -13,4 +13,5 @@ export default interface CacheCell<K, V> {
   destroy: () => Promise<void>
   size: () => Promise<number>
   type: string
+  entries: () => Promise<[K, V][]>
 }
