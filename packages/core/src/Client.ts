@@ -13,7 +13,7 @@ export default class Client {
   }
 
   $(moduleName: string): Module | undefined {
-    return this.modules.get(moduleName)
+    return this.modules.get(moduleName) // 1231
   }
 
   get getModule() {
