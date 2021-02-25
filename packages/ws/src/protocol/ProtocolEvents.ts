@@ -19,7 +19,6 @@ export default interface ProtocolEvents {
     id: number,
     entries: [any, any][]
   },
-  SPAWNED: Record<string, never>,
   HELLO: {
     id: number,
     token: string
