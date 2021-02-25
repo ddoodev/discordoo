@@ -30,13 +30,13 @@ export default class WebSocketManager extends EventEmitter implements ShardsMana
   async spawnShard(file: string, id: number): Promise<WSShard> {
     const worker = new worker_threads.Worker(file)
     this.shards.set(id, new WSShard(this, id, worker))
-    worker.postMessage(JSON.stringify({
+    this.shards.get(id)!.sendProtocolMessage({
       event: 'HELLO',
       payload: {
         token: this.module!.client!.config.token,
         id
       }
-    }))
+    })
     await this.shards.get(id)!.connect()
 
     return this.shards.get(id)!

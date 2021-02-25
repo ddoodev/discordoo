@@ -11,6 +11,7 @@ import {
   GatewayActivity
 } from 'discord-api-types'
 import { Worker } from 'worker_threads'
+import ProtocolMessage from './protocol/ProtocolMessage'
 
 /**
  * WebSocket shard
@@ -34,6 +35,10 @@ export default class WSShard implements Shard<WebSocket> {
   connect(): Promise<void> | void {
     this.worker.on('message', console.log)
     return undefined
+  }
+
+  sendProtocolMessage(message: ProtocolMessage) {
+    this.worker.postMessage(JSON.stringify(message))
   }
 
   // @ts-ignore
