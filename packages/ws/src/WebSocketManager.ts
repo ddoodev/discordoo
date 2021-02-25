@@ -27,33 +27,27 @@ export default class WebSocketManager extends EventEmitter implements ShardsMana
     return this.shards.get(id)
   }
 
+  async spawnShard(file: string, id: number): Promise<WSShard> {
+    const worker = new worker_threads.Worker(file, {
+      workerData: JSON.stringify({ token: this.module!.client!.config.token, id })
+    })
+    this.shards.set(id, new WSShard(this, id, worker))
+    await this.shards.get(id)!.connect()
+
+    return this.shards.get(id)!
+  }
+
   async startShards(file: string): Promise<void> {
     if (worker_threads.isMainThread) {
-      console.log('i am a big boy!!!!')
       if (Array.isArray(this.module.config.shards)) {
         for (const shard of this.module.config.shards as number[]) {
-          const worker = new worker_threads.Worker(file, {
-            workerData: JSON.stringify({token: this.module.config.token, id: shard})
-          })
-          worker.on('message', console.log)
-          this.shards.set(shard, new WSShard(this, shard, worker))
-          await this.shards.get(shard)!.connect()
+          await this.spawnShard(file, shard)
         }
       } else {
         for (let i = 1; i <= (this.module.config.shards as number); i++) {
-          console.log('a')
-          const worker = new worker_threads.Worker(file, {
-            workerData: JSON.stringify({token: this.module.config.token, id: i})
-          })
-          worker.on('message', console.log)
-          this.shards.set(i, new WSShard(this, i, worker))
-          await this.shards.get(i)!.connect()
+          await this.spawnShard(file, i)
         }
       }
-    } else {
-      console.log('i am a child')
-      worker_threads.parentPort?.postMessage('IT\'S ALIVE!!!!!!!')
-      worker_threads.parentPort?.postMessage('IT\'S ALIVE!!!!!!!')
     }
   }
 }
