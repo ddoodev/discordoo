@@ -27,7 +27,7 @@ export default class WSShard implements Shard<WebSocket> {
   constructor(manager: WebSocketManager, id: number, worker: Worker, token?: string) {
     this.id = id
     this.manager = manager
-    this.token = token ?? this.manager.module.config.token
+    this.token = token ?? this.manager.module.token
     this.worker = worker
   }
 
