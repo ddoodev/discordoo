@@ -18,5 +18,10 @@ export default interface ProtocolEvents {
     type: 'CHANNELS' | 'GUILD_EMOJIS' | 'GUILDS' | 'MEMBERS' | 'USERS' | 'PRESENCES' | 'MESSAGES',
     id: number,
     entries: [any, any][]
+  },
+  SPAWNED: Record<string, never>,
+  HELLO: {
+    id: number,
+    token: string
   }
 }
