@@ -3,10 +3,6 @@
  */
 export default interface GatewayModuleConfig {
   /**
-   * Token, that will be passed to shards
-   */
-  token?: string,
-  /**
    * File, which shall be clustered.
    *
    * Should be always default to __filename
