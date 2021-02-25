@@ -38,7 +38,6 @@ export default class CollectionCacheCell<K, V> implements CacheCell<K, V> {
     return this._data!.has(key)
   }
 
-
   async random(amount: number | undefined): Promise<V[] | V> {
     return this._data!.random(amount)
   }
@@ -50,6 +49,10 @@ export default class CollectionCacheCell<K, V> implements CacheCell<K, V> {
 
   async size() {
     return this._data!.size
+  }
+
+  async addEntries(entries: [K, V][]) {
+    this._data = new Collection<K, V>([ ...this._data!.entries(), ...entries ])
   }
 
   async entries() {
