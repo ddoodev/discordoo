@@ -1,3 +1,8 @@
+/**
+ * Discordoo
+ * Brought to you by Mirdukkk and KislBall
+ */
+
 import createPreloadedClient from './createPreloadedClient'
 import { CacheModule } from '@discordoo/cache'
 import { Client as OriginalClient } from '@discordoo/core'
