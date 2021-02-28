@@ -14,7 +14,6 @@ export default class ConnectionShard {
   connection?: WebSocket
   credentials?: { id: number, token: string, total: number, intents?: number }
   inflateContext: ZlibSync.Inflate
-  private addZlibSuffix = false
   private sequence: number | null =  null
 
   constructor() {
@@ -22,22 +21,14 @@ export default class ConnectionShard {
   }
 
   private decodeMessage(message: WebSocket.Data): GatewayDispatchPayload {
-    if (this.addZlibSuffix) {
-      this.addZlibSuffix = true
-      this.inflateContext.push(message as Buffer)
-    } else {
-      this.inflateContext.push(message as Buffer, ZlibSync.Z_SYNC_FLUSH)
-    }
-
-    if (this.inflateContext.err < 0) throw new Error(`Failed to decode message: ${this.inflateContext.err}`)
-
-    return JSON.parse(this.inflateContext.result!.toString())
+    return JSON.parse(message.toString()) as GatewayDispatchPayload
   }
 
   private awaitForHeartBeat(): Promise<number> {
     return new Promise<number>((resolve, reject) => {
       this.connection?.on('message', message => {
-        const m = this.decodeMessage(message) as unknown as GatewayHeartbeat & { d: { heartbeat_interval: number } }
+        const m =
+          this.decodeMessage(message as Buffer) as unknown as GatewayHeartbeat & { d: { heartbeat_interval: number } }
         if (m.op === 10) {
           resolve(m.d.heartbeat_interval)
         }
@@ -76,7 +67,7 @@ export default class ConnectionShard {
     this.credentials = await this.awaitForHelloPayload()
     this.connection = new WebSocket(Util.Constants.GATEWAY_URL(8, 'json', false))
     this.connection.on('message', msg => {
-      const message = this.decodeMessage(msg)
+      const message = this.decodeMessage(msg as Buffer)
       this.sequence = message.s ?? this.sequence
       console.log('msg', message)
     })
