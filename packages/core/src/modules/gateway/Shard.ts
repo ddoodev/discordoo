@@ -6,15 +6,11 @@ import ShardsManager from './ShardsManager'
  *
  * @template C connection type for this shard
  */
-export default interface Shard<C> extends ShardLike {
+export default interface Shard extends ShardLike {
   /**
    * Id of this shard
    */
   id: number
-  /**
-   * Connection this shard uses
-   */
-  connection?: C
   /**
    * Token this shard uses
    */
@@ -22,7 +18,7 @@ export default interface Shard<C> extends ShardLike {
   /**
    * Manager that controls this shard
    */
-  manager: ShardsManager<C>
+  manager: ShardsManager
   /**
    * Establish connection to somewhere
    */

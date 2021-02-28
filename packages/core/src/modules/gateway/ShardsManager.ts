@@ -3,7 +3,7 @@ import GatewayModule from './GatewayModule'
 import Shard from './Shard'
 import events from 'events'
 
-export default interface ShardsManager<C> extends events.EventEmitter {
+export default interface ShardsManager extends events.EventEmitter {
   /**
    * Retrieve a representation of all shards
    */
@@ -11,13 +11,13 @@ export default interface ShardsManager<C> extends events.EventEmitter {
   /**
    * Module which controls this ShardManager
    */
-  module: GatewayModule<C>
+  module: GatewayModule
   /**
    * Get specific shard by id
    *
    * @param id - shard's id
    */
-  get(id: number): Shard<C> | undefined
+  get(id: number): Shard | undefined
   /**
    * Start shards following this config
    *

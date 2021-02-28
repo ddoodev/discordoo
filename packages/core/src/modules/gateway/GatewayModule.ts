@@ -6,7 +6,7 @@ import ShardsManager from './ShardsManager'
  * Gateway module interface
  * @template C connection type. Internal.
  */
-export default interface GatewayModule<C> extends CoreModule {
+export default interface GatewayModule extends CoreModule {
   /**
    * Configuration for this module
    */
@@ -14,5 +14,5 @@ export default interface GatewayModule<C> extends CoreModule {
   /**
    * ShardsManager for this module
    */
-  shards: ShardsManager<C>
+  shards: ShardsManager
 }

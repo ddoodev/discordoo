@@ -1,1 +1,5 @@
-export * from './Constants'
+import Constants from './Constants'
+
+export {
+  Constants
+}

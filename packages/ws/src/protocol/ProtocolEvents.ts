@@ -21,6 +21,8 @@ export default interface ProtocolEvents {
   },
   HELLO: {
     id: number,
-    token: string
+    token: string,
+    total: number,
+    intents?: number
   }
 }

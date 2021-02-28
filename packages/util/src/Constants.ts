@@ -37,10 +37,18 @@ export enum Intents {
   DIRECT_MESSAGE_TYPING = 1 << 14
 }
 
+export const gatewayUrl =
+  (
+    v: number,
+    encoding: 'etf' | 'json',
+    compress = false
+  ) => `wss://gateway.discord.gg/?v=${v}&encoding=${encoding}${compress ? '&compress=zlib-stream' : ''}`
+
 export default class Constants {
 
   static Statuses = Statuses
   static WSCodes = WSCodes
   static Intents = Intents
+  static GATEWAY_URL = gatewayUrl
 
 }

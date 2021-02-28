@@ -1,12 +1,12 @@
-import {ShardLike, ShardsManager} from '@discordoo/core'
-import WebSocket from 'ws'
+import { ShardLike, ShardsManager } from '@discordoo/core'
 import WSModule from './WSModule'
 import { Collection } from '@discordoo/collection'
 import WSShard from './WSShard'
 import worker_threads from 'worker_threads'
 import EventEmitter from 'events'
+import ConnectionShard from './ConnectionShard'
 
-export default class WebSocketManager extends EventEmitter implements ShardsManager<WebSocket> {
+export default class WebSocketManager extends EventEmitter implements ShardsManager {
   module: WSModule
   shards: Collection<number, WSShard> = new Collection<number, WSShard>()
 
@@ -34,7 +34,8 @@ export default class WebSocketManager extends EventEmitter implements ShardsMana
       event: 'HELLO',
       payload: {
         token: this.module!.client!.config.token,
-        id
+        id,
+        total: this.module.totalShards!
       }
     })
     await this.shards.get(id)!.connect()
@@ -46,13 +47,17 @@ export default class WebSocketManager extends EventEmitter implements ShardsMana
     if (worker_threads.isMainThread) {
       if (Array.isArray(this.module.config.shards)) {
         for (const shard of this.module.config.shards as number[]) {
-          await this.spawnShard(file, shard)
+          await this.spawnShard(file, shard - 1)
         }
       } else {
         for (let i = 1; i <= (this.module.config.shards as number); i++) {
-          await this.spawnShard(file, i)
+          await this.spawnShard(file, i - 1)
         }
       }
+    } else {
+      this.on('message', console.log)
+      const cs = new ConnectionShard()
+      cs.connect()
     }
   }
 }
