@@ -7,7 +7,7 @@ Please, follow [our code of conduct](CODE_OF_CONDUCT.md). You'll be treated the 
 
 ## Version control
 ### Commit-style
-Discordoo uses [conventional commits](https://www.conventionalcommits.org/en/v1.0.0-beta.2/) for its commits. However, we have only accept some of types:
+Discordoo uses [conventional commits](https://www.conventionalcommits.org/en/v1.0.0-beta.2/) for its commits. However, we have only accept some of the types
 * feat - new features
 * fix - bug fixes
 * perf - performance tweaks
@@ -18,6 +18,7 @@ Discordoo uses [conventional commits](https://www.conventionalcommits.org/en/v1.
 * dep - dependencies change
 * ci - GitHub actions changes
 * tests - tests update
+* unk - unknown changes (many different small changes)
 
 ### Branching
 Discordoo uses three types of branches: features, master and release. 
