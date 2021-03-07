@@ -8,6 +8,8 @@ export default class Client {
 
   constructor(config: ClientConfig) {
     this.config = config
+
+    console.log(config)
   }
 
   get modules(): Map<string, Module> {

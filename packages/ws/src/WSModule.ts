@@ -10,12 +10,13 @@ export default class WSModule implements GatewayModule {
   type: 'gateway' | 'rest' | 'cache' = 'gateway'
   client?: Client
 
-  constructor(config: WSConfig) {
+  constructor(config: WSConfig = {}) {
     this.config = config
   }
 
   async init(ctx: ModuleInitContext) {
     this.client = ctx.client
+    console.log(this.client)
     await this.shards.startShards(this.config?.file as string)
   }
 
