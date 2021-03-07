@@ -3,9 +3,9 @@ import * as Util from '@discordoo/util'
 import ProtocolEvents from './protocol/ProtocolEvents'
 import worker_threads from 'worker_threads'
 import ProtocolMessage from './protocol/ProtocolMessage'
-import { GatewayDispatchPayload, GatewayHeartbeat, GatewayIdentify } from 'discord-api-types'
+import { GatewayDispatchPayload, GatewayHeartbeat } from 'discord-api-types'
 import os from 'os'
-import ZlibSync from 'zlib-sync'
+// import ZlibSync from 'zlib-sync'
 
 /**
  * The thing that actually connects to Discord
@@ -13,11 +13,11 @@ import ZlibSync from 'zlib-sync'
 export default class ConnectionShard {
   connection?: WebSocket
   credentials?: { id: number, token: string, total: number, intents?: number }
-  inflateContext: ZlibSync.Inflate
+  // inflateContext: ZlibSync.Inflate
   private sequence: number | null =  null
 
   constructor() {
-    this.inflateContext = new ZlibSync.Inflate
+    // this.inflateContext = new ZlibSync.Inflate
   }
 
   private decodeMessage(message: WebSocket.Data): GatewayDispatchPayload {
@@ -47,7 +47,7 @@ export default class ConnectionShard {
     })
   }
 
-  private buildIdentifyPayload(): GatewayIdentify {
+  private buildIdentifyPayload(): any {
     return {
       op: 2,
       d: {
@@ -58,7 +58,16 @@ export default class ConnectionShard {
           $browser: 'discordoo',
           $device: 'discordoo'
         },
-        shard: [ this.credentials!.id, this.credentials!.total ]
+        shard: [ this.credentials!.id, this.credentials!.total ],
+        presence: {
+          status: 'dnd',
+          afk: false,
+          activities: [ {
+            name: 'Hello from Discordoo!',
+            type: 0,
+            created_at: new Date()
+          } ]
+        }
       }
     }
   }
@@ -66,11 +75,13 @@ export default class ConnectionShard {
   async connect() {
     this.credentials = await this.awaitForHelloPayload()
     this.connection = new WebSocket(Util.Constants.GATEWAY_URL(8, 'json', false))
+
     this.connection.on('message', msg => {
       const message = this.decodeMessage(msg as Buffer)
       this.sequence = message.s ?? this.sequence
       console.log('msg', message)
     })
+
     this.connection.on('open', async () => {
       console.log('open')
       const heartbeat = await this.awaitForHeartBeat()
@@ -83,6 +94,7 @@ export default class ConnectionShard {
         console.log(this.sequence, 'sent')
       }, heartbeat)
     })
+
     this.connection.on('error', console.log)
   }
 }
