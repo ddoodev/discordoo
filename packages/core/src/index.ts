@@ -10,6 +10,7 @@ import GatewayModule from './modules/gateway/GatewayModule'
 import Shard from './modules/gateway/Shard'
 import ShardLike from './modules/gateway/ShardLike'
 import ShardsManager from './modules/gateway/ShardsManager'
+import ClientConfig from './ClientConfig'
 
 export {
   Module,
@@ -23,5 +24,6 @@ export {
   Shard,
   ShardLike,
   ShardsManager,
-  Client
+  Client,
+  ClientConfig,
 }
