@@ -1,5 +1,4 @@
 # Discordoo
-> Wowie, another JavaScript library for Discord!!!
 
 ## Table of contents
 - [About](#about)
@@ -8,7 +7,7 @@
 - [Contributing](#contributing)
 
 ## About
-Discordoo is a powerful, modular Discord-library.
+Discordoo is a modular and powerful node.js library to interact with the Discord API.
 
 We have now:
 - Powerful types
