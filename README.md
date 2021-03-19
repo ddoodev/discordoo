@@ -26,15 +26,15 @@ Discord API Coverage: 0%
 Discordoo has the only root package - `discordoo`.
 It contains all modules and stuff.
 
-Name | Usage
+Name | Description
 --- | ---
 cache | Implements caching logic
 collection | An utillity data structure which is used within the library
 core | Contains pure client and interface that modules have to implement
-main | Exports everything from every module and contains client with preloaded modules as well
+main | Exports everything from every module and contains client with preloaded modules
 rest | Works with Discord's HTTP API
-util | Internal thing for the library
-ws | Works with Discord's gateway using websocket connection
+util | Internal things for the library
+ws | Works with Discord's gateway via WebSocket
 
 ## Contributing
 Feel free to create a PR, but check if there is an existing one.
