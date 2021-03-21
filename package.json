@@ -14,13 +14,27 @@
   },
   "typesVersions": {
     "*": {
-      "core": ["types/core/index.d.ts"],
-      "cache": ["types/cache/index.d.ts"],
-      "collection": ["types/collection/index.d.ts"],
-      "rest": ["types/rest/index.d.ts"],
-      "util": ["types/util/index.d.ts"],
-      "ws": ["types/ws/index.d.ts"],
-      "main": ["types/main/index.d.ts"]
+      "core": [
+        "types/core/index.d.ts"
+      ],
+      "cache": [
+        "types/cache/index.d.ts"
+      ],
+      "collection": [
+        "types/collection/index.d.ts"
+      ],
+      "rest": [
+        "types/rest/index.d.ts"
+      ],
+      "util": [
+        "types/util/index.d.ts"
+      ],
+      "ws": [
+        "types/ws/index.d.ts"
+      ],
+      "main": [
+        "types/main/index.d.ts"
+      ]
     }
   },
   "scripts": {
@@ -49,5 +63,8 @@
   },
   "lint-staged": {
     "*.ts": "eslint --fix"
+  },
+  "dependencies": {
+    "discord-api-types": "^0.12.1"
   }
 }
