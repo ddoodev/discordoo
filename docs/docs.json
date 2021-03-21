@@ -1,0 +1,2737 @@
+{
+	"id": 0,
+	"name": "discordoo",
+	"kind": 0,
+	"flags": {},
+	"originalName": "",
+	"children": [
+		{
+			"id": 1,
+			"name": "cache",
+			"kind": 1,
+			"kindString": "Module",
+			"flags": {}
+		},
+		{
+			"id": 2,
+			"name": "collection",
+			"kind": 1,
+			"kindString": "Module",
+			"flags": {},
+			"children": [
+				{
+					"id": 3,
+					"name": "default",
+					"kind": 128,
+					"kindString": "Class",
+					"flags": {},
+					"children": [
+						{
+							"id": 5,
+							"name": "constructor",
+							"kind": 512,
+							"kindString": "Constructor",
+							"flags": {},
+							"signatures": [
+								{
+									"id": 6,
+									"name": "new default",
+									"kind": 16384,
+									"kindString": "Constructor signature",
+									"flags": {},
+									"typeParameter": [
+										{
+											"id": 7,
+											"name": "K",
+											"kind": 131072,
+											"kindString": "Type parameter",
+											"flags": {}
+										},
+										{
+											"id": 8,
+											"name": "V",
+											"kind": 131072,
+											"kindString": "Type parameter",
+											"flags": {}
+										}
+									],
+									"parameters": [
+										{
+											"id": 9,
+											"name": "entries",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isOptional": true
+											},
+											"type": {
+												"type": "union",
+												"types": [
+													{
+														"type": "literal",
+														"value": null
+													},
+													{
+														"type": "typeOperator",
+														"operator": "readonly",
+														"target": {
+															"type": "array",
+															"elementType": {
+																"type": "typeOperator",
+																"operator": "readonly",
+																"target": {
+																	"type": "tuple",
+																	"elements": [
+																		{
+																			"type": "reference",
+																			"name": "K"
+																		},
+																		{
+																			"type": "reference",
+																			"name": "V"
+																		}
+																	]
+																}
+															}
+														}
+													}
+												]
+											}
+										}
+									],
+									"type": {
+										"type": "reference",
+										"id": 3,
+										"typeArguments": [
+											{
+												"type": "reference",
+												"name": "K"
+											},
+											{
+												"type": "reference",
+												"name": "V"
+											}
+										],
+										"name": "default"
+									},
+									"inheritedFrom": {
+										"type": "reference",
+										"name": "Map<K, V>.constructor"
+									}
+								},
+								{
+									"id": 10,
+									"name": "new default",
+									"kind": 16384,
+									"kindString": "Constructor signature",
+									"flags": {},
+									"typeParameter": [
+										{
+											"id": 11,
+											"name": "K",
+											"kind": 131072,
+											"kindString": "Type parameter",
+											"flags": {}
+										},
+										{
+											"id": 12,
+											"name": "V",
+											"kind": 131072,
+											"kindString": "Type parameter",
+											"flags": {}
+										}
+									],
+									"parameters": [
+										{
+											"id": 13,
+											"name": "iterable",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"type": {
+												"type": "reference",
+												"typeArguments": [
+													{
+														"type": "typeOperator",
+														"operator": "readonly",
+														"target": {
+															"type": "tuple",
+															"elements": [
+																{
+																	"type": "reference",
+																	"name": "K"
+																},
+																{
+																	"type": "reference",
+																	"name": "V"
+																}
+															]
+														}
+													}
+												],
+												"name": "Iterable"
+											}
+										}
+									],
+									"type": {
+										"type": "reference",
+										"id": 3,
+										"typeArguments": [
+											{
+												"type": "reference",
+												"name": "K"
+											},
+											{
+												"type": "reference",
+												"name": "V"
+											}
+										],
+										"name": "default"
+									},
+									"inheritedFrom": {
+										"type": "reference",
+										"name": "Map<K, V>.constructor"
+									}
+								}
+							],
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "Map<K, V>.constructor"
+							}
+						},
+						{
+							"id": 4,
+							"name": "[Symbol.species]",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExternal": true,
+								"isReadonly": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts",
+									"line": 317,
+									"character": 29
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "MapConstructor"
+							}
+						},
+						{
+							"id": 63,
+							"name": "[Symbol.toStringTag]",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExternal": true,
+								"isReadonly": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts",
+									"line": 135,
+									"character": 33
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "string"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "Map.__@toStringTag"
+							}
+						},
+						{
+							"id": 54,
+							"name": "size",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isExternal": true,
+								"isReadonly": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/typescript/lib/lib.es2015.collection.d.ts",
+									"line": 28,
+									"character": 17
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "Map.size"
+							}
+						},
+						{
+							"id": 55,
+							"name": "[Symbol.iterator]",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExternal": true
+							},
+							"signatures": [
+								{
+									"id": 56,
+									"name": "[Symbol.iterator]",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {
+										"isExternal": true
+									},
+									"comment": {
+										"shortText": "Returns an iterable of entries in the map."
+									},
+									"type": {
+										"type": "reference",
+										"typeArguments": [
+											{
+												"type": "tuple",
+												"elements": [
+													{
+														"type": "reference",
+														"name": "K"
+													},
+													{
+														"type": "reference",
+														"name": "V"
+													}
+												]
+											}
+										],
+										"name": "IterableIterator"
+									},
+									"inheritedFrom": {
+										"type": "reference",
+										"name": "Map.__@iterator"
+									}
+								}
+							],
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "Map.__@iterator"
+							}
+						},
+						{
+							"id": 30,
+							"name": "clear",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExternal": true
+							},
+							"signatures": [
+								{
+									"id": 31,
+									"name": "clear",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "void"
+									},
+									"inheritedFrom": {
+										"type": "reference",
+										"name": "Map.clear"
+									}
+								}
+							],
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "Map.clear"
+							}
+						},
+						{
+							"id": 25,
+							"name": "clone",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "src/collection/index.ts",
+									"line": 27,
+									"character": 7
+								}
+							],
+							"signatures": [
+								{
+									"id": 26,
+									"name": "clone",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"type": {
+										"type": "reference",
+										"id": 3,
+										"typeArguments": [
+											{
+												"type": "reference",
+												"name": "K"
+											},
+											{
+												"type": "reference",
+												"name": "V"
+											}
+										],
+										"name": "default"
+									}
+								}
+							]
+						},
+						{
+							"id": 32,
+							"name": "delete",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExternal": true
+							},
+							"signatures": [
+								{
+									"id": 33,
+									"name": "delete",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {
+										"isExternal": true
+									},
+									"parameters": [
+										{
+											"id": 34,
+											"name": "key",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isExternal": true
+											},
+											"type": {
+												"type": "reference",
+												"name": "K"
+											}
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "boolean"
+									},
+									"inheritedFrom": {
+										"type": "reference",
+										"name": "Map.delete"
+									}
+								}
+							],
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "Map.delete"
+							}
+						},
+						{
+							"id": 57,
+							"name": "entries",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExternal": true
+							},
+							"signatures": [
+								{
+									"id": 58,
+									"name": "entries",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {
+										"isExternal": true
+									},
+									"comment": {
+										"shortText": "Returns an iterable of key, value pairs for every entry in the map."
+									},
+									"type": {
+										"type": "reference",
+										"typeArguments": [
+											{
+												"type": "tuple",
+												"elements": [
+													{
+														"type": "reference",
+														"name": "K"
+													},
+													{
+														"type": "reference",
+														"name": "V"
+													}
+												]
+											}
+										],
+										"name": "IterableIterator"
+									},
+									"inheritedFrom": {
+										"type": "reference",
+										"name": "Map.entries"
+									}
+								}
+							],
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "Map.entries"
+							}
+						},
+						{
+							"id": 27,
+							"name": "equal",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "src/collection/index.ts",
+									"line": 31,
+									"character": 7
+								}
+							],
+							"signatures": [
+								{
+									"id": 28,
+									"name": "equal",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"parameters": [
+										{
+											"id": 29,
+											"name": "collection",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"type": {
+												"type": "reference",
+												"id": 3,
+												"typeArguments": [
+													{
+														"type": "reference",
+														"name": "K"
+													},
+													{
+														"type": "reference",
+														"name": "V"
+													}
+												],
+												"name": "default"
+											}
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "boolean"
+									}
+								}
+							]
+						},
+						{
+							"id": 17,
+							"name": "filter",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "src/collection/index.ts",
+									"line": 21,
+									"character": 8
+								}
+							],
+							"signatures": [
+								{
+									"id": 18,
+									"name": "filter",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"parameters": [
+										{
+											"id": 19,
+											"name": "filter",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"type": {
+												"type": "reflection",
+												"declaration": {
+													"id": 20,
+													"name": "__type",
+													"kind": 65536,
+													"kindString": "Type literal",
+													"flags": {},
+													"signatures": [
+														{
+															"id": 21,
+															"name": "__type",
+															"kind": 4096,
+															"kindString": "Call signature",
+															"flags": {},
+															"parameters": [
+																{
+																	"id": 22,
+																	"name": "value",
+																	"kind": 32768,
+																	"kindString": "Parameter",
+																	"flags": {},
+																	"type": {
+																		"type": "reference",
+																		"name": "V"
+																	}
+																},
+																{
+																	"id": 23,
+																	"name": "key",
+																	"kind": 32768,
+																	"kindString": "Parameter",
+																	"flags": {},
+																	"type": {
+																		"type": "reference",
+																		"name": "K"
+																	}
+																},
+																{
+																	"id": 24,
+																	"name": "collection",
+																	"kind": 32768,
+																	"kindString": "Parameter",
+																	"flags": {},
+																	"type": {
+																		"type": "reference",
+																		"id": 3,
+																		"typeArguments": [
+																			{
+																				"type": "reference",
+																				"name": "K"
+																			},
+																			{
+																				"type": "reference",
+																				"name": "V"
+																			}
+																		],
+																		"name": "default"
+																	}
+																}
+															],
+															"type": {
+																"type": "intrinsic",
+																"name": "boolean"
+															}
+														}
+													]
+												}
+											}
+										}
+									],
+									"type": {
+										"type": "reference",
+										"id": 3,
+										"typeArguments": [
+											{
+												"type": "reference",
+												"name": "K"
+											},
+											{
+												"type": "reference",
+												"name": "V"
+											}
+										],
+										"name": "default"
+									}
+								}
+							]
+						},
+						{
+							"id": 35,
+							"name": "forEach",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExternal": true
+							},
+							"signatures": [
+								{
+									"id": 36,
+									"name": "forEach",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {
+										"isExternal": true
+									},
+									"parameters": [
+										{
+											"id": 37,
+											"name": "callbackfn",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isExternal": true
+											},
+											"type": {
+												"type": "reflection",
+												"declaration": {
+													"id": 38,
+													"name": "__type",
+													"kind": 65536,
+													"kindString": "Type literal",
+													"flags": {
+														"isExternal": true
+													},
+													"signatures": [
+														{
+															"id": 39,
+															"name": "__type",
+															"kind": 4096,
+															"kindString": "Call signature",
+															"flags": {
+																"isExternal": true
+															},
+															"parameters": [
+																{
+																	"id": 40,
+																	"name": "value",
+																	"kind": 32768,
+																	"kindString": "Parameter",
+																	"flags": {
+																		"isExternal": true
+																	},
+																	"type": {
+																		"type": "reference",
+																		"name": "V"
+																	}
+																},
+																{
+																	"id": 41,
+																	"name": "key",
+																	"kind": 32768,
+																	"kindString": "Parameter",
+																	"flags": {
+																		"isExternal": true
+																	},
+																	"type": {
+																		"type": "reference",
+																		"name": "K"
+																	}
+																},
+																{
+																	"id": 42,
+																	"name": "map",
+																	"kind": 32768,
+																	"kindString": "Parameter",
+																	"flags": {
+																		"isExternal": true
+																	},
+																	"type": {
+																		"type": "reference",
+																		"typeArguments": [
+																			{
+																				"type": "reference",
+																				"name": "K"
+																			},
+																			{
+																				"type": "reference",
+																				"name": "V"
+																			}
+																		],
+																		"name": "Map"
+																	}
+																}
+															],
+															"type": {
+																"type": "intrinsic",
+																"name": "void"
+															}
+														}
+													]
+												}
+											}
+										},
+										{
+											"id": 43,
+											"name": "thisArg",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isExternal": true,
+												"isOptional": true
+											},
+											"type": {
+												"type": "intrinsic",
+												"name": "any"
+											}
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "void"
+									},
+									"inheritedFrom": {
+										"type": "reference",
+										"name": "Map.forEach"
+									}
+								}
+							],
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "Map.forEach"
+							}
+						},
+						{
+							"id": 44,
+							"name": "get",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExternal": true
+							},
+							"signatures": [
+								{
+									"id": 45,
+									"name": "get",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {
+										"isExternal": true
+									},
+									"parameters": [
+										{
+											"id": 46,
+											"name": "key",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isExternal": true
+											},
+											"type": {
+												"type": "reference",
+												"name": "K"
+											}
+										}
+									],
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "undefined"
+											},
+											{
+												"type": "reference",
+												"name": "V"
+											}
+										]
+									},
+									"inheritedFrom": {
+										"type": "reference",
+										"name": "Map.get"
+									}
+								}
+							],
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "Map.get"
+							}
+						},
+						{
+							"id": 47,
+							"name": "has",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExternal": true
+							},
+							"signatures": [
+								{
+									"id": 48,
+									"name": "has",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {
+										"isExternal": true
+									},
+									"parameters": [
+										{
+											"id": 49,
+											"name": "key",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isExternal": true
+											},
+											"type": {
+												"type": "reference",
+												"name": "K"
+											}
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "boolean"
+									},
+									"inheritedFrom": {
+										"type": "reference",
+										"name": "Map.has"
+									}
+								}
+							],
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "Map.has"
+							}
+						},
+						{
+							"id": 59,
+							"name": "keys",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExternal": true
+							},
+							"signatures": [
+								{
+									"id": 60,
+									"name": "keys",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {
+										"isExternal": true
+									},
+									"comment": {
+										"shortText": "Returns an iterable of keys in the map"
+									},
+									"type": {
+										"type": "reference",
+										"typeArguments": [
+											{
+												"type": "reference",
+												"name": "K"
+											}
+										],
+										"name": "IterableIterator"
+									},
+									"inheritedFrom": {
+										"type": "reference",
+										"name": "Map.keys"
+									}
+								}
+							],
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "Map.keys"
+							}
+						},
+						{
+							"id": 14,
+							"name": "random",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "src/collection/index.ts",
+									"line": 4,
+									"character": 8
+								}
+							],
+							"signatures": [
+								{
+									"id": 15,
+									"name": "random",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"parameters": [
+										{
+											"id": 16,
+											"name": "amount",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isOptional": true
+											},
+											"type": {
+												"type": "intrinsic",
+												"name": "number"
+											}
+										}
+									],
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "reference",
+												"name": "V"
+											},
+											{
+												"type": "array",
+												"elementType": {
+													"type": "reference",
+													"name": "V"
+												}
+											}
+										]
+									}
+								}
+							]
+						},
+						{
+							"id": 50,
+							"name": "set",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExternal": true
+							},
+							"signatures": [
+								{
+									"id": 51,
+									"name": "set",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {
+										"isExternal": true
+									},
+									"parameters": [
+										{
+											"id": 52,
+											"name": "key",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isExternal": true
+											},
+											"type": {
+												"type": "reference",
+												"name": "K"
+											}
+										},
+										{
+											"id": 53,
+											"name": "value",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isExternal": true
+											},
+											"type": {
+												"type": "reference",
+												"name": "V"
+											}
+										}
+									],
+									"type": {
+										"type": "reference",
+										"id": 3,
+										"typeArguments": [
+											{
+												"type": "reference",
+												"name": "K"
+											},
+											{
+												"type": "reference",
+												"name": "V"
+											}
+										],
+										"name": "default"
+									},
+									"inheritedFrom": {
+										"type": "reference",
+										"name": "Map.set"
+									}
+								}
+							],
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "Map.set"
+							}
+						},
+						{
+							"id": 61,
+							"name": "values",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExternal": true
+							},
+							"signatures": [
+								{
+									"id": 62,
+									"name": "values",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {
+										"isExternal": true
+									},
+									"comment": {
+										"shortText": "Returns an iterable of values in the map"
+									},
+									"type": {
+										"type": "reference",
+										"typeArguments": [
+											{
+												"type": "reference",
+												"name": "V"
+											}
+										],
+										"name": "IterableIterator"
+									},
+									"inheritedFrom": {
+										"type": "reference",
+										"name": "Map.values"
+									}
+								}
+							],
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "Map.values"
+							}
+						}
+					],
+					"groups": [
+						{
+							"title": "Constructors",
+							"kind": 512,
+							"children": [
+								5
+							]
+						},
+						{
+							"title": "Properties",
+							"kind": 1024,
+							"children": [
+								4,
+								63,
+								54
+							]
+						},
+						{
+							"title": "Methods",
+							"kind": 2048,
+							"children": [
+								55,
+								30,
+								25,
+								32,
+								57,
+								27,
+								17,
+								35,
+								44,
+								47,
+								59,
+								14,
+								50,
+								61
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "src/collection/index.ts",
+							"line": 3,
+							"character": 31
+						}
+					],
+					"typeParameter": [
+						{
+							"id": 64,
+							"name": "K",
+							"kind": 131072,
+							"kindString": "Type parameter",
+							"flags": {}
+						},
+						{
+							"id": 65,
+							"name": "V",
+							"kind": 131072,
+							"kindString": "Type parameter",
+							"flags": {}
+						}
+					],
+					"extendedTypes": [
+						{
+							"type": "reference",
+							"typeArguments": [
+								{
+									"type": "reference",
+									"name": "K"
+								},
+								{
+									"type": "reference",
+									"name": "V"
+								}
+							],
+							"name": "Map"
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Classes",
+					"kind": 128,
+					"children": [
+						3
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "src/collection/index.ts",
+					"line": 1,
+					"character": 0
+				}
+			]
+		},
+		{
+			"id": 66,
+			"name": "core",
+			"kind": 1,
+			"kindString": "Module",
+			"flags": {},
+			"children": [
+				{
+					"id": 71,
+					"name": "Client",
+					"kind": 128,
+					"kindString": "Class",
+					"flags": {},
+					"children": [
+						{
+							"id": 73,
+							"name": "constructor",
+							"kind": 512,
+							"kindString": "Constructor",
+							"flags": {},
+							"signatures": [
+								{
+									"id": 74,
+									"name": "new Client",
+									"kind": 16384,
+									"kindString": "Constructor signature",
+									"flags": {},
+									"type": {
+										"type": "reference",
+										"id": 71,
+										"name": "Client"
+									},
+									"inheritedFrom": {
+										"type": "reference",
+										"name": "TypedEmitter<ClientEventHandlers>.constructor"
+									}
+								}
+							],
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "TypedEmitter<ClientEventHandlers>.constructor"
+							}
+						},
+						{
+							"id": 75,
+							"name": "modules",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "src/core/Client.ts",
+									"line": 7,
+									"character": 9
+								}
+							],
+							"type": {
+								"type": "reference",
+								"name": "default"
+							},
+							"defaultValue": "..."
+						},
+						{
+							"id": 72,
+							"name": "defaultMaxListeners",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isStatic": true,
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/tiny-typed-emitter/lib/index.d.ts",
+									"line": 10,
+									"character": 30
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "TypedEmitter.defaultMaxListeners"
+							}
+						},
+						{
+							"id": 76,
+							"name": "$",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "src/core/Client.ts",
+									"line": 9,
+									"character": 3
+								}
+							],
+							"signatures": [
+								{
+									"id": 77,
+									"name": "$",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"parameters": [
+										{
+											"id": 78,
+											"name": "id",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"type": {
+												"type": "union",
+												"types": [
+													{
+														"type": "intrinsic",
+														"name": "string"
+													},
+													{
+														"type": "intrinsic",
+														"name": "symbol"
+													}
+												]
+											}
+										}
+									],
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "literal",
+												"value": null
+											},
+											{
+												"type": "reference",
+												"name": "default"
+											}
+										]
+									}
+								}
+							]
+						},
+						{
+							"id": 82,
+							"name": "addListener",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/tiny-typed-emitter/lib/index.d.ts",
+									"line": 11,
+									"character": 15
+								}
+							],
+							"signatures": [
+								{
+									"id": 83,
+									"name": "addListener",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {
+										"isExternal": true
+									},
+									"typeParameter": [
+										{
+											"id": 84,
+											"name": "U",
+											"kind": 131072,
+											"kindString": "Type parameter",
+											"flags": {
+												"isExternal": true
+											},
+											"type": {
+												"type": "literal",
+												"value": "ready"
+											}
+										}
+									],
+									"parameters": [
+										{
+											"id": 85,
+											"name": "event",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isExternal": true
+											},
+											"type": {
+												"type": "reference",
+												"name": "U"
+											}
+										},
+										{
+											"id": 86,
+											"name": "listener",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isExternal": true
+											},
+											"type": {
+												"type": "indexedAccess",
+												"indexType": {
+													"type": "reference",
+													"name": "U"
+												},
+												"objectType": {
+													"type": "reference",
+													"id": 144,
+													"name": "default"
+												}
+											}
+										}
+									],
+									"type": {
+										"type": "reference",
+										"id": 71,
+										"name": "Client"
+									},
+									"inheritedFrom": {
+										"type": "reference",
+										"name": "TypedEmitter.addListener"
+									}
+								}
+							],
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "TypedEmitter.addListener"
+							}
+						},
+						{
+							"id": 120,
+							"name": "emit",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/tiny-typed-emitter/lib/index.d.ts",
+									"line": 19,
+									"character": 8
+								}
+							],
+							"signatures": [
+								{
+									"id": 121,
+									"name": "emit",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {
+										"isExternal": true
+									},
+									"typeParameter": [
+										{
+											"id": 122,
+											"name": "U",
+											"kind": 131072,
+											"kindString": "Type parameter",
+											"flags": {
+												"isExternal": true
+											},
+											"type": {
+												"type": "literal",
+												"value": "ready"
+											}
+										}
+									],
+									"parameters": [
+										{
+											"id": 123,
+											"name": "event",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isExternal": true
+											},
+											"type": {
+												"type": "reference",
+												"name": "U"
+											}
+										},
+										{
+											"id": 124,
+											"name": "args",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isExternal": true,
+												"isRest": true
+											},
+											"type": {
+												"type": "reference",
+												"typeArguments": [
+													{
+														"type": "indexedAccess",
+														"indexType": {
+															"type": "reference",
+															"name": "U"
+														},
+														"objectType": {
+															"type": "reference",
+															"id": 144,
+															"name": "default"
+														}
+													}
+												],
+												"name": "Parameters"
+											}
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "boolean"
+									},
+									"inheritedFrom": {
+										"type": "reference",
+										"name": "TypedEmitter.emit"
+									}
+								}
+							],
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "TypedEmitter.emit"
+							}
+						},
+						{
+							"id": 125,
+							"name": "eventNames",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/tiny-typed-emitter/lib/index.d.ts",
+									"line": 20,
+									"character": 14
+								}
+							],
+							"signatures": [
+								{
+									"id": 126,
+									"name": "eventNames",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {
+										"isExternal": true
+									},
+									"typeParameter": [
+										{
+											"id": 127,
+											"name": "U",
+											"kind": 131072,
+											"kindString": "Type parameter",
+											"flags": {
+												"isExternal": true
+											},
+											"type": {
+												"type": "literal",
+												"value": "ready"
+											}
+										}
+									],
+									"type": {
+										"type": "array",
+										"elementType": {
+											"type": "reference",
+											"name": "U"
+										}
+									},
+									"inheritedFrom": {
+										"type": "reference",
+										"name": "TypedEmitter.eventNames"
+									}
+								}
+							],
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "TypedEmitter.eventNames"
+							}
+						},
+						{
+							"id": 139,
+							"name": "getMaxListeners",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/tiny-typed-emitter/lib/index.d.ts",
+									"line": 24,
+									"character": 19
+								}
+							],
+							"signatures": [
+								{
+									"id": 140,
+									"name": "getMaxListeners",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "number"
+									},
+									"inheritedFrom": {
+										"type": "reference",
+										"name": "TypedEmitter.getMaxListeners"
+									}
+								}
+							],
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "TypedEmitter.getMaxListeners"
+							}
+						},
+						{
+							"id": 128,
+							"name": "listenerCount",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/tiny-typed-emitter/lib/index.d.ts",
+									"line": 21,
+									"character": 17
+								}
+							],
+							"signatures": [
+								{
+									"id": 129,
+									"name": "listenerCount",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {
+										"isExternal": true
+									},
+									"parameters": [
+										{
+											"id": 130,
+											"name": "type",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isExternal": true
+											},
+											"type": {
+												"type": "literal",
+												"value": "ready"
+											}
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "number"
+									},
+									"inheritedFrom": {
+										"type": "reference",
+										"name": "TypedEmitter.listenerCount"
+									}
+								}
+							],
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "TypedEmitter.listenerCount"
+							}
+						},
+						{
+							"id": 131,
+							"name": "listeners",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/tiny-typed-emitter/lib/index.d.ts",
+									"line": 22,
+									"character": 13
+								}
+							],
+							"signatures": [
+								{
+									"id": 132,
+									"name": "listeners",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {
+										"isExternal": true
+									},
+									"typeParameter": [
+										{
+											"id": 133,
+											"name": "U",
+											"kind": 131072,
+											"kindString": "Type parameter",
+											"flags": {
+												"isExternal": true
+											},
+											"type": {
+												"type": "literal",
+												"value": "ready"
+											}
+										}
+									],
+									"parameters": [
+										{
+											"id": 134,
+											"name": "type",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isExternal": true
+											},
+											"type": {
+												"type": "reference",
+												"name": "U"
+											}
+										}
+									],
+									"type": {
+										"type": "array",
+										"elementType": {
+											"type": "indexedAccess",
+											"indexType": {
+												"type": "reference",
+												"name": "U"
+											},
+											"objectType": {
+												"type": "reference",
+												"id": 144,
+												"name": "default"
+											}
+										}
+									},
+									"inheritedFrom": {
+										"type": "reference",
+										"name": "TypedEmitter.listeners"
+									}
+								}
+							],
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "TypedEmitter.listeners"
+							}
+						},
+						{
+							"id": 115,
+							"name": "off",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/tiny-typed-emitter/lib/index.d.ts",
+									"line": 18,
+									"character": 7
+								}
+							],
+							"signatures": [
+								{
+									"id": 116,
+									"name": "off",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {
+										"isExternal": true
+									},
+									"typeParameter": [
+										{
+											"id": 117,
+											"name": "U",
+											"kind": 131072,
+											"kindString": "Type parameter",
+											"flags": {
+												"isExternal": true
+											},
+											"type": {
+												"type": "literal",
+												"value": "ready"
+											}
+										}
+									],
+									"parameters": [
+										{
+											"id": 118,
+											"name": "event",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isExternal": true
+											},
+											"type": {
+												"type": "reference",
+												"name": "U"
+											}
+										},
+										{
+											"id": 119,
+											"name": "listener",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isExternal": true
+											},
+											"type": {
+												"type": "indexedAccess",
+												"indexType": {
+													"type": "reference",
+													"name": "U"
+												},
+												"objectType": {
+													"type": "reference",
+													"id": 144,
+													"name": "default"
+												}
+											}
+										}
+									],
+									"type": {
+										"type": "reference",
+										"id": 71,
+										"name": "Client"
+									},
+									"inheritedFrom": {
+										"type": "reference",
+										"name": "TypedEmitter.off"
+									}
+								}
+							],
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "TypedEmitter.off"
+							}
+						},
+						{
+							"id": 110,
+							"name": "on",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/tiny-typed-emitter/lib/index.d.ts",
+									"line": 17,
+									"character": 6
+								}
+							],
+							"signatures": [
+								{
+									"id": 111,
+									"name": "on",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {
+										"isExternal": true
+									},
+									"typeParameter": [
+										{
+											"id": 112,
+											"name": "U",
+											"kind": 131072,
+											"kindString": "Type parameter",
+											"flags": {
+												"isExternal": true
+											},
+											"type": {
+												"type": "literal",
+												"value": "ready"
+											}
+										}
+									],
+									"parameters": [
+										{
+											"id": 113,
+											"name": "event",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isExternal": true
+											},
+											"type": {
+												"type": "reference",
+												"name": "U"
+											}
+										},
+										{
+											"id": 114,
+											"name": "listener",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isExternal": true
+											},
+											"type": {
+												"type": "indexedAccess",
+												"indexType": {
+													"type": "reference",
+													"name": "U"
+												},
+												"objectType": {
+													"type": "reference",
+													"id": 144,
+													"name": "default"
+												}
+											}
+										}
+									],
+									"type": {
+										"type": "reference",
+										"id": 71,
+										"name": "Client"
+									},
+									"inheritedFrom": {
+										"type": "reference",
+										"name": "TypedEmitter.on"
+									}
+								}
+							],
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "TypedEmitter.on"
+							}
+						},
+						{
+							"id": 105,
+							"name": "once",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/tiny-typed-emitter/lib/index.d.ts",
+									"line": 16,
+									"character": 8
+								}
+							],
+							"signatures": [
+								{
+									"id": 106,
+									"name": "once",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {
+										"isExternal": true
+									},
+									"typeParameter": [
+										{
+											"id": 107,
+											"name": "U",
+											"kind": 131072,
+											"kindString": "Type parameter",
+											"flags": {
+												"isExternal": true
+											},
+											"type": {
+												"type": "literal",
+												"value": "ready"
+											}
+										}
+									],
+									"parameters": [
+										{
+											"id": 108,
+											"name": "event",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isExternal": true
+											},
+											"type": {
+												"type": "reference",
+												"name": "U"
+											}
+										},
+										{
+											"id": 109,
+											"name": "listener",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isExternal": true
+											},
+											"type": {
+												"type": "indexedAccess",
+												"indexType": {
+													"type": "reference",
+													"name": "U"
+												},
+												"objectType": {
+													"type": "reference",
+													"id": 144,
+													"name": "default"
+												}
+											}
+										}
+									],
+									"type": {
+										"type": "reference",
+										"id": 71,
+										"name": "Client"
+									},
+									"inheritedFrom": {
+										"type": "reference",
+										"name": "TypedEmitter.once"
+									}
+								}
+							],
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "TypedEmitter.once"
+							}
+						},
+						{
+							"id": 87,
+							"name": "prependListener",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/tiny-typed-emitter/lib/index.d.ts",
+									"line": 12,
+									"character": 19
+								}
+							],
+							"signatures": [
+								{
+									"id": 88,
+									"name": "prependListener",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {
+										"isExternal": true
+									},
+									"typeParameter": [
+										{
+											"id": 89,
+											"name": "U",
+											"kind": 131072,
+											"kindString": "Type parameter",
+											"flags": {
+												"isExternal": true
+											},
+											"type": {
+												"type": "literal",
+												"value": "ready"
+											}
+										}
+									],
+									"parameters": [
+										{
+											"id": 90,
+											"name": "event",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isExternal": true
+											},
+											"type": {
+												"type": "reference",
+												"name": "U"
+											}
+										},
+										{
+											"id": 91,
+											"name": "listener",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isExternal": true
+											},
+											"type": {
+												"type": "indexedAccess",
+												"indexType": {
+													"type": "reference",
+													"name": "U"
+												},
+												"objectType": {
+													"type": "reference",
+													"id": 144,
+													"name": "default"
+												}
+											}
+										}
+									],
+									"type": {
+										"type": "reference",
+										"id": 71,
+										"name": "Client"
+									},
+									"inheritedFrom": {
+										"type": "reference",
+										"name": "TypedEmitter.prependListener"
+									}
+								}
+							],
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "TypedEmitter.prependListener"
+							}
+						},
+						{
+							"id": 92,
+							"name": "prependOnceListener",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/tiny-typed-emitter/lib/index.d.ts",
+									"line": 13,
+									"character": 23
+								}
+							],
+							"signatures": [
+								{
+									"id": 93,
+									"name": "prependOnceListener",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {
+										"isExternal": true
+									},
+									"typeParameter": [
+										{
+											"id": 94,
+											"name": "U",
+											"kind": 131072,
+											"kindString": "Type parameter",
+											"flags": {
+												"isExternal": true
+											},
+											"type": {
+												"type": "literal",
+												"value": "ready"
+											}
+										}
+									],
+									"parameters": [
+										{
+											"id": 95,
+											"name": "event",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isExternal": true
+											},
+											"type": {
+												"type": "reference",
+												"name": "U"
+											}
+										},
+										{
+											"id": 96,
+											"name": "listener",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isExternal": true
+											},
+											"type": {
+												"type": "indexedAccess",
+												"indexType": {
+													"type": "reference",
+													"name": "U"
+												},
+												"objectType": {
+													"type": "reference",
+													"id": 144,
+													"name": "default"
+												}
+											}
+										}
+									],
+									"type": {
+										"type": "reference",
+										"id": 71,
+										"name": "Client"
+									},
+									"inheritedFrom": {
+										"type": "reference",
+										"name": "TypedEmitter.prependOnceListener"
+									}
+								}
+							],
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "TypedEmitter.prependOnceListener"
+							}
+						},
+						{
+							"id": 135,
+							"name": "rawListeners",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/tiny-typed-emitter/lib/index.d.ts",
+									"line": 23,
+									"character": 16
+								}
+							],
+							"signatures": [
+								{
+									"id": 136,
+									"name": "rawListeners",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {
+										"isExternal": true
+									},
+									"typeParameter": [
+										{
+											"id": 137,
+											"name": "U",
+											"kind": 131072,
+											"kindString": "Type parameter",
+											"flags": {
+												"isExternal": true
+											},
+											"type": {
+												"type": "literal",
+												"value": "ready"
+											}
+										}
+									],
+									"parameters": [
+										{
+											"id": 138,
+											"name": "type",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isExternal": true
+											},
+											"type": {
+												"type": "reference",
+												"name": "U"
+											}
+										}
+									],
+									"type": {
+										"type": "array",
+										"elementType": {
+											"type": "indexedAccess",
+											"indexType": {
+												"type": "reference",
+												"name": "U"
+											},
+											"objectType": {
+												"type": "reference",
+												"id": 144,
+												"name": "default"
+											}
+										}
+									},
+									"inheritedFrom": {
+										"type": "reference",
+										"name": "TypedEmitter.rawListeners"
+									}
+								}
+							],
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "TypedEmitter.rawListeners"
+							}
+						},
+						{
+							"id": 102,
+							"name": "removeAllListeners",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/tiny-typed-emitter/lib/index.d.ts",
+									"line": 15,
+									"character": 22
+								}
+							],
+							"signatures": [
+								{
+									"id": 103,
+									"name": "removeAllListeners",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {
+										"isExternal": true
+									},
+									"parameters": [
+										{
+											"id": 104,
+											"name": "event",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isExternal": true,
+												"isOptional": true
+											},
+											"type": {
+												"type": "literal",
+												"value": "ready"
+											}
+										}
+									],
+									"type": {
+										"type": "reference",
+										"id": 71,
+										"name": "Client"
+									},
+									"inheritedFrom": {
+										"type": "reference",
+										"name": "TypedEmitter.removeAllListeners"
+									}
+								}
+							],
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "TypedEmitter.removeAllListeners"
+							}
+						},
+						{
+							"id": 97,
+							"name": "removeListener",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/tiny-typed-emitter/lib/index.d.ts",
+									"line": 14,
+									"character": 18
+								}
+							],
+							"signatures": [
+								{
+									"id": 98,
+									"name": "removeListener",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {
+										"isExternal": true
+									},
+									"typeParameter": [
+										{
+											"id": 99,
+											"name": "U",
+											"kind": 131072,
+											"kindString": "Type parameter",
+											"flags": {
+												"isExternal": true
+											},
+											"type": {
+												"type": "literal",
+												"value": "ready"
+											}
+										}
+									],
+									"parameters": [
+										{
+											"id": 100,
+											"name": "event",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isExternal": true
+											},
+											"type": {
+												"type": "reference",
+												"name": "U"
+											}
+										},
+										{
+											"id": 101,
+											"name": "listener",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isExternal": true
+											},
+											"type": {
+												"type": "indexedAccess",
+												"indexType": {
+													"type": "reference",
+													"name": "U"
+												},
+												"objectType": {
+													"type": "reference",
+													"id": 144,
+													"name": "default"
+												}
+											}
+										}
+									],
+									"type": {
+										"type": "reference",
+										"id": 71,
+										"name": "Client"
+									},
+									"inheritedFrom": {
+										"type": "reference",
+										"name": "TypedEmitter.removeListener"
+									}
+								}
+							],
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "TypedEmitter.removeListener"
+							}
+						},
+						{
+							"id": 141,
+							"name": "setMaxListeners",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/tiny-typed-emitter/lib/index.d.ts",
+									"line": 25,
+									"character": 19
+								}
+							],
+							"signatures": [
+								{
+									"id": 142,
+									"name": "setMaxListeners",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {
+										"isExternal": true
+									},
+									"parameters": [
+										{
+											"id": 143,
+											"name": "n",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isExternal": true
+											},
+											"type": {
+												"type": "intrinsic",
+												"name": "number"
+											}
+										}
+									],
+									"type": {
+										"type": "reference",
+										"id": 71,
+										"name": "Client"
+									},
+									"inheritedFrom": {
+										"type": "reference",
+										"name": "TypedEmitter.setMaxListeners"
+									}
+								}
+							],
+							"inheritedFrom": {
+								"type": "reference",
+								"name": "TypedEmitter.setMaxListeners"
+							}
+						},
+						{
+							"id": 79,
+							"name": "use",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "src/core/Client.ts",
+									"line": 13,
+									"character": 5
+								}
+							],
+							"signatures": [
+								{
+									"id": 80,
+									"name": "use",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"parameters": [
+										{
+											"id": 81,
+											"name": "modules",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isRest": true
+											},
+											"type": {
+												"type": "array",
+												"elementType": {
+													"type": "reference",
+													"name": "default"
+												}
+											}
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "void"
+									}
+								}
+							]
+						}
+					],
+					"groups": [
+						{
+							"title": "Constructors",
+							"kind": 512,
+							"children": [
+								73
+							]
+						},
+						{
+							"title": "Properties",
+							"kind": 1024,
+							"children": [
+								75,
+								72
+							]
+						},
+						{
+							"title": "Methods",
+							"kind": 2048,
+							"children": [
+								76,
+								82,
+								120,
+								125,
+								139,
+								128,
+								131,
+								115,
+								110,
+								105,
+								87,
+								92,
+								135,
+								102,
+								97,
+								141,
+								79
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "src/core/Client.ts",
+							"line": 6,
+							"character": 12
+						}
+					],
+					"extendedTypes": [
+						{
+							"type": "reference",
+							"typeArguments": [
+								{
+									"type": "reference",
+									"id": 144,
+									"name": "ClientEventHandlers"
+								}
+							],
+							"name": "TypedEmitter"
+						}
+					]
+				},
+				{
+					"id": 144,
+					"name": "ClientEventHandlers",
+					"kind": 256,
+					"kindString": "Interface",
+					"flags": {},
+					"children": [
+						{
+							"id": 145,
+							"name": "ready",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "src/core/ClientEventHandlers.ts",
+									"line": 2,
+									"character": 7
+								}
+							],
+							"type": {
+								"type": "reflection",
+								"declaration": {
+									"id": 146,
+									"name": "__type",
+									"kind": 65536,
+									"kindString": "Type literal",
+									"flags": {},
+									"signatures": [
+										{
+											"id": 147,
+											"name": "__type",
+											"kind": 4096,
+											"kindString": "Call signature",
+											"flags": {},
+											"type": {
+												"type": "intrinsic",
+												"name": "void"
+											}
+										}
+									]
+								}
+							}
+						}
+					],
+					"groups": [
+						{
+							"title": "Properties",
+							"kind": 1024,
+							"children": [
+								145
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "src/core/ClientEventHandlers.ts",
+							"line": 1,
+							"character": 44
+						}
+					]
+				}
+			],
+			"groups": [
+				{
+					"title": "Classes",
+					"kind": 128,
+					"children": [
+						71
+					]
+				},
+				{
+					"title": "Interfaces",
+					"kind": 256,
+					"children": [
+						144
+					]
+				}
+			],
+			"sources": [
+				{
+					"fileName": "src/core/index.ts",
+					"line": 1,
+					"character": 0
+				}
+			]
+		},
+		{
+			"id": 67,
+			"name": "main",
+			"kind": 1,
+			"kindString": "Module",
+			"flags": {}
+		},
+		{
+			"id": 68,
+			"name": "rest",
+			"kind": 1,
+			"kindString": "Module",
+			"flags": {}
+		},
+		{
+			"id": 69,
+			"name": "util",
+			"kind": 1,
+			"kindString": "Module",
+			"flags": {}
+		},
+		{
+			"id": 70,
+			"name": "ws",
+			"kind": 1,
+			"kindString": "Module",
+			"flags": {}
+		}
+	],
+	"groups": [
+		{
+			"title": "Modules",
+			"kind": 1,
+			"children": [
+				1,
+				2,
+				66,
+				67,
+				68,
+				69,
+				70
+			]
+		}
+	]
+}
