@@ -9,6 +9,7 @@
     "./rest": "./dist/rest/index.js",
     "./util": "./dist/util/index.js",
     "./main": "./dist/main/index.js",
+    "./ws": "./dist/ws/index.js",
     "./package.json": "./package.json"
   },
   "typesVersions": {
