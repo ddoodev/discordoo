@@ -1,0 +1,33 @@
+name: Documentation generation
+
+on:
+  - push
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Install packages etc
+        run: |
+          npm i
+          npm run build
+      - name: Create local changes
+        run: |
+          mkdir -p ./docs
+          npm run docs
+      - name: Commit files
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git log -n 1 --pretty=format:"%H" > ./docs/DOCS_HASH
+          git add -A
+          git commit -m "ci(docs): generating docs"
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
