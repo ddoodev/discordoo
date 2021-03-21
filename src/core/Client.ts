@@ -6,7 +6,11 @@ import Module from './modules/Module'
 class Client extends TypedEmitter<ClientEventHandlers> {
   modules: ModuleManager = new ModuleManager(this)
 
-  $(id: string | symbol): Module | null {
+  m(id: string | symbol): Module | null {
+    return this.modules.getModule(id) ?? null
+  }
+
+  module(id: string | symbol): Module | null {
     return this.modules.getModule(id) ?? null
   }
 
