@@ -1,5 +1,5 @@
 import Client from '../Client'
-import Collection from '../../collection'
+import { Collection } from '../../collection'
 import Module from './Module'
 
 /**
