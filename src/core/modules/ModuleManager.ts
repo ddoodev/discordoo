@@ -29,6 +29,11 @@ export default class ModuleManager {
     this.createLoadGroup(...modules)
   }
 
+  /**
+   * Initialize all modules
+   *
+   * @param async - determines if load groups shall be loaded in parallel
+   */
   async init(async = false) { // using false by default to avoid some issues
     if (async) {
       const promises = []
@@ -51,6 +56,11 @@ export default class ModuleManager {
     }
   }
 
+  /**
+   * Retrieve a module
+   *
+   * @param id - module's id
+   */
   getModule(id: string | symbol) {
     return this.modules.get(id)
   }
