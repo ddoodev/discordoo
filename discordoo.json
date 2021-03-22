@@ -1,6 +1,4 @@
 {
-  "//": "discordoo.json is an utility file, which contains useful information for build toolkit",
-  "//": "Packages field is used in typedoc.js to specify entrypoints.",
   "packages": [
     "cache",
     "collection",

@@ -41,7 +41,8 @@
     "test": "jest",
     "build": "tsc",
     "build:dry": "tsc --noEmit",
-    "docs": "typedoc"
+    "docs": "typedoc",
+    "utils": "node scripts/root.js"
   },
   "keywords": [],
   "author": "",
