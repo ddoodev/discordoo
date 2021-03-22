@@ -40,6 +40,7 @@
   "scripts": {
     "test": "jest",
     "build": "tsc",
+    "build:dry": "tsc --noEmit",
     "docs": "typedoc"
   },
   "keywords": [],
@@ -66,7 +67,10 @@
     }
   },
   "lint-staged": {
-    "*.ts": "eslint . --fix"
+    "*.ts": [
+      "npm run build:dry",
+      "eslint . --fix"
+    ]
   },
   "dependencies": {
     "discord-api-types": "^0.12.1",
