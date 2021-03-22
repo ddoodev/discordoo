@@ -3,7 +3,7 @@ import isEqual from 'lodash/isEqual'
 /**
  * An utility data structure used within the library
  */
-export default class Collection<K, V> extends Map<K, V> {
+export class Collection<K, V> extends Map<K, V> {
   /**
    * Get a random element from collection
    *
