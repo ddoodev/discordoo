@@ -38,6 +38,8 @@
     }
   },
   "scripts": {
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "test": "jest",
     "build": "tsc",
     "build:dry": "tsc --noEmit",
