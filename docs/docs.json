@@ -21,7 +21,7 @@
 			"children": [
 				{
 					"id": 3,
-					"name": "default",
+					"name": "Collection",
 					"kind": 128,
 					"kindString": "Class",
 					"flags": {},
@@ -38,7 +38,7 @@
 							"signatures": [
 								{
 									"id": 6,
-									"name": "new default",
+									"name": "new Collection",
 									"kind": 16384,
 									"kindString": "Constructor signature",
 									"flags": {},
@@ -115,7 +115,7 @@
 												"name": "V"
 											}
 										],
-										"name": "default"
+										"name": "Collection"
 									},
 									"inheritedFrom": {
 										"type": "reference",
@@ -124,7 +124,7 @@
 								},
 								{
 									"id": 10,
-									"name": "new default",
+									"name": "new Collection",
 									"kind": 16384,
 									"kindString": "Constructor signature",
 									"flags": {},
@@ -189,7 +189,7 @@
 												"name": "V"
 											}
 										],
-										"name": "default"
+										"name": "Collection"
 									},
 									"inheritedFrom": {
 										"type": "reference",
@@ -391,7 +391,7 @@
 												"name": "V"
 											}
 										],
-										"name": "default"
+										"name": "Collection"
 									}
 								}
 							]
@@ -539,7 +539,7 @@
 														"name": "V"
 													}
 												],
-												"name": "default"
+												"name": "Collection"
 											}
 										}
 									],
@@ -640,7 +640,7 @@
 																				"name": "V"
 																			}
 																		],
-																		"name": "default"
+																		"name": "Collection"
 																	}
 																}
 															],
@@ -667,7 +667,7 @@
 												"name": "V"
 											}
 										],
-										"name": "default"
+										"name": "Collection"
 									}
 								}
 							]
@@ -1069,7 +1069,7 @@
 												"name": "V"
 											}
 										],
-										"name": "default"
+										"name": "Collection"
 									},
 									"inheritedFrom": {
 										"type": "reference",
@@ -1166,7 +1166,7 @@
 						{
 							"fileName": "src/collection/index.ts",
 							"line": 6,
-							"character": 31
+							"character": 23
 						}
 					],
 					"typeParameter": [
@@ -2856,7 +2856,7 @@
 										"name": "default"
 									}
 								],
-								"name": "default"
+								"name": "Collection"
 							},
 							"defaultValue": "..."
 						},
