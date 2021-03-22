@@ -25,6 +25,9 @@
 					"kind": 128,
 					"kindString": "Class",
 					"flags": {},
+					"comment": {
+						"shortText": "An utility data structure used within the library"
+					},
 					"children": [
 						{
 							"id": 5,
@@ -361,7 +364,7 @@
 							"sources": [
 								{
 									"fileName": "src/collection/index.ts",
-									"line": 27,
+									"line": 43,
 									"character": 7
 								}
 							],
@@ -372,6 +375,9 @@
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Create a new collection based on this one"
+									},
 									"type": {
 										"type": "reference",
 										"id": 3,
@@ -496,7 +502,7 @@
 							"sources": [
 								{
 									"fileName": "src/collection/index.ts",
-									"line": 31,
+									"line": 52,
 									"character": 7
 								}
 							],
@@ -507,6 +513,9 @@
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Check if two collections are equal"
+									},
 									"parameters": [
 										{
 											"id": 29,
@@ -514,6 +523,9 @@
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "collection to compare to\n"
+											},
 											"type": {
 												"type": "reference",
 												"id": 3,
@@ -547,7 +559,7 @@
 							"sources": [
 								{
 									"fileName": "src/collection/index.ts",
-									"line": 21,
+									"line": 34,
 									"character": 8
 								}
 							],
@@ -558,6 +570,9 @@
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Throw away the elements which dont meet requirements"
+									},
 									"parameters": [
 										{
 											"id": 19,
@@ -565,6 +580,9 @@
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "function which filters\n"
+											},
 											"type": {
 												"type": "reflection",
 												"declaration": {
@@ -942,7 +960,7 @@
 							"sources": [
 								{
 									"fileName": "src/collection/index.ts",
-									"line": 4,
+									"line": 12,
 									"character": 8
 								}
 							],
@@ -953,6 +971,9 @@
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Get a random element from collection"
+									},
 									"parameters": [
 										{
 											"id": 16,
@@ -961,6 +982,9 @@
 											"kindString": "Parameter",
 											"flags": {
 												"isOptional": true
+											},
+											"comment": {
+												"text": "amount of elements to be retrieved\n"
 											},
 											"type": {
 												"type": "intrinsic",
@@ -1141,7 +1165,7 @@
 					"sources": [
 						{
 							"fileName": "src/collection/index.ts",
-							"line": 3,
+							"line": 6,
 							"character": 31
 						}
 					],
@@ -1209,6 +1233,9 @@
 					"kind": 128,
 					"kindString": "Class",
 					"flags": {},
+					"comment": {
+						"shortText": "Entry point for all of Discordoo. Manages modules and events"
+					},
 					"children": [
 						{
 							"id": 73,
@@ -1226,7 +1253,7 @@
 									"type": {
 										"type": "reference",
 										"id": 71,
-										"name": "Client"
+										"name": "default"
 									},
 									"inheritedFrom": {
 										"type": "reference",
@@ -1245,15 +1272,19 @@
 							"kind": 1024,
 							"kindString": "Property",
 							"flags": {},
+							"comment": {
+								"shortText": "Module manager of this client"
+							},
 							"sources": [
 								{
 									"fileName": "src/core/Client.ts",
-									"line": 7,
+									"line": 13,
 									"character": 9
 								}
 							],
 							"type": {
 								"type": "reference",
+								"id": 161,
 								"name": "default"
 							},
 							"defaultValue": "..."
@@ -1361,7 +1392,7 @@
 									"type": {
 										"type": "reference",
 										"id": 71,
-										"name": "Client"
+										"name": "default"
 									},
 									"inheritedFrom": {
 										"type": "reference",
@@ -1710,7 +1741,7 @@
 							"sources": [
 								{
 									"fileName": "src/core/Client.ts",
-									"line": 9,
+									"line": 20,
 									"character": 3
 								}
 							],
@@ -1721,6 +1752,9 @@
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Get a module"
+									},
 									"parameters": [
 										{
 											"id": 78,
@@ -1728,6 +1762,9 @@
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "module id\n"
+											},
 											"type": {
 												"type": "union",
 												"types": [
@@ -1752,6 +1789,7 @@
 											},
 											{
 												"type": "reference",
+												"id": 151,
 												"name": "default"
 											}
 										]
@@ -1768,7 +1806,7 @@
 							"sources": [
 								{
 									"fileName": "src/core/Client.ts",
-									"line": 13,
+									"line": 29,
 									"character": 8
 								}
 							],
@@ -1779,6 +1817,9 @@
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Get a module"
+									},
 									"parameters": [
 										{
 											"id": 81,
@@ -1786,6 +1827,9 @@
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "module id\n"
+											},
 											"type": {
 												"type": "union",
 												"types": [
@@ -1810,6 +1854,7 @@
 											},
 											{
 												"type": "reference",
+												"id": 151,
 												"name": "default"
 											}
 										]
@@ -1895,7 +1940,7 @@
 									"type": {
 										"type": "reference",
 										"id": 71,
-										"name": "Client"
+										"name": "default"
 									},
 									"inheritedFrom": {
 										"type": "reference",
@@ -1986,7 +2031,7 @@
 									"type": {
 										"type": "reference",
 										"id": 71,
-										"name": "Client"
+										"name": "default"
 									},
 									"inheritedFrom": {
 										"type": "reference",
@@ -2077,7 +2122,7 @@
 									"type": {
 										"type": "reference",
 										"id": 71,
-										"name": "Client"
+										"name": "default"
 									},
 									"inheritedFrom": {
 										"type": "reference",
@@ -2168,7 +2213,7 @@
 									"type": {
 										"type": "reference",
 										"id": 71,
-										"name": "Client"
+										"name": "default"
 									},
 									"inheritedFrom": {
 										"type": "reference",
@@ -2259,7 +2304,7 @@
 									"type": {
 										"type": "reference",
 										"id": 71,
-										"name": "Client"
+										"name": "default"
 									},
 									"inheritedFrom": {
 										"type": "reference",
@@ -2395,7 +2440,7 @@
 									"type": {
 										"type": "reference",
 										"id": 71,
-										"name": "Client"
+										"name": "default"
 									},
 									"inheritedFrom": {
 										"type": "reference",
@@ -2486,7 +2531,7 @@
 									"type": {
 										"type": "reference",
 										"id": 71,
-										"name": "Client"
+										"name": "default"
 									},
 									"inheritedFrom": {
 										"type": "reference",
@@ -2541,7 +2586,7 @@
 									"type": {
 										"type": "reference",
 										"id": 71,
-										"name": "Client"
+										"name": "default"
 									},
 									"inheritedFrom": {
 										"type": "reference",
@@ -2563,7 +2608,7 @@
 							"sources": [
 								{
 									"fileName": "src/core/Client.ts",
-									"line": 17,
+									"line": 38,
 									"character": 5
 								}
 							],
@@ -2574,6 +2619,9 @@
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Create a new module load group"
+									},
 									"parameters": [
 										{
 											"id": 84,
@@ -2583,10 +2631,14 @@
 											"flags": {
 												"isRest": true
 											},
+											"comment": {
+												"text": "modules in the group\n"
+											},
 											"type": {
 												"type": "array",
 												"elementType": {
 													"type": "reference",
+													"id": 151,
 													"name": "default"
 												}
 											}
@@ -2644,8 +2696,8 @@
 					"sources": [
 						{
 							"fileName": "src/core/Client.ts",
-							"line": 6,
-							"character": 12
+							"line": 9,
+							"character": 27
 						}
 					],
 					"extendedTypes": [
@@ -2663,11 +2715,420 @@
 					]
 				},
 				{
+					"id": 161,
+					"name": "ModuleManager",
+					"kind": 128,
+					"kindString": "Class",
+					"flags": {},
+					"comment": {
+						"shortText": "Module manager for Client",
+						"text": "Manages module loadment and their \"injection\"\n"
+					},
+					"children": [
+						{
+							"id": 162,
+							"name": "constructor",
+							"kind": 512,
+							"kindString": "Constructor",
+							"flags": {},
+							"signatures": [
+								{
+									"id": 163,
+									"name": "new ModuleManager",
+									"kind": 16384,
+									"kindString": "Constructor signature",
+									"flags": {},
+									"comment": {},
+									"parameters": [
+										{
+											"id": 164,
+											"name": "client",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"comment": {
+												"text": "client, into which modules will be loaded\n"
+											},
+											"type": {
+												"type": "reference",
+												"id": 71,
+												"name": "default"
+											}
+										}
+									],
+									"type": {
+										"type": "reference",
+										"id": 161,
+										"name": "default"
+									}
+								}
+							]
+						},
+						{
+							"id": 166,
+							"name": "_moduleLoadGroups",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isPrivate": true
+							},
+							"comment": {
+								"shortText": "Array of load groups"
+							},
+							"sources": [
+								{
+									"fileName": "src/core/modules/ModuleManager.ts",
+									"line": 21,
+									"character": 27
+								}
+							],
+							"type": {
+								"type": "array",
+								"elementType": {
+									"type": "array",
+									"elementType": {
+										"type": "reference",
+										"id": 151,
+										"name": "default"
+									}
+								}
+							},
+							"defaultValue": "..."
+						},
+						{
+							"id": 167,
+							"name": "client",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"comment": {
+								"shortText": "Client which uses this manager"
+							},
+							"sources": [
+								{
+									"fileName": "src/core/modules/ModuleManager.ts",
+									"line": 26,
+									"character": 8
+								}
+							],
+							"type": {
+								"type": "reference",
+								"id": 71,
+								"name": "default"
+							}
+						},
+						{
+							"id": 165,
+							"name": "modules",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"comment": {
+								"shortText": "Modules loaded by this manager"
+							},
+							"sources": [
+								{
+									"fileName": "src/core/modules/ModuleManager.ts",
+									"line": 14,
+									"character": 9
+								}
+							],
+							"type": {
+								"type": "reference",
+								"id": 3,
+								"typeArguments": [
+									{
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "string"
+											},
+											{
+												"type": "intrinsic",
+												"name": "symbol"
+											}
+										]
+									},
+									{
+										"type": "reference",
+										"id": 151,
+										"name": "default"
+									}
+								],
+								"name": "default"
+							},
+							"defaultValue": "..."
+						},
+						{
+							"id": 168,
+							"name": "createLoadGroup",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "src/core/modules/ModuleManager.ts",
+									"line": 44,
+									"character": 17
+								}
+							],
+							"signatures": [
+								{
+									"id": 169,
+									"name": "createLoadGroup",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"comment": {
+										"shortText": "Creates a new load group",
+										"text": "Load group is a bunch of modules, which will be loaded together sequentially.\nGroups can be either loaded in parallel or sequentially\n"
+									},
+									"parameters": [
+										{
+											"id": 170,
+											"name": "modules",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isRest": true
+											},
+											"comment": {
+												"text": "modules to add to a new load group\n"
+											},
+											"type": {
+												"type": "array",
+												"elementType": {
+													"type": "reference",
+													"id": 151,
+													"name": "default"
+												}
+											}
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "void"
+									}
+								}
+							]
+						},
+						{
+							"id": 177,
+							"name": "getModule",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "src/core/modules/ModuleManager.ts",
+									"line": 89,
+									"character": 11
+								}
+							],
+							"signatures": [
+								{
+									"id": 178,
+									"name": "getModule",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"comment": {
+										"shortText": "Retrieve a module"
+									},
+									"parameters": [
+										{
+											"id": 179,
+											"name": "id",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"comment": {
+												"text": "module's id\n"
+											},
+											"type": {
+												"type": "union",
+												"types": [
+													{
+														"type": "intrinsic",
+														"name": "string"
+													},
+													{
+														"type": "intrinsic",
+														"name": "symbol"
+													}
+												]
+											}
+										}
+									],
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "undefined"
+											},
+											{
+												"type": "reference",
+												"id": 151,
+												"name": "default"
+											}
+										]
+									}
+								}
+							]
+						},
+						{
+							"id": 174,
+							"name": "init",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "src/core/modules/ModuleManager.ts",
+									"line": 62,
+									"character": 12
+								}
+							],
+							"signatures": [
+								{
+									"id": 175,
+									"name": "init",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"comment": {
+										"shortText": "Initialize all modules"
+									},
+									"parameters": [
+										{
+											"id": 176,
+											"name": "async",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"comment": {
+												"text": "determines if load groups shall be loaded in parallel\n"
+											},
+											"type": {
+												"type": "intrinsic",
+												"name": "boolean"
+											},
+											"defaultValue": "false"
+										}
+									],
+									"type": {
+										"type": "reference",
+										"typeArguments": [
+											{
+												"type": "intrinsic",
+												"name": "void"
+											}
+										],
+										"name": "Promise"
+									}
+								}
+							]
+						},
+						{
+							"id": 171,
+							"name": "use",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "src/core/modules/ModuleManager.ts",
+									"line": 53,
+									"character": 5
+								}
+							],
+							"signatures": [
+								{
+									"id": 172,
+									"name": "use",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"comment": {
+										"shortText": "An alias to ModuleManager#createLoadGroup"
+									},
+									"parameters": [
+										{
+											"id": 173,
+											"name": "modules",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {
+												"isRest": true
+											},
+											"comment": {
+												"text": "modules to add to a new load group\n"
+											},
+											"type": {
+												"type": "array",
+												"elementType": {
+													"type": "reference",
+													"id": 151,
+													"name": "default"
+												}
+											}
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "void"
+									}
+								}
+							]
+						}
+					],
+					"groups": [
+						{
+							"title": "Constructors",
+							"kind": 512,
+							"children": [
+								162
+							]
+						},
+						{
+							"title": "Properties",
+							"kind": 1024,
+							"children": [
+								166,
+								167,
+								165
+							]
+						},
+						{
+							"title": "Methods",
+							"kind": 2048,
+							"children": [
+								168,
+								177,
+								174,
+								171
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "src/core/modules/ModuleManager.ts",
+							"line": 10,
+							"character": 34
+						}
+					]
+				},
+				{
 					"id": 147,
 					"name": "ClientEventHandlers",
 					"kind": 256,
 					"kindString": "Interface",
 					"flags": {},
+					"comment": {
+						"shortText": "Client events"
+					},
 					"children": [
 						{
 							"id": 148,
@@ -2675,10 +3136,13 @@
 							"kind": 1024,
 							"kindString": "Property",
 							"flags": {},
+							"comment": {
+								"shortText": "Emitted once the client is ready"
+							},
 							"sources": [
 								{
 									"fileName": "src/core/ClientEventHandlers.ts",
-									"line": 2,
+									"line": 8,
 									"character": 7
 								}
 							],
@@ -2719,8 +3183,226 @@
 					"sources": [
 						{
 							"fileName": "src/core/ClientEventHandlers.ts",
-							"line": 1,
+							"line": 4,
 							"character": 44
+						}
+					]
+				},
+				{
+					"id": 151,
+					"name": "Module",
+					"kind": 256,
+					"kindString": "Interface",
+					"flags": {},
+					"comment": {
+						"shortText": "Represents a module",
+						"text": "Not meant to be used by regular users, just for library's and third-party developers\n"
+					},
+					"children": [
+						{
+							"id": 157,
+							"name": "destroyed",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isOptional": true
+							},
+							"comment": {
+								"shortText": "Function, which will be emitted once module is destroyed"
+							},
+							"sources": [
+								{
+									"fileName": "src/core/modules/Module.ts",
+									"line": 21,
+									"character": 11
+								}
+							],
+							"type": {
+								"type": "reflection",
+								"declaration": {
+									"id": 158,
+									"name": "__type",
+									"kind": 65536,
+									"kindString": "Type literal",
+									"flags": {},
+									"signatures": [
+										{
+											"id": 159,
+											"name": "__type",
+											"kind": 4096,
+											"kindString": "Call signature",
+											"flags": {},
+											"type": {
+												"type": "union",
+												"types": [
+													{
+														"type": "intrinsic",
+														"name": "void"
+													},
+													{
+														"type": "reference",
+														"typeArguments": [
+															{
+																"type": "intrinsic",
+																"name": "void"
+															}
+														],
+														"name": "Promise"
+													}
+												]
+											}
+										}
+									]
+								}
+							}
+						},
+						{
+							"id": 160,
+							"name": "id",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"comment": {
+								"shortText": "Unique id for this module."
+							},
+							"sources": [
+								{
+									"fileName": "src/core/modules/Module.ts",
+									"line": 25,
+									"character": 4
+								}
+							],
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "intrinsic",
+										"name": "string"
+									},
+									{
+										"type": "intrinsic",
+										"name": "symbol"
+									}
+								]
+							}
+						},
+						{
+							"id": 153,
+							"name": "init",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isOptional": true
+							},
+							"comment": {
+								"shortText": "Function, which will be emitted once module was initialized on client's startup",
+								"tags": [
+									{
+										"tag": "param",
+										"text": "\n",
+										"param": "client"
+									}
+								]
+							},
+							"sources": [
+								{
+									"fileName": "src/core/modules/Module.ts",
+									"line": 17,
+									"character": 6
+								}
+							],
+							"type": {
+								"type": "reflection",
+								"declaration": {
+									"id": 154,
+									"name": "__type",
+									"kind": 65536,
+									"kindString": "Type literal",
+									"flags": {},
+									"signatures": [
+										{
+											"id": 155,
+											"name": "__type",
+											"kind": 4096,
+											"kindString": "Call signature",
+											"flags": {},
+											"parameters": [
+												{
+													"id": 156,
+													"name": "client",
+													"kind": 32768,
+													"kindString": "Parameter",
+													"flags": {},
+													"type": {
+														"type": "reference",
+														"id": 71,
+														"name": "default"
+													}
+												}
+											],
+											"type": {
+												"type": "union",
+												"types": [
+													{
+														"type": "intrinsic",
+														"name": "void"
+													},
+													{
+														"type": "reference",
+														"typeArguments": [
+															{
+																"type": "intrinsic",
+																"name": "void"
+															}
+														],
+														"name": "Promise"
+													}
+												]
+											}
+										}
+									]
+								}
+							}
+						},
+						{
+							"id": 152,
+							"name": "initialized",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"comment": {
+								"shortText": "Whether the module was initialized"
+							},
+							"sources": [
+								{
+									"fileName": "src/core/modules/Module.ts",
+									"line": 12,
+									"character": 13
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "boolean"
+							}
+						}
+					],
+					"groups": [
+						{
+							"title": "Properties",
+							"kind": 1024,
+							"children": [
+								157,
+								160,
+								153,
+								152
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "src/core/modules/Module.ts",
+							"line": 8,
+							"character": 31
 						}
 					]
 				}
@@ -2730,14 +3412,16 @@
 					"title": "Classes",
 					"kind": 128,
 					"children": [
-						71
+						71,
+						161
 					]
 				},
 				{
 					"title": "Interfaces",
 					"kind": 256,
 					"children": [
-						147
+						147,
+						151
 					]
 				}
 			],
