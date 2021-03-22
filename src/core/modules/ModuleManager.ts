@@ -2,11 +2,36 @@ import Client from '../Client'
 import Collection from '../../collection'
 import Module from './Module'
 
+/**
+ * Module manager for Client
+ *
+ * Manages module loadment and their "injection"
+ */
 export default class ModuleManager {
+  /**
+   * Modules loaded by this manager
+   */
   modules: Collection<string | symbol, Module> = new Collection
+
+  /**
+   * Array of load groups
+   *
+   * @private
+   */
   private _moduleLoadGroups: (Module[])[] = []
 
-  constructor(public client: Client) {}
+  /**
+   * Client which uses this manager
+   */
+  client: Client
+
+  /**
+   *
+   * @param client - client, into which modules will be loaded
+   */
+  constructor(client: Client) {
+    this.client = client
+  }
 
   /**
    * Creates a new load group

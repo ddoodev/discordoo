@@ -3,21 +3,39 @@ import { TypedEmitter } from 'tiny-typed-emitter'
 import ModuleManager from './modules/ModuleManager'
 import Module from './modules/Module'
 
-class Client extends TypedEmitter<ClientEventHandlers> {
+/**
+ * Entry point for all of Discordoo. Manages modules and events
+ */
+export default class Client extends TypedEmitter<ClientEventHandlers> {
+  /**
+   * Module manager of this client
+   */
   modules: ModuleManager = new ModuleManager(this)
 
+  /**
+   * Get a module
+   *
+   * @param id - module id
+   */
   m(id: string | symbol): Module | null {
     return this.modules.getModule(id) ?? null
   }
 
+  /**
+   * Get a module
+   *
+   * @param id - module id
+   */
   module(id: string | symbol): Module | null {
     return this.modules.getModule(id) ?? null
   }
 
+  /**
+   * Create a new module load group
+   *
+   * @param modules - modules in the group
+   */
   use(...modules: Module[]) {
     this.modules.use(...modules)
   }
 }
-
-// exporting this one seperately because yes
-export default Client
