@@ -5,11 +5,15 @@ const args = process.argv.slice(2)
 const commands = load()
 
 function showHelp() {
-  console.log('Discordoo dev tools help')
+  console.log('\nDiscordoo developer\'s tools')
+  console.log('Usage: npm run utils <command-name> [options]')
+  console.log('\nAvailable commands:')
 
   for (const cmd of commands) {
     console.log(`\t${cmd.help.name} ${cmd.help.usage} - ${cmd.help.description}`)
   }
+
+  console.log('\nEnjoy contributing!')
 
   process.exit()
 }
