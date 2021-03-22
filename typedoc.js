@@ -1,15 +1,7 @@
-const entryPoints = [
-  'cache',
-  'collection',
-  'core',
-  'main',
-  'rest',
-  'util',
-  'ws'
-]
+const { packages } = require('./discordoo.json')
 
 module.exports = {
-  entryPoints: entryPoints.map(e => `./src/${e}/index.ts`),
+  entryPoints: packages.map(e => `./src/${e}/index.ts`),
   json: './docs/docs.json',
   readme: './README.md'
 }
