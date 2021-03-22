@@ -13,12 +13,12 @@ export default class Client extends TypedEmitter<ClientEventHandlers> {
   modules: ModuleManager = new ModuleManager(this)
 
   /**
-   * Get a module
+   * Get a module. Alias for module(id).
    *
    * @param id - module id
    */
   m(id: string | symbol): Module | null {
-    return this.modules.getModule(id) ?? null
+    return this.module(id)
   }
 
   /**
