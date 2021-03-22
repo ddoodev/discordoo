@@ -15,7 +15,6 @@ function showHelp() {
 }
 
 if (!args[0] || args[0] === 'help') {
-  console.log('a')
   showHelp()
 }
 
