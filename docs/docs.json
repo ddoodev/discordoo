@@ -1753,7 +1753,7 @@
 									"kindString": "Call signature",
 									"flags": {},
 									"comment": {
-										"shortText": "Get a module"
+										"shortText": "Get a module. Alias for module(id)."
 									},
 									"parameters": [
 										{
