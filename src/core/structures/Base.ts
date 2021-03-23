@@ -1,7 +1,7 @@
 /**
  * Base structure for everything which has snowflake
  */
-import getDateFromSnowflake from '../../util/getDateFromSnowflake'
+import idToDate from '../../util/idToDate'
 
 export default class Base {
   id: string
@@ -15,6 +15,10 @@ export default class Base {
   }
 
   get createdAt() {
-    return getDateFromSnowflake(this.id)
+    return idToDate(this.id)
+  }
+
+  get createdTimestamp() {
+    return this.createdAt.getDate()
   }
 }

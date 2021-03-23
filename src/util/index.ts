@@ -1,5 +1,5 @@
-import getDateFromSnowflake from './getDateFromSnowflake'
+import idToDate from './idToDate'
 
 export default {
-  getDateFromSnowflake
+  idToDate: idToDate
 }
