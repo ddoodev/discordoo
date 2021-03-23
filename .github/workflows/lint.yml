@@ -1,4 +1,4 @@
-name: Lint
+name: Linting
 
 on: push
 
@@ -19,7 +19,7 @@ jobs:
       - name: Install Node.js dependencies
         run: npm i
 
-      - name: Run linters
+      - name: lint
         uses: wearerequired/lint-action@v1
         with:
           eslint: true
