@@ -3471,7 +3471,7 @@
 							"children": [
 								{
 									"id": 72,
-									"name": "getDateFromSnowflake",
+									"name": "idToDate",
 									"kind": 1024,
 									"kindString": "Property",
 									"flags": {},
@@ -3493,7 +3493,7 @@
 													"parameters": [
 														{
 															"id": 75,
-															"name": "snowflake",
+															"name": "id",
 															"kind": 32768,
 															"kindString": "Parameter",
 															"flags": {},
@@ -3510,7 +3510,8 @@
 												}
 											]
 										}
-									}
+									},
+									"defaultValue": "..."
 								}
 							],
 							"groups": [
