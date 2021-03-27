@@ -17,7 +17,7 @@ jobs:
           npm run build
       - name: Create local changes
         run: |
-          mkdir -p ./docs
+          rm -rf docs
           npm run docs
       - name: Commit files
         run: |
