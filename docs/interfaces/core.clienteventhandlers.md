@@ -26,6 +26,6 @@ Emitted once the client is ready
 
 **Returns:** *void*
 
-Defined in: [src/core/ClientEventHandlers.ts:8](https://github.com/Discordoo/discordoo/blob/e040d45/src/core/ClientEventHandlers.ts#L8)
+Defined in: [src/core/ClientEventHandlers.ts:8](https://github.com/Discordoo/discordoo/blob/11a6501/src/core/ClientEventHandlers.ts#L8)
 
-Defined in: [src/core/ClientEventHandlers.ts:8](https://github.com/Discordoo/discordoo/blob/e040d45/src/core/ClientEventHandlers.ts#L8)
+Defined in: [src/core/ClientEventHandlers.ts:8](https://github.com/Discordoo/discordoo/blob/11a6501/src/core/ClientEventHandlers.ts#L8)

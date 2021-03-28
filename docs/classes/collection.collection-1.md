@@ -158,7 +158,7 @@ Create a new collection based on this one
 
 **Returns:** [*Collection*](collection.collection-1.md)<K, V\>
 
-Defined in: [src/collection/index.ts:43](https://github.com/Discordoo/discordoo/blob/e040d45/src/collection/index.ts#L43)
+Defined in: [src/collection/index.ts:43](https://github.com/Discordoo/discordoo/blob/11a6501/src/collection/index.ts#L43)
 
 ___
 
@@ -208,7 +208,7 @@ Name | Type | Description |
 
 **Returns:** *boolean*
 
-Defined in: [src/collection/index.ts:52](https://github.com/Discordoo/discordoo/blob/e040d45/src/collection/index.ts#L52)
+Defined in: [src/collection/index.ts:52](https://github.com/Discordoo/discordoo/blob/11a6501/src/collection/index.ts#L52)
 
 ___
 
@@ -226,7 +226,7 @@ Name | Type | Description |
 
 **Returns:** [*Collection*](collection.collection-1.md)<K, V\>
 
-Defined in: [src/collection/index.ts:34](https://github.com/Discordoo/discordoo/blob/e040d45/src/collection/index.ts#L34)
+Defined in: [src/collection/index.ts:34](https://github.com/Discordoo/discordoo/blob/11a6501/src/collection/index.ts#L34)
 
 ___
 
@@ -313,7 +313,7 @@ Name | Type | Description |
 
 **Returns:** V \| V[]
 
-Defined in: [src/collection/index.ts:12](https://github.com/Discordoo/discordoo/blob/e040d45/src/collection/index.ts#L12)
+Defined in: [src/collection/index.ts:12](https://github.com/Discordoo/discordoo/blob/11a6501/src/collection/index.ts#L12)
 
 ___
 

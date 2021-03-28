@@ -13,3 +13,7 @@
 
 - [ClientEventHandlers](../interfaces/core.clienteventhandlers.md)
 - [Module](../interfaces/core.module.md)
+- [RequestBuilder](../interfaces/core.requestbuilder.md)
+- [RequestOptions](../interfaces/core.requestoptions.md)
+- [RestModule](../interfaces/core.restmodule.md)
+- [RestModuleEvents](../interfaces/core.restmoduleevents.md)

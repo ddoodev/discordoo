@@ -62,7 +62,7 @@ Inherited from: void
 
 Module manager of this client
 
-Defined in: [src/core/Client.ts:13](https://github.com/Discordoo/discordoo/blob/e040d45/src/core/Client.ts#L13)
+Defined in: [src/core/Client.ts:13](https://github.com/Discordoo/discordoo/blob/11a6501/src/core/Client.ts#L13)
 
 ___
 
@@ -212,7 +212,7 @@ Name | Type | Description |
 
 **Returns:** *null* \| [*Module*](../interfaces/core.module.md)
 
-Defined in: [src/core/Client.ts:20](https://github.com/Discordoo/discordoo/blob/e040d45/src/core/Client.ts#L20)
+Defined in: [src/core/Client.ts:20](https://github.com/Discordoo/discordoo/blob/11a6501/src/core/Client.ts#L20)
 
 ___
 
@@ -230,7 +230,7 @@ Name | Type | Description |
 
 **Returns:** *null* \| [*Module*](../interfaces/core.module.md)
 
-Defined in: [src/core/Client.ts:29](https://github.com/Discordoo/discordoo/blob/e040d45/src/core/Client.ts#L29)
+Defined in: [src/core/Client.ts:29](https://github.com/Discordoo/discordoo/blob/11a6501/src/core/Client.ts#L29)
 
 ___
 
@@ -458,4 +458,4 @@ Name | Type | Description |
 
 **Returns:** *void*
 
-Defined in: [src/core/Client.ts:38](https://github.com/Discordoo/discordoo/blob/e040d45/src/core/Client.ts#L38)
+Defined in: [src/core/Client.ts:38](https://github.com/Discordoo/discordoo/blob/11a6501/src/core/Client.ts#L38)

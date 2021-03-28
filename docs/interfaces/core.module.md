@@ -8,6 +8,12 @@ Represents a module
 
 Not meant to be used by regular users, just for library's and third-party developers
 
+## Hierarchy
+
+* **Module**
+
+  ↳ [*RestModule*](core.restmodule.md)
+
 ## Table of contents
 
 ### Properties
@@ -31,9 +37,9 @@ Function, which will be emitted once module is destroyed
 
 **Returns:** *void* \| *Promise*<void\>
 
-Defined in: [src/core/modules/Module.ts:21](https://github.com/Discordoo/discordoo/blob/e040d45/src/core/modules/Module.ts#L21)
+Defined in: [src/core/modules/Module.ts:21](https://github.com/Discordoo/discordoo/blob/11a6501/src/core/modules/Module.ts#L21)
 
-Defined in: [src/core/modules/Module.ts:21](https://github.com/Discordoo/discordoo/blob/e040d45/src/core/modules/Module.ts#L21)
+Defined in: [src/core/modules/Module.ts:21](https://github.com/Discordoo/discordoo/blob/11a6501/src/core/modules/Module.ts#L21)
 
 ___
 
@@ -43,7 +49,7 @@ ___
 
 Unique id for this module.
 
-Defined in: [src/core/modules/Module.ts:25](https://github.com/Discordoo/discordoo/blob/e040d45/src/core/modules/Module.ts#L25)
+Defined in: [src/core/modules/Module.ts:25](https://github.com/Discordoo/discordoo/blob/11a6501/src/core/modules/Module.ts#L25)
 
 ___
 
@@ -67,9 +73,9 @@ Name | Type |
 
 **Returns:** *void* \| *Promise*<void\>
 
-Defined in: [src/core/modules/Module.ts:17](https://github.com/Discordoo/discordoo/blob/e040d45/src/core/modules/Module.ts#L17)
+Defined in: [src/core/modules/Module.ts:17](https://github.com/Discordoo/discordoo/blob/11a6501/src/core/modules/Module.ts#L17)
 
-Defined in: [src/core/modules/Module.ts:17](https://github.com/Discordoo/discordoo/blob/e040d45/src/core/modules/Module.ts#L17)
+Defined in: [src/core/modules/Module.ts:17](https://github.com/Discordoo/discordoo/blob/11a6501/src/core/modules/Module.ts#L17)
 
 ___
 
@@ -79,4 +85,4 @@ ___
 
 Whether the module was initialized
 
-Defined in: [src/core/modules/Module.ts:12](https://github.com/Discordoo/discordoo/blob/e040d45/src/core/modules/Module.ts#L12)
+Defined in: [src/core/modules/Module.ts:12](https://github.com/Discordoo/discordoo/blob/11a6501/src/core/modules/Module.ts#L12)

@@ -41,7 +41,7 @@ Name | Type | Description |
 
 **Returns:** [*ModuleManager*](core.modulemanager.md)
 
-Defined in: [src/core/modules/ModuleManager.ts:26](https://github.com/Discordoo/discordoo/blob/e040d45/src/core/modules/ModuleManager.ts#L26)
+Defined in: [src/core/modules/ModuleManager.ts:26](https://github.com/Discordoo/discordoo/blob/11a6501/src/core/modules/ModuleManager.ts#L26)
 
 ## Properties
 
@@ -51,7 +51,7 @@ Defined in: [src/core/modules/ModuleManager.ts:26](https://github.com/Discordoo/
 
 Array of load groups
 
-Defined in: [src/core/modules/ModuleManager.ts:21](https://github.com/Discordoo/discordoo/blob/e040d45/src/core/modules/ModuleManager.ts#L21)
+Defined in: [src/core/modules/ModuleManager.ts:21](https://github.com/Discordoo/discordoo/blob/11a6501/src/core/modules/ModuleManager.ts#L21)
 
 ___
 
@@ -61,7 +61,7 @@ ___
 
 Client which uses this manager
 
-Defined in: [src/core/modules/ModuleManager.ts:26](https://github.com/Discordoo/discordoo/blob/e040d45/src/core/modules/ModuleManager.ts#L26)
+Defined in: [src/core/modules/ModuleManager.ts:26](https://github.com/Discordoo/discordoo/blob/11a6501/src/core/modules/ModuleManager.ts#L26)
 
 ___
 
@@ -71,7 +71,7 @@ ___
 
 Modules loaded by this manager
 
-Defined in: [src/core/modules/ModuleManager.ts:14](https://github.com/Discordoo/discordoo/blob/e040d45/src/core/modules/ModuleManager.ts#L14)
+Defined in: [src/core/modules/ModuleManager.ts:14](https://github.com/Discordoo/discordoo/blob/11a6501/src/core/modules/ModuleManager.ts#L14)
 
 ## Methods
 
@@ -92,7 +92,7 @@ Name | Type | Description |
 
 **Returns:** *void*
 
-Defined in: [src/core/modules/ModuleManager.ts:44](https://github.com/Discordoo/discordoo/blob/e040d45/src/core/modules/ModuleManager.ts#L44)
+Defined in: [src/core/modules/ModuleManager.ts:44](https://github.com/Discordoo/discordoo/blob/11a6501/src/core/modules/ModuleManager.ts#L44)
 
 ___
 
@@ -110,7 +110,7 @@ Name | Type | Description |
 
 **Returns:** *undefined* \| [*Module*](../interfaces/core.module.md)
 
-Defined in: [src/core/modules/ModuleManager.ts:89](https://github.com/Discordoo/discordoo/blob/e040d45/src/core/modules/ModuleManager.ts#L89)
+Defined in: [src/core/modules/ModuleManager.ts:89](https://github.com/Discordoo/discordoo/blob/11a6501/src/core/modules/ModuleManager.ts#L89)
 
 ___
 
@@ -128,7 +128,7 @@ Name | Type | Default value | Description |
 
 **Returns:** *Promise*<void\>
 
-Defined in: [src/core/modules/ModuleManager.ts:62](https://github.com/Discordoo/discordoo/blob/e040d45/src/core/modules/ModuleManager.ts#L62)
+Defined in: [src/core/modules/ModuleManager.ts:62](https://github.com/Discordoo/discordoo/blob/11a6501/src/core/modules/ModuleManager.ts#L62)
 
 ___
 
@@ -146,4 +146,4 @@ Name | Type | Description |
 
 **Returns:** *void*
 
-Defined in: [src/core/modules/ModuleManager.ts:53](https://github.com/Discordoo/discordoo/blob/e040d45/src/core/modules/ModuleManager.ts#L53)
+Defined in: [src/core/modules/ModuleManager.ts:53](https://github.com/Discordoo/discordoo/blob/11a6501/src/core/modules/ModuleManager.ts#L53)
