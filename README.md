@@ -1,24 +1,24 @@
 ![ddoologo_v1 5](https://user-images.githubusercontent.com/44965055/113192570-98562000-9267-11eb-966f-ea562bbb1f85.png)
-<div style="text-align: center;">
+<p align="center">
 <b>Discord bots. Simplified and boosted 🚀</b>
-</div>
+</p>
 
-<div style="text-align: center">
+<p align="center">
   <a href="https://discord.gg/TFZtXeYVM5">
     <img 
       src="https://img.shields.io/discord/811663819721539674?color=purple&label=Discord&style=for-the-badge" 
       alt="Online"
     >
   </a>
-</div> 
+</p> 
 
-<div style="text-align: center">
+<p align="center">
 <a href="https://discordoo.xyz/api">API Docs</a>
 <span> · </span>
 <a href="https://discordoo.xyz/guide">Guide</a>
 <span> · </span>
 <a href="https://github.com/Discordoo/discordoo/blob/master/CONTRIBUTING.md">Contribute</a>
-</div> 
+</p> 
 
 
 <hr>
