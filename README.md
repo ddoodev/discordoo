@@ -1,5 +1,5 @@
 <p align="center">
-<img width="300" src="https://user-images.githubusercontent.com/44965055/113192570-98562000-9267-11eb-966f-ea562bbb1f85.png" alt="">
+<img width="420" src="https://user-images.githubusercontent.com/44965055/113192570-98562000-9267-11eb-966f-ea562bbb1f85.png" alt="">
 </p>
 <p align="center">
 <b>Discord bots. Simplified and boosted 🚀</b>
