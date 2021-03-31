@@ -47,8 +47,10 @@
     "utils": "node scripts/root.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "contributors": [
+    "All the amazing people from https://github.com/Discordoo/discordoo/graphs/contributors"
+  ],
+  "license": "MIT",
   "devDependencies": {
     "@commitlint/cli": "^12.0.1",
     "@commitlint/config-conventional": "^12.0.1",
