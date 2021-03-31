@@ -1,4 +1,4 @@
-# Discordoo
+![ddoologo_v1 5](https://user-images.githubusercontent.com/44965055/113192570-98562000-9267-11eb-966f-ea562bbb1f85.png)
 
 ## Table of contents
 - [About](#about)
