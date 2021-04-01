@@ -46,13 +46,13 @@ export default class Client extends TypedEmitter<ClientEventHandlers> {
   }
 
   /**
-   * Set the {@link RESTProvider} of this client
+   * Set the {@link RESTProvider} to be used by this client
    *
    * Bounds it's context to {@link Client}
    *
-   * @param provider - provider to set
+   * @param provider - function, that returns desired RESTProvider
    */
-  useRESTProvider(provider: RESTProvider) {
-    this.rest = provider.bind(this)
+  useRESTProvider(provider: (client: Client) => RESTProvider) {
+    this.rest = provider(this).bind(this)
   }
 }
