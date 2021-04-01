@@ -37,6 +37,8 @@ It provides a set of tools, like easy-to-use project generator, official framewo
 Discordoo is completely free and open-source! It is licensed under MIT license, so you can use it as long as you want to 
 and how you want to.
 
+At the moment, project is maintained by [@kislball](https://github.com/kislball) and by [@Mirdukkk](https://github.com/mirdukkk)
+
 ## Getting started
 
 ### Creating a project
