@@ -41,13 +41,20 @@ export default class RESTRequestBuilder implements RequestBuilder {
     }
   }
 
-  /** Add query data */
+  /**
+   * Add query data
+   * @param k - key
+   * @param v - value
+   */
   query(k: string, v: string): RequestBuilder {
     this.queryStack[k] = v
     return this
   }
 
-  /** Add part(s) to the URI */
+  /**
+   * Add part(s) to the URI
+   * @param paths - paths
+   */
   url(...paths: string[]): RequestBuilder {
     this.stack.push(...paths)
     return this

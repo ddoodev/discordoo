@@ -1,12 +1,8 @@
 import idToDate from '../../util/idToDate'
 
-/**
- * Base structure for everything which has snowflake
- */
+/**  Base structure for everything which has snowflake */
 export default class Base {
-  /**
-   * Unique id
-   */
+  /** Unique id */
   id: string
 
   /**
@@ -18,23 +14,18 @@ export default class Base {
 
   /**
    * Check, if two entities are equal
-   *
    * @param compareTo - entity to compare to
    */
   equal(compareTo: Base) {
     return compareTo.id === this.id
   }
 
-  /**
-   * Get creation date
-   */
+  /** Get creation date */
   get createdAt() {
     return idToDate(this.id)
   }
 
-  /**
-   * Unix timestamp
-   */
+  /** Unix timestamp */
   get createdTimestamp() {
     return this.createdAt.getDate()
   }

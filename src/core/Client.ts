@@ -22,7 +22,6 @@ export default class Client extends TypedEmitter<ClientEventHandlers> {
 
   /**
    * Get a module. Alias for module(id).
-   *
    * @param id - module id
    */
   m(id: string | symbol): Module | null {
@@ -31,7 +30,6 @@ export default class Client extends TypedEmitter<ClientEventHandlers> {
 
   /**
    * Get a module
-   *
    * @param id - module id
    */
   module(id: string | symbol): Module | null {
@@ -40,7 +38,6 @@ export default class Client extends TypedEmitter<ClientEventHandlers> {
 
   /**
    * Create a new module load group
-   *
    * @param modules - modules in the group
    */
   use(...modules: Module[]) {
@@ -49,9 +46,7 @@ export default class Client extends TypedEmitter<ClientEventHandlers> {
 
   /**
    * Set the {@link RESTProvider} to be used by this client
-   *
    * Bounds it's context to {@link Client}
-   *
    * @param provider - function, that returns desired RESTProvider
    */
   useRESTProvider(provider: (client: Client) => RESTProvider) {

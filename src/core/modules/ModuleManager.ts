@@ -4,7 +4,6 @@ import Module from './Module'
 
 /**
  * Module manager for Client
- *
  * Manages module loadment and their "injection"
  */
 export default class ModuleManager {
@@ -13,20 +12,13 @@ export default class ModuleManager {
    */
   modules: Collection<string | symbol, Module> = new Collection
 
-  /**
-   * Array of load groups
-   *
-   * @private
-   */
+  /** Array of load groups */
   private _moduleLoadGroups: (Module[])[] = []
 
-  /**
-   * Client which uses this manager
-   */
+  /** Client which uses this manager */
   client: Client
 
   /**
-   *
    * @param client - client, into which modules will be loaded
    */
   constructor(client: Client) {
@@ -47,7 +39,6 @@ export default class ModuleManager {
 
   /**
    * An alias to ModuleManager#createLoadGroup
-   *
    * @param modules - modules to add to a new load group
    */
   use(...modules: Module[]) {
@@ -56,7 +47,6 @@ export default class ModuleManager {
 
   /**
    * Initialize all modules
-   *
    * @param async - determines if load groups shall be loaded in parallel
    */
   async init(async = false) { // using false by default to avoid some issues
@@ -83,7 +73,6 @@ export default class ModuleManager {
 
   /**
    * Retrieve a module
-   *
    * @param id - module's id
    */
   getModule(id: string | symbol) {
