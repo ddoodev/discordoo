@@ -364,7 +364,7 @@
 							"sources": [
 								{
 									"fileName": "src/collection/index.ts",
-									"line": 43,
+									"line": 37,
 									"character": 7
 								}
 							],
@@ -502,7 +502,7 @@
 							"sources": [
 								{
 									"fileName": "src/collection/index.ts",
-									"line": 52,
+									"line": 45,
 									"character": 7
 								}
 							],
@@ -559,7 +559,7 @@
 							"sources": [
 								{
 									"fileName": "src/collection/index.ts",
-									"line": 34,
+									"line": 30,
 									"character": 8
 								}
 							],
@@ -571,7 +571,7 @@
 									"kindString": "Call signature",
 									"flags": {},
 									"comment": {
-										"shortText": "Throw away the elements which dont meet requirements"
+										"shortText": "Filter out the elements which don't meet requirements"
 									},
 									"parameters": [
 										{
@@ -960,7 +960,7 @@
 							"sources": [
 								{
 									"fileName": "src/collection/index.ts",
-									"line": 12,
+									"line": 9,
 									"character": 8
 								}
 							],
@@ -1165,7 +1165,7 @@
 					"sources": [
 						{
 							"fileName": "src/collection/index.ts",
-							"line": 6,
+							"line": 4,
 							"character": 23
 						}
 					],
@@ -1809,7 +1809,7 @@
 							"sources": [
 								{
 									"fileName": "src/core/Client.ts",
-									"line": 28,
+									"line": 27,
 									"character": 3
 								}
 							],
@@ -1874,7 +1874,7 @@
 							"sources": [
 								{
 									"fileName": "src/core/Client.ts",
-									"line": 37,
+									"line": 35,
 									"character": 8
 								}
 							],
@@ -2676,7 +2676,7 @@
 							"sources": [
 								{
 									"fileName": "src/core/Client.ts",
-									"line": 46,
+									"line": 43,
 									"character": 5
 								}
 							],
@@ -2728,7 +2728,7 @@
 							"sources": [
 								{
 									"fileName": "src/core/Client.ts",
-									"line": 57,
+									"line": 52,
 									"character": 17
 								}
 							],
@@ -2740,8 +2740,7 @@
 									"kindString": "Call signature",
 									"flags": {},
 									"comment": {
-										"shortText": "Set the {@link RESTProvider} to be used by this client",
-										"text": "Bounds it's context to {@link Client}\n"
+										"shortText": "Set the {@link RESTProvider} to be used by this client\nBounds it's context to {@link Client}"
 									},
 									"parameters": [
 										{
@@ -2947,8 +2946,7 @@
 					"kindString": "Class",
 					"flags": {},
 					"comment": {
-						"shortText": "Module manager for Client",
-						"text": "Manages module loadment and their \"injection\"\n"
+						"shortText": "Module manager for Client\nManages module loadment and their \"injection\""
 					},
 					"children": [
 						{
@@ -3004,7 +3002,7 @@
 							"sources": [
 								{
 									"fileName": "src/core/modules/ModuleManager.ts",
-									"line": 21,
+									"line": 16,
 									"character": 27
 								}
 							],
@@ -3033,7 +3031,7 @@
 							"sources": [
 								{
 									"fileName": "src/core/modules/ModuleManager.ts",
-									"line": 26,
+									"line": 19,
 									"character": 8
 								}
 							],
@@ -3055,7 +3053,7 @@
 							"sources": [
 								{
 									"fileName": "src/core/modules/ModuleManager.ts",
-									"line": 14,
+									"line": 13,
 									"character": 9
 								}
 							],
@@ -3095,7 +3093,7 @@
 							"sources": [
 								{
 									"fileName": "src/core/modules/ModuleManager.ts",
-									"line": 44,
+									"line": 36,
 									"character": 17
 								}
 							],
@@ -3148,7 +3146,7 @@
 							"sources": [
 								{
 									"fileName": "src/core/modules/ModuleManager.ts",
-									"line": 89,
+									"line": 78,
 									"character": 11
 								}
 							],
@@ -3213,7 +3211,7 @@
 							"sources": [
 								{
 									"fileName": "src/core/modules/ModuleManager.ts",
-									"line": 62,
+									"line": 52,
 									"character": 12
 								}
 							],
@@ -3266,7 +3264,7 @@
 							"sources": [
 								{
 									"fileName": "src/core/modules/ModuleManager.ts",
-									"line": 53,
+									"line": 44,
 									"character": 5
 								}
 							],
@@ -3341,7 +3339,7 @@
 					"sources": [
 						{
 							"fileName": "src/core/modules/ModuleManager.ts",
-							"line": 10,
+							"line": 9,
 							"character": 34
 						}
 					]
@@ -3368,7 +3366,7 @@
 							"sources": [
 								{
 									"fileName": "src/core/ClientEventHandlers.ts",
-									"line": 8,
+									"line": 4,
 									"character": 7
 								}
 							],
@@ -3409,7 +3407,7 @@
 					"sources": [
 						{
 							"fileName": "src/core/ClientEventHandlers.ts",
-							"line": 4,
+							"line": 2,
 							"character": 44
 						}
 					]
@@ -3421,8 +3419,7 @@
 					"kindString": "Interface",
 					"flags": {},
 					"comment": {
-						"shortText": "Represents a module",
-						"text": "Not meant to be used by regular users, just for library's and third-party developers\n"
+						"shortText": "Represents a module"
 					},
 					"children": [
 						{
@@ -3439,7 +3436,7 @@
 							"sources": [
 								{
 									"fileName": "src/core/modules/Module.ts",
-									"line": 21,
+									"line": 13,
 									"character": 11
 								}
 							],
@@ -3489,12 +3486,12 @@
 							"kindString": "Property",
 							"flags": {},
 							"comment": {
-								"shortText": "Unique id for this module."
+								"shortText": "Unique id for this module"
 							},
 							"sources": [
 								{
 									"fileName": "src/core/modules/Module.ts",
-									"line": 25,
+									"line": 15,
 									"character": 4
 								}
 							],
@@ -3525,7 +3522,7 @@
 								"tags": [
 									{
 										"tag": "param",
-										"text": "\n",
+										"text": "client, the module will be bound to\n",
 										"param": "client"
 									}
 								]
@@ -3533,7 +3530,7 @@
 							"sources": [
 								{
 									"fileName": "src/core/modules/Module.ts",
-									"line": 17,
+									"line": 11,
 									"character": 6
 								}
 							],
@@ -3602,7 +3599,7 @@
 							"sources": [
 								{
 									"fileName": "src/core/modules/Module.ts",
-									"line": 12,
+									"line": 6,
 									"character": 13
 								}
 							],
@@ -3627,7 +3624,7 @@
 					"sources": [
 						{
 							"fileName": "src/core/modules/Module.ts",
-							"line": 8,
+							"line": 4,
 							"character": 31
 						}
 					]
@@ -3638,6 +3635,9 @@
 					"kind": 256,
 					"kindString": "Interface",
 					"flags": {},
+					"comment": {
+						"shortText": "Data fetched from REST"
+					},
 					"children": [
 						{
 							"id": 234,
@@ -3645,10 +3645,13 @@
 							"kind": 1024,
 							"kindString": "Property",
 							"flags": {},
+							"comment": {
+								"shortText": "Body"
+							},
 							"sources": [
 								{
 									"fileName": "src/core/providers/rest/RESTResponse.ts",
-									"line": 2,
+									"line": 7,
 									"character": 6
 								}
 							],
@@ -3663,10 +3666,13 @@
 							"kind": 1024,
 							"kindString": "Property",
 							"flags": {},
+							"comment": {
+								"shortText": "Headers"
+							},
 							"sources": [
 								{
 									"fileName": "src/core/providers/rest/RESTResponse.ts",
-									"line": 4,
+									"line": 11,
 									"character": 9
 								}
 							],
@@ -3691,10 +3697,13 @@
 							"kind": 1024,
 							"kindString": "Property",
 							"flags": {},
+							"comment": {
+								"shortText": "Status code"
+							},
 							"sources": [
 								{
 									"fileName": "src/core/providers/rest/RESTResponse.ts",
-									"line": 3,
+									"line": 9,
 									"character": 12
 								}
 							],
@@ -3718,7 +3727,7 @@
 					"sources": [
 						{
 							"fileName": "src/core/providers/rest/RESTResponse.ts",
-							"line": 1,
+							"line": 5,
 							"character": 37
 						}
 					],
@@ -3728,7 +3737,10 @@
 							"name": "T",
 							"kind": 131072,
 							"kindString": "Type parameter",
-							"flags": {}
+							"flags": {},
+							"comment": {
+								"shortText": "body type\n"
+							}
 						}
 					]
 				},
@@ -3738,6 +3750,9 @@
 					"kind": 256,
 					"kindString": "Interface",
 					"flags": {},
+					"comment": {
+						"shortText": "Represents a request builder"
+					},
 					"children": [
 						{
 							"id": 211,
@@ -3752,6 +3767,9 @@
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Create DELETE request"
+									},
 									"typeParameter": [
 										{
 											"id": 213,
@@ -3768,6 +3786,9 @@
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "options\n"
+											},
 											"type": {
 												"type": "reference",
 												"id": 223,
@@ -3808,6 +3829,9 @@
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Create GET request"
+									},
 									"typeParameter": [
 										{
 											"id": 205,
@@ -3824,6 +3848,9 @@
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "options\n"
+											},
 											"type": {
 												"type": "reference",
 												"id": 223,
@@ -3864,6 +3891,9 @@
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Create PATCH request"
+									},
 									"typeParameter": [
 										{
 											"id": 221,
@@ -3880,6 +3910,9 @@
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "options\n"
+											},
 											"type": {
 												"type": "reference",
 												"id": 223,
@@ -3920,6 +3953,9 @@
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Create POST request"
+									},
 									"typeParameter": [
 										{
 											"id": 209,
@@ -3936,6 +3972,9 @@
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "options\n"
+											},
 											"type": {
 												"type": "reference",
 												"id": 223,
@@ -3976,6 +4015,9 @@
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Create PUT request"
+									},
 									"typeParameter": [
 										{
 											"id": 217,
@@ -3992,6 +4034,9 @@
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "options\n"
+											},
 											"type": {
 												"type": "reference",
 												"id": 223,
@@ -4032,6 +4077,9 @@
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Add query data"
+									},
 									"parameters": [
 										{
 											"id": 201,
@@ -4039,6 +4087,9 @@
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "key"
+											},
 											"type": {
 												"type": "intrinsic",
 												"name": "string"
@@ -4050,6 +4101,9 @@
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "value\n"
+											},
 											"type": {
 												"type": "intrinsic",
 												"name": "string"
@@ -4077,6 +4131,9 @@
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Add part(s) to the URI"
+									},
 									"parameters": [
 										{
 											"id": 198,
@@ -4085,6 +4142,9 @@
 											"kindString": "Parameter",
 											"flags": {
 												"isRest": true
+											},
+											"comment": {
+												"text": "paths\n"
 											},
 											"type": {
 												"type": "array",
@@ -4122,14 +4182,14 @@
 					"sources": [
 						{
 							"fileName": "src/core/providers/rest/RequestBuilder.ts",
-							"line": 4,
+							"line": 5,
 							"character": 39
 						}
 					],
 					"implementedBy": [
 						{
 							"type": "reference",
-							"id": 257,
+							"id": 252,
 							"name": "RESTRequestBuilder"
 						}
 					]
@@ -4140,6 +4200,9 @@
 					"kind": 256,
 					"kindString": "Interface",
 					"flags": {},
+					"comment": {
+						"shortText": "Request options"
+					},
 					"children": [
 						{
 							"id": 225,
@@ -4149,10 +4212,13 @@
 							"flags": {
 								"isOptional": true
 							},
+							"comment": {
+								"shortText": "Body"
+							},
 							"sources": [
 								{
 									"fileName": "src/core/providers/rest/RequestOptions.ts",
-									"line": 3,
+									"line": 6,
 									"character": 6
 								}
 							],
@@ -4179,10 +4245,13 @@
 							"flags": {
 								"isOptional": true
 							},
+							"comment": {
+								"shortText": "Headers"
+							},
 							"sources": [
 								{
 									"fileName": "src/core/providers/rest/RequestOptions.ts",
-									"line": 2,
+									"line": 4,
 									"character": 9
 								}
 							],
@@ -4215,7 +4284,7 @@
 					"sources": [
 						{
 							"fileName": "src/core/providers/rest/RequestOptions.ts",
-							"line": 1,
+							"line": 2,
 							"character": 39
 						}
 					]
@@ -4227,12 +4296,12 @@
 					"kindString": "Type alias",
 					"flags": {},
 					"comment": {
-						"shortText": "Represents a RESTProvider. Bound to Client context."
+						"shortText": "Represents a RESTProvider. Bound to Client context"
 					},
 					"sources": [
 						{
 							"fileName": "src/core/providers/rest/RESTProvider.ts",
-							"line": 6,
+							"line": 4,
 							"character": 17
 						}
 					],
@@ -4247,7 +4316,7 @@
 							"sources": [
 								{
 									"fileName": "src/core/providers/rest/RESTProvider.ts",
-									"line": 6,
+									"line": 4,
 									"character": 19
 								}
 							],
@@ -4337,7 +4406,7 @@
 			"flags": {},
 			"children": [
 				{
-					"id": 257,
+					"id": 252,
 					"name": "RESTRequestBuilder",
 					"kind": 128,
 					"kindString": "Class",
@@ -4353,84 +4422,97 @@
 					},
 					"children": [
 						{
-							"id": 258,
+							"id": 253,
 							"name": "constructor",
 							"kind": 512,
 							"kindString": "Constructor",
 							"flags": {},
 							"signatures": [
 								{
-									"id": 259,
+									"id": 254,
 									"name": "new RESTRequestBuilder",
 									"kind": 16384,
 									"kindString": "Constructor signature",
 									"flags": {},
+									"comment": {},
 									"parameters": [
 										{
-											"id": 260,
+											"id": 255,
 											"name": "token",
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "token to be used by this request"
+											},
 											"type": {
 												"type": "intrinsic",
 												"name": "string"
 											}
 										},
 										{
-											"id": 261,
+											"id": 256,
 											"name": "options",
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "request options\n"
+											},
 											"type": {
 												"type": "reference",
-												"id": 243,
+												"id": 238,
 												"name": "default"
 											}
 										}
 									],
 									"type": {
 										"type": "reference",
-										"id": 257,
+										"id": 252,
 										"name": "default"
 									}
 								}
 							]
 						},
 						{
-							"id": 266,
+							"id": 261,
 							"name": "options",
 							"kind": 1024,
 							"kindString": "Property",
 							"flags": {
 								"isPublic": true
 							},
+							"comment": {
+								"shortText": "Tokens used by this request"
+							},
 							"sources": [
 								{
 									"fileName": "src/rest/RESTRequestBuilder.ts",
-									"line": 18,
+									"line": 21,
 									"character": 16
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 243,
+								"id": 238,
 								"name": "default"
 							}
 						},
 						{
-							"id": 263,
+							"id": 258,
 							"name": "queryStack",
 							"kind": 1024,
 							"kindString": "Property",
 							"flags": {
 								"isPrivate": true
 							},
+							"comment": {
+								"shortText": "Query to be built"
+							},
 							"sources": [
 								{
 									"fileName": "src/rest/RESTRequestBuilder.ts",
-									"line": 13,
+									"line": 14,
 									"character": 20
 								}
 							],
@@ -4451,17 +4533,20 @@
 							"defaultValue": "..."
 						},
 						{
-							"id": 264,
+							"id": 259,
 							"name": "retries",
 							"kind": 1024,
 							"kindString": "Property",
 							"flags": {
 								"isPrivate": true
 							},
+							"comment": {
+								"shortText": "Retries done"
+							},
 							"sources": [
 								{
 									"fileName": "src/rest/RESTRequestBuilder.ts",
-									"line": 14,
+									"line": 16,
 									"character": 17
 								}
 							],
@@ -4472,12 +4557,15 @@
 							"defaultValue": "0"
 						},
 						{
-							"id": 262,
+							"id": 257,
 							"name": "stack",
 							"kind": 1024,
 							"kindString": "Property",
 							"flags": {
 								"isPrivate": true
+							},
+							"comment": {
+								"shortText": "URI parts"
 							},
 							"sources": [
 								{
@@ -4496,7 +4584,7 @@
 							"defaultValue": "..."
 						},
 						{
-							"id": 265,
+							"id": 260,
 							"name": "token",
 							"kind": 1024,
 							"kindString": "Property",
@@ -4509,7 +4597,7 @@
 							"sources": [
 								{
 									"fileName": "src/rest/RESTRequestBuilder.ts",
-									"line": 17,
+									"line": 19,
 									"character": 14
 								}
 							],
@@ -4519,25 +4607,31 @@
 							}
 						},
 						{
-							"id": 281,
+							"id": 276,
 							"name": "endpoint",
 							"kind": 262144,
 							"kindString": "Accessor",
 							"flags": {},
+							"comment": {
+								"shortText": "URI request will be sent to"
+							},
 							"sources": [
 								{
 									"fileName": "src/rest/RESTRequestBuilder.ts",
-									"line": 46,
+									"line": 64,
 									"character": 14
 								}
 							],
 							"getSignature": [
 								{
-									"id": 282,
+									"id": 277,
 									"name": "endpoint",
 									"kind": 524288,
 									"kindString": "Get signature",
 									"flags": {},
+									"comment": {
+										"shortText": "URI request will be sent to"
+									},
 									"type": {
 										"type": "intrinsic",
 										"name": "string"
@@ -4546,7 +4640,7 @@
 							]
 						},
 						{
-							"id": 304,
+							"id": 299,
 							"name": "delete",
 							"kind": 2048,
 							"kindString": "Method",
@@ -4554,20 +4648,23 @@
 							"sources": [
 								{
 									"fileName": "src/rest/RESTRequestBuilder.ts",
-									"line": 107,
+									"line": 150,
 									"character": 14
 								}
 							],
 							"signatures": [
 								{
-									"id": 305,
+									"id": 300,
 									"name": "delete",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Create DELETE request"
+									},
 									"typeParameter": [
 										{
-											"id": 306,
+											"id": 301,
 											"name": "T",
 											"kind": 131072,
 											"kindString": "Type parameter",
@@ -4576,11 +4673,14 @@
 									],
 									"parameters": [
 										{
-											"id": 307,
+											"id": 302,
 											"name": "options",
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "options\n"
+											},
 											"type": {
 												"type": "reference",
 												"id": 223,
@@ -4620,7 +4720,7 @@
 							}
 						},
 						{
-							"id": 288,
+							"id": 283,
 							"name": "get",
 							"kind": 2048,
 							"kindString": "Method",
@@ -4628,20 +4728,23 @@
 							"sources": [
 								{
 									"fileName": "src/rest/RESTRequestBuilder.ts",
-									"line": 91,
+									"line": 118,
 									"character": 11
 								}
 							],
 							"signatures": [
 								{
-									"id": 289,
+									"id": 284,
 									"name": "get",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Create GET request"
+									},
 									"typeParameter": [
 										{
-											"id": 290,
+											"id": 285,
 											"name": "T",
 											"kind": 131072,
 											"kindString": "Type parameter",
@@ -4650,11 +4753,14 @@
 									],
 									"parameters": [
 										{
-											"id": 291,
+											"id": 286,
 											"name": "options",
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "options\n"
+											},
 											"type": {
 												"type": "reference",
 												"typeArguments": [
@@ -4704,7 +4810,7 @@
 							}
 						},
 						{
-							"id": 267,
+							"id": 262,
 							"name": "getHeaders",
 							"kind": 2048,
 							"kindString": "Method",
@@ -4714,20 +4820,23 @@
 							"sources": [
 								{
 									"fileName": "src/rest/RESTRequestBuilder.ts",
-									"line": 27,
+									"line": 35,
 									"character": 20
 								}
 							],
 							"signatures": [
 								{
-									"id": 268,
+									"id": 263,
 									"name": "getHeaders",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Get headers"
+									},
 									"parameters": [
 										{
-											"id": 269,
+											"id": 264,
 											"name": "headers",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -4753,14 +4862,14 @@
 									"type": {
 										"type": "reflection",
 										"declaration": {
-											"id": 270,
+											"id": 265,
 											"name": "__type",
 											"kind": 65536,
 											"kindString": "Type literal",
 											"flags": {},
 											"children": [
 												{
-													"id": 272,
+													"id": 267,
 													"name": "Authorization",
 													"kind": 1024,
 													"kindString": "Property",
@@ -4772,7 +4881,7 @@
 													"defaultValue": "..."
 												},
 												{
-													"id": 273,
+													"id": 268,
 													"name": "Content-Type",
 													"kind": 1024,
 													"kindString": "Property",
@@ -4784,7 +4893,7 @@
 													"defaultValue": "'application/json'"
 												},
 												{
-													"id": 271,
+													"id": 266,
 													"name": "User-Agent",
 													"kind": 1024,
 													"kindString": "Property",
@@ -4801,9 +4910,9 @@
 													"title": "Properties",
 													"kind": 1024,
 													"children": [
-														272,
-														273,
-														271
+														267,
+														268,
+														266
 													]
 												}
 											]
@@ -4813,7 +4922,7 @@
 							]
 						},
 						{
-							"id": 296,
+							"id": 291,
 							"name": "patch",
 							"kind": 2048,
 							"kindString": "Method",
@@ -4821,20 +4930,23 @@
 							"sources": [
 								{
 									"fileName": "src/rest/RESTRequestBuilder.ts",
-									"line": 99,
+									"line": 134,
 									"character": 13
 								}
 							],
 							"signatures": [
 								{
-									"id": 297,
+									"id": 292,
 									"name": "patch",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Create PATCH request"
+									},
 									"typeParameter": [
 										{
-											"id": 298,
+											"id": 293,
 											"name": "T",
 											"kind": 131072,
 											"kindString": "Type parameter",
@@ -4843,11 +4955,14 @@
 									],
 									"parameters": [
 										{
-											"id": 299,
+											"id": 294,
 											"name": "options",
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "options\n"
+											},
 											"type": {
 												"type": "reference",
 												"id": 223,
@@ -4887,7 +5002,7 @@
 							}
 						},
 						{
-							"id": 292,
+							"id": 287,
 							"name": "post",
 							"kind": 2048,
 							"kindString": "Method",
@@ -4895,20 +5010,23 @@
 							"sources": [
 								{
 									"fileName": "src/rest/RESTRequestBuilder.ts",
-									"line": 95,
+									"line": 126,
 									"character": 12
 								}
 							],
 							"signatures": [
 								{
-									"id": 293,
+									"id": 288,
 									"name": "post",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Create POST request"
+									},
 									"typeParameter": [
 										{
-											"id": 294,
+											"id": 289,
 											"name": "T",
 											"kind": 131072,
 											"kindString": "Type parameter",
@@ -4917,11 +5035,14 @@
 									],
 									"parameters": [
 										{
-											"id": 295,
+											"id": 290,
 											"name": "options",
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "options\n"
+											},
 											"type": {
 												"type": "reference",
 												"id": 223,
@@ -4961,7 +5082,7 @@
 							}
 						},
 						{
-							"id": 300,
+							"id": 295,
 							"name": "put",
 							"kind": 2048,
 							"kindString": "Method",
@@ -4969,20 +5090,23 @@
 							"sources": [
 								{
 									"fileName": "src/rest/RESTRequestBuilder.ts",
-									"line": 103,
+									"line": 142,
 									"character": 11
 								}
 							],
 							"signatures": [
 								{
-									"id": 301,
+									"id": 296,
 									"name": "put",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Create PUT request"
+									},
 									"typeParameter": [
 										{
-											"id": 302,
+											"id": 297,
 											"name": "T",
 											"kind": 131072,
 											"kindString": "Type parameter",
@@ -4991,11 +5115,14 @@
 									],
 									"parameters": [
 										{
-											"id": 303,
+											"id": 298,
 											"name": "options",
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "options\n"
+											},
 											"type": {
 												"type": "reference",
 												"id": 223,
@@ -5035,7 +5162,7 @@
 							}
 						},
 						{
-							"id": 274,
+							"id": 269,
 							"name": "query",
 							"kind": 2048,
 							"kindString": "Method",
@@ -5043,35 +5170,44 @@
 							"sources": [
 								{
 									"fileName": "src/rest/RESTRequestBuilder.ts",
-									"line": 36,
+									"line": 49,
 									"character": 7
 								}
 							],
 							"signatures": [
 								{
-									"id": 275,
+									"id": 270,
 									"name": "query",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Add query data"
+									},
 									"parameters": [
 										{
-											"id": 276,
+											"id": 271,
 											"name": "k",
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "key"
+											},
 											"type": {
 												"type": "intrinsic",
 												"name": "string"
 											}
 										},
 										{
-											"id": 277,
+											"id": 272,
 											"name": "v",
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "value\n"
+											},
 											"type": {
 												"type": "intrinsic",
 												"name": "string"
@@ -5097,7 +5233,7 @@
 							}
 						},
 						{
-							"id": 283,
+							"id": 278,
 							"name": "request",
 							"kind": 2048,
 							"kindString": "Method",
@@ -5105,20 +5241,23 @@
 							"sources": [
 								{
 									"fileName": "src/rest/RESTRequestBuilder.ts",
-									"line": 54,
+									"line": 77,
 									"character": 9
 								}
 							],
 							"signatures": [
 								{
-									"id": 284,
+									"id": 279,
 									"name": "request",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Create a request"
+									},
 									"typeParameter": [
 										{
-											"id": 285,
+											"id": 280,
 											"name": "T",
 											"kind": 131072,
 											"kindString": "Type parameter",
@@ -5127,11 +5266,14 @@
 									],
 									"parameters": [
 										{
-											"id": 286,
+											"id": 281,
 											"name": "method",
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "method to be used"
+											},
 											"type": {
 												"type": "union",
 												"types": [
@@ -5159,11 +5301,14 @@
 											}
 										},
 										{
-											"id": 287,
+											"id": 282,
 											"name": "options",
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "options\n"
+											},
 											"type": {
 												"type": "reference",
 												"id": 223,
@@ -5193,7 +5338,7 @@
 							]
 						},
 						{
-							"id": 278,
+							"id": 273,
 							"name": "url",
 							"kind": 2048,
 							"kindString": "Method",
@@ -5201,25 +5346,31 @@
 							"sources": [
 								{
 									"fileName": "src/rest/RESTRequestBuilder.ts",
-									"line": 41,
+									"line": 58,
 									"character": 5
 								}
 							],
 							"signatures": [
 								{
-									"id": 279,
+									"id": 274,
 									"name": "url",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Add part(s) to the URI"
+									},
 									"parameters": [
 										{
-											"id": 280,
+											"id": 275,
 											"name": "paths",
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {
 												"isRest": true
+											},
+											"comment": {
+												"text": "paths\n"
 											},
 											"type": {
 												"type": "array",
@@ -5254,47 +5405,47 @@
 							"title": "Constructors",
 							"kind": 512,
 							"children": [
-								258
+								253
 							]
 						},
 						{
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								266,
-								263,
-								264,
-								262,
-								265
+								261,
+								258,
+								259,
+								257,
+								260
 							]
 						},
 						{
 							"title": "Accessors",
 							"kind": 262144,
 							"children": [
-								281
+								276
 							]
 						},
 						{
 							"title": "Methods",
 							"kind": 2048,
 							"children": [
-								304,
-								288,
-								267,
-								296,
-								292,
-								300,
-								274,
+								299,
 								283,
-								278
+								262,
+								291,
+								287,
+								295,
+								269,
+								278,
+								273
 							]
 						}
 					],
 					"sources": [
 						{
 							"fileName": "src/rest/RESTRequestBuilder.ts",
-							"line": 11,
+							"line": 10,
 							"character": 39
 						}
 					],
@@ -5307,35 +5458,42 @@
 					]
 				},
 				{
-					"id": 247,
+					"id": 242,
 					"name": "RestProviderBuilder",
 					"kind": 128,
 					"kindString": "Class",
 					"flags": {},
+					"comment": {
+						"shortText": "Builds a RestProvider for {@link Client}"
+					},
 					"children": [
 						{
-							"id": 248,
+							"id": 243,
 							"name": "constructor",
 							"kind": 512,
 							"kindString": "Constructor",
 							"flags": {},
 							"signatures": [
 								{
-									"id": 249,
+									"id": 244,
 									"name": "new RestProviderBuilder",
 									"kind": 16384,
 									"kindString": "Constructor signature",
 									"flags": {},
+									"comment": {},
 									"parameters": [
 										{
-											"id": 250,
+											"id": 245,
 											"name": "options",
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "builder's options\n"
+											},
 											"type": {
 												"type": "reference",
-												"id": 243,
+												"id": 238,
 												"name": "default"
 											},
 											"defaultValue": "..."
@@ -5343,33 +5501,36 @@
 									],
 									"type": {
 										"type": "reference",
-										"id": 247,
+										"id": 242,
 										"name": "default"
 									}
 								}
 							]
 						},
 						{
-							"id": 251,
+							"id": 246,
 							"name": "options",
 							"kind": 1024,
 							"kindString": "Property",
 							"flags": {},
+							"comment": {
+								"shortText": "Options for this builder"
+							},
 							"sources": [
 								{
 									"fileName": "src/rest/RestProviderBuilder.ts",
-									"line": 7,
+									"line": 9,
 									"character": 9
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 243,
+								"id": 238,
 								"name": "default"
 							}
 						},
 						{
-							"id": 252,
+							"id": 247,
 							"name": "getRestProvider",
 							"kind": 2048,
 							"kindString": "Method",
@@ -5377,35 +5538,38 @@
 							"sources": [
 								{
 									"fileName": "src/rest/RestProviderBuilder.ts",
-									"line": 19,
+									"line": 25,
 									"character": 17
 								}
 							],
 							"signatures": [
 								{
-									"id": 253,
+									"id": 248,
 									"name": "getRestProvider",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Get rest provider"
+									},
 									"type": {
 										"type": "reflection",
 										"declaration": {
-											"id": 254,
+											"id": 249,
 											"name": "__type",
 											"kind": 65536,
 											"kindString": "Type literal",
 											"flags": {},
 											"signatures": [
 												{
-													"id": 255,
+													"id": 250,
 													"name": "__type",
 													"kind": 4096,
 													"kindString": "Call signature",
 													"flags": {},
 													"parameters": [
 														{
-															"id": 256,
+															"id": 251,
 															"name": "client",
 															"kind": 32768,
 															"kindString": "Parameter",
@@ -5435,141 +5599,44 @@
 							"title": "Constructors",
 							"kind": 512,
 							"children": [
-								248
+								243
 							]
 						},
 						{
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								251
+								246
 							]
 						},
 						{
 							"title": "Methods",
 							"kind": 2048,
 							"children": [
-								252
+								247
 							]
 						}
 					],
 					"sources": [
 						{
 							"fileName": "src/rest/RestProviderBuilder.ts",
-							"line": 6,
+							"line": 7,
 							"character": 40
 						}
 					]
 				},
 				{
 					"id": 238,
-					"name": "Bucket",
-					"kind": 256,
-					"kindString": "Interface",
-					"flags": {},
-					"children": [
-						{
-							"id": 242,
-							"name": "global",
-							"kind": 1024,
-							"kindString": "Property",
-							"flags": {},
-							"sources": [
-								{
-									"fileName": "src/rest/Bucket.ts",
-									"line": 5,
-									"character": 8
-								}
-							],
-							"type": {
-								"type": "intrinsic",
-								"name": "boolean"
-							}
-						},
-						{
-							"id": 239,
-							"name": "limit",
-							"kind": 1024,
-							"kindString": "Property",
-							"flags": {},
-							"sources": [
-								{
-									"fileName": "src/rest/Bucket.ts",
-									"line": 2,
-									"character": 7
-								}
-							],
-							"type": {
-								"type": "intrinsic",
-								"name": "number"
-							}
-						},
-						{
-							"id": 240,
-							"name": "remaining",
-							"kind": 1024,
-							"kindString": "Property",
-							"flags": {},
-							"sources": [
-								{
-									"fileName": "src/rest/Bucket.ts",
-									"line": 3,
-									"character": 11
-								}
-							],
-							"type": {
-								"type": "intrinsic",
-								"name": "number"
-							}
-						},
-						{
-							"id": 241,
-							"name": "reset",
-							"kind": 1024,
-							"kindString": "Property",
-							"flags": {},
-							"sources": [
-								{
-									"fileName": "src/rest/Bucket.ts",
-									"line": 4,
-									"character": 7
-								}
-							],
-							"type": {
-								"type": "reference",
-								"name": "Date"
-							}
-						}
-					],
-					"groups": [
-						{
-							"title": "Properties",
-							"kind": 1024,
-							"children": [
-								242,
-								239,
-								240,
-								241
-							]
-						}
-					],
-					"sources": [
-						{
-							"fileName": "src/rest/Bucket.ts",
-							"line": 1,
-							"character": 31
-						}
-					]
-				},
-				{
-					"id": 243,
 					"name": "RESTOptions",
 					"kind": 256,
 					"kindString": "Interface",
 					"flags": {},
+					"comment": {
+						"shortText": "Options for rest"
+					},
 					"children": [
 						{
-							"id": 246,
+							"id": 241,
 							"name": "maxRetries",
 							"kind": 1024,
 							"kindString": "Property",
@@ -5590,14 +5657,13 @@
 							}
 						},
 						{
-							"id": 245,
+							"id": 240,
 							"name": "useragent",
 							"kind": 1024,
 							"kindString": "Property",
 							"flags": {},
 							"comment": {
-								"shortText": "UserAgent to use",
-								"text": "Shouldn't be used, since Discord requires it to contain library name and it's version\n"
+								"shortText": "UserAgent to use\nShouldn't be used, since Discord requires it to contain library name and it's version"
 							},
 							"sources": [
 								{
@@ -5612,7 +5678,7 @@
 							}
 						},
 						{
-							"id": 244,
+							"id": 239,
 							"name": "v",
 							"kind": 1024,
 							"kindString": "Property",
@@ -5623,7 +5689,7 @@
 							"sources": [
 								{
 									"fileName": "src/rest/RESTOptions.ts",
-									"line": 3,
+									"line": 4,
 									"character": 3
 								}
 							],
@@ -5647,16 +5713,16 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								246,
-								245,
-								244
+								241,
+								240,
+								239
 							]
 						}
 					],
 					"sources": [
 						{
 							"fileName": "src/rest/RESTOptions.ts",
-							"line": 1,
+							"line": 2,
 							"character": 36
 						}
 					]
@@ -5667,16 +5733,15 @@
 					"title": "Classes",
 					"kind": 128,
 					"children": [
-						257,
-						247
+						252,
+						242
 					]
 				},
 				{
 					"title": "Interfaces",
 					"kind": 256,
 					"children": [
-						238,
-						243
+						238
 					]
 				}
 			],
@@ -5731,6 +5796,9 @@
 													"kind": 4096,
 													"kindString": "Call signature",
 													"flags": {},
+													"comment": {
+														"shortText": "Convert snowflake to date"
+													},
 													"parameters": [
 														{
 															"id": 75,
