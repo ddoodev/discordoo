@@ -5,6 +5,8 @@ import ModuleManager from './modules/ModuleManager'
 import RequestBuilder from './providers/rest/RequestBuilder'
 import RequestOptions from './providers/rest/RequestOptions'
 import RESTProvider from './providers/rest/RESTProvider'
+import Constants from './Constants'
+import RESTResponse from './providers/rest/RESTResponse'
 
 export {
   Client,
@@ -14,4 +16,6 @@ export {
   RequestBuilder,
   RequestOptions,
   RESTProvider,
+  Constants,
+  RESTResponse
 }

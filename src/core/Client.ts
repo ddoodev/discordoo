@@ -4,18 +4,20 @@ import ModuleManager from './modules/ModuleManager'
 import Module from './modules/Module'
 import RESTProvider from './providers/rest/RESTProvider'
 
-/**
- * Entry point for all of Discordoo. Manages modules and events
- */
+/** Entry point for all of Discordoo. Manages modules and events */
 export default class Client extends TypedEmitter<ClientEventHandlers> {
-  /**
-   * Module manager of this client
-   */
+  /** Token used by this client */
+  public token: string
+
+  constructor(token: string) {
+    super()
+    this.token = token
+  }
+
+  /** Module manager of this client */
   modules: ModuleManager = new ModuleManager(this)
 
-  /**
-   * RESTProvider used by this module
-   */
+  /** RESTProvider used by this module */
   rest: RESTProvider | null = null
 
   /**

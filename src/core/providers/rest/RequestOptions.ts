@@ -1,4 +1,4 @@
 export default interface RequestOptions {
-  headers: Record<string, string>,
-  body: string | Record<string, string>
+  headers?: Record<string, string>,
+  body?: Record<string, string>
 }
