@@ -13,8 +13,7 @@ jobs:
           fetch-depth: 0
       - name: Install packages etc
         run: |
-          npm i
-          npm run build
+          npm ci
       - name: Create local changes
         run: |
           rm -rf docs
