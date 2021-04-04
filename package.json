@@ -74,7 +74,7 @@
   },
   "lint-staged": {
     "*.ts": [
-      "eslint . --fix"
+      "eslint src --fix"
     ]
   },
   "dependencies": {

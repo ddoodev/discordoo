@@ -1,9 +1,7 @@
 import { Constants, RequestBuilder, RequestOptions, RESTResponse } from '../core'
 import { URLSearchParams } from 'url'
 import RESTOptions from './RESTOptions'
-import Bucket from './Bucket'
-import fetch, { Response } from 'node-fetch'
-import { Collection } from '../collection'
+import fetch from 'node-fetch'
 
 /**
  * Create requests to Discord
