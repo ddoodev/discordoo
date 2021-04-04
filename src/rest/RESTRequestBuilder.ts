@@ -5,18 +5,25 @@ import fetch from 'node-fetch'
 
 /**
  * Create requests to Discord
- *
  * @internal
  */
 export default class RESTRequestBuilder implements RequestBuilder {
+  /** URI parts */
   private stack: string[] = []
+  /** Query to be built */
   private queryStack: Record<string, string> = {}
+  /** Retries done */
   private retries = 0
 
   /** Token of this request */
   public token: string
+  /** Tokens used by this request */
   public options: RESTOptions
 
+  /**
+   * @param token - token to be used by this request
+   * @param options - request options
+   */
   constructor(token: string, options: RESTOptions) {
     this.token = token
     this.options = options
@@ -24,6 +31,7 @@ export default class RESTRequestBuilder implements RequestBuilder {
     this.stack.push(`v${options.v ?? 8}`)
   }
 
+  /** Get headers */
   private getHeaders(headers?: Record<any, any>) {
     return {
       ...(headers ?? {}),
@@ -33,16 +41,19 @@ export default class RESTRequestBuilder implements RequestBuilder {
     }
   }
 
+  /** Add query data */
   query(k: string, v: string): RequestBuilder {
     this.queryStack[k] = v
     return this
   }
 
+  /** Add part(s) to the URI */
   url(...paths: string[]): RequestBuilder {
     this.stack.push(...paths)
     return this
   }
 
+  /** URI request will be sent to */
   get endpoint() {
     let r = `${Constants.API_ENDPOINT}/${this.stack.join('/')}`
     if (Object.keys(this.queryStack).length > 0) {
@@ -51,6 +62,11 @@ export default class RESTRequestBuilder implements RequestBuilder {
     return r
   }
 
+  /**
+   * Create a request
+   * @param method - method to be used
+   * @param options - options
+   */
   request<T>(
     method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE',
     options: RequestOptions = {}
@@ -88,22 +104,42 @@ export default class RESTRequestBuilder implements RequestBuilder {
     })
   }
 
+  /**
+   * Create GET request
+   * @param options - options
+   */
   async get<T>(options: Omit<RequestOptions, 'body'> = {}): Promise<RESTResponse<T>> {
     return this.request('GET', options)
   }
 
+  /**
+   * Create POST request
+   * @param options - options
+   */
   async post<T>(options: RequestOptions = {}): Promise<RESTResponse<T>> {
     return this.request('POST', options)
   }
 
+  /**
+   * Create PATCH request
+   * @param options - options
+   */
   async patch<T>(options: RequestOptions = {}): Promise<RESTResponse<T>> {
     return this.request('PATCH', options)
   }
 
+  /**
+   * Create PUT request
+   * @param options - options
+   */
   async put<T>(options: RequestOptions = {}): Promise<RESTResponse<T>> {
     return this.request('PUT', options)
   }
 
+  /**
+   * Create DELETE request
+   * @param options - options
+   */
   async delete<T>(options: RequestOptions = {}): Promise<RESTResponse<T>> {
     return this.request('DELETE', options)
   }
