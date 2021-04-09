@@ -13,10 +13,8 @@
     "importHelpers": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
-    "outDir": "./dist",
     "declaration": true,
     "declarationDir": "./types",
-    "emitDeclarationOnly": true,
     "noImplicitAny": false,
     "resolveJsonModule": true,
     "isolatedModules": false,
@@ -24,7 +22,8 @@
     "paths": {
       "@src/*": [ "src/*" ],
       "@root/*": [ "./*" ]
-    }
+    },
+    "outDir": "./dist"
   },
   "exclude": [
     "node_modules",
