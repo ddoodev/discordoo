@@ -8,6 +8,7 @@ Please, follow [our code of conduct](CODE_OF_CONDUCT.md). You'll be treated the 
 ## Version control
 ### Commit-style
 Discordoo uses [conventional commits](https://www.conventionalcommits.org/en/v1.0.0-beta.2/) for its commits.
+You should also use Present Simple for commits(wasn't followed during base development).
 
 ### Branching
 Discordoo uses three types of branches: features, master and release.
