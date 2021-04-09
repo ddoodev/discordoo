@@ -1,5 +1,5 @@
 import Client from '../Client'
-import { Collection } from '../../collection'
+import { Collection } from '@src/collection'
 import Module from './Module'
 
 /**
@@ -51,7 +51,7 @@ export default class ModuleManager {
    */
   async init(async = false) { // using false by default to avoid some issues
     if (async) {
-      const promises = []
+      const promises: any[] = []
       for (const loadGroup of this._moduleLoadGroups) {
         promises.push((async () => {
           for (const module of loadGroup) {

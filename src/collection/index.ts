@@ -13,7 +13,7 @@ export class Collection<K, V> extends Map<K, V> {
     } else {
       if (amount > this.size) throw new RangeError('Cannot get more random elements that are in the Collection')
       else if (amount === this.size) return [ ...this.values() ]
-      const result = []
+      const result: any[] = []
 
       // eslint-disable-next-line
       for (const i of Array(amount).fill(228)) {
