@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "exports": {
-    "./core": "./dist/core/index.js",
-    "./cache": "./dist/cache/index.js",
-    "./collection": "./dist/collection/index.js",
-    "./rest": "./dist/rest/index.js",
-    "./util": "./dist/util/index.js",
-    "./main": "./dist/main/index.js",
-    "./ws": "./dist/ws/index.js",
+    "./core": "./dist/src/core/index.js",
+    "./cache": "./dist/src/cache/index.js",
+    "./collection": "./src/dist/collection/index.js",
+    "./rest": "./dist/src/rest/index.js",
+    "./util": "./dist/src/util/index.js",
+    "./main": "./dist/src/main/index.js",
+    "./ws": "./dist/src/ws/index.js",
     "./package.json": "./package.json"
   },
   "typesVersions": {

@@ -21,7 +21,7 @@ module.exports = (name, log) => {
   const pkgJson = JSON.parse(
     fs.readFileSync(path.resolve('./package.json'), 'utf-8')
   )
-  pkgJson.exports[`./${name}`] = `./dist/${name}/index.js`
+  pkgJson.exports[`./${name}`] = `./dist/src/${name}/index.js`
   pkgJson.typesVersions['*'][name] = [ `types/${name}/index.d.ts` ]
   fs.writeFileSync(
     path.resolve('./package.json'), JSON.stringify(pkgJson, null, 2)
