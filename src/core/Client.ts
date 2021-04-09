@@ -3,9 +3,10 @@ import { TypedEmitter } from 'tiny-typed-emitter'
 import ModuleManager from './modules/ModuleManager'
 import Module from './modules/Module'
 import RESTProvider from './providers/rest/RESTProvider'
+import CacheProvider from './providers/cache/CacheProvider'
 
 /** Entry point for all of Discordoo. Manages modules and events */
-export default class Client extends TypedEmitter<ClientEventHandlers> {
+export default class Client<Cache = any> extends TypedEmitter<ClientEventHandlers> {
   /** Token used by this client */
   public token: string
 
@@ -19,6 +20,9 @@ export default class Client extends TypedEmitter<ClientEventHandlers> {
 
   /** RESTProvider used by this module */
   rest: RESTProvider | null = null
+
+  /** CacheProvider used by this module */
+  cache: CacheProvider<Cache> | null = null
 
   /**
    * Get a module. Alias for module(id).
@@ -52,4 +56,14 @@ export default class Client extends TypedEmitter<ClientEventHandlers> {
   useRESTProvider(provider: (client: Client) => RESTProvider) {
     this.rest = provider(this).bind(this)
   }
+
+  /**
+   * Set the {@link CacheProvider} to be used by this client
+   * Bounds it's context to {@link Client}
+   * @param provider - function, that returns desired CacheProvider
+   */
+  useCacheProvider(provider: (client: Client) => CacheProvider<Cache>) {
+    this.cache = provider(this).bind(this)
+  }
+
 }

@@ -16,8 +16,15 @@
     "outDir": "./dist",
     "declaration": true,
     "declarationDir": "./types",
-    "noImplicitAny": true,
-    "resolveJsonModule": true
+    "emitDeclarationOnly": true,
+    "noImplicitAny": false,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "baseUrl": ".",
+    "paths": {
+      "@src/*": [ "src/*" ],
+      "@root/*": [ "./*" ]
+    }
   },
   "exclude": [
     "node_modules",

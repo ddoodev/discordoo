@@ -77,8 +77,22 @@
       "eslint src --fix"
     ]
   },
+  "babel": {
+    "plugins": [
+      [
+        "module-resolver",
+        {
+          "alias": {
+            "@src": "./src",
+            "@root": "./"
+          }
+        }
+      ]
+    ]
+  },
   "dependencies": {
     "@types/node-fetch": "^2.5.9",
+    "babel-plugin-module-resolver": "^4.1.0",
     "discord-api-types": "^0.12.1",
     "lodash": "^4.17.21",
     "node-fetch": "^2.6.1",

@@ -1,4 +1,4 @@
-import { Constants, RequestBuilder, RequestOptions, RESTResponse } from '../core'
+import { Constants, RequestBuilder, RequestOptions, RESTResponse } from '@src/core'
 import { URLSearchParams } from 'url'
 import RESTOptions from './RESTOptions'
 import fetch from 'node-fetch'
@@ -46,7 +46,7 @@ export default class RESTRequestBuilder implements RequestBuilder {
    * @param k - key
    * @param v - value
    */
-  query(k: string, v: string): RequestBuilder {
+  query(k: string, v: any): RequestBuilder {
     this.queryStack[k] = v
     return this
   }
@@ -88,19 +88,23 @@ export default class RESTRequestBuilder implements RequestBuilder {
       const body = await resp.json()
 
       if (resp.status === 429) {
+
         const seconds = +resp.headers.get('Retry-After')!
         setTimeout(async () => {
           resolve(await this.request(method, options))
         }, seconds * 60)
+
       } else if (resp.status < 500 && resp.status > 399) {
         reject(`Request on ${this.endpoint} ended with code ${resp.status}`)
       } else if (resp.status > 499) {
+
         if (this.retries < this.options.maxRetries) {
           this.retries++
           resolve(await this.request(method, options))
         } else {
           reject(`Too many retries on ${this.endpoint}. Code - ${resp.status}`)
         }
+
       }
 
       resolve({
