@@ -597,9 +597,37 @@
 											"kind": 131072,
 											"kindString": "Type parameter",
 											"flags": {},
+											"type": {
+												"type": "reference",
+												"typeArguments": [
+													{
+														"type": "intrinsic",
+														"name": "unknown"
+													},
+													{
+														"type": "intrinsic",
+														"name": "unknown"
+													},
+													{
+														"type": "reference",
+														"name": "Cache"
+													}
+												],
+												"name": "default"
+											},
 											"default": {
-												"type": "intrinsic",
-												"name": "any"
+												"type": "reference",
+												"typeArguments": [
+													{
+														"type": "intrinsic",
+														"name": "unknown"
+													},
+													{
+														"type": "intrinsic",
+														"name": "unknown"
+													}
+												],
+												"name": "default"
 											}
 										}
 									],
@@ -650,7 +678,7 @@
 							"sources": [
 								{
 									"fileName": "src/core/Client.ts",
-									"line": 25,
+									"line": 26,
 									"character": 7
 								}
 							],
@@ -687,7 +715,7 @@
 							"sources": [
 								{
 									"fileName": "src/core/Client.ts",
-									"line": 19,
+									"line": 20,
 									"character": 9
 								}
 							],
@@ -710,7 +738,7 @@
 							"sources": [
 								{
 									"fileName": "src/core/Client.ts",
-									"line": 22,
+									"line": 23,
 									"character": 6
 								}
 							],
@@ -744,7 +772,7 @@
 							"sources": [
 								{
 									"fileName": "src/core/Client.ts",
-									"line": 11,
+									"line": 12,
 									"character": 14
 								}
 							],
@@ -762,7 +790,7 @@
 							"sources": [
 								{
 									"fileName": "src/core/Client.ts",
-									"line": 31,
+									"line": 32,
 									"character": 3
 								}
 							],
@@ -827,7 +855,7 @@
 							"sources": [
 								{
 									"fileName": "src/core/Client.ts",
-									"line": 39,
+									"line": 40,
 									"character": 8
 								}
 							],
@@ -892,7 +920,7 @@
 							"sources": [
 								{
 									"fileName": "src/core/Client.ts",
-									"line": 47,
+									"line": 48,
 									"character": 5
 								}
 							],
@@ -944,7 +972,7 @@
 							"sources": [
 								{
 									"fileName": "src/core/Client.ts",
-									"line": 65,
+									"line": 66,
 									"character": 18
 								}
 							],
@@ -995,8 +1023,18 @@
 																		"id": 42,
 																		"typeArguments": [
 																			{
-																				"type": "intrinsic",
-																				"name": "any"
+																				"type": "reference",
+																				"typeArguments": [
+																					{
+																						"type": "intrinsic",
+																						"name": "unknown"
+																					},
+																					{
+																						"type": "intrinsic",
+																						"name": "unknown"
+																					}
+																				],
+																				"name": "default"
 																			}
 																		],
 																		"name": "default"
@@ -1035,7 +1073,7 @@
 							"sources": [
 								{
 									"fileName": "src/core/Client.ts",
-									"line": 56,
+									"line": 57,
 									"character": 17
 								}
 							],
@@ -1086,8 +1124,18 @@
 																		"id": 42,
 																		"typeArguments": [
 																			{
-																				"type": "intrinsic",
-																				"name": "any"
+																				"type": "reference",
+																				"typeArguments": [
+																					{
+																						"type": "intrinsic",
+																						"name": "unknown"
+																					},
+																					{
+																						"type": "intrinsic",
+																						"name": "unknown"
+																					}
+																				],
+																				"name": "default"
 																			}
 																		],
 																		"name": "default"
@@ -1146,7 +1194,7 @@
 					"sources": [
 						{
 							"fileName": "src/core/Client.ts",
-							"line": 9,
+							"line": 10,
 							"character": 27
 						}
 					],
@@ -1157,9 +1205,13 @@
 							"kind": 131072,
 							"kindString": "Type parameter",
 							"flags": {},
+							"type": {
+								"type": "reference",
+								"name": "CacheNamespace"
+							},
 							"default": {
-								"type": "intrinsic",
-								"name": "any"
+								"type": "reference",
+								"name": "CacheNamespace"
 							}
 						}
 					],
@@ -1290,8 +1342,18 @@
 												"id": 42,
 												"typeArguments": [
 													{
-														"type": "intrinsic",
-														"name": "any"
+														"type": "reference",
+														"typeArguments": [
+															{
+																"type": "intrinsic",
+																"name": "unknown"
+															},
+															{
+																"type": "intrinsic",
+																"name": "unknown"
+															}
+														],
+														"name": "default"
 													}
 												],
 												"name": "default"
@@ -1358,8 +1420,18 @@
 								"id": 42,
 								"typeArguments": [
 									{
-										"type": "intrinsic",
-										"name": "any"
+										"type": "reference",
+										"typeArguments": [
+											{
+												"type": "intrinsic",
+												"name": "unknown"
+											},
+											{
+												"type": "intrinsic",
+												"name": "unknown"
+											}
+										],
+										"name": "default"
 									}
 								],
 								"name": "default"
@@ -1885,8 +1957,18 @@
 														"id": 42,
 														"typeArguments": [
 															{
-																"type": "intrinsic",
-																"name": "any"
+																"type": "reference",
+																"typeArguments": [
+																	{
+																		"type": "intrinsic",
+																		"name": "unknown"
+																	},
+																	{
+																		"type": "intrinsic",
+																		"name": "unknown"
+																	}
+																],
+																"name": "default"
 															}
 														],
 														"name": "default"
@@ -3909,8 +3991,18 @@
 																"id": 42,
 																"typeArguments": [
 																	{
-																		"type": "intrinsic",
-																		"name": "any"
+																		"type": "reference",
+																		"typeArguments": [
+																			{
+																				"type": "intrinsic",
+																				"name": "unknown"
+																			},
+																			{
+																				"type": "intrinsic",
+																				"name": "unknown"
+																			}
+																		],
+																		"name": "default"
 																	}
 																],
 																"name": "default"
