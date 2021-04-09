@@ -4,9 +4,10 @@ import ModuleManager from './modules/ModuleManager'
 import Module from './modules/Module'
 import RESTProvider from './providers/rest/RESTProvider'
 import CacheProvider from './providers/cache/CacheProvider'
+import CacheNamespace from '@src/core/providers/cache/CacheNamespace'
 
 /** Entry point for all of Discordoo. Manages modules and events */
-export default class Client<Cache = any> extends TypedEmitter<ClientEventHandlers> {
+export default class Client<Cache extends CacheNamespace = CacheNamespace> extends TypedEmitter<ClientEventHandlers> {
   /** Token used by this client */
   public token: string
 
