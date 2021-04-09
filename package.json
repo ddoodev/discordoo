@@ -5,7 +5,7 @@
   "exports": {
     "./core": "./dist/src/core/index.js",
     "./cache": "./dist/src/cache/index.js",
-    "./collection": "./src/dist/collection/index.js",
+    "./collection": "./dist/src/dist/collection/index.js",
     "./rest": "./dist/src/rest/index.js",
     "./util": "./dist/src/util/index.js",
     "./main": "./dist/src/main/index.js",
