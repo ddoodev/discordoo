@@ -77,19 +77,6 @@
       "eslint src --fix"
     ]
   },
-  "babel": {
-    "plugins": [
-      [
-        "module-resolver",
-        {
-          "alias": {
-            "@src": "./src",
-            "@root": "./"
-          }
-        }
-      ]
-    ]
-  },
   "dependencies": {
     "@types/node-fetch": "^2.5.9",
     "babel-plugin-module-resolver": "^4.1.0",
