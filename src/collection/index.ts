@@ -33,6 +33,16 @@ export class Collection<K, V> extends Map<K, V> {
     return new Collection<K, V>(entries.filter((v) => filter(v[1], v[0], this)))
   }
 
+  /**
+   * Execute a function on each of elements of map
+   * @param predicate - function to use
+   */
+  forEach(predicate: (value: V, key: K, collection: Collection<K, V>) => void) {
+    super.forEach((v: V, k: K, m: Map<K, V>) => {
+      predicate(v, k, new Collection<K, V>(m.entries()))
+    })
+  }
+
   /** Create a new collection based on this one */
   clone(): Collection<K, V> {
     return new Collection<K, V>([ ...this ])
