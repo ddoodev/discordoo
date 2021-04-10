@@ -1,13 +1,14 @@
-import ClientEventHandlers from './ClientEventHandlers'
-import { TypedEmitter } from 'tiny-typed-emitter'
-import ModuleManager from './modules/ModuleManager'
-import Module from './modules/Module'
-import RESTProvider from './providers/rest/RESTProvider'
-import CacheProvider from './providers/cache/CacheProvider'
-import CacheNamespace from '@src/core/providers/cache/CacheNamespace'
+import { ListenerSignature, TypedEmitter } from 'tiny-typed-emitter'
+import ModuleManager from '@src/core/modules/ModuleManager'
+import Module from '@src/core/modules/Module'
+import RESTProvider from '@src/core/providers/rest/RESTProvider'
+import CacheProvider from '@src/core/providers/cache/CacheProvider'
+import DefaultClientStack from '@src/core/DefaultClientStack'
 
 /** Entry point for all of Discordoo. Manages modules and events */
-export default class Client<Cache extends CacheNamespace = CacheNamespace> extends TypedEmitter<ClientEventHandlers> {
+export default class Client<
+  ClientStack extends DefaultClientStack = DefaultClientStack
+  > extends TypedEmitter<ListenerSignature<ClientStack['events']>> {
   /** Token used by this client */
   public token: string
 
@@ -20,10 +21,10 @@ export default class Client<Cache extends CacheNamespace = CacheNamespace> exten
   modules: ModuleManager = new ModuleManager(this)
 
   /** RESTProvider used by this module */
-  rest: RESTProvider | null = null
+  rest: RESTProvider<ClientStack['rest']> | null = null
 
   /** CacheProvider used by this module */
-  cache: CacheProvider<Cache> | null = null
+  cache: CacheProvider<ClientStack['cache']> | null = null
 
   /**
    * Get a module. Alias for module(id).
@@ -54,7 +55,7 @@ export default class Client<Cache extends CacheNamespace = CacheNamespace> exten
    * Bounds it's context to {@link Client}
    * @param provider - function, that returns desired RESTProvider
    */
-  useRESTProvider(provider: (client: Client) => RESTProvider) {
+  useRESTProvider(provider: (client: Client) => RESTProvider<ClientStack['rest']>) {
     this.rest = provider(this).bind(this)
   }
 
@@ -63,7 +64,7 @@ export default class Client<Cache extends CacheNamespace = CacheNamespace> exten
    * Bounds it's context to {@link Client}
    * @param provider - function, that returns desired CacheProvider
    */
-  useCacheProvider(provider: (client: Client) => CacheProvider<Cache>) {
+  useCacheProvider(provider: (client: Client) => CacheProvider<ClientStack['cache']>) {
     this.cache = provider(this).bind(this)
   }
 
