@@ -67,5 +67,4 @@ export default class Client<
   useCacheProvider(provider: (client: Client) => CacheProvider<ClientStack['cache']>) {
     this.cache = provider(this).bind(this)
   }
-
 }

@@ -29,5 +29,4 @@ export default class RestProviderBuilder {
       return new RESTRequestBuilder(client.token, options)
     }
   }
-
 }

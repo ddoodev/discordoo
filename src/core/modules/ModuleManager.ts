@@ -50,7 +50,6 @@ export default class ModuleManager {
    * @param async - determines if load groups shall be loaded in parallel
    */
   async init(async = false) { // using false by default to avoid some issues
-
     if (async) {
       const promises: any[] = []
 
@@ -64,16 +63,13 @@ export default class ModuleManager {
       }
 
       await Promise.all(promises)
-
     } else {
-
       for (const loadGroup of this._moduleLoadGroups) {
         for (const module of loadGroup) {
           module.init?.(this.client)
           this.modules.set(module.id, module)
         }
       }
-
     }
   }
 
