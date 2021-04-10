@@ -41,7 +41,7 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "test": "jest",
-    "build": "tsc -p tsconfig.json && tscpaths -p tsconfig.json -s ./src -o ./dist",
+    "build": "tsc -p tsconfig.json && tscpaths -p tsconfig.tspaths.json -s ./src -o ./dist",
     "docs": "typedoc",
     "utils": "node scripts/root.js"
   },
