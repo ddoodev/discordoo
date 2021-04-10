@@ -4,7 +4,7 @@ import { Client, RequestBuilder, RESTProvider } from '@src/core'
 import RESTRequestBuilder from '@src/rest/RESTRequestBuilder'
 
 /** Builds a RestProvider for {@link Client} */
-export default class RestProviderBuilder {
+export default class RESTProviderBuilder {
   /** Options for this builder */
   options: RESTOptions
 
