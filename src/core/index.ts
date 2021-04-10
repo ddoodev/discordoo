@@ -1,3 +1,6 @@
+import Base from '@src/core/structures/Base'
+import CacheProvider from '@src/core/providers/cache/CacheProvider'
+import CacheNamespace from '@src/core/providers/cache/CacheNamespace'
 import Client from '@src/core/Client'
 import ClientEventsHandlers from '@src/core/ClientEventsHandlers'
 import Module from '@src/core/modules/Module'
@@ -10,6 +13,9 @@ import RESTResponse from '@src/core/providers/rest/RESTResponse'
 import DefaultClientStack from '@src/core/DefaultClientStack'
 
 export {
+  Base,
+  CacheProvider,
+  CacheNamespace,
   Client,
   ClientEventsHandlers,
   DefaultClientStack,
