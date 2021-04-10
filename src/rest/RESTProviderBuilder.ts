@@ -14,7 +14,7 @@ export default class RESTProviderBuilder {
   constructor(
     options: RESTOptions = {
       v: 8,
-      useragent: `DiscordBot (https://discordoo.xyz, ${version})`,
+      useragent: `DiscordBot (https://github.com/Discordoo/discordoo, ${version})`,
       maxRetries: 5
     }
   ) {
