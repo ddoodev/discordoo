@@ -25,7 +25,7 @@ export default class RESTProviderBuilder {
   getRestProvider(): (client: Client) => RESTProvider {
     const options = this.options // this.options is shadowed in nested function
 
-    return (client: Client) => function (): RequestBuilder {
+    return (client: Client) => function(): RequestBuilder {
       return new RESTRequestBuilder(client.token, options)
     }
   }
