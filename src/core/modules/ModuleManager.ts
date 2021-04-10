@@ -1,6 +1,6 @@
-import Client from '../Client'
+import Client from '@src/core/Client'
 import { Collection } from '@src/collection'
-import Module from './Module'
+import Module from '@src/core/modules/Module'
 
 /**
  * Module manager for Client

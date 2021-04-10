@@ -1,6 +1,6 @@
-import RESTOptions from './RESTOptions'
-import RestProviderBuilder from './RestProviderBuilder'
-import RESTRequestBuilder from './RESTRequestBuilder'
+import RESTOptions from '@src/rest/RESTOptions'
+import RestProviderBuilder from '@src/rest/RestProviderBuilder'
+import RESTRequestBuilder from '@src/rest/RESTRequestBuilder'
 
 export {
   RESTOptions,

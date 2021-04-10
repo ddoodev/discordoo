@@ -1,4 +1,4 @@
-import Client from '../Client'
+import Client from '@src/core/Client'
 
 /** Represents a module */
 export default interface Module {

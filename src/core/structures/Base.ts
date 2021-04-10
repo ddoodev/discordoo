@@ -1,4 +1,4 @@
-import idToDate from '../../util/idToDate'
+import idToDate from '@src/util/idToDate'
 
 /**  Base structure for everything which has snowflake */
 export default class Base {

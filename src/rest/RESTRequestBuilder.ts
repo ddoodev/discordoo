@@ -1,6 +1,6 @@
 import { Constants, RequestBuilder, RequestOptions, RESTResponse } from '@src/core'
 import { URLSearchParams } from 'url'
-import RESTOptions from './RESTOptions'
+import RESTOptions from '@src/rest/RESTOptions'
 import fetch from 'node-fetch'
 
 /**

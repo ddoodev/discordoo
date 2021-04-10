@@ -1,5 +1,5 @@
-import RequestOptions from './RequestOptions'
-import RESTResponse from './RESTResponse'
+import RequestOptions from '@src/core/providers/rest/RequestOptions'
+import RESTResponse from '@src/core/providers/rest/RESTResponse'
 
 /** Represents a request builder */
 export default interface RequestBuilder {

@@ -1,7 +1,7 @@
-import RESTOptions from './RESTOptions'
+import RESTOptions from '@src/rest/RESTOptions'
 import { version } from '@root/package.json'
 import { Client, RequestBuilder, RESTProvider } from '@src/core'
-import RESTRequestBuilder from './RESTRequestBuilder'
+import RESTRequestBuilder from '@src/rest/RESTRequestBuilder'
 
 /** Builds a RestProvider for {@link Client} */
 export default class RestProviderBuilder {
