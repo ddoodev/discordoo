@@ -5,7 +5,6 @@ export default class CacheProviderBuilder {
   manager: CacheManager = new CacheManager
 
   getCacheProvider(): (client: Client) => CacheProvider {
-    console.log(this)
     const manager = this.manager // this.manager is shadowed in nested function
 
     return (client: Client) => function (id: string) {
