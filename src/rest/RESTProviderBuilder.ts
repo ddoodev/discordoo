@@ -1,6 +1,5 @@
 import RESTOptions from '@src/rest/RESTOptions'
-import { version } from '@root/package.json'
-import { Client, RequestBuilder, RESTProvider } from '@src/core'
+import { Client, Constants, RequestBuilder, RESTProvider } from '@src/core'
 import RESTRequestBuilder from '@src/rest/RESTRequestBuilder'
 
 /** Builds a RestProvider for {@link Client} */
@@ -12,11 +11,7 @@ export default class RESTProviderBuilder {
    * @param options - builder's options
    */
   constructor(
-    options: RESTOptions = {
-      v: 8,
-      useragent: `DiscordBot (https://github.com/Discordoo/discordoo, ${version})`,
-      maxRetries: 5
-    }
+    options: RESTOptions = Constants.DEFAULT_REST_OPTIONS
   ) {
     this.options = options
   }
