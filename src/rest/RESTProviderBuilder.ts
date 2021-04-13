@@ -1,5 +1,5 @@
 import RESTOptions from '@src/rest/RESTOptions'
-import { Client, Constants, RequestBuilder, RESTProvider } from '@src/core'
+import { Client, Constants, RESTProvider } from '@src/core'
 import RESTRequestBuilder from '@src/rest/RESTRequestBuilder'
 
 /** Builds a RestProvider for {@link Client} */
@@ -20,7 +20,7 @@ export default class RESTProviderBuilder {
   getRestProvider(): (client: Client) => RESTProvider {
     const options = this.options // this.options is shadowed in nested function
 
-    return (client: Client) => function(): RequestBuilder {
+    return (client: Client) => function(): RESTRequestBuilder {
       return new RESTRequestBuilder(client.token, options)
     }
   }
