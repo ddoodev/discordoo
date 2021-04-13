@@ -6,6 +6,7 @@
     "main",
     "rest",
     "util",
-    "ws"
+    "ws",
+    "wrapper"
   ]
 }
