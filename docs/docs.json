@@ -18,6 +18,10 @@
 					"kind": 128,
 					"kindString": "Class",
 					"flags": {},
+					"comment": {
+						"shortText": "Represents a cache manager",
+						"text": "Used for cache namespaces fetching\n"
+					},
 					"children": [
 						{
 							"id": 51,
@@ -46,10 +50,13 @@
 							"kind": 1024,
 							"kindString": "Property",
 							"flags": {},
+							"comment": {
+								"shortText": "Namespaces controlled by this manager"
+							},
 							"sources": [
 								{
 									"fileName": "src/cache/CacheManager.ts",
-									"line": 5,
+									"line": 11,
 									"character": 8
 								}
 							],
@@ -90,7 +97,7 @@
 							"sources": [
 								{
 									"fileName": "src/cache/CacheManager.ts",
-									"line": 7,
+									"line": 17,
 									"character": 10
 								}
 							],
@@ -101,6 +108,9 @@
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Get a cache namespace"
+									},
 									"parameters": [
 										{
 											"id": 56,
@@ -108,6 +118,9 @@
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "id of cache namespace\n"
+											},
 											"type": {
 												"type": "intrinsic",
 												"name": "string"
@@ -159,7 +172,7 @@
 					"sources": [
 						{
 							"fileName": "src/cache/CacheManager.ts",
-							"line": 4,
+							"line": 9,
 							"character": 33
 						}
 					]
@@ -170,6 +183,9 @@
 					"kind": 128,
 					"kindString": "Class",
 					"flags": {},
+					"comment": {
+						"shortText": "An adapter of {@link CacheManager} for {@link Client}"
+					},
 					"children": [
 						{
 							"id": 58,
@@ -198,10 +214,13 @@
 							"kind": 1024,
 							"kindString": "Property",
 							"flags": {},
+							"comment": {
+								"shortText": "Cache manager, adapted by this adapter"
+							},
 							"sources": [
 								{
 									"fileName": "src/cache/CacheProviderBuilder.ts",
-									"line": 5,
+									"line": 7,
 									"character": 9
 								}
 							],
@@ -221,7 +240,7 @@
 							"sources": [
 								{
 									"fileName": "src/cache/CacheProviderBuilder.ts",
-									"line": 7,
+									"line": 10,
 									"character": 18
 								}
 							],
@@ -232,6 +251,9 @@
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Get a cache provider"
+									},
 									"type": {
 										"type": "reflection",
 										"declaration": {
@@ -324,7 +346,7 @@
 					"sources": [
 						{
 							"fileName": "src/cache/CacheProviderBuilder.ts",
-							"line": 4,
+							"line": 5,
 							"character": 41
 						}
 					]
@@ -335,6 +357,9 @@
 					"kind": 128,
 					"kindString": "Class",
 					"flags": {},
+					"comment": {
+						"shortText": "Represents a cache namespace"
+					},
 					"children": [
 						{
 							"id": 67,
@@ -397,10 +422,13 @@
 							"kind": 1024,
 							"kindString": "Property",
 							"flags": {},
+							"comment": {
+								"shortText": "Collection used by this cache namespace"
+							},
 							"sources": [
 								{
 									"fileName": "src/cache/CollectionCacheNamespace.ts",
-									"line": 5,
+									"line": 7,
 									"character": 6
 								}
 							],
@@ -430,7 +458,7 @@
 							"sources": [
 								{
 									"fileName": "src/cache/CollectionCacheNamespace.ts",
-									"line": 7,
+									"line": 13,
 									"character": 14
 								}
 							],
@@ -441,6 +469,9 @@
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Delete a key from collection"
+									},
 									"parameters": [
 										{
 											"id": 74,
@@ -448,6 +479,9 @@
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "key to delete\n"
+											},
 											"type": {
 												"type": "reference",
 												"name": "K"
@@ -486,8 +520,8 @@
 							"sources": [
 								{
 									"fileName": "src/cache/CollectionCacheNamespace.ts",
-									"line": 28,
-									"character": 8
+									"line": 49,
+									"character": 14
 								}
 							],
 							"signatures": [
@@ -497,6 +531,9 @@
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "The same as {@link Collection#filter}"
+									},
 									"parameters": [
 										{
 											"id": 89,
@@ -577,18 +614,24 @@
 									],
 									"type": {
 										"type": "reference",
-										"id": 3,
 										"typeArguments": [
 											{
 												"type": "reference",
-												"name": "K"
-											},
-											{
-												"type": "reference",
-												"name": "V"
+												"id": 3,
+												"typeArguments": [
+													{
+														"type": "reference",
+														"name": "K"
+													},
+													{
+														"type": "reference",
+														"name": "V"
+													}
+												],
+												"name": "Collection"
 											}
 										],
-										"name": "Collection"
+										"name": "Promise"
 									}
 								}
 							]
@@ -602,8 +645,8 @@
 							"sources": [
 								{
 									"fileName": "src/cache/CollectionCacheNamespace.ts",
-									"line": 36,
-									"character": 9
+									"line": 59,
+									"character": 15
 								}
 							],
 							"signatures": [
@@ -613,6 +656,9 @@
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "The same as {@link Collection#forEach}"
+									},
 									"parameters": [
 										{
 											"id": 100,
@@ -692,8 +738,14 @@
 										}
 									],
 									"type": {
-										"type": "intrinsic",
-										"name": "void"
+										"type": "reference",
+										"typeArguments": [
+											{
+												"type": "intrinsic",
+												"name": "void"
+											}
+										],
+										"name": "Promise"
 									}
 								}
 							]
@@ -707,7 +759,7 @@
 							"sources": [
 								{
 									"fileName": "src/cache/CollectionCacheNamespace.ts",
-									"line": 11,
+									"line": 21,
 									"character": 11
 								}
 							],
@@ -718,6 +770,9 @@
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Get a key from collection"
+									},
 									"parameters": [
 										{
 											"id": 77,
@@ -725,6 +780,9 @@
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "key to get\n"
+											},
 											"type": {
 												"type": "reference",
 												"name": "K"
@@ -772,7 +830,7 @@
 							"sources": [
 								{
 									"fileName": "src/cache/CollectionCacheNamespace.ts",
-									"line": 15,
+									"line": 29,
 									"character": 11
 								}
 							],
@@ -783,6 +841,9 @@
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Check if collection has a key"
+									},
 									"parameters": [
 										{
 											"id": 80,
@@ -790,6 +851,9 @@
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "ket to check\n"
+											},
 											"type": {
 												"type": "reference",
 												"name": "K"
@@ -828,8 +892,8 @@
 							"sources": [
 								{
 									"fileName": "src/cache/CollectionCacheNamespace.ts",
-									"line": 32,
-									"character": 8
+									"line": 54,
+									"character": 14
 								}
 							],
 							"signatures": [
@@ -839,6 +903,9 @@
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "The same as {@link Collection#random}"
+									},
 									"parameters": [
 										{
 											"id": 97,
@@ -855,20 +922,26 @@
 										}
 									],
 									"type": {
-										"type": "union",
-										"types": [
+										"type": "reference",
+										"typeArguments": [
 											{
-												"type": "reference",
-												"name": "V"
-											},
-											{
-												"type": "array",
-												"elementType": {
-													"type": "reference",
-													"name": "V"
-												}
+												"type": "union",
+												"types": [
+													{
+														"type": "reference",
+														"name": "V"
+													},
+													{
+														"type": "array",
+														"elementType": {
+															"type": "reference",
+															"name": "V"
+														}
+													}
+												]
 											}
-										]
+										],
+										"name": "Promise"
 									}
 								}
 							]
@@ -882,7 +955,7 @@
 							"sources": [
 								{
 									"fileName": "src/cache/CollectionCacheNamespace.ts",
-									"line": 19,
+									"line": 38,
 									"character": 11
 								}
 							],
@@ -893,6 +966,9 @@
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Change key's value"
+									},
 									"parameters": [
 										{
 											"id": 83,
@@ -900,6 +976,9 @@
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "key to set"
+											},
 											"type": {
 												"type": "reference",
 												"name": "K"
@@ -911,6 +990,9 @@
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "value to set\n"
+											},
 											"type": {
 												"type": "reference",
 												"name": "V"
@@ -949,7 +1031,7 @@
 							"sources": [
 								{
 									"fileName": "src/cache/CollectionCacheNamespace.ts",
-									"line": 24,
+									"line": 44,
 									"character": 12
 								}
 							],
@@ -960,6 +1042,9 @@
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Get total elements in the collection"
+									},
 									"type": {
 										"type": "reference",
 										"typeArguments": [
@@ -1017,7 +1102,7 @@
 					"sources": [
 						{
 							"fileName": "src/cache/CollectionCacheNamespace.ts",
-							"line": 4,
+							"line": 5,
 							"character": 45
 						}
 					],
@@ -3180,6 +3265,9 @@
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Delete a key from cache"
+									},
 									"parameters": [
 										{
 											"id": 135,
@@ -3187,6 +3275,9 @@
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "cache to delete\n"
+											},
 											"type": {
 												"type": "reference",
 												"name": "K"
@@ -3219,6 +3310,9 @@
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Get value from key"
+									},
 									"parameters": [
 										{
 											"id": 128,
@@ -3226,6 +3320,9 @@
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "key to get\n"
+											},
 											"type": {
 												"type": "reference",
 												"name": "K"
@@ -3267,6 +3364,9 @@
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Check if key exists in cache"
+									},
 									"parameters": [
 										{
 											"id": 138,
@@ -3274,6 +3374,9 @@
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "key to check\n"
+											},
 											"type": {
 												"type": "reference",
 												"name": "K"
@@ -3306,6 +3409,9 @@
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Set a key to given value"
+									},
 									"parameters": [
 										{
 											"id": 131,
@@ -3313,6 +3419,9 @@
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "key to set"
+											},
 											"type": {
 												"type": "reference",
 												"name": "K"
@@ -3324,6 +3433,9 @@
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
+											"comment": {
+												"text": "value to be set\n"
+											},
 											"type": {
 												"type": "reference",
 												"name": "V"
@@ -3356,6 +3468,9 @@
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
+									"comment": {
+										"shortText": "Get size of cache"
+									},
 									"type": {
 										"type": "reference",
 										"typeArguments": [
