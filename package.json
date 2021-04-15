@@ -42,8 +42,8 @@
     }
   },
   "scripts": {
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
+    "lint": "eslint tests src",
+    "lint:fix": "eslint tests src --fix",
     "test": "jest",
     "build": "tsc -p tsconfig.json && tscpaths -p tsconfig.tspaths.json -s ./src -o ./dist",
     "docs": "typedoc",

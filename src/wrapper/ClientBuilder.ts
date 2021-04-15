@@ -1,4 +1,4 @@
-import {CacheProvider, Client, DefaultClientStack, RESTProvider} from '@src/core'
+import { CacheProvider, Client, DefaultClientStack, RESTProvider } from '@src/core'
 import { CacheProviderBuilder } from '@src/cache'
 import { RESTProviderBuilder } from '@src/rest'
 import ModuleHostModule from '@src/wrapper/ModuleHostModule'

@@ -1,7 +1,7 @@
 /** Request options */
 export default interface RequestOptions {
   /** Headers */
-  headers?: Record<string, string>,
+  headers?: Record<string, any>,
   /** Body */
-  body?: Record<string, string>
+  body?: Record<string, any>
 }
