@@ -418,10 +418,12 @@
 						},
 						{
 							"id": 72,
-							"name": "data",
+							"name": "#data",
 							"kind": 1024,
 							"kindString": "Property",
-							"flags": {},
+							"flags": {
+								"isPrivate": true
+							},
 							"comment": {
 								"shortText": "Collection used by this cache namespace"
 							},
@@ -429,7 +431,7 @@
 								{
 									"fileName": "src/cache/CollectionCacheNamespace.ts",
 									"line": 7,
-									"character": 6
+									"character": 7
 								}
 							],
 							"type": {
@@ -4064,6 +4066,20 @@
 							"flags": {},
 							"comment": {
 								"shortText": "body type\n"
+							},
+							"default": {
+								"type": "reference",
+								"typeArguments": [
+									{
+										"type": "intrinsic",
+										"name": "string"
+									},
+									{
+										"type": "intrinsic",
+										"name": "any"
+									}
+								],
+								"name": "Record"
 							}
 						}
 					]
@@ -4555,7 +4571,7 @@
 									},
 									{
 										"type": "intrinsic",
-										"name": "string"
+										"name": "any"
 									}
 								],
 								"name": "Record"
@@ -4588,7 +4604,7 @@
 									},
 									{
 										"type": "intrinsic",
-										"name": "string"
+										"name": "any"
 									}
 								],
 								"name": "Record"
@@ -6936,6 +6952,11 @@
 									"kindString": "Type parameter",
 									"flags": {},
 									"type": {
+										"type": "reference",
+										"id": 179,
+										"name": "default"
+									},
+									"default": {
 										"type": "reference",
 										"id": 179,
 										"name": "default"
