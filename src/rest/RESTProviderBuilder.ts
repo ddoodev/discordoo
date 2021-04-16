@@ -1,11 +1,12 @@
 import RESTOptions from '@src/rest/RESTOptions'
 import { Client, Constants, RESTProvider } from '@src/core'
 import RESTRequestBuilder from '@src/rest/RESTRequestBuilder'
+import RESTClient from '@src/rest/RESTClient'
 
 /** Builds a RestProvider for {@link Client} */
 export default class RESTProviderBuilder {
-  /** Options for this builder */
-  options: RESTOptions
+  /** {@link RESTClient} used by this builder */
+  client: RESTClient
 
   /**
    * @param options - builder's options
@@ -13,15 +14,15 @@ export default class RESTProviderBuilder {
   constructor(
     options: RESTOptions = Constants.DEFAULT_REST_OPTIONS
   ) {
-    this.options = options
+    this.client = new RESTClient('random token, because it will be overridden', options)
   }
 
   /** Get rest provider */
   getRestProvider(): (client: Client) => RESTProvider {
-    const options = this.options // this.options is shadowed in nested function
+    const restClient = this.client // this is shadowed
 
     return (client: Client) => function(): RESTRequestBuilder {
-      return new RESTRequestBuilder(client.token, options)
+      return restClient.request(client.token)
     }
   }
 }
