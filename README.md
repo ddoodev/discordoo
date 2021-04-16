@@ -33,13 +33,10 @@ Most of the stuff described here is not done yet, and we are just planning to im
 It is designed to be scalable, fast and customizable.
 It provides a set of tools, like easy-to-use project generator, official framework(see `@discordoo/commander`).
 
-## The Why
-There are a lot of great projects for Discord bot development, especially for node.js.  
-However, most of them don't solve scaling and distribution issues. There are some
-projects, which solve the issue - WeatherStack is a great example.
-But it is still pretty complicated. That's why we decided to create **Discordoo** which is designed
-to solve the issue in easy and elegant way. It is simple but yet scalable.
-Discordoo simplifies and boosts Discord bots.
+## Why Discordoo?
+* It's fast
+* It's modular
+* It's simple
 
 ## Open-source and free
 Discordoo is completely free and open-source! It is licensed under MIT license, so you can use it anyway you want as long
