@@ -4882,23 +4882,22 @@
 						},
 						{
 							"id": 265,
-							"name": "options",
+							"name": "client",
 							"kind": 1024,
 							"kindString": "Property",
 							"flags": {},
 							"comment": {
-								"shortText": "Options for this builder"
+								"shortText": "{@link RESTClient} used by this builder"
 							},
 							"sources": [
 								{
 									"fileName": "src/rest/RESTProviderBuilder.ts",
-									"line": 8,
-									"character": 9
+									"line": 9,
+									"character": 8
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 257,
 								"name": "default"
 							}
 						},
@@ -4911,7 +4910,7 @@
 							"sources": [
 								{
 									"fileName": "src/rest/RESTProviderBuilder.ts",
-									"line": 20,
+									"line": 21,
 									"character": 17
 								}
 							],
@@ -5007,7 +5006,7 @@
 					"sources": [
 						{
 							"fileName": "src/rest/RESTProviderBuilder.ts",
-							"line": 6,
+							"line": 7,
 							"character": 40
 						}
 					]
