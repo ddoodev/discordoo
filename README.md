@@ -2,7 +2,7 @@
 <img width="420" src="https://user-images.githubusercontent.com/44965055/113192570-98562000-9267-11eb-966f-ea562bbb1f85.png" alt="">
 </p>
 <p align="center">
-<b>Discord bots. Simplified and boosted 🚀</b>
+<b>Discord bots. Simplified and boosted</b>
 </p>
 
 <p align="center">
@@ -29,19 +29,17 @@
 Most of the stuff described here is not done yet, and we are just planning to implement it
 
 ## About
-**[Discordoo](https://discordoo.xyz)** is a **modular and powerful** node.js library to interact with the Discord API.
-It is designed to be scalable, fast and customizable.
-It provides a set of tools, like easy-to-use project generator, official framework(see `@discordoo/commander`).
+Discordoo is a Discord API library interface. It was built from ground-up to provide better APIs, both internal and external.
 
-## Why Discordoo?
-* It's fast
-* It's modular
-* It's simple
+In general, Discordoo was designed to be completely modular. Each thing, such as Gateway provider or
+cache storage can be replaced with anything you have written/installed from npm.
 
-## Open-source and free
-Discordoo is completely free and open-source! It is licensed under MIT license, so you can use it anyway you want as long
-as you follow MIT license.  
-At the moment, project is maintained by [@kislball](https://github.com/kislball) and by [@Mirdukkk](https://github.com/mirdukkk)
+Moreover, we designed Discordoo to be simple to use. For example, you don't need to use non-sense
+like `broadcastEval` to get info from another shard. You always work with cache like you normally
+would when using a collection. Even more, Discordoo abstracts you from hard things without limiting you to simple APIs. 
+
+In addition, Discordoo also can be used in different ways. If you don't need Gateway, 
+why use it? Use nothing but `RESTClient` - the thing you actually need.
 
 ## Getting started
 
@@ -55,20 +53,6 @@ $ npm init @discordoo
 Answer simple questions, and it will have the project scaffolded for you. Simple, isn't it?
 
 Wanna see more? Go [here](https://discordoo.xyz/guide/getting-started) to explore all of Discordoo!
-
-### Packages
-Discordoo has the only root package - `discordoo`.
-It contains all modules and stuff.
-
-Name | Description
---- | ---
-cache | Implements caching logic
-collection | An utillity data structure which is used within the library
-core | Contains pure client and interface that modules have to implement
-main | Exports everything from every module and contains client with preloaded modules
-rest | Works with Discord's HTTP API
-util | Internal things for the library
-ws | Works with Discord's gateway via WebSocket
 
 ## Contributing
 Feel free to create a PR, but check if there is an existing one.
