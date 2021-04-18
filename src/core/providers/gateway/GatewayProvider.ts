@@ -8,7 +8,7 @@ interface GatewayProviderUtils {
   send: (payload: GatewaySendPayload) => Promise<void>
 }
 
-type GatewayProvider<T extends GatewayProviderUtils = GatewayProviderUtils> = () => GatewayProviderSub & T
+type GatewayProvider<T extends GatewayProviderUtils = GatewayProviderUtils> = GatewayProviderSub & T
 
 export {
   GatewayProviderSub,
