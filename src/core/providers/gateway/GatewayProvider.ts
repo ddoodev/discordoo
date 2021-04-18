@@ -1,17 +1,17 @@
-import { GatewayReceivePayload, GatewaySendPayload } from 'discord-api-types'
+import { GatewaySendPayload } from 'discord-api-types'
+import { TypedEmitter } from 'tiny-typed-emitter'
+import GatewayProviderEvents from '@src/core/providers/gateway/GatewayProviderEvents'
+import GatewayStatus from '@src/core/providers/gateway/GatewayStatus'
 
-type GatewayProviderSub = (callback: (message: GatewayReceivePayload) => any) => void
-
-interface GatewayProviderUtils {
-  error: (callback: () => any) => void
-  prepare: (token: string) => Promise<void>
-  send: (payload: GatewaySendPayload) => Promise<void>
+interface GatewayProviderAPI extends TypedEmitter<GatewayProviderEvents> {
+  send: (msg: GatewaySendPayload) => Promise<void>
+  status: GatewayStatus
+  start: (token: string) => Promise<void>
 }
 
-type GatewayProvider<T extends GatewayProviderUtils = GatewayProviderUtils> = GatewayProviderSub & T
+type GatewayProvider<T extends GatewayProviderAPI = GatewayProviderAPI> = () => T
 
 export {
-  GatewayProviderSub,
-  GatewayProviderUtils,
-  GatewayProvider
+  GatewayProvider,
+  GatewayProviderAPI
 }
