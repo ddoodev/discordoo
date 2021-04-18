@@ -4,6 +4,7 @@ import Module from '@src/core/modules/Module'
 import RESTProvider from '@src/core/providers/rest/RESTProvider'
 import CacheProvider from '@src/core/providers/cache/CacheProvider'
 import DefaultClientStack from '@src/core/DefaultClientStack'
+import { GatewayProvider } from '@src/core/providers/gateway/GatewayProvider'
 
 /** Entry point for all of Discordoo. Manages modules and events */
 export default class Client<
@@ -25,6 +26,9 @@ export default class Client<
 
   /** CacheProvider used by this module */
   cache: CacheProvider<ClientStack['cache']> | null = null
+  
+  /** GatewayProvider used by this module */
+  gateway: GatewayProvider<ClientStack['gateway']> | null = null
 
   /**
    * Get a module. Alias for module(id).
@@ -66,5 +70,14 @@ export default class Client<
    */
   useCacheProvider(provider: (client: Client) => CacheProvider<ClientStack['cache']>) {
     this.cache = provider(this).bind(this)
+  }
+
+  /**
+   * Set the {@link CacheProvider} to be used by this client
+   * Bounds it's context to {@link Client}
+   * @param provider - function, that returns desired CacheProvider
+   */
+  useGatewayProvider(provider: (client: Client) => GatewayProvider<ClientStack['gateway']>) {
+    this.gateway = provider(this).bind(this) as GatewayProvider<ClientStack['gateway']>
   }
 }

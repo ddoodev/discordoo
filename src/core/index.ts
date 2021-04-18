@@ -3,6 +3,7 @@ import CacheProvider from '@src/core/providers/cache/CacheProvider'
 import CacheNamespace from '@src/core/providers/cache/CacheNamespace'
 import Client from '@src/core/Client'
 import ClientEventsHandlers from '@src/core/ClientEventsHandlers'
+import { GatewayProvider, GatewayProviderUtils, GatewayProviderSub } from '@src/core/providers/gateway/GatewayProvider'
 import Module from '@src/core/modules/Module'
 import ModuleManager from '@src/core/modules/ModuleManager'
 import RequestBuilder from '@src/core/providers/rest/RequestBuilder'
@@ -18,6 +19,9 @@ export {
   CacheNamespace,
   Client,
   ClientEventsHandlers,
+  GatewayProvider,
+  GatewayProviderSub,
+  GatewayProviderUtils,
   DefaultClientStack,
   Module,
   ModuleManager,
