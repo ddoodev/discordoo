@@ -26,7 +26,7 @@ export default class Client<
 
   /** CacheProvider used by this module */
   cache: CacheProvider<ClientStack['cache']> | null = null
-  
+
   /** GatewayProvider used by this module */
   gateway: GatewayProvider<ClientStack['gateway']> | null = null
 
@@ -78,6 +78,6 @@ export default class Client<
    * @param provider - function, that returns desired CacheProvider
    */
   useGatewayProvider(provider: (client: Client) => GatewayProvider<ClientStack['gateway']>) {
-    this.gateway = provider(this).bind(this) as GatewayProvider<ClientStack['gateway']>
+    this.gateway = provider(this).bind(this)
   }
 }
