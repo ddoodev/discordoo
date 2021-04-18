@@ -9,9 +9,7 @@ Please, follow [our code of conduct](CODE_OF_CONDUCT.md). You'll be treated the 
 ### Commit-style
 Discordoo uses [conventional commits](https://www.conventionalcommits.org/en/v1.0.0-beta.2/) for its commits.
 You should also use Present Simple for commits(wasn't followed during base development). You should write sentences so 
-they show what will the code do after you've done the commit. E.g. ~~The library will~~ export some important interfaces.  
-But in some cases it doesn't apply to some changes, docs changes for 
-an instance. In that case you describe what the commit does, e.g. ~~This commit does~~ change readme.
+they show what does the code changes contain. E.g. ~~This commit does~~ add export some important interfaces.  
 
 ### Branching
 Discordoo uses three types of branches: features, master and release.
