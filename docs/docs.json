@@ -282,7 +282,7 @@
 																"typeArguments": [
 																	{
 																		"type": "reference",
-																		"id": 179,
+																		"id": 210,
 																		"name": "default"
 																	}
 																],
@@ -2099,12 +2099,12 @@
 											"flags": {},
 											"type": {
 												"type": "reference",
-												"id": 179,
+												"id": 210,
 												"name": "default"
 											},
 											"default": {
 												"type": "reference",
-												"id": 179,
+												"id": 210,
 												"name": "default"
 											}
 										}
@@ -2156,7 +2156,7 @@
 							"sources": [
 								{
 									"fileName": "src/core/Client.ts",
-									"line": 27,
+									"line": 28,
 									"character": 7
 								}
 							],
@@ -2190,6 +2190,51 @@
 							"defaultValue": "null"
 						},
 						{
+							"id": 153,
+							"name": "gateway",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"comment": {
+								"shortText": "GatewayProvider used by this module"
+							},
+							"sources": [
+								{
+									"fileName": "src/core/Client.ts",
+									"line": 31,
+									"character": 9
+								}
+							],
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "literal",
+										"value": null
+									},
+									{
+										"type": "reference",
+										"id": 186,
+										"typeArguments": [
+											{
+												"type": "indexedAccess",
+												"indexType": {
+													"type": "literal",
+													"value": "gateway"
+												},
+												"objectType": {
+													"type": "reference",
+													"name": "ClientStack"
+												}
+											}
+										],
+										"name": "GatewayProvider"
+									}
+								]
+							},
+							"defaultValue": "null"
+						},
+						{
 							"id": 150,
 							"name": "modules",
 							"kind": 1024,
@@ -2201,13 +2246,13 @@
 							"sources": [
 								{
 									"fileName": "src/core/Client.ts",
-									"line": 21,
+									"line": 22,
 									"character": 9
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 193,
+								"id": 225,
 								"name": "default"
 							},
 							"defaultValue": "..."
@@ -2224,7 +2269,7 @@
 							"sources": [
 								{
 									"fileName": "src/core/Client.ts",
-									"line": 24,
+									"line": 25,
 									"character": 6
 								}
 							],
@@ -2237,7 +2282,7 @@
 									},
 									{
 										"type": "reference",
-										"id": 243,
+										"id": 275,
 										"typeArguments": [
 											{
 												"type": "indexedAccess",
@@ -2271,7 +2316,7 @@
 							"sources": [
 								{
 									"fileName": "src/core/Client.ts",
-									"line": 13,
+									"line": 14,
 									"character": 14
 								}
 							],
@@ -2281,7 +2326,7 @@
 							}
 						},
 						{
-							"id": 153,
+							"id": 154,
 							"name": "m",
 							"kind": 2048,
 							"kindString": "Method",
@@ -2289,13 +2334,13 @@
 							"sources": [
 								{
 									"fileName": "src/core/Client.ts",
-									"line": 33,
+									"line": 37,
 									"character": 3
 								}
 							],
 							"signatures": [
 								{
-									"id": 154,
+									"id": 155,
 									"name": "m",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -2305,7 +2350,7 @@
 									},
 									"parameters": [
 										{
-											"id": 155,
+											"id": 156,
 											"name": "id",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -2337,7 +2382,7 @@
 											},
 											{
 												"type": "reference",
-												"id": 183,
+												"id": 215,
 												"name": "default"
 											}
 										]
@@ -2346,7 +2391,7 @@
 							]
 						},
 						{
-							"id": 156,
+							"id": 157,
 							"name": "module",
 							"kind": 2048,
 							"kindString": "Method",
@@ -2354,13 +2399,13 @@
 							"sources": [
 								{
 									"fileName": "src/core/Client.ts",
-									"line": 41,
+									"line": 45,
 									"character": 8
 								}
 							],
 							"signatures": [
 								{
-									"id": 157,
+									"id": 158,
 									"name": "module",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -2370,7 +2415,7 @@
 									},
 									"parameters": [
 										{
-											"id": 158,
+											"id": 159,
 											"name": "id",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -2402,7 +2447,7 @@
 											},
 											{
 												"type": "reference",
-												"id": 183,
+												"id": 215,
 												"name": "default"
 											}
 										]
@@ -2411,7 +2456,7 @@
 							]
 						},
 						{
-							"id": 159,
+							"id": 160,
 							"name": "use",
 							"kind": 2048,
 							"kindString": "Method",
@@ -2419,13 +2464,13 @@
 							"sources": [
 								{
 									"fileName": "src/core/Client.ts",
-									"line": 49,
+									"line": 53,
 									"character": 5
 								}
 							],
 							"signatures": [
 								{
-									"id": 160,
+									"id": 161,
 									"name": "use",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -2435,7 +2480,7 @@
 									},
 									"parameters": [
 										{
-											"id": 161,
+											"id": 162,
 											"name": "modules",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -2449,7 +2494,7 @@
 												"type": "array",
 												"elementType": {
 													"type": "reference",
-													"id": 183,
+													"id": 215,
 													"name": "default"
 												}
 											}
@@ -2463,7 +2508,7 @@
 							]
 						},
 						{
-							"id": 168,
+							"id": 169,
 							"name": "useCacheProvider",
 							"kind": 2048,
 							"kindString": "Method",
@@ -2471,13 +2516,13 @@
 							"sources": [
 								{
 									"fileName": "src/core/Client.ts",
-									"line": 67,
+									"line": 71,
 									"character": 18
 								}
 							],
 							"signatures": [
 								{
-									"id": 169,
+									"id": 170,
 									"name": "useCacheProvider",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -2487,7 +2532,7 @@
 									},
 									"parameters": [
 										{
-											"id": 170,
+											"id": 171,
 											"name": "provider",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -2498,21 +2543,21 @@
 											"type": {
 												"type": "reflection",
 												"declaration": {
-													"id": 171,
+													"id": 172,
 													"name": "__type",
 													"kind": 65536,
 													"kindString": "Type literal",
 													"flags": {},
 													"signatures": [
 														{
-															"id": 172,
+															"id": 173,
 															"name": "__type",
 															"kind": 4096,
 															"kindString": "Call signature",
 															"flags": {},
 															"parameters": [
 																{
-																	"id": 173,
+																	"id": 174,
 																	"name": "client",
 																	"kind": 32768,
 																	"kindString": "Parameter",
@@ -2523,7 +2568,7 @@
 																		"typeArguments": [
 																			{
 																				"type": "reference",
-																				"id": 179,
+																				"id": 210,
 																				"name": "default"
 																			}
 																		],
@@ -2563,56 +2608,56 @@
 							]
 						},
 						{
-							"id": 162,
-							"name": "useRESTProvider",
+							"id": 175,
+							"name": "useGatewayProvider",
 							"kind": 2048,
 							"kindString": "Method",
 							"flags": {},
 							"sources": [
 								{
 									"fileName": "src/core/Client.ts",
-									"line": 58,
-									"character": 17
+									"line": 80,
+									"character": 20
 								}
 							],
 							"signatures": [
 								{
-									"id": 163,
-									"name": "useRESTProvider",
+									"id": 176,
+									"name": "useGatewayProvider",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
 									"comment": {
-										"shortText": "Set the {@link RESTProvider} to be used by this client\nBounds it's context to {@link Client}"
+										"shortText": "Set the {@link CacheProvider} to be used by this client\nBounds it's context to {@link Client}"
 									},
 									"parameters": [
 										{
-											"id": 164,
+											"id": 177,
 											"name": "provider",
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
 											"comment": {
-												"text": "function, that returns desired RESTProvider\n"
+												"text": "function, that returns desired CacheProvider\n"
 											},
 											"type": {
 												"type": "reflection",
 												"declaration": {
-													"id": 165,
+													"id": 178,
 													"name": "__type",
 													"kind": 65536,
 													"kindString": "Type literal",
 													"flags": {},
 													"signatures": [
 														{
-															"id": 166,
+															"id": 179,
 															"name": "__type",
 															"kind": 4096,
 															"kindString": "Call signature",
 															"flags": {},
 															"parameters": [
 																{
-																	"id": 167,
+																	"id": 180,
 																	"name": "client",
 																	"kind": 32768,
 																	"kindString": "Parameter",
@@ -2623,7 +2668,7 @@
 																		"typeArguments": [
 																			{
 																				"type": "reference",
-																				"id": 179,
+																				"id": 210,
 																				"name": "default"
 																			}
 																		],
@@ -2633,7 +2678,107 @@
 															],
 															"type": {
 																"type": "reference",
-																"id": 243,
+																"id": 186,
+																"typeArguments": [
+																	{
+																		"type": "indexedAccess",
+																		"indexType": {
+																			"type": "literal",
+																			"value": "gateway"
+																		},
+																		"objectType": {
+																			"type": "reference",
+																			"name": "ClientStack"
+																		}
+																	}
+																],
+																"name": "GatewayProvider"
+															}
+														}
+													]
+												}
+											}
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "void"
+									}
+								}
+							]
+						},
+						{
+							"id": 163,
+							"name": "useRESTProvider",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "src/core/Client.ts",
+									"line": 62,
+									"character": 17
+								}
+							],
+							"signatures": [
+								{
+									"id": 164,
+									"name": "useRESTProvider",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"comment": {
+										"shortText": "Set the {@link RESTProvider} to be used by this client\nBounds it's context to {@link Client}"
+									},
+									"parameters": [
+										{
+											"id": 165,
+											"name": "provider",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"comment": {
+												"text": "function, that returns desired RESTProvider\n"
+											},
+											"type": {
+												"type": "reflection",
+												"declaration": {
+													"id": 166,
+													"name": "__type",
+													"kind": 65536,
+													"kindString": "Type literal",
+													"flags": {},
+													"signatures": [
+														{
+															"id": 167,
+															"name": "__type",
+															"kind": 4096,
+															"kindString": "Call signature",
+															"flags": {},
+															"parameters": [
+																{
+																	"id": 168,
+																	"name": "client",
+																	"kind": 32768,
+																	"kindString": "Parameter",
+																	"flags": {},
+																	"type": {
+																		"type": "reference",
+																		"id": 144,
+																		"typeArguments": [
+																			{
+																				"type": "reference",
+																				"id": 210,
+																				"name": "default"
+																			}
+																		],
+																		"name": "default"
+																	}
+																}
+															],
+															"type": {
+																"type": "reference",
+																"id": 275,
 																"typeArguments": [
 																	{
 																		"type": "indexedAccess",
@@ -2676,6 +2821,7 @@
 							"kind": 1024,
 							"children": [
 								152,
+								153,
 								150,
 								151,
 								149
@@ -2685,36 +2831,37 @@
 							"title": "Methods",
 							"kind": 2048,
 							"children": [
-								153,
-								156,
-								159,
-								168,
-								162
+								154,
+								157,
+								160,
+								169,
+								175,
+								163
 							]
 						}
 					],
 					"sources": [
 						{
 							"fileName": "src/core/Client.ts",
-							"line": 9,
+							"line": 10,
 							"character": 27
 						}
 					],
 					"typeParameter": [
 						{
-							"id": 174,
+							"id": 181,
 							"name": "ClientStack",
 							"kind": 131072,
 							"kindString": "Type parameter",
 							"flags": {},
 							"type": {
 								"type": "reference",
-								"id": 179,
+								"id": 210,
 								"name": "DefaultClientStack"
 							},
 							"default": {
 								"type": "reference",
-								"id": 179,
+								"id": 210,
 								"name": "DefaultClientStack"
 							}
 						}
@@ -2746,35 +2893,35 @@
 					]
 				},
 				{
-					"id": 247,
+					"id": 279,
 					"name": "Constants",
 					"kind": 128,
 					"kindString": "Class",
 					"flags": {},
 					"children": [
 						{
-							"id": 250,
+							"id": 282,
 							"name": "constructor",
 							"kind": 512,
 							"kindString": "Constructor",
 							"flags": {},
 							"signatures": [
 								{
-									"id": 251,
+									"id": 283,
 									"name": "new Constants",
 									"kind": 16384,
 									"kindString": "Constructor signature",
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"id": 247,
+										"id": 279,
 										"name": "default"
 									}
 								}
 							]
 						},
 						{
-							"id": 248,
+							"id": 280,
 							"name": "API_ENDPOINT",
 							"kind": 1024,
 							"kindString": "Property",
@@ -2795,7 +2942,7 @@
 							"defaultValue": "'https://discord.com/api'"
 						},
 						{
-							"id": 249,
+							"id": 281,
 							"name": "DEFAULT_REST_OPTIONS",
 							"kind": 1024,
 							"kindString": "Property",
@@ -2811,7 +2958,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 267,
+								"id": 299,
 								"name": "default"
 							},
 							"defaultValue": "..."
@@ -2822,15 +2969,15 @@
 							"title": "Constructors",
 							"kind": 512,
 							"children": [
-								250
+								282
 							]
 						},
 						{
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								248,
-								249
+								280,
+								281
 							]
 						}
 					],
@@ -2843,7 +2990,7 @@
 					]
 				},
 				{
-					"id": 193,
+					"id": 225,
 					"name": "ModuleManager",
 					"kind": 128,
 					"kindString": "Class",
@@ -2853,14 +3000,14 @@
 					},
 					"children": [
 						{
-							"id": 194,
+							"id": 226,
 							"name": "constructor",
 							"kind": 512,
 							"kindString": "Constructor",
 							"flags": {},
 							"signatures": [
 								{
-									"id": 195,
+									"id": 227,
 									"name": "new ModuleManager",
 									"kind": 16384,
 									"kindString": "Constructor signature",
@@ -2868,7 +3015,7 @@
 									"comment": {},
 									"parameters": [
 										{
-											"id": 196,
+											"id": 228,
 											"name": "client",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -2882,7 +3029,7 @@
 												"typeArguments": [
 													{
 														"type": "reference",
-														"id": 179,
+														"id": 210,
 														"name": "default"
 													}
 												],
@@ -2892,14 +3039,14 @@
 									],
 									"type": {
 										"type": "reference",
-										"id": 193,
+										"id": 225,
 										"name": "default"
 									}
 								}
 							]
 						},
 						{
-							"id": 198,
+							"id": 230,
 							"name": "_moduleLoadGroups",
 							"kind": 1024,
 							"kindString": "Property",
@@ -2922,7 +3069,7 @@
 									"type": "array",
 									"elementType": {
 										"type": "reference",
-										"id": 183,
+										"id": 215,
 										"name": "default"
 									}
 								}
@@ -2930,7 +3077,7 @@
 							"defaultValue": "..."
 						},
 						{
-							"id": 199,
+							"id": 231,
 							"name": "client",
 							"kind": 1024,
 							"kindString": "Property",
@@ -2951,7 +3098,7 @@
 								"typeArguments": [
 									{
 										"type": "reference",
-										"id": 179,
+										"id": 210,
 										"name": "default"
 									}
 								],
@@ -2959,7 +3106,7 @@
 							}
 						},
 						{
-							"id": 197,
+							"id": 229,
 							"name": "modules",
 							"kind": 1024,
 							"kindString": "Property",
@@ -2993,7 +3140,7 @@
 									},
 									{
 										"type": "reference",
-										"id": 183,
+										"id": 215,
 										"name": "default"
 									}
 								],
@@ -3002,7 +3149,7 @@
 							"defaultValue": "..."
 						},
 						{
-							"id": 200,
+							"id": 232,
 							"name": "createLoadGroup",
 							"kind": 2048,
 							"kindString": "Method",
@@ -3016,7 +3163,7 @@
 							],
 							"signatures": [
 								{
-									"id": 201,
+									"id": 233,
 									"name": "createLoadGroup",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -3027,7 +3174,7 @@
 									},
 									"parameters": [
 										{
-											"id": 202,
+											"id": 234,
 											"name": "modules",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -3041,7 +3188,7 @@
 												"type": "array",
 												"elementType": {
 													"type": "reference",
-													"id": 183,
+													"id": 215,
 													"name": "default"
 												}
 											}
@@ -3055,7 +3202,7 @@
 							]
 						},
 						{
-							"id": 209,
+							"id": 241,
 							"name": "getModule",
 							"kind": 2048,
 							"kindString": "Method",
@@ -3069,7 +3216,7 @@
 							],
 							"signatures": [
 								{
-									"id": 210,
+									"id": 242,
 									"name": "getModule",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -3079,7 +3226,7 @@
 									},
 									"parameters": [
 										{
-											"id": 211,
+											"id": 243,
 											"name": "id",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -3111,7 +3258,7 @@
 											},
 											{
 												"type": "reference",
-												"id": 183,
+												"id": 215,
 												"name": "default"
 											}
 										]
@@ -3120,7 +3267,7 @@
 							]
 						},
 						{
-							"id": 206,
+							"id": 238,
 							"name": "init",
 							"kind": 2048,
 							"kindString": "Method",
@@ -3134,7 +3281,7 @@
 							],
 							"signatures": [
 								{
-									"id": 207,
+									"id": 239,
 									"name": "init",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -3144,7 +3291,7 @@
 									},
 									"parameters": [
 										{
-											"id": 208,
+											"id": 240,
 											"name": "async",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -3173,7 +3320,7 @@
 							]
 						},
 						{
-							"id": 203,
+							"id": 235,
 							"name": "use",
 							"kind": 2048,
 							"kindString": "Method",
@@ -3187,7 +3334,7 @@
 							],
 							"signatures": [
 								{
-									"id": 204,
+									"id": 236,
 									"name": "use",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -3197,7 +3344,7 @@
 									},
 									"parameters": [
 										{
-											"id": 205,
+											"id": 237,
 											"name": "modules",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -3211,7 +3358,7 @@
 												"type": "array",
 												"elementType": {
 													"type": "reference",
-													"id": 183,
+													"id": 215,
 													"name": "default"
 												}
 											}
@@ -3230,26 +3377,26 @@
 							"title": "Constructors",
 							"kind": 512,
 							"children": [
-								194
+								226
 							]
 						},
 						{
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								198,
-								199,
-								197
+								230,
+								231,
+								229
 							]
 						},
 						{
 							"title": "Methods",
 							"kind": 2048,
 							"children": [
-								200,
-								209,
-								206,
-								203
+								232,
+								241,
+								238,
+								235
 							]
 						}
 					],
@@ -3563,7 +3710,7 @@
 					]
 				},
 				{
-					"id": 175,
+					"id": 182,
 					"name": "ClientEventsHandlers",
 					"kind": 256,
 					"kindString": "Interface",
@@ -3573,7 +3720,7 @@
 					},
 					"children": [
 						{
-							"id": 176,
+							"id": 183,
 							"name": "ready",
 							"kind": 1024,
 							"kindString": "Property",
@@ -3591,14 +3738,14 @@
 							"type": {
 								"type": "reflection",
 								"declaration": {
-									"id": 177,
+									"id": 184,
 									"name": "__type",
 									"kind": 65536,
 									"kindString": "Type literal",
 									"flags": {},
 									"signatures": [
 										{
-											"id": 178,
+											"id": 185,
 											"name": "__type",
 											"kind": 4096,
 											"kindString": "Call signature",
@@ -3618,7 +3765,7 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								176
+								183
 							]
 						}
 					],
@@ -3631,14 +3778,14 @@
 					]
 				},
 				{
-					"id": 179,
+					"id": 210,
 					"name": "DefaultClientStack",
 					"kind": 256,
 					"kindString": "Interface",
 					"flags": {},
 					"children": [
 						{
-							"id": 180,
+							"id": 211,
 							"name": "cache",
 							"kind": 1024,
 							"kindString": "Property",
@@ -3646,7 +3793,7 @@
 							"sources": [
 								{
 									"fileName": "src/core/DefaultClientStack.ts",
-									"line": 6,
+									"line": 7,
 									"character": 7
 								}
 							],
@@ -3667,7 +3814,7 @@
 							}
 						},
 						{
-							"id": 182,
+							"id": 213,
 							"name": "events",
 							"kind": 1024,
 							"kindString": "Property",
@@ -3675,18 +3822,37 @@
 							"sources": [
 								{
 									"fileName": "src/core/DefaultClientStack.ts",
-									"line": 8,
+									"line": 9,
 									"character": 8
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 175,
+								"id": 182,
 								"name": "default"
 							}
 						},
 						{
-							"id": 181,
+							"id": 214,
+							"name": "gateway",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "src/core/DefaultClientStack.ts",
+									"line": 10,
+									"character": 9
+								}
+							],
+							"type": {
+								"type": "reference",
+								"id": 195,
+								"name": "GatewayProviderUtils"
+							}
+						},
+						{
+							"id": 212,
 							"name": "rest",
 							"kind": 1024,
 							"kindString": "Property",
@@ -3694,13 +3860,13 @@
 							"sources": [
 								{
 									"fileName": "src/core/DefaultClientStack.ts",
-									"line": 7,
+									"line": 8,
 									"character": 6
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 212,
+								"id": 244,
 								"name": "default"
 							}
 						}
@@ -3710,22 +3876,231 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								180,
-								182,
-								181
+								211,
+								213,
+								214,
+								212
 							]
 						}
 					],
 					"sources": [
 						{
 							"fileName": "src/core/DefaultClientStack.ts",
-							"line": 5,
+							"line": 6,
 							"character": 43
 						}
 					]
 				},
 				{
-					"id": 183,
+					"id": 195,
+					"name": "GatewayProviderUtils",
+					"kind": 256,
+					"kindString": "Interface",
+					"flags": {},
+					"children": [
+						{
+							"id": 196,
+							"name": "error",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "src/core/providers/gateway/GatewayProvider.ts",
+									"line": 6,
+									"character": 7
+								}
+							],
+							"type": {
+								"type": "reflection",
+								"declaration": {
+									"id": 197,
+									"name": "__type",
+									"kind": 65536,
+									"kindString": "Type literal",
+									"flags": {},
+									"signatures": [
+										{
+											"id": 198,
+											"name": "__type",
+											"kind": 4096,
+											"kindString": "Call signature",
+											"flags": {},
+											"parameters": [
+												{
+													"id": 199,
+													"name": "callback",
+													"kind": 32768,
+													"kindString": "Parameter",
+													"flags": {},
+													"type": {
+														"type": "reflection",
+														"declaration": {
+															"id": 200,
+															"name": "__type",
+															"kind": 65536,
+															"kindString": "Type literal",
+															"flags": {},
+															"signatures": [
+																{
+																	"id": 201,
+																	"name": "__type",
+																	"kind": 4096,
+																	"kindString": "Call signature",
+																	"flags": {},
+																	"type": {
+																		"type": "intrinsic",
+																		"name": "any"
+																	}
+																}
+															]
+														}
+													}
+												}
+											],
+											"type": {
+												"type": "intrinsic",
+												"name": "void"
+											}
+										}
+									]
+								}
+							}
+						},
+						{
+							"id": 202,
+							"name": "prepare",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "src/core/providers/gateway/GatewayProvider.ts",
+									"line": 7,
+									"character": 9
+								}
+							],
+							"type": {
+								"type": "reflection",
+								"declaration": {
+									"id": 203,
+									"name": "__type",
+									"kind": 65536,
+									"kindString": "Type literal",
+									"flags": {},
+									"signatures": [
+										{
+											"id": 204,
+											"name": "__type",
+											"kind": 4096,
+											"kindString": "Call signature",
+											"flags": {},
+											"parameters": [
+												{
+													"id": 205,
+													"name": "token",
+													"kind": 32768,
+													"kindString": "Parameter",
+													"flags": {},
+													"type": {
+														"type": "intrinsic",
+														"name": "string"
+													}
+												}
+											],
+											"type": {
+												"type": "reference",
+												"typeArguments": [
+													{
+														"type": "intrinsic",
+														"name": "void"
+													}
+												],
+												"name": "Promise"
+											}
+										}
+									]
+								}
+							}
+						},
+						{
+							"id": 206,
+							"name": "send",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "src/core/providers/gateway/GatewayProvider.ts",
+									"line": 8,
+									"character": 6
+								}
+							],
+							"type": {
+								"type": "reflection",
+								"declaration": {
+									"id": 207,
+									"name": "__type",
+									"kind": 65536,
+									"kindString": "Type literal",
+									"flags": {},
+									"signatures": [
+										{
+											"id": 208,
+											"name": "__type",
+											"kind": 4096,
+											"kindString": "Call signature",
+											"flags": {},
+											"parameters": [
+												{
+													"id": 209,
+													"name": "payload",
+													"kind": 32768,
+													"kindString": "Parameter",
+													"flags": {},
+													"type": {
+														"type": "reference",
+														"name": "GatewaySendPayload"
+													}
+												}
+											],
+											"type": {
+												"type": "reference",
+												"typeArguments": [
+													{
+														"type": "intrinsic",
+														"name": "void"
+													}
+												],
+												"name": "Promise"
+											}
+										}
+									]
+								}
+							}
+						}
+					],
+					"groups": [
+						{
+							"title": "Properties",
+							"kind": 1024,
+							"children": [
+								196,
+								202,
+								206
+							]
+						}
+					],
+					"sources": [
+						{
+							"fileName": "src/core/providers/gateway/GatewayProvider.ts",
+							"line": 5,
+							"character": 30
+						}
+					]
+				},
+				{
+					"id": 215,
 					"name": "Module",
 					"kind": 256,
 					"kindString": "Interface",
@@ -3735,7 +4110,7 @@
 					},
 					"children": [
 						{
-							"id": 189,
+							"id": 221,
 							"name": "destroyed",
 							"kind": 1024,
 							"kindString": "Property",
@@ -3755,14 +4130,14 @@
 							"type": {
 								"type": "reflection",
 								"declaration": {
-									"id": 190,
+									"id": 222,
 									"name": "__type",
 									"kind": 65536,
 									"kindString": "Type literal",
 									"flags": {},
 									"signatures": [
 										{
-											"id": 191,
+											"id": 223,
 											"name": "__type",
 											"kind": 4096,
 											"kindString": "Call signature",
@@ -3792,7 +4167,7 @@
 							}
 						},
 						{
-							"id": 192,
+							"id": 224,
 							"name": "id",
 							"kind": 1024,
 							"kindString": "Property",
@@ -3822,7 +4197,7 @@
 							}
 						},
 						{
-							"id": 185,
+							"id": 217,
 							"name": "init",
 							"kind": 1024,
 							"kindString": "Property",
@@ -3849,21 +4224,21 @@
 							"type": {
 								"type": "reflection",
 								"declaration": {
-									"id": 186,
+									"id": 218,
 									"name": "__type",
 									"kind": 65536,
 									"kindString": "Type literal",
 									"flags": {},
 									"signatures": [
 										{
-											"id": 187,
+											"id": 219,
 											"name": "__type",
 											"kind": 4096,
 											"kindString": "Call signature",
 											"flags": {},
 											"parameters": [
 												{
-													"id": 188,
+													"id": 220,
 													"name": "client",
 													"kind": 32768,
 													"kindString": "Parameter",
@@ -3874,7 +4249,7 @@
 														"typeArguments": [
 															{
 																"type": "reference",
-																"id": 179,
+																"id": 210,
 																"name": "default"
 															}
 														],
@@ -3907,7 +4282,7 @@
 							}
 						},
 						{
-							"id": 184,
+							"id": 216,
 							"name": "initialized",
 							"kind": 1024,
 							"kindString": "Property",
@@ -3933,10 +4308,10 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								189,
-								192,
-								185,
-								184
+								221,
+								224,
+								217,
+								216
 							]
 						}
 					],
@@ -3950,13 +4325,13 @@
 					"implementedBy": [
 						{
 							"type": "reference",
-							"id": 359,
+							"id": 391,
 							"name": "ModuleHostModule"
 						}
 					]
 				},
 				{
-					"id": 252,
+					"id": 284,
 					"name": "RESTResponse",
 					"kind": 256,
 					"kindString": "Interface",
@@ -3966,7 +4341,7 @@
 					},
 					"children": [
 						{
-							"id": 253,
+							"id": 285,
 							"name": "body",
 							"kind": 1024,
 							"kindString": "Property",
@@ -3987,7 +4362,7 @@
 							}
 						},
 						{
-							"id": 255,
+							"id": 287,
 							"name": "headers",
 							"kind": 1024,
 							"kindString": "Property",
@@ -4018,7 +4393,7 @@
 							}
 						},
 						{
-							"id": 254,
+							"id": 286,
 							"name": "statusCode",
 							"kind": 1024,
 							"kindString": "Property",
@@ -4044,9 +4419,9 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								253,
-								255,
-								254
+								285,
+								287,
+								286
 							]
 						}
 					],
@@ -4059,7 +4434,7 @@
 					],
 					"typeParameter": [
 						{
-							"id": 256,
+							"id": 288,
 							"name": "T",
 							"kind": 131072,
 							"kindString": "Type parameter",
@@ -4085,7 +4460,7 @@
 					]
 				},
 				{
-					"id": 212,
+					"id": 244,
 					"name": "RequestBuilder",
 					"kind": 256,
 					"kindString": "Interface",
@@ -4095,14 +4470,14 @@
 					},
 					"children": [
 						{
-							"id": 228,
+							"id": 260,
 							"name": "delete",
 							"kind": 2048,
 							"kindString": "Method",
 							"flags": {},
 							"signatures": [
 								{
-									"id": 229,
+									"id": 261,
 									"name": "delete",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -4112,7 +4487,7 @@
 									},
 									"typeParameter": [
 										{
-											"id": 230,
+											"id": 262,
 											"name": "T",
 											"kind": 131072,
 											"kindString": "Type parameter",
@@ -4121,7 +4496,7 @@
 									],
 									"parameters": [
 										{
-											"id": 231,
+											"id": 263,
 											"name": "options",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -4131,7 +4506,7 @@
 											},
 											"type": {
 												"type": "reference",
-												"id": 240,
+												"id": 272,
 												"name": "default"
 											}
 										}
@@ -4141,7 +4516,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 252,
+												"id": 284,
 												"typeArguments": [
 													{
 														"type": "reference",
@@ -4157,14 +4532,14 @@
 							]
 						},
 						{
-							"id": 220,
+							"id": 252,
 							"name": "get",
 							"kind": 2048,
 							"kindString": "Method",
 							"flags": {},
 							"signatures": [
 								{
-									"id": 221,
+									"id": 253,
 									"name": "get",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -4174,7 +4549,7 @@
 									},
 									"typeParameter": [
 										{
-											"id": 222,
+											"id": 254,
 											"name": "T",
 											"kind": 131072,
 											"kindString": "Type parameter",
@@ -4183,7 +4558,7 @@
 									],
 									"parameters": [
 										{
-											"id": 223,
+											"id": 255,
 											"name": "options",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -4193,7 +4568,7 @@
 											},
 											"type": {
 												"type": "reference",
-												"id": 240,
+												"id": 272,
 												"name": "default"
 											}
 										}
@@ -4203,7 +4578,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 252,
+												"id": 284,
 												"typeArguments": [
 													{
 														"type": "reference",
@@ -4219,14 +4594,14 @@
 							]
 						},
 						{
-							"id": 236,
+							"id": 268,
 							"name": "patch",
 							"kind": 2048,
 							"kindString": "Method",
 							"flags": {},
 							"signatures": [
 								{
-									"id": 237,
+									"id": 269,
 									"name": "patch",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -4236,7 +4611,7 @@
 									},
 									"typeParameter": [
 										{
-											"id": 238,
+											"id": 270,
 											"name": "T",
 											"kind": 131072,
 											"kindString": "Type parameter",
@@ -4245,7 +4620,7 @@
 									],
 									"parameters": [
 										{
-											"id": 239,
+											"id": 271,
 											"name": "options",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -4255,7 +4630,7 @@
 											},
 											"type": {
 												"type": "reference",
-												"id": 240,
+												"id": 272,
 												"name": "default"
 											}
 										}
@@ -4265,7 +4640,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 252,
+												"id": 284,
 												"typeArguments": [
 													{
 														"type": "reference",
@@ -4281,14 +4656,14 @@
 							]
 						},
 						{
-							"id": 224,
+							"id": 256,
 							"name": "post",
 							"kind": 2048,
 							"kindString": "Method",
 							"flags": {},
 							"signatures": [
 								{
-									"id": 225,
+									"id": 257,
 									"name": "post",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -4298,7 +4673,7 @@
 									},
 									"typeParameter": [
 										{
-											"id": 226,
+											"id": 258,
 											"name": "T",
 											"kind": 131072,
 											"kindString": "Type parameter",
@@ -4307,7 +4682,7 @@
 									],
 									"parameters": [
 										{
-											"id": 227,
+											"id": 259,
 											"name": "options",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -4317,7 +4692,7 @@
 											},
 											"type": {
 												"type": "reference",
-												"id": 240,
+												"id": 272,
 												"name": "default"
 											}
 										}
@@ -4327,7 +4702,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 252,
+												"id": 284,
 												"typeArguments": [
 													{
 														"type": "reference",
@@ -4343,14 +4718,14 @@
 							]
 						},
 						{
-							"id": 232,
+							"id": 264,
 							"name": "put",
 							"kind": 2048,
 							"kindString": "Method",
 							"flags": {},
 							"signatures": [
 								{
-									"id": 233,
+									"id": 265,
 									"name": "put",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -4360,7 +4735,7 @@
 									},
 									"typeParameter": [
 										{
-											"id": 234,
+											"id": 266,
 											"name": "T",
 											"kind": 131072,
 											"kindString": "Type parameter",
@@ -4369,7 +4744,7 @@
 									],
 									"parameters": [
 										{
-											"id": 235,
+											"id": 267,
 											"name": "options",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -4379,7 +4754,7 @@
 											},
 											"type": {
 												"type": "reference",
-												"id": 240,
+												"id": 272,
 												"name": "default"
 											}
 										}
@@ -4389,7 +4764,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 252,
+												"id": 284,
 												"typeArguments": [
 													{
 														"type": "reference",
@@ -4405,14 +4780,14 @@
 							]
 						},
 						{
-							"id": 216,
+							"id": 248,
 							"name": "query",
 							"kind": 2048,
 							"kindString": "Method",
 							"flags": {},
 							"signatures": [
 								{
-									"id": 217,
+									"id": 249,
 									"name": "query",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -4422,7 +4797,7 @@
 									},
 									"parameters": [
 										{
-											"id": 218,
+											"id": 250,
 											"name": "k",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -4436,7 +4811,7 @@
 											}
 										},
 										{
-											"id": 219,
+											"id": 251,
 											"name": "v",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -4452,21 +4827,21 @@
 									],
 									"type": {
 										"type": "reference",
-										"id": 212,
+										"id": 244,
 										"name": "default"
 									}
 								}
 							]
 						},
 						{
-							"id": 213,
+							"id": 245,
 							"name": "url",
 							"kind": 2048,
 							"kindString": "Method",
 							"flags": {},
 							"signatures": [
 								{
-									"id": 214,
+									"id": 246,
 									"name": "url",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -4476,7 +4851,7 @@
 									},
 									"parameters": [
 										{
-											"id": 215,
+											"id": 247,
 											"name": "paths",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -4497,7 +4872,7 @@
 									],
 									"type": {
 										"type": "reference",
-										"id": 212,
+										"id": 244,
 										"name": "default"
 									}
 								}
@@ -4509,13 +4884,13 @@
 							"title": "Methods",
 							"kind": 2048,
 							"children": [
-								228,
-								220,
-								236,
-								224,
-								232,
-								216,
-								213
+								260,
+								252,
+								268,
+								256,
+								264,
+								248,
+								245
 							]
 						}
 					],
@@ -4529,13 +4904,13 @@
 					"implementedBy": [
 						{
 							"type": "reference",
-							"id": 281,
+							"id": 313,
 							"name": "RESTRequestBuilder"
 						}
 					]
 				},
 				{
-					"id": 240,
+					"id": 272,
 					"name": "RequestOptions",
 					"kind": 256,
 					"kindString": "Interface",
@@ -4545,7 +4920,7 @@
 					},
 					"children": [
 						{
-							"id": 242,
+							"id": 274,
 							"name": "body",
 							"kind": 1024,
 							"kindString": "Property",
@@ -4578,7 +4953,7 @@
 							}
 						},
 						{
-							"id": 241,
+							"id": 273,
 							"name": "headers",
 							"kind": 1024,
 							"kindString": "Property",
@@ -4616,8 +4991,8 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								242,
-								241
+								274,
+								273
 							]
 						}
 					],
@@ -4709,7 +5084,150 @@
 					}
 				},
 				{
-					"id": 243,
+					"id": 186,
+					"name": "GatewayProvider",
+					"kind": 4194304,
+					"kindString": "Type alias",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "src/core/providers/gateway/GatewayProvider.ts",
+							"line": 11,
+							"character": 20
+						}
+					],
+					"typeParameter": [
+						{
+							"id": 187,
+							"name": "T",
+							"kind": 131072,
+							"kindString": "Type parameter",
+							"flags": {},
+							"type": {
+								"type": "reference",
+								"id": 195,
+								"name": "GatewayProviderUtils"
+							},
+							"default": {
+								"type": "reference",
+								"id": 195,
+								"name": "GatewayProviderUtils"
+							}
+						}
+					],
+					"type": {
+						"type": "intersection",
+						"types": [
+							{
+								"type": "reference",
+								"id": 188,
+								"name": "GatewayProviderSub"
+							},
+							{
+								"type": "reference",
+								"name": "T"
+							}
+						]
+					}
+				},
+				{
+					"id": 188,
+					"name": "GatewayProviderSub",
+					"kind": 4194304,
+					"kindString": "Type alias",
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "src/core/providers/gateway/GatewayProvider.ts",
+							"line": 3,
+							"character": 23
+						}
+					],
+					"type": {
+						"type": "reflection",
+						"declaration": {
+							"id": 189,
+							"name": "__type",
+							"kind": 65536,
+							"kindString": "Type literal",
+							"flags": {},
+							"sources": [
+								{
+									"fileName": "src/core/providers/gateway/GatewayProvider.ts",
+									"line": 3,
+									"character": 25
+								}
+							],
+							"signatures": [
+								{
+									"id": 190,
+									"name": "__type",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"parameters": [
+										{
+											"id": 191,
+											"name": "callback",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"type": {
+												"type": "reflection",
+												"declaration": {
+													"id": 192,
+													"name": "__type",
+													"kind": 65536,
+													"kindString": "Type literal",
+													"flags": {},
+													"sources": [
+														{
+															"fileName": "src/core/providers/gateway/GatewayProvider.ts",
+															"line": 3,
+															"character": 36
+														}
+													],
+													"signatures": [
+														{
+															"id": 193,
+															"name": "__type",
+															"kind": 4096,
+															"kindString": "Call signature",
+															"flags": {},
+															"parameters": [
+																{
+																	"id": 194,
+																	"name": "message",
+																	"kind": 32768,
+																	"kindString": "Parameter",
+																	"flags": {},
+																	"type": {
+																		"type": "reference",
+																		"name": "GatewayReceivePayload"
+																	}
+																}
+															],
+															"type": {
+																"type": "intrinsic",
+																"name": "any"
+															}
+														}
+													]
+												}
+											}
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "void"
+									}
+								}
+							]
+						}
+					}
+				},
+				{
+					"id": 275,
 					"name": "RESTProvider",
 					"kind": 4194304,
 					"kindString": "Type alias",
@@ -4726,19 +5244,19 @@
 					],
 					"typeParameter": [
 						{
-							"id": 246,
+							"id": 278,
 							"name": "T",
 							"kind": 131072,
 							"kindString": "Type parameter",
 							"flags": {},
 							"type": {
 								"type": "reference",
-								"id": 212,
+								"id": 244,
 								"name": "RequestBuilder"
 							},
 							"default": {
 								"type": "reference",
-								"id": 212,
+								"id": 244,
 								"name": "RequestBuilder"
 							}
 						}
@@ -4746,7 +5264,7 @@
 					"type": {
 						"type": "reflection",
 						"declaration": {
-							"id": 244,
+							"id": 276,
 							"name": "__type",
 							"kind": 65536,
 							"kindString": "Type literal",
@@ -4760,7 +5278,7 @@
 							],
 							"signatures": [
 								{
-									"id": 245,
+									"id": 277,
 									"name": "__type",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -4782,8 +5300,8 @@
 					"children": [
 						109,
 						144,
-						247,
-						193
+						279,
+						225
 					]
 				},
 				{
@@ -4791,12 +5309,13 @@
 					"kind": 256,
 					"children": [
 						126,
-						175,
-						179,
-						183,
-						252,
-						212,
-						240
+						182,
+						210,
+						195,
+						215,
+						284,
+						244,
+						272
 					]
 				},
 				{
@@ -4804,7 +5323,9 @@
 					"kind": 4194304,
 					"children": [
 						121,
-						243
+						186,
+						188,
+						275
 					]
 				}
 			],
@@ -4831,7 +5352,7 @@
 			"flags": {},
 			"children": [
 				{
-					"id": 257,
+					"id": 289,
 					"name": "RESTClient",
 					"kind": 128,
 					"kindString": "Class",
@@ -4841,14 +5362,14 @@
 					},
 					"children": [
 						{
-							"id": 258,
+							"id": 290,
 							"name": "constructor",
 							"kind": 512,
 							"kindString": "Constructor",
 							"flags": {},
 							"signatures": [
 								{
-									"id": 259,
+									"id": 291,
 									"name": "new RESTClient",
 									"kind": 16384,
 									"kindString": "Constructor signature",
@@ -4856,7 +5377,7 @@
 									"comment": {},
 									"parameters": [
 										{
-											"id": 260,
+											"id": 292,
 											"name": "token",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -4870,7 +5391,7 @@
 											}
 										},
 										{
-											"id": 261,
+											"id": 293,
 											"name": "options",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -4880,7 +5401,7 @@
 											},
 											"type": {
 												"type": "reference",
-												"id": 267,
+												"id": 299,
 												"name": "default"
 											},
 											"defaultValue": "..."
@@ -4888,14 +5409,14 @@
 									],
 									"type": {
 										"type": "reference",
-										"id": 257,
+										"id": 289,
 										"name": "default"
 									}
 								}
 							]
 						},
 						{
-							"id": 263,
+							"id": 295,
 							"name": "options",
 							"kind": 1024,
 							"kindString": "Property",
@@ -4904,13 +5425,13 @@
 							},
 							"type": {
 								"type": "reference",
-								"id": 267,
+								"id": 299,
 								"name": "default"
 							},
 							"defaultValue": "..."
 						},
 						{
-							"id": 262,
+							"id": 294,
 							"name": "token",
 							"kind": 1024,
 							"kindString": "Property",
@@ -4923,7 +5444,7 @@
 							}
 						},
 						{
-							"id": 264,
+							"id": 296,
 							"name": "request",
 							"kind": 2048,
 							"kindString": "Method",
@@ -4937,7 +5458,7 @@
 							],
 							"signatures": [
 								{
-									"id": 265,
+									"id": 297,
 									"name": "request",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -4947,7 +5468,7 @@
 									},
 									"parameters": [
 										{
-											"id": 266,
+											"id": 298,
 											"name": "tokenOverride",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -4962,7 +5483,7 @@
 									],
 									"type": {
 										"type": "reference",
-										"id": 281,
+										"id": 313,
 										"name": "default"
 									}
 								}
@@ -4974,22 +5495,22 @@
 							"title": "Constructors",
 							"kind": 512,
 							"children": [
-								258
+								290
 							]
 						},
 						{
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								263,
-								262
+								295,
+								294
 							]
 						},
 						{
 							"title": "Methods",
 							"kind": 2048,
 							"children": [
-								264
+								296
 							]
 						}
 					],
@@ -5002,7 +5523,7 @@
 					]
 				},
 				{
-					"id": 271,
+					"id": 303,
 					"name": "RESTProviderBuilder",
 					"kind": 128,
 					"kindString": "Class",
@@ -5012,14 +5533,14 @@
 					},
 					"children": [
 						{
-							"id": 272,
+							"id": 304,
 							"name": "constructor",
 							"kind": 512,
 							"kindString": "Constructor",
 							"flags": {},
 							"signatures": [
 								{
-									"id": 273,
+									"id": 305,
 									"name": "new RESTProviderBuilder",
 									"kind": 16384,
 									"kindString": "Constructor signature",
@@ -5027,7 +5548,7 @@
 									"comment": {},
 									"parameters": [
 										{
-											"id": 274,
+											"id": 306,
 											"name": "options",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5037,7 +5558,7 @@
 											},
 											"type": {
 												"type": "reference",
-												"id": 267,
+												"id": 299,
 												"name": "default"
 											},
 											"defaultValue": "..."
@@ -5045,14 +5566,14 @@
 									],
 									"type": {
 										"type": "reference",
-										"id": 271,
+										"id": 303,
 										"name": "default"
 									}
 								}
 							]
 						},
 						{
-							"id": 275,
+							"id": 307,
 							"name": "client",
 							"kind": 1024,
 							"kindString": "Property",
@@ -5069,12 +5590,12 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 257,
+								"id": 289,
 								"name": "default"
 							}
 						},
 						{
-							"id": 276,
+							"id": 308,
 							"name": "getRestProvider",
 							"kind": 2048,
 							"kindString": "Method",
@@ -5088,7 +5609,7 @@
 							],
 							"signatures": [
 								{
-									"id": 277,
+									"id": 309,
 									"name": "getRestProvider",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -5099,21 +5620,21 @@
 									"type": {
 										"type": "reflection",
 										"declaration": {
-											"id": 278,
+											"id": 310,
 											"name": "__type",
 											"kind": 65536,
 											"kindString": "Type literal",
 											"flags": {},
 											"signatures": [
 												{
-													"id": 279,
+													"id": 311,
 													"name": "__type",
 													"kind": 4096,
 													"kindString": "Call signature",
 													"flags": {},
 													"parameters": [
 														{
-															"id": 280,
+															"id": 312,
 															"name": "client",
 															"kind": 32768,
 															"kindString": "Parameter",
@@ -5124,7 +5645,7 @@
 																"typeArguments": [
 																	{
 																		"type": "reference",
-																		"id": 179,
+																		"id": 210,
 																		"name": "default"
 																	}
 																],
@@ -5134,11 +5655,11 @@
 													],
 													"type": {
 														"type": "reference",
-														"id": 243,
+														"id": 275,
 														"typeArguments": [
 															{
 																"type": "reference",
-																"id": 212,
+																"id": 244,
 																"name": "default"
 															}
 														],
@@ -5157,21 +5678,21 @@
 							"title": "Constructors",
 							"kind": 512,
 							"children": [
-								272
+								304
 							]
 						},
 						{
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								275
+								307
 							]
 						},
 						{
 							"title": "Methods",
 							"kind": 2048,
 							"children": [
-								276
+								308
 							]
 						}
 					],
@@ -5184,7 +5705,7 @@
 					]
 				},
 				{
-					"id": 281,
+					"id": 313,
 					"name": "RESTRequestBuilder",
 					"kind": 128,
 					"kindString": "Class",
@@ -5200,14 +5721,14 @@
 					},
 					"children": [
 						{
-							"id": 282,
+							"id": 314,
 							"name": "constructor",
 							"kind": 512,
 							"kindString": "Constructor",
 							"flags": {},
 							"signatures": [
 								{
-									"id": 283,
+									"id": 315,
 									"name": "new RESTRequestBuilder",
 									"kind": 16384,
 									"kindString": "Constructor signature",
@@ -5215,7 +5736,7 @@
 									"comment": {},
 									"parameters": [
 										{
-											"id": 284,
+											"id": 316,
 											"name": "token",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5229,7 +5750,7 @@
 											}
 										},
 										{
-											"id": 285,
+											"id": 317,
 											"name": "options",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5239,21 +5760,21 @@
 											},
 											"type": {
 												"type": "reference",
-												"id": 267,
+												"id": 299,
 												"name": "default"
 											}
 										}
 									],
 									"type": {
 										"type": "reference",
-										"id": 281,
+										"id": 313,
 										"name": "default"
 									}
 								}
 							]
 						},
 						{
-							"id": 290,
+							"id": 322,
 							"name": "options",
 							"kind": 1024,
 							"kindString": "Property",
@@ -5272,12 +5793,12 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 267,
+								"id": 299,
 								"name": "default"
 							}
 						},
 						{
-							"id": 287,
+							"id": 319,
 							"name": "queryStack",
 							"kind": 1024,
 							"kindString": "Property",
@@ -5311,7 +5832,7 @@
 							"defaultValue": "..."
 						},
 						{
-							"id": 288,
+							"id": 320,
 							"name": "retries",
 							"kind": 1024,
 							"kindString": "Property",
@@ -5335,7 +5856,7 @@
 							"defaultValue": "0"
 						},
 						{
-							"id": 286,
+							"id": 318,
 							"name": "stack",
 							"kind": 1024,
 							"kindString": "Property",
@@ -5362,7 +5883,7 @@
 							"defaultValue": "..."
 						},
 						{
-							"id": 289,
+							"id": 321,
 							"name": "token",
 							"kind": 1024,
 							"kindString": "Property",
@@ -5385,7 +5906,7 @@
 							}
 						},
 						{
-							"id": 305,
+							"id": 337,
 							"name": "endpoint",
 							"kind": 262144,
 							"kindString": "Accessor",
@@ -5402,7 +5923,7 @@
 							],
 							"getSignature": [
 								{
-									"id": 306,
+									"id": 338,
 									"name": "endpoint",
 									"kind": 524288,
 									"kindString": "Get signature",
@@ -5418,7 +5939,7 @@
 							]
 						},
 						{
-							"id": 328,
+							"id": 360,
 							"name": "delete",
 							"kind": 2048,
 							"kindString": "Method",
@@ -5432,7 +5953,7 @@
 							],
 							"signatures": [
 								{
-									"id": 329,
+									"id": 361,
 									"name": "delete",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -5442,7 +5963,7 @@
 									},
 									"typeParameter": [
 										{
-											"id": 330,
+											"id": 362,
 											"name": "T",
 											"kind": 131072,
 											"kindString": "Type parameter",
@@ -5451,7 +5972,7 @@
 									],
 									"parameters": [
 										{
-											"id": 331,
+											"id": 363,
 											"name": "options",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5461,7 +5982,7 @@
 											},
 											"type": {
 												"type": "reference",
-												"id": 240,
+												"id": 272,
 												"name": "default"
 											},
 											"defaultValue": "..."
@@ -5472,7 +5993,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 252,
+												"id": 284,
 												"typeArguments": [
 													{
 														"type": "reference",
@@ -5486,19 +6007,19 @@
 									},
 									"implementationOf": {
 										"type": "reference",
-										"id": 229,
+										"id": 261,
 										"name": "RequestBuilder.delete"
 									}
 								}
 							],
 							"implementationOf": {
 								"type": "reference",
-								"id": 228,
+								"id": 260,
 								"name": "RequestBuilder.delete"
 							}
 						},
 						{
-							"id": 312,
+							"id": 344,
 							"name": "get",
 							"kind": 2048,
 							"kindString": "Method",
@@ -5512,7 +6033,7 @@
 							],
 							"signatures": [
 								{
-									"id": 313,
+									"id": 345,
 									"name": "get",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -5522,7 +6043,7 @@
 									},
 									"typeParameter": [
 										{
-											"id": 314,
+											"id": 346,
 											"name": "T",
 											"kind": 131072,
 											"kindString": "Type parameter",
@@ -5531,7 +6052,7 @@
 									],
 									"parameters": [
 										{
-											"id": 315,
+											"id": 347,
 											"name": "options",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5544,7 +6065,7 @@
 												"typeArguments": [
 													{
 														"type": "reference",
-														"id": 240,
+														"id": 272,
 														"name": "default"
 													},
 													{
@@ -5562,7 +6083,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 252,
+												"id": 284,
 												"typeArguments": [
 													{
 														"type": "reference",
@@ -5576,19 +6097,19 @@
 									},
 									"implementationOf": {
 										"type": "reference",
-										"id": 221,
+										"id": 253,
 										"name": "RequestBuilder.get"
 									}
 								}
 							],
 							"implementationOf": {
 								"type": "reference",
-								"id": 220,
+								"id": 252,
 								"name": "RequestBuilder.get"
 							}
 						},
 						{
-							"id": 291,
+							"id": 323,
 							"name": "getHeaders",
 							"kind": 2048,
 							"kindString": "Method",
@@ -5604,7 +6125,7 @@
 							],
 							"signatures": [
 								{
-									"id": 292,
+									"id": 324,
 									"name": "getHeaders",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -5614,7 +6135,7 @@
 									},
 									"parameters": [
 										{
-											"id": 293,
+											"id": 325,
 											"name": "headers",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5640,14 +6161,14 @@
 									"type": {
 										"type": "reflection",
 										"declaration": {
-											"id": 294,
+											"id": 326,
 											"name": "__type",
 											"kind": 65536,
 											"kindString": "Type literal",
 											"flags": {},
 											"children": [
 												{
-													"id": 296,
+													"id": 328,
 													"name": "Authorization",
 													"kind": 1024,
 													"kindString": "Property",
@@ -5659,7 +6180,7 @@
 													"defaultValue": "..."
 												},
 												{
-													"id": 297,
+													"id": 329,
 													"name": "Content-Type",
 													"kind": 1024,
 													"kindString": "Property",
@@ -5671,7 +6192,7 @@
 													"defaultValue": "'application/json'"
 												},
 												{
-													"id": 295,
+													"id": 327,
 													"name": "User-Agent",
 													"kind": 1024,
 													"kindString": "Property",
@@ -5688,9 +6209,9 @@
 													"title": "Properties",
 													"kind": 1024,
 													"children": [
-														296,
-														297,
-														295
+														328,
+														329,
+														327
 													]
 												}
 											]
@@ -5700,7 +6221,7 @@
 							]
 						},
 						{
-							"id": 320,
+							"id": 352,
 							"name": "patch",
 							"kind": 2048,
 							"kindString": "Method",
@@ -5714,7 +6235,7 @@
 							],
 							"signatures": [
 								{
-									"id": 321,
+									"id": 353,
 									"name": "patch",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -5724,7 +6245,7 @@
 									},
 									"typeParameter": [
 										{
-											"id": 322,
+											"id": 354,
 											"name": "T",
 											"kind": 131072,
 											"kindString": "Type parameter",
@@ -5733,7 +6254,7 @@
 									],
 									"parameters": [
 										{
-											"id": 323,
+											"id": 355,
 											"name": "options",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5743,7 +6264,7 @@
 											},
 											"type": {
 												"type": "reference",
-												"id": 240,
+												"id": 272,
 												"name": "default"
 											},
 											"defaultValue": "..."
@@ -5754,7 +6275,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 252,
+												"id": 284,
 												"typeArguments": [
 													{
 														"type": "reference",
@@ -5768,19 +6289,19 @@
 									},
 									"implementationOf": {
 										"type": "reference",
-										"id": 237,
+										"id": 269,
 										"name": "RequestBuilder.patch"
 									}
 								}
 							],
 							"implementationOf": {
 								"type": "reference",
-								"id": 236,
+								"id": 268,
 								"name": "RequestBuilder.patch"
 							}
 						},
 						{
-							"id": 316,
+							"id": 348,
 							"name": "post",
 							"kind": 2048,
 							"kindString": "Method",
@@ -5794,7 +6315,7 @@
 							],
 							"signatures": [
 								{
-									"id": 317,
+									"id": 349,
 									"name": "post",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -5804,7 +6325,7 @@
 									},
 									"typeParameter": [
 										{
-											"id": 318,
+											"id": 350,
 											"name": "T",
 											"kind": 131072,
 											"kindString": "Type parameter",
@@ -5813,7 +6334,7 @@
 									],
 									"parameters": [
 										{
-											"id": 319,
+											"id": 351,
 											"name": "options",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5823,7 +6344,7 @@
 											},
 											"type": {
 												"type": "reference",
-												"id": 240,
+												"id": 272,
 												"name": "default"
 											},
 											"defaultValue": "..."
@@ -5834,7 +6355,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 252,
+												"id": 284,
 												"typeArguments": [
 													{
 														"type": "reference",
@@ -5848,19 +6369,19 @@
 									},
 									"implementationOf": {
 										"type": "reference",
-										"id": 225,
+										"id": 257,
 										"name": "RequestBuilder.post"
 									}
 								}
 							],
 							"implementationOf": {
 								"type": "reference",
-								"id": 224,
+								"id": 256,
 								"name": "RequestBuilder.post"
 							}
 						},
 						{
-							"id": 324,
+							"id": 356,
 							"name": "put",
 							"kind": 2048,
 							"kindString": "Method",
@@ -5874,7 +6395,7 @@
 							],
 							"signatures": [
 								{
-									"id": 325,
+									"id": 357,
 									"name": "put",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -5884,7 +6405,7 @@
 									},
 									"typeParameter": [
 										{
-											"id": 326,
+											"id": 358,
 											"name": "T",
 											"kind": 131072,
 											"kindString": "Type parameter",
@@ -5893,7 +6414,7 @@
 									],
 									"parameters": [
 										{
-											"id": 327,
+											"id": 359,
 											"name": "options",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5903,7 +6424,7 @@
 											},
 											"type": {
 												"type": "reference",
-												"id": 240,
+												"id": 272,
 												"name": "default"
 											},
 											"defaultValue": "..."
@@ -5914,7 +6435,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 252,
+												"id": 284,
 												"typeArguments": [
 													{
 														"type": "reference",
@@ -5928,19 +6449,19 @@
 									},
 									"implementationOf": {
 										"type": "reference",
-										"id": 233,
+										"id": 265,
 										"name": "RequestBuilder.put"
 									}
 								}
 							],
 							"implementationOf": {
 								"type": "reference",
-								"id": 232,
+								"id": 264,
 								"name": "RequestBuilder.put"
 							}
 						},
 						{
-							"id": 298,
+							"id": 330,
 							"name": "query",
 							"kind": 2048,
 							"kindString": "Method",
@@ -5954,7 +6475,7 @@
 							],
 							"signatures": [
 								{
-									"id": 299,
+									"id": 331,
 									"name": "query",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -5964,7 +6485,7 @@
 									},
 									"parameters": [
 										{
-											"id": 300,
+											"id": 332,
 											"name": "k",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5978,7 +6499,7 @@
 											}
 										},
 										{
-											"id": 301,
+											"id": 333,
 											"name": "v",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5994,24 +6515,24 @@
 									],
 									"type": {
 										"type": "reference",
-										"id": 212,
+										"id": 244,
 										"name": "default"
 									},
 									"implementationOf": {
 										"type": "reference",
-										"id": 217,
+										"id": 249,
 										"name": "RequestBuilder.query"
 									}
 								}
 							],
 							"implementationOf": {
 								"type": "reference",
-								"id": 216,
+								"id": 248,
 								"name": "RequestBuilder.query"
 							}
 						},
 						{
-							"id": 307,
+							"id": 339,
 							"name": "request",
 							"kind": 2048,
 							"kindString": "Method",
@@ -6025,7 +6546,7 @@
 							],
 							"signatures": [
 								{
-									"id": 308,
+									"id": 340,
 									"name": "request",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -6035,7 +6556,7 @@
 									},
 									"typeParameter": [
 										{
-											"id": 309,
+											"id": 341,
 											"name": "T",
 											"kind": 131072,
 											"kindString": "Type parameter",
@@ -6044,7 +6565,7 @@
 									],
 									"parameters": [
 										{
-											"id": 310,
+											"id": 342,
 											"name": "method",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -6079,7 +6600,7 @@
 											}
 										},
 										{
-											"id": 311,
+											"id": 343,
 											"name": "options",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -6089,7 +6610,7 @@
 											},
 											"type": {
 												"type": "reference",
-												"id": 240,
+												"id": 272,
 												"name": "default"
 											},
 											"defaultValue": "..."
@@ -6100,7 +6621,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 252,
+												"id": 284,
 												"typeArguments": [
 													{
 														"type": "reference",
@@ -6116,7 +6637,7 @@
 							]
 						},
 						{
-							"id": 302,
+							"id": 334,
 							"name": "url",
 							"kind": 2048,
 							"kindString": "Method",
@@ -6130,7 +6651,7 @@
 							],
 							"signatures": [
 								{
-									"id": 303,
+									"id": 335,
 									"name": "url",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -6140,7 +6661,7 @@
 									},
 									"parameters": [
 										{
-											"id": 304,
+											"id": 336,
 											"name": "paths",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -6161,19 +6682,19 @@
 									],
 									"type": {
 										"type": "reference",
-										"id": 212,
+										"id": 244,
 										"name": "default"
 									},
 									"implementationOf": {
 										"type": "reference",
-										"id": 214,
+										"id": 246,
 										"name": "RequestBuilder.url"
 									}
 								}
 							],
 							"implementationOf": {
 								"type": "reference",
-								"id": 213,
+								"id": 245,
 								"name": "RequestBuilder.url"
 							}
 						}
@@ -6183,40 +6704,40 @@
 							"title": "Constructors",
 							"kind": 512,
 							"children": [
-								282
+								314
 							]
 						},
 						{
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								290,
-								287,
-								288,
-								286,
-								289
+								322,
+								319,
+								320,
+								318,
+								321
 							]
 						},
 						{
 							"title": "Accessors",
 							"kind": 262144,
 							"children": [
-								305
+								337
 							]
 						},
 						{
 							"title": "Methods",
 							"kind": 2048,
 							"children": [
-								328,
-								312,
-								291,
-								320,
-								316,
-								324,
-								298,
-								307,
-								302
+								360,
+								344,
+								323,
+								352,
+								348,
+								356,
+								330,
+								339,
+								334
 							]
 						}
 					],
@@ -6230,13 +6751,13 @@
 					"implementedTypes": [
 						{
 							"type": "reference",
-							"id": 212,
+							"id": 244,
 							"name": "RequestBuilder"
 						}
 					]
 				},
 				{
-					"id": 267,
+					"id": 299,
 					"name": "RESTOptions",
 					"kind": 256,
 					"kindString": "Interface",
@@ -6246,7 +6767,7 @@
 					},
 					"children": [
 						{
-							"id": 270,
+							"id": 302,
 							"name": "maxRetries",
 							"kind": 1024,
 							"kindString": "Property",
@@ -6267,7 +6788,7 @@
 							}
 						},
 						{
-							"id": 269,
+							"id": 301,
 							"name": "useragent",
 							"kind": 1024,
 							"kindString": "Property",
@@ -6288,7 +6809,7 @@
 							}
 						},
 						{
-							"id": 268,
+							"id": 300,
 							"name": "v",
 							"kind": 1024,
 							"kindString": "Property",
@@ -6314,9 +6835,9 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								270,
-								269,
-								268
+								302,
+								301,
+								300
 							]
 						}
 					],
@@ -6334,16 +6855,16 @@
 					"title": "Classes",
 					"kind": 128,
 					"children": [
-						257,
-						271,
-						281
+						289,
+						303,
+						313
 					]
 				},
 				{
 					"title": "Interfaces",
 					"kind": 256,
 					"children": [
-						267
+						299
 					]
 				}
 			],
@@ -6462,47 +6983,47 @@
 			"flags": {},
 			"children": [
 				{
-					"id": 332,
+					"id": 364,
 					"name": "ClientBuilder",
 					"kind": 128,
 					"kindString": "Class",
 					"flags": {},
 					"children": [
 						{
-							"id": 333,
+							"id": 365,
 							"name": "constructor",
 							"kind": 512,
 							"kindString": "Constructor",
 							"flags": {},
 							"signatures": [
 								{
-									"id": 334,
+									"id": 366,
 									"name": "new ClientBuilder",
 									"kind": 16384,
 									"kindString": "Constructor signature",
 									"flags": {},
 									"typeParameter": [
 										{
-											"id": 335,
+											"id": 367,
 											"name": "Stack",
 											"kind": 131072,
 											"kindString": "Type parameter",
 											"flags": {},
 											"type": {
 												"type": "reference",
-												"id": 179,
+												"id": 210,
 												"name": "default"
 											},
 											"default": {
 												"type": "reference",
-												"id": 179,
+												"id": 210,
 												"name": "default"
 											}
 										}
 									],
 									"parameters": [
 										{
-											"id": 336,
+											"id": 368,
 											"name": "token",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -6513,21 +7034,21 @@
 											}
 										},
 										{
-											"id": 337,
+											"id": 369,
 											"name": "root",
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
 											"type": {
 												"type": "reference",
-												"id": 359,
+												"id": 391,
 												"name": "default"
 											}
 										}
 									],
 									"type": {
 										"type": "reference",
-										"id": 332,
+										"id": 364,
 										"typeArguments": [
 											{
 												"type": "reference",
@@ -6540,7 +7061,7 @@
 							]
 						},
 						{
-							"id": 338,
+							"id": 370,
 							"name": "client",
 							"kind": 1024,
 							"kindString": "Property",
@@ -6565,7 +7086,7 @@
 							}
 						},
 						{
-							"id": 351,
+							"id": 383,
 							"name": "build",
 							"kind": 2048,
 							"kindString": "Method",
@@ -6579,7 +7100,7 @@
 							],
 							"signatures": [
 								{
-									"id": 352,
+									"id": 384,
 									"name": "build",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -6599,7 +7120,7 @@
 							]
 						},
 						{
-							"id": 345,
+							"id": 377,
 							"name": "cache",
 							"kind": 2048,
 							"kindString": "Method",
@@ -6613,14 +7134,14 @@
 							],
 							"signatures": [
 								{
-									"id": 346,
+									"id": 378,
 									"name": "cache",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
 									"parameters": [
 										{
-											"id": 347,
+											"id": 379,
 											"name": "provider",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -6628,21 +7149,21 @@
 											"type": {
 												"type": "reflection",
 												"declaration": {
-													"id": 348,
+													"id": 380,
 													"name": "__type",
 													"kind": 65536,
 													"kindString": "Type literal",
 													"flags": {},
 													"signatures": [
 														{
-															"id": 349,
+															"id": 381,
 															"name": "__type",
 															"kind": 4096,
 															"kindString": "Call signature",
 															"flags": {},
 															"parameters": [
 																{
-																	"id": 350,
+																	"id": 382,
 																	"name": "client",
 																	"kind": 32768,
 																	"kindString": "Parameter",
@@ -6653,7 +7174,7 @@
 																		"typeArguments": [
 																			{
 																				"type": "reference",
-																				"id": 179,
+																				"id": 210,
 																				"name": "default"
 																			}
 																		],
@@ -6691,7 +7212,7 @@
 									],
 									"type": {
 										"type": "reference",
-										"id": 332,
+										"id": 364,
 										"typeArguments": [
 											{
 												"type": "reference",
@@ -6704,7 +7225,7 @@
 							]
 						},
 						{
-							"id": 339,
+							"id": 371,
 							"name": "rest",
 							"kind": 2048,
 							"kindString": "Method",
@@ -6718,14 +7239,14 @@
 							],
 							"signatures": [
 								{
-									"id": 340,
+									"id": 372,
 									"name": "rest",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
 									"parameters": [
 										{
-											"id": 341,
+											"id": 373,
 											"name": "provider",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -6733,21 +7254,21 @@
 											"type": {
 												"type": "reflection",
 												"declaration": {
-													"id": 342,
+													"id": 374,
 													"name": "__type",
 													"kind": 65536,
 													"kindString": "Type literal",
 													"flags": {},
 													"signatures": [
 														{
-															"id": 343,
+															"id": 375,
 															"name": "__type",
 															"kind": 4096,
 															"kindString": "Call signature",
 															"flags": {},
 															"parameters": [
 																{
-																	"id": 344,
+																	"id": 376,
 																	"name": "client",
 																	"kind": 32768,
 																	"kindString": "Parameter",
@@ -6758,7 +7279,7 @@
 																		"typeArguments": [
 																			{
 																				"type": "reference",
-																				"id": 179,
+																				"id": 210,
 																				"name": "default"
 																			}
 																		],
@@ -6768,11 +7289,11 @@
 															],
 															"type": {
 																"type": "reference",
-																"id": 243,
+																"id": 275,
 																"typeArguments": [
 																	{
 																		"type": "reference",
-																		"id": 212,
+																		"id": 244,
 																		"name": "default"
 																	}
 																],
@@ -6786,7 +7307,7 @@
 									],
 									"type": {
 										"type": "reference",
-										"id": 332,
+										"id": 364,
 										"typeArguments": [
 											{
 												"type": "reference",
@@ -6804,23 +7325,23 @@
 							"title": "Constructors",
 							"kind": 512,
 							"children": [
-								333
+								365
 							]
 						},
 						{
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								338
+								370
 							]
 						},
 						{
 							"title": "Methods",
 							"kind": 2048,
 							"children": [
-								351,
-								345,
-								339
+								383,
+								377,
+								371
 							]
 						}
 					],
@@ -6833,26 +7354,26 @@
 					],
 					"typeParameter": [
 						{
-							"id": 353,
+							"id": 385,
 							"name": "Stack",
 							"kind": 131072,
 							"kindString": "Type parameter",
 							"flags": {},
 							"type": {
 								"type": "reference",
-								"id": 179,
+								"id": 210,
 								"name": "DefaultClientStack"
 							},
 							"default": {
 								"type": "reference",
-								"id": 179,
+								"id": 210,
 								"name": "DefaultClientStack"
 							}
 						}
 					]
 				},
 				{
-					"id": 359,
+					"id": 391,
 					"name": "ModuleHostModule",
 					"kind": 128,
 					"kindString": "Class",
@@ -6862,14 +7383,14 @@
 					},
 					"children": [
 						{
-							"id": 360,
+							"id": 392,
 							"name": "constructor",
 							"kind": 512,
 							"kindString": "Constructor",
 							"flags": {},
 							"signatures": [
 								{
-									"id": 361,
+									"id": 393,
 									"name": "new ModuleHostModule",
 									"kind": 16384,
 									"kindString": "Constructor signature",
@@ -6877,7 +7398,7 @@
 									"comment": {},
 									"parameters": [
 										{
-											"id": 362,
+											"id": 394,
 											"name": "modules",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -6889,7 +7410,7 @@
 												"type": "array",
 												"elementType": {
 													"type": "reference",
-													"id": 183,
+													"id": 215,
 													"name": "default"
 												}
 											}
@@ -6897,14 +7418,14 @@
 									],
 									"type": {
 										"type": "reference",
-										"id": 359,
+										"id": 391,
 										"name": "default"
 									}
 								}
 							]
 						},
 						{
-							"id": 363,
+							"id": 395,
 							"name": "id",
 							"kind": 1024,
 							"kindString": "Property",
@@ -6935,12 +7456,12 @@
 							"defaultValue": "'host-module'",
 							"implementationOf": {
 								"type": "reference",
-								"id": 192,
+								"id": 224,
 								"name": "Module.id"
 							}
 						},
 						{
-							"id": 364,
+							"id": 396,
 							"name": "initialized",
 							"kind": 1024,
 							"kindString": "Property",
@@ -6962,12 +7483,12 @@
 							"defaultValue": "false",
 							"implementationOf": {
 								"type": "reference",
-								"id": 184,
+								"id": 216,
 								"name": "Module.initialized"
 							}
 						},
 						{
-							"id": 365,
+							"id": 397,
 							"name": "modules",
 							"kind": 1024,
 							"kindString": "Property",
@@ -6986,14 +7507,14 @@
 								"type": "array",
 								"elementType": {
 									"type": "reference",
-									"id": 183,
+									"id": 215,
 									"name": "default"
 								}
 							},
 							"defaultValue": "..."
 						},
 						{
-							"id": 366,
+							"id": 398,
 							"name": "init",
 							"kind": 2048,
 							"kindString": "Method",
@@ -7010,7 +7531,7 @@
 							],
 							"signatures": [
 								{
-									"id": 367,
+									"id": 399,
 									"name": "init",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -7020,7 +7541,7 @@
 									},
 									"parameters": [
 										{
-											"id": 368,
+											"id": 400,
 											"name": "client",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -7031,7 +7552,7 @@
 												"typeArguments": [
 													{
 														"type": "reference",
-														"id": 179,
+														"id": 210,
 														"name": "default"
 													}
 												],
@@ -7051,7 +7572,7 @@
 							],
 							"implementationOf": {
 								"type": "reference",
-								"id": 185,
+								"id": 217,
 								"name": "Module.init"
 							}
 						}
@@ -7061,23 +7582,23 @@
 							"title": "Constructors",
 							"kind": 512,
 							"children": [
-								360
+								392
 							]
 						},
 						{
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								363,
-								364,
-								365
+								395,
+								396,
+								397
 							]
 						},
 						{
 							"title": "Methods",
 							"kind": 2048,
 							"children": [
-								366
+								398
 							]
 						}
 					],
@@ -7091,13 +7612,13 @@
 					"implementedTypes": [
 						{
 							"type": "reference",
-							"id": 183,
+							"id": 215,
 							"name": "Module"
 						}
 					]
 				},
 				{
-					"id": 354,
+					"id": 386,
 					"name": "createBot",
 					"kind": 64,
 					"kindString": "Function",
@@ -7111,33 +7632,33 @@
 					],
 					"signatures": [
 						{
-							"id": 355,
+							"id": 387,
 							"name": "createBot",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"typeParameter": [
 								{
-									"id": 356,
+									"id": 388,
 									"name": "Stack",
 									"kind": 131072,
 									"kindString": "Type parameter",
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"id": 179,
+										"id": 210,
 										"name": "default"
 									},
 									"default": {
 										"type": "reference",
-										"id": 179,
+										"id": 210,
 										"name": "default"
 									}
 								}
 							],
 							"parameters": [
 								{
-									"id": 357,
+									"id": 389,
 									"name": "token",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -7148,21 +7669,21 @@
 									}
 								},
 								{
-									"id": 358,
+									"id": 390,
 									"name": "root",
 									"kind": 32768,
 									"kindString": "Parameter",
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"id": 359,
+										"id": 391,
 										"name": "ModuleHostModule"
 									}
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 332,
+								"id": 364,
 								"typeArguments": [
 									{
 										"type": "reference",
@@ -7180,15 +7701,15 @@
 					"title": "Classes",
 					"kind": 128,
 					"children": [
-						332,
-						359
+						364,
+						391
 					]
 				},
 				{
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						354
+						386
 					]
 				}
 			],
