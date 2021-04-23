@@ -20,29 +20,29 @@ export default interface RequestBuilder {
    * Create GET request
    * @param options - options
    */
-  get<T>(options: RequestOptions): Promise<RESTResponse<T>>
+  get<T>(options?: RequestOptions): Promise<RESTResponse<T>>
 
   /**
    * Create POST request
    * @param options - options
    */
-  post<T>(options: RequestOptions): Promise<RESTResponse<T>>
+  post<T>(options?: RequestOptions): Promise<RESTResponse<T>>
 
   /**
    * Create DELETE request
    * @param options - options
    */
-  delete<T>(options: RequestOptions): Promise<RESTResponse<T>>
+  delete<T>(options?: RequestOptions): Promise<RESTResponse<T>>
 
   /**
    * Create PUT request
    * @param options - options
    */
-  put<T>(options: RequestOptions): Promise<RESTResponse<T>>
+  put<T>(options?: RequestOptions): Promise<RESTResponse<T>>
 
   /**
    * Create PATCH request
    * @param options - options
    */
-  patch<T>(options: RequestOptions): Promise<RESTResponse<T>>
+  patch<T>(options?: RequestOptions): Promise<RESTResponse<T>>
 }
