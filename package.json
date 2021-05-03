@@ -9,7 +9,7 @@
     "./rest": "./dist/src/rest/index.js",
     "./util": "./dist/src/util/index.js",
     "./main": "./dist/src/main/index.js",
-    "./ws": "./dist/src/ws/index.js",
+    "./websocket": "./dist/src/websocket/index.js",
     "./package.json": "./package.json",
     "./wrapper": "./dist/src/wrapper/index.js"
   },
@@ -30,8 +30,8 @@
       "util": [
         "types/util/index.d.ts"
       ],
-      "ws": [
-        "types/ws/index.d.ts"
+      "websocket": [
+        "types/websocket/index.d.ts"
       ],
       "main": [
         "types/main/index.d.ts"
