@@ -19,10 +19,6 @@
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
-    "indent": [
-      "error",
-      2
-    ],
     "quotes": [
       "error",
       "single"
@@ -39,6 +35,16 @@
       "error",
       "always"
     ],
+    "@typescript-eslint/member-delimiter-style": [
+      "error",
+      {
+        "multiline": {
+          "delimiter": "none",
+          "requireLast": true
+        }
+      }
+    ],
+    "@typescript-eslint/ban-ts-comment": "off",
     "keyword-spacing": ["error", { "before": true, "after": true }],
     "max-len": ["error", { "code": 120, "ignoreComments": true }],
     "spaced-comment": ["error", "always"]

@@ -6,6 +6,6 @@ import { GatewayProviderAPI } from '@src/core/providers/gateway/GatewayProvider'
 export default interface DefaultClientStack {
   cache: CacheNamespace
   rest: RequestBuilder
-  events: ClientEventsHandlers,
+  events: ClientEventsHandlers
   gateway: GatewayProviderAPI
 }

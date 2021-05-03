@@ -9,11 +9,11 @@ export default interface GatewayOptions extends GatewayIdentifyData {
   shards?: number | number[] | 'auto'
   /** Maximum amount of shards that can be spawned by the {@link WSClient} */
   // might be useless, because it can be calculated from all values of shards
-  maxShards?: number,
+  maxShards?: number
   /**
    * Version of gateway to use
    * */
-  version?: 9,
+  version?: 9
   /** Gateway URL */
-  url?: string,
+  url?: string
 }

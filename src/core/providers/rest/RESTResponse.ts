@@ -4,9 +4,9 @@
  */
 export default interface RESTResponse<T = Record<string, any>> {
   /** Body */
-  body: T,
+  body: T
   /** Status code */
-  statusCode: number,
+  statusCode: number
   /** Headers */
   headers: Record<string, any>
 }
