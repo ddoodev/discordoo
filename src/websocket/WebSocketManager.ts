@@ -8,6 +8,7 @@ import getGateway from '@src/util/getGateway'
 import range from '../util/range'
 import zlib from 'zlib'
 import websocket from 'websocket'
+import WebSocketShard from '@src/websocket/WebSocketShard'
 
 // a few notes:
 // * this.options cannot be sent to the gateway, it shall be sieved
@@ -17,10 +18,13 @@ import websocket from 'websocket'
 //
 // Have fun!
 export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvents> {
-  private readonly options: GatewayOptions
+  public readonly options: GatewayOptions
   private gateway?: RESTGetAPIGatewayBotResult
 
   private totalShards = 1
+  private shardQueue = new Set<WebSocketShard>()
+
+  public shards: WebSocketShard[] = []
 
   constructor(token: string, options: Omit<GatewayOptions, 'token'>) {
     super()
@@ -48,13 +52,15 @@ export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvent
 
     const { shards: recommendedShards, url: gatewayUrl, session_start_limit: sessionStartLimit } = this.gateway
 
-    const { shards } = this.options
+    this.options.url = gatewayUrl + '/'
+
+    let { shards } = this.options
 
     switch (typeof shards) {
       case 'number': {
-        const totalShards = []
-
         this.totalShards = shards
+
+        shards = Array.from({ length: shards }, (_, i) => i)
       } break
 
       case 'object':
@@ -63,15 +69,46 @@ export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvent
         break
 
       case 'string':
-        if (shards === 'auto') this.totalShards = recommendedShards
-        else if (!isNaN(parseInt(shards))) this.totalShards = parseInt(shards)
-        else throw new Error('Discordoo: WebSocketManager: invalid "shards" option: ' +
-          'if type of "shards" is string, it cannot be anything other than "auto"')
+        if (shards === 'auto') {
+          this.totalShards = recommendedShards
+
+          shards = Array.from({ length: recommendedShards }, (_, i) => i)
+        } else if (!isNaN(parseInt(shards))) {
+          shards = parseInt(shards)
+
+          this.totalShards = shards
+          shards = Array.from({ length: shards }, (_, i) => i)
+        } else {
+          throw new Error('Discordoo: WebSocketManager: invalid "shards" option: ' +
+            'if type of "shards" is string, it cannot be anything other than "auto"')
+        }
         break
 
       default:
-
-        break
+        throw new Error(
+          'Discordoo: WebSocketManager: invalid "shards" option: received disallowed type: ' + typeof shards
+        )
     }
+
+    this.shardQueue = new Set(shards.map(id => new WebSocketShard(this, id)))
+    return this.createShards()
+  }
+
+  private async createShards() {
+    if (!this.shardQueue.size) return false
+
+    const [ shard ] = this.shardQueue
+
+    this.shardQueue.delete(shard)
+
+    try {
+      await shard.connect()
+    } catch (e) {
+      console.error(e)
+    }
+
+    if (this.shardQueue.size) return this.createShards()
+
+    return true
   }
 }
