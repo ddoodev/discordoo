@@ -1,7 +1,7 @@
 {
   "name": "discordoo",
   "version": "1.0.0",
-  "description": "",
+  "description": "Discord bots. Simplified and boosted",
   "exports": {
     "./core": "./dist/src/core/index.js",
     "./cache": "./dist/src/cache/index.js",
@@ -90,7 +90,7 @@
     "lodash": "^4.17.21",
     "node-fetch": "^2.6.1",
     "tiny-typed-emitter": "^2.0.3",
-    "websocket": "^1.0.34",
+    "utf-8-validate": "^5.0.4",
     "ws": "^7.4.4"
   },
   "optionalDependencies": {
