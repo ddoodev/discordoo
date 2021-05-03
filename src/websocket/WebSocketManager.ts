@@ -1,14 +1,13 @@
 import { TypedEmitter } from 'tiny-typed-emitter'
 import WebSocketManagerEvents from '@src/websocket/WebSocketManagerEvents'
 import GatewayOptions from '@src/websocket/GatewayOptions'
-import os from 'os'
-import WebSocket from 'ws'
-import { GatewayIdentifyData, RESTGetAPIGatewayBotResult } from 'discord-api-types'
+import { RESTGetAPIGatewayBotResult } from 'discord-api-types'
 import getGateway from '@src/util/getGateway'
-import range from '../util/range'
-import zlib from 'zlib'
-import websocket from 'websocket'
 import WebSocketShard from '@src/websocket/WebSocketShard'
+import { Collection } from '@src/collection'
+import { promisify } from 'util'
+
+const wait = promisify(setTimeout)
 
 // a few notes:
 // * this.options cannot be sent to the gateway, it shall be sieved
@@ -21,16 +20,16 @@ export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvent
   public readonly options: GatewayOptions
   private gateway?: RESTGetAPIGatewayBotResult
 
-  private totalShards = 1
   private shardQueue = new Set<WebSocketShard>()
 
-  public shards: WebSocketShard[] = []
+  public totalShards = 1
+  public shards = new Collection<number, WebSocketShard>()
 
   constructor(token: string, options: Omit<GatewayOptions, 'token'>) {
     super()
 
     this.options = Object.assign({
-      token,
+      token: token,
       properties: {
         $browser: 'Discordoo',
         $device: 'Discordoo',
@@ -38,7 +37,7 @@ export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvent
       },
       version: 9,
       url: 'wss://gateway.discord.gg',
-      compress: true,
+      compress: false,
       encoding: 'json',
       shards: 'auto',
       intents: 32509 // use all intents except privileged
@@ -46,16 +45,19 @@ export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvent
   }
 
   public async connect() {
+    console.log('connecting')
     this.gateway = await getGateway(this.options.token).catch(e => {
       throw e.statusCode === 401 ? new Error('Discordoo: invalid token provided') : e
     })
 
+    console.log('gateway:', this.gateway)
     const { shards: recommendedShards, url: gatewayUrl, session_start_limit: sessionStartLimit } = this.gateway
 
     this.options.url = gatewayUrl + '/'
 
     let { shards } = this.options
 
+    // shards option processing
     switch (typeof shards) {
       case 'number': {
         this.totalShards = shards
@@ -90,24 +92,35 @@ export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvent
         )
     }
 
+    console.log('shards:', shards)
+
     this.shardQueue = new Set(shards.map(id => new WebSocketShard(this, id)))
+    console.log('queue:', this.shardQueue)
     return this.createShards()
   }
 
   private async createShards() {
-    if (!this.shardQueue.size) return false
+    if (!this.shardQueue.size || this.shards.size >= (this.options.maxShards || Infinity)) return false
 
     const [ shard ] = this.shardQueue
 
     this.shardQueue.delete(shard)
 
     try {
+      console.log('shard', shard.id, 'connecting')
       await shard.connect()
     } catch (e) {
       console.error(e)
     }
 
-    if (this.shardQueue.size) return this.createShards()
+    this.shards.set(shard.id, shard)
+
+    if (this.shardQueue.size) {
+      const delay = this.options.spawnDelay || 5000
+
+      await wait(delay)
+      return this.createShards()
+    }
 
     return true
   }

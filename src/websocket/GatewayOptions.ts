@@ -8,7 +8,7 @@ export default interface GatewayOptions extends GatewayIdentifyData {
    */
   shards?: number | number[] | 'auto'
 
-  /** Maximum amount of shards that can be spawned by the {@link WSClient} */
+  /** Maximum amount of shards that can be spawned by the {@link WebSocketManager} */
   // might be useless, because it can be calculated from all values of shards
   maxShards?: number
 
@@ -19,4 +19,7 @@ export default interface GatewayOptions extends GatewayIdentifyData {
 
   /** Gateway URL */
   url?: string
+
+  /** Waiting time between shards launches, in ms */
+  spawnDelay?: number
 }
