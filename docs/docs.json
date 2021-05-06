@@ -2900,14 +2900,14 @@
 					"flags": {},
 					"children": [
 						{
-							"id": 282,
+							"id": 283,
 							"name": "constructor",
 							"kind": 512,
 							"kindString": "Constructor",
 							"flags": {},
 							"signatures": [
 								{
-									"id": 283,
+									"id": 284,
 									"name": "new Constants",
 									"kind": 16384,
 									"kindString": "Constructor signature",
@@ -2931,7 +2931,7 @@
 							"sources": [
 								{
 									"fileName": "src/core/Constants.ts",
-									"line": 60,
+									"line": 67,
 									"character": 21
 								}
 							],
@@ -2952,13 +2952,13 @@
 							"sources": [
 								{
 									"fileName": "src/core/Constants.ts",
-									"line": 61,
+									"line": 68,
 									"character": 29
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 299,
+								"id": 300,
 								"name": "default"
 							},
 							"defaultValue": "..."
@@ -2974,7 +2974,7 @@
 							"sources": [
 								{
 									"fileName": "src/core/Constants.ts",
-									"line": 67,
+									"line": 74,
 									"character": 16
 								}
 							],
@@ -2998,7 +2998,7 @@
 							"sources": [
 								{
 									"fileName": "src/core/Constants.ts",
-									"line": 68,
+									"line": 75,
 									"character": 24
 								}
 							],
@@ -3010,6 +3010,30 @@
 								}
 							},
 							"defaultValue": "..."
+						},
+						{
+							"id": 282,
+							"name": "WebSocketStates",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isStatic": true
+							},
+							"sources": [
+								{
+									"fileName": "src/core/Constants.ts",
+									"line": 76,
+									"character": 24
+								}
+							],
+							"type": {
+								"type": "query",
+								"queryType": {
+									"type": "reference",
+									"name": "WebSocketStates"
+								}
+							},
+							"defaultValue": "..."
 						}
 					],
 					"groups": [
@@ -3017,7 +3041,7 @@
 							"title": "Constructors",
 							"kind": 512,
 							"children": [
-								282
+								283
 							]
 						},
 						{
@@ -3027,14 +3051,15 @@
 								278,
 								279,
 								280,
-								281
+								281,
+								282
 							]
 						}
 					],
 					"sources": [
 						{
 							"fileName": "src/core/Constants.ts",
-							"line": 59,
+							"line": 66,
 							"character": 30
 						}
 					]
@@ -4336,13 +4361,13 @@
 					"implementedBy": [
 						{
 							"type": "reference",
-							"id": 448,
+							"id": 459,
 							"name": "ModuleHostModule"
 						}
 					]
 				},
 				{
-					"id": 284,
+					"id": 285,
 					"name": "RESTResponse",
 					"kind": 256,
 					"kindString": "Interface",
@@ -4352,7 +4377,7 @@
 					},
 					"children": [
 						{
-							"id": 285,
+							"id": 286,
 							"name": "body",
 							"kind": 1024,
 							"kindString": "Property",
@@ -4373,7 +4398,7 @@
 							}
 						},
 						{
-							"id": 287,
+							"id": 288,
 							"name": "headers",
 							"kind": 1024,
 							"kindString": "Property",
@@ -4404,7 +4429,7 @@
 							}
 						},
 						{
-							"id": 286,
+							"id": 287,
 							"name": "statusCode",
 							"kind": 1024,
 							"kindString": "Property",
@@ -4430,9 +4455,9 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								285,
-								287,
-								286
+								286,
+								288,
+								287
 							]
 						}
 					],
@@ -4445,7 +4470,7 @@
 					],
 					"typeParameter": [
 						{
-							"id": 288,
+							"id": 289,
 							"name": "T",
 							"kind": 131072,
 							"kindString": "Type parameter",
@@ -4529,7 +4554,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 284,
+												"id": 285,
 												"typeArguments": [
 													{
 														"type": "reference",
@@ -4593,7 +4618,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 284,
+												"id": 285,
 												"typeArguments": [
 													{
 														"type": "reference",
@@ -4657,7 +4682,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 284,
+												"id": 285,
 												"typeArguments": [
 													{
 														"type": "reference",
@@ -4721,7 +4746,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 284,
+												"id": 285,
 												"typeArguments": [
 													{
 														"type": "reference",
@@ -4785,7 +4810,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 284,
+												"id": 285,
 												"typeArguments": [
 													{
 														"type": "reference",
@@ -4925,7 +4950,7 @@
 					"implementedBy": [
 						{
 							"type": "reference",
-							"id": 313,
+							"id": 314,
 							"name": "RESTRequestBuilder"
 						}
 					]
@@ -5254,7 +5279,7 @@
 						208,
 						198,
 						213,
-						284,
+						285,
 						242,
 						270
 					]
@@ -5292,7 +5317,7 @@
 			"flags": {},
 			"children": [
 				{
-					"id": 289,
+					"id": 290,
 					"name": "RESTClient",
 					"kind": 128,
 					"kindString": "Class",
@@ -5302,14 +5327,14 @@
 					},
 					"children": [
 						{
-							"id": 290,
+							"id": 291,
 							"name": "constructor",
 							"kind": 512,
 							"kindString": "Constructor",
 							"flags": {},
 							"signatures": [
 								{
-									"id": 291,
+									"id": 292,
 									"name": "new RESTClient",
 									"kind": 16384,
 									"kindString": "Constructor signature",
@@ -5317,7 +5342,7 @@
 									"comment": {},
 									"parameters": [
 										{
-											"id": 292,
+											"id": 293,
 											"name": "token",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5331,7 +5356,7 @@
 											}
 										},
 										{
-											"id": 293,
+											"id": 294,
 											"name": "options",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5341,7 +5366,7 @@
 											},
 											"type": {
 												"type": "reference",
-												"id": 299,
+												"id": 300,
 												"name": "default"
 											},
 											"defaultValue": "..."
@@ -5349,14 +5374,14 @@
 									],
 									"type": {
 										"type": "reference",
-										"id": 289,
+										"id": 290,
 										"name": "default"
 									}
 								}
 							]
 						},
 						{
-							"id": 295,
+							"id": 296,
 							"name": "options",
 							"kind": 1024,
 							"kindString": "Property",
@@ -5365,13 +5390,13 @@
 							},
 							"type": {
 								"type": "reference",
-								"id": 299,
+								"id": 300,
 								"name": "default"
 							},
 							"defaultValue": "..."
 						},
 						{
-							"id": 294,
+							"id": 295,
 							"name": "token",
 							"kind": 1024,
 							"kindString": "Property",
@@ -5384,7 +5409,7 @@
 							}
 						},
 						{
-							"id": 296,
+							"id": 297,
 							"name": "request",
 							"kind": 2048,
 							"kindString": "Method",
@@ -5398,7 +5423,7 @@
 							],
 							"signatures": [
 								{
-									"id": 297,
+									"id": 298,
 									"name": "request",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -5408,7 +5433,7 @@
 									},
 									"parameters": [
 										{
-											"id": 298,
+											"id": 299,
 											"name": "tokenOverride",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5423,7 +5448,7 @@
 									],
 									"type": {
 										"type": "reference",
-										"id": 313,
+										"id": 314,
 										"name": "default"
 									}
 								}
@@ -5435,22 +5460,22 @@
 							"title": "Constructors",
 							"kind": 512,
 							"children": [
-								290
+								291
 							]
 						},
 						{
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								295,
-								294
+								296,
+								295
 							]
 						},
 						{
 							"title": "Methods",
 							"kind": 2048,
 							"children": [
-								296
+								297
 							]
 						}
 					],
@@ -5463,7 +5488,7 @@
 					]
 				},
 				{
-					"id": 303,
+					"id": 304,
 					"name": "RESTProviderBuilder",
 					"kind": 128,
 					"kindString": "Class",
@@ -5473,14 +5498,14 @@
 					},
 					"children": [
 						{
-							"id": 304,
+							"id": 305,
 							"name": "constructor",
 							"kind": 512,
 							"kindString": "Constructor",
 							"flags": {},
 							"signatures": [
 								{
-									"id": 305,
+									"id": 306,
 									"name": "new RESTProviderBuilder",
 									"kind": 16384,
 									"kindString": "Constructor signature",
@@ -5488,7 +5513,7 @@
 									"comment": {},
 									"parameters": [
 										{
-											"id": 306,
+											"id": 307,
 											"name": "options",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5498,7 +5523,7 @@
 											},
 											"type": {
 												"type": "reference",
-												"id": 299,
+												"id": 300,
 												"name": "default"
 											},
 											"defaultValue": "..."
@@ -5506,14 +5531,14 @@
 									],
 									"type": {
 										"type": "reference",
-										"id": 303,
+										"id": 304,
 										"name": "default"
 									}
 								}
 							]
 						},
 						{
-							"id": 307,
+							"id": 308,
 							"name": "client",
 							"kind": 1024,
 							"kindString": "Property",
@@ -5530,12 +5555,12 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 289,
+								"id": 290,
 								"name": "default"
 							}
 						},
 						{
-							"id": 308,
+							"id": 309,
 							"name": "getRestProvider",
 							"kind": 2048,
 							"kindString": "Method",
@@ -5549,7 +5574,7 @@
 							],
 							"signatures": [
 								{
-									"id": 309,
+									"id": 310,
 									"name": "getRestProvider",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -5560,21 +5585,21 @@
 									"type": {
 										"type": "reflection",
 										"declaration": {
-											"id": 310,
+											"id": 311,
 											"name": "__type",
 											"kind": 65536,
 											"kindString": "Type literal",
 											"flags": {},
 											"signatures": [
 												{
-													"id": 311,
+													"id": 312,
 													"name": "__type",
 													"kind": 4096,
 													"kindString": "Call signature",
 													"flags": {},
 													"parameters": [
 														{
-															"id": 312,
+															"id": 313,
 															"name": "client",
 															"kind": 32768,
 															"kindString": "Parameter",
@@ -5618,21 +5643,21 @@
 							"title": "Constructors",
 							"kind": 512,
 							"children": [
-								304
+								305
 							]
 						},
 						{
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								307
+								308
 							]
 						},
 						{
 							"title": "Methods",
 							"kind": 2048,
 							"children": [
-								308
+								309
 							]
 						}
 					],
@@ -5645,7 +5670,7 @@
 					]
 				},
 				{
-					"id": 313,
+					"id": 314,
 					"name": "RESTRequestBuilder",
 					"kind": 128,
 					"kindString": "Class",
@@ -5661,14 +5686,14 @@
 					},
 					"children": [
 						{
-							"id": 314,
+							"id": 315,
 							"name": "constructor",
 							"kind": 512,
 							"kindString": "Constructor",
 							"flags": {},
 							"signatures": [
 								{
-									"id": 315,
+									"id": 316,
 									"name": "new RESTRequestBuilder",
 									"kind": 16384,
 									"kindString": "Constructor signature",
@@ -5676,7 +5701,7 @@
 									"comment": {},
 									"parameters": [
 										{
-											"id": 316,
+											"id": 317,
 											"name": "token",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5690,7 +5715,7 @@
 											}
 										},
 										{
-											"id": 317,
+											"id": 318,
 											"name": "options",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5700,21 +5725,21 @@
 											},
 											"type": {
 												"type": "reference",
-												"id": 299,
+												"id": 300,
 												"name": "default"
 											}
 										}
 									],
 									"type": {
 										"type": "reference",
-										"id": 313,
+										"id": 314,
 										"name": "default"
 									}
 								}
 							]
 						},
 						{
-							"id": 322,
+							"id": 323,
 							"name": "options",
 							"kind": 1024,
 							"kindString": "Property",
@@ -5733,12 +5758,12 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 299,
+								"id": 300,
 								"name": "default"
 							}
 						},
 						{
-							"id": 319,
+							"id": 320,
 							"name": "queryStack",
 							"kind": 1024,
 							"kindString": "Property",
@@ -5772,7 +5797,7 @@
 							"defaultValue": "..."
 						},
 						{
-							"id": 320,
+							"id": 321,
 							"name": "retries",
 							"kind": 1024,
 							"kindString": "Property",
@@ -5796,7 +5821,7 @@
 							"defaultValue": "0"
 						},
 						{
-							"id": 318,
+							"id": 319,
 							"name": "stack",
 							"kind": 1024,
 							"kindString": "Property",
@@ -5823,7 +5848,7 @@
 							"defaultValue": "..."
 						},
 						{
-							"id": 321,
+							"id": 322,
 							"name": "token",
 							"kind": 1024,
 							"kindString": "Property",
@@ -5846,7 +5871,7 @@
 							}
 						},
 						{
-							"id": 337,
+							"id": 338,
 							"name": "endpoint",
 							"kind": 262144,
 							"kindString": "Accessor",
@@ -5863,7 +5888,7 @@
 							],
 							"getSignature": [
 								{
-									"id": 338,
+									"id": 339,
 									"name": "endpoint",
 									"kind": 524288,
 									"kindString": "Get signature",
@@ -5879,7 +5904,7 @@
 							]
 						},
 						{
-							"id": 360,
+							"id": 361,
 							"name": "delete",
 							"kind": 2048,
 							"kindString": "Method",
@@ -5893,7 +5918,7 @@
 							],
 							"signatures": [
 								{
-									"id": 361,
+									"id": 362,
 									"name": "delete",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -5903,7 +5928,7 @@
 									},
 									"typeParameter": [
 										{
-											"id": 362,
+											"id": 363,
 											"name": "T",
 											"kind": 131072,
 											"kindString": "Type parameter",
@@ -5912,7 +5937,7 @@
 									],
 									"parameters": [
 										{
-											"id": 363,
+											"id": 364,
 											"name": "options",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -5933,7 +5958,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 284,
+												"id": 285,
 												"typeArguments": [
 													{
 														"type": "reference",
@@ -5959,7 +5984,7 @@
 							}
 						},
 						{
-							"id": 344,
+							"id": 345,
 							"name": "get",
 							"kind": 2048,
 							"kindString": "Method",
@@ -5973,7 +5998,7 @@
 							],
 							"signatures": [
 								{
-									"id": 345,
+									"id": 346,
 									"name": "get",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -5983,7 +6008,7 @@
 									},
 									"typeParameter": [
 										{
-											"id": 346,
+											"id": 347,
 											"name": "T",
 											"kind": 131072,
 											"kindString": "Type parameter",
@@ -5992,7 +6017,7 @@
 									],
 									"parameters": [
 										{
-											"id": 347,
+											"id": 348,
 											"name": "options",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -6023,7 +6048,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 284,
+												"id": 285,
 												"typeArguments": [
 													{
 														"type": "reference",
@@ -6049,7 +6074,7 @@
 							}
 						},
 						{
-							"id": 323,
+							"id": 324,
 							"name": "getHeaders",
 							"kind": 2048,
 							"kindString": "Method",
@@ -6065,7 +6090,7 @@
 							],
 							"signatures": [
 								{
-									"id": 324,
+									"id": 325,
 									"name": "getHeaders",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -6075,7 +6100,7 @@
 									},
 									"parameters": [
 										{
-											"id": 325,
+											"id": 326,
 											"name": "headers",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -6101,14 +6126,14 @@
 									"type": {
 										"type": "reflection",
 										"declaration": {
-											"id": 326,
+											"id": 327,
 											"name": "__type",
 											"kind": 65536,
 											"kindString": "Type literal",
 											"flags": {},
 											"children": [
 												{
-													"id": 328,
+													"id": 329,
 													"name": "Authorization",
 													"kind": 1024,
 													"kindString": "Property",
@@ -6120,7 +6145,7 @@
 													"defaultValue": "..."
 												},
 												{
-													"id": 329,
+													"id": 330,
 													"name": "Content-Type",
 													"kind": 1024,
 													"kindString": "Property",
@@ -6132,7 +6157,7 @@
 													"defaultValue": "'application/json'"
 												},
 												{
-													"id": 327,
+													"id": 328,
 													"name": "User-Agent",
 													"kind": 1024,
 													"kindString": "Property",
@@ -6149,9 +6174,9 @@
 													"title": "Properties",
 													"kind": 1024,
 													"children": [
-														328,
 														329,
-														327
+														330,
+														328
 													]
 												}
 											]
@@ -6161,7 +6186,7 @@
 							]
 						},
 						{
-							"id": 352,
+							"id": 353,
 							"name": "patch",
 							"kind": 2048,
 							"kindString": "Method",
@@ -6175,7 +6200,7 @@
 							],
 							"signatures": [
 								{
-									"id": 353,
+									"id": 354,
 									"name": "patch",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -6185,7 +6210,7 @@
 									},
 									"typeParameter": [
 										{
-											"id": 354,
+											"id": 355,
 											"name": "T",
 											"kind": 131072,
 											"kindString": "Type parameter",
@@ -6194,7 +6219,7 @@
 									],
 									"parameters": [
 										{
-											"id": 355,
+											"id": 356,
 											"name": "options",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -6215,7 +6240,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 284,
+												"id": 285,
 												"typeArguments": [
 													{
 														"type": "reference",
@@ -6241,7 +6266,7 @@
 							}
 						},
 						{
-							"id": 348,
+							"id": 349,
 							"name": "post",
 							"kind": 2048,
 							"kindString": "Method",
@@ -6255,7 +6280,7 @@
 							],
 							"signatures": [
 								{
-									"id": 349,
+									"id": 350,
 									"name": "post",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -6265,7 +6290,7 @@
 									},
 									"typeParameter": [
 										{
-											"id": 350,
+											"id": 351,
 											"name": "T",
 											"kind": 131072,
 											"kindString": "Type parameter",
@@ -6274,7 +6299,7 @@
 									],
 									"parameters": [
 										{
-											"id": 351,
+											"id": 352,
 											"name": "options",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -6295,7 +6320,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 284,
+												"id": 285,
 												"typeArguments": [
 													{
 														"type": "reference",
@@ -6321,7 +6346,7 @@
 							}
 						},
 						{
-							"id": 356,
+							"id": 357,
 							"name": "put",
 							"kind": 2048,
 							"kindString": "Method",
@@ -6335,7 +6360,7 @@
 							],
 							"signatures": [
 								{
-									"id": 357,
+									"id": 358,
 									"name": "put",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -6345,7 +6370,7 @@
 									},
 									"typeParameter": [
 										{
-											"id": 358,
+											"id": 359,
 											"name": "T",
 											"kind": 131072,
 											"kindString": "Type parameter",
@@ -6354,7 +6379,7 @@
 									],
 									"parameters": [
 										{
-											"id": 359,
+											"id": 360,
 											"name": "options",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -6375,7 +6400,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 284,
+												"id": 285,
 												"typeArguments": [
 													{
 														"type": "reference",
@@ -6401,7 +6426,7 @@
 							}
 						},
 						{
-							"id": 330,
+							"id": 331,
 							"name": "query",
 							"kind": 2048,
 							"kindString": "Method",
@@ -6415,7 +6440,7 @@
 							],
 							"signatures": [
 								{
-									"id": 331,
+									"id": 332,
 									"name": "query",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -6425,7 +6450,7 @@
 									},
 									"parameters": [
 										{
-											"id": 332,
+											"id": 333,
 											"name": "k",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -6439,7 +6464,7 @@
 											}
 										},
 										{
-											"id": 333,
+											"id": 334,
 											"name": "v",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -6472,7 +6497,7 @@
 							}
 						},
 						{
-							"id": 339,
+							"id": 340,
 							"name": "request",
 							"kind": 2048,
 							"kindString": "Method",
@@ -6486,7 +6511,7 @@
 							],
 							"signatures": [
 								{
-									"id": 340,
+									"id": 341,
 									"name": "request",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -6496,7 +6521,7 @@
 									},
 									"typeParameter": [
 										{
-											"id": 341,
+											"id": 342,
 											"name": "T",
 											"kind": 131072,
 											"kindString": "Type parameter",
@@ -6505,7 +6530,7 @@
 									],
 									"parameters": [
 										{
-											"id": 342,
+											"id": 343,
 											"name": "method",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -6540,7 +6565,7 @@
 											}
 										},
 										{
-											"id": 343,
+											"id": 344,
 											"name": "options",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -6561,7 +6586,7 @@
 										"typeArguments": [
 											{
 												"type": "reference",
-												"id": 284,
+												"id": 285,
 												"typeArguments": [
 													{
 														"type": "reference",
@@ -6577,7 +6602,7 @@
 							]
 						},
 						{
-							"id": 334,
+							"id": 335,
 							"name": "url",
 							"kind": 2048,
 							"kindString": "Method",
@@ -6591,7 +6616,7 @@
 							],
 							"signatures": [
 								{
-									"id": 335,
+									"id": 336,
 									"name": "url",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -6601,7 +6626,7 @@
 									},
 									"parameters": [
 										{
-											"id": 336,
+											"id": 337,
 											"name": "paths",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -6644,40 +6669,40 @@
 							"title": "Constructors",
 							"kind": 512,
 							"children": [
-								314
+								315
 							]
 						},
 						{
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								322,
-								319,
+								323,
 								320,
-								318,
-								321
+								321,
+								319,
+								322
 							]
 						},
 						{
 							"title": "Accessors",
 							"kind": 262144,
 							"children": [
-								337
+								338
 							]
 						},
 						{
 							"title": "Methods",
 							"kind": 2048,
 							"children": [
-								360,
-								344,
-								323,
-								352,
-								348,
-								356,
-								330,
-								339,
-								334
+								361,
+								345,
+								324,
+								353,
+								349,
+								357,
+								331,
+								340,
+								335
 							]
 						}
 					],
@@ -6697,7 +6722,7 @@
 					]
 				},
 				{
-					"id": 299,
+					"id": 300,
 					"name": "RESTOptions",
 					"kind": 256,
 					"kindString": "Interface",
@@ -6707,7 +6732,7 @@
 					},
 					"children": [
 						{
-							"id": 302,
+							"id": 303,
 							"name": "maxRetries",
 							"kind": 1024,
 							"kindString": "Property",
@@ -6728,7 +6753,7 @@
 							}
 						},
 						{
-							"id": 301,
+							"id": 302,
 							"name": "useragent",
 							"kind": 1024,
 							"kindString": "Property",
@@ -6749,7 +6774,7 @@
 							}
 						},
 						{
-							"id": 300,
+							"id": 301,
 							"name": "v",
 							"kind": 1024,
 							"kindString": "Property",
@@ -6775,9 +6800,9 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
+								303,
 								302,
-								301,
-								300
+								301
 							]
 						}
 					],
@@ -6795,16 +6820,16 @@
 					"title": "Classes",
 					"kind": 128,
 					"children": [
-						289,
-						303,
-						313
+						290,
+						304,
+						314
 					]
 				},
 				{
 					"title": "Interfaces",
 					"kind": 256,
 					"children": [
-						299
+						300
 					]
 				}
 			],
@@ -7023,28 +7048,28 @@
 			"flags": {},
 			"children": [
 				{
-					"id": 407,
+					"id": 418,
 					"name": "WebSocketManager",
 					"kind": 128,
 					"kindString": "Class",
 					"flags": {},
 					"children": [
 						{
-							"id": 408,
+							"id": 419,
 							"name": "constructor",
 							"kind": 512,
 							"kindString": "Constructor",
 							"flags": {},
 							"signatures": [
 								{
-									"id": 409,
+									"id": 420,
 									"name": "new WebSocketManager",
 									"kind": 16384,
 									"kindString": "Constructor signature",
 									"flags": {},
 									"parameters": [
 										{
-											"id": 410,
+											"id": 421,
 											"name": "token",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -7055,7 +7080,7 @@
 											}
 										},
 										{
-											"id": 411,
+											"id": 422,
 											"name": "options",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -7065,7 +7090,7 @@
 												"typeArguments": [
 													{
 														"type": "reference",
-														"id": 364,
+														"id": 365,
 														"name": "default"
 													},
 													{
@@ -7079,7 +7104,7 @@
 									],
 									"type": {
 										"type": "reference",
-										"id": 407,
+										"id": 418,
 										"name": "default"
 									},
 									"overwrites": {
@@ -7094,7 +7119,7 @@
 							}
 						},
 						{
-							"id": 413,
+							"id": 424,
 							"name": "gateway",
 							"kind": 1024,
 							"kindString": "Property",
@@ -7105,7 +7130,7 @@
 							"sources": [
 								{
 									"fileName": "src/websocket/WebSocketManager.ts",
-									"line": 21,
+									"line": 22,
 									"character": 17
 								}
 							],
@@ -7115,7 +7140,7 @@
 							}
 						},
 						{
-							"id": 412,
+							"id": 423,
 							"name": "options",
 							"kind": 1024,
 							"kindString": "Property",
@@ -7126,18 +7151,18 @@
 							"sources": [
 								{
 									"fileName": "src/websocket/WebSocketManager.ts",
-									"line": 20,
+									"line": 21,
 									"character": 25
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 364,
+								"id": 365,
 								"name": "default"
 							}
 						},
 						{
-							"id": 414,
+							"id": 425,
 							"name": "shardQueue",
 							"kind": 1024,
 							"kindString": "Property",
@@ -7147,7 +7172,7 @@
 							"sources": [
 								{
 									"fileName": "src/websocket/WebSocketManager.ts",
-									"line": 23,
+									"line": 24,
 									"character": 20
 								}
 							],
@@ -7156,7 +7181,7 @@
 								"typeArguments": [
 									{
 										"type": "reference",
-										"id": 370,
+										"id": 371,
 										"name": "default"
 									}
 								],
@@ -7165,7 +7190,7 @@
 							"defaultValue": "..."
 						},
 						{
-							"id": 416,
+							"id": 427,
 							"name": "shards",
 							"kind": 1024,
 							"kindString": "Property",
@@ -7175,7 +7200,7 @@
 							"sources": [
 								{
 									"fileName": "src/websocket/WebSocketManager.ts",
-									"line": 26,
+									"line": 27,
 									"character": 15
 								}
 							],
@@ -7189,7 +7214,7 @@
 									},
 									{
 										"type": "reference",
-										"id": 370,
+										"id": 371,
 										"name": "default"
 									}
 								],
@@ -7198,7 +7223,7 @@
 							"defaultValue": "..."
 						},
 						{
-							"id": 415,
+							"id": 426,
 							"name": "totalShards",
 							"kind": 1024,
 							"kindString": "Property",
@@ -7208,7 +7233,7 @@
 							"sources": [
 								{
 									"fileName": "src/websocket/WebSocketManager.ts",
-									"line": 25,
+									"line": 26,
 									"character": 20
 								}
 							],
@@ -7219,7 +7244,7 @@
 							"defaultValue": "1"
 						},
 						{
-							"id": 417,
+							"id": 428,
 							"name": "connect",
 							"kind": 2048,
 							"kindString": "Method",
@@ -7229,13 +7254,13 @@
 							"sources": [
 								{
 									"fileName": "src/websocket/WebSocketManager.ts",
-									"line": 47,
+									"line": 48,
 									"character": 22
 								}
 							],
 							"signatures": [
 								{
-									"id": 418,
+									"id": 429,
 									"name": "connect",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -7254,7 +7279,7 @@
 							]
 						},
 						{
-							"id": 419,
+							"id": 430,
 							"name": "createShards",
 							"kind": 2048,
 							"kindString": "Method",
@@ -7264,13 +7289,13 @@
 							"sources": [
 								{
 									"fileName": "src/websocket/WebSocketManager.ts",
-									"line": 102,
+									"line": 103,
 									"character": 28
 								}
 							],
 							"signatures": [
 								{
-									"id": 420,
+									"id": 431,
 									"name": "createShards",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -7288,33 +7313,33 @@
 							"title": "Constructors",
 							"kind": 512,
 							"children": [
-								408
+								419
 							]
 						},
 						{
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								413,
-								412,
-								414,
-								416,
-								415
+								424,
+								423,
+								425,
+								427,
+								426
 							]
 						},
 						{
 							"title": "Methods",
 							"kind": 2048,
 							"children": [
-								417,
-								419
+								428,
+								430
 							]
 						}
 					],
 					"sources": [
 						{
 							"fileName": "src/websocket/WebSocketManager.ts",
-							"line": 19,
+							"line": 20,
 							"character": 37
 						}
 					],
@@ -7332,40 +7357,40 @@
 					]
 				},
 				{
-					"id": 370,
+					"id": 371,
 					"name": "WebSocketShard",
 					"kind": 128,
 					"kindString": "Class",
 					"flags": {},
 					"children": [
 						{
-							"id": 371,
+							"id": 372,
 							"name": "constructor",
 							"kind": 512,
 							"kindString": "Constructor",
 							"flags": {},
 							"signatures": [
 								{
-									"id": 372,
+									"id": 373,
 									"name": "new WebSocketShard",
 									"kind": 16384,
 									"kindString": "Constructor signature",
 									"flags": {},
 									"parameters": [
 										{
-											"id": 373,
+											"id": 374,
 											"name": "manager",
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
 											"type": {
 												"type": "reference",
-												"id": 407,
+												"id": 418,
 												"name": "default"
 											}
 										},
 										{
-											"id": 374,
+											"id": 375,
 											"name": "id",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -7378,7 +7403,7 @@
 									],
 									"type": {
 										"type": "reference",
-										"id": 370,
+										"id": 371,
 										"name": "default"
 									},
 									"overwrites": {
@@ -7393,7 +7418,7 @@
 							}
 						},
 						{
-							"id": 377,
+							"id": 380,
 							"name": "connection",
 							"kind": 1024,
 							"kindString": "Property",
@@ -7404,7 +7429,7 @@
 							"sources": [
 								{
 									"fileName": "src/websocket/WebSocketShard.ts",
-									"line": 12,
+									"line": 15,
 									"character": 20
 								}
 							],
@@ -7414,7 +7439,28 @@
 							}
 						},
 						{
-							"id": 376,
+							"id": 384,
+							"name": "heartbeatInterval",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isPrivate": true,
+								"isOptional": true
+							},
+							"sources": [
+								{
+									"fileName": "src/websocket/WebSocketShard.ts",
+									"line": 19,
+									"character": 27
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "any"
+							}
+						},
+						{
+							"id": 377,
 							"name": "id",
 							"kind": 1024,
 							"kindString": "Property",
@@ -7434,8 +7480,8 @@
 							}
 						},
 						{
-							"id": 380,
-							"name": "lastPingTimestamp",
+							"id": 385,
+							"name": "lastHeartbeatAcked",
 							"kind": 1024,
 							"kindString": "Property",
 							"flags": {
@@ -7444,8 +7490,29 @@
 							"sources": [
 								{
 									"fileName": "src/websocket/WebSocketShard.ts",
-									"line": 15,
-									"character": 27
+									"line": 20,
+									"character": 28
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "boolean"
+							},
+							"defaultValue": "true"
+						},
+						{
+							"id": 378,
+							"name": "lastPingTimestamp",
+							"kind": 1024,
+							"kindString": "Property",
+							"flags": {
+								"isPublic": true
+							},
+							"sources": [
+								{
+									"fileName": "src/websocket/WebSocketShard.ts",
+									"line": 12,
+									"character": 26
 								}
 							],
 							"type": {
@@ -7455,7 +7522,7 @@
 							"defaultValue": "0"
 						},
 						{
-							"id": 375,
+							"id": 376,
 							"name": "manager",
 							"kind": 1024,
 							"kindString": "Property",
@@ -7471,12 +7538,12 @@
 							],
 							"type": {
 								"type": "reference",
-								"id": 407,
+								"id": 418,
 								"name": "default"
 							}
 						},
 						{
-							"id": 382,
+							"id": 383,
 							"name": "pendingGuilds",
 							"kind": 1024,
 							"kindString": "Property",
@@ -7486,7 +7553,7 @@
 							"sources": [
 								{
 									"fileName": "src/websocket/WebSocketShard.ts",
-									"line": 17,
+									"line": 18,
 									"character": 23
 								}
 							],
@@ -7500,18 +7567,18 @@
 							"defaultValue": "..."
 						},
 						{
-							"id": 381,
+							"id": 379,
 							"name": "ping",
 							"kind": 1024,
 							"kindString": "Property",
 							"flags": {
-								"isPrivate": true
+								"isPublic": true
 							},
 							"sources": [
 								{
 									"fileName": "src/websocket/WebSocketShard.ts",
-									"line": 16,
-									"character": 14
+									"line": 13,
+									"character": 13
 								}
 							],
 							"type": {
@@ -7521,7 +7588,7 @@
 							"defaultValue": "-1"
 						},
 						{
-							"id": 379,
+							"id": 382,
 							"name": "sequence",
 							"kind": 1024,
 							"kindString": "Property",
@@ -7531,7 +7598,7 @@
 							"sources": [
 								{
 									"fileName": "src/websocket/WebSocketShard.ts",
-									"line": 14,
+									"line": 17,
 									"character": 18
 								}
 							],
@@ -7542,7 +7609,7 @@
 							"defaultValue": "-1"
 						},
 						{
-							"id": 378,
+							"id": 381,
 							"name": "sessionID",
 							"kind": 1024,
 							"kindString": "Property",
@@ -7553,7 +7620,7 @@
 							"sources": [
 								{
 									"fileName": "src/websocket/WebSocketShard.ts",
-									"line": 13,
+									"line": 16,
 									"character": 19
 								}
 							],
@@ -7563,7 +7630,7 @@
 							}
 						},
 						{
-							"id": 402,
+							"id": 405,
 							"name": "ackHeartbeat",
 							"kind": 2048,
 							"kindString": "Method",
@@ -7573,13 +7640,13 @@
 							"sources": [
 								{
 									"fileName": "src/websocket/WebSocketShard.ts",
-									"line": 134,
+									"line": 143,
 									"character": 22
 								}
 							],
 							"signatures": [
 								{
-									"id": 403,
+									"id": 406,
 									"name": "ackHeartbeat",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -7592,7 +7659,7 @@
 							]
 						},
 						{
-							"id": 383,
+							"id": 386,
 							"name": "connect",
 							"kind": 2048,
 							"kindString": "Method",
@@ -7602,13 +7669,13 @@
 							"sources": [
 								{
 									"fileName": "src/websocket/WebSocketShard.ts",
-									"line": 26,
+									"line": 29,
 									"character": 22
 								}
 							],
 							"signatures": [
 								{
-									"id": 384,
+									"id": 387,
 									"name": "connect",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -7636,7 +7703,7 @@
 							]
 						},
 						{
-							"id": 387,
+							"id": 390,
 							"name": "createIdentify",
 							"kind": 2048,
 							"kindString": "Method",
@@ -7646,13 +7713,13 @@
 							"sources": [
 								{
 									"fileName": "src/websocket/WebSocketShard.ts",
-									"line": 40,
+									"line": 43,
 									"character": 24
 								}
 							],
 							"signatures": [
 								{
-									"id": 388,
+									"id": 391,
 									"name": "createIdentify",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -7665,7 +7732,82 @@
 							]
 						},
 						{
-							"id": 394,
+							"id": 410,
+							"name": "destroy",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isPublic": true
+							},
+							"sources": [
+								{
+									"fileName": "src/websocket/WebSocketShard.ts",
+									"line": 158,
+									"character": 16
+								}
+							],
+							"signatures": [
+								{
+									"id": 411,
+									"name": "destroy",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"parameters": [
+										{
+											"id": 412,
+											"name": "__namedParameters",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"type": {
+												"type": "reflection",
+												"declaration": {
+													"id": 413,
+													"name": "__type",
+													"kind": 65536,
+													"kindString": "Type literal",
+													"flags": {},
+													"children": [
+														{
+															"id": 414,
+															"name": "code",
+															"kind": 2048,
+															"kindString": "Method",
+															"flags": {}
+														},
+														{
+															"id": 415,
+															"name": "reset",
+															"kind": 2048,
+															"kindString": "Method",
+															"flags": {}
+														}
+													],
+													"groups": [
+														{
+															"title": "Methods",
+															"kind": 2048,
+															"children": [
+																414,
+																415
+															]
+														}
+													]
+												}
+											},
+											"defaultValue": "..."
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "void"
+									}
+								}
+							]
+						},
+						{
+							"id": 397,
 							"name": "handlePacket",
 							"kind": 2048,
 							"kindString": "Method",
@@ -7675,20 +7817,20 @@
 							"sources": [
 								{
 									"fileName": "src/websocket/WebSocketShard.ts",
-									"line": 87,
+									"line": 90,
 									"character": 22
 								}
 							],
 							"signatures": [
 								{
-									"id": 395,
+									"id": 398,
 									"name": "handlePacket",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
 									"parameters": [
 										{
-											"id": 396,
+											"id": 399,
 											"name": "packet",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -7719,7 +7861,7 @@
 							]
 						},
 						{
-							"id": 400,
+							"id": 403,
 							"name": "heartbeat",
 							"kind": 2048,
 							"kindString": "Method",
@@ -7729,13 +7871,13 @@
 							"sources": [
 								{
 									"fileName": "src/websocket/WebSocketShard.ts",
-									"line": 128,
+									"line": 131,
 									"character": 19
 								}
 							],
 							"signatures": [
 								{
-									"id": 401,
+									"id": 404,
 									"name": "heartbeat",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -7748,49 +7890,7 @@
 							]
 						},
 						{
-							"id": 404,
-							"name": "heartbeatInterval",
-							"kind": 2048,
-							"kindString": "Method",
-							"flags": {
-								"isPrivate": true
-							},
-							"sources": [
-								{
-									"fileName": "src/websocket/WebSocketShard.ts",
-									"line": 139,
-									"character": 27
-								}
-							],
-							"signatures": [
-								{
-									"id": 405,
-									"name": "heartbeatInterval",
-									"kind": 4096,
-									"kindString": "Call signature",
-									"flags": {},
-									"parameters": [
-										{
-											"id": 406,
-											"name": "interval",
-											"kind": 32768,
-											"kindString": "Parameter",
-											"flags": {},
-											"type": {
-												"type": "intrinsic",
-												"name": "number"
-											}
-										}
-									],
-									"type": {
-										"type": "intrinsic",
-										"name": "void"
-									}
-								}
-							]
-						},
-						{
-							"id": 385,
+							"id": 388,
 							"name": "identify",
 							"kind": 2048,
 							"kindString": "Method",
@@ -7800,13 +7900,13 @@
 							"sources": [
 								{
 									"fileName": "src/websocket/WebSocketShard.ts",
-									"line": 36,
+									"line": 39,
 									"character": 18
 								}
 							],
 							"signatures": [
 								{
-									"id": 386,
+									"id": 389,
 									"name": "identify",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -7819,7 +7919,7 @@
 							]
 						},
 						{
-							"id": 391,
+							"id": 394,
 							"name": "onMessage",
 							"kind": 2048,
 							"kindString": "Method",
@@ -7829,20 +7929,20 @@
 							"sources": [
 								{
 									"fileName": "src/websocket/WebSocketShard.ts",
-									"line": 69,
+									"line": 72,
 									"character": 19
 								}
 							],
 							"signatures": [
 								{
-									"id": 392,
+									"id": 395,
 									"name": "onMessage",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
 									"parameters": [
 										{
-											"id": 393,
+											"id": 396,
 											"name": "event",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -7861,7 +7961,36 @@
 							]
 						},
 						{
-							"id": 389,
+							"id": 416,
+							"name": "removeListeners",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isPrivate": true
+							},
+							"sources": [
+								{
+									"fileName": "src/websocket/WebSocketShard.ts",
+									"line": 177,
+									"character": 25
+								}
+							],
+							"signatures": [
+								{
+									"id": 417,
+									"name": "removeListeners",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"type": {
+										"type": "intrinsic",
+										"name": "void"
+									}
+								}
+							]
+						},
+						{
+							"id": 392,
 							"name": "resumeIdentify",
 							"kind": 2048,
 							"kindString": "Method",
@@ -7871,13 +8000,13 @@
 							"sources": [
 								{
 									"fileName": "src/websocket/WebSocketShard.ts",
-									"line": 57,
+									"line": 60,
 									"character": 24
 								}
 							],
 							"signatures": [
 								{
-									"id": 390,
+									"id": 393,
 									"name": "resumeIdentify",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -7890,7 +8019,7 @@
 							]
 						},
 						{
-							"id": 397,
+							"id": 400,
 							"name": "send",
 							"kind": 2048,
 							"kindString": "Method",
@@ -7900,20 +8029,20 @@
 							"sources": [
 								{
 									"fileName": "src/websocket/WebSocketShard.ts",
-									"line": 120,
+									"line": 123,
 									"character": 14
 								}
 							],
 							"signatures": [
 								{
-									"id": 398,
+									"id": 401,
 									"name": "send",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
 									"parameters": [
 										{
-											"id": 399,
+											"id": 402,
 											"name": "data",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -7930,6 +8059,48 @@
 									}
 								}
 							]
+						},
+						{
+							"id": 407,
+							"name": "setupHeartbeatInterval",
+							"kind": 2048,
+							"kindString": "Method",
+							"flags": {
+								"isPrivate": true
+							},
+							"sources": [
+								{
+									"fileName": "src/websocket/WebSocketShard.ts",
+									"line": 149,
+									"character": 32
+								}
+							],
+							"signatures": [
+								{
+									"id": 408,
+									"name": "setupHeartbeatInterval",
+									"kind": 4096,
+									"kindString": "Call signature",
+									"flags": {},
+									"parameters": [
+										{
+											"id": 409,
+											"name": "interval",
+											"kind": 32768,
+											"kindString": "Parameter",
+											"flags": {},
+											"type": {
+												"type": "intrinsic",
+												"name": "number"
+											}
+										}
+									],
+									"type": {
+										"type": "intrinsic",
+										"name": "void"
+									}
+								}
+							]
 						}
 					],
 					"groups": [
@@ -7937,37 +8108,41 @@
 							"title": "Constructors",
 							"kind": 512,
 							"children": [
-								371
+								372
 							]
 						},
 						{
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								377,
-								376,
 								380,
-								375,
-								382,
-								381,
+								384,
+								377,
+								385,
+								378,
+								376,
+								383,
 								379,
-								378
+								382,
+								381
 							]
 						},
 						{
 							"title": "Methods",
 							"kind": 2048,
 							"children": [
-								402,
-								383,
-								387,
+								405,
+								386,
+								390,
+								410,
+								397,
+								403,
+								388,
 								394,
+								416,
+								392,
 								400,
-								404,
-								385,
-								391,
-								389,
-								397
+								407
 							]
 						}
 					],
@@ -7992,14 +8167,14 @@
 					]
 				},
 				{
-					"id": 364,
+					"id": 365,
 					"name": "GatewayOptions",
 					"kind": 256,
 					"kindString": "Interface",
 					"flags": {},
 					"children": [
 						{
-							"id": 366,
+							"id": 367,
 							"name": "maxShards",
 							"kind": 1024,
 							"kindString": "Property",
@@ -8022,7 +8197,7 @@
 							}
 						},
 						{
-							"id": 365,
+							"id": 366,
 							"name": "shards",
 							"kind": 1024,
 							"kindString": "Property",
@@ -8061,7 +8236,7 @@
 							}
 						},
 						{
-							"id": 369,
+							"id": 370,
 							"name": "spawnDelay",
 							"kind": 1024,
 							"kindString": "Property",
@@ -8084,7 +8259,7 @@
 							}
 						},
 						{
-							"id": 368,
+							"id": 369,
 							"name": "url",
 							"kind": 1024,
 							"kindString": "Property",
@@ -8107,7 +8282,7 @@
 							}
 						},
 						{
-							"id": 367,
+							"id": 368,
 							"name": "version",
 							"kind": 1024,
 							"kindString": "Property",
@@ -8135,11 +8310,11 @@
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
+								367,
 								366,
-								365,
+								370,
 								369,
-								368,
-								367
+								368
 							]
 						}
 					],
@@ -8163,15 +8338,15 @@
 					"title": "Classes",
 					"kind": 128,
 					"children": [
-						407,
-						370
+						418,
+						371
 					]
 				},
 				{
 					"title": "Interfaces",
 					"kind": 256,
 					"children": [
-						364
+						365
 					]
 				}
 			],
@@ -8191,28 +8366,28 @@
 			"flags": {},
 			"children": [
 				{
-					"id": 421,
+					"id": 432,
 					"name": "ClientBuilder",
 					"kind": 128,
 					"kindString": "Class",
 					"flags": {},
 					"children": [
 						{
-							"id": 422,
+							"id": 433,
 							"name": "constructor",
 							"kind": 512,
 							"kindString": "Constructor",
 							"flags": {},
 							"signatures": [
 								{
-									"id": 423,
+									"id": 434,
 									"name": "new ClientBuilder",
 									"kind": 16384,
 									"kindString": "Constructor signature",
 									"flags": {},
 									"typeParameter": [
 										{
-											"id": 424,
+											"id": 435,
 											"name": "Stack",
 											"kind": 131072,
 											"kindString": "Type parameter",
@@ -8231,7 +8406,7 @@
 									],
 									"parameters": [
 										{
-											"id": 425,
+											"id": 436,
 											"name": "token",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -8242,21 +8417,21 @@
 											}
 										},
 										{
-											"id": 426,
+											"id": 437,
 											"name": "root",
 											"kind": 32768,
 											"kindString": "Parameter",
 											"flags": {},
 											"type": {
 												"type": "reference",
-												"id": 448,
+												"id": 459,
 												"name": "default"
 											}
 										}
 									],
 									"type": {
 										"type": "reference",
-										"id": 421,
+										"id": 432,
 										"typeArguments": [
 											{
 												"type": "reference",
@@ -8269,7 +8444,7 @@
 							]
 						},
 						{
-							"id": 427,
+							"id": 438,
 							"name": "client",
 							"kind": 1024,
 							"kindString": "Property",
@@ -8294,7 +8469,7 @@
 							}
 						},
 						{
-							"id": 440,
+							"id": 451,
 							"name": "build",
 							"kind": 2048,
 							"kindString": "Method",
@@ -8308,7 +8483,7 @@
 							],
 							"signatures": [
 								{
-									"id": 441,
+									"id": 452,
 									"name": "build",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -8328,7 +8503,7 @@
 							]
 						},
 						{
-							"id": 434,
+							"id": 445,
 							"name": "cache",
 							"kind": 2048,
 							"kindString": "Method",
@@ -8342,14 +8517,14 @@
 							],
 							"signatures": [
 								{
-									"id": 435,
+									"id": 446,
 									"name": "cache",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
 									"parameters": [
 										{
-											"id": 436,
+											"id": 447,
 											"name": "provider",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -8357,21 +8532,21 @@
 											"type": {
 												"type": "reflection",
 												"declaration": {
-													"id": 437,
+													"id": 448,
 													"name": "__type",
 													"kind": 65536,
 													"kindString": "Type literal",
 													"flags": {},
 													"signatures": [
 														{
-															"id": 438,
+															"id": 449,
 															"name": "__type",
 															"kind": 4096,
 															"kindString": "Call signature",
 															"flags": {},
 															"parameters": [
 																{
-																	"id": 439,
+																	"id": 450,
 																	"name": "client",
 																	"kind": 32768,
 																	"kindString": "Parameter",
@@ -8420,7 +8595,7 @@
 									],
 									"type": {
 										"type": "reference",
-										"id": 421,
+										"id": 432,
 										"typeArguments": [
 											{
 												"type": "reference",
@@ -8433,7 +8608,7 @@
 							]
 						},
 						{
-							"id": 428,
+							"id": 439,
 							"name": "rest",
 							"kind": 2048,
 							"kindString": "Method",
@@ -8447,14 +8622,14 @@
 							],
 							"signatures": [
 								{
-									"id": 429,
+									"id": 440,
 									"name": "rest",
 									"kind": 4096,
 									"kindString": "Call signature",
 									"flags": {},
 									"parameters": [
 										{
-											"id": 430,
+											"id": 441,
 											"name": "provider",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -8462,21 +8637,21 @@
 											"type": {
 												"type": "reflection",
 												"declaration": {
-													"id": 431,
+													"id": 442,
 													"name": "__type",
 													"kind": 65536,
 													"kindString": "Type literal",
 													"flags": {},
 													"signatures": [
 														{
-															"id": 432,
+															"id": 443,
 															"name": "__type",
 															"kind": 4096,
 															"kindString": "Call signature",
 															"flags": {},
 															"parameters": [
 																{
-																	"id": 433,
+																	"id": 444,
 																	"name": "client",
 																	"kind": 32768,
 																	"kindString": "Parameter",
@@ -8515,7 +8690,7 @@
 									],
 									"type": {
 										"type": "reference",
-										"id": 421,
+										"id": 432,
 										"typeArguments": [
 											{
 												"type": "reference",
@@ -8533,23 +8708,23 @@
 							"title": "Constructors",
 							"kind": 512,
 							"children": [
-								422
+								433
 							]
 						},
 						{
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								427
+								438
 							]
 						},
 						{
 							"title": "Methods",
 							"kind": 2048,
 							"children": [
-								440,
-								434,
-								428
+								451,
+								445,
+								439
 							]
 						}
 					],
@@ -8562,7 +8737,7 @@
 					],
 					"typeParameter": [
 						{
-							"id": 442,
+							"id": 453,
 							"name": "Stack",
 							"kind": 131072,
 							"kindString": "Type parameter",
@@ -8581,7 +8756,7 @@
 					]
 				},
 				{
-					"id": 448,
+					"id": 459,
 					"name": "ModuleHostModule",
 					"kind": 128,
 					"kindString": "Class",
@@ -8591,14 +8766,14 @@
 					},
 					"children": [
 						{
-							"id": 449,
+							"id": 460,
 							"name": "constructor",
 							"kind": 512,
 							"kindString": "Constructor",
 							"flags": {},
 							"signatures": [
 								{
-									"id": 450,
+									"id": 461,
 									"name": "new ModuleHostModule",
 									"kind": 16384,
 									"kindString": "Constructor signature",
@@ -8606,7 +8781,7 @@
 									"comment": {},
 									"parameters": [
 										{
-											"id": 451,
+											"id": 462,
 											"name": "modules",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -8626,14 +8801,14 @@
 									],
 									"type": {
 										"type": "reference",
-										"id": 448,
+										"id": 459,
 										"name": "default"
 									}
 								}
 							]
 						},
 						{
-							"id": 452,
+							"id": 463,
 							"name": "id",
 							"kind": 1024,
 							"kindString": "Property",
@@ -8669,7 +8844,7 @@
 							}
 						},
 						{
-							"id": 453,
+							"id": 464,
 							"name": "initialized",
 							"kind": 1024,
 							"kindString": "Property",
@@ -8696,7 +8871,7 @@
 							}
 						},
 						{
-							"id": 454,
+							"id": 465,
 							"name": "modules",
 							"kind": 1024,
 							"kindString": "Property",
@@ -8722,7 +8897,7 @@
 							"defaultValue": "..."
 						},
 						{
-							"id": 455,
+							"id": 466,
 							"name": "init",
 							"kind": 2048,
 							"kindString": "Method",
@@ -8739,7 +8914,7 @@
 							],
 							"signatures": [
 								{
-									"id": 456,
+									"id": 467,
 									"name": "init",
 									"kind": 4096,
 									"kindString": "Call signature",
@@ -8749,7 +8924,7 @@
 									},
 									"parameters": [
 										{
-											"id": 457,
+											"id": 468,
 											"name": "client",
 											"kind": 32768,
 											"kindString": "Parameter",
@@ -8790,23 +8965,23 @@
 							"title": "Constructors",
 							"kind": 512,
 							"children": [
-								449
+								460
 							]
 						},
 						{
 							"title": "Properties",
 							"kind": 1024,
 							"children": [
-								452,
-								453,
-								454
+								463,
+								464,
+								465
 							]
 						},
 						{
 							"title": "Methods",
 							"kind": 2048,
 							"children": [
-								455
+								466
 							]
 						}
 					],
@@ -8826,7 +9001,7 @@
 					]
 				},
 				{
-					"id": 443,
+					"id": 454,
 					"name": "createBot",
 					"kind": 64,
 					"kindString": "Function",
@@ -8840,14 +9015,14 @@
 					],
 					"signatures": [
 						{
-							"id": 444,
+							"id": 455,
 							"name": "createBot",
 							"kind": 4096,
 							"kindString": "Call signature",
 							"flags": {},
 							"typeParameter": [
 								{
-									"id": 445,
+									"id": 456,
 									"name": "Stack",
 									"kind": 131072,
 									"kindString": "Type parameter",
@@ -8866,7 +9041,7 @@
 							],
 							"parameters": [
 								{
-									"id": 446,
+									"id": 457,
 									"name": "token",
 									"kind": 32768,
 									"kindString": "Parameter",
@@ -8877,21 +9052,21 @@
 									}
 								},
 								{
-									"id": 447,
+									"id": 458,
 									"name": "root",
 									"kind": 32768,
 									"kindString": "Parameter",
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"id": 448,
+										"id": 459,
 										"name": "ModuleHostModule"
 									}
 								}
 							],
 							"type": {
 								"type": "reference",
-								"id": 421,
+								"id": 432,
 								"typeArguments": [
 									{
 										"type": "reference",
@@ -8909,15 +9084,15 @@
 					"title": "Classes",
 					"kind": 128,
 					"children": [
-						421,
-						448
+						432,
+						459
 					]
 				},
 				{
 					"title": "Functions",
 					"kind": 64,
 					"children": [
-						443
+						454
 					]
 				}
 			],
