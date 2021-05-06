@@ -1,6 +1,6 @@
 import { RESTOptions } from '@src/rest'
 import { version } from '@root/package.json'
-import WebSocketUtil from '@src/util/WebSocketUtil'
+import WebSocketUtils from '@src/util/WebSocketUtils'
 
 enum OPCodes {
   DISPATCH,
@@ -56,6 +56,13 @@ enum WebSocketEvents {
   'WEBHOOKS_UPDATE' = 'WEBHOOKS_UPDATE',
 }
 
+enum WebSocketStates {
+  CONNECTING,
+  OPEN,
+  CLOSING,
+  CLOSED,
+}
+
 export default class Constants {
   static API_ENDPOINT = 'https://discord.com/api'
   static DEFAULT_REST_OPTIONS: RESTOptions = {
@@ -66,4 +73,5 @@ export default class Constants {
 
   static OPCodes = OPCodes
   static WebSocketEvents = WebSocketEvents
+  static WebSocketStates = WebSocketStates
 }

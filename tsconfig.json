@@ -3,7 +3,15 @@
     "strict": true,
     "module": "commonjs",
     "target": "es6",
-    "lib": ["esnext", "esnext.array", "esnext.asynciterable", "esnext.intl", "esnext.symbol", "es6"],
+    "lib": [
+      "esnext",
+      "esnext.array",
+      "esnext.asynciterable",
+      "esnext.intl",
+      "esnext.symbol",
+      "es6",
+      "dom"
+    ],
     "sourceMap": true,
     "removeComments": false,
     "alwaysStrict": true,

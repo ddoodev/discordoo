@@ -6,6 +6,7 @@ import getGateway from '@src/util/getGateway'
 import WebSocketShard from '@src/websocket/WebSocketShard'
 import { Collection } from '@src/collection'
 import { promisify } from 'util'
+import WebSocketUtils from '@src/util/WebSocketUtils'
 
 const wait = promisify(setTimeout)
 
@@ -53,7 +54,7 @@ export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvent
     console.log('gateway:', this.gateway)
     const { shards: recommendedShards, url: gatewayUrl, session_start_limit: sessionStartLimit } = this.gateway
 
-    this.options.url = gatewayUrl + '/'
+    this.options.url = gatewayUrl + '/' + '?encoding=' + WebSocketUtils.encoding + '&v=' + (this.options.version || 9)
 
     let { shards } = this.options
 
