@@ -14,7 +14,7 @@ export default class CacheManager {
    * Get a cache namespace
    * @param id - id of cache namespace
    */
-  getCache(id: string): CollectionCacheNamespace {
+  getCache<K = unknown, V = unknown>(id: string): CollectionCacheNamespace<K, V> {
     if (this.caches.has(id)) return this.caches.get(id)!
     else {
       this.caches.set(id, new CollectionCacheNamespace())
