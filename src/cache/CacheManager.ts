@@ -15,10 +15,10 @@ export default class CacheManager {
    * @param id - id of cache namespace
    */
   getCache<K = unknown, V = unknown>(id: string): CollectionCacheNamespace<K, V> {
-    if (this.caches.has(id)) return this.caches.get(id)!
+    if (this.caches.has(id)) return (this.caches.get(id)!) CollectionCacheNamespace<K, V>
     else {
       this.caches.set(id, new CollectionCacheNamespace())
-      return this.caches.get(id)!
+      return (this.caches.get(id)!) as CollectionCacheNamespace<K, V>
     }
   }
 }
