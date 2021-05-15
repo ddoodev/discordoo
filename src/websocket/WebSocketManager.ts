@@ -95,6 +95,8 @@ export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvent
 
     console.log('shards:', shards)
 
+    console.log(this.totalShards)
+
     this.shardQueue = new Set(shards.map(id => new WebSocketShard(this, id)))
     console.log('queue:', this.shardQueue)
     return this.createShards()

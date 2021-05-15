@@ -34,6 +34,7 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
 
     console.log('shard', this.id, 'message subscribe')
     this.connection.onmessage = this.onMessage.bind(this)
+    this.connection.onclose = this.onClose.bind(this)
   }
 
   private identify() {
@@ -67,6 +68,10 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
     }
 
     return this.send({ op: Constants.OPCodes.RESUME, d })
+  }
+
+  private onClose(event: WebSocket.CloseEvent) {
+    this.destroy({ code: event.code, reset: true, reconnect: true })
   }
 
   private onMessage(event: WebSocket.MessageEvent) {
@@ -106,6 +111,9 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
         this.identify()
         this.setupHeartbeatInterval(packet.d.heartbeat_interval)
         break
+      case Constants.OPCodes.INVALID_SESSION:
+        this.destroy({ reset: true, reconnect: true })
+        break
       case Constants.OPCodes.HEARTBEAT:
         console.log('HEARTBEAT')
         this.heartbeat()
@@ -133,7 +141,7 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
 
     if (!this.lastHeartbeatAcked) {
       console.log('shard', this.id, 'last heartbeat didnt acked, reconnecting')
-      return
+      return this.destroy({ reset: true, reconnect: true })
     }
 
     this.lastPingTimestamp = Date.now()
@@ -155,7 +163,7 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
     if (interval !== -1) this.heartbeatInterval = setInterval(this.heartbeat.bind(this), interval)
   }
 
-  public destroy({ code = 1000, reset = false } = {}) {
+  public destroy({ code = 1000, reset = false, reconnect = false } = {}) {
 
     this.setupHeartbeatInterval(-1)
 
@@ -167,9 +175,15 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
       }
     }
 
+    this.connection = undefined
+
     if (reset) {
       this.sequence = -1
       this.sessionID = undefined
+    }
+
+    if (reconnect) {
+      this.connect()
     }
 
   }

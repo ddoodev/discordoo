@@ -74,4 +74,5 @@ export default class Constants {
   static OPCodes = OPCodes
   static WebSocketEvents = WebSocketEvents
   static WebSocketStates = WebSocketStates
+  static WebSocketEncoding = WebSocketUtils.encoding
 }
