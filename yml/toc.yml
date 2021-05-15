@@ -1,7 +1,0 @@
-- name: discordoo
-  items:
-    - name: Overview
-      uid: discordoo
-    - uid: discordoo.main
-      name: main
-      items: []
