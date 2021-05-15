@@ -8,7 +8,6 @@
     "./collection": "./dist/src/collection/index.js",
     "./rest": "./dist/src/rest/index.js",
     "./util": "./dist/src/util/index.js",
-    "./main": "./dist/src/main/index.js",
     "./websocket": "./dist/src/websocket/index.js",
     "./package.json": "./package.json",
     "./wrapper": "./dist/src/wrapper/index.js"
@@ -32,9 +31,6 @@
       ],
       "websocket": [
         "types/websocket/index.d.ts"
-      ],
-      "main": [
-        "types/main/index.d.ts"
       ],
       "wrapper": [
         "types/wrapper/index.d.ts"
