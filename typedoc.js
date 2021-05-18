@@ -3,5 +3,4 @@ const { packages } = require('./discordoo.json')
 
 module.exports = {
   entryPoints: packages.map(e => `./src/${e}/index.ts`),
-  theme: './node_modules/typedoc-neo-theme/bin/default'
 }

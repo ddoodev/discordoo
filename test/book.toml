@@ -1,0 +1,5 @@
+[book]
+authors = ["TypeDoc"]
+language = "en"
+multilingual = false
+src = "src"

@@ -42,7 +42,9 @@
     "lint:fix": "eslint tests src --fix",
     "test": "jest",
     "build": "tsc -p tsconfig.json && tscpaths -p tsconfig.tspaths.json -s ./src -o ./dist",
-    "docs": "typedoc",
+    "docs:md": "typedoc",
+    "docs:json": "typedoc --json ./docs.json --plugin none",
+    "docs:summary": "taapok",
     "utils": "node scripts/root.js"
   },
   "keywords": [],
@@ -53,6 +55,7 @@
   "devDependencies": {
     "@commitlint/cli": "^12.0.1",
     "@commitlint/config-conventional": "^12.0.1",
+    "@discordoo/taapok": "^1.0.0",
     "@types/jest": "^26.0.21",
     "@types/lodash": "^4.14.168",
     "@types/node-fetch": "^2.5.9",
@@ -68,7 +71,7 @@
     "ts-jest": "^26.5.4",
     "tscpaths": "^0.0.9",
     "typedoc": "^0.20.32",
-    "typedoc-neo-theme": "^1.1.1",
+    "typedoc-plugin-markdown": "^3.8.1",
     "typescript": "^4.2.3"
   },
   "husky": {
