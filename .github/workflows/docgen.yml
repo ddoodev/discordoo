@@ -22,7 +22,7 @@ jobs:
           mkdir book
           cp ./book.toml ./book/book.toml
           mkdir book/book
-          cp ./docs ./book/src
+          cp -r ./docs ./book/src
           cp ./SUMMARY.md ./book/src/SUMMARY.md
           cd ./book
           mdbook build
