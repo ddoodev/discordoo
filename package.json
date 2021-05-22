@@ -44,8 +44,7 @@
     "build": "tsc -p tsconfig.json && tscpaths -p tsconfig.tspaths.json -s ./src -o ./dist",
     "docs": "npm run docs:md && npm run docs:summary",
     "docs:md": "typedoc",
-    "docs:json": "typedoc --json ./docs.json --plugin none",
-    "docs:summary": "taapok --input ./docs --output ./docs/summary.md",
+    "docs:summary": "taapok --input ./docs --output ./SUMMARY.md",
     "utils": "node scripts/root.js"
   },
   "keywords": [],
@@ -56,7 +55,7 @@
   "devDependencies": {
     "@commitlint/cli": "^12.0.1",
     "@commitlint/config-conventional": "^12.0.1",
-    "@discordoo/taapok": "^1.0.1",
+    "@discordoo/taapok": "^1.0.3",
     "@types/jest": "^26.0.21",
     "@types/lodash": "^4.14.168",
     "@types/node-fetch": "^2.5.9",

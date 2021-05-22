@@ -16,3 +16,5 @@ types
 tsconfig.tsbuildinfo
 
 docs
+docs.json
+SUMMARY.md

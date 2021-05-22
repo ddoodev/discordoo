@@ -11,10 +11,21 @@ jobs:
         with:
           persist-credentials: false
           fetch-depth: 0
+      - name: Install MDBook
+        uses: peaceiris/actions-mdbook@v1
+        with:
+          mdbook-version: '0.4.7'
       - name: Install packages etc
         run: |
           npm ci
           npm run docs
+          mkdir book
+          cp ./book.toml ./book/book.toml
+          mkdir book/book
+          cp ./docs ./book/src
+          cp ./SUMMARY.md ./book/src/SUMMARY.md
+          cd ./book
+          mdbook build
       - name: Deploy
         uses: 'JamesIves/github-pages-deploy-action@4.1.3'
         with:
