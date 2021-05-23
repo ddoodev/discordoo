@@ -15,9 +15,9 @@
 </p> 
 
 <p align="center">
-<a href="https://docs.discordoo.dev">API Docs</a>
+<a href="https://docs.discordoo.xyz">API Docs</a>
 <span> · </span>
-<a href="https://guide.discordoo.dev">Guide</a>
+<a href="https://guide.discordoo.xyz">Guide</a>
 <span> · </span>
 <a href="https://github.com/Discordoo/discordoo/blob/master/CONTRIBUTING.md">Contribute</a>
 </p> 
