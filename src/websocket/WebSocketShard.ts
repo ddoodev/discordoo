@@ -181,6 +181,7 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
     if (reset) {
       this.sequence = -1
       this.sessionID = undefined
+      this.lastHeartbeatAcked = true
     }
 
     if (reconnect) {
