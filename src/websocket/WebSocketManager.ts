@@ -7,16 +7,11 @@ import WebSocketShard from '@src/websocket/WebSocketShard'
 import { Collection } from '@src/collection'
 import { promisify } from 'util'
 import WebSocketUtils from '@src/util/WebSocketUtils'
+import { inspect } from 'util'
+import DiscordooError from '@src/util/DiscordooError'
 
 const wait = promisify(setTimeout)
 
-// a few notes:
-// * this.options cannot be sent to the gateway, it shall be sieved
-// * WebSocketManager spawns shards and collects events from them. It doesn't
-// spawn new threads or stuff like that
-// * this.gateway is the result of getGateway() util
-//
-// Have fun!
 export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvents> {
   public readonly options: GatewayOptions
   private gateway?: RESTGetAPIGatewayBotResult
@@ -39,7 +34,7 @@ export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvent
       version: 9,
       url: 'wss://gateway.discord.gg',
       compress: false,
-      encoding: 'json',
+      encoding: WebSocketUtils.encoding,
       shards: 'auto',
       intents: 32509 // use all intents except privileged
     }, options)
@@ -67,8 +62,14 @@ export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvent
       } break
 
       case 'object':
-        if (!Array.isArray(shards)) throw new Error('Discordoo: WebSocketManager: type of "shards" cannot be object')
-        else this.totalShards = shards.length
+        if (!Array.isArray(shards))
+          throw new DiscordooError(
+            'WebSocketManager',
+            'invalid "shards" option:',
+            'type of "shards" cannot be object'
+          )
+        else
+          this.totalShards = shards.length
         break
 
       case 'string':
@@ -82,14 +83,20 @@ export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvent
           this.totalShards = shards
           shards = Array.from({ length: shards }, (_, i) => i)
         } else {
-          throw new Error('Discordoo: WebSocketManager: invalid "shards" option: ' +
-            'if type of "shards" is string, it cannot be anything other than "auto"')
+          throw new DiscordooError(
+            'WebSocketManager',
+            'invalid "shards" option:',
+            'if type of "shards" is string, it cannot be anything other than "auto"'
+          )
         }
         break
 
       default:
-        throw new Error(
-          'Discordoo: WebSocketManager: invalid "shards" option: received disallowed type: ' + typeof shards
+        throw new DiscordooError(
+          'WebSocketManager',
+          'invalid "shards" option:',
+          'received disallowed type:',
+          typeof shards
         )
     }
 
@@ -99,6 +106,19 @@ export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvent
 
     this.shardQueue = new Set(shards.map(id => new WebSocketShard(this, id)))
     console.log('queue:', this.shardQueue)
+
+    if (sessionStartLimit.remaining < this.totalShards) {
+      throw new DiscordooError(
+        'WebSocketManager',
+        'cannot start shards',
+        Array.from(this.shardQueue).map(s => s.id).join(', '),
+        'because the remaining number of session starts the current user is allowed is',
+        sessionStartLimit.remaining,
+        'but needed',
+        this.totalShards + '.'
+      )
+    }
+
     return this.createShards()
   }
 
@@ -119,9 +139,12 @@ export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvent
     this.shards.set(shard.id, shard)
 
     if (this.shardQueue.size) {
-      const delay = this.options.spawnDelay || 5000
+      // https://discord.com/developers/docs/topics/gateway#session-start-limit-object
+      const delay = this.options.spawnDelay
+        || 5000 / (this.gateway?.session_start_limit.max_concurrency || 1)
 
       await wait(delay)
+
       return this.createShards()
     }
 

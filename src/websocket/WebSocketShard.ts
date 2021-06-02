@@ -53,7 +53,7 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
       shard: [ this.id, this.manager.totalShards ]
     }
 
-    console.log('shard', this.id, 'idenfity', { op: Constants.OPCodes.IDENTIFY, d })
+    // console.log('shard', this.id, 'identity', { op: Constants.OPCodes.IDENTIFY, d })
 
     return this.send({ op: Constants.OPCodes.IDENTIFY, d })
   }
@@ -144,6 +144,7 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
       return this.destroy({ reset: true, reconnect: true })
     }
 
+    this.lastHeartbeatAcked = false
     this.lastPingTimestamp = Date.now()
     this.send({ op: Constants.OPCodes.HEARTBEAT, d: this.sequence })
   }
@@ -151,7 +152,7 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
   private ackHeartbeat() {
     this.lastHeartbeatAcked = true
     this.ping = Date.now() - this.lastPingTimestamp
-    console.log('shard', this.id, 'ack heartbeat', this.ping + 'ms')
+    console.log('shard', this.id, 'ack heartbeat. PING', this.ping + 'ms')
   }
 
   private setupHeartbeatInterval(interval: number) {
