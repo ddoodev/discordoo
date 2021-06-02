@@ -7,7 +7,6 @@ import WebSocketShard from '@src/websocket/WebSocketShard'
 import { Collection } from '@src/collection'
 import { promisify } from 'util'
 import WebSocketUtils from '@src/util/WebSocketUtils'
-import { inspect } from 'util'
 import DiscordooError from '@src/util/DiscordooError'
 
 const wait = promisify(setTimeout)

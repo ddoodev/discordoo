@@ -17,7 +17,7 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
   private sequence = -1
   private pendingGuilds: string[] = []
   private heartbeatInterval?: any
-  private lastHeartbeatAcked = true
+  private missedHeartbeats = 0
 
   constructor(manager: WebSocketManager, id: number) {
     super()
@@ -139,18 +139,18 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
   private heartbeat() {
     console.log('shard', this.id, 'heartbeat', this.sequence)
 
-    if (!this.lastHeartbeatAcked) {
-      console.log('shard', this.id, 'last heartbeat didnt acked, reconnecting')
+    if (this.missedHeartbeats > 2) {
+      console.log('shard', this.id, 'missed 3 heartbeats, reconnecting')
       return this.destroy({ reset: true, reconnect: true })
     }
 
-    this.lastHeartbeatAcked = false
+    this.missedHeartbeats += 1
     this.lastPingTimestamp = Date.now()
     this.send({ op: Constants.OPCodes.HEARTBEAT, d: this.sequence })
   }
 
   private ackHeartbeat() {
-    this.lastHeartbeatAcked = true
+    this.missedHeartbeats = 0
     this.ping = Date.now() - this.lastPingTimestamp
     console.log('shard', this.id, 'ack heartbeat. PING', this.ping + 'ms')
   }
@@ -170,6 +170,7 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
 
     if (this.connection) {
       if (this.connection.readyState === Constants.WebSocketStates.OPEN) {
+        if (!code) code = 1000
         this.connection.close(code)
       } else {
         this.removeListeners()
@@ -181,7 +182,7 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
     if (reset) {
       this.sequence = -1
       this.sessionID = undefined
-      this.lastHeartbeatAcked = true
+      this.missedHeartbeats = 0
     }
 
     if (reconnect) {
