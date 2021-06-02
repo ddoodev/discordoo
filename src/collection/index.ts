@@ -38,8 +38,8 @@ export class Collection<K, V> extends Map<K, V> {
    * @param predicate - function to use
    */
   forEach(predicate: (value: V, key: K, collection: Collection<K, V>) => void) {
-    super.forEach((v: V, k: K, m: Map<K, V>) => {
-      predicate(v, k, new Collection<K, V>(m.entries()))
+    super.forEach((v: V, k: K) => {
+      predicate(v, k, this)
     })
   }
 
