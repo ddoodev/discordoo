@@ -8,6 +8,8 @@ import { Collection } from '@src/collection'
 import { promisify } from 'util'
 import WebSocketUtils from '@src/util/WebSocketUtils'
 import DiscordooError from '@src/util/DiscordooError'
+import Optional from '@src/util/Optional'
+import { Constants } from '@src/core'
 
 const wait = promisify(setTimeout)
 
@@ -20,23 +22,10 @@ export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvent
   public totalShards = 1
   public shards = new Collection<number, WebSocketShard>()
 
-  constructor(token: string, options: Omit<GatewayOptions, 'token'>) {
+  constructor(options: Optional<GatewayOptions, 'intents' | 'properties'>) {
     super()
 
-    this.options = Object.assign({
-      token: token,
-      properties: {
-        $browser: 'Discordoo',
-        $device: 'Discordoo',
-        $os: process.platform
-      },
-      version: 9,
-      url: 'wss://gateway.discord.gg',
-      compress: false,
-      encoding: WebSocketUtils.encoding,
-      shards: 'auto',
-      intents: 32509 // use all intents except privileged
-    }, options)
+    this.options = Object.assign(Constants.DEFAULT_WS_OPTIONS, options)
   }
 
   public async connect() {
