@@ -1,17 +1,16 @@
 import { TypedEmitter } from 'tiny-typed-emitter'
-import WebSocketManagerEvents from '@src/websocket/WebSocketManagerEvents'
-import GatewayOptions from '@src/websocket/GatewayOptions'
+import { Collection } from '@src/collection'
+import { Constants } from '@src/core'
 import { RESTGetAPIGatewayBotResult } from 'discord-api-types'
+import WebSocketManagerEvents from '@src/websocket/interfaces/WebSocketManagerEvents'
+import GatewayOptions from '@src/websocket/interfaces/GatewayOptions'
+import Optional from '@src/util/Optional'
 import getGateway from '@src/util/getGateway'
 import WebSocketShard from '@src/websocket/WebSocketShard'
-import { Collection } from '@src/collection'
-import { promisify } from 'util'
 import WebSocketUtils from '@src/util/WebSocketUtils'
 import DiscordooError from '@src/util/DiscordooError'
-import Optional from '@src/util/Optional'
-import { Constants } from '@src/core'
-
-const wait = promisify(setTimeout)
+import wait from '@src/util/wait'
+import zlib from 'zlib'
 
 export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvents> {
   public readonly options: GatewayOptions
@@ -31,13 +30,18 @@ export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvent
   public async connect() {
     console.log('connecting')
     this.gateway = await getGateway(this.options.token).catch(e => {
-      throw e.statusCode === 401 ? new Error('Discordoo: invalid token provided') : e
+      throw e.statusCode === 401
+        ? new DiscordooError('WebSocketManager', 'invalid token provided')
+        : e
     })
 
     console.log('gateway:', this.gateway)
     const { shards: recommendedShards, url: gatewayUrl, session_start_limit: sessionStartLimit } = this.gateway
 
-    this.options.url = gatewayUrl + '/' + '?encoding=' + WebSocketUtils.encoding + '&v=' + (this.options.version || 9)
+    this.options.url = gatewayUrl + '/'
+      + '?encoding=' + (this.options.encoding || WebSocketUtils.encoding)
+      + '&v=' + (this.options.version || 9)
+      + (this.options.compress ? '&compress=zlib-stream' : '')
 
     let { shards } = this.options
 

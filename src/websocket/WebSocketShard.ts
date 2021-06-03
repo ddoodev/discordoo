@@ -1,40 +1,87 @@
 import { TypedEmitter } from 'tiny-typed-emitter'
-import WebSocketShardEvents from '@src/websocket/WebSocketShardEvents'
+import { OPCodes, WebSocketEvents, WebSocketShardStatus, WebSocketStates } from '@src/core/Constants'
+import WebSocketShardEvents from '@src/websocket/interfaces/WebSocketShardEvents'
 import WebSocketManager from '@src/websocket/WebSocketManager'
 import WebSocket from 'ws'
 import WebSocketUtils from '@src/util/WebSocketUtils'
-import { Constants } from '@src/core'
+import WebSocketShardDestroyOptions from '@src/websocket/interfaces/WebSocketShardDestroyOptions'
+import WebSocketShardLimits from '@src/websocket/interfaces/WebSocketShardLimits'
+import wait from '@src/util/wait'
+import DiscordooError from '@src/util/DiscordooError'
+// @ts-ignore
+import PakoTypes from '@types/pako'
 
 export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
   public manager: WebSocketManager
   public id: number
+  public status: WebSocketShardStatus
 
   public lastPingTimestamp = 0
   public ping = -1
 
+  private limits: WebSocketShardLimits
+  private expectedGuilds: string[] = []
+  private readonly inflate?: PakoTypes.Inflate
+
   private connection?: WebSocket
   private sessionID?: string
   private sequence = -1
-  private pendingGuilds: string[] = []
   private heartbeatInterval?: any
   private missedHeartbeats = 0
 
   constructor(manager: WebSocketManager, id: number) {
     super()
 
+    this.limits = {
+      requests: {
+        queue: [],
+        sent: 0,
+        resetTime: Date.now() + 60000 // 1 second
+      }
+    }
+
+    this.status = WebSocketShardStatus.CREATED
+
     this.manager = manager
     this.id = id
+
+    if (this.manager.options.compress) {
+      if (!WebSocketUtils.pako) {
+        throw new DiscordooError(
+          'WebSocketShard ' + this.id,
+          'gateway compression requires "pako" module installed'
+        )
+      }
+
+      this.inflate = new WebSocketUtils.pako.Inflate({
+        chunkSize: 128 * 1024
+      })
+    }
   }
 
   public async connect() {
     if (!this.manager.options.url) return false
 
-    console.log('shard', this.id, 'creating websocket', this.manager.options.url)
-    this.connection = new WebSocket(this.manager.options.url)
+    if (this.connection?.readyState === WebSocketStates.OPEN && this.ready) {
+      return Promise.resolve()
+    }
 
-    console.log('shard', this.id, 'message subscribe')
-    this.connection.onmessage = this.onMessage.bind(this)
-    this.connection.onclose = this.onClose.bind(this)
+    try {
+      this.status = WebSocketShardStatus.CONNECTING
+
+      console.log('shard', this.id, 'creating websocket', this.manager.options.url)
+      this.connection = new WebSocket(this.manager.options.url)
+
+      console.log('shard', this.id, 'message subscribe')
+      this.connection.onmessage = this.onMessage.bind(this)
+      this.connection.onclose = this.onClose.bind(this)
+      this.connection.onopen = this.onOpen.bind(this)
+    } catch (e) {
+      this.status = WebSocketShardStatus.RECONNECTING
+      console.error('shard', this.id, 'websocket creation failed. trying again in 15s. error:', e)
+      await wait(15000)
+      this.connect()
+    }
   }
 
   private identify() {
@@ -53,13 +100,14 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
       shard: [ this.id, this.manager.totalShards ]
     }
 
-    // console.log('shard', this.id, 'identity', { op: Constants.OPCodes.IDENTIFY, d })
+    // console.log('shard', this.id, 'identity', { op: OPCodes.IDENTIFY, d })
 
-    return this.send({ op: Constants.OPCodes.IDENTIFY, d })
+    return this.send({ op: OPCodes.IDENTIFY, d })
   }
 
   private resumeIdentify() {
     if (!this.sessionID) return this.identify()
+    this.status = WebSocketShardStatus.RESUMING
 
     const d = {
       token: this.manager.options.token,
@@ -67,11 +115,22 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
       seq: this.sequence
     }
 
-    return this.send({ op: Constants.OPCodes.RESUME, d })
+    return this.send({ op: OPCodes.RESUME, d })
+  }
+
+  private onOpen() {
+    this.status = WebSocketShardStatus.CONNECTED
+
+    this.emit('connected')
   }
 
   private onClose(event: WebSocket.CloseEvent) {
-    this.destroy({ code: event.code, reset: true, reconnect: true })
+    if (event.code === 1000) {
+      this.emit('invalidated')
+    }
+
+    this.emit('closed')
+    this.removeListeners()
   }
 
   private onMessage(event: WebSocket.MessageEvent) {
@@ -80,79 +139,149 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
 
     if (data instanceof ArrayBuffer) data = new Uint8Array(data)
 
+    if (Array.isArray(data)) data = Buffer.concat(data)
+
+    if (
+      this.manager.options.compress
+      && data instanceof Uint8Array
+      && this.inflate
+    ) {
+      const l = data.length
+      const flush = l >= 4
+        && data[l - 4] === 0x00
+        && data[l - 3] === 0x00
+        && data[l - 2] === 0xff
+        && data[l - 1] === 0xff
+
+
+      this.inflate.push(data, flush ? WebSocketUtils.pako.Z_SYNC_FLUSH : false)
+      if (!flush) return
+      const decompressed = this.inflate.result
+
+      if (!decompressed) return
+
+      if (decompressed instanceof Uint8Array || Array.isArray(decompressed)) {
+        data = Buffer.from(decompressed)
+      } else {
+        data = decompressed
+      }
+
+      if (WebSocketUtils.encoding === 'json' && Buffer.isBuffer(data)) data = data.toString('utf8')
+
+    }
+
     console.log('shard', this.id, 'message', data)
 
     try {
       packet = WebSocketUtils.unpack(data)
 
-      this.handlePacket(packet)
+      this.onPacket(packet)
     } catch (e) {
       console.error('shard', this.id, 'error', e)
     }
 
   }
 
-  private handlePacket(packet?: Record<any, any>) {
+  private onPacket(packet?: Record<any, any>) {
     if (!packet) return
     console.log('shard', this.id, 'packet', packet)
     if (WebSocketUtils.exists(packet.s) && packet.s > this.sequence) this.sequence = packet.s
 
     switch (packet.t) {
-      case Constants.WebSocketEvents.READY:
+      case WebSocketEvents.READY:
         this.sessionID = packet.d.session_id
-        this.pendingGuilds = packet.d.guilds.map(g => g.id)
+        this.expectedGuilds = packet.d.guilds.map(g => g.id)
         this.heartbeat()
+        this.status = WebSocketShardStatus.WAITING_FOR_GUILDS
+        break
+      case WebSocketEvents.RESUMED:
+        this.status = WebSocketShardStatus.READY
         break
     }
 
     switch (packet.op) {
-      case Constants.OPCodes.HELLO:
+      case OPCodes.HELLO:
         console.log('HELLO')
+        this.status = WebSocketShardStatus.IDENTIFYING
         this.identify()
         this.setupHeartbeatInterval(packet.d.heartbeat_interval)
         break
-      case Constants.OPCodes.INVALID_SESSION:
-        this.destroy({ reset: true, reconnect: true })
+
+      case OPCodes.INVALID_SESSION:
+        if (WebSocketUtils.exists(packet.d) && !this.manager.options.useReconnectOnly) {
+          this.destroy({ reconnect: true, code: 4900 })
+        } else {
+          this.destroy({ reset: true, reconnect: true })
+        }
         break
-      case Constants.OPCodes.HEARTBEAT:
+
+      case OPCodes.HEARTBEAT:
         console.log('HEARTBEAT')
         this.heartbeat()
         break
-      case Constants.OPCodes.HEARTBEAT_ACK:
-        console.log('HEARTBEAT_ACK')
-        this.ackHeartbeat()
-        break
-      default:
 
+      case OPCodes.HEARTBEAT_ACK:
+        console.log('HEARTBEAT_ACK')
+        this.missedHeartbeats = 0
+        this.ping = Date.now() - this.lastPingTimestamp
+        break
+
+      case OPCodes.RECONNECT: {
+        let code: number, reset: boolean
+
+        if (this.manager.options.useReconnectOnly) {
+          code = 1000
+          reset = true
+        } else {
+          code = 4900
+          reset = false
+        }
+
+        this.destroy({ reconnect: true, code, reset })
+      } break
+
+      case OPCodes.DISPATCH:
+        // call websocket manager ws events handler
+        break
+
+      default:
+        console.log('shard', this.id, 'packet with unknown opcode:', packet)
         break
     }
   }
 
-  private send(data: any) {
-    if (!this.connection) return
+  public send(data: any, important = false) {
+    if (!this.connection || this.connection.readyState !== WebSocketStates.OPEN) return
 
-    this.connection.send(WebSocketUtils.pack(data), err => {
-      if (err) console.error(err)
-    })
+    if (this.limits.requests.resetTime <= Date.now()) {
+      this.limits.requests.resetTime = Date.now() + 60000 // 1s
+      this.limits.requests.sent = 0
+    }
+
+    if (this.limits.requests.sent >= 115) { // TODO: rate limit queue processing
+      if (important) this.limits.requests.queue.unshift(data)
+      else this.limits.requests.queue.push(data)
+    } else {
+      this.connection.send(WebSocketUtils.pack(data), err => {
+        if (err) console.error(err)
+      })
+    }
   }
 
   private heartbeat() {
+    if (this.status === WebSocketShardStatus.RESUMING) return
     console.log('shard', this.id, 'heartbeat', this.sequence)
 
     if (this.missedHeartbeats > 2) {
       console.log('shard', this.id, 'missed 3 heartbeats, reconnecting')
-      return this.destroy({ reset: true, reconnect: true })
+
+      const reset = !!(this.sessionID && !this.manager.options.useReconnectOnly)
+      return this.destroy({ reset, reconnect: true, code: reset ? 1000 : 1001 })
     }
 
     this.missedHeartbeats += 1
     this.lastPingTimestamp = Date.now()
-    this.send({ op: Constants.OPCodes.HEARTBEAT, d: this.sequence })
-  }
-
-  private ackHeartbeat() {
-    this.missedHeartbeats = 0
-    this.ping = Date.now() - this.lastPingTimestamp
-    console.log('shard', this.id, 'ack heartbeat. PING', this.ping + 'ms')
+    this.send({ op: OPCodes.HEARTBEAT, d: this.sequence })
   }
 
   private setupHeartbeatInterval(interval: number) {
@@ -164,17 +293,24 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
     if (interval !== -1) this.heartbeatInterval = setInterval(this.heartbeat.bind(this), interval)
   }
 
-  public destroy({ code = 1000, reset = false, reconnect = false } = {}) {
+  public destroy(options: WebSocketShardDestroyOptions = { code: 1000, reset: false, reconnect: false }) {
+
+    // eslint-disable-next-line prefer-const
+    let { code, reset, reconnect } = options
+
+    if (reconnect) {
+      if (code === 1000 || !code) this.status = WebSocketShardStatus.RECONNECTING
+    } else {
+      this.status = WebSocketShardStatus.DISCONNECTED
+    }
 
     this.setupHeartbeatInterval(-1)
 
-    if (this.connection) {
-      if (this.connection.readyState === Constants.WebSocketStates.OPEN) {
-        if (!code) code = 1000
-        this.connection.close(code)
-      } else {
-        this.removeListeners()
-      }
+    if (this.connection?.readyState === WebSocketStates.OPEN) {
+      if (!code) code = 1000
+      this.connection.close(code)
+    } else {
+      this.removeListeners()
     }
 
     this.connection = undefined
@@ -182,8 +318,9 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
     if (reset) {
       this.sequence = -1
       this.sessionID = undefined
-      this.missedHeartbeats = 0
     }
+
+    this.missedHeartbeats = 0
 
     if (reconnect) {
       this.connect()
@@ -191,11 +328,17 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
 
   }
 
+  public get ready() {
+    return this.status === WebSocketShardStatus.READY
+  }
+
   private removeListeners() {
     if (!this.connection) return
 
     // eslint-disable-next-line
     this.connection.onmessage = this.connection.onclose = this.connection.onerror = this.connection.onopen = () => {}
+
+    // this.inflate = undefined
   }
 
 }

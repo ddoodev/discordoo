@@ -1,4 +1,4 @@
-let pack, unpack, encoding: 'json' | 'etf' = 'json'
+let pack, unpack, encoding: 'json' | 'etf' = 'json', pako
 
 try {
   const erlpack = require('erlpack')
@@ -16,12 +16,18 @@ try {
   unpack = JSON.parse
 }
 
+try {
+  pako = require('pako')
+} catch (e) {} // eslint-disable-line no-empty
+
 const decoder = new TextDecoder()
 
 export default class WebSocketUtils {
   static pack = pack
 
   static encoding = encoding
+
+  static pako = pako
 
   static unpack(data: any, type: 'json' | 'etf' = encoding): Record<any, any> {
     if (typeof data === 'string' || type === 'json') {

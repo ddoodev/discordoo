@@ -26,7 +26,7 @@ export default class Client<
 
   /** CacheProvider used by this module */
   cache: CacheProvider<ClientStack['cache']> | null = null
-  
+
   /** GatewayProvider used by this module */
   gateway: GatewayProvider<ClientStack['gateway']> | null = null
 

@@ -1,8 +1,9 @@
 import { RESTOptions } from '@src/rest'
 import { version } from '@root/package.json'
 import WebSocketUtils from '@src/util/WebSocketUtils'
+import { GatewayOptions } from '@src/websocket'
 
-enum OPCodes {
+export enum OPCodes {
   DISPATCH,
   HEARTBEAT,
   IDENTIFY,
@@ -17,7 +18,7 @@ enum OPCodes {
   HEARTBEAT_ACK,
 }
 
-enum WebSocketEvents {
+export enum WebSocketEvents {
   'READY' = 'READY',
   'RESUMED' = 'RESUMED',
   'GUILD_CREATE' = 'GUILD_CREATE',
@@ -56,23 +57,57 @@ enum WebSocketEvents {
   'WEBHOOKS_UPDATE' = 'WEBHOOKS_UPDATE',
 }
 
-enum WebSocketStates {
+export enum WebSocketStates {
   CONNECTING,
   OPEN,
   CLOSING,
   CLOSED,
 }
 
+export enum WebSocketShardStatus {
+  CREATED,
+  READY,
+  CONNECTING,
+  RECONNECTING,
+  CONNECTED,
+  DISCONNECTED,
+  WAITING_FOR_GUILDS,
+  IDENTIFYING,
+  RESUMING,
+}
+
 export default class Constants {
-  static API_ENDPOINT = 'https://discord.com/api'
-  static DEFAULT_REST_OPTIONS: RESTOptions = {
-    v: 8,
+  public static API_ENDPOINT = 'https://discord.com/api'
+
+  public static DEFAULT_REST_OPTIONS: RESTOptions = {
+    v: 9,
     useragent: `DiscordBot (https://github.com/Discordoo/discordoo, ${version})`,
     maxRetries: 5
   }
 
-  static OPCodes = OPCodes
-  static WebSocketEvents = WebSocketEvents
-  static WebSocketStates = WebSocketStates
-  static WebSocketEncoding = WebSocketUtils.encoding
+  public static DEFAULT_WS_OPTIONS: Omit<GatewayOptions, 'token'> = {
+    properties: {
+      $browser: 'Discordoo',
+      $device: 'Discordoo',
+      $os: process.platform
+    },
+    compress: false,
+    intents: 32509, // use all intents except privileged
+
+    maxShards: Infinity,
+    version: 9,
+    url: 'wss://gateway.discord.gg',
+    spawnDelay: 5000,
+    encoding: WebSocketUtils.encoding,
+    useReconnectOnly: false,
+    smoothEventsPeaks: false,
+    eventPeaksSmoothingMultiplier: 2,
+    maxEventsPerSecond: undefined
+  }
+
+  public static OPCodes = OPCodes
+  public static WebSocketEvents = WebSocketEvents
+  public static WebSocketStates = WebSocketStates
+  public static WebSocketEncoding = WebSocketUtils.encoding
+  public static WebSocketShardStatus = WebSocketShardStatus
 }

@@ -1,3 +1,4 @@
+/** Custom error class to create human-readable errors */
 export default class DiscordooError extends Error {
   public name = 'DiscordooError'
 
