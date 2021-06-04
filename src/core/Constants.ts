@@ -97,7 +97,7 @@ export default class Constants {
     maxShards: Infinity,
     version: 9,
     url: 'wss://gateway.discord.gg',
-    spawnDelay: 5000,
+    spawnDelay: 6000, // WARNING: DECREASE THIS LATER
     encoding: WebSocketUtils.encoding,
     useReconnectOnly: false,
     smoothEventsPeaks: false,

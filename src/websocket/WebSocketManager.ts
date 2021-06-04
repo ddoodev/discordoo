@@ -132,8 +132,7 @@ export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvent
 
     if (this.shardQueue.size) {
       // https://discord.com/developers/docs/topics/gateway#session-start-limit-object
-      const delay = this.options.spawnDelay
-        || 5000 / (this.gateway?.session_start_limit.max_concurrency || 1)
+      const delay = (this.options.spawnDelay || 5000) / (this.gateway?.session_start_limit.max_concurrency || 1)
 
       await wait(delay)
 
