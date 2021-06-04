@@ -49,7 +49,7 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
       if (!WebSocketUtils.pako) {
         throw new DiscordooError(
           'WebSocketShard ' + this.id,
-          'gateway compression requires "pako" module installed'
+          'gateway compression requires pako@1.0.11 module installed'
         )
       }
 
@@ -226,19 +226,9 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
         this.ping = Date.now() - this.lastPingTimestamp
         break
 
-      case OPCodes.RECONNECT: {
-        let code: number, reset: boolean
-
-        if (this.manager.options.useReconnectOnly) {
-          code = 1000
-          reset = true
-        } else {
-          code = 4900
-          reset = false
-        }
-
-        this.destroy({ reconnect: true, code, reset })
-      } break
+      case OPCodes.RECONNECT:
+        this.destroy({ reconnect: true, reset: true, code: 4000 })
+        break
 
       case OPCodes.DISPATCH:
         // call websocket manager ws events handler
@@ -299,7 +289,7 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
     let { code, reset, reconnect } = options
 
     if (reconnect) {
-      if (code === 1000 || !code) this.status = WebSocketShardStatus.RECONNECTING
+      this.status = WebSocketShardStatus.RECONNECTING
     } else {
       this.status = WebSocketShardStatus.DISCONNECTED
     }
