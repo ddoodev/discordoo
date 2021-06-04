@@ -21,7 +21,7 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
 
   private limits: WebSocketShardLimits
   private expectedGuilds: string[] = []
-  private readonly inflate?: PakoTypes.Inflate
+  private inflate?: PakoTypes.Inflate
 
   private connection?: WebSocket
   private sessionID?: string
@@ -44,8 +44,16 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
 
     this.manager = manager
     this.id = id
+  }
 
-    if (this.manager.options.compress) {
+  public async connect() {
+    if (!this.manager.options.url) return false
+
+    if (this.connection?.readyState === WebSocketStates.OPEN && this.ready) {
+      return Promise.resolve()
+    }
+
+    if (this.manager.options.compress && !this.sessionID) {
       if (!WebSocketUtils.pako) {
         throw new DiscordooError(
           'WebSocketShard ' + this.id,
@@ -56,14 +64,6 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
       this.inflate = new WebSocketUtils.pako.Inflate({
         chunkSize: 128 * 1024
       })
-    }
-  }
-
-  public async connect() {
-    if (!this.manager.options.url) return false
-
-    if (this.connection?.readyState === WebSocketStates.OPEN && this.ready) {
-      return Promise.resolve()
     }
 
     try {
