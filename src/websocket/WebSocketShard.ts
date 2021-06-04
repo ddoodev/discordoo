@@ -85,10 +85,12 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
   }
 
   private identify() {
+    console.log('shard', this.id, 'identify, sessionID:', this.sessionID)
     return this.sessionID ? this.resumeIdentify() : this.createIdentify()
   }
 
   private createIdentify() {
+    console.log('shard', this.id, 'create identify')
     const { token, intents, properties, presence, compress } = this.manager.options
 
     const d = {
@@ -101,11 +103,12 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
     }
 
     // console.log('shard', this.id, 'identity', { op: OPCodes.IDENTIFY, d })
-
+    console.log('shard', this.id, 'send created identify:', d)
     return this.send({ op: OPCodes.IDENTIFY, d })
   }
 
   private resumeIdentify() {
+    console.log('shard', this.id, 'resume identify')
     if (!this.sessionID) return this.identify()
     this.status = WebSocketShardStatus.RESUMING
 
@@ -115,6 +118,7 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
       seq: this.sequence
     }
 
+    console.log('shard', this.id, 'send resume identify', d)
     return this.send({ op: OPCodes.RESUME, d })
   }
 
@@ -189,6 +193,7 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
 
     switch (packet.t) {
       case WebSocketEvents.READY:
+        console.log('shard', this.id, 'READY')
         this.sessionID = packet.d.session_id
         this.expectedGuilds = packet.d.guilds.map(g => g.id)
         this.heartbeat()
@@ -201,13 +206,14 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
 
     switch (packet.op) {
       case OPCodes.HELLO:
-        console.log('HELLO')
+        console.log('shard', this.id, 'HELLO')
         this.status = WebSocketShardStatus.IDENTIFYING
         this.identify()
         this.setupHeartbeatInterval(packet.d.heartbeat_interval)
         break
 
       case OPCodes.INVALID_SESSION:
+        console.log('shard', this.id, 'INVALID_SESSION')
         if (WebSocketUtils.exists(packet.d) && !this.manager.options.useReconnectOnly) {
           this.destroy({ reconnect: true, code: 4900 })
         } else {
@@ -216,17 +222,18 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
         break
 
       case OPCodes.HEARTBEAT:
-        console.log('HEARTBEAT')
+        console.log('shard', this.id, 'HEARTBEAT')
         this.heartbeat()
         break
 
       case OPCodes.HEARTBEAT_ACK:
-        console.log('HEARTBEAT_ACK')
+        console.log('shard', this.id, 'HEARTBEAT_ACK')
         this.missedHeartbeats = 0
         this.ping = Date.now() - this.lastPingTimestamp
         break
 
       case OPCodes.RECONNECT:
+        console.log('shard', this.id, 'RECONNECT')
         this.destroy({ reconnect: true, reset: true, code: 4000 })
         break
 
