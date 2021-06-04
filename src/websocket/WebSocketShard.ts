@@ -262,10 +262,10 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
     if (this.status === WebSocketShardStatus.RESUMING) return
     console.log('shard', this.id, 'heartbeat', this.sequence)
 
-    if (this.missedHeartbeats > 2) {
-      console.log('shard', this.id, 'missed 3 heartbeats, reconnecting')
+    if (this.missedHeartbeats > 1) {
+      console.log('shard', this.id, 'missed 2 heartbeats, reconnecting')
 
-      const reset = !!(this.sessionID && !this.manager.options.useReconnectOnly)
+      const reset = !(this.sessionID && !this.manager.options.useReconnectOnly)
       return this.destroy({ reset, reconnect: true, code: reset ? 1000 : 1001 })
     }
 
