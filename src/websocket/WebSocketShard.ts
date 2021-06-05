@@ -125,6 +125,8 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
   private onOpen() {
     this.status = WebSocketShardStatus.CONNECTED
 
+    if (this.sessionID) this.identify()
+
     this.emit('connected')
   }
 
@@ -201,6 +203,7 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
         break
       case WebSocketEvents.RESUMED:
         this.status = WebSocketShardStatus.READY
+        this.heartbeat()
         break
     }
 
@@ -214,11 +217,14 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
 
       case OPCodes.INVALID_SESSION:
         console.log('shard', this.id, 'INVALID_SESSION')
-        if (WebSocketUtils.exists(packet.d) && !this.manager.options.useReconnectOnly) {
-          this.destroy({ reconnect: true, code: 4900 })
-        } else {
-          this.destroy({ reset: true, reconnect: true })
-        }
+
+        wait(5000).then(() => {
+          if (WebSocketUtils.exists(packet.d) && !this.manager.options.useReconnectOnly) {
+            this.destroy({ reconnect: true, code: 4000 })
+          } else {
+            this.destroy({ reset: true, reconnect: true })
+          }
+        })
         break
 
       case OPCodes.HEARTBEAT:
@@ -266,7 +272,7 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
   }
 
   private heartbeat() {
-    if (this.status === WebSocketShardStatus.RESUMING) return
+    if (this.status === WebSocketShardStatus.RESUMING || this.status === WebSocketShardStatus.RECONNECTING) return
     console.log('shard', this.id, 'heartbeat', this.sequence)
 
     if (this.missedHeartbeats > 1) {
@@ -301,8 +307,6 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
       this.status = WebSocketShardStatus.DISCONNECTED
     }
 
-    this.setupHeartbeatInterval(-1)
-
     if (this.connection?.readyState === WebSocketStates.OPEN) {
       if (!code) code = 1000
       this.connection.close(code)
@@ -315,6 +319,7 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
     if (reset) {
       this.sequence = -1
       this.sessionID = undefined
+      this.setupHeartbeatInterval(-1)
     }
 
     this.missedHeartbeats = 0
