@@ -10,7 +10,7 @@ export default class ModuleManager {
   /**
    * Modules loaded by this manager
    */
-  modules: Collection<string | symbol, Module> = new Collection
+  modules: Collection<string | symbol, Module> = new Collection()
 
   /** Array of load groups */
   private _moduleLoadGroups: (Module[])[] = []

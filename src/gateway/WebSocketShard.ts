@@ -1,11 +1,11 @@
 import { TypedEmitter } from 'tiny-typed-emitter'
 import { OPCodes, WebSocketEvents, WebSocketShardStatus, WebSocketStates } from '@src/core/Constants'
-import WebSocketShardEvents from '@src/websocket/interfaces/WebSocketShardEvents'
-import WebSocketManager from '@src/websocket/WebSocketManager'
+import WebSocketShardEvents from '@src/gateway/interfaces/WebSocketShardEvents'
+import WebSocketManager from '@src/gateway/WebSocketManager'
 import WebSocket from 'ws'
 import WebSocketUtils from '@src/util/WebSocketUtils'
-import WebSocketShardDestroyOptions from '@src/websocket/interfaces/WebSocketShardDestroyOptions'
-import WebSocketShardLimits from '@src/websocket/interfaces/WebSocketShardLimits'
+import WebSocketShardDestroyOptions from '@src/gateway/interfaces/WebSocketShardDestroyOptions'
+import WebSocketShardLimits from '@src/gateway/interfaces/WebSocketShardLimits'
 import wait from '@src/util/wait'
 import DiscordooError from '@src/util/DiscordooError'
 // @ts-ignore
@@ -26,6 +26,7 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
   private connection?: WebSocket
   private sessionID?: string
   private sequence = -1
+  private closeSequence = -1
   private heartbeatInterval?: any
   private missedHeartbeats = 0
 
@@ -340,7 +341,7 @@ export default class WebSocketShard extends TypedEmitter<WebSocketShardEvents> {
     // eslint-disable-next-line
     this.connection.onmessage = this.connection.onclose = this.connection.onerror = this.connection.onopen = () => {}
 
-    // this.inflate = undefined
+    this.inflate = undefined
   }
 
 }

@@ -2,24 +2,23 @@ import { TypedEmitter } from 'tiny-typed-emitter'
 import { Collection } from '@src/collection'
 import { Constants } from '@src/core'
 import { RESTGetAPIGatewayBotResult } from 'discord-api-types'
-import WebSocketManagerEvents from '@src/websocket/interfaces/WebSocketManagerEvents'
-import GatewayOptions from '@src/websocket/interfaces/GatewayOptions'
+import WebSocketManagerEvents from '@src/gateway/interfaces/WebSocketManagerEvents'
+import GatewayOptions from '@src/gateway/interfaces/GatewayOptions'
 import Optional from '@src/util/Optional'
 import getGateway from '@src/util/getGateway'
-import WebSocketShard from '@src/websocket/WebSocketShard'
+import WebSocketClient from '@src/gateway/WebSocketClient'
 import WebSocketUtils from '@src/util/WebSocketUtils'
 import DiscordooError from '@src/util/DiscordooError'
 import wait from '@src/util/wait'
-import zlib from 'zlib'
 
 export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvents> {
   public readonly options: GatewayOptions
   private gateway?: RESTGetAPIGatewayBotResult
 
-  private shardQueue = new Set<WebSocketShard>()
+  private shardQueue = new Set<WebSocketClient>()
 
   public totalShards = 1
-  public shards = new Collection<number, WebSocketShard>()
+  public shards = new Collection<number, WebSocketClient>()
 
   constructor(options: Optional<GatewayOptions, 'intents' | 'properties'>) {
     super()
@@ -96,7 +95,7 @@ export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvent
 
     console.log(this.totalShards)
 
-    this.shardQueue = new Set(shards.map(id => new WebSocketShard(this, id)))
+    this.shardQueue = new Set(shards.map(id => new WebSocketClient(this, id)))
     console.log('queue:', this.shardQueue)
 
     if (sessionStartLimit.remaining < this.totalShards) {

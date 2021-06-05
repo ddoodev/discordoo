@@ -8,7 +8,7 @@ import CollectionCacheNamespace from '@src/cache/CollectionCacheNamespace'
  * */
 export default class CacheManager {
   /** Namespaces controlled by this manager */
-  caches: Collection<string, CollectionCacheNamespace> = new Collection
+  caches: Collection<string, CollectionCacheNamespace> = new Collection()
 
   /**
    * Get a cache namespace

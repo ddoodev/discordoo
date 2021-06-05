@@ -1,7 +1,7 @@
 import { RESTOptions } from '@src/rest'
 import { version } from '@root/package.json'
 import WebSocketUtils from '@src/util/WebSocketUtils'
-import { GatewayOptions } from '@src/websocket'
+import { GatewayOptions } from '@src/gateway'
 
 export enum OPCodes {
   DISPATCH,
@@ -76,6 +76,31 @@ export enum WebSocketShardStatus {
   RESUMING,
 }
 
+export enum WebSocketClientStates {
+  CREATED,
+  READY,
+  CONNECTING,
+  RECONNECTING,
+  CONNECTED,
+  DISCONNECTED,
+  WAITING_FOR_GUILDS,
+  IDENTIFYING,
+  RESUMING,
+}
+
+export enum WebSocketClientEvents {
+  WS_SEND_ERROR = 'WS_SEND_ERROR',
+  WS_OPEN_ERROR = 'WS_OPEN_ERROR',
+  WS_ERROR = 'WS_ERROR',
+  WS_OPEN = 'WS_OPEN',
+  WS_CLOSED = 'WS_CLOSED',
+
+  READY = 'ready',
+  RESUMED = 'resumed',
+  DESTROYED = 'destroyed',
+  INVALID_SESSION = 'invalidSession',
+}
+
 export default class Constants {
   public static API_ENDPOINT = 'https://discord.com/api'
 
@@ -97,7 +122,7 @@ export default class Constants {
     maxShards: Infinity,
     version: 9,
     url: 'wss://gateway.discord.gg',
-    spawnDelay: 6000, // WARNING: DECREASE THIS LATER
+    spawnDelay: 5000,
     encoding: WebSocketUtils.encoding,
     useReconnectOnly: false,
     smoothEventsPeaks: false,

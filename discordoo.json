@@ -5,7 +5,7 @@
     "core",
     "rest",
     "util",
-    "websocket",
+    "gateway",
     "wrapper"
   ]
 }
