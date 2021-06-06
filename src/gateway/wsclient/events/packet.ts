@@ -7,7 +7,7 @@ import wait from '@src/util/wait'
 export default async function packet(
   client: WebSocketClient,
   // it should have been GatewayDispatchPayload & GatewayReceivePayload, but IntelliJ says SYS LOAD 666%
-  // https://cdn.discordapp.com/attachments/531549268033404928/850824244987166780/2021-06-05_22-44-36.mov
+  // https://cdn.discordapp.com/attachments/531549268033404928/850888918811017256/2021-06-05_22-44-36.mp4
   // so a warning to anyone who reads this: do not use GatewayDispatchPayload & GatewayReceivePayload type
   packet: WebSocketPacket,
   functions: { // TODO: rewrite this
