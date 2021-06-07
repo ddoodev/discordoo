@@ -28,7 +28,7 @@ export default async function packet(
   if (WebSocketUtils.exists(packet.s) && packet.s! > client.sequence) client.sequence = packet.s!
 
   /**
-   * process ready and resumed events
+   * ready and resumed events handling
    * this is necessary to resolve promise returned from WebSocketClient.connect()
    * and also to set the expected servers, sessionID and to tell discord that we are alive
    * */

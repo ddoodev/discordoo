@@ -71,15 +71,14 @@ export default class WebSocketClient extends TypedEmitter<WebSocketClientEventsI
         }
       }
 
-      const triggerCleanup = () => {
-        console.log('this', this)
+      const cleanup = () => {
         cleanupOrListen(this)
       }
 
-      const ready   = () => { triggerCleanup(); resolve() },
-            resumed = () => { triggerCleanup(); resolve() },
-            invalid = () => { triggerCleanup(); reject() },
-            closed   = () => { triggerCleanup(); reject() }
+      const ready   = () => { cleanup(); resolve() },
+            resumed = () => { cleanup(); resolve() },
+            invalid = () => { cleanup(); reject() },
+            closed  = () => { cleanup(); reject() }
 
       function cleanupOrListen(client: WebSocketClient, listen = false) {
         console.log('client', client)

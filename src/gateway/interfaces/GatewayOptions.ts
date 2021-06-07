@@ -12,6 +12,10 @@ export default interface GatewayOptions extends GatewayIdentifyData {
   // might be useless, because it can be calculated from all values of shards
   maxShards?: number
 
+  /** Used by the library internals for correct interprocess sharding.
+   * Can be used for client clustering. */
+  totalShards?: number
+
   /** Version of gateway to use */
   version?: number
 

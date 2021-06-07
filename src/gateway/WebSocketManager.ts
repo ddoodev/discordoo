@@ -91,14 +91,18 @@ export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvent
         )
     }
 
+    if (this.options.totalShards && !isNaN(parseInt(this.options.totalShards as any))) {
+      this.totalShards = this.options.totalShards
+    }
+
     console.log('shards:', shards)
 
-    console.log(this.totalShards)
+    console.log('totalShards:', this.totalShards)
 
     this.shardQueue = new Set(shards.map(id => new WebSocketClient(this, id)))
     console.log('queue:', this.shardQueue)
 
-    if (sessionStartLimit.remaining < this.totalShards) {
+    if (sessionStartLimit.remaining < this.shardQueue.size) {
       throw new DiscordooError(
         'WebSocketManager',
         'cannot start shards',
@@ -106,7 +110,7 @@ export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvent
         'because the remaining number of session starts the current user is allowed is',
         sessionStartLimit.remaining,
         'but needed',
-        this.totalShards + '.'
+        this.shardQueue.size + '.'
       )
     }
 
