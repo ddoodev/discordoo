@@ -3,6 +3,8 @@ const { packages } = require('./discordoo.json')
 
 module.exports = {
   entryPoints: packages.map(e => `./src/${e}/index.ts`),
-  theme: 'minimal',
-  readme: 'none'
+  theme: './theme',
+  readme: './docs.md',
+  plugin: 'none',
+  name: 'Discordoo'
 }
