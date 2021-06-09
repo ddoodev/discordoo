@@ -1,4 +1,30 @@
+# IDEs
+.idea
+.vscode
+.editorconfig
+
+# Docs
 docs
+theme
+
+# After-build files
+dist/tsconfig.tsbuildinfo
+types/tsconfig.tsbuildinfo
+
+# Development files
+.eslintignore
+.eslintrc.json
+commitlint.config.js
+discordoo.json
+docs.md
+jest.config.js
+typedoc.js
+
+# Library about files
+CODE_OF_CONDUCT.md
+CONTRIBUTING.md
+
+# Other
 scripts
 tests
-theme
+.github
