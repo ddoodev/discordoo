@@ -74,44 +74,48 @@ export default class RESTRequestBuilder implements RequestBuilder {
    * @param method - method to be used
    * @param options - options
    */
-  request<T>(
+  async request<T>(
     method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE',
     options: RequestOptions = {}
   ): Promise<RESTResponse<T>> {
-    // eslint-disable-next-line no-async-promise-executor
-    return new Promise(async (resolve, reject) => {
-      const resp = await fetch(this.endpoint, {
-        method,
-        body: method === 'GET' ? undefined : JSON.stringify(options.body ?? {}),
-        headers: this.getHeaders(options.headers)
+
+    const resp = await fetch(this.endpoint, {
+      method,
+      body: method === 'GET' ? undefined : JSON.stringify(options.body ?? {}),
+      headers: this.getHeaders(options.headers)
+    })
+    const body = await resp.json()
+
+    if (resp.status === 429) {
+
+      const seconds = +resp.headers.get('Retry-After')!
+      setTimeout(async () => {
+        return this.request(method, options)
+      }, seconds * 60)
+
+    } else if (resp.status < 500 && resp.status > 399) {
+      return Promise.reject({
+        statusCode: resp.status,
+        reason: `Request on ${this.endpoint} ended with code ${resp.status}`
       })
-      const body = await resp.json()
+    } else if (resp.status > 499) {
 
-      if (resp.status === 429) {
-
-        const seconds = +resp.headers.get('Retry-After')!
-        setTimeout(async () => {
-          resolve(await this.request(method, options))
-        }, seconds * 60)
-
-      } else if (resp.status < 500 && resp.status > 399) {
-        reject(`Request on ${this.endpoint} ended with code ${resp.status}`)
-      } else if (resp.status > 499) {
-
-        if (this.retries < this.options.maxRetries) {
-          this.retries++
-          resolve(await this.request(method, options))
-        } else {
-          reject(`Too many retries on ${this.endpoint}. Code - ${resp.status}`)
-        }
-
+      if (this.retries < this.options.maxRetries) {
+        this.retries++
+        return this.request(method, options)
+      } else {
+        return Promise.reject({
+          statusCode: resp.status,
+          reason: `Too many retries on ${this.endpoint}. Code - ${resp.status}`
+        })
       }
 
-      resolve({
-        body,
-        statusCode: resp.status,
-        headers: resp.headers
-      })
+    }
+
+    return Promise.resolve({
+      body,
+      statusCode: resp.status,
+      headers: resp.headers
     })
   }
 
