@@ -28,7 +28,7 @@ export default class RESTRequestBuilder implements RequestBuilder {
     this.token = token
     this.options = options
 
-    this.stack.push(`v${options.v ?? 8}`)
+    this.stack.push(`v${options.v ?? Constants.DEFAULT_REST_OPTIONS.v}`)
   }
 
   /** Get headers */

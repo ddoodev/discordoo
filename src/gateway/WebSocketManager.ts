@@ -11,6 +11,8 @@ import WebSocketUtils from '@src/util/WebSocketUtils'
 import DiscordooError from '@src/util/DiscordooError'
 import wait from '@src/util/wait'
 import { WebSocketClientEvents, WebSocketManagerStates } from '@src/core/Constants'
+import inspectWsOptions from '@src/gateway/wsmanager/inspectWsOptions'
+import WsOptionsInspectionResult from '@src/gateway/interfaces/WsOptionsInspectionResult'
 
 export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvents> {
   public readonly options: GatewayOptions
@@ -32,91 +34,18 @@ export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvent
   public async connect() {
     console.log('connecting')
     this.status = WebSocketManagerStates.CONNECTING
-    this.gateway = await getGateway(this.options.token).catch(e => {
-      throw e.statusCode === 401
-        ? new DiscordooError('WebSocketManager', 'invalid token provided')
-        : e
-    })
 
-    console.log('gateway:', this.gateway)
-    const { shards: recommendedShards, url: gatewayUrl, session_start_limit: sessionStartLimit } = this.gateway
+    const { url, shardsInTotal, shardsToSpawn: shards, gateway } = await inspectWsOptions(this.options)
 
-    this.options.url = gatewayUrl + '/'
-      + '?encoding=' + (this.options.encoding || WebSocketUtils.encoding)
-      + '&v=' + (this.options.version || 9)
-      + (this.options.compress ? '&compress=zlib-stream' : '')
-
-    let { shards } = this.options
-
-    // shards option processing
-    switch (typeof shards) {
-      case 'number': {
-        this.totalShards = shards
-
-        shards = Array.from({ length: shards }, (_, i) => i)
-      } break
-
-      case 'object':
-        if (!Array.isArray(shards))
-          throw new DiscordooError(
-            'WebSocketManager',
-            'invalid "shards" option:',
-            'type of "shards" cannot be object'
-          )
-        else
-          this.totalShards = shards.length
-        break
-
-      case 'string':
-        if (shards === 'auto') {
-          this.totalShards = recommendedShards
-
-          shards = Array.from({ length: recommendedShards }, (_, i) => i)
-        } else if (!isNaN(parseInt(shards))) {
-          shards = parseInt(shards)
-
-          this.totalShards = shards
-          shards = Array.from({ length: shards }, (_, i) => i)
-        } else {
-          throw new DiscordooError(
-            'WebSocketManager',
-            'invalid "shards" option:',
-            'if type of "shards" is string, it cannot be anything other than "auto"'
-          )
-        }
-        break
-
-      default:
-        throw new DiscordooError(
-          'WebSocketManager',
-          'invalid "shards" option:',
-          'received disallowed type:',
-          typeof shards
-        )
-    }
-
-    if (this.options.totalShards && !isNaN(parseInt(this.options.totalShards as any))) {
-      this.totalShards = this.options.totalShards
-    }
+    this.options.url = url
+    this.totalShards = shardsInTotal
+    this.gateway = gateway
 
     console.log('shards:', shards)
-
     console.log('totalShards:', this.totalShards)
 
     this.shardQueue = new Set(shards.map(id => new WebSocketClient(this, id)))
     console.log('queue:', this.shardQueue)
-
-    if (sessionStartLimit.remaining < this.shardQueue.size) {
-      throw new DiscordooError(
-        'WebSocketManager',
-        'cannot start shards',
-        Array.from(this.shardQueue).map(s => s.id).join(', '),
-        'because the remaining number of session starts the current user is allowed is',
-        sessionStartLimit.remaining,
-        'but needed',
-        this.shardQueue.size + '.'
-      )
-    }
 
     return this.createShards()
   }

@@ -1,6 +1,10 @@
 import WebSocketUtils from '@src/util/WebSocketUtils'
 import WebSocketClient from '@src/gateway/WebSocketClient'
-import { OPCodes, WebSocketClientEvents, WebSocketClientStates } from '@src/core/Constants'
+import {
+  OPCodes,
+  WebSocketClientEvents,
+  WebSocketClientStates
+} from '@src/core/Constants'
 import WebSocketPacket from '@src/gateway/interfaces/WebSocketPacket'
 import wait from '@src/util/wait'
 
@@ -75,6 +79,10 @@ export default function packet(
 
     case OPCodes.RECONNECT:
       client.destroy({ reconnect: true })
+      break
+
+    case OPCodes.DISPATCH:
+
       break
   }
 }
