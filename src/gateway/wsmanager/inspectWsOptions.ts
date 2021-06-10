@@ -76,7 +76,7 @@ export default async function inspectWsOptions(options: GatewayOptions): Promise
   if (sessionStartLimit.remaining < result.shardsToSpawn.length) {
     throw new DiscordooError(
       'WebSocketManager',
-      'cannot start shards',
+      'cannot start shard' + (result.shardsToSpawn.length > 1 ? 's' : ''),
       result.shardsToSpawn.join(', '),
       'because the remaining number of session starts the current user is allowed is',
       sessionStartLimit.remaining,
