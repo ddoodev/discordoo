@@ -6,6 +6,7 @@ import WebSocketUtils from '@src/util/WebSocketUtils'
 import { GatewayOptions } from '@src/gateway'
 import WebSocketPacket from '@src/gateway/interfaces/WebSocketPacket'
 
+// handles websocket raw messages, decompressing/decoding it to normal javascript objects
 export default function message(
   client: WebSocketClient,
   event: WebSocket.MessageEvent,

@@ -4,28 +4,20 @@ import { OPCodes, WebSocketClientEvents, WebSocketClientStates } from '@src/core
 import WebSocketPacket from '@src/gateway/interfaces/WebSocketPacket'
 import wait from '@src/util/wait'
 
-export default async function packet(
+export default function packet(
   client: WebSocketClient,
   // it should have been GatewayDispatchPayload & GatewayReceivePayload, but IntelliJ says SYS LOAD 666%
   // https://cdn.discordapp.com/attachments/531549268033404928/850888918811017256/2021-06-05_22-44-36.mp4
   // so a warning to anyone who reads this: do not use GatewayDispatchPayload & GatewayReceivePayload type
-  packet: WebSocketPacket,
-  functions: { // TODO: rewrite this
-    identify: WebSocketClient['identify']
-    heartbeat: WebSocketClient['heartbeat']
-    destroy: WebSocketClient['destroy']
-    setHeartbeatInterval: WebSocketClient['setHeartbeatInterval']
-  }
+  packet: WebSocketPacket
 ) {
 
   console.log('shard', client.id, 'packet', packet)
 
-  Object.keys(functions).forEach(key => functions[key] = functions[key].bind(client))
-
-  const { identify, heartbeat, destroy, setHeartbeatInterval } = functions
-
   // process sequence increase
   if (WebSocketUtils.exists(packet.s) && packet.s! > client.sequence) client.sequence = packet.s!
+
+  console.log('shard', client.id, 'SEQUENCE', client.sequence)
 
   /**
    * ready and resumed events handling
@@ -39,39 +31,50 @@ export default async function packet(
       client.status = WebSocketClientStates.READY
       client.expectedGuilds = new Set<any>(packet.d.guilds.map(g => g.id))
 
-      heartbeat()
+      client.heartbeat()
 
-      client.emit('ready')
+      client.emit(WebSocketClientEvents.READY)
+      console.log('shard', client.id, 'READY')
       break
     case 'RESUMED':
       client.status = WebSocketClientStates.READY
       client.emit(WebSocketClientEvents.RESUMED)
+      console.log('shard', client.id, 'RESUMED and replayed', client.sequence - client.closeSequence, 'events')
       break
   }
 
   switch (packet.op) {
     case OPCodes.HELLO:
 
-      setHeartbeatInterval(packet.d.heartbeat_interval)
-      identify()
+      client.heartbeatInterval(packet.d.heartbeat_interval)
+      client.handshakeTimeout()
+      client.identify()
+      console.log('shard', client.id, 'HELLO')
 
       break
 
     case OPCodes.INVALID_SESSION:
-      client.emit('invalidSession')
+      client.emit(WebSocketClientEvents.INVALID_SESSION)
 
-      await wait(5000)
-      destroy({ code: 4000 })
+      wait(5000).then(() => {
+        client.destroy({ code: 1000, reconnect: true })
+      })
+      console.log('shard', client.id, 'INVALID SESSION')
 
       break
 
     case OPCodes.HEARTBEAT:
-      heartbeat()
+      client.heartbeat()
       break
 
     case OPCodes.HEARTBEAT_ACK:
+      console.log('shard', client.id, 'HEARTBEAT_ACK')
       client.missedHeartbeats -= 1
       client.ping = Date.now() - client.lastPingTimestamp
+      break
+
+    case OPCodes.RECONNECT:
+      client.destroy({ reconnect: true })
       break
   }
 }

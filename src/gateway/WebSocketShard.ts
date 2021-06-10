@@ -1,3 +1,9 @@
+/**
+ * !!! WARNING !!!
+ *
+ * DEPRECATED. no longer used.
+ * */
+
 import { TypedEmitter } from 'tiny-typed-emitter'
 import { OPCodes, WebSocketEvents, WebSocketShardStatus, WebSocketStates } from '@src/core/Constants'
 import WebSocketShardEvents from '@src/gateway/interfaces/WebSocketShardEvents'

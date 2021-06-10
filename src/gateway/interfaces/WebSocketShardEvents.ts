@@ -1,3 +1,9 @@
+/**
+ * !!! WARNING !!!
+ *
+ * DEPRECATED. no longer used.
+ * */
+
 import { GatewayDispatchEvents } from 'discord-api-types'
 
 export default interface WebSocketShardEvents {

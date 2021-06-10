@@ -10,10 +10,12 @@ import WebSocketClient from '@src/gateway/WebSocketClient'
 import WebSocketUtils from '@src/util/WebSocketUtils'
 import DiscordooError from '@src/util/DiscordooError'
 import wait from '@src/util/wait'
+import { WebSocketClientEvents, WebSocketManagerStates } from '@src/core/Constants'
 
 export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvents> {
   public readonly options: GatewayOptions
   private gateway?: RESTGetAPIGatewayBotResult
+  private status: WebSocketManagerStates
 
   private shardQueue = new Set<WebSocketClient>()
 
@@ -24,10 +26,12 @@ export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvent
     super()
 
     this.options = Object.assign(Constants.DEFAULT_WS_OPTIONS, options)
+    this.status = WebSocketManagerStates.CREATED
   }
 
   public async connect() {
     console.log('connecting')
+    this.status = WebSocketManagerStates.CONNECTING
     this.gateway = await getGateway(this.options.token).catch(e => {
       throw e.statusCode === 401
         ? new DiscordooError('WebSocketManager', 'invalid token provided')
@@ -119,6 +123,7 @@ export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvent
 
   private async createShards() {
     if (!this.shardQueue.size || this.shards.size >= (this.options.maxShards || Infinity)) return false
+    this.status = WebSocketManagerStates.CONNECTING
 
     const [ shard ] = this.shardQueue
 
@@ -126,12 +131,19 @@ export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvent
 
     try {
       console.log('shard', shard.id, 'connecting')
-      await shard.connect()
+      await shard.connect().catch(() => shard.emit(WebSocketClientEvents.RECONNECT_ME))
     } catch (e) {
       console.error(e)
     }
 
     this.shards.set(shard.id, shard)
+
+    if (!shard.listeners(WebSocketClientEvents.RECONNECT_ME).length) {
+      shard.on(WebSocketClientEvents.RECONNECT_ME, () => {
+        this.shardQueue.add(shard)
+        if (this.status !== WebSocketManagerStates.CONNECTING) this.createShards()
+      })
+    }
 
     if (this.shardQueue.size) {
       // https://discord.com/developers/docs/topics/gateway#session-start-limit-object
@@ -140,6 +152,8 @@ export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvent
       await wait(delay)
 
       return this.createShards()
+    } else {
+      this.status = WebSocketManagerStates.READY
     }
 
     return true
