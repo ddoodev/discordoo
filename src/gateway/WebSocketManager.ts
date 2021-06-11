@@ -5,19 +5,16 @@ import { RESTGetAPIGatewayBotResult } from 'discord-api-types'
 import WebSocketManagerEvents from '@src/gateway/interfaces/WebSocketManagerEvents'
 import GatewayOptions from '@src/gateway/interfaces/GatewayOptions'
 import Optional from '@src/util/Optional'
-import getGateway from '@src/util/getGateway'
 import WebSocketClient from '@src/gateway/WebSocketClient'
-import WebSocketUtils from '@src/util/WebSocketUtils'
-import DiscordooError from '@src/util/DiscordooError'
 import wait from '@src/util/wait'
 import { WebSocketClientEvents, WebSocketManagerStates } from '@src/core/Constants'
 import inspectWsOptions from '@src/gateway/wsmanager/inspectWsOptions'
-import WsOptionsInspectionResult from '@src/gateway/interfaces/WsOptionsInspectionResult'
 
 export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvents> {
   public readonly options: GatewayOptions
   private gateway?: RESTGetAPIGatewayBotResult
   private status: WebSocketManagerStates
+  private queueInterval?: NodeJS.Timeout
 
   private shardQueue = new Set<WebSocketClient>()
 
@@ -47,6 +44,14 @@ export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvent
     this.shardQueue = new Set(shards.map(id => new WebSocketClient(this, id)))
     console.log('queue:', this.shardQueue)
 
+    if (!this.queueInterval) {
+      this.queueInterval = setInterval(() => {
+        if (this.shardQueue.size && this.status !== WebSocketManagerStates.CONNECTING) {
+          this.createShards()
+        }
+      }, 1000)
+    }
+
     return this.createShards()
   }
 
@@ -70,7 +75,6 @@ export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvent
     if (!shard.listeners(WebSocketClientEvents.RECONNECT_ME).length) {
       shard.on(WebSocketClientEvents.RECONNECT_ME, () => {
         this.shardQueue.add(shard)
-        if (this.status !== WebSocketManagerStates.CONNECTING) this.createShards()
       })
     }
 

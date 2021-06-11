@@ -6,5 +6,5 @@ import { WebSocketClientEvents, WebSocketClientStates } from '@src/core/Constant
 export default function close(client: WebSocketClient, event: WebSocket.CloseEvent) {
   client.status = WebSocketClientStates.DISCONNECTED
   client.emit(WebSocketClientEvents.WS_CLOSED, event)
-  if (event.code !== 4901 && event.code !== 1000) client.destroy({ reconnect: true, code: event.code })
+  if (!event.reason?.includes('ddoo')) client.destroy({ reconnect: true, code: event.code })
 }

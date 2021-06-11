@@ -186,6 +186,8 @@ export default class WebSocketClient extends TypedEmitter<WebSocketClientEventsI
       this.destroy({ reconnect: true })
     }
 
+    if (this.status === WebSocketClientStates.RESUMING) return
+
     // increase missed heartbeats count to detect zombie connections
     if (!shouldIgnoreAck) this.missedHeartbeats += 1
 
