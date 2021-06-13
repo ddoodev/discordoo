@@ -24,7 +24,7 @@ export default interface GatewayOptions {
    *
    * @default 50
    * */
-  large_threshold?: number
+  largeThreshold?: number
 
   /**
    * Presence structure for initial presence information.
