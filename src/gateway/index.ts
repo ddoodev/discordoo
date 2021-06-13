@@ -1,13 +1,15 @@
 import GatewayOptions from '@src/gateway/interfaces/GatewayOptions'
-import WebSocketManager from '@src/gateway/WebSocketManager'
-import WebSocketShard from '@src/gateway/WebSocketShard'
+import WebSocketClientDestroyOptions from '@src/gateway/interfaces/WebSocketClientDestroyOptions'
+import WebSocketClientEventsI from '@src/gateway/interfaces/WebSocketClientEventsI'
 import WebSocketManagerEvents from '@src/gateway/interfaces/WebSocketManagerEvents'
-import WebSocketShardEvents from '@src/gateway/interfaces/WebSocketShardEvents'
+import WebSocketClient from '@src/gateway/WebSocketClient'
+import WebSocketManager from '@src/gateway/WebSocketManager'
 
 export {
   GatewayOptions,
-  WebSocketShard,
-  WebSocketManager,
+  WebSocketClientDestroyOptions,
+  WebSocketClientEventsI as WebSocketClientEvents,
   WebSocketManagerEvents,
-  WebSocketShardEvents
+  WebSocketClient,
+  WebSocketManager
 }
