@@ -17,5 +17,6 @@ export default class ModuleHostModule implements Module {
 
   init(client: Client) {
     client.use(...this.modules)
+    this.initialized = true
   }
 }
