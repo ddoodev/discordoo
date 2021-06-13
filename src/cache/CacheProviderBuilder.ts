@@ -11,8 +11,8 @@ export default class CacheProviderBuilder {
     const manager = this.manager // this.manager is shadowed in nested function
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    return (client: Client) => function (id: string) {
-      return manager.getCache(id)
+    return (client: Client) => function (id: string, local = false) {
+      return manager.getCache(id, local)
     }
   }
 }

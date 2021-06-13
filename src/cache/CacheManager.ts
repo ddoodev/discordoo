@@ -13,8 +13,9 @@ export default class CacheManager {
   /**
    * Get a cache namespace
    * @param id - id of cache namespace
+   * @param local - whether to use IPC when a key is not found
    */
-  getCache<K = unknown, V = unknown>(id: string): CollectionCacheNamespace<K, V> {
+  getCache<K = unknown, V = unknown>(id: string, local = true): CollectionCacheNamespace<K, V> {
     if (this.caches.has(id)) return (this.caches.get(id)!) as CollectionCacheNamespace<K, V>
     else {
       this.caches.set(id, new CollectionCacheNamespace())

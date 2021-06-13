@@ -6,6 +6,13 @@ export default class CollectionCacheNamespace<K = unknown, V = unknown> implemen
   /** Collection used by this cache namespace */
   #data: Collection<K, V> = new Collection<K, V>()
 
+  /** Whether the namespace will use IPC */
+  local = false
+
+  constructor(local = false) {
+    this.local = local
+  }
+
   /**
    * Delete a key from collection
    * @param key - key to delete
