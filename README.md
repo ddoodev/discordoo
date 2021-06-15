@@ -26,7 +26,7 @@
 <hr>
 
 ## WARNING
-Most of the stuff described here is not done yet, and we are just planning to implement it
+Most of the stuff described here is not done yet, and we are just planning to implement it.
 
 ## About
 Discordoo is a Discord API library interface. It was built from ground-up to provide better APIs, both internal and external.
@@ -34,11 +34,11 @@ Discordoo is a Discord API library interface. It was built from ground-up to pro
 In general, Discordoo was designed to be completely modular. Each thing, such as Gateway provider or
 cache storage can be replaced with anything you have written/installed from npm.
 
-Moreover, we designed Discordoo to be simple to use. For example, you don't need to use non-sense
+Moreover, we designed Discordoo to be easy to use. For example, you don't need to use non-sense
 like `broadcastEval` to get info from another shard. You always work with cache like you normally
 would when using a collection. Even more, Discordoo abstracts you from hard things without limiting you to simple APIs. 
 
-In addition, Discordoo also can be used in different ways. If you don't need Gateway, 
+In addition, Discordoo can also be used in different ways. If you don't need Gateway, 
 why use it? Use nothing but `RESTClient` - the thing you actually need.
 
 ## Getting started
