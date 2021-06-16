@@ -182,10 +182,11 @@ export default class WebSocketClient extends TypedEmitter<WebSocketClientEventsI
 
     // handle zombie connections
     if (this.missedHeartbeats > 1) {
-      console.log('zombie connection! arrr!')
+      console.log('shard', this.id, 'is a zombie connection! arrr!')
       this.destroy({ reconnect: true })
     }
 
+    // cannot heartbeat when resuming
     if (this.status === WebSocketClientStates.RESUMING) return
 
     // increase missed heartbeats count to detect zombie connections
