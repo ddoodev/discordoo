@@ -25,7 +25,6 @@
     "@types/node-fetch": "^2.5.9",
     "@types/node-ipc": "^9.1.4",
     "@types/pako": "^1.0.1",
-    "@types/websocket": "^1.0.2",
     "@types/ws": "^7.4.1",
     "@typescript-eslint/eslint-plugin": "^4.18.0",
     "@typescript-eslint/parser": "^4.18.0",
@@ -58,7 +57,7 @@
     "./cache": "./dist/src/cache/index.js",
     "./collection": "./dist/src/collection/index.js",
     "./rest": "./dist/src/rest/index.js",
-    "./util": "./dist/src/util/index.js",
+    "./utils": "./dist/src/utils/index.js",
     "./gateway": "./dist/src/websocket/index.js",
     "./package.json": "./package.json",
     "./wrapper": "./dist/src/wrapper/index.js"
@@ -66,25 +65,28 @@
   "typesVersions": {
     "*": {
       "core": [
-        "types/core/index.d.ts"
+        "types/src/core/index.d.ts"
       ],
       "cache": [
-        "types/cache/index.d.ts"
+        "types/src/cache/index.d.ts"
       ],
       "collection": [
-        "types/collection/index.d.ts"
+        "types/src/collection/index.d.ts"
       ],
       "rest": [
-        "types/rest/index.d.ts"
+        "types/src/rest/index.d.ts"
       ],
-      "util": [
-        "types/util/index.d.ts"
+      "sharding": [
+        "types/src/sharding/index.d.ts"
+      ],
+      "utils": [
+        "types/src/utils/index.d.ts"
       ],
       "gateway": [
-        "types/gateway/index.d.ts"
+        "types/src/gateway/index.d.ts"
       ],
       "wrapper": [
-        "types/wrapper/index.d.ts"
+        "types/src/wrapper/index.d.ts"
       ]
     }
   },
