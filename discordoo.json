@@ -4,7 +4,8 @@
     "collection",
     "core",
     "rest",
-    "util",
+    "sharding",
+    "utils",
     "gateway",
     "wrapper"
   ]
