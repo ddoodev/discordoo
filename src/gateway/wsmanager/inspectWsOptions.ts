@@ -1,9 +1,9 @@
 import { GatewayOptions } from '@src/gateway'
-import { getGateway, range } from '@src/util'
-import DiscordooError from '@src/util/DiscordooError'
+import { getGateway, range } from '@src/utils'
+import DiscordooError from '@src/utils/DiscordooError'
 import WsOptionsInspectionResult from '@src/gateway/interfaces/WsOptionsInspectionResult'
-import Optional from '@src/util/Optional'
-import WebSocketUtils from '@src/util/WebSocketUtils'
+import Optional from '@src/utils/Optional'
+import WebSocketUtils from '@src/utils/WebSocketUtils'
 
 export default async function inspectWsOptions(options: GatewayOptions): Promise<WsOptionsInspectionResult> {
 

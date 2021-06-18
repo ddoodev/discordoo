@@ -23,6 +23,7 @@
     "@types/jest": "^26.0.21",
     "@types/lodash": "^4.14.168",
     "@types/node-fetch": "^2.5.9",
+    "@types/node-ipc": "^9.1.4",
     "@types/pako": "^1.0.1",
     "@types/websocket": "^1.0.2",
     "@types/ws": "^7.4.1",
@@ -42,6 +43,7 @@
     "discord-api-types": "^0.18.1",
     "lodash": "^4.17.21",
     "node-fetch": "^2.6.1",
+    "node-ipc": "^9.1.4",
     "tiny-typed-emitter": "^2.0.3",
     "ws": "^7.4.5"
   },

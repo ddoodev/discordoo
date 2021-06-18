@@ -9,7 +9,7 @@ import GatewayOptions from '@src/gateway/interfaces/GatewayOptions'
 import WebSocketPacket from '@src/gateway/interfaces/WebSocketPacket'
 import WebSocketClientDestroyOptions from '@src/gateway/interfaces/WebSocketClientDestroyOptions'
 import {
-  OPCodes,
+  WebSocketOPCodes,
   WebSocketClientEvents,
   WebSocketClientStates,
   WebSocketStates,
@@ -17,8 +17,8 @@ import {
 } from '@src/core/Constants'
 
 import WebSocketManager from '@src/gateway/WebSocketManager'
-import WebSocketUtils from '@src/util/WebSocketUtils'
-import DiscordooError from '@src/util/DiscordooError'
+import WebSocketUtils from '@src/utils/WebSocketUtils'
+import DiscordooError from '@src/utils/DiscordooError'
 
 import identify from '@src/gateway/wsclient/identify'
 import open from '@src/gateway/wsclient/events/open'
@@ -193,7 +193,7 @@ export default class WebSocketClient extends TypedEmitter<WebSocketClientEventsI
     if (!shouldIgnoreAck) this.missedHeartbeats += 1
 
     this.lastPingTimestamp = Date.now()
-    this.socketSend({ op: OPCodes.HEARTBEAT, d: this.sequence })
+    this.socketSend({ op: WebSocketOPCodes.HEARTBEAT, d: this.sequence })
   }
 
   public socketSend(data: WebSocketSendPayload) {

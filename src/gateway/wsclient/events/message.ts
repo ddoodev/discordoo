@@ -2,7 +2,7 @@
 import PakoTypes from '@types/pako'
 import WebSocketClient from '@src/gateway/WebSocketClient'
 import WebSocket from 'ws'
-import WebSocketUtils from '@src/util/WebSocketUtils'
+import WebSocketUtils from '@src/utils/WebSocketUtils'
 import { GatewayOptions } from '@src/gateway'
 import WebSocketPacket from '@src/gateway/interfaces/WebSocketPacket'
 

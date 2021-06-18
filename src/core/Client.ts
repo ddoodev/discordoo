@@ -7,9 +7,8 @@ import DefaultClientStack from '@src/core/DefaultClientStack'
 import { GatewayProvider } from '@src/core/providers/gateway/GatewayProvider'
 
 /** Entry point for all of Discordoo. Manages modules and events */
-export default class Client<
-  ClientStack extends DefaultClientStack = DefaultClientStack
-  > extends TypedEmitter<ListenerSignature<ClientStack['events']>> {
+export default class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
+  extends TypedEmitter<ListenerSignature<ClientStack['events']>> {
   /** Token used by this client */
   public token: string
 
