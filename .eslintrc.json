@@ -47,7 +47,7 @@
     "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/no-var-requires": "off",
     "keyword-spacing": ["error", { "before": true, "after": true }],
-    "max-len": ["error", { "code": 150, "ignoreComments": true }],
+    "max-len": ["error", { "code": 140, "ignoreComments": true }],
     "spaced-comment": ["error", "always"]
   }
 }
