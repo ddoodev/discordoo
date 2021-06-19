@@ -1,11 +1,11 @@
 import DeconstructedDiscordooSnowflake from '@src/interfaces/utils/DeconstructedSnowflake'
 
 const EPOCH = 1609459200000 // 2021-01-01T00:00:00.000Z
-let INCREMENT = 0
+let INCREMENT = 5
 
 /**
- * DiscordooSnowflake is a
- * thanks devsnek and drahcirius, original code creators
+ * DiscordooSnowflake is a custom twitter snowflake used to identify ipc connections.
+ * thanks devsnek and drahcirius, this code based at their work.
  * @see https://github.com/devsnek
  * @see https://github.com/Drahcirius
  * */
@@ -22,13 +22,13 @@ export default class DiscordooSnowflake {
    *     number of ms since Discordoo epoch                  worker id                       shard id                    increment
    *
    * getting a timestamp:
-   *  BigInt(snowflake) >> 86n + BigInt(EPOCH) === 1624043753498n
+   *  (BigInt(snowflake) >> 86n) + BigInt(EPOCH) === 1624043753498n
    *
    * getting a worker id:
-   *  BigInt(snowflake) & 0x7FFFFFFFn >> 54n === 11n
+   *  (BigInt(snowflake) & 0x7FFFFFFFn) >> 54n === 11n
    *
    * getting a shard id:
-   *  BigInt(snowflake) & 0x7FFFFFFFn >> 22n === 99n
+   *  (BigInt(snowflake) & 0x7FFFFFFFn) >> 22n === 99n
    *
    * getting a increment:
    *  BigInt(snowflake) & 0x3FFFFFn === 5n
@@ -45,14 +45,18 @@ export default class DiscordooSnowflake {
 
     const toString = (num: number, padStart: number) => num.toString(2).padStart(padStart, '0')
 
+    console.log('shard', shardID, 'worker', workerID)
+
     const binarySegments = [
       toString(timestamp - EPOCH, 42), // 42 bits for timestamp
       toString(workerID, 32), // 32 bits for worker id
       toString(shardID, 32), // 32 bits for shard id
-      toString(INCREMENT, 22) // 22 bits for increment
+      toString(INCREMENT++, 22) // 22 bits for increment
     ]
 
-    return this.binaryToID(binarySegments.join())
+    console.log(binarySegments.join())
+
+    return this.binaryToID(binarySegments.join(''))
   }
 
   static deconstruct(snowflake: string): DeconstructedDiscordooSnowflake {
@@ -60,10 +64,16 @@ export default class DiscordooSnowflake {
     const b = BigInt, n = Number
 
     const res = {
-      timestamp:  n((b(snowflake) >> b(86)) + b(EPOCH)),
-      workerID:   n((b(snowflake) & b(0x7FFFFFFF)) >> b(54)), // 32 bit shardID, 0x7FFFFFFF is a max 32 bit integer
-      shardID:    n((b(snowflake) & b(0x7FFFFFFF)) >> b(22)), // 32 bit shardID
-      increment:  n(b(snowflake) & b(0x3FFFFF)), // 22 bit increment, 0x3FFFFF is a max 22 bit integer
+      timestamp: n((b(snowflake) >> b(86)) + b(EPOCH)),
+
+      // 32 bit workerID (0x3FFFFFFFC0000000000000 22 bit increment (0) + 32 bit shardID (0) + 32 bit workerID (1))
+      workerID: n((b(snowflake) & b(0x3FFFFFFFC00000)) >> b(54)),
+
+      // 32 bit shardID, 0x3FFFFFFFC00000 is a 54 bit integer (22 bit increment (0) + 32 bit shardID (1))
+      shardID: n((b(snowflake) & b(0xFFFFFFFF)) >> b(22)),
+
+      // 22 bit increment, 0x3FFFFF is a max 22 bit integer
+      increment: n(b(snowflake) & b(0x3FFFFF)),
     }
 
     Object.defineProperty(res, 'date', {
@@ -77,24 +87,38 @@ export default class DiscordooSnowflake {
   }
 
   static binaryToID(num: any) {
+    console.log('initial num', num)
     let dec = ''
 
     while (num.length > 50) {
       const high = parseInt(num.slice(0, -32), 2)
       const low = parseInt((high % 10).toString(2) + num.slice(-32), 2)
 
+      console.log('high', high, 'low', low)
+
       dec = (low % 10).toString() + dec
+
+      console.log('dec', dec)
+
       num =
         Math.floor(high / 10).toString(2) +
         Math.floor(low / 10)
           .toString(2)
           .padStart(32, '0')
+
+      console.log('num', num)
     }
 
+    console.log('num 2', num)
     num = parseInt(num, 2)
+    console.log('num 3', num)
+
     while (num > 0) {
+      console.log('dec 2', dec)
       dec = (num % 10).toString() + dec
+      console.log('dec 3', dec, 'num 4', num)
       num = Math.floor(num / 10)
+      console.log('num 5', num)
     }
 
     return dec

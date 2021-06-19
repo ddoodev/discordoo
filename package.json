@@ -40,7 +40,6 @@
   },
   "dependencies": {
     "discord-api-types": "^0.18.1",
-    "lodash": "^4.17.21",
     "node-fetch": "^2.6.1",
     "node-ipc": "^9.1.4",
     "tiny-typed-emitter": "^2.0.3",
@@ -49,6 +48,7 @@
   "optionalDependencies": {
     "bufferutil": "^4.0.3",
     "erlpack": "^0.1.3",
+    "lodash": "^4.17.21",
     "pako": "^1.0.11",
     "utf-8-validate": "^5.0.4"
   },

@@ -4,11 +4,12 @@ import WebSocketUtils from '@src/utils/WebSocketUtils'
 import { GatewayOptions } from '@src/gateway'
 
 export enum IpcOPCodes {
-  DISPATCH,
-  REQUEST_STATS,
-  CONNECTED,
-  DISCONNECTED,
-  ERROR,
+  DISPATCH, // receive
+  IDENTIFY, // send/receive
+  INVALID_SESSION, // receive
+  HELLO, // receive
+  REQUEST_STATS, // send/receive
+  ERROR, // receive
 }
 
 export enum IpcEvents {
