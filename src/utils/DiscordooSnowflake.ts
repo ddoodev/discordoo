@@ -5,9 +5,6 @@ let INCREMENT = 5
 
 /**
  * DiscordooSnowflake is a custom twitter snowflake used to identify ipc connections.
- * thanks devsnek and drahcirius, this code based at their work.
- * @see https://github.com/devsnek
- * @see https://github.com/Drahcirius
  * */
 
 export default class DiscordooSnowflake {
@@ -45,8 +42,6 @@ export default class DiscordooSnowflake {
 
     const toString = (num: number, padStart: number) => num.toString(2).padStart(padStart, '0')
 
-    console.log('shard', shardID, 'worker', workerID)
-
     const binarySegments = [
       toString(timestamp - EPOCH, 42), // 42 bits for timestamp
       toString(workerID, 32), // 32 bits for worker id
@@ -54,26 +49,23 @@ export default class DiscordooSnowflake {
       toString(INCREMENT++, 22) // 22 bits for increment
     ]
 
-    console.log(binarySegments.join())
-
     return this.binaryToID(binarySegments.join(''))
   }
 
   static deconstruct(snowflake: string): DeconstructedDiscordooSnowflake {
-
     const b = BigInt, n = Number
 
     const res = {
-      timestamp: n((b(snowflake) >> b(86)) + b(EPOCH)),
+      timestamp: n((b(snowflake) >> 86n) + b(EPOCH)),
 
       // 32 bit workerID (0x3FFFFFFFC0000000000000 22 bit increment (0) + 32 bit shardID (0) + 32 bit workerID (1))
-      workerID: n((b(snowflake) & b(0x3FFFFFFFC00000)) >> b(54)),
+      workerID: n((b(snowflake) & 0x3FFFFFFFC0000000000000n) >> 54n),
 
       // 32 bit shardID, 0x3FFFFFFFC00000 is a 54 bit integer (22 bit increment (0) + 32 bit shardID (1))
-      shardID: n((b(snowflake) & b(0xFFFFFFFF)) >> b(22)),
+      shardID: n((b(snowflake) & 0x3FFFFFFFC00000n) >> 22n),
 
       // 22 bit increment, 0x3FFFFF is a max 22 bit integer
-      increment: n(b(snowflake) & b(0x3FFFFF)),
+      increment: n(b(snowflake) & 0x3FFFFFn),
     }
 
     Object.defineProperty(res, 'date', {
@@ -86,41 +78,17 @@ export default class DiscordooSnowflake {
     return res as DeconstructedDiscordooSnowflake
   }
 
-  static binaryToID(num: any) {
-    console.log('initial num', num)
-    let dec = ''
+  static binaryToID(str: string, base: number | bigint = 2) {
+    base = BigInt(base)
 
-    while (num.length > 50) {
-      const high = parseInt(num.slice(0, -32), 2)
-      const low = parseInt((high % 10).toString(2) + num.slice(-32), 2)
+    let bigint = 0n
 
-      console.log('high', high, 'low', low)
-
-      dec = (low % 10).toString() + dec
-
-      console.log('dec', dec)
-
-      num =
-        Math.floor(high / 10).toString(2) +
-        Math.floor(low / 10)
-          .toString(2)
-          .padStart(32, '0')
-
-      console.log('num', num)
+    for (let i = 0; i < str.length; i++) {
+      let code = str[str.length - 1 - i].charCodeAt(0) - 48
+      if (code >= 10) code -= 39
+      bigint += base ** BigInt(i) * BigInt(code)
     }
 
-    console.log('num 2', num)
-    num = parseInt(num, 2)
-    console.log('num 3', num)
-
-    while (num > 0) {
-      console.log('dec 2', dec)
-      dec = (num % 10).toString() + dec
-      console.log('dec 3', dec, 'num 4', num)
-      num = Math.floor(num / 10)
-      console.log('num 5', num)
-    }
-
-    return dec
+    return bigint.toString()
   }
 }

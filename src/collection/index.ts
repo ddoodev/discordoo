@@ -7,7 +7,7 @@ try {
 } catch (e) {} // eslint-disable-line no-empty
 
 import CollectionEqualOptions from '@src/collection/interfaces/CollectionEqualOptions'
-import CollectionFilterOptions from '@src/collection/interfaces/CollectionFilterOptiions'
+import CollectionFilterOptions from '@src/collection/interfaces/CollectionFilterOptions'
 
 /** An utility data structure used within the library */
 export class Collection<K = unknown, V = unknown> extends Map<K, V> {
@@ -19,7 +19,7 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
   random(amount?: number): V | V[] {
     const size = this.size
 
-    if (size < 1) throw new RangeError('Cannot get random elements in the empty collection')
+    if (size < 1) throw new RangeError('Cannot get random elements from the empty collection')
 
     if (amount && amount > size) amount = size
 
@@ -32,7 +32,7 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
       index++
     })
 
-    return result.length === 1 ? result[0] : result
+    return (amount || 1) <= 1 ? result[0] : result
   }
 
   /**
@@ -113,6 +113,5 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
     }
 
     return true
-
   }
 }
