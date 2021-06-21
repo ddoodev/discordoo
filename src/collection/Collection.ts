@@ -1,7 +1,8 @@
-import { DiscordooError } from '@src/utils'
+import { DiscordooError, range } from '@src/utils'
 import CollectionEqualOptions from '@src/collection/interfaces/CollectionEqualOptions'
 import CollectionFilterOptions from '@src/collection/interfaces/CollectionFilterOptions'
 import CollectionRandomOptions from '@src/collection/interfaces/CollectionRandomOptions'
+import swap from '@src/utils/swap'
 
 let lodashIsEqual
 
@@ -24,23 +25,39 @@ export default class Collection<K = unknown, V = unknown> extends Map<K, V> {
     if (!amount || (amount && amount < 1)) amount = 1
     if (typeof options.unique !== 'boolean') options.unique = !!options.unique
 
-    const random: number[] = []
+    // when amount is 15% or more of collection size,
+    // we should switch random numbers generation algorithm to avoid performance issues
+    const largeAmount: boolean = Math.floor(amount / size * 100) > 15,
+      arr = [ ...this.values() ]
+    let results: V[] = []
 
-    for (let i = 0; i < amount; i++) {
-      switch (true) {
-        case options.unique: {
+    if (largeAmount && options.unique) {
+      let randomNumbers = range(size),
+        max = size - 1
+
+      for (let i = 0; i < size; i++) {
+        const num = Math.floor(Math.random() * max)
+        randomNumbers = swap(randomNumbers, num, max)
+        max -= 1
+      }
+
+      for (let i = 0; i < amount; i++) {
+        results.push(arr[randomNumbers[i]])
+      }
+    } else {
+      const random: number[] = []
+
+      if (options.unique) {
+        for (let i = 0; i < amount; i++) {
           const num = Math.floor(Math.random() * size)
           random.indexOf(num) > -1 ? i -= 1 : random.push(num) // repeat iteration if number is not unique
-        } break
-
-        default:
-          random.push(Math.floor(Math.random() * size))
-          break
+        }
+      } else {
+        for (let i = 0; i < amount; i++) random.push(Math.floor(Math.random() * size))
       }
-    }
 
-    const arr = [ ...this.values() ]
-    const results: V[] = random.map(r => arr[r])
+      results = random.map(r => arr[r])
+    }
 
     return amount <= 1 ? results[0] : results
   }
@@ -59,10 +76,6 @@ export default class Collection<K = unknown, V = unknown> extends Map<K, V> {
     let results, predicate
 
     switch (options.return) {
-      case 'array':
-        results = []
-        predicate = (v, k, c) => filter(v, k, c) && results.push([ k, v ])
-        break
       case 'map':
         results = new Map<K, V>()
         predicate = (v, k, c) => filter(v, k, c) && results.set(k, v)
@@ -71,6 +84,7 @@ export default class Collection<K = unknown, V = unknown> extends Map<K, V> {
         results = new Collection<K, V>()
         predicate = (v, k, c) => filter(v, k, c) && results.set(k, v)
         break
+      case 'array':
       default:
         results = []
         predicate = (v, k, c) => filter(v, k, c) && results.push([ k, v ])
@@ -115,7 +129,7 @@ export default class Collection<K = unknown, V = unknown> extends Map<K, V> {
       else equal = (arg1: any, arg2: any) => lodashIsEqual(arg1, arg2)
     }
 
-    for (const [ key, value ] of this) {
+    for (const [ key, value ] of this.entries()) {
       switch (true) { // switch is faster than if, so we use it in the loop
         case !collection.has(key) || !equal(collection.get(key), value):
           return false
