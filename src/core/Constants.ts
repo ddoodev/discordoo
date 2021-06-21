@@ -154,7 +154,8 @@ export enum WebSocketClientEvents {
 export enum WebSocketManagerStates {
   CREATED,
   CONNECTING,
-  READY
+  READY,
+  DISCONNECTED,
 }
 
 export const WS_HANDSHAKE_TIMEOUT = 30000

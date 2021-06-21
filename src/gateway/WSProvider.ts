@@ -1,11 +1,12 @@
-import {GatewayProviderAPI, GatewayProviderEvents} from '@src/core'
-import {TypedEmitter} from 'tiny-typed-emitter'
-import GatewayOptions from '@src/gateway/interfaces/GatewayOptions'
+import { GatewayProviderAPI, GatewayProviderEvents } from '@src/core'
+import { TypedEmitter } from 'tiny-typed-emitter'
 import WebSocketManager from '@src/gateway/WebSocketManager'
+import PartialGatewayOptions from '@src/gateway/interfaces/PartialGatewayOptions'
 
 export default class WSProvider extends TypedEmitter<GatewayProviderEvents> implements GatewayProviderAPI {
   manager: WebSocketManager
-  constructor(public options: GatewayOptions) {
+
+  constructor(public options: PartialGatewayOptions) {
     super()
     this.manager = new WebSocketManager(options)
   }
@@ -14,5 +15,7 @@ export default class WSProvider extends TypedEmitter<GatewayProviderEvents> impl
     await this.manager.connect()
   }
 
-  async disconnect(): Promise<void> {}
+  async disconnect(): Promise<void> {
+    await this.manager.destroy()
+  }
 }

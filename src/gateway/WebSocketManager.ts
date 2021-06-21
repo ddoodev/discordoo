@@ -55,6 +55,11 @@ export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvent
     return this.createShards()
   }
 
+  public destroy() {
+    this.status = WebSocketManagerStates.DISCONNECTED
+    this.shards.forEach(shard => shard.destroy({ reconnect: false }))
+  }
+
   private async createShards() {
     if (!this.shardQueue.size || this.shards.size >= (this.options.maxShards || Infinity)) return false
     this.status = WebSocketManagerStates.CONNECTING
