@@ -13,6 +13,7 @@ import RESTProvider from '@src/core/providers/rest/RESTProvider'
 import Constants from '@src/core/Constants'
 import RESTResponse from '@src/core/providers/rest/RESTResponse'
 import DefaultClientStack from '@src/core/client/DefaultClientStack'
+import GatewayProviderEvents from '@src/core/providers/gateway/GatewayProviderEvents'
 
 export {
   Base,
@@ -29,5 +30,6 @@ export {
   RequestOptions,
   RESTProvider,
   Constants,
-  RESTResponse
+  RESTResponse,
+  GatewayProviderEvents
 }

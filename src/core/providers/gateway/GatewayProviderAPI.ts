@@ -1,8 +1,7 @@
-export default interface GatewayProviderAPI {
+import { TypedEmitter } from 'tiny-typed-emitter'
+import GatewayProviderEvents from '@src/core/providers/gateway/GatewayProviderEvents'
 
-  /**
-   * Emit event to the client or somewhere else
-   * @param event - event to emit
-   */
-  emit(event: string)
+export default interface GatewayProviderAPI extends TypedEmitter<GatewayProviderEvents> {
+  connect(): Promise<void>
+  disconnect(): Promise<void>
 }
