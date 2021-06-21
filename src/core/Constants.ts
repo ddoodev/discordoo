@@ -3,10 +3,19 @@ import { version } from '@root/package.json'
 import WebSocketUtils from '@src/utils/WebSocketUtils'
 import { GatewayOptions } from '@src/gateway'
 
+export const RAW_IPC_EVENT = '__DDOO__.MESSAGE'
+
+export enum DiscordooProviders {
+  REST,
+  GATEWAY,
+  CACHE,
+}
+
 export enum IpcOPCodes {
-  DISPATCH, // receive
-  IDENTIFY, // send/receive
-  INVALID_SESSION, // receive
+  DISPATCH, // send/receive
+  IDENTIFY, // send
+  HEARTBEAT, // send/receive
+  INVALID_SESSION, // send
   HELLO, // receive
   REQUEST_STATS, // send/receive
   ERROR, // receive
@@ -31,6 +40,13 @@ export enum ChildShardingModes {
   PROCESSES = 'processes',
   WORKERS = 'workers',
   CLUSTERS = 'clusters',
+}
+
+export enum ShardingManagerTypes {
+  STANDALONE_PARENT,
+  STANDALONE_CHILD,
+  PARENT,
+  CHILD,
 }
 
 export enum WebSocketOPCodes {

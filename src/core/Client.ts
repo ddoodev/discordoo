@@ -3,8 +3,17 @@ import ModuleManager from '@src/core/modules/ModuleManager'
 import Module from '@src/core/modules/Module'
 import RESTProvider from '@src/core/providers/rest/RESTProvider'
 import CacheProvider from '@src/core/providers/cache/CacheProvider'
-import DefaultClientStack from '@src/core/DefaultClientStack'
-import { GatewayProvider } from '@src/core/providers/gateway/GatewayProvider'
+import DefaultClientStack from '@src/core/client/DefaultClientStack'
+import GatewayProvider from '@src/core/providers/gateway/GatewayProvider'
+import ClientInternals from '@src/core/client/ClientInternals'
+import ClientOptions from '@src/core/client/ClientOptions'
+import { RESTProviderBuilder } from '@src/rest'
+import { CacheProviderBuilder } from '@src/cache'
+import GatewayProviderBuilder from '@src/gateway/GatewayProviderBuilder'
+import { DiscordooProviders } from '@src/core/Constants'
+import { DiscordooError, DiscordooSnowflake } from '@src/utils'
+import IpcServer from '@src/sharding/ipc/IpcServer'
+import ShardingClientEnvironment from '@src/sharding/interfaces/client/ShardingClientEnvironment'
 
 /** Entry point for all of Discordoo. Manages modules and events */
 export default class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
@@ -12,22 +21,71 @@ export default class Client<ClientStack extends DefaultClientStack = DefaultClie
   /** Token used by this client */
   public token: string
 
-  constructor(token: string) {
-    super()
-    this.token = token
-  }
-
   /** Module manager of this client */
-  modules: ModuleManager = new ModuleManager(this)
+  public modules: ModuleManager = new ModuleManager(this)
 
-  /** RESTProvider used by this module */
-  rest: RESTProvider<ClientStack['rest']> | null = null
+  /** Internal things used by this client */
+  public internals: ClientInternals<ClientStack>
 
-  /** CacheProvider used by this module */
-  cache: CacheProvider<ClientStack['cache']> | null = null
+  /** Options passed to this client */
+  public options: ClientOptions
 
-  /** GatewayProvider used by this module */
-  gateway: GatewayProvider<ClientStack['gateway']> | null = null
+  constructor(token: string, options: ClientOptions = {}) {
+    super()
+
+    this.token = token
+    this.options = options
+
+    let rest: RESTProvider<ClientStack['rest']> = new RESTProviderBuilder(this.options.rest).getRestProvider()(this),
+      cache: CacheProvider<ClientStack['cache']> = new CacheProviderBuilder().getCacheProvider()(this),
+      gateway: GatewayProvider<ClientStack['gateway']> = new GatewayProviderBuilder(
+        Object.assign(this.options.gateway ?? {}, { token: this.token })
+      ).getGatewayProvider()(this)
+
+    this.options.providers?.forEach(provider => {
+      try {
+        switch (provider.provide) {
+          case DiscordooProviders.CACHE:
+            cache = provider.use<CacheProvider>(this).bind(this)
+            break
+
+          case DiscordooProviders.GATEWAY:
+            gateway = provider.use<GatewayProvider>(this).bind(this)
+            break
+
+          case DiscordooProviders.REST:
+            rest = provider.use<RESTProvider>(this).bind(this)
+            break
+        }
+      } catch (e) {
+        throw new DiscordooError('Client#constructor', 'one of providers threw error when initialized:', e)
+      }
+    })
+
+    const env: ShardingClientEnvironment = {
+      SHARD_IPC_IDENTIFIER: process.env.__DDOO_SHARD_IPC_IDENTIFIER!,
+      SHARDING_MANAGER_IPC_IDENTIFIER: process.env.__DDOO_SHARDING_MANAGER_IPC_IDENTIFIER!,
+      SHARD_ID: parseInt(process.env.__DDOO_SHARD_ID!) ?? 0
+    }
+
+    const ipc = new IpcServer(
+      Object.assign({
+        id: DiscordooSnowflake.generate(env.SHARD_ID, process.pid),
+        managerId: env.SHARDING_MANAGER_IPC_IDENTIFIER,
+        shardID: env.SHARD_ID
+      }, this.options.ipc ?? {})
+    )
+
+    this.internals = {
+      rest,
+      cache,
+      gateway,
+      ipc,
+      env,
+    }
+
+    if (this.options.root) this.use(this.options.root)
+  }
 
   /**
    * Get a module. Alias for module(id).
@@ -59,7 +117,7 @@ export default class Client<ClientStack extends DefaultClientStack = DefaultClie
    * @param provider - function, that returns desired RESTProvider
    */
   useRESTProvider(provider: (client: Client) => RESTProvider<ClientStack['rest']>) {
-    this.rest = provider(this).bind(this)
+    this.internals.rest = provider(this).bind(this)
   }
 
   /**
@@ -68,7 +126,7 @@ export default class Client<ClientStack extends DefaultClientStack = DefaultClie
    * @param provider - function, that returns desired CacheProvider
    */
   useCacheProvider(provider: (client: Client) => CacheProvider<ClientStack['cache']>) {
-    this.cache = provider(this).bind(this)
+    this.internals.cache = provider(this).bind(this)
   }
 
   /**
@@ -77,6 +135,12 @@ export default class Client<ClientStack extends DefaultClientStack = DefaultClie
    * @param provider - function, that returns desired CacheProvider
    */
   useGatewayProvider(provider: (client: Client) => GatewayProvider<ClientStack['gateway']>) {
-    this.gateway = provider(this) as GatewayProvider<ClientStack['gateway']>
+    this.internals.gateway = provider(this).bind(this)
+  }
+
+  async start() {
+    if (this.internals.env.SHARDING_MANAGER_IPC_IDENTIFIER) {
+      await this.internals.ipc.serve()
+    }
   }
 }

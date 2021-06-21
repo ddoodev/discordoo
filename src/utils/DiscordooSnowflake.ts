@@ -1,13 +1,15 @@
 import DeconstructedDiscordooSnowflake from '@src/interfaces/utils/DeconstructedSnowflake'
 
 const EPOCH = 1609459200000 // 2021-01-01T00:00:00.000Z
-let INCREMENT = 5
+let INCREMENT = 0
 
 /**
- * DiscordooSnowflake is a custom twitter snowflake used to identify ipc connections.
+ * DiscordooSnowflake is a custom twitter snowflake used to identify ipc connections and messages.
  * */
 
 export default class DiscordooSnowflake {
+  // used to identify sharding managers in snowflakes
+  public static readonly SHARDING_MANAGER_ID = 1_111_111_111
 
   /**
    * Custom twitter snowflake: DiscordooSnowflake.
@@ -22,16 +24,16 @@ export default class DiscordooSnowflake {
    *  (BigInt(snowflake) >> 86n) + BigInt(EPOCH) === 1624043753498n
    *
    * getting a worker id:
-   *  (BigInt(snowflake) & 0x7FFFFFFFn) >> 54n === 11n
+   *  (BigInt(snowflake) & 0x3FFFFFFFC0000000000000n) >> 54n === 11n
    *
    * getting a shard id:
-   *  (BigInt(snowflake) & 0x7FFFFFFFn) >> 22n === 99n
+   *  (BigInt(snowflake) & 0x3FFFFFFFC00000n) >> 22n === 99n
    *
    * getting a increment:
    *  BigInt(snowflake) & 0x3FFFFFn === 5n
    * ```
    * Why?
-   * Discordoo uses DiscordooSnowflake to identify ipc connections.
+   * Discordoo uses DiscordooSnowflake to identify ipc connections and messages.
    * So, if your bot has more than 2,147,483,647 shards, you will unfortunately not be able to use Discordoo.
    */
 

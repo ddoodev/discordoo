@@ -1,16 +1,11 @@
-import { CacheProvider, Client, DefaultClientStack, RESTProvider } from '@src/core'
-import { CacheProviderBuilder } from '@src/cache'
-import { RESTProviderBuilder } from '@src/rest'
-import ModuleHostModule from '@src/wrapper/ModuleHostModule'
+import { CacheProvider, Client, DefaultClientStack, GatewayProvider, RESTProvider } from '@src/core'
+import ClientOptions from '@src/core/client/ClientOptions'
 
 export default class ClientBuilder<Stack extends DefaultClientStack = DefaultClientStack> {
-  client: Client<Stack>
+  public client: Client<Stack>
 
-  constructor(token: string, root: ModuleHostModule) {
-    this.client = new Client<Stack>(token)
-    this.client.useCacheProvider(new CacheProviderBuilder().getCacheProvider())
-    this.client.useRESTProvider(new RESTProviderBuilder().getRestProvider())
-    this.client.use(root)
+  constructor(token: string, options?: ClientOptions) {
+    this.client = new Client<Stack>(token, options)
   }
 
   rest(provider: (client: Client) => RESTProvider): ClientBuilder<Stack> {
@@ -20,6 +15,11 @@ export default class ClientBuilder<Stack extends DefaultClientStack = DefaultCli
 
   cache(provider: (client: Client) => CacheProvider): ClientBuilder<Stack> {
     this.client.useCacheProvider(provider)
+    return this
+  }
+
+  gateway(provider: (client: Client) => GatewayProvider): ClientBuilder<Stack> {
+    this.client.useGatewayProvider(provider)
     return this
   }
 

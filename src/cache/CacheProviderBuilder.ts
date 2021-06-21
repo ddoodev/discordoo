@@ -4,7 +4,7 @@ import CacheManager from '@src/cache/CacheManager'
 /** An adapter of {@link CacheManager} for {@link Client} */
 export default class CacheProviderBuilder {
   /** Cache manager, adapted by this adapter */
-  manager: CacheManager = new CacheManager
+  manager: CacheManager = new CacheManager()
 
   /** Get a cache provider */
   getCacheProvider(): (client: Client) => CacheProvider {

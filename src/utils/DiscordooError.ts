@@ -1,3 +1,5 @@
+import { inspect } from 'util'
+
 /** Custom error class to create human-readable errors */
 export default class DiscordooError extends Error {
   public name = 'DiscordooError'
@@ -6,6 +8,6 @@ export default class DiscordooError extends Error {
   constructor(source?: string, ...args: any[]) {
     if (source) args.unshift(`[${source}]`)
 
-    super(args.join(' '))
+    super(args.map(a => typeof a !== 'string' ? inspect(a) : a).join(' '))
   }
 }

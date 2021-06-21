@@ -1,25 +1,23 @@
 import { TypedEmitter } from 'tiny-typed-emitter'
 import ShardingManagerEvents from '@src/sharding/interfaces/manager/ShardingManagerEvents'
-import { IPC as Ipc, server as IpcServer } from 'node-ipc'
+import { ShardingManagerTypes, ShardingModes } from '@src/core/Constants'
 import ShardingManagerOptions from '@src/sharding/interfaces/manager/options/ShardingManagerOptions'
-import { ShardingModes } from '@src/core/Constants'
+import { DiscordooSnowflake } from '@src/utils'
 
 export default class ShardingManager extends TypedEmitter<ShardingManagerEvents> {
-  public ipc: InstanceType<typeof Ipc>
-  public server: typeof IpcServer
+  public type: ShardingManagerTypes
+  public mode: ShardingModes
+  public options: ShardingManagerOptions
+  public id: string
 
-  private mode: ShardingModes
-
-  constructor(public options: ShardingManagerOptions) {
+  constructor(options: ShardingManagerOptions) {
     super()
 
-    this.ipc = new Ipc()
-    this.server = this.ipc.server
-
+    this.type = options.type
     this.mode = options.mode
+    this.options = options
+
+    this.id = DiscordooSnowflake.generate(DiscordooSnowflake.SHARDING_MANAGER_ID, process.pid)
   }
 
-  start() {
-    return 1
-  }
 }
