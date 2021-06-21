@@ -142,5 +142,7 @@ export default class Client<ClientStack extends DefaultClientStack = DefaultClie
     if (this.internals.env.SHARDING_MANAGER_IPC_IDENTIFIER) {
       await this.internals.ipc.serve()
     }
+
+    await this.internals.gateway().connect()
   }
 }

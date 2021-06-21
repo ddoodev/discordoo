@@ -1,9 +1,9 @@
 import ClientBuilder from '@src/wrapper/ClientBuilder'
-import createBot from '@src/wrapper/createBot'
+import createApp from '@src/wrapper/createApp'
 import ModuleHostModule from '@src/wrapper/ModuleHostModule'
 
 export {
   ClientBuilder,
-  createBot,
+  createApp,
   ModuleHostModule
 }

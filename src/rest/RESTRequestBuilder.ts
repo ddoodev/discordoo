@@ -1,7 +1,8 @@
-import { Constants, RequestBuilder, RequestOptions, RESTResponse } from '@src/core'
+import { RequestBuilder, RequestOptions, RESTResponse } from '@src/core'
 import { URLSearchParams } from 'url'
 import RESTOptions from '@src/rest/RESTOptions'
 import fetch from 'node-fetch'
+import { API_ENDPOINT, DEFAULT_REST_OPTIONS } from '@src/core/Constants'
 
 /**
  * Create requests to Discord
@@ -28,7 +29,7 @@ export default class RESTRequestBuilder implements RequestBuilder {
     this.token = token
     this.options = options
 
-    this.stack.push(`v${options.v ?? Constants.DEFAULT_REST_OPTIONS.v}`)
+    this.stack.push(`v${options.v ?? DEFAULT_REST_OPTIONS.v}`)
   }
 
   /** Get headers */
@@ -62,7 +63,7 @@ export default class RESTRequestBuilder implements RequestBuilder {
 
   /** URI request will be sent to */
   get endpoint() {
-    let r = `${Constants.API_ENDPOINT}/${this.stack.join('/')}`
+    let r = `${API_ENDPOINT}/${this.stack.join('/')}`
     if (Object.keys(this.queryStack).length > 0) {
       r += new URLSearchParams(this.queryStack).toString()
     }

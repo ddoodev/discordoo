@@ -39,7 +39,6 @@ export default class IpcServer extends TypedEmitter {
 
   public serve() {
     this.server.on(RAW_IPC_EVENT, this.eventsHandler.bind(this))
-
     this.server.start()
   }
 

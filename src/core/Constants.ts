@@ -160,34 +160,36 @@ export enum WebSocketManagerStates {
 
 export const WS_HANDSHAKE_TIMEOUT = 30000
 
+export const API_ENDPOINT = 'https://discord.com/api'
+
+export const DEFAULT_WS_OPTIONS: Omit<GatewayOptions, 'token'> = {
+  properties: {
+    $browser: 'Discordoo',
+    $device: 'Discordoo',
+    $os: process.platform
+  },
+  compress: false,
+  intents: 32509, // use all intents except privileged
+  maxShards: Infinity,
+  version: 9,
+  shards: 1,
+  url: 'wss://gateway.discord.gg',
+  spawnDelay: 5000,
+  encoding: WebSocketUtils.encoding,
+  useReconnectOnly: false,
+  smoothEventsPeaks: false,
+  eventPeaksSmoothingMultiplier: 2,
+  maxEventsPerSecond: undefined
+}
+
+export const DEFAULT_REST_OPTIONS: RESTOptions = {
+  v: 9,
+  useragent: `DiscordBot (https://github.com/Discordoo/discordoo, ${version})`,
+  maxRetries: 5
+}
+
 export default class Constants {
   public static API_ENDPOINT = 'https://discord.com/api'
-
-  public static DEFAULT_REST_OPTIONS: RESTOptions = {
-    v: 9,
-    useragent: `DiscordBot (https://github.com/Discordoo/discordoo, ${version})`,
-    maxRetries: 5
-  }
-
-  public static DEFAULT_WS_OPTIONS: Omit<GatewayOptions, 'token'> = {
-    properties: {
-      $browser: 'Discordoo',
-      $device: 'Discordoo',
-      $os: process.platform
-    },
-    compress: false,
-    intents: 32509, // use all intents except privileged
-
-    maxShards: Infinity,
-    version: 9,
-    url: 'wss://gateway.discord.gg',
-    spawnDelay: 5000,
-    encoding: WebSocketUtils.encoding,
-    useReconnectOnly: false,
-    smoothEventsPeaks: false,
-    eventPeaksSmoothingMultiplier: 2,
-    maxEventsPerSecond: undefined
-  }
 
   public static WebSocketOPCodes = WebSocketOPCodes
   public static WebSocketEvents = WebSocketEvents

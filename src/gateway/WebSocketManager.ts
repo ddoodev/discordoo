@@ -1,13 +1,12 @@
 import { TypedEmitter } from 'tiny-typed-emitter'
 import { Collection } from '@src/collection'
-import { Constants } from '@src/core'
 import { RESTGetAPIGatewayBotResult } from 'discord-api-types'
 import WebSocketManagerEvents from '@src/gateway/interfaces/WebSocketManagerEvents'
 import GatewayOptions from '@src/gateway/interfaces/GatewayOptions'
 import Optional from '@src/utils/Optional'
 import WebSocketClient from '@src/gateway/WebSocketClient'
 import wait from '@src/utils/wait'
-import { WebSocketClientEvents, WebSocketManagerStates } from '@src/core/Constants'
+import { DEFAULT_WS_OPTIONS, WebSocketClientEvents, WebSocketManagerStates } from '@src/core/Constants'
 import inspectWsOptions from '@src/gateway/wsmanager/inspectWsOptions'
 
 export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvents> {
@@ -24,7 +23,7 @@ export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvent
   constructor(options: Optional<GatewayOptions, 'intents' | 'properties'>) {
     super()
 
-    this.options = Object.assign(Constants.DEFAULT_WS_OPTIONS, options)
+    this.options = Object.assign(DEFAULT_WS_OPTIONS, options)
     this.status = WebSocketManagerStates.CREATED
   }
 

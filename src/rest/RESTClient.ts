@@ -1,6 +1,6 @@
 import RESTOptions from '@src/rest/RESTOptions'
-import { Constants } from '@src/core'
 import RESTRequestBuilder from '@src/rest/RESTRequestBuilder'
+import { DEFAULT_REST_OPTIONS } from '@src/core/Constants'
 
 /** Helps to send requests to Discord */
 export default class RESTClient {
@@ -8,7 +8,7 @@ export default class RESTClient {
    * @param token - token to use in requests
    * @param options - options
    */
-  constructor(public token: string, public options: RESTOptions = Constants.DEFAULT_REST_OPTIONS) {}
+  constructor(public token: string, public options: RESTOptions = DEFAULT_REST_OPTIONS) {}
 
   /** Create a request */
   request(tokenOverride?: string): RESTRequestBuilder {
