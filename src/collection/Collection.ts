@@ -25,15 +25,15 @@ export default class Collection<K = unknown, V = unknown> extends Map<K, V> {
     if (!amount || (amount && amount < 1)) amount = 1
     if (typeof options.unique !== 'boolean') options.unique = !!options.unique
 
-    // when amount is 15% or more of collection size,
-    // we should switch random numbers generation algorithm to avoid performance issues
-    const largeAmount: boolean = Math.floor(amount / size * 100) > 15,
+    // switches the random numbers generation algorithm depending on the size of the collection and the size of the amount
+    const largeAmount: boolean = Math.floor(amount / size * 100) > (size > 500 ? size > 1000 ? 15 : 50 : 80),
       arr = [ ...this.values() ]
     let results: V[] = []
 
+    // O(1) generation algorithm, https://stackoverflow.com/questions/196017/unique-non-repeating-random-numbers-in-o1
     if (largeAmount && options.unique) {
-      let randomNumbers = range(size),
-        max = size - 1
+      let randomNumbers = range(size + 1),
+        max = size
 
       for (let i = 0; i < size; i++) {
         const num = Math.floor(Math.random() * max)
@@ -47,6 +47,10 @@ export default class Collection<K = unknown, V = unknown> extends Map<K, V> {
     } else {
       const random: number[] = []
 
+      // O(unknown) generation algorithm. works much faster in small collections, but much worse in big
+      // 1. gen
+      // 2. if not unique, start from 1. else
+      // 3. push to random numbers array
       if (options.unique) {
         for (let i = 0; i < amount; i++) {
           const num = Math.floor(Math.random() * size)
