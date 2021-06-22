@@ -14,6 +14,7 @@ import { DiscordooProviders } from '@src/core/Constants'
 import { DiscordooError, DiscordooSnowflake } from '@src/utils'
 import IpcServer from '@src/sharding/ipc/IpcServer'
 import ShardingClientEnvironment from '@src/sharding/interfaces/client/ShardingClientEnvironment'
+import GatewayConnectOptions from '@src/gateway/interfaces/GatewayConnectOptions'
 
 /** Entry point for all of Discordoo. Manages modules and events */
 export default class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
@@ -70,9 +71,9 @@ export default class Client<ClientStack extends DefaultClientStack = DefaultClie
 
     const ipc = new IpcServer(
       Object.assign({
-        id: DiscordooSnowflake.generate(env.SHARD_ID, process.pid),
-        managerId: env.SHARDING_MANAGER_IPC_IDENTIFIER,
-        shardID: env.SHARD_ID
+        id: env.SHARD_IPC_IDENTIFIER || DiscordooSnowflake.generate(env.SHARD_ID, process.pid),
+        managerIpcId: env.SHARDING_MANAGER_IPC_IDENTIFIER,
+        shardId: env.SHARD_ID
       }, this.options.ipc ?? {})
     )
 
@@ -139,10 +140,20 @@ export default class Client<ClientStack extends DefaultClientStack = DefaultClie
   }
 
   async start() {
+    let options: GatewayConnectOptions
+
+    console.log(this.internals.env, process.env)
+
     if (this.internals.env.SHARDING_MANAGER_IPC_IDENTIFIER) {
       await this.internals.ipc.serve()
+      if (this.internals.ipc.shards && this.internals.ipc.totalShards) {
+        options = {
+          totalShards: this.internals.ipc.totalShards,
+          shards: this.internals.ipc.shards
+        }
+      }
     }
 
-    await this.internals.gateway().connect()
+    await this.internals.gateway().connect(options!)
   }
 }

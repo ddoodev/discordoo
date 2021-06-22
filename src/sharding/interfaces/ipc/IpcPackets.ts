@@ -5,7 +5,9 @@ export interface IpcHelloPacket extends IpcPacket {
   op: IpcOPCodes.HELLO
   d: {
     id: string
+    event_id: string
     shards: number[]
+    total_shards: number
     heartbeat_interval: number
   }
 }

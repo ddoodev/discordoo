@@ -9,6 +9,7 @@ export default interface ShardingManagerOptions {
   mode: ShardingModes
   type: ShardingManagerTypes
   shards: ShardListResolvable
+  file: string
 
   machines?: MachinesShardingOptions
   processes?: ProcessesShardingOptions

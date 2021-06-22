@@ -10,5 +10,5 @@ export default interface ClientOptions {
   gateway?: Optional<GatewayOptions, 'token' | 'intents' | 'properties'>
   rest?: RESTOptions
   root?: ModuleHostModule
-  ipc?: Optional<IpcServerOptions, 'id' | 'managerId' | 'shardID'>
+  ipc?: Optional<IpcServerOptions, 'id' | 'managerIpcId' | 'shardId'>
 }

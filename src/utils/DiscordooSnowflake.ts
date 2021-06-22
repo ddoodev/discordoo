@@ -1,4 +1,5 @@
 import DeconstructedDiscordooSnowflake from '@src/interfaces/utils/DeconstructedSnowflake'
+import DiscordooError from '@src/utils/DiscordooError'
 
 const EPOCH = 1609459200000 // 2021-01-01T00:00:00.000Z
 let INCREMENT = 0
@@ -41,6 +42,13 @@ export default class DiscordooSnowflake {
     if (timestamp instanceof Date) timestamp = timestamp.getTime()
 
     if (INCREMENT >= 4194302) INCREMENT = 0
+
+    if (shardID.toString(2).length > 32 || workerID.toString(2).length > 32) {
+      throw new DiscordooError(
+        'DiscordooSnowflake#generate',
+        'cannot generate snowflake with shardID or workerID that take up more than 32 bits'
+      )
+    }
 
     const toString = (num: number, padStart: number) => num.toString(2).padStart(padStart, '0')
 

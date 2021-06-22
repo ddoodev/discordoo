@@ -15,5 +15,9 @@ types
 # Misc
 tsconfig.tsbuildinfo
 
+# Docs
 docs
 docs.json
+
+# On-the-fly tests
+on-the-fly

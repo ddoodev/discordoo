@@ -18,7 +18,7 @@ export enum IpcOPCodes {
   INVALID_SESSION, // send
   HELLO, // receive
   REQUEST_STATS, // send/receive
-  ERROR, // receive
+  ERROR, // send/receive
 }
 
 export enum IpcEvents {
@@ -36,7 +36,7 @@ export enum ShardingModes {
   MACHINES = 'machines',
 }
 
-export enum ChildShardingModes {
+export enum PartialShardingModes {
   PROCESSES = 'processes',
   WORKERS = 'workers',
   CLUSTERS = 'clusters',
@@ -186,14 +186,4 @@ export const DEFAULT_REST_OPTIONS: RESTOptions = {
   v: 9,
   useragent: `DiscordBot (https://github.com/Discordoo/discordoo, ${version})`,
   maxRetries: 5
-}
-
-export default class Constants {
-  public static API_ENDPOINT = 'https://discord.com/api'
-
-  public static WebSocketOPCodes = WebSocketOPCodes
-  public static WebSocketEvents = WebSocketEvents
-  public static WebSocketStates = WebSocketStates
-  public static WebSocketEncoding = WebSocketUtils.encoding
-  public static WebSocketShardStatus = WebSocketShardStatus
 }

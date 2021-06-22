@@ -9,9 +9,11 @@ import MachinesShardingOptions from '@src/sharding/interfaces/manager/options/Ma
 
 import ShardingMachineOptions from '@src/sharding/interfaces/machine/ShardingMachineOptions'
 import IpcTlsOptions from '@src/sharding/interfaces/ipc/IpcTlsOptions'
-
 import IpcPacket from '@src/sharding/interfaces/ipc/IpcPacket'
 import ShardingManagerEvents from '@src/sharding/interfaces/manager/ShardingManagerEvents'
+
+import IpcClient from '@src/sharding/ipc/IpcClient'
+import IpcServer from '@src/sharding/ipc/IpcServer'
 
 export {
   ShardingManager,
@@ -24,5 +26,7 @@ export {
   ShardingMachineOptions,
   IpcTlsOptions,
   IpcPacket,
-  ShardingManagerEvents
+  ShardingManagerEvents,
+  IpcClient,
+  IpcServer
 }

@@ -8,6 +8,7 @@ import WebSocketClient from '@src/gateway/WebSocketClient'
 import wait from '@src/utils/wait'
 import { DEFAULT_WS_OPTIONS, WebSocketClientEvents, WebSocketManagerStates } from '@src/core/Constants'
 import inspectWsOptions from '@src/gateway/wsmanager/inspectWsOptions'
+import GatewayConnectOptions from '@src/gateway/interfaces/GatewayConnectOptions'
 
 export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvents> {
   public readonly options: GatewayOptions
@@ -27,14 +28,21 @@ export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvent
     this.status = WebSocketManagerStates.CREATED
   }
 
-  public async connect() {
+  public async connect(options?: GatewayConnectOptions) {
     console.log('connecting')
     this.status = WebSocketManagerStates.CONNECTING
+
+    if (options) {
+      if (options.shards && options.totalShards) {
+        this.options.shards = options.shards
+        this.totalShards = options.totalShards
+      }
+    }
 
     const { url, shardsInTotal, shardsToSpawn: shards, gateway } = await inspectWsOptions(this.options)
 
     this.options.url = url
-    this.totalShards = shardsInTotal
+    this.totalShards = this.totalShards < shardsInTotal ? shardsInTotal : this.totalShards
     this.gateway = gateway
 
     console.log('shards:', shards)

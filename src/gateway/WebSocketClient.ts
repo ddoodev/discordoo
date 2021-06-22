@@ -60,7 +60,7 @@ export default class WebSocketClient extends TypedEmitter<WebSocketClientEventsI
     return new Promise<void>((resolve, reject) => {
 
       // cannot connect without websocket url
-      if (!this.options.url) return reject()
+      if (!this.options?.url) return reject()
 
       // WebSocketClient already connected and working
       if (this.socket?.readyState === WebSocketStates.OPEN && this.status === WebSocketClientStates.READY) {

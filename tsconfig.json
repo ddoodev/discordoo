@@ -39,6 +39,7 @@
     "types"
   ],
   "include": [
-    "src/**/*"
+    "src/**/*",
+    "on-the-fly/**/*"
   ]
 }

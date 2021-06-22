@@ -1,7 +1,8 @@
 import { TypedEmitter } from 'tiny-typed-emitter'
 import GatewayProviderEvents from '@src/core/providers/gateway/GatewayProviderEvents'
+import GatewayConnectOptions from '@src/gateway/interfaces/GatewayConnectOptions'
 
 export default interface GatewayProviderAPI extends TypedEmitter<GatewayProviderEvents> {
-  connect(): Promise<void>
+  connect(options?: GatewayConnectOptions): Promise<void>
   disconnect(): Promise<void>
 }
