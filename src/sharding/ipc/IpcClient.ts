@@ -45,6 +45,7 @@ export default class IpcClient extends TypedEmitter {
       promise = { res: resolve, rej: reject }
 
       promise.timeout = setTimeout(() => {
+        this.ipc.config.stopRetrying = true
         const err = new DiscordooError(
           'IpcClient#connect',
           'the connection timed out.',
@@ -56,11 +57,11 @@ export default class IpcClient extends TypedEmitter {
       }, 30000)
 
       this.ipc.connectTo(this.shardIpcId, () => {
-        this.ipc.of[this.shardIpcId].once('connected', () => {
+        this.ipc.of[this.shardIpcId].once('connect', () => {
+          console.log('SHARDS', this.shards.join(', '), 'CONNECTED')
           clearTimeout(promise.timeout)
           promise.res(void 0)
         })
-        console.log('ALO!!')
 
         this.ipc.of[this.shardIpcId].on(RAW_IPC_EVENT, this.eventsHandler)
 

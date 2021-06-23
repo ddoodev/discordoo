@@ -142,8 +142,6 @@ export default class Client<ClientStack extends DefaultClientStack = DefaultClie
   async start() {
     let options: GatewayConnectOptions
 
-    console.log(this.internals.env, process.env)
-
     if (this.internals.env.SHARDING_MANAGER_IPC_IDENTIFIER) {
       await this.internals.ipc.serve()
       if (this.internals.ipc.shards && this.internals.ipc.totalShards) {

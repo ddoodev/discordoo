@@ -38,8 +38,6 @@ export default class IpcServer extends TypedEmitter {
   }
 
   public async serve() {
-    console.log('this', this)
-
     this.ipc.serve(() => {
       this.server!.on(RAW_IPC_EVENT, this.eventsHandler)
     })

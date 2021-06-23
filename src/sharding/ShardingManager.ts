@@ -58,7 +58,7 @@ export default class ShardingManager extends TypedEmitter<ShardingManagerEvents>
       })
 
       this.shards.set(shardID, shard)
-      shard.create()
+      shard.create().then(() => console.log('created'))
     })
   }
 
