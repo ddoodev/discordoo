@@ -15,9 +15,9 @@
 </p> 
 
 <p align="center">
-<a href="https://docs.discordoo.xyz">API Docs</a>
+<a href="https://api.discordoo.xyz">API</a>
 <span> · </span>
-<a href="https://guide.discordoo.xyz">Guide</a>
+<a href="https://docs.discordoo.xyz">Docs & Guide</a>
 <span> · </span>
 <a href="https://github.com/Discordoo/discordoo/blob/master/CONTRIBUTING.md">Contribute</a>
 </p> 
@@ -52,7 +52,7 @@ $ npm init @discordoo
 ```
 Answer simple questions, and it will have the project scaffolded for you. Simple, isn't it?
 
-Wanna see more? Go [here](https://discordoo.xyz/guide/getting-started) to explore all of Discordoo!
+Wanna see more? Go [here](https://docs.discordoo.xyz/) to explore all of Discordoo!
 
 ## Contributing
 Feel free to create a PR, but check if there is an existing one.
