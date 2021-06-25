@@ -4,6 +4,6 @@ const { packages } = require('./discordoo.json')
 module.exports = {
   entryPoints: packages.map(e => `./src/${e}/index.ts`),
   readme: './docs.md',
-  out: './docs/api',
+  out: './docs/docs/api',
   name: 'Discordoo'
 }
