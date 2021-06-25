@@ -8,15 +8,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
         with:
           persist-credentials: false
           fetch-depth: 0
-      - name: Install packages etc
+          python-version: '3.7'
+      - name: Clone guide repo
+        run: |
+          git clone https://github.com/Discordoo/discordoo-guide docs
+      - name: Install required packages
         run: |
           npm ci
+          pip install -r ./docs/requirements.txt
+      - name: Run api docs generation
+        run: |
           npm run docs
+      - name: Build documentation
+        run: |
+          cd docs && mkdocs build
       - name: Deploy
         uses: 'JamesIves/github-pages-deploy-action@4.1.3'
         with:
           branch: gh-pages
-          folder: docs
+          folder: site

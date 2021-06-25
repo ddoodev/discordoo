@@ -8,7 +8,7 @@
     "test": "jest",
     "test:fly": "node dist/on-the-fly/index.js",
     "build": "tsc -p tsconfig.json && tscpaths -p tsconfig.tspaths.json -s ./src -o ./dist",
-    "docs": "typedoc",
+    "docs": "typedoc && node ./node_modules/@discordoo/tapok/src/index.js docs/api",
     "utils": "node scripts/root.js",
     "prepublish": "npm run build"
   },
@@ -20,7 +20,7 @@
   "devDependencies": {
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.0.1",
-    "@discordoo/discordoocs": "^1.0.0",
+    "@discordoo/tapok": "^1.0.0",
     "@types/jest": "^26.0.21",
     "@types/lodash": "^4.14.168",
     "@types/node-fetch": "^2.5.9",
@@ -35,8 +35,8 @@
     "lint-staged": "^10.5.4",
     "ts-jest": "^26.5.4",
     "tscpaths": "^0.0.9",
-    "typedoc": "^0.20.32",
-    "typedoc-plugin-markdown": "^3.8.1",
+    "typedoc": "^0.21.1",
+    "typedoc-plugin-markdown": "^3.10.2",
     "typescript": "^4.2.3"
   },
   "dependencies": {
