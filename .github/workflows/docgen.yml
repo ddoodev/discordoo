@@ -23,8 +23,6 @@ jobs:
       - name: Run api docs generation
         run: |
           npm run docs
-      - name: Build documentation
-        run: |
           cd docs && mkdocs build
       - name: Deploy
         uses: 'JamesIves/github-pages-deploy-action@4.1.3'
