@@ -16,15 +16,15 @@ type equalFn = (value: any, other: any) => boolean
 /** An utility data structure used within the library */
 export class Collection<K = unknown, V = unknown> extends Map<K, V> {
 
-  /*
-  * Returns boolean value whether the collection is empty or not.
+  /**
+  * Returns the collection is empty or not.
   * */
   get empty(): boolean {
     return this.size === 0
   }
 
   /**
-   * Gets a random element from collection (can return several identical results if the amount is specified).
+   * Gets a random element from collection (returns non-unique results if the unique option is not specified).
    * */
   random(): V
   random(amount: number, options?: CollectionRandomOptions): V[]
@@ -80,6 +80,8 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
 
   /**
    * Filters out the elements which don't meet requirements.
+   * @param filter - function to use
+   * @param {CollectionFilterOptions?} options - filter options
    */
   filter<T>(
     filter: (value: V, key: K, collection: Collection<K, V>) => unknown,
@@ -132,7 +134,7 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
   /**
    * Checks if two collections are equal.
    * @param {Collection} collection - collection to compare to
-   * @param {CollectionEqualOptions} options - options to use
+   * @param {CollectionEqualOptions?} options - options to use
    */
   equal(collection: Collection<K, V>, options: CollectionEqualOptions = {}): boolean {
     if (this.size !== collection?.size) return false
@@ -155,9 +157,9 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
     return true
   }
 
-
-  /*
-  * Creates and returns merged collection.
+  /**
+  * Merges the specified collections into one and returns a new collection.
+  * @param collections - collections to merge
   * */
   concat(collections: Collection<K, V>[]): Collection<K, V> {
     const merged = this.clone()
@@ -167,7 +169,7 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
         continue
       }
 
-      for (const [ key, value ] of collection) {
+      for (const [ key, value ] of collection.entries()) {
         merged.set(key, value)
       }
     }
@@ -175,12 +177,13 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
     return merged
   }
 
-  /*
-  * Checks if any of values value satisfies the condition.
+  /**
+  * Checks if any of values satisfies the condition.
+  * @param predicate - function to use
   * */
-  some(fn: (v: V, k: K) => boolean): boolean {
+  some(predicate: (value: V, key: K, collection: Collection<K, V>) => boolean): boolean {
     for (const [ key, value ] of this.entries()) {
-      if (fn(value, key)) {
+      if (predicate(value, key, this)) {
         return true
       }
     }
@@ -188,12 +191,13 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
     return false
   }
 
-  /*
+  /**
   * Checks if all values satisfy the condition.
+  * @param predicate - function to use
   * */
-  every(fn: (v: V, k: K) => boolean): boolean {
+  every(predicate: (value: V, key: K, collection: Collection<K, V>) => boolean): boolean {
     for (const [ key, value ] of this.entries()) {
-      if (!fn(value, key)) {
+      if (!predicate(value, key, this)) {
         return false
       }
     }
@@ -201,11 +205,11 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
     return true
   }
 
-  /*
+  /**
   * Returns first N collection values.
   * */
   first(): V | undefined
-  first(amount?: number): V[]
+  first(amount: number): V[]
   first(amount?: number): V | V[] | undefined {
     if (!amount || amount <= 1) {
       return this.values().next().value
@@ -218,11 +222,11 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
     return values.slice(0, amount)
   }
 
-  /*
+  /**
   * Returns first N collection keys.
   * */
   firstKey(): K | undefined
-  firstKey(amount?: number): K[]
+  firstKey(amount: number): K[]
   firstKey(amount?: number): K | K[] | undefined {
     if (!amount || amount <= 1) {
       return this.keys().next().value
@@ -235,11 +239,11 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
     return keys.slice(0, amount)
   }
 
-  /*
+  /**
   * Returns last N collection values.
   * */
   last(): V | undefined
-  last(amount?: number): V[]
+  last(amount: number): V[]
   last(amount?: number): V | V[] | undefined {
     const values = [ ...this.values() ]
 
@@ -252,11 +256,11 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
     return values.slice(-amount)
   }
 
-  /*
+  /**
   * Returns last N collection keys.
   * */
   lastKey(): K | undefined
-  lastKey(amount?: number): K[]
+  lastKey(amount: number): K[]
   lastKey(amount?: number): K | K[] | undefined {
     const keys = [ ...this.keys() ]
 
@@ -269,11 +273,12 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
     return keys.slice(-amount)
   }
 
-  /*
+  /**
   * Returns a collection chunked into several collections.
+  * @param size - chunk size
   * */
-  intoChunks(amount?: number): Collection<K, V>[] {
-    return intoChunks<[K, V]>([ ...this.entries() ], amount)
+  intoChunks(size?: number): Collection<K, V>[] {
+    return intoChunks<[K, V]>([ ...this.entries() ], size)
       .map(e => new Collection(e))
   }
 }
