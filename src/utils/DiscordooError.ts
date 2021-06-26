@@ -1,7 +1,7 @@
 import { inspect } from 'util'
 
 /** Custom error class to create human-readable errors */
-export default class DiscordooError extends Error {
+export class DiscordooError extends Error {
   public name = 'DiscordooError'
 
   // @ts-ignore

@@ -1,8 +1,8 @@
 import { DiscordooError, range } from '@src/utils'
-import CollectionEqualOptions from '@src/collection/interfaces/CollectionEqualOptions'
-import CollectionFilterOptions from '@src/collection/interfaces/CollectionFilterOptions'
-import CollectionRandomOptions from '@src/collection/interfaces/CollectionRandomOptions'
-import swap from '@src/utils/swap'
+import { CollectionEqualOptions } from '@src/collection/interfaces/CollectionEqualOptions'
+import { CollectionFilterOptions } from '@src/collection/interfaces/CollectionFilterOptions'
+import { CollectionRandomOptions } from '@src/collection/interfaces/CollectionRandomOptions'
+import { swap } from '@src/utils/swap'
 
 let lodashIsEqual
 
@@ -11,7 +11,7 @@ try {
 } catch (e) {} // eslint-disable-line no-empty
 
 /** An utility data structure used within the library */
-export default class Collection<K = unknown, V = unknown> extends Map<K, V> {
+export class Collection<K = unknown, V = unknown> extends Map<K, V> {
 
   /** Get a random element from collection (can return several identical results if the amount is specified) */
   random(): V

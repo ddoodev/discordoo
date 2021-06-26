@@ -1,23 +1,23 @@
 import { ListenerSignature, TypedEmitter } from 'tiny-typed-emitter'
-import ModuleManager from '@src/core/modules/ModuleManager'
-import Module from '@src/core/modules/Module'
-import RESTProvider from '@src/core/providers/rest/RESTProvider'
-import CacheProvider from '@src/core/providers/cache/CacheProvider'
-import DefaultClientStack from '@src/core/client/DefaultClientStack'
-import GatewayProvider from '@src/core/providers/gateway/GatewayProvider'
-import ClientInternals from '@src/core/client/ClientInternals'
-import ClientOptions from '@src/core/client/ClientOptions'
+import { ModuleManager } from '@src/core/modules/ModuleManager'
+import { Module } from '@src/core/modules/Module'
+import { RESTProvider } from '@src/core/providers/rest/RESTProvider'
+import { CacheProvider } from '@src/core/providers/cache/CacheProvider'
+import { DefaultClientStack } from '@src/core/client/DefaultClientStack'
+import { GatewayProvider } from '@src/core/providers/gateway/GatewayProvider'
+import { ClientInternals } from '@src/core/client/ClientInternals'
+import { ClientOptions } from '@src/core/client/ClientOptions'
 import { RESTProviderBuilder } from '@src/rest'
 import { CacheProviderBuilder } from '@src/cache'
-import GatewayProviderBuilder from '@src/gateway/GatewayProviderBuilder'
+import { GatewayProviderBuilder } from '@src/gateway/GatewayProviderBuilder'
 import { DiscordooProviders } from '@src/core/Constants'
 import { DiscordooError, DiscordooSnowflake } from '@src/utils'
-import IpcServer from '@src/sharding/ipc/IpcServer'
-import ShardingClientEnvironment from '@src/sharding/interfaces/client/ShardingClientEnvironment'
-import GatewayConnectOptions from '@src/gateway/interfaces/GatewayConnectOptions'
+import { IpcServer } from '@src/sharding/ipc/IpcServer'
+import { ShardingClientEnvironment } from '@src/sharding/interfaces/client/ShardingClientEnvironment'
+import { GatewayConnectOptions } from '@src/gateway/interfaces/GatewayConnectOptions'
 
 /** Entry point for all of Discordoo. Manages modules and events */
-export default class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
+export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
   extends TypedEmitter<ListenerSignature<ClientStack['events']>> {
   /** Token used by this client */
   public token: string

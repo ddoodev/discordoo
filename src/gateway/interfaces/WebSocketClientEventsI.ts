@@ -1,7 +1,7 @@
 import WebSocket from 'ws'
-import WebSocketSendPayload from '@src/gateway/interfaces/WebSocketSendPayload'
+import { WebSocketSendPayload } from '@src/gateway/interfaces/WebSocketSendPayload'
 
-export default interface WebSocketClientEventsI {
+export interface WebSocketClientEventsI {
   WS_SEND_ERROR: (error: Error, data: WebSocketSendPayload) => unknown
   WS_OPEN_ERROR: (error: Error) => unknown
   WS_CLOSE_ERROR: (error: Error) => unknown

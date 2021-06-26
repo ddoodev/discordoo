@@ -1,6 +1,6 @@
 import { GatewayIdentifyProperties, GatewayPresenceUpdateData } from 'discord-api-types/gateway/v8'
 
-export default interface GatewayOptions {
+export interface GatewayOptions {
 
   /** Authentication token. */
   token: string

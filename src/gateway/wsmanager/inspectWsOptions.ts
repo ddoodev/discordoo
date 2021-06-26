@@ -1,11 +1,11 @@
 import { GatewayOptions } from '@src/gateway'
 import { getGateway, range } from '@src/utils'
-import DiscordooError from '@src/utils/DiscordooError'
-import WsOptionsInspectionResult from '@src/gateway/interfaces/WsOptionsInspectionResult'
-import Optional from '@src/utils/Optional'
-import WebSocketUtils from '@src/utils/WebSocketUtils'
+import { DiscordooError } from '@src/utils/DiscordooError'
+import { WsOptionsInspectionResult } from '@src/gateway/interfaces/WsOptionsInspectionResult'
+import { Optional } from '@src/utils/Optional'
+import { WebSocketUtils } from '@src/utils/WebSocketUtils'
 
-export default async function inspectWsOptions(options: GatewayOptions): Promise<WsOptionsInspectionResult> {
+export async function inspectWsOptions(options: GatewayOptions): Promise<WsOptionsInspectionResult> {
 
   const result: Optional<WsOptionsInspectionResult, 'gateway' | 'url'> = {
     gateway: undefined,

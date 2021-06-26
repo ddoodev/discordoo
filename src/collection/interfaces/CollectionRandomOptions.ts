@@ -1,3 +1,3 @@
-export default interface CollectionRandomOptions {
+export interface CollectionRandomOptions {
   unique?: boolean
 }

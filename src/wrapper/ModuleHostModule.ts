@@ -1,7 +1,7 @@
-import {Client, Module} from '@src/core'
+import { Client, Module } from '@src/core'
 
 /** Module which is capable of loading other modules */
-export default class ModuleHostModule implements Module {
+export class ModuleHostModule implements Module {
   id: string | symbol = 'host-module'
   initialized = false
 

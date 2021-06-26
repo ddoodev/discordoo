@@ -1,8 +1,8 @@
-import CacheNamespace from '@src/core/providers/cache/CacheNamespace'
+import { CacheNamespace } from '@src/core/providers/cache/CacheNamespace'
 import { Collection } from '@src/collection'
 
 /** Represents a cache namespace */
-export default class CollectionCacheNamespace<K = unknown, V = unknown> implements CacheNamespace<K, V> {
+export class CollectionCacheNamespace<K = unknown, V = unknown> implements CacheNamespace<K, V> {
   /** Collection used by this cache namespace */
   #data: Collection<K, V> = new Collection<K, V>()
 

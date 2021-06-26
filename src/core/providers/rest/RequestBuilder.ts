@@ -1,8 +1,8 @@
-import RequestOptions from '@src/core/providers/rest/RequestOptions'
-import RESTResponse from '@src/core/providers/rest/RESTResponse'
+import { RequestOptions } from '@src/core/providers/rest/RequestOptions'
+import { RESTResponse } from '@src/core/providers/rest/RESTResponse'
 
 /** Represents a request builder */
-export default interface RequestBuilder {
+export interface RequestBuilder {
   /**
    * Add part(s) to the URI
    * @param paths - paths

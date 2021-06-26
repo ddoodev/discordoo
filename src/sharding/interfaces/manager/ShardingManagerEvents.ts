@@ -1,3 +1,3 @@
-export default interface ShardingManagerEvents {
+export interface ShardingManagerEvents {
   message: () => unknown
 }

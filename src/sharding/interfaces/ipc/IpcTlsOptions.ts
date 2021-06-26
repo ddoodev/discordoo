@@ -1,4 +1,4 @@
-export default interface IpcTlsOptions {
+export interface IpcTlsOptions {
   public?: string
   private?: string
   dhparam?: string

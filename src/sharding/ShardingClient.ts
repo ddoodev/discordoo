@@ -3,12 +3,12 @@ import Cluster from 'cluster'
 import { Worker } from 'worker_threads'
 import * as Process from 'child_process'
 import { PartialShardingModes } from '@src/core/Constants'
-import ShardingClientOptions from '@src/sharding/interfaces/client/ShardingClientOptions'
-import ShardingClientCreateOptions from '@src/sharding/interfaces/client/ShardingClientCreateOptions'
-import IpcClient from '@src/sharding/ipc/IpcClient'
+import { ShardingClientOptions } from '@src/sharding/interfaces/client/ShardingClientOptions'
+import { ShardingClientCreateOptions } from '@src/sharding/interfaces/client/ShardingClientCreateOptions'
+import { IpcClient } from '@src/sharding/ipc/IpcClient'
 import { DiscordooError } from '@src/utils'
 
-export default class ShardingClient extends TypedEmitter {
+export class ShardingClient extends TypedEmitter {
   public id: number
   public ipcId: string
   public ipc: IpcClient

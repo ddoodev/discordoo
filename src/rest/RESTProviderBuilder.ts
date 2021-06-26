@@ -1,11 +1,11 @@
-import RESTOptions from '@src/rest/RESTOptions'
+import { RESTOptions } from '@src/rest/RESTOptions'
 import { Client, RESTProvider } from '@src/core'
-import RESTRequestBuilder from '@src/rest/RESTRequestBuilder'
-import RESTClient from '@src/rest/RESTClient'
+import { RESTRequestBuilder } from '@src/rest/RESTRequestBuilder'
+import { RESTClient } from '@src/rest/RESTClient'
 import { DEFAULT_REST_OPTIONS } from '@src/core/Constants'
 
 /** Builds a RestProvider for {@link Client} */
-export default class RESTProviderBuilder {
+export class RESTProviderBuilder {
   /** {@link RESTClient} used by this builder */
   client: RESTClient
 

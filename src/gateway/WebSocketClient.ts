@@ -3,11 +3,11 @@ import PakoTypes from '@types/pako'
 import WebSocket from 'ws'
 import { TypedEmitter } from 'tiny-typed-emitter'
 
-import WebSocketClientEventsI from '@src/gateway/interfaces/WebSocketClientEventsI'
-import WebSocketSendPayload from '@src/gateway/interfaces/WebSocketSendPayload'
-import GatewayOptions from '@src/gateway/interfaces/GatewayOptions'
-import WebSocketPacket from '@src/gateway/interfaces/WebSocketPacket'
-import WebSocketClientDestroyOptions from '@src/gateway/interfaces/WebSocketClientDestroyOptions'
+import { WebSocketClientEventsI } from '@src/gateway/interfaces/WebSocketClientEventsI'
+import { WebSocketSendPayload } from '@src/gateway/interfaces/WebSocketSendPayload'
+import { GatewayOptions } from '@src/gateway/interfaces/GatewayOptions'
+import { WebSocketPacket } from '@src/gateway/interfaces/WebSocketPacket'
+import { WebSocketClientDestroyOptions } from '@src/gateway/interfaces/WebSocketClientDestroyOptions'
 import {
   WebSocketOPCodes,
   WebSocketClientEvents,
@@ -16,18 +16,18 @@ import {
   WS_HANDSHAKE_TIMEOUT
 } from '@src/core/Constants'
 
-import WebSocketManager from '@src/gateway/WebSocketManager'
-import WebSocketUtils from '@src/utils/WebSocketUtils'
-import DiscordooError from '@src/utils/DiscordooError'
+import { WebSocketManager } from '@src/gateway/WebSocketManager'
+import { WebSocketUtils } from '@src/utils/WebSocketUtils'
+import { DiscordooError } from '@src/utils/DiscordooError'
 
-import identify from '@src/gateway/wsclient/identify'
-import open from '@src/gateway/wsclient/events/open'
-import error from '@src/gateway/wsclient/events/error'
-import close from '@src/gateway/wsclient/events/close'
-import message from '@src/gateway/wsclient/events/message'
-import packet from '@src/gateway/wsclient/events/packet'
+import { identify } from '@src/gateway/wsclient/identify'
+import { open } from '@src/gateway/wsclient/events/open'
+import { error } from '@src/gateway/wsclient/events/error'
+import { close } from '@src/gateway/wsclient/events/close'
+import { message } from '@src/gateway/wsclient/events/message'
+import { packet } from '@src/gateway/wsclient/events/packet'
 
-export default class WebSocketClient extends TypedEmitter<WebSocketClientEventsI> {
+export class WebSocketClient extends TypedEmitter<WebSocketClientEventsI> {
   private socket?: WebSocket
   private readonly options: GatewayOptions
   private inflate?: PakoTypes.Inflate

@@ -1,4 +1,4 @@
-import idToDate from '../../src/utils/idToDate'
+import { idToDate } from '../../src/utils'
 
 test('idToDate', () => {
   expect(

@@ -1,3 +1,3 @@
-export default interface ShardingClientCreateOptions {
+export interface ShardingClientCreateOptions {
   timeout?: number
 }

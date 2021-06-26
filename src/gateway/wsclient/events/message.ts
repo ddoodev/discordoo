@@ -1,13 +1,13 @@
 // @ts-ignore
 import PakoTypes from '@types/pako'
-import WebSocketClient from '@src/gateway/WebSocketClient'
+import { WebSocketClient } from '@src/gateway/WebSocketClient'
 import WebSocket from 'ws'
-import WebSocketUtils from '@src/utils/WebSocketUtils'
+import { WebSocketUtils } from '@src/utils/WebSocketUtils'
 import { GatewayOptions } from '@src/gateway'
-import WebSocketPacket from '@src/gateway/interfaces/WebSocketPacket'
+import { WebSocketPacket } from '@src/gateway/interfaces/WebSocketPacket'
 
 // handles websocket raw messages, decompressing/decoding it to normal javascript objects
-export default function message(
+export function message(
   client: WebSocketClient,
   event: WebSocket.MessageEvent,
   options: GatewayOptions,

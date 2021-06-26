@@ -1,5 +1,5 @@
 /** Client events */
-export default interface ClientEventsHandlers {
+export interface ClientEventsHandlers {
 
   /** Emitted once the client is ready */
   ready: () => unknown

@@ -1,5 +1,5 @@
-import {GatewayReceivePayload} from 'discord-api-types'
+import { GatewayReceivePayload } from 'discord-api-types'
 
-export default interface GatewayProviderEvents {
+export interface GatewayProviderEvents {
   message: (data: GatewayReceivePayload) => any
 }

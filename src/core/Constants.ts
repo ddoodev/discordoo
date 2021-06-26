@@ -1,6 +1,6 @@
 import { RESTOptions } from '@src/rest'
 import { version } from '@root/package.json'
-import WebSocketUtils from '@src/utils/WebSocketUtils'
+import { WebSocketUtils } from '@src/utils/WebSocketUtils'
 import { GatewayOptions } from '@src/gateway'
 
 export const RAW_IPC_EVENT = '__DDOO__.MESSAGE'

@@ -1,3 +1,3 @@
-export default interface ProcessesShardingOptions {
+export interface ProcessesShardingOptions {
   idk: string
 }

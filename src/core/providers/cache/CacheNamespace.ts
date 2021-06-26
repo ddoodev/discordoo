@@ -2,7 +2,7 @@
  * Represents a cache namespace. Custom caching modules must implement it
  * @note Some implementations may use remote cache, e.g. Redis, so all the methods are async
  */
-export default interface CacheNamespace<K = unknown, V = unknown> {
+export interface CacheNamespace<K = unknown, V = unknown> {
   /**
    * Get value from key
    * @param key - key to get

@@ -1,7 +1,7 @@
-import Client from '@src/core/Client'
+import { Client } from '@src/core/Client'
 
 /** Represents a module */
-export default interface Module {
+export interface Module {
   /** Whether the module was initialized */
   initialized: boolean
   /**

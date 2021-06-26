@@ -1,7 +1,7 @@
-import IpcClientTlsOptions from '@src/sharding/interfaces/ipc/IpcClientTlsOptions'
-import RawIpcConfig from '@src/sharding/interfaces/ipc/RawIpcConfig'
+import { IpcClientTlsOptions } from '@src/sharding/interfaces/ipc/IpcClientTlsOptions'
+import { RawIpcConfig } from '@src/sharding/interfaces/ipc/RawIpcConfig'
 
-export default interface IpcClientOptions {
+export interface IpcClientOptions {
   tls?: IpcClientTlsOptions
   config?: RawIpcConfig
   shardId: number

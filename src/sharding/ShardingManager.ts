@@ -1,20 +1,20 @@
 import { TypedEmitter } from 'tiny-typed-emitter'
-import ShardingManagerEvents from '@src/sharding/interfaces/manager/ShardingManagerEvents'
+import { ShardingManagerEvents } from '@src/sharding/interfaces/manager/ShardingManagerEvents'
 import { PartialShardingModes, ShardingManagerTypes, ShardingModes } from '@src/core/Constants'
-import ShardingManagerOptions from '@src/sharding/interfaces/manager/options/ShardingManagerOptions'
+import { ShardingManagerOptions } from '@src/sharding/interfaces/manager/options/ShardingManagerOptions'
 import { DiscordooError, DiscordooSnowflake } from '@src/utils'
 import { isMaster as isMainCluster } from 'cluster'
 import { isMainThread } from 'worker_threads'
 import { Collection } from '@src/collection'
-import ShardingClient from '@src/sharding/ShardingClient'
-import ShardListResolvable from '@src/core/ShardListResolvable'
+import { ShardingClient } from '@src/sharding/ShardingClient'
+import { ShardListResolvable } from '@src/core/ShardListResolvable'
 const isMainProcess = process.send === undefined
 
 const SpawningLoopError = new DiscordooError(
   'ShardingManager', 'spawning loop detected. sharding manager spawned in the shard. aborting'
 )
 
-export default class ShardingManager extends TypedEmitter<ShardingManagerEvents> {
+export class ShardingManager extends TypedEmitter<ShardingManagerEvents> {
   public type: ShardingManagerTypes
   public mode: ShardingModes
   public options: ShardingManagerOptions

@@ -1,3 +1,3 @@
-export default interface WorkersShardingOptions {
+export interface WorkersShardingOptions {
   idk: string
 }

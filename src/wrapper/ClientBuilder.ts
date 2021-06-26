@@ -1,7 +1,7 @@
 import { CacheProvider, Client, DefaultClientStack, GatewayProvider, RESTProvider } from '@src/core'
-import ClientOptions from '@src/core/client/ClientOptions'
+import { ClientOptions } from '@src/core/client/ClientOptions'
 
-export default class ClientBuilder<Stack extends DefaultClientStack = DefaultClientStack> {
+export class ClientBuilder<Stack extends DefaultClientStack = DefaultClientStack> {
   public client: Client<Stack>
 
   constructor(token: string, options?: ClientOptions) {

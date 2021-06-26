@@ -1,14 +1,14 @@
-import WebSocketUtils from '@src/utils/WebSocketUtils'
-import WebSocketClient from '@src/gateway/WebSocketClient'
+import { WebSocketUtils } from '@src/utils/WebSocketUtils'
+import { WebSocketClient } from '@src/gateway/WebSocketClient'
 import {
   WebSocketOPCodes,
   WebSocketClientEvents,
   WebSocketClientStates
 } from '@src/core/Constants'
-import WebSocketPacket from '@src/gateway/interfaces/WebSocketPacket'
-import wait from '@src/utils/wait'
+import { WebSocketPacket } from '@src/gateway/interfaces/WebSocketPacket'
+import { wait } from '@src/utils/wait'
 
-export default function packet(
+export function packet(
   client: WebSocketClient,
   // it should have been GatewayDispatchPayload & GatewayReceivePayload, but IntelliJ says SYS LOAD 666%
   // https://cdn.discordapp.com/attachments/531549268033404928/850888918811017256/2021-06-05_22-44-36.mp4

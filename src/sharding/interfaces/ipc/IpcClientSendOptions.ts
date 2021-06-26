@@ -1,4 +1,4 @@
-export default interface IpcClientSendOptions {
+export interface IpcClientSendOptions {
   waitResponse?: boolean
   connection?: any
 }

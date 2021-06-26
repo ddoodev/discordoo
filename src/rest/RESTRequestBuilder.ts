@@ -1,6 +1,6 @@
 import { RequestBuilder, RequestOptions, RESTResponse } from '@src/core'
 import { URLSearchParams } from 'url'
-import RESTOptions from '@src/rest/RESTOptions'
+import { RESTOptions } from '@src/rest/RESTOptions'
 import fetch from 'node-fetch'
 import { API_ENDPOINT, DEFAULT_REST_OPTIONS } from '@src/core/Constants'
 
@@ -8,7 +8,7 @@ import { API_ENDPOINT, DEFAULT_REST_OPTIONS } from '@src/core/Constants'
  * Create requests to Discord
  * @internal
  */
-export default class RESTRequestBuilder implements RequestBuilder {
+export class RESTRequestBuilder implements RequestBuilder {
   /** URI parts */
   private stack: string[] = []
   /** Query to be built */

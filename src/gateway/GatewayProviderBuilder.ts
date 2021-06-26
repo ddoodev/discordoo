@@ -1,9 +1,9 @@
-import GatewayProvider from '@src/core/providers/gateway/GatewayProvider'
+import { GatewayProvider } from '@src/core/providers/gateway/GatewayProvider'
 import PartialGatewayOptions from '@src/gateway/interfaces/PartialGatewayOptions'
 import { Client } from '@src/core'
-import WSProvider from '@src/gateway/WSProvider'
+import { WSProvider } from '@src/gateway/WSProvider'
 
-export default class GatewayProviderBuilder {
+export class GatewayProviderBuilder {
   public options: PartialGatewayOptions | undefined
 
   constructor(options?: PartialGatewayOptions) {

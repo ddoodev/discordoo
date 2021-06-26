@@ -1,3 +1,3 @@
-export default interface CollectionEqualOptions {
+export interface CollectionEqualOptions {
   deep?: boolean
 }

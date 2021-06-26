@@ -1,3 +1,3 @@
-export default interface ClustersShardingOptions {
+export interface ClustersShardingOptions {
   idk: string
 }

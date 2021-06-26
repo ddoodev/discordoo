@@ -1,3 +1,3 @@
-export default interface CollectionFilterOptions {
+export interface CollectionFilterOptions {
   return?: 'collection' | 'map' | 'array'
 }

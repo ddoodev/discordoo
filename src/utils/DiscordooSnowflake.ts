@@ -1,5 +1,5 @@
-import DeconstructedDiscordooSnowflake from '@src/interfaces/utils/DeconstructedSnowflake'
-import DiscordooError from '@src/utils/DiscordooError'
+import { DeconstructedDiscordooSnowflake } from '@src/interfaces/utils/DeconstructedSnowflake'
+import { DiscordooError } from '@src/utils/DiscordooError'
 
 const EPOCH = 1609459200000 // 2021-01-01T00:00:00.000Z
 let INCREMENT = 0
@@ -8,7 +8,7 @@ let INCREMENT = 0
  * DiscordooSnowflake is a custom twitter snowflake used to identify ipc connections and messages.
  * */
 
-export default class DiscordooSnowflake {
+export class DiscordooSnowflake {
   // used to identify sharding managers in snowflakes
   public static readonly SHARDING_MANAGER_ID = 1_111_111_111
 

@@ -1,5 +1,5 @@
 /** Request options */
-export default interface RequestOptions {
+export interface RequestOptions {
   /** Headers */
   headers?: Record<string, any>
   /** Body */

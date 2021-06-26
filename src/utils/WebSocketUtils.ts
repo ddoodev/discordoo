@@ -22,7 +22,7 @@ try {
 
 const decoder = new TextDecoder()
 
-export default class WebSocketUtils {
+export class WebSocketUtils {
   static pack = pack
 
   static encoding = encoding

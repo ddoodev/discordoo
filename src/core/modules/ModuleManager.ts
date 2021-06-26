@@ -1,12 +1,12 @@
-import Client from '@src/core/Client'
+import { Client } from '@src/core/Client'
 import { Collection } from '@src/collection'
-import Module from '@src/core/modules/Module'
+import { Module } from '@src/core/modules/Module'
 
 /**
  * Module manager for Client
  * Manages module loadment and their "injection"
  */
-export default class ModuleManager {
+export class ModuleManager {
   /**
    * Modules loaded by this manager
    */

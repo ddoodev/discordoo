@@ -1,8 +1,8 @@
 import { CacheProvider, Client } from '@src/core'
-import CacheManager from '@src/cache/CacheManager'
+import { CacheManager } from '@src/cache/CacheManager'
 
 /** An adapter of {@link CacheManager} for {@link Client} */
-export default class CacheProviderBuilder {
+export class CacheProviderBuilder {
   /** Cache manager, adapted by this adapter */
   manager: CacheManager = new CacheManager()
 

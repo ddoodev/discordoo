@@ -1,9 +1,9 @@
-import ShardingClientEnvironment from '@src/sharding/interfaces/client/ShardingClientEnvironment'
+import { ShardingClientEnvironment } from '@src/sharding/interfaces/client/ShardingClientEnvironment'
 import { PartialShardingModes } from '@src/core/Constants'
-import IpcClientTlsOptions from '@src/sharding/interfaces/ipc/IpcClientTlsOptions'
-import RawIpcConfig from '@src/sharding/interfaces/ipc/RawIpcConfig'
+import { IpcClientTlsOptions } from '@src/sharding/interfaces/ipc/IpcClientTlsOptions'
+import { RawIpcConfig } from '@src/sharding/interfaces/ipc/RawIpcConfig'
 
-export default interface ShardingClientOptions {
+export interface ShardingClientOptions {
   env: ShardingClientEnvironment
   ipc?: {
     tls?: IpcClientTlsOptions

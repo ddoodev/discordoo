@@ -1,12 +1,12 @@
 import { Collection } from '@src/collection'
-import CollectionCacheNamespace from '@src/cache/CollectionCacheNamespace'
+import { CollectionCacheNamespace } from '@src/cache/CollectionCacheNamespace'
 
 /**
  * Represents a cache manager
  *
  * Used for cache namespaces fetching
  * */
-export default class CacheManager {
+export class CacheManager {
   /** Namespaces controlled by this manager */
   caches: Collection<string, CollectionCacheNamespace> = new Collection()
 

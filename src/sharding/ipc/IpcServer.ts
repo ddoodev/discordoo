@@ -1,14 +1,14 @@
 import { TypedEmitter } from 'tiny-typed-emitter'
-import IpcServerOptions from '@src/sharding/interfaces/ipc/IpcServerOptions'
+import { IpcServerOptions } from '@src/sharding/interfaces/ipc/IpcServerOptions'
 import { IPC as RawIpc, server as RawIpcServer } from 'node-ipc'
 import { Collection } from '@src/collection'
 import { IpcEvents, IpcOPCodes, RAW_IPC_EVENT } from '@src/core/Constants'
 import { IpcPacket } from '@src/sharding'
 import { DiscordooError, DiscordooSnowflake } from '@src/utils'
-import IpcServerSendOptions from '@src/sharding/interfaces/ipc/IpcServerSendOptions'
+import { IpcServerSendOptions } from '@src/sharding/interfaces/ipc/IpcServerSendOptions'
 import { IpcDispatchPacket, IpcHelloPacket, IpcIdentifyPacket } from '@src/sharding/interfaces/ipc/IpcPackets'
 
-export default class IpcServer extends TypedEmitter {
+export class IpcServer extends TypedEmitter {
   private bucket: Collection<string, any> = new Collection()
   private managerSocket: any
   private readonly managerId: string

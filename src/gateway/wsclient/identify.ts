@@ -1,10 +1,10 @@
-import WebSocketClient from '@src/gateway/WebSocketClient'
-import IdentifyOptions from '@src/gateway/interfaces/IdentifyOptions'
+import { WebSocketClient } from '@src/gateway/WebSocketClient'
+import { IdentifyOptions } from '@src/gateway/interfaces/IdentifyOptions'
 import { WebSocketOPCodes, WebSocketClientStates } from '@src/core/Constants'
 import { GatewayIdentify, GatewayIdentifyData, GatewayResume, GatewayResumeData } from 'discord-api-types'
 
 // creates discord api identify payload
-export default function identify(
+export function identify(
   client: WebSocketClient,
   options: IdentifyOptions
 ): GatewayIdentify | GatewayResume {

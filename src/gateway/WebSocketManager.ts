@@ -1,16 +1,16 @@
 import { TypedEmitter } from 'tiny-typed-emitter'
 import { Collection } from '@src/collection'
 import { RESTGetAPIGatewayBotResult } from 'discord-api-types'
-import WebSocketManagerEvents from '@src/gateway/interfaces/WebSocketManagerEvents'
-import GatewayOptions from '@src/gateway/interfaces/GatewayOptions'
-import Optional from '@src/utils/Optional'
-import WebSocketClient from '@src/gateway/WebSocketClient'
-import wait from '@src/utils/wait'
+import { WebSocketManagerEvents } from '@src/gateway/interfaces/WebSocketManagerEvents'
+import { GatewayOptions } from '@src/gateway/interfaces/GatewayOptions'
+import { Optional } from '@src/utils/Optional'
+import { WebSocketClient } from '@src/gateway/WebSocketClient'
+import { wait } from '@src/utils/wait'
 import { DEFAULT_WS_OPTIONS, WebSocketClientEvents, WebSocketManagerStates } from '@src/core/Constants'
-import inspectWsOptions from '@src/gateway/wsmanager/inspectWsOptions'
-import GatewayConnectOptions from '@src/gateway/interfaces/GatewayConnectOptions'
+import { inspectWsOptions } from '@src/gateway/wsmanager/inspectWsOptions'
+import { GatewayConnectOptions } from '@src/gateway/interfaces/GatewayConnectOptions'
 
-export default class WebSocketManager extends TypedEmitter<WebSocketManagerEvents> {
+export class WebSocketManager extends TypedEmitter<WebSocketManagerEvents> {
   public readonly options: GatewayOptions
   private gateway?: RESTGetAPIGatewayBotResult
   private status: WebSocketManagerStates

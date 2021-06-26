@@ -1,4 +1,4 @@
-export default interface WebSocketManagerLimits {
+export interface WebSocketManagerLimits {
   events: {
     emittedLastSecond: number
     emittedThisSecond: number

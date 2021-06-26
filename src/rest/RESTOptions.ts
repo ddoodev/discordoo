@@ -1,5 +1,5 @@
 /** Options for rest */
-export default interface RESTOptions {
+export interface RESTOptions {
   /** API version to use */
   v: number
   /**
