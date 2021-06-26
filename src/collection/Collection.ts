@@ -109,7 +109,7 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
         break
     }
 
-    for (const [ value, key ] of this.entries()) {
+    for (const [ key, value ] of this.entries()) {
       predicate(value, key, this)
     }
 
