@@ -14,7 +14,7 @@ try {
 type equalFn = (value: any, other: any) => boolean
 
 /** An utility data structure used within the library */
-export default class Collection<K = unknown, V = unknown> extends Map<K, V> {
+export class Collection<K = unknown, V = unknown> extends Map<K, V> {
 
   /*
   * Returns boolean value whether the collection is empty or not.
