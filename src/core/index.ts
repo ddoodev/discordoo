@@ -1,4 +1,3 @@
-import Base from '@src/core/structures/Base'
 import CacheProvider from '@src/core/providers/cache/CacheProvider'
 import CacheNamespace from '@src/core/providers/cache/CacheNamespace'
 import Client from '@src/core/Client'
@@ -16,7 +15,6 @@ import DefaultClientStack from '@src/core/client/DefaultClientStack'
 import GatewayProviderEvents from '@src/core/providers/gateway/GatewayProviderEvents'
 
 export {
-  Base,
   CacheProvider,
   CacheNamespace,
   Client,
