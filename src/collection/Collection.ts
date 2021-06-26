@@ -3,7 +3,7 @@ import { CollectionEqualOptions } from '@src/collection/interfaces/CollectionEqu
 import { CollectionFilterOptions } from '@src/collection/interfaces/CollectionFilterOptions'
 import { CollectionRandomOptions } from '@src/collection/interfaces/CollectionRandomOptions'
 import { swap } from '@src/utils/swap'
-import { intoChunks } from "@src/utils/intoChunks"
+import { intoChunks } from '@src/utils/intoChunks'
 
 let lodashIsEqual: equalFn
 
@@ -163,11 +163,11 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
     const merged = this.clone()
 
     for (const collection of collections) {
-      if (!collection) {
+      if (!collection || !(collection instanceof Collection)) {
         continue
       }
 
-      for (const [key, value] of collection) {
+      for (const [ key, value ] of collection) {
         merged.set(key, value)
       }
     }
@@ -179,7 +179,7 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
   * Checks if any of values value satisfies the condition.
   * */
   some(fn: (v: V, k: K) => boolean): boolean {
-    for (const [key, value] of this.entries()) {
+    for (const [ key, value ] of this.entries()) {
       if (fn(value, key)) {
         return true
       }
@@ -192,7 +192,7 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
   * Checks if all values satisfy the condition.
   * */
   every(fn: (v: V, k: K) => boolean): boolean {
-    for (const [key, value] of this.entries()) {
+    for (const [ key, value ] of this.entries()) {
       if (!fn(value, key)) {
         return false
       }
@@ -211,7 +211,7 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
       return this.values().next().value
     }
 
-    const values = [ ...this.values( )]
+    const values = [ ...this.values() ]
 
     amount = Math.min(values.length, amount)
 

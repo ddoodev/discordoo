@@ -1,21 +1,23 @@
 name: Documentation generation
 
 on:
-  - push
+  push:
+    branches:
+      - master
 
 jobs:
   docs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
         with:
           persist-credentials: false
           fetch-depth: 0
+      - uses: actions/setup-python@v2
+        with:
           python-version: '3.7'
       - name: Clone guide repo
-        run: |
-          git clone https://github.com/Discordoo/discordoo-guide docs
+        run: git clone https://github.com/Discordoo/discordoo-guide docs
       - name: Install required packages
         run: |
           npm ci
