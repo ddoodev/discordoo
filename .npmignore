@@ -12,6 +12,7 @@ dist/tsconfig.tsbuildinfo
 types/tsconfig.tsbuildinfo
 
 # Development files
+dist/on-the-fly
 .eslintignore
 .eslintrc.json
 commitlint.config.js
