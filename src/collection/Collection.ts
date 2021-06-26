@@ -211,7 +211,7 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
       return this.values().next().value
     }
 
-    const values = [...this.values()]
+    const values = [ ...this.values( )]
 
     amount = Math.min(values.length, amount)
 
@@ -228,7 +228,7 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
       return this.keys().next().value
     }
 
-    const keys = [...this.keys()]
+    const keys = [ ...this.keys() ]
 
     amount = Math.min(keys.length, amount)
 
@@ -241,7 +241,7 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
   last(): V | undefined
   last(amount?: number): V[]
   last(amount?: number): V | V[] | undefined {
-    const values = [...this.values()]
+    const values = [ ...this.values() ]
 
     if (!amount || amount <= 1) {
       return values[values.length - 1]
@@ -258,7 +258,7 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
   lastKey(): K | undefined
   lastKey(amount?: number): K[]
   lastKey(amount?: number): K | K[] | undefined {
-    const keys = [...this.keys()]
+    const keys = [ ...this.keys() ]
 
     if (!amount || amount <= 1) {
       return keys[keys.length - 1]
@@ -273,7 +273,7 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
   * Returns a collection chunked into several collections.
   * */
   intoChunks(amount?: number): Collection<K, V>[] {
-    return intoChunks<[K, V]>([...this.entries()], amount)
+    return intoChunks<[K, V]>([ ...this.entries() ], amount)
       .map(e => new Collection(e))
   }
 }
