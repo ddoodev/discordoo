@@ -3,17 +3,29 @@ import { CollectionEqualOptions } from '@src/collection/interfaces/CollectionEqu
 import { CollectionFilterOptions } from '@src/collection/interfaces/CollectionFilterOptions'
 import { CollectionRandomOptions } from '@src/collection/interfaces/CollectionRandomOptions'
 import { swap } from '@src/utils/swap'
+import { intoChunks } from "@src/utils/intoChunks"
 
-let lodashIsEqual
+let lodashIsEqual: equalFn
 
 try {
   lodashIsEqual = require('lodash/isEqual')
 } catch (e) {} // eslint-disable-line no-empty
 
-/** An utility data structure used within the library */
-export class Collection<K = unknown, V = unknown> extends Map<K, V> {
+type equalFn = (value: any, other: any) => boolean
 
-  /** Get a random element from collection (can return several identical results if the amount is specified) */
+/** An utility data structure used within the library */
+export default class Collection<K = unknown, V = unknown> extends Map<K, V> {
+
+  /*
+  * Returns boolean value whether the collection is empty or not.
+  * */
+  get empty(): boolean {
+    return this.size === 0
+  }
+
+  /**
+   * Gets a random element from collection (can return several identical results if the amount is specified).
+   * */
   random(): V
   random(amount: number, options?: CollectionRandomOptions): V[]
   random(amount?: number, options?: CollectionRandomOptions): V | V[]
@@ -47,7 +59,7 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
     } else {
       const random: number[] = []
 
-      // O(unknown) generation algorithm. works much faster in small collections, but much worse in big
+      // O(unknown) generation algorithm. works much faster in small collections, but much worse in big.
       // 1. gen
       // 2. if not unique, start from 1. else
       // 3. push to random numbers array
@@ -67,7 +79,7 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
   }
 
   /**
-   * Filter out the elements which don't meet requirements
+   * Filters out the elements which don't meet requirements.
    */
   filter<T>(
     filter: (value: V, key: K, collection: Collection<K, V>) => unknown,
@@ -103,7 +115,7 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
   }
 
   /**
-   * Execute a function on each of elements of map
+   * Executes a function on each of elements of map.
    * @param predicate - function to use
    */
   forEach(predicate: (value: V, key: K, collection: Collection<K, V>) => unknown) {
@@ -112,13 +124,13 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
     })
   }
 
-  /** Create a new collection based on this one */
+  /** Creates a new collection based on this one. */
   clone(): Collection<K, V> {
     return new Collection<K, V>([ ...this ])
   }
 
   /**
-   * Check if two collections are equal
+   * Checks if two collections are equal.
    * @param {Collection} collection - collection to compare to
    * @param {CollectionEqualOptions} options - options to use
    */
@@ -126,7 +138,7 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
     if (this.size !== collection?.size) return false
     if (this === collection) return true
 
-    let equal = (arg1: any, arg2: any) => arg1 === arg2
+    let equal: equalFn = (arg1: any, arg2: any) => arg1 === arg2
 
     if (options.deep) {
       if (!lodashIsEqual) throw new DiscordooError('Collection#equal', 'cannot perform deep equal without lodash installed')
@@ -141,5 +153,128 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
     }
 
     return true
+  }
+
+
+  /*
+  * Creates and returns merged collection.
+  * */
+  concat(collections: Collection<K, V>[]): Collection<K, V> {
+    const merged = this.clone()
+
+    for (const collection of collections) {
+      if (!collection) {
+        continue
+      }
+
+      for (const [key, value] of collection) {
+        merged.set(key, value)
+      }
+    }
+
+    return merged
+  }
+
+  /*
+  * Checks if any of values value satisfies the condition.
+  * */
+  some(fn: (v: V, k: K) => boolean): boolean
+  some(fn: (v: V, k: K) => boolean): boolean {
+    for (const [key, value] of this.entries()) {
+      if (fn(value, key)) {
+        return true
+      }
+    }
+
+    return false
+  }
+
+  /*
+  * Checks if all values satisfy the condition.
+  * */
+  every(fn: (v: V, k: K) => boolean): boolean {
+    for (const [key, value] of this.entries()) {
+      if (!fn(value, key)) {
+        return false
+      }
+    }
+
+    return true
+  }
+
+  /*
+  * Returns first N collection values.
+  * */
+  first(): V | undefined
+  first(amount?: number): V[]
+  first(amount?: number): V | V[] | undefined {
+    if (!amount || amount <= 1) {
+      return this.values().next().value
+    }
+
+    const values = [...this.values()]
+
+    amount = Math.min(values.length, amount)
+
+    return values.slice(0, amount)
+  }
+
+  /*
+  * Returns first N collection keys.
+  * */
+  firstKey(): K | undefined
+  firstKey(amount?: number): K[]
+  firstKey(amount?: number): K | K[] | undefined {
+    if (!amount || amount <= 1) {
+      return this.keys().next().value
+    }
+
+    const keys = [...this.keys()]
+
+    amount = Math.min(keys.length, amount)
+
+    return keys.slice(0, amount)
+  }
+
+  /*
+  * Returns last N collection values.
+  * */
+  last(): V | undefined
+  last(amount?: number): V[]
+  last(amount?: number): V | V[] | undefined {
+    const values = [...this.values()]
+
+    if (!amount || amount <= 1) {
+      return values[values.length - 1]
+    }
+
+    amount = Math.min(values.length, amount)
+
+    return values.slice(-amount)
+  }
+
+  /*
+  * Returns last N collection keys.
+  * */
+  lastKey(): K | undefined
+  lastKey(amount?: number): K[]
+  lastKey(amount?: number): K | K[] | undefined {
+    const keys = [...this.keys()]
+
+    if (!amount || amount <= 1) {
+      return keys[keys.length - 1]
+    }
+
+    amount = Math.min(keys.length, amount)
+
+    return keys.slice(-amount)
+  }
+
+  /*
+  * Returns a collection chunked into several collections.
+  * */
+  intoChunks(amount?: number): Collection<K, V>[] {
+    return intoChunks<[K, V]>([...this.entries()], amount)
+      .map(e => new Collection(e))
   }
 }
