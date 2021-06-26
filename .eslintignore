@@ -1,2 +1,12 @@
+# IDEs
+.idea
+.vscode
+
+# Build
 dist
+types
+
+# Other
+docs
 theme
+.github
