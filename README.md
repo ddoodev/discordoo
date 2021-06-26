@@ -31,7 +31,7 @@ Most of the stuff described here is not done yet, and we are just planning to im
 ## About
 Discordoo is a Discord API library interface. It was built from ground-up to provide better APIs, both internal and external.
 
-In general, Discordoo was designed to be completely modular. Each thing, such as Gateway provider or
+In general, Discordoo was designed to be completely modular. Each thing, such as gateway provider or
 cache storage can be replaced with anything you have written/installed from npm.
 
 Moreover, we designed Discordoo to be easy to use. For example, you don't need to use non-sense
