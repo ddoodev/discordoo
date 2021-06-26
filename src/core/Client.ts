@@ -1,6 +1,4 @@
 import { ListenerSignature, TypedEmitter } from 'tiny-typed-emitter'
-import { ModuleManager } from '@src/core/modules/ModuleManager'
-import { Module } from '@src/core/modules/Module'
 import { RESTProvider } from '@src/core/providers/rest/RESTProvider'
 import { CacheProvider } from '@src/core/providers/cache/CacheProvider'
 import { DefaultClientStack } from '@src/core/client/DefaultClientStack'
@@ -21,9 +19,6 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
   extends TypedEmitter<ListenerSignature<ClientStack['events']>> {
   /** Token used by this client */
   public token: string
-
-  /** Module manager of this client */
-  public modules: ModuleManager = new ModuleManager(this)
 
   /** Internal things used by this client */
   public internals: ClientInternals<ClientStack>
@@ -84,32 +79,6 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
       ipc,
       env,
     }
-
-    if (this.options.root) this.use(this.options.root)
-  }
-
-  /**
-   * Get a module. Alias for module(id).
-   * @param id - module id
-   */
-  m(id: string | symbol): Module | null {
-    return this.module(id)
-  }
-
-  /**
-   * Get a module
-   * @param id - module id
-   */
-  module(id: string | symbol): Module | null {
-    return this.modules.getModule(id) ?? null
-  }
-
-  /**
-   * Create a new module load group
-   * @param modules - modules in the group
-   */
-  use(...modules: Module[]) {
-    this.modules.use(...modules)
   }
 
   /**

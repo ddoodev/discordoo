@@ -11,10 +11,10 @@ export interface ClientInternals<ClientStack extends DefaultClientStack = Defaul
   /** RESTProvider used by this client */
   rest: RESTProvider<ClientStack['rest']>
 
-  /** CacheProvider used by this module */
+  /** CacheProvider used by this client */
   cache: CacheProvider<ClientStack['cache']>
 
-  /** GatewayProvider used by this module */
+  /** GatewayProvider used by this client */
   gateway: GatewayProvider<ClientStack['gateway']>
 
   env: ShardingClientEnvironment

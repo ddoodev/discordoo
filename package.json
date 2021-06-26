@@ -8,7 +8,7 @@
     "test": "jest",
     "test:fly": "node dist/on-the-fly/index.js",
     "build": "tsc -p tsconfig.json && tscpaths -p tsconfig.tspaths.json -s ./src -o ./dist",
-    "docs": "typedoc && node ./node_modules/@discordoo/tapok/src/index.js docs/docs/api",
+    "docs": "typedoc && npx tapok docs/docs/api",
     "prepublish": "npm run build"
   },
   "keywords": [],
