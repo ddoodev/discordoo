@@ -178,7 +178,6 @@ export default class Collection<K = unknown, V = unknown> extends Map<K, V> {
   /*
   * Checks if any of values value satisfies the condition.
   * */
-  some(fn: (v: V, k: K) => boolean): boolean
   some(fn: (v: V, k: K) => boolean): boolean {
     for (const [key, value] of this.entries()) {
       if (fn(value, key)) {
