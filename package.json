@@ -1,6 +1,6 @@
 {
   "name": "discordoo",
-  "version": "1.0.0",
+  "version": "0.6.1",
   "description": "Discord bots. Simplified and boosted",
   "scripts": {
     "lint": "eslint tests src",
