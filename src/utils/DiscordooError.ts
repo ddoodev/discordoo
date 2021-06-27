@@ -4,7 +4,7 @@ import { inspect } from 'util'
 export class DiscordooError extends Error {
   public name = 'DiscordooError'
 
-  // @ts-ignore
+  // @ts-expect-error
   constructor(source?: string, ...args: any[]) {
     if (source) args.unshift(`[${source}]`)
 
