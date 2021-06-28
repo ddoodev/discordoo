@@ -1,3 +1,7 @@
+import Process from 'child_process'
+
 export interface ProcessesShardingOptions {
-  idk: string
+  shardsPerProcess?: number
+  env?: Record<string, string>
+  forkOptions?: Omit<Process.ForkOptions, 'env'>
 }

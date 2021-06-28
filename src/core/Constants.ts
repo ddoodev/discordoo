@@ -29,7 +29,7 @@ export enum IpcEvents {
   PARTIAL_RESTARTING = 'PARTIAL_RESTARTING', // restart specified shards
 }
 
-export enum ShardingModes {
+export const enum ShardingModes {
   PROCESSES = 'processes',
   WORKERS = 'workers',
   CLUSTERS = 'clusters',

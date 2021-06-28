@@ -1,3 +1,7 @@
+import { WorkerOptions } from 'worker_threads'
+
 export interface WorkersShardingOptions {
-  idk: string
+  shardsPerWorker?: number
+  env?: Record<string, string>
+  spawnOptions?: Omit<WorkerOptions, 'env'>
 }

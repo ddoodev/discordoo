@@ -49,10 +49,12 @@ export class IpcServer extends TypedEmitter {
     let promise
     return new Promise((resolve, reject) => {
       promise = { res: resolve, rej: reject }
+
       promise.timeout = setTimeout(() => {
         this.bucket.delete('__CONNECTION_PROMISE__')
         reject(new DiscordooError('IpcServer#serve', 'connection to sharding manager timed out.'))
       }, 30000)
+
       this.bucket.set('__CONNECTION_PROMISE__', promise)
     })
   }

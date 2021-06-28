@@ -7,7 +7,7 @@ import { ShardListResolvable } from '@src/core/ShardListResolvable'
 
 export interface ShardingManagerOptions {
   mode: ShardingModes
-  type: ShardingManagerTypes
+  type?: ShardingManagerTypes
   shards: ShardListResolvable
   file: string
 

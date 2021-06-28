@@ -1,3 +1,4 @@
 export interface ClustersShardingOptions {
-  idk: string
+  shardsPerCluster?: number
+  env?: Record<string, string>
 }

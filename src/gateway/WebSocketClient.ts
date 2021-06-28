@@ -68,17 +68,26 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsI> {
       }
 
       // create decompressing context if developer wants use compression between us and discord
-      if (this.manager.options.compress) {
+      if (this.options.compress) {
         if (!WebSocketUtils.pako) {
-          reject(new DiscordooError(
+          throw new DiscordooError(
             'WebSocketShard ' + this.id,
             'gateway compression requires pako module installed. npm i pako@1.0.11'
-          ))
+          )
         } else {
           this.inflate = new WebSocketUtils.pako.Inflate({
             chunkSize: 128 * 1024
           })
         }
+      }
+
+      // cannot use etf encoding without erlpack
+      if (this.options.encoding === 'etf' && WebSocketUtils.encoding !== 'etf') {
+        throw new DiscordooError(
+          'WebSocketShard ' + this.id,
+          'cannot use etf encoding without erlpack installed.'
+          + '(if you are using worker threads sharding, node.js cannot use external modules inside workers)'
+        )
       }
 
       const cleanup = () => {
@@ -291,6 +300,8 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsI> {
     // clean listeners
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     this.socket.onmessage = this.socket.onclose = this.socket.onopen = this.socket.onerror = () => {}
+
+    this.socket.terminate()
   }
 
 }

@@ -2,12 +2,14 @@ import { TypedEmitter } from 'tiny-typed-emitter'
 import { ShardingManagerEvents } from '@src/sharding/interfaces/manager/ShardingManagerEvents'
 import { PartialShardingModes, ShardingManagerTypes, ShardingModes } from '@src/core/Constants'
 import { ShardingManagerOptions } from '@src/sharding/interfaces/manager/options/ShardingManagerOptions'
-import { DiscordooError, DiscordooSnowflake } from '@src/utils'
+import { DiscordooError, DiscordooSnowflake, wait } from '@src/utils'
 import { isMaster as isMainCluster } from 'cluster'
 import { isMainThread } from 'worker_threads'
 import { Collection } from '@src/collection'
 import { ShardingClient } from '@src/sharding/ShardingClient'
-import { ShardListResolvable } from '@src/core/ShardListResolvable'
+import { resolveShards } from '@src/utils/resolveShards'
+import { intoChunks } from '@src/utils/intoChunks'
+
 const isMainProcess = process.send === undefined
 
 const SpawningLoopError = new DiscordooError(
@@ -21,8 +23,7 @@ export class ShardingManager extends TypedEmitter<ShardingManagerEvents> {
   public id: string
   public shards: Collection<number, ShardingClient> = new Collection()
 
-  private _shards: ShardListResolvable
-
+  private readonly _shards: number[]
   readonly #died: boolean = false
 
   constructor(options: ShardingManagerOptions) {
@@ -33,33 +34,44 @@ export class ShardingManager extends TypedEmitter<ShardingManagerEvents> {
       throw SpawningLoopError
     }
 
-    this.type = options.type
+    this.type = options.type || ShardingManagerTypes.STANDALONE_PARENT
     this.mode = options.mode
     this.options = options
-    this._shards = options.shards
+    this._shards = resolveShards(options.shards)
 
     this.id = DiscordooSnowflake.generate(DiscordooSnowflake.SHARDING_MANAGER_ID, process.pid)
   }
 
   async spawn() {
-    if (this.#died) throw SpawningLoopError;
+    if (this.#died) throw SpawningLoopError
 
-    (this._shards as number[]).forEach(shardID => {
+    const shardsPerShard: number = this.options.processes?.shardsPerProcess
+      || this.options.workers?.shardsPerWorker
+      || this.options.clusters?.shardsPerCluster
+      || 1
+
+    const chunks = intoChunks<number>(this._shards, shardsPerShard)
+
+    let index = 0
+    for await (const shards of chunks) {
       const shard = new ShardingClient({
+        shards: shards,
         file: this.options.file,
-        shards: [ shardID ],
-        mode: PartialShardingModes.PROCESSES,
-        totalShards: 1,
+        totalShards: this._shards.length,
+        mode: this.mode as unknown as PartialShardingModes,
         env: {
           SHARDING_MANAGER_IPC_IDENTIFIER: this.id,
-          SHARD_ID: shardID,
-          SHARD_IPC_IDENTIFIER: DiscordooSnowflake.generate(shardID, process.pid)
+          SHARD_IPC_IDENTIFIER: DiscordooSnowflake.generate(index, process.pid),
+          SHARD_ID: index,
         }
       })
 
-      this.shards.set(shardID, shard)
-      shard.create().then(() => console.log('created'))
-    })
+      await shard.create()
+      this.shards.set(index, shard)
+      await wait((shardsPerShard * 5000) + 5000)
+
+      index++
+    }
   }
 
 }

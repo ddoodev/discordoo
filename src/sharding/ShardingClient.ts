@@ -45,21 +45,24 @@ export class ShardingClient extends TypedEmitter {
       __DDOO_SHARDING_MANAGER_IPC_IDENTIFIER: this.options.env.SHARDING_MANAGER_IPC_IDENTIFIER,
       __DDOO_SHARD_IPC_IDENTIFIER: this.options.env.SHARD_IPC_IDENTIFIER,
       __DDOO_SHARD_ID: this.options.env.SHARD_ID,
-      ...process.env
+      ...process.env,
+      ...(this.options.extraOptions?.env || {})
     }
 
+    if (this.options.extraOptions?.env) delete this.options.extraOptions.env
+
     switch (this.mode) {
-      case PartialShardingModes.CLUSTERS:
+      case PartialShardingModes.CLUSTERS: // node:internal/child_process:805 TypeError: handle.setSimultaneousAccepts is not a function
         Cluster.setupMaster({ exec: this.options.file })
         this.rawShard = Cluster.fork(env)
         break
 
       case PartialShardingModes.PROCESSES:
-        this.rawShard = Process.fork(this.options.file, { env: env })
+        this.rawShard = Process.fork(this.options.file, { env: env, ...(this.options.extraOptions || {}) })
         break
 
       case PartialShardingModes.WORKERS:
-        this.rawShard = new Worker(this.options.file, { env: env })
+        this.rawShard = new Worker(this.options.file, { env: env, ...(this.options.extraOptions || {}) })
         break
 
       default:
