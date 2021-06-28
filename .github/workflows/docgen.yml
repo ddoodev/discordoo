@@ -4,10 +4,12 @@ on:
   push:
     branches:
       - master
+  repository_dispatch:
 
 jobs:
   docs:
     runs-on: ubuntu-latest
+    if: github.event_name == 'push' || github.event.action == 'guide_build'
     steps:
       - uses: actions/checkout@v2
         with:
