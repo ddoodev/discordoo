@@ -7,6 +7,7 @@
     "lint:fix": "eslint tests src --fix",
     "test": "jest",
     "test:fly": "node dist/on-the-fly/index.js",
+    "test:fly:nsolid": "npx nsolid-quickstart --exec dist/on-the-fly/index.js",
     "build": "tsc -p tsconfig.json && tscpaths -p tsconfig.tspaths.json -s ./src -o ./dist",
     "docs": "typedoc && npx tapok docs/docs/api",
     "prepublish": "npm run build"

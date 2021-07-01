@@ -81,12 +81,14 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsI> {
         }
       }
 
+      console.log('SHARD', this.id, 'ENCODING', this.options.encoding, 'REAL ENCODING', WebSocketUtils.encoding)
+
       // cannot use etf encoding without erlpack
       if (this.options.encoding === 'etf' && WebSocketUtils.encoding !== 'etf') {
         throw new DiscordooError(
           'WebSocketShard ' + this.id,
-          'cannot use etf encoding without erlpack installed.'
-          + '(if you are using worker threads sharding, node.js cannot use external modules inside workers)'
+          'cannot use etf encoding without erlpack installed.',
+          '(if you are using worker threads sharding, node.js cannot use external modules inside workers)'
         )
       }
 

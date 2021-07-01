@@ -9,6 +9,7 @@ import { wait } from '@src/utils/wait'
 import { DEFAULT_WS_OPTIONS, WebSocketClientEvents, WebSocketManagerStates } from '@src/core/Constants'
 import { inspectWsOptions } from '@src/gateway/wsmanager/inspectWsOptions'
 import { GatewayConnectOptions } from '@src/gateway/interfaces/GatewayConnectOptions'
+import { DiscordooError } from '@src/utils'
 
 export class WebSocketManager extends TypedEmitter<WebSocketManagerEvents> {
   public readonly options: GatewayOptions
@@ -75,20 +76,24 @@ export class WebSocketManager extends TypedEmitter<WebSocketManagerEvents> {
 
     this.shardQueue.delete(shard)
 
-    try {
-      console.log('shard', shard.id, 'connecting')
-      await shard.connect().catch(() => shard.emit(WebSocketClientEvents.RECONNECT_ME))
-    } catch (e) {
-      console.error(e)
-    }
-
-    this.shards.set(shard.id, shard)
-
     if (!shard.listeners(WebSocketClientEvents.RECONNECT_ME).length) {
       shard.on(WebSocketClientEvents.RECONNECT_ME, () => {
         this.shardQueue.add(shard)
       })
     }
+
+    try {
+      console.log('shard', shard.id, 'connecting')
+      await shard.connect()
+        .catch(e => {
+          if (e && !(e instanceof DiscordooError)) shard.emit(WebSocketClientEvents.RECONNECT_ME)
+          console.error(e)
+        })
+    } catch (e) {
+      console.error(e)
+    }
+
+    this.shards.set(shard.id, shard)
 
     if (this.shardQueue.size) {
       // https://discord.com/developers/docs/topics/gateway#session-start-limit-object
