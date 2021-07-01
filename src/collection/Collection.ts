@@ -274,6 +274,20 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
   }
 
   /**
+   * Maps each item to another value into an array
+   * @param predicate function to use
+   * */
+  map<T = unknown>(predicate: (value: V, key: K, collection: Collection<K, V>) => T): T[] {
+    const result: T[] = []
+
+    for (const [ key, value ] of this.entries()) {
+      result.push(predicate(value, key, this))
+    }
+
+    return result
+  }
+
+  /**
   * Returns a collection chunked into several collections.
   * @param size - chunk size
   * */
