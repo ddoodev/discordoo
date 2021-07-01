@@ -1,5 +1,4 @@
 import { CacheProvider } from '@src/core/providers/cache/CacheProvider'
-import { CacheNamespace } from '@src/core/providers/cache/CacheNamespace'
 import { Client } from '@src/core/Client'
 import { ClientEventsHandlers } from '@src/core/client/ClientEventsHandlers'
 import { GatewayProvider } from '@src/core/providers/gateway/GatewayProvider'
@@ -14,7 +13,6 @@ import { GatewayProviderEvents } from '@src/core/providers/gateway/GatewayProvid
 
 export {
   CacheProvider,
-  CacheNamespace,
   Client,
   ClientEventsHandlers,
   GatewayProvider,

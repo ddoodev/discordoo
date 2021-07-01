@@ -1,4 +1,4 @@
-import { DeconstructedDiscordooSnowflake } from '@src/interfaces/utils/DeconstructedSnowflake'
+import { DeconstructedDiscordooSnowflake } from '@src/utils/interfaces/DeconstructedSnowflake'
 import { DiscordooError } from '@src/utils/DiscordooError'
 
 const EPOCH = 1609459200000 // 2021-01-01T00:00:00.000Z

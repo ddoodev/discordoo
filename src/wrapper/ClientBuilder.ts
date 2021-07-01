@@ -1,5 +1,6 @@
 import { CacheProvider, Client, DefaultClientStack, GatewayProvider, RESTProvider } from '@src/core'
 import { ClientOptions } from '@src/core/client/ClientOptions'
+import { CacheProviderConstructor } from '@src/core/providers/cache/CacheProviderConstructor'
 
 export class ClientBuilder<Stack extends DefaultClientStack = DefaultClientStack> {
   public client: Client<Stack>
@@ -13,8 +14,8 @@ export class ClientBuilder<Stack extends DefaultClientStack = DefaultClientStack
     return this
   }
 
-  cache(provider: (client: Client) => CacheProvider): ClientBuilder<Stack> {
-    this.client.useCacheProvider(provider)
+  cache(provider: CacheProviderConstructor<Stack['cache']>, ...options: any[]): ClientBuilder<Stack> {
+    this.client.useCacheProvider(provider, ...options)
     return this
   }
 

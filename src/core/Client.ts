@@ -6,13 +6,14 @@ import { GatewayProvider } from '@src/core/providers/gateway/GatewayProvider'
 import { ClientInternals } from '@src/core/client/ClientInternals'
 import { ClientOptions } from '@src/core/client/ClientOptions'
 import { RESTProviderBuilder } from '@src/rest'
-import { CacheProviderBuilder } from '@src/cache'
 import { GatewayProviderBuilder } from '@src/gateway/GatewayProviderBuilder'
 import { DiscordooProviders } from '@src/core/Constants'
 import { DiscordooError, DiscordooSnowflake } from '@src/utils'
 import { IpcServer } from '@src/sharding/ipc/IpcServer'
 import { ShardingClientEnvironment } from '@src/sharding/interfaces/client/ShardingClientEnvironment'
 import { GatewayConnectOptions } from '@src/gateway/interfaces/GatewayConnectOptions'
+import { DefaultCacheProvider } from '@src/cache/DefaultCacheProvider'
+import { CacheProviderConstructor } from '@src/core/providers/cache/CacheProviderConstructor'
 
 /** Entry point for all of Discordoo. Manages modules and events */
 export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
@@ -33,7 +34,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
     this.options = options
 
     let rest: RESTProvider<ClientStack['rest']> = new RESTProviderBuilder(this.options.rest).getRestProvider()(this),
-      cache: CacheProvider<ClientStack['cache']> = new CacheProviderBuilder().getCacheProvider()(this),
+      cache: ClientStack['cache'] = new DefaultCacheProvider(this),
       gateway: GatewayProvider<ClientStack['gateway']> = new GatewayProviderBuilder(
         Object.assign(this.options.gateway ?? {}, { token: this.token })
       ).getGatewayProvider()(this)
@@ -42,7 +43,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
       try {
         switch (provider.provide) {
           case DiscordooProviders.CACHE:
-            cache = provider.use<CacheProvider>(this).bind(this)
+            cache = new provider.useClass(this)
             break
 
           case DiscordooProviders.GATEWAY:
@@ -94,9 +95,10 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
    * Set the {@link CacheProvider} to be used by this client
    * Bounds it's context to {@link Client}
    * @param provider - function, that returns desired CacheProvider
+   * @param options - any options to custom cache providers
    */
-  useCacheProvider(provider: (client: Client) => CacheProvider<ClientStack['cache']>) {
-    this.internals.cache = provider(this).bind(this)
+  useCacheProvider(provider: CacheProviderConstructor<ClientStack['cache']>, ...options: any[]) {
+    this.internals.cache = new provider(this, ...options)
   }
 
   /**
