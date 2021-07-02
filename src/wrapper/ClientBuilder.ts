@@ -1,46 +1,60 @@
-import { Client, DefaultClientStack, ClientOptions, ProviderConstructor } from '@src/core'
+import { Client, ClientOptions, DefaultClientStack, ProviderConstructor } from '@src/core'
 import { DiscordooProviders } from '@src/core/Constants'
+import { CreateAppOptions } from '@src/wrapper/interfaces/CreateAppOptions'
 
 export class ClientBuilder<Stack extends DefaultClientStack = DefaultClientStack> {
   public token: string
   public options: ClientOptions
 
-  constructor(token: string, options?: ClientOptions) {
+  private readonly customClient: any
+
+  constructor(token: string, options?: CreateAppOptions) {
     this.token = token
 
-    this.options = options || {}
+    this.options = {}
     if (!this.options.providers) this.options.providers = []
+
+    if (options?.useClient) this.customClient = options.useClient
   }
 
-  restProvider(provider: ProviderConstructor<Stack['cache']>): ClientBuilder<Stack> {
-    this.removeProvider(DiscordooProviders.REST)
-
-    this.options.providers!.push({
-      provide: DiscordooProviders.REST,
-      // @ts-ignore
-      use: provider
-    })
-
+  rest(options: ClientOptions['rest']): ClientBuilder<Stack> {
+    this.options.rest = options
     return this
+  }
+
+  gateway(options: ClientOptions['gateway']): ClientBuilder<Stack> {
+    this.options.gateway = options
+    return this
+  }
+
+  ipc(options: ClientOptions['ipc']): ClientBuilder<Stack> {
+    this.options.ipc = options
+    return this
+  }
+
+  custom<T>(options: ClientOptions<T>['custom']): ClientBuilder<Stack> {
+    this.options.custom = options
+    return this
+  }
+
+  restProvider(provider: ProviderConstructor<Stack['rest']>, ...options: any[]): ClientBuilder<Stack> {
+    return this.useProvider(DiscordooProviders.REST, provider, ...options)
   }
 
   cacheProvider(provider: ProviderConstructor<Stack['cache']>, ...options: any[]): ClientBuilder<Stack> {
-    this.removeProvider(DiscordooProviders.CACHE)
-
-    this.options.providers!.push({
-      provide: DiscordooProviders.CACHE,
-      useClass: provider,
-      useOptions: options
-    })
-
-    return this
+    return this.useProvider(DiscordooProviders.CACHE, provider, ...options)
   }
 
   gatewayProvider(provider: ProviderConstructor<Stack['gateway']>, ...options: any[]): ClientBuilder<Stack> {
-    this.removeProvider(DiscordooProviders.GATEWAY)
+    return this.useProvider(DiscordooProviders.GATEWAY, provider, ...options)
+  }
+
+  private useProvider(providerSignature: DiscordooProviders, provider: any, ...options: any[]): ClientBuilder<Stack> {
+    const providerIndex = this.options.providers!.findIndex(p => p.provide === provider)
+    if (providerIndex > -1) this.options.providers!.splice(providerIndex, 1)
 
     this.options.providers!.push({
-      provide: DiscordooProviders.GATEWAY,
+      provide: providerSignature,
       useClass: provider,
       useOptions: options
     })
@@ -48,12 +62,9 @@ export class ClientBuilder<Stack extends DefaultClientStack = DefaultClientStack
     return this
   }
 
-  private removeProvider(provider: DiscordooProviders) {
-    const providerIndex = this.options.providers!.findIndex(p => p.provide === provider)
-    if (providerIndex > -1) this.options.providers!.splice(providerIndex, 1)
-  }
+  build<T extends Client = Client<Stack>>(): T {
+    if (this.customClient) return new this.customClient(this.token, this.options)
 
-  build(): Client {
-    return new Client(this.token, this.options)
+    return new Client<Stack>(this.token, this.options) as unknown as T
   }
 }
