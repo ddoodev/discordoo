@@ -40,9 +40,9 @@ export class DefaultCacheProvider<K, V> implements CacheProvider<K, V> {
   }
 
   async set(keyspace: string, key: K, value: V, options: CacheProviderSetOptions = {}): Promise<DefaultCacheProvider<K, V>> {
-    const space = this.keyspaces.get(keyspace)
+    let space = this.keyspaces.get(keyspace)
 
-    if (!space) return this
+    if (!space) space = this.keyspaces.set(keyspace, new Collection()).get(keyspace)!
 
     return space.set(key, value) && this
   }
