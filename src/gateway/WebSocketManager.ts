@@ -3,13 +3,13 @@ import { Collection } from '@src/collection'
 import { RESTGetAPIGatewayBotResult } from 'discord-api-types'
 import { WebSocketManagerEvents } from '@src/gateway/interfaces/WebSocketManagerEvents'
 import { GatewayOptions } from '@src/gateway/interfaces/GatewayOptions'
-import { Optional } from '@src/utils/Optional'
 import { WebSocketClient } from '@src/gateway/WebSocketClient'
 import { wait } from '@src/utils/wait'
 import { DEFAULT_WS_OPTIONS, WebSocketClientEvents, WebSocketManagerStates } from '@src/core/Constants'
 import { inspectWsOptions } from '@src/gateway/wsmanager/inspectWsOptions'
-import { GatewayConnectOptions } from '@src/gateway/interfaces/GatewayConnectOptions'
+import { GatewayConnectOptions } from '@src/core/providers/gateway/options/GatewayConnectOptions'
 import { DiscordooError } from '@src/utils'
+import { PartialGatewayOptions } from '@src/gateway/interfaces/PartialGatewayOptions'
 
 export class WebSocketManager extends TypedEmitter<WebSocketManagerEvents> {
   public readonly options: GatewayOptions
@@ -22,7 +22,7 @@ export class WebSocketManager extends TypedEmitter<WebSocketManagerEvents> {
   public totalShards = 1
   public shards = new Collection<number, WebSocketClient>()
 
-  constructor(options: Optional<GatewayOptions, 'intents' | 'properties'>) {
+  constructor(options: PartialGatewayOptions) {
     super()
 
     this.options = Object.assign(DEFAULT_WS_OPTIONS, options)

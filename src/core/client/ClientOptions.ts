@@ -1,12 +1,12 @@
-import { ProviderOption } from '@src/core/providers/ProviderOption'
+import { ProviderOption } from '@src/core'
 import { GatewayOptions } from '@src/gateway'
 import { Optional } from '@src/utils'
-import { RESTOptions } from '@src/rest'
-import { IpcServerOptions } from '@src/sharding/interfaces/ipc/IpcServerOptions'
+// import { RESTOptions } from '@src/rest'
+import { IpcServerOptions } from '@src/sharding'
 
 export interface ClientOptions {
   providers?: ProviderOption[]
   gateway?: Optional<GatewayOptions, 'token' | 'intents' | 'properties'>
-  rest?: RESTOptions
+  rest?: any
   ipc?: Optional<IpcServerOptions, 'id' | 'managerIpcId' | 'shardId'>
 }

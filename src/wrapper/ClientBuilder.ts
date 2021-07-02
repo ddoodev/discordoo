@@ -1,30 +1,59 @@
-import { CacheProvider, Client, DefaultClientStack, GatewayProvider, RESTProvider } from '@src/core'
-import { ClientOptions } from '@src/core/client/ClientOptions'
-import { CacheProviderConstructor } from '@src/core/providers/cache/CacheProviderConstructor'
+import { Client, DefaultClientStack, ClientOptions, ProviderConstructor } from '@src/core'
+import { DiscordooProviders } from '@src/core/Constants'
 
 export class ClientBuilder<Stack extends DefaultClientStack = DefaultClientStack> {
-  public client: Client<Stack>
+  public token: string
+  public options: ClientOptions
 
   constructor(token: string, options?: ClientOptions) {
-    this.client = new Client<Stack>(token, options)
+    this.token = token
+
+    this.options = options || {}
+    if (!this.options.providers) this.options.providers = []
   }
 
-  rest(provider: (client: Client) => RESTProvider): ClientBuilder<Stack> {
-    this.client.useRESTProvider(provider)
+  restProvider(provider: ProviderConstructor<Stack['cache']>): ClientBuilder<Stack> {
+    this.removeProvider(DiscordooProviders.REST)
+
+    this.options.providers!.push({
+      provide: DiscordooProviders.REST,
+      // @ts-ignore
+      use: provider
+    })
+
     return this
   }
 
-  cache(provider: CacheProviderConstructor<Stack['cache']>, ...options: any[]): ClientBuilder<Stack> {
-    this.client.useCacheProvider(provider, ...options)
+  cacheProvider(provider: ProviderConstructor<Stack['cache']>, ...options: any[]): ClientBuilder<Stack> {
+    this.removeProvider(DiscordooProviders.CACHE)
+
+    this.options.providers!.push({
+      provide: DiscordooProviders.CACHE,
+      useClass: provider,
+      useOptions: options
+    })
+
     return this
   }
 
-  gateway(provider: (client: Client) => GatewayProvider): ClientBuilder<Stack> {
-    this.client.useGatewayProvider(provider)
+  gatewayProvider(provider: ProviderConstructor<Stack['gateway']>, ...options: any[]): ClientBuilder<Stack> {
+    this.removeProvider(DiscordooProviders.GATEWAY)
+
+    this.options.providers!.push({
+      provide: DiscordooProviders.GATEWAY,
+      useClass: provider,
+      useOptions: options
+    })
+
     return this
   }
 
-  build() {
-    return this.client
+  private removeProvider(provider: DiscordooProviders) {
+    const providerIndex = this.options.providers!.findIndex(p => p.provide === provider)
+    if (providerIndex > -1) this.options.providers!.splice(providerIndex, 1)
+  }
+
+  build(): Client {
+    return new Client(this.token, this.options)
   }
 }

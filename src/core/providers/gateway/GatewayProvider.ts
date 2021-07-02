@@ -1,3 +1,7 @@
-import { GatewayProviderAPI } from '@src/core/providers/gateway/GatewayProviderAPI'
+import { GatewayConnectOptions } from '@src/core/providers/gateway/options/GatewayConnectOptions'
 
-export type GatewayProvider<T extends GatewayProviderAPI = GatewayProviderAPI> = () => T
+export interface GatewayProvider {
+  connect(options?: GatewayConnectOptions): Promise<unknown>
+
+  disconnect(): Promise<unknown>
+}

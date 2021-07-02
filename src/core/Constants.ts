@@ -1,4 +1,4 @@
-import { RESTOptions } from '@src/rest'
+// import { RESTOptions } from '@src/rest'
 import { version } from '@root/package.json'
 import { WebSocketUtils } from '@src/utils/WebSocketUtils'
 import { GatewayOptions } from '@src/gateway'
@@ -182,7 +182,7 @@ export const DEFAULT_WS_OPTIONS: Omit<GatewayOptions, 'token'> = {
   maxEventsPerSecond: undefined
 }
 
-export const DEFAULT_REST_OPTIONS: RESTOptions = {
+export const DEFAULT_REST_OPTIONS: any /* RESTOptions */ = {
   v: 9,
   useragent: `DiscordBot (https://github.com/Discordoo/discordoo, ${version})`,
   maxRetries: 5

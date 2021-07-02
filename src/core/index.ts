@@ -1,27 +1,40 @@
-import { CacheProvider } from '@src/core/providers/cache/CacheProvider'
-import { Client } from '@src/core/Client'
-import { ClientEventsHandlers } from '@src/core/client/ClientEventsHandlers'
+import { AbstractCacheProviderOptions } from '@src/core/providers/cache/options/AbstractCacheProviderOptions'
+import { CacheProviderDeleteOptions } from '@src/core/providers/cache/options/CacheProviderDeleteOptions'
+import { CacheProviderSizeOptions } from '@src/core/providers/cache/options/CacheProviderSizeOptions'
+import { CacheProviderGetOptions } from '@src/core/providers/cache/options/CacheProviderGetOptions'
+import { CacheProviderHasOptions } from '@src/core/providers/cache/options/CacheProviderHasOptions'
+import { CacheProviderSetOptions } from '@src/core/providers/cache/options/CacheProviderSetOptions'
+import { GatewayConnectOptions } from '@src/core/providers/gateway/options/GatewayConnectOptions'
+import { ProviderConstructor } from '@src/core/providers/ProviderConstructor'
 import { GatewayProvider } from '@src/core/providers/gateway/GatewayProvider'
-import { GatewayProviderAPI } from '@src/core/providers/gateway/GatewayProviderAPI'
-import { RequestBuilder } from '@src/core/providers/rest/RequestBuilder'
-import { RequestOptions } from '@src/core/providers/rest/RequestOptions'
-import { RESTProvider } from '@src/core/providers/rest/RESTProvider'
-import * as Constants from '@src/core/Constants'
-import { RESTResponse } from '@src/core/providers/rest/RESTResponse'
+import { ClientEventsHandlers } from '@src/core/client/ClientEventsHandlers'
 import { DefaultClientStack } from '@src/core/client/DefaultClientStack'
-import { GatewayProviderEvents } from '@src/core/providers/gateway/GatewayProviderEvents'
+import { CacheProvider } from '@src/core/providers/cache/CacheProvider'
+import { ProviderOption } from '@src/core/providers/ProviderOption'
+import { ShardListResolvable } from '@src/core/ShardListResolvable'
+import { ClientInternals } from '@src/core/client/ClientInternals'
+import { ClientOptions } from '@src/core/client/ClientOptions'
+
+import * as Constants from '@src/core/Constants'
+import { Client } from '@src/core/Client'
 
 export {
-  CacheProvider,
-  Client,
-  ClientEventsHandlers,
+  AbstractCacheProviderOptions,
+  CacheProviderDeleteOptions,
+  CacheProviderSizeOptions,
+  CacheProviderGetOptions,
+  CacheProviderHasOptions,
+  CacheProviderSetOptions,
+  GatewayConnectOptions,
+  ProviderConstructor,
   GatewayProvider,
-  GatewayProviderAPI,
+  ClientEventsHandlers,
   DefaultClientStack,
-  RequestBuilder,
-  RequestOptions,
-  RESTProvider,
+  CacheProvider,
+  ProviderOption,
+  ShardListResolvable,
+  ClientInternals,
+  ClientOptions,
   Constants,
-  RESTResponse,
-  GatewayProviderEvents
+  Client,
 }
