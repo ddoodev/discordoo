@@ -7,7 +7,6 @@ let INCREMENT = 0
 /**
  * DiscordooSnowflake is a custom twitter snowflake used to identify ipc connections and messages.
  * */
-
 export class DiscordooSnowflake {
   // used to identify sharding managers in snowflakes
   public static readonly SHARDING_MANAGER_ID = 1_111_111_111
@@ -38,7 +37,7 @@ export class DiscordooSnowflake {
    * So, if your bot has more than 2,147,483,647 shards, you will unfortunately not be able to use Discordoo.
    */
 
-  static generate(shardID: number, workerID = 0, timestamp: number | Date = Date.now()) {
+  static generate(shardID: number, workerID = 0, timestamp: number | Date = Date.now()): string {
     if (timestamp instanceof Date) timestamp = timestamp.getTime()
 
     if (INCREMENT >= 4194302) INCREMENT = 0
@@ -60,6 +59,14 @@ export class DiscordooSnowflake {
     ]
 
     return this.binaryToID(binarySegments.join(''))
+  }
+
+  static generatePartial(timestamp: Date | number = Date.now()): string {
+    if (timestamp instanceof Date) timestamp = timestamp.getTime()
+
+    const b = BigInt
+
+    return (b(timestamp) - b(EPOCH) << b(86)).toString()
   }
 
   static deconstruct(snowflake: string): DeconstructedDiscordooSnowflake {
