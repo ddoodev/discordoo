@@ -79,7 +79,7 @@ djs is the most popular library for developing bots, so we will compare with it.
 
 ## Planned features
 * **Waifoo** — a framework for creating discord bots based on Discordoo (commands, other features).
-* **Kawaioo** — a library / nestjs microservice that will allow you to interact with the Discordoo ShardingManager over TCP and UDP, to create your own scalable REST API for the bot.
+* **~~Kawaioo~~ Ayayoo** — a library / nestjs microservice that will allow you to interact with the Discordoo ShardingManager over TCP and UDP, to create your own scalable REST API for the bot.
 * **Voice support** — at this moment, the library does not support voice.
 * **Microservices** — injection of microservices into the Client that can communicate with each other.
 
