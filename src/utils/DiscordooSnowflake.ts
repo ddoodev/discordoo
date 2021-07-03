@@ -66,16 +66,16 @@ export class DiscordooSnowflake {
     const b = BigInt, n = Number
 
     const res = {
-      timestamp: n((b(snowflake) >> 86n) + b(EPOCH)),
+      timestamp: n((b(snowflake) >> b(86)) + b(EPOCH)),
 
       // 32 bit workerID (0x3FFFFFFFC0000000000000 22 bit increment (0) + 32 bit shardID (0) + 32 bit workerID (1))
-      workerID: n((b(snowflake) & 0x3FFFFFFFC0000000000000n) >> 54n),
+      workerID: n((b(snowflake) & b(0x3FFFFFFFC0000000000000)) >> b(54)),
 
       // 32 bit shardID, 0x3FFFFFFFC00000 is a 54 bit integer (22 bit increment (0) + 32 bit shardID (1))
-      shardID: n((b(snowflake) & 0x3FFFFFFFC00000n) >> 22n),
+      shardID: n((b(snowflake) & b(0x3FFFFFFFC00000)) >> b(22)),
 
       // 22 bit increment, 0x3FFFFF is a max 22 bit integer
-      increment: n(b(snowflake) & 0x3FFFFFn),
+      increment: n(b(snowflake) & b(0x3FFFFF)),
     }
 
     Object.defineProperty(res, 'date', {
@@ -91,7 +91,7 @@ export class DiscordooSnowflake {
   static binaryToID(str: string, base: number | bigint = 2) {
     base = BigInt(base)
 
-    let bigint = 0n
+    let bigint = BigInt(0)
 
     for (let i = 0; i < str.length; i++) {
       let code = str[str.length - 1 - i].charCodeAt(0) - 48

@@ -3,14 +3,9 @@
     "strict": true,
     "module": "commonjs",
     "moduleResolution": "node",
-    "target": "es2020",
+    "target": "es2019",
     "lib": [
-      "esnext",
-      "esnext.array",
-      "esnext.asynciterable",
-      "esnext.intl",
-      "esnext.symbol",
-      "es6",
+      "es2020",
       "dom"
     ],
     "sourceMap": true,
