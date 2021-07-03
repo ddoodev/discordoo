@@ -44,7 +44,7 @@ It was built from ground-up to provide better and faster APIs, both internal and
 * **Convenient to development** — we create predictable APIs and take care of the convenience of development
 * **Caching policies** — do not store a cache that your bot does not need
 * **Flexible in everything** — you can replace parts of the library as you need using our providers
-* **Safe for large bots** — global-rate-limit synchronization between shards and machines, the ability to limit the number of events sent by gateway to your bot per second
+* **Safe for large bots** — global-rate-limit synchronization between shards on one machine, the ability to limit the number of events sent by gateway to your bot per second
 * **Convenient to monitor** — any statistics, from v8 to eventloop lag and events per second, are available for each sharding instance
 * **Good TypeScript support** — the library written in TypeScript, so we naturally support integration with TypeScript well
 * **Well-documented** — instructions for everything, starting from the installation, ending with inter-machines sharding

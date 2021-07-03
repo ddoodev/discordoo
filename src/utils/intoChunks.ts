@@ -1,9 +1,9 @@
-export function intoChunks<T>(array: T[], chunkSize = 1): T[][] {
-  const chunkArray: T[][] = []
+export function intoChunks<T = unknown>(array: T[], chunkSize = 1): T[][] {
+  const chunks: T[][] = []
 
   for (let i = 0; i < Math.ceil(array.length / chunkSize); i++) {
-    chunkArray[i] = array.slice(i * chunkSize, i * chunkSize + chunkSize)
+    chunks[i] = array.slice(i * chunkSize, i * chunkSize + chunkSize)
   }
 
-  return chunkArray
+  return chunks
 }

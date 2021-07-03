@@ -5,6 +5,70 @@ import { GatewayOptions } from '@src/gateway'
 
 export const RAW_IPC_EVENT = '__DDOO__.MESSAGE'
 
+export enum GlobalCachingPolicy {
+  ALL = 'all',
+  NONE = 'none',
+}
+
+export enum MessagesCachingPolicy {
+  ALL = 'all',
+  NONE = 'none',
+  USERS = 'users',
+  BOTS = 'bots',
+}
+
+export enum GuildsCachingPolicy {
+  ALL = 'all',
+  NONE = 'none',
+}
+
+export enum MembersCachingPolicy {
+  ALL = 'all',
+  NONE = 'none',
+  ONLINE = 'online',
+  DND = 'dnd',
+  IDLE = 'idle',
+  OFFLINE = 'offline',
+  OWNER = 'owner',
+  PENDING = 'pending',
+  VOICE = 'voice',
+  RECENT_MESSAGE = 'recentMessage',
+}
+
+export enum ChannelsCachingPolicy {
+  ALL = 'all',
+  NONE = 'none',
+  TEXT = 'text',
+  VOICE = 'voice',
+  DM = 'dm',
+  CATEGORY = 'category',
+  NEWS = 'news',
+  STORE = 'store',
+  NEWS_THREAD = 'newsThread',
+  PUBLIC_THREAD = 'publicThread',
+  PRIVATE_THREAD = 'privateThread',
+  STAGE_VOICE = 'stageVoice',
+}
+
+export enum EmojisCachingPolicy {
+  ALL = 'all',
+  NONE = 'none',
+  ANIMATED = 'animated',
+  STATIC = 'static',
+}
+
+export enum RolesCachingPolicy {
+  ALL = 'all',
+  NONE = 'none',
+  EVERYONE = 'everyone',
+  MANAGED = 'managed',
+}
+
+export enum PresencesCachingPolicy {
+  ALL = 'all',
+  NONE = 'none',
+}
+
 export enum DiscordooProviders {
   REST,
   GATEWAY,
