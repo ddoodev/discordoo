@@ -1,6 +1,6 @@
 {
   "name": "discordoo",
-  "version": "0.6.1",
+  "version": "0.6.3",
   "description": "Discord bots. Simplified and boosted",
   "scripts": {
     "lint": "eslint tests src",
@@ -94,7 +94,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged && npm run build && npm run lint && npm run test",
+      "pre-commit": "lint-staged",
+      "pre-push": "npm run build && npm run lint && npm run test",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
