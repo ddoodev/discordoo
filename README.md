@@ -72,7 +72,7 @@ djs is the most popular library for developing bots, so we will compare with it.
 2. [800 elements in collection](https://jsben.ch/UcXNJ)
 3. [10000 elements in collection](https://jsben.ch/GYwWj)
 
-### Test: map collection elements
+#### Test: map collection elements
 1. [100 elements in collection](https://jsben.ch/Gqp0P)
 2. [800 elements in collection](https://jsben.ch/NNGE4)
 3. [10000 elements in collection](https://jsben.ch/rMMWl)
