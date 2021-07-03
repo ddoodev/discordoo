@@ -55,6 +55,28 @@ Instructions for creating the first bot with Discordoo can be found in our docum
 1. [Installing](https://docs.discordoo.xyz/base-guide/installing/)
 2. [First code & starting](https://docs.discordoo.xyz/base-guide/starting/)
 
+## Tests
+While the library is under development, only Discordoo Collection tests are available.
+### djs collection VS ddoo collection
+djs is the most popular library for developing bots, so we will compare with it.
+(if you're interested, ddoo is roughly comparable to eris in collection speed)
+
+#### Test: random elements from collection
+1. [100 elements in collection, 5 random elements](https://jsben.ch/mNKer)
+2. [800 elements in collection, 150 random elements](https://jsben.ch/en4FL)
+3. [10000 elements in collection, 1000 random elements](https://jsben.ch/86Fpd)
+4. [10000 elements in collection, 8000 random elements](https://jsben.ch/q5IXT)
+
+#### Test: filter 50% of elements from collection
+1. [100 elements in collection](https://jsben.ch/coBir)
+2. [800 elements in collection](https://jsben.ch/UcXNJ)
+3. [10000 elements in collection](https://jsben.ch/GYwWj)
+
+### Test: map collection elements
+1. [100 elements in collection](https://jsben.ch/Gqp0P)
+2. [800 elements in collection](https://jsben.ch/NNGE4)
+3. [10000 elements in collection](https://jsben.ch/rMMWl)
+
 ## Planned features
 * **Waifoo** — a framework for creating discord bots based on Discordoo (commands, other features).
 * **Kawaioo** — a library / nestjs microservice that will allow you to interact with the Discordoo ShardingManager over TCP and UDP, to create your own scalable REST API for the bot.
