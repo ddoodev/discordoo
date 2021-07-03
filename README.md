@@ -20,37 +20,37 @@
 <a href="https://github.com/Discordoo/discordoo/blob/master/CONTRIBUTING.md">Contribute</a>
 </p> 
 
-
 <hr>
 
 ## WARNING
-Most of the stuff described here is not done yet, and we are just planning to implement it.
+**THIS LIBRARY UNDER DEVELOPMENT!** Parts of the stuff described here is not done yet, and we are just planning to implement it.
 
 ## About
-Discordoo is a Discord API library interface. It was built from ground-up to provide better APIs, both internal and external.
+[Discordoo](https://discordoo.xyz/) is a [Discord API](https://discord.com/developers/docs/intro) library interface. 
+It was built from ground-up to provide better and faster APIs, both internal and external, than existing [Node.js](https://nodejs.org/) libraries offer.
 
-In general, Discordoo was designed to be completely modular. Each thing, such as gateway provider or
-cache storage can be replaced with anything you have written/installed from npm.
+## Features
+* **Very scalable in any way** — inter-machines sharding, custom modules for events queue
+* **Really fast** — this is not a promise, but real tests
+* **Convenient to development** — we create predictable APIs and take care of the convenience of development
+* **Caching policies** — do not store a cache that your bot does not need
+* **Flexible in everything** — you can replace parts of the library as you need using our providers
+* **Safe for large bots** — global-rate-limit synchronization between shards and machines, the ability to limit the number of events sent by gateway to your bot per second
+* **Convenient to monitor** — any statistics, from v8 to eventloop lag and events per second, are available for each sharding instance
+* **Good TypeScript support** — the library written in TypeScript, so we naturally support integration with TypeScript well
+* **Well-documented** — instructions for everything, starting from the installation, ending with inter-machines sharding
+* **Tested** — critical components tested using various benchmarks, including testing using N|Solid platform
 
-Moreover, we designed Discordoo to be easy to use. For example, you don't need to use non-sense
-like `broadcastEval` to get info from another shard. You always work with cache like you normally
-would when using a collection. Even more, Discordoo abstracts you from hard things without limiting you to simple APIs. 
+## Let's start
+Instructions for creating the first bot with Discordoo can be found in our documentation:
+1. [Installing](https://docs.discordoo.xyz/base-guide/installing/)
+2. [First code & starting](https://docs.discordoo.xyz/base-guide/starting/)
 
-In addition, Discordoo can also be used in different ways. If you don't need Gateway, 
-why use it? Use nothing but `RESTClient` - the thing you actually need.
-
-## Getting started
-
-### Creating a project
-The recommended way to use Discordoo is to use official project generator - 
-```shell
-$ mkdir mybot
-$ cd mybot
-$ npm init @discordoo 
-```
-Answer simple questions, and it will have the project scaffolded for you. Simple, isn't it?
-
-Wanna see more? Go [here](https://docs.discordoo.xyz/) to explore all of Discordoo!
+## Planned features
+* **Waifoo** — a framework for creating discord bots based on Discordoo (commands, other features).
+* **Kawaioo** — a library / nestjs microservice that will allow you to interact with the Discordoo ShardingManager over TCP and UDP, to create your own scalable REST API for the bot.
+* **Voice support** — at this moment, the library does not support voice.
+* **Microservices** — injection of microservices into the Client that can communicate with each other.
 
 ## Contributing
 Feel free to create a PR, but check if there is an existing one.
