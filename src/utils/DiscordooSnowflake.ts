@@ -52,24 +52,18 @@ export class DiscordooSnowflake {
     const b = BigInt
 
     const segments = [
+      // 42 bits timestamp block (86 empty bits, 32 for worker id + 32 for shard id + 22 for increment)
       b(timestamp - EPOCH) << b(86),
+      // 32 bits worker id block (54 empty bits, 32 for shard id + 22 for increment)
       b(workerID) << b(54),
+      // 32 bits worker id block (22 empty bits, 22 for increment)
       b(shardID) << b(22),
-      b(INCREMENT++) << b(0)
+      // 22 bits increment block (0 empty bits)
+      b(INCREMENT++)
     ]
 
+    // just add up the segments and get valid discordoo snowflake
     return segments.reduce((prev, curr) => prev + curr, b(0)).toString()
-
-    /* const toString = (num: number, padStart: number) => num.toString(2).padStart(padStart, '0')
-
-    const binarySegments = [
-      toString(timestamp - EPOCH, 42), // 42 bits for timestamp
-      toString(workerID, 32), // 32 bits for worker id
-      toString(shardID, 32), // 32 bits for shard id
-      toString(INCREMENT++, 22) // 22 bits for increment
-    ]
-
-    return this.binaryToID(binarySegments.join('')) */
   }
 
   static generatePartial(timestamp: Date | number = Date.now()): string {
@@ -84,15 +78,16 @@ export class DiscordooSnowflake {
     const b = BigInt, n = Number
 
     const res = {
+      // 42 bits timestamp
       timestamp: n((b(snowflake) >> b(86)) + b(EPOCH)),
 
-      // 32 bit workerID (0x3FFFFFFFC0000000000000 22 bit increment (0) + 32 bit shardID (0) + 32 bit workerID (1))
+      // 32 bits workerID, 0x3FFFFFFFC0000000000000 is a 86 bit integer (22 for increment (0) + 32 for shardID (0) + 32 for workerID (1))
       workerID: n((b(snowflake) & b(0x3FFFFFFFC0000000000000)) >> b(54)),
 
-      // 32 bit shardID, 0x3FFFFFFFC00000 is a 54 bit integer (22 bit increment (0) + 32 bit shardID (1))
+      // 32 bits shardID, 0x3FFFFFFFC00000 is a 54 bit integer (22 for increment (0) + 32 for shardID (1))
       shardID: n((b(snowflake) & b(0x3FFFFFFFC00000)) >> b(22)),
 
-      // 22 bit increment, 0x3FFFFF is a max 22 bit integer
+      // 22 bits increment, 0x3FFFFF is a max 22 bit integer
       increment: n(b(snowflake) & b(0x3FFFFF)),
     }
 
@@ -104,19 +99,5 @@ export class DiscordooSnowflake {
     })
 
     return res as DeconstructedDiscordooSnowflake
-  }
-
-  static binaryToID(str: string, base: number | bigint = 2) {
-    base = BigInt(base)
-
-    let bigint = BigInt(0)
-
-    for (let i = 0; i < str.length; i++) {
-      let code = str[str.length - 1 - i].charCodeAt(0) - 48
-      if (code >= 10) code -= 39
-      bigint += base ** BigInt(i) * BigInt(code)
-    }
-
-    return bigint.toString()
   }
 }
