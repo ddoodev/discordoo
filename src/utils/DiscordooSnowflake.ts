@@ -49,7 +49,18 @@ export class DiscordooSnowflake {
       )
     }
 
-    const toString = (num: number, padStart: number) => num.toString(2).padStart(padStart, '0')
+    const b = BigInt
+
+    const segments = [
+      b(timestamp - EPOCH) << b(86),
+      b(workerID) << b(54),
+      b(shardID) << b(22),
+      b(INCREMENT++) << b(0)
+    ]
+
+    return segments.reduce((prev, curr) => prev + curr, b(0)).toString()
+
+    /* const toString = (num: number, padStart: number) => num.toString(2).padStart(padStart, '0')
 
     const binarySegments = [
       toString(timestamp - EPOCH, 42), // 42 bits for timestamp
@@ -58,7 +69,7 @@ export class DiscordooSnowflake {
       toString(INCREMENT++, 22) // 22 bits for increment
     ]
 
-    return this.binaryToID(binarySegments.join(''))
+    return this.binaryToID(binarySegments.join('')) */
   }
 
   static generatePartial(timestamp: Date | number = Date.now()): string {
