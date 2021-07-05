@@ -4,6 +4,8 @@ import { CollectionFilterOptions } from '@src/collection/interfaces/CollectionFi
 import { CollectionRandomOptions } from '@src/collection/interfaces/CollectionRandomOptions'
 import { swap } from '@src/utils/swap'
 import { intoChunks } from '@src/utils/intoChunks'
+import { Predicate } from '@src/collection/interfaces/Predicate'
+import { equalFn } from '@src/collection/interfaces/equalFn'
 
 let lodashIsEqual: equalFn
 
@@ -11,14 +13,13 @@ try {
   lodashIsEqual = require('lodash/isEqual')
 } catch (e) {} // eslint-disable-line no-empty
 
-type equalFn = (value: any, other: any) => boolean
 
 /** An utility data structure used within the library */
-export class Collection<K = unknown, V = unknown> extends Map<K, V> {
+export class Collection<K = any, V = any> extends Map<K, V> {
 
   /**
-  * Returns the collection is empty or not.
-  * */
+   * The collection is empty or not.
+   * */
   get empty(): boolean {
     return this.size === 0
   }
@@ -81,17 +82,17 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
   /**
    * Filters out the elements which don't meet requirements.
    * @param filter - function to use
-   * @param {CollectionFilterOptions?} options - filter options
+   * @param options - filter options
    */
   filter<T>(
-    filter: (value: V, key: K, collection: Collection<K, V>) => unknown,
+    filter: Predicate<K, V, Collection<K, V>>,
     options?: CollectionFilterOptions
   ): T extends Array<any> ? Array<[ K, V ]> : T
   filter(
-    filter: (value: V, key: K, collection: Collection<K, V>) => unknown,
+    filter: Predicate<K, V, Collection<K, V>>,
     options: CollectionFilterOptions = {}
   ): Collection<K, V> | Array<[ K, V ]> | Map<K, V> {
-    let results, predicate
+    let results, predicate: Predicate<K, V, Collection<K, V>>
 
     switch (options.return) {
       case 'map':
@@ -117,10 +118,22 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
   }
 
   /**
+   * Searches to the element in collection and returns it
+   * @param predicate - function to use
+   * */
+  find(predicate: Predicate<K, V, Collection<K, V>, boolean>): V | null {
+    for (const [ key, value ] of this.entries()) {
+      if (predicate(value, key, this)) return value
+    }
+
+    return null
+  }
+
+  /**
    * Executes a function on each of elements of map.
    * @param predicate - function to use
    */
-  forEach(predicate: (value: V, key: K, collection: Collection<K, V>) => unknown) {
+  forEach(predicate: Predicate<K, V, Collection<K, V>>) {
     super.forEach((v: V, k: K) => {
       predicate(v, k, this)
     })
@@ -133,8 +146,8 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
 
   /**
    * Checks if two collections are equal.
-   * @param {Collection} collection - collection to compare to
-   * @param {CollectionEqualOptions?} options - options to use
+   * @param collection - collection to compare to
+   * @param options - options to use
    */
   equal(collection: Collection<K, V>, options: CollectionEqualOptions = {}): boolean {
     if (this.size !== collection?.size) return false
@@ -158,9 +171,9 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
   }
 
   /**
-  * Merges the specified collections into one and returns a new collection.
-  * @param collections - collections to merge
-  * */
+   * Merges the specified collections into one and returns a new collection.
+   * @param collections - collections to merge
+   * */
   concat(collections: Collection<K, V>[]): Collection<K, V> {
     const merged = this.clone()
 
@@ -178,10 +191,10 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
   }
 
   /**
-  * Checks if any of values satisfies the condition.
-  * @param predicate - function to use
-  * */
-  some(predicate: (value: V, key: K, collection: Collection<K, V>) => boolean): boolean {
+   * Checks if any of values satisfies the condition.
+   * @param predicate - function to use
+   * */
+  some(predicate: Predicate<K, V, Collection<K, V>, boolean>): boolean {
     for (const [ key, value ] of this.entries()) {
       if (predicate(value, key, this)) {
         return true
@@ -192,10 +205,10 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
   }
 
   /**
-  * Checks if all values satisfy the condition.
-  * @param predicate - function to use
-  * */
-  every(predicate: (value: V, key: K, collection: Collection<K, V>) => boolean): boolean {
+   * Checks if all values satisfy the condition.
+   * @param predicate - function to use
+   * */
+  every(predicate: Predicate<K, V, Collection<K, V>, boolean>): boolean {
     for (const [ key, value ] of this.entries()) {
       if (!predicate(value, key, this)) {
         return false
@@ -206,8 +219,8 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
   }
 
   /**
-  * Returns first N collection values.
-  * */
+   * Returns first N collection values.
+   * */
   first(): V | undefined
   first(amount: number): V[]
   first(amount?: number): V | V[] | undefined {
@@ -223,8 +236,8 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
   }
 
   /**
-  * Returns first N collection keys.
-  * */
+   * Returns first N collection keys.
+   * */
   firstKey(): K | undefined
   firstKey(amount: number): K[]
   firstKey(amount?: number): K | K[] | undefined {
@@ -240,8 +253,8 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
   }
 
   /**
-  * Returns last N collection values.
-  * */
+   * Returns last N collection values.
+   * */
   last(): V | undefined
   last(amount: number): V[]
   last(amount?: number): V | V[] | undefined {
@@ -257,8 +270,8 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
   }
 
   /**
-  * Returns last N collection keys.
-  * */
+   * Returns last N collection keys.
+   * */
   lastKey(): K | undefined
   lastKey(amount: number): K[]
   lastKey(amount?: number): K | K[] | undefined {
@@ -275,9 +288,9 @@ export class Collection<K = unknown, V = unknown> extends Map<K, V> {
 
   /**
    * Maps each item to another value into an array
-   * @param predicate function to use
+   * @param predicate - function to use
    * */
-  map<T = unknown>(predicate: (value: V, key: K, collection: Collection<K, V>) => T): T[] {
+  map<T = unknown>(predicate: Predicate<K, V, Collection<K, V>, T>): T[] {
     const result: T[] = []
 
     for (const [ key, value ] of this.entries()) {
