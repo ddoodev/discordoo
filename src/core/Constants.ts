@@ -41,7 +41,7 @@ export enum MembersCachingPolicy {
   NONE = 'none',
   /** Cache online members */
   ONLINE = 'online',
-  /** Cache members with dnd */
+  /** Cache members with dnd status */
   DND = 'dnd',
   /** Cache with idle status */
   IDLE = 'idle',
@@ -114,6 +114,14 @@ export enum PresencesCachingPolicy {
   /** Cache all presences */
   ALL = 'all',
   /** Dont cache presences */
+  NONE = 'none',
+}
+
+/** Users caching policy */
+export enum UsersCachingPolicy {
+  /** Cache all users */
+  ALL = 'all',
+  /** Dont cache users */
   NONE = 'none',
 }
 

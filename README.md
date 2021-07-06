@@ -83,6 +83,101 @@ djs is the most popular library for developing bots, so we will compare with it.
 * **Voice support** — at this moment, the library does not support voice.
 * **Microservices** — injection of microservices into the Client that can communicate with each other.
 
+## Release milestone
+A complete description of everything that must be in Discordoo to be released
+### Sharding
+* [x] Implement sharding
+* [x] Shards spawning
+  * [x] use processes for shards
+  * [x] use workers for shards
+  * [ ] use clusters for shards (currently it throws node:internal error)
+* [x] Shards communication
+  * [x] Shards must be able to communicate in fast and scalable way
+  * [x] Shards must use hello/identify algorithm
+  * [ ] Shards must use heartbeat algorithm
+  * [ ] Shards must be able to send, receive and handle REQUEST_STATS messages
+  * [ ] Shards must be able to send errors to ShardingManager, manager must handle these errors 
+* [x] User-land APIs
+  * [x] User must be able to spawn shards
+  * [ ] User must be able to restart specified shard(s)
+  * [ ] User must be able to destroy shard(s)
+  * [ ] User must be able to get shard(s) statistics
+    * [ ] v8 statistics
+    * [ ] eventloop lag
+    * [ ] custom statistics
+    * [ ] events per gateway shard per second statistics
+    * [ ] common statistics (guilds in cache, users in cache, channels in cache, other)
+  * [ ] User-friendly sharding APIs in sharding instances
+  
+### Gateway
+* [x] Implement gateway
+  * [x] Implement gateway provider
+* [x] Connecting to gateway
+* [x] Reconnecting/resuming in common/emergency cases
+* [x] Receive and send etf encoded messages
+* [x] Receive and decode zlib-compressed messages
+* [x] Multi gateway shards support in one WebSocketManager instance
+* [ ] Processing events/s smoothing/limiting
+* [ ] Handling gateway rate limits
+* [ ] Send events to WebSocketManager, and then to GatewayProvider
+* [ ] Gateway must be able to restart only specified shard(s)
+
+### Rest
+* [ ] Implement rest
+  * [ ] Implement rest provider (maybe request handler/requester providers)
+* [ ] Requests
+  * [ ] Sending requests to Discord
+* [ ] Responses
+  * [ ] Unified response form for library internals
+* [ ] Rate-limits
+  * [ ] Rest must smartly-handle rate-limits using `remaining` header
+  * [ ] Rest must synchronize global-rate-limit between shards on one machine
+  
+### Cache
+* [x] Implement cache
+  * [x] Implement cache provider
+* [x] Library must be able to store something
+* [x] Library must be able to delete something from cache
+* [x] Library must be able to check cache size
+* [ ] Library must be able to sweep cache using predicate and cycle 
+* [ ] Library must be able to iterate cache
+* [ ] Library must be able to operate with cache in a different shards from one shard
+* [ ] Caching policies
+  * [ ] Cache must handle GlobalCachingPolicy
+  * [ ] Cache must handle MessagesCachingPolicy
+  * [ ] Cache must handle GuildsCachingPolicy
+  * [ ] Cache must handle MembersCachingPolicy
+  * [ ] Cache must handle ChannelsCachingPolicy
+  * [ ] Cache must handle EmojisCachingPolicy
+  * [ ] Cache must handle RolesCachingPolicy
+  * [ ] Cache must handle PresencesCachingPolicy
+  * [ ] Cache must handle UsersCachingPolicy
+  * [ ] All the policies listed above must be able to handle custom caching functions
+  
+### Entities (discord structures)
+* [ ] Must be extendable
+* [ ] Must be steadiness to monkey-patches
+* [ ] Implement Guilds
+* [ ] Implement Messages
+* [ ] Implement Channels
+* [ ] Implement Emojis
+* [ ] Implement Roles
+* [ ] Implement Presences
+* [ ] Implement Users
+
+### User-land APIs
+* [x] Collection
+* [x] Wrapper
+* [ ] Entities managers
+  * [ ] BaseManager
+  * [ ] GuildsManager
+  * [ ] MessagesManager
+  * [ ] ChannelsManager
+  * [ ] EmojisManager
+  * [ ] RolesManager
+  * [ ] PresencesManager
+  * [ ] UsersManager
+
 ## Contributing
 Feel free to create a PR, but check if there is an existing one.
 See [Contributing Guide](https://github.com/Discordoo/discordoo/blob/master/CONTRIBUTING.md).
