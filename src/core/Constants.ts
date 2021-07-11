@@ -5,6 +5,14 @@ import { GatewayOptions } from '@src/gateway'
 
 export const RAW_IPC_EVENT = '__DDOO__.MESSAGE'
 
+export enum RestRequestMethods {
+  GET = 'GET',
+  POST = 'POST',
+  PUT = 'PUT',
+  PATCH = 'PATCH',
+  DELETE = 'DELETE'
+}
+
 /** Global caching policy used to override any other caching policies */
 export enum GlobalCachingPolicy {
   /** Cache everything we can */
@@ -184,13 +192,6 @@ export enum PartialShardingModes {
   WORKERS = 'workers',
   /** Spawn sharding instances in different node.js's clusters */
   CLUSTERS = 'clusters',
-}
-
-export enum ShardingManagerTypes {
-  STANDALONE_PARENT,
-  STANDALONE_CHILD,
-  PARENT,
-  CHILD,
 }
 
 export enum WebSocketOPCodes {

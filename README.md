@@ -125,12 +125,12 @@ Release deadline: September 30, 2021
 * [ ] Gateway must be able to restart only specified shard(s)
 
 ### Rest
-* [ ] Implement rest
-  * [ ] Implement rest provider (maybe request handler/requester providers)
+* [x] Implement rest
+  * [x] Implement rest provider - rest request (like constructor) & rest provider (performs requests and handles rate-limits)
 * [ ] Requests
   * [ ] Sending requests to Discord
-* [ ] Responses
-  * [ ] Unified response form for library internals
+* [x] Responses
+  * [x] Unified response form for library internals
 * [ ] Rate-limits
   * [ ] Rest must smartly-handle rate-limits using `remaining` header
   * [ ] Rest must synchronize global-rate-limit between shards on one machine

@@ -49,4 +49,6 @@ export interface CacheProvider<K = unknown, V = unknown> {
    * @param options - calculating options
    * */
   size(keyspace?: string, options?: CacheProviderSizeOptions): Promise<number>
+
+  // TODO: add forEach, sweep and filter methods
 }

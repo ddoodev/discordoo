@@ -1,6 +1,6 @@
 import { TypedEmitter } from 'tiny-typed-emitter'
 import { ShardingManagerEvents } from '@src/sharding/interfaces/manager/ShardingManagerEvents'
-import { PartialShardingModes, ShardingManagerTypes, ShardingModes } from '@src/core/Constants'
+import { PartialShardingModes, ShardingModes } from '@src/core/Constants'
 import { ShardingManagerOptions } from '@src/sharding/interfaces/manager/options/ShardingManagerOptions'
 import { DiscordooError, DiscordooSnowflake, wait } from '@src/utils'
 import { isMaster as isMainCluster } from 'cluster'
@@ -17,7 +17,6 @@ const SpawningLoopError = new DiscordooError(
 )
 
 export class ShardingManager extends TypedEmitter<ShardingManagerEvents> {
-  public type: ShardingManagerTypes
   public mode: ShardingModes
   public options: ShardingManagerOptions
   public id: string
@@ -34,7 +33,6 @@ export class ShardingManager extends TypedEmitter<ShardingManagerEvents> {
       throw SpawningLoopError
     }
 
-    this.type = options.type || ShardingManagerTypes.STANDALONE_PARENT
     this.mode = options.mode
     this.options = options
     this._shards = resolveShards(options.shards)

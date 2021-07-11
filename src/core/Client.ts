@@ -10,6 +10,7 @@ import { GatewayConnectOptions } from '@src/core/providers/gateway/options/Gatew
 import { DefaultCacheProvider } from '@src/cache/DefaultCacheProvider'
 import { ProviderConstructor } from '@src/core/providers/ProviderConstructor'
 import { DefaultGatewayProvider } from '@src/gateway/DefaultGatewayProvider'
+import { DefaultRestProvider } from '@src/rest/DefaultRestProvider'
 
 /** Entry point for all of Discordoo. Manages modules and events */
 export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
@@ -31,7 +32,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
 
     const gatewayOptions = Object.assign({}, this.options.gateway || {}, { token: this.token })
 
-    let // rest: ClientStack['rest'] = new RESTProviderBuilder(this.options.rest).getRestProvider()(this),
+    let rest: ClientStack['rest'] = new DefaultRestProvider(this),
       cache: ClientStack['cache'] = new DefaultCacheProvider(this),
       gateway: ClientStack['gateway'] = new DefaultGatewayProvider(this, gatewayOptions)
 
@@ -47,7 +48,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
             break
 
           case DiscordooProviders.REST:
-            // rest = new provider.useClass(this)
+            rest = new provider.useClass(this)
             break
         }
       } catch (e) {
@@ -69,9 +70,8 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
       }, this.options.ipc ?? {})
     )
 
-    // @ts-ignore
     this.internals = {
-      // rest,
+      rest,
       cache,
       gateway,
       ipc,
@@ -80,7 +80,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
   }
 
   /**
-   * Set the {@link RESTProvider} to be used by this client
+   * Set the {@link RestProvider} to be used by this client
    * @param provider - function, that returns desired RESTProvider
    * @param options - any options to custom cache provider
    */

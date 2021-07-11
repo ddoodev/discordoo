@@ -1,4 +1,4 @@
-import { ShardingManagerTypes, ShardingModes } from '@src/core/Constants'
+import { ShardingModes } from '@src/core/Constants'
 import { MachinesShardingOptions } from '@src/sharding/interfaces/manager/options/MachinesShardingOptions'
 import { ProcessesShardingOptions } from '@src/sharding/interfaces/manager/options/ProcessesShardingOptions'
 import { WorkersShardingOptions } from '@src/sharding/interfaces/manager/options/WorkersShardingOptions'
@@ -7,7 +7,6 @@ import { ShardListResolvable } from '@src/core/ShardListResolvable'
 
 export interface ShardingManagerOptions {
   mode: ShardingModes
-  type?: ShardingManagerTypes
   shards: ShardListResolvable
   file: string
 
