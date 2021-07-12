@@ -9,7 +9,7 @@
     "test:fly": "node dist/on-the-fly/index.js",
     "test:fly:nsolid": "npx nsolid-quickstart --exec dist/on-the-fly/index.js",
     "build": "tsc -p tsconfig.json && tscpaths -p tsconfig.tspaths.json -s ./src -o ./dist",
-    "docs": "typedoc && npx tapok docs/docs/api",
+    "docs": "npx typedoc && npx tapok docs/docs/api",
     "prepublishOnly": "npm run build",
     "prepare": "husky install"
   },
@@ -42,7 +42,7 @@
     "ts-jest": "^26.5.4",
     "tscpaths": "^0.0.9",
     "tslib": "^2.3.0",
-    "typedoc": "^0.21.1",
+    "typedoc": "0.21.1",
     "typedoc-plugin-markdown": "^3.10.2",
     "typescript": "^4.3.4"
   },
