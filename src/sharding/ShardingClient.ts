@@ -7,6 +7,7 @@ import { ShardingClientOptions } from '@src/sharding/interfaces/client/ShardingC
 import { ShardingClientCreateOptions } from '@src/sharding/interfaces/client/ShardingClientCreateOptions'
 import { IpcClient } from '@src/sharding/ipc/IpcClient'
 import { DiscordooError } from '@src/utils'
+import { ProcessesShardingOptions, WorkersShardingOptions } from '@src/sharding'
 
 export class ShardingClient extends TypedEmitter {
   public id: number
@@ -46,10 +47,8 @@ export class ShardingClient extends TypedEmitter {
       __DDOO_SHARD_IPC_IDENTIFIER: this.options.env.SHARD_IPC_IDENTIFIER,
       __DDOO_SHARD_ID: this.options.env.SHARD_ID,
       ...process.env,
-      ...(this.options.extraOptions?.env || {})
+      ...this.options.extraOptions?.env
     }
-
-    if (this.options.extraOptions?.env) delete this.options.extraOptions.env
 
     switch (this.mode) {
       case PartialShardingModes.CLUSTERS: // node:internal/child_process:805 TypeError: handle.setSimultaneousAccepts is not a function
@@ -58,11 +57,18 @@ export class ShardingClient extends TypedEmitter {
         break
 
       case PartialShardingModes.PROCESSES:
-        this.rawShard = Process.fork(this.options.file, { env: env, ...(this.options.extraOptions || {}) })
+        this.rawShard = Process.fork(
+          this.options.file,
+          undefined,
+          { env, ...(this.options.extraOptions as ProcessesShardingOptions)?.forkOptions }
+        )
         break
 
       case PartialShardingModes.WORKERS:
-        this.rawShard = new Worker(this.options.file, { env: env, ...(this.options.extraOptions || {}) })
+        this.rawShard = new Worker(
+          this.options.file,
+          { env, ...(this.options.extraOptions as WorkersShardingOptions)?.spawnOptions }
+        )
         break
 
       default:
