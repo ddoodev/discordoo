@@ -16,6 +16,8 @@ export function message(
 
   let { data } = event, packet: Record<any, any> | undefined
 
+  console.log('shard', client.id, 'message', data)
+
   if (data instanceof ArrayBuffer) data = new Uint8Array(data)
 
   // Buffer.concat is slow, but no alternative
@@ -36,23 +38,17 @@ export function message(
     // then pako will decompress all received chunks
     inflate.push(data, flush ? WebSocketUtils.pako.Z_SYNC_FLUSH : false)
     if (!flush) return // we can't process if this is not the last chunk
-    const decompressed = inflate.result
+    const decompressed: any = inflate.result
 
     // in case if packet is broken
     if (!decompressed) return
 
     // preparing data for subsequent processing
-    if (decompressed instanceof Uint8Array || Array.isArray(decompressed)) {
-      data = Buffer.from(decompressed)
-    } else {
-      data = decompressed
-    }
+    data = Buffer.from(decompressed)
 
     // if we use erlpack data will be buffer, so else we unpack it to string
-    if (WebSocketUtils.encoding === 'json' && Buffer.isBuffer(data)) data = data.toString('utf8')
+    if (WebSocketUtils.encoding === 'json') data = data.toString('utf8')
   }
-
-  console.log('shard', client.id, 'message', data)
 
   try {
     // data unpacking from string/utf to json
