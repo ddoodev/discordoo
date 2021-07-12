@@ -57,16 +57,16 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
     })
 
     const env: ShardingClientEnvironment = {
-      SHARD_IPC_IDENTIFIER: process.env.__DDOO_SHARD_IPC_IDENTIFIER!,
-      SHARDING_MANAGER_IPC_IDENTIFIER: process.env.__DDOO_SHARDING_MANAGER_IPC_IDENTIFIER!,
-      SHARD_ID: parseInt(process.env.__DDOO_SHARD_ID!) ?? 0
+      SHARDING_MANAGER_IPC_ID: process.env.__DDOO_SHARDING_MANAGER_IPC_ID!,
+      SHARDING_INSTANCE_IPC_ID: process.env.__DDOO_SHARDING_INSTANCE_IPC_ID!,
+      SHARDING_INSTANCE_ID: parseInt(process.env.__DDOO_SHARDING_INSTANCE_ID!) ?? 0
     }
 
     const ipc = new IpcServer(
       Object.assign({
-        id: env.SHARD_IPC_IDENTIFIER || DiscordooSnowflake.generate(env.SHARD_ID, process.pid),
-        managerIpcId: env.SHARDING_MANAGER_IPC_IDENTIFIER,
-        shardId: env.SHARD_ID
+        id: env.SHARDING_INSTANCE_IPC_ID || DiscordooSnowflake.generate(env.SHARDING_INSTANCE_ID, process.pid),
+        managerIpcId: env.SHARDING_MANAGER_IPC_ID,
+        shardId: env.SHARDING_INSTANCE_ID
       }, this.options.ipc ?? {})
     )
 
@@ -109,7 +109,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
   async start() {
     let options: GatewayConnectOptions | undefined
 
-    if (this.internals.env.SHARDING_MANAGER_IPC_IDENTIFIER) {
+    if (this.internals.env.SHARDING_MANAGER_IPC_ID) {
       await this.internals.ipc.serve()
       if (this.internals.ipc.shards && this.internals.ipc.totalShards) {
         options = {

@@ -22,8 +22,8 @@ export class ShardingClient extends TypedEmitter {
   constructor(options: ShardingClientOptions) {
     super()
 
-    this.id = options.env.SHARD_ID
-    this.ipcId = options.env.SHARD_IPC_IDENTIFIER
+    this.id = options.internalEnv.SHARDING_INSTANCE_ID
+    this.ipcId = options.internalEnv.SHARDING_INSTANCE_IPC_ID
     this.shards = options.shards
     this.mode = options.mode
     this.totalShards = options.totalShards
@@ -34,7 +34,7 @@ export class ShardingClient extends TypedEmitter {
       tls: options.ipc?.tls,
       config: options.ipc?.config,
       shards: this.shards,
-      managerId: this.options.env.SHARDING_MANAGER_IPC_IDENTIFIER,
+      managerId: this.options.internalEnv.SHARDING_MANAGER_IPC_ID,
       totalShards: this.totalShards
     })
   }
@@ -43,31 +43,31 @@ export class ShardingClient extends TypedEmitter {
     if (!options.timeout) options.timeout = 30000
 
     const env: any = {
-      __DDOO_SHARDING_MANAGER_IPC_IDENTIFIER: this.options.env.SHARDING_MANAGER_IPC_IDENTIFIER,
-      __DDOO_SHARD_IPC_IDENTIFIER: this.options.env.SHARD_IPC_IDENTIFIER,
-      __DDOO_SHARD_ID: this.options.env.SHARD_ID,
-      ...process.env,
-      ...this.options.extraOptions?.env
+      __DDOO_SHARDING_MANAGER_IPC_ID: this.options.internalEnv.SHARDING_MANAGER_IPC_ID,
+      __DDOO_SHARDING_INSTANCE_IPC_ID: this.options.internalEnv.SHARDING_INSTANCE_IPC_ID,
+      __DDOO_SHARDING_INSTANCE_ID: this.options.internalEnv.SHARDING_INSTANCE_ID,
+      TOKEN: process.env.TOKEN
+      // ...process.env,
     }
 
     switch (this.mode) {
       case PartialShardingModes.CLUSTERS: // node:internal/child_process:805 TypeError: handle.setSimultaneousAccepts is not a function
         Cluster.setupMaster({ exec: this.options.file })
-        this.rawShard = Cluster.fork(env)
+        this.rawShard = Cluster.fork()
         break
 
       case PartialShardingModes.PROCESSES:
         this.rawShard = Process.fork(
           this.options.file,
           undefined,
-          { env, ...(this.options.extraOptions as ProcessesShardingOptions)?.forkOptions }
+          { env, ...this.options.spawnOptions }
         )
         break
 
       case PartialShardingModes.WORKERS:
         this.rawShard = new Worker(
           this.options.file,
-          { env, ...(this.options.extraOptions as WorkersShardingOptions)?.spawnOptions }
+          { env, ...this.options.spawnOptions }
         )
         break
 

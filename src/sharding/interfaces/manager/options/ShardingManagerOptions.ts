@@ -10,6 +10,8 @@ export interface ShardingManagerOptions {
   shards: ShardListResolvable
   file: string
 
+  shardsPerInstance?: number
+
   machines?: MachinesShardingOptions
   processes?: ProcessesShardingOptions
   workers?: WorkersShardingOptions

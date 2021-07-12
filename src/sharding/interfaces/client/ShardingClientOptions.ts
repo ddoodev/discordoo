@@ -2,15 +2,16 @@ import { ShardingClientEnvironment } from '@src/sharding/interfaces/client/Shard
 import { PartialShardingModes } from '@src/core/Constants'
 import { IpcClientTlsOptions } from '@src/sharding/interfaces/ipc/IpcClientTlsOptions'
 import { RawIpcConfig } from '@src/sharding/interfaces/ipc/RawIpcConfig'
-import { ClustersShardingOptions, ProcessesShardingOptions, WorkersShardingOptions } from '@src/sharding'
+import { ForkOptions as ProcessForkOptions } from 'child_process'
+import { WorkerOptions } from 'worker_threads'
 
 export interface ShardingClientOptions {
-  env: ShardingClientEnvironment
+  internalEnv: ShardingClientEnvironment
   shards: number[]
   totalShards: number
   mode: PartialShardingModes
   file: string
-  extraOptions?: ProcessesShardingOptions | WorkersShardingOptions | ClustersShardingOptions
+  spawnOptions?: ProcessForkOptions | WorkerOptions
   ipc?: {
     tls?: IpcClientTlsOptions
     config?: RawIpcConfig

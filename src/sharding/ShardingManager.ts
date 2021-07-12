@@ -28,7 +28,7 @@ export class ShardingManager extends TypedEmitter<ShardingManagerEvents> {
   constructor(options: ShardingManagerOptions) {
     super()
 
-    if ((!isMainProcess || !isMainCluster || !isMainThread) && process.env.__DDOO_SHARDING_MANAGER_IPC_IDENTIFIER) {
+    if ((!isMainProcess || !isMainCluster || !isMainThread) && process.env.__DDOO_SHARDING_MANAGER_IPC_ID) {
       this.#died = true
       throw SpawningLoopError
     }
@@ -57,10 +57,10 @@ export class ShardingManager extends TypedEmitter<ShardingManagerEvents> {
         file: this.options.file,
         totalShards: this._shards.length,
         mode: this.mode as unknown as PartialShardingModes,
-        env: {
-          SHARDING_MANAGER_IPC_IDENTIFIER: this.id,
-          SHARD_IPC_IDENTIFIER: DiscordooSnowflake.generate(index, process.pid),
-          SHARD_ID: index,
+        internalEnv: {
+          SHARDING_MANAGER_IPC_ID: this.id,
+          SHARDING_INSTANCE_IPC_ID: DiscordooSnowflake.generate(index, process.pid),
+          SHARDING_INSTANCE_ID: index,
         }
       })
 
