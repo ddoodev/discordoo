@@ -5,12 +5,18 @@ import { GatewayOptions } from '@src/gateway'
 
 export const RAW_IPC_EVENT = '__DDOO__.MESSAGE'
 
+/** Sharding more 'clusters' incompatible with Windows socket. Only UNIX socket supported. */
+export const CLUSTERS_SHARDING_UNSUPPORTED_PLATFORMS = [
+  'win32',
+  'cygwin',
+]
+
 export enum RestRequestMethods {
   GET = 'GET',
   POST = 'POST',
   PUT = 'PUT',
   PATCH = 'PATCH',
-  DELETE = 'DELETE'
+  DELETE = 'DELETE',
 }
 
 /** Global caching policy used to override any other caching policies */

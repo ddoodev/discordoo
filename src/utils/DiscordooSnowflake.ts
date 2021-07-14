@@ -38,6 +38,7 @@ export class DiscordooSnowflake {
    */
 
   static generate(shardID: number, workerID = 0, timestamp: number | Date = Date.now()): string {
+    console.log('SNOWFLAKE GENERATE', process.pid, 'DATA', 'shard', shardID, 'worker', workerID, 'timestamp', timestamp)
     if (timestamp instanceof Date) timestamp = timestamp.getTime()
 
     if (INCREMENT >= 4194302) INCREMENT = 0

@@ -5,8 +5,10 @@ import { Collection } from '@src/collection'
 import { IpcOPCodes, RAW_IPC_EVENT } from '@src/core/Constants'
 import { DiscordooError, DiscordooSnowflake } from '@src/utils'
 import { IpcHeartbeatPacket, IpcHelloPacket } from '@src/sharding/interfaces/ipc/IpcPackets'
+import { IpcClientEvents } from '@src/sharding/interfaces/ipc/IpcClientEvents'
+import * as fs from 'fs'
 
-export class IpcClient extends TypedEmitter {
+export class IpcClient extends TypedEmitter<IpcClientEvents> {
   private bucket: Collection<string, any> = new Collection()
   private shardSocket: any
   private readonly shardIpcId: string
@@ -32,6 +34,7 @@ export class IpcClient extends TypedEmitter {
     this.ipc.config = Object.assign(this.ipc.config, options.config ?? {})
 
     this.eventsHandler = (packet: IpcPacket) => {
+      if (this.listeners('RAW').length) this.emit('RAW', packet)
       this.onPacket(packet)
     }
   }
@@ -138,6 +141,7 @@ export class IpcClient extends TypedEmitter {
   }
 
   private generate() {
+    console.log('CLIENT', this.id)
     return DiscordooSnowflake.generate(this.id, process.pid)
   }
 }

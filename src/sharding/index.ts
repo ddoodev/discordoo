@@ -5,9 +5,9 @@ import { ClustersShardingOptions } from '@src/sharding/interfaces/manager/option
 import { ShardingManagerOptions } from '@src/sharding/interfaces/manager/options/ShardingManagerOptions'
 import { WorkersShardingOptions } from '@src/sharding/interfaces/manager/options/WorkersShardingOptions'
 
-import { ShardingClientCreateOptions } from '@src/sharding/interfaces/client/ShardingClientCreateOptions'
-import { ShardingClientEnvironment } from '@src/sharding/interfaces/client/ShardingClientEnvironment'
-import { ShardingClientOptions } from '@src/sharding/interfaces/client/ShardingClientOptions'
+import { ShardingInstanceCreateOptions } from '@src/sharding/interfaces/client/ShardingInstanceCreateOptions'
+import { ShardingInstanceEnvironment } from '@src/sharding/interfaces/client/ShardingInstanceEnvironment'
+import { ShardingInstanceOptions } from '@src/sharding/interfaces/client/ShardingInstanceOptions'
 
 import { ShardingMachineOptions } from '@src/sharding/interfaces/machine/ShardingMachineOptions'
 import { ShardingManagerEvents } from '@src/sharding/interfaces/manager/ShardingManagerEvents'
@@ -24,7 +24,7 @@ import * as IpcPackets from '@src/sharding/interfaces/ipc/IpcPackets'
 import { IpcPacket } from '@src/sharding/interfaces/ipc/IpcPacket'
 
 import { ShardingManager } from '@src/sharding/ShardingManager'
-import { ShardingClient } from '@src/sharding/ShardingClient'
+import { ShardingInstance } from '@src/sharding/ShardingInstance'
 
 import { IpcClient } from '@src/sharding/ipc/IpcClient'
 import { IpcServer } from '@src/sharding/ipc/IpcServer'
@@ -36,9 +36,9 @@ export {
   ClustersShardingOptions,
   ShardingManagerOptions,
   WorkersShardingOptions,
-  ShardingClientCreateOptions,
-  ShardingClientEnvironment,
-  ShardingClientOptions,
+  ShardingInstanceCreateOptions,
+  ShardingInstanceEnvironment,
+  ShardingInstanceOptions,
   ShardingMachineOptions,
   ShardingManagerEvents,
   IpcClientSendOptions,
@@ -52,7 +52,7 @@ export {
   IpcPackets,
   IpcPacket,
   ShardingManager,
-  ShardingClient,
+  ShardingInstance,
   IpcServer,
   IpcClient
 }

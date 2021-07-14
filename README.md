@@ -92,7 +92,7 @@ Release deadline: September 30, 2021
 * [x] Shards spawning
   * [x] use processes for shards
   * [x] use workers for shards
-  * [ ] use clusters for shards (currently it throws node:internal error)
+  * [x] use clusters for shards (unfortunately, windows not supported)
 * [x] Shards communication
   * [x] Shards must be able to communicate in fast and scalable way
   * [x] Shards must use hello/identify algorithm

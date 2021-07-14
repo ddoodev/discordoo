@@ -1,5 +1,5 @@
 import { DefaultClientStack } from '@src/core/client/DefaultClientStack'
-import { ShardingClientEnvironment } from '@src/sharding/interfaces/client/ShardingClientEnvironment'
+import { ShardingInstanceEnvironment } from '@src/sharding/interfaces/client/ShardingInstanceEnvironment'
 
 export interface ClientInternals<ClientStack extends DefaultClientStack = DefaultClientStack> {
   /** Inter-process communication server used by this client */
@@ -15,5 +15,5 @@ export interface ClientInternals<ClientStack extends DefaultClientStack = Defaul
   gateway: ClientStack['gateway']
 
   /** Sharding Environment */
-  env: ShardingClientEnvironment
+  env: ShardingInstanceEnvironment
 }

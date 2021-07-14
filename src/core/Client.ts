@@ -5,7 +5,7 @@ import { ClientOptions } from '@src/core/client/ClientOptions'
 import { DiscordooProviders } from '@src/core/Constants'
 import { DiscordooError, DiscordooSnowflake } from '@src/utils'
 import { IpcServer } from '@src/sharding/ipc/IpcServer'
-import { ShardingClientEnvironment } from '@src/sharding/interfaces/client/ShardingClientEnvironment'
+import { ShardingInstanceEnvironment } from '@src/sharding/interfaces/client/ShardingInstanceEnvironment'
 import { GatewayConnectOptions } from '@src/core/providers/gateway/options/GatewayConnectOptions'
 import { DefaultCacheProvider } from '@src/cache/DefaultCacheProvider'
 import { ProviderConstructor } from '@src/core/providers/ProviderConstructor'
@@ -56,17 +56,19 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
       }
     })
 
-    const env: ShardingClientEnvironment = {
-      SHARDING_MANAGER_IPC_ID: process.env.__DDOO_SHARDING_MANAGER_IPC_ID!,
-      SHARDING_INSTANCE_IPC_ID: process.env.__DDOO_SHARDING_INSTANCE_IPC_ID!,
-      SHARDING_INSTANCE_ID: parseInt(process.env.__DDOO_SHARDING_INSTANCE_ID!) ?? 0
+    const env: ShardingInstanceEnvironment = {
+      SHARDING_MANAGER_IPC: process.env.SHARDING_MANAGER_IPC!,
+      SHARDING_INSTANCE_IPC: process.env.SHARDING_INSTANCE_IPC!,
+      SHARDING_INSTANCE: parseInt(process.env.SHARDING_INSTANCE!) || 0
     }
+
+    console.log(process.env)
 
     const ipc = new IpcServer(
       Object.assign({
-        id: env.SHARDING_INSTANCE_IPC_ID || DiscordooSnowflake.generate(env.SHARDING_INSTANCE_ID, process.pid),
-        managerIpcId: env.SHARDING_MANAGER_IPC_ID,
-        shardId: env.SHARDING_INSTANCE_ID
+        id: env.SHARDING_INSTANCE_IPC || DiscordooSnowflake.generate(env.SHARDING_INSTANCE, process.pid),
+        managerIpcId: env.SHARDING_MANAGER_IPC,
+        shardId: env.SHARDING_INSTANCE
       }, this.options.ipc ?? {})
     )
 
@@ -109,7 +111,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
   async start() {
     let options: GatewayConnectOptions | undefined
 
-    if (this.internals.env.SHARDING_MANAGER_IPC_ID) {
+    if (this.internals.env.SHARDING_MANAGER_IPC) {
       await this.internals.ipc.serve()
       if (this.internals.ipc.shards && this.internals.ipc.totalShards) {
         options = {

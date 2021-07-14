@@ -7,8 +7,9 @@ import { IpcPacket } from '@src/sharding'
 import { DiscordooError, DiscordooSnowflake } from '@src/utils'
 import { IpcServerSendOptions } from '@src/sharding/interfaces/ipc/IpcServerSendOptions'
 import { IpcDispatchPacket, IpcHelloPacket, IpcIdentifyPacket } from '@src/sharding/interfaces/ipc/IpcPackets'
+import { IpcServerEvents } from '@src/sharding/interfaces/ipc/IpcServerEvents'
 
-export class IpcServer extends TypedEmitter {
+export class IpcServer extends TypedEmitter<IpcServerEvents> {
   private bucket: Collection<string, any> = new Collection()
   private managerSocket: any
   private readonly managerId: string
@@ -33,6 +34,7 @@ export class IpcServer extends TypedEmitter {
     this.ipc.config = Object.assign(this.ipc.config, options.config ?? {})
 
     this.eventsHandler = (data: IpcPacket, socket: any) => {
+      if (this.listeners('RAW').length) this.emit('RAW', data)
       this.onPacket(data, socket)
     }
   }
@@ -155,6 +157,7 @@ export class IpcServer extends TypedEmitter {
   }
 
   private generate() {
+    console.log('SERVER', this.shardID)
     return DiscordooSnowflake.generate(this.shardID, process.pid)
   }
 }
