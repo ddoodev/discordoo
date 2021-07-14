@@ -1,6 +1,6 @@
 {
   "name": "discordoo",
-  "version": "0.6.5",
+  "version": "0.6.6",
   "description": "Discord bots. Simplified and boosted",
   "scripts": {
     "lint": "eslint tests src",
@@ -19,7 +19,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/Discordoo/discordoo"
+    "url": "git+https://github.com/Discordoo/discordoo.git"
   },
   "license": "MIT",
   "devDependencies": {
@@ -49,9 +49,9 @@
   "dependencies": {
     "@discordoo/collection": "^1.0.3",
     "discord-api-types": "^0.18.1",
-    "node-fetch": "^2.6.1",
     "node-ipc": "^9.1.4",
     "tiny-typed-emitter": "^2.0.3",
+    "undici": "^4.1.1",
     "ws": "^7.4.5"
   },
   "optionalDependencies": {
@@ -98,5 +98,8 @@
         "types/src/wrapper/index.d.ts"
       ]
     }
+  },
+  "engines": {
+    "node": ">=12.18"
   }
 }

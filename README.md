@@ -51,7 +51,7 @@ It was built from ground-up to provide better and faster APIs, both internal and
 * **Tested** — critical components tested using various benchmarks, including testing using N|Solid platform
 
 ## Let's start
-Instructions for creating the first bot with Discordoo can be found in our documentation:
+Node.js v12.18 or newer required.
 1. [Installing](https://docs.discordoo.xyz/base-guide/installing/)
 2. [First code & starting](https://docs.discordoo.xyz/base-guide/starting/)
 
