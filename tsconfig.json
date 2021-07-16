@@ -27,7 +27,12 @@
       "@src/*": [ "src/*" ],
       "@root/*": [ "./*" ]
     },
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "plugins": [
+      {
+        "transform": "@zerollup/ts-transform-paths",
+      }
+    ]
   },
   "exclude": [
     "node_modules",

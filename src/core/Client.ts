@@ -62,8 +62,6 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
       SHARDING_INSTANCE: parseInt(process.env.SHARDING_INSTANCE!) || 0
     }
 
-    console.log(process.env)
-
     const ipc = new IpcServer(
       Object.assign({
         id: env.SHARDING_INSTANCE_IPC || DiscordooSnowflake.generate(env.SHARDING_INSTANCE, process.pid),

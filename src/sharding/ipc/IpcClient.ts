@@ -6,7 +6,6 @@ import { IpcOPCodes, RAW_IPC_EVENT } from '@src/core/Constants'
 import { DiscordooError, DiscordooSnowflake } from '@src/utils'
 import { IpcHeartbeatPacket, IpcHelloPacket } from '@src/sharding/interfaces/ipc/IpcPackets'
 import { IpcClientEvents } from '@src/sharding/interfaces/ipc/IpcClientEvents'
-import * as fs from 'fs'
 
 export class IpcClient extends TypedEmitter<IpcClientEvents> {
   private bucket: Collection<string, any> = new Collection()

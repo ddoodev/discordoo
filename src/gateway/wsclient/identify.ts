@@ -1,6 +1,6 @@
 import { WebSocketClient } from '@src/gateway/WebSocketClient'
 import { IdentifyOptions } from '@src/gateway/interfaces/IdentifyOptions'
-import { WebSocketOPCodes, WebSocketClientStates } from '@src/core/Constants'
+import { WebSocketClientStates, WebSocketOPCodes } from '@src/core/Constants'
 import { GatewayIdentify, GatewayIdentifyData, GatewayResume, GatewayResumeData } from 'discord-api-types'
 
 // creates discord api identify payload

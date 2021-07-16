@@ -9,9 +9,9 @@ import { WebSocketSendPayload } from '@src/gateway/interfaces/WebSocketSendPaylo
 import { WebSocketPacket } from '@src/gateway/interfaces/WebSocketPacket'
 import { GatewayOptions } from '@src/gateway/interfaces/GatewayOptions'
 import {
-  WebSocketOPCodes,
   WebSocketClientEvents,
   WebSocketClientStates,
+  WebSocketOPCodes,
   WebSocketStates,
   WS_HANDSHAKE_TIMEOUT
 } from '@src/core/Constants'
