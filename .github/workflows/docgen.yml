@@ -9,7 +9,7 @@ on:
 jobs:
   docs:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' || github.event.action == 'guide_build'
+    if: github.event_name == 'push' || github.event.action == 'docs_build'
     steps:
       - uses: actions/checkout@v2
         with:
@@ -21,16 +21,31 @@ jobs:
       - uses: actions/setup-python@v2
         with:
           python-version: '3.7'
+
       - name: Clone guide repo
         run: git clone https://github.com/Discordoo/discordoo-guide docs
-      - name: Install required packages
-        run: |
-          npm ci
-          pip install -r ./docs/requirements.txt
-      - name: Run api docs generation
-        run: |
-          npm run docs
-          cd docs && mkdocs build
+
+      - name: Clone collection repo
+        run: git clone https://github.com/Discordoo/discordoo-guide __collection__
+
+      - name: Install collection required packages
+        run: cd __collection__ && npm ci && cd ..
+
+      - name: Run collection docs generation
+        run: cd __collection__ && npm run docs && cd ..
+
+      - name: Install ddoo required packages
+        run: npm ci
+
+      - name: Run ddoo docs generation
+        run: npm run docs
+
+      - name: Install mkdocs required packages
+        run: pip install -r ./docs/requirements.txt
+
+      - name: Run mkdocs build
+        run: cd docs && mkdocs build
+
       - name: Deploy
         uses: 'JamesIves/github-pages-deploy-action@4.1.3'
         with:
