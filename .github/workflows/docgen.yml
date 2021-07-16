@@ -29,10 +29,12 @@ jobs:
         run: git clone https://github.com/Discordoo/discordoo-guide __collection__
 
       - name: Install collection required packages
-        run: cd __collection__ && npm ci
+        working-directory: ./__collection__
+        run: npm ci
 
       - name: Run collection docs generation
-        run: cd __collection__ && npm run docs
+        working-directory: ./__collection__
+        run: npm run docs
 
       - name: Install ddoo required packages
         run: npm ci
@@ -44,7 +46,8 @@ jobs:
         run: pip install -r ./docs/requirements.txt
 
       - name: Run mkdocs build
-        run: cd docs && mkdocs build
+        working-directory: ./docs
+        run: mkdocs build
 
       - name: Deploy
         uses: 'JamesIves/github-pages-deploy-action@4.1.3'
