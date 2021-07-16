@@ -26,7 +26,7 @@ jobs:
         run: git clone https://github.com/Discordoo/discordoo-guide docs
 
       - name: Clone collection repo
-        run: git clone https://github.com/Discordoo/discordoo-guide __collection__
+        run: git clone https://github.com/Discordoo/collection __collection__
 
       - name: Run collection docs generation
         run: npm run docs:collection
