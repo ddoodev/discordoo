@@ -10,6 +10,7 @@
     "test:fly:nsolid": "npx nsolid-quickstart --exec dist/on-the-fly/index.js",
     "build": "ttsc -p tsconfig.json",
     "docs": "npx typedoc && npx tapok docs/docs/api",
+    "docs:collection": "cd ./__collection__ && npm ci && npm run docs",
     "prepublishOnly": "npm run build",
     "prepare": "husky install"
   },
