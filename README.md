@@ -157,6 +157,8 @@ Release deadline: September 30, 2021
   * [ ] All the policies listed above must be able to handle custom caching functions
   
 ### Entities (discord structures)
+* [ ] Must be extendable
+* [x] Anti monkey-patch defence
 * [ ] Implement Guilds
 * [ ] Implement Messages
 * [ ] Implement Channels

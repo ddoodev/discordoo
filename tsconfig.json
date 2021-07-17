@@ -17,6 +17,7 @@
     "importHelpers": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "declaration": true,
     "declarationDir": "./types",
     "noImplicitAny": false,
@@ -30,7 +31,7 @@
     "outDir": "./dist",
     "plugins": [
       {
-        "transform": "@zerollup/ts-transform-paths",
+        "transform": "@zerollup/ts-transform-paths"
       }
     ]
   },
