@@ -1,11 +1,11 @@
-import { RestProvider } from '@src/core/providers/rest/RestProvider'
 import { RestRequestMethods } from '@src/core/Constants'
 import { RestRequestResponse } from '@src/core/providers/rest/RestRequestResponse'
+import { RestManager } from '@src/rest/RestManager'
 
 /** Constructor used to build and perform requests to discord rest api */
 export interface RestRequest {
   /** RestProvider to perform requests */
-  rest: RestProvider
+  rest: RestManager
 
   /** Url parts */
   requestStack: string[]

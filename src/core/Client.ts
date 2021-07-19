@@ -11,8 +11,13 @@ import { DefaultCacheProvider } from '@src/cache/DefaultCacheProvider'
 import { ProviderConstructor } from '@src/core/providers/ProviderConstructor'
 import { DefaultGatewayProvider } from '@src/gateway/DefaultGatewayProvider'
 import { DefaultRestProvider } from '@src/rest/DefaultRestProvider'
+import { RestManager } from '@src/rest/RestManager'
+import { CacheManager } from '@src/cache/CacheManager'
+import { GatewayManager } from '@src/gateway/GatewayManager'
+import { Final } from '@src/utils/FinalDecorator'
 
 /** Entry point for all of Discordoo. Manages modules and events */
+@Final('start', 'internals')
 export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
   extends TypedEmitter<ListenerSignature<ClientStack['events']>> {
   /** Token used by this client */
@@ -32,23 +37,28 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
 
     const gatewayOptions = Object.assign({}, this.options.gateway || {}, { token: this.token })
 
-    let rest: ClientStack['rest'] = new DefaultRestProvider(this),
-      cache: ClientStack['cache'] = new DefaultCacheProvider(this),
-      gateway: ClientStack['gateway'] = new DefaultGatewayProvider(this, gatewayOptions)
+    let
+      restProvider: ProviderConstructor<ClientStack['rest']> = DefaultRestProvider,
+      cacheProvider: ProviderConstructor<ClientStack['cache']> = DefaultCacheProvider,
+      gatewayProvider: ProviderConstructor<ClientStack['gateway']> = DefaultGatewayProvider
+    let restProviderOptions, gatewayProviderOptions = gatewayOptions, cacheProviderOptions
 
     this.options.providers?.forEach(provider => {
       try {
         switch (provider.provide) {
           case DiscordooProviders.CACHE:
-            cache = new provider.useClass(this)
+            cacheProvider = provider.useClass
+            cacheProviderOptions = provider.useOptions
             break
 
           case DiscordooProviders.GATEWAY:
-            gateway = new provider.useClass(this, gatewayOptions)
+            gatewayProvider = provider.useClass
+            gatewayProviderOptions = provider.useOptions
             break
 
           case DiscordooProviders.REST:
-            rest = new provider.useClass(this)
+            restProvider = provider.useClass
+            restProviderOptions = provider.useOptions
             break
         }
       } catch (e) {
@@ -56,19 +66,22 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
       }
     })
 
-    const env: ShardingInstanceEnvironment = {
-      SHARDING_MANAGER_IPC: process.env.SHARDING_MANAGER_IPC!,
-      SHARDING_INSTANCE_IPC: process.env.SHARDING_INSTANCE_IPC!,
-      SHARDING_INSTANCE: parseInt(process.env.SHARDING_INSTANCE!) || 0
-    }
-
-    const ipc = new IpcServer(
-      Object.assign({
-        id: env.SHARDING_INSTANCE_IPC || DiscordooSnowflake.generate(env.SHARDING_INSTANCE, process.pid),
-        managerIpcId: env.SHARDING_MANAGER_IPC,
-        shardId: env.SHARDING_INSTANCE
-      }, this.options.ipc ?? {})
-    )
+    const
+      rest = new RestManager<ClientStack['rest']>(this, restProvider, { provider: restProviderOptions }),
+      cache = new CacheManager<ClientStack['cache']>(this, cacheProvider, { provider: cacheProviderOptions }),
+      gateway = new GatewayManager<ClientStack['gateway']>(this, gatewayProvider, { provider: gatewayProviderOptions }),
+      env: ShardingInstanceEnvironment = {
+        SHARDING_MANAGER_IPC: process.env.SHARDING_MANAGER_IPC!,
+        SHARDING_INSTANCE_IPC: process.env.SHARDING_INSTANCE_IPC!,
+        SHARDING_INSTANCE: parseInt(process.env.SHARDING_INSTANCE!) || 0
+      },
+      ipc = new IpcServer(
+        Object.assign({
+          id: env.SHARDING_INSTANCE_IPC || DiscordooSnowflake.generate(env.SHARDING_INSTANCE, process.pid),
+          managerIpcId: env.SHARDING_MANAGER_IPC,
+          shardId: env.SHARDING_INSTANCE
+        }, this.options.ipc ?? {})
+      )
 
     this.internals = {
       rest,
@@ -77,33 +90,6 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
       ipc,
       env,
     }
-  }
-
-  /**
-   * Set the {@link RestProvider} to be used by this client
-   * @param provider - function, that returns desired RESTProvider
-   * @param options - any options to custom cache provider
-   */
-  useRESTProvider(provider: ProviderConstructor<ClientStack['rest']>, ...options: any[]) {
-    this.internals.rest = new provider(this, ...options)
-  }
-
-  /**
-   * Set the {@link CacheProvider} to be used by this client
-   * @param provider - class that implements {@link CacheProvider}
-   * @param options - any options to custom cache provider
-   */
-  useCacheProvider(provider: ProviderConstructor<ClientStack['cache']>, ...options: any[]) {
-    this.internals.cache = new provider(this, ...options)
-  }
-
-  /**
-   * Set the {@link GatewayProvider} to be used by this client
-   * @param provider - class that implements {@link GatewayProvider}
-   * @param options - any options to custom gateway provider
-   */
-  useGatewayProvider(provider: ProviderConstructor<ClientStack['gateway']>, ...options: any[]) {
-    this.internals.gateway = new provider(this, ...options)
   }
 
   async start() {

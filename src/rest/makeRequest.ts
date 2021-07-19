@@ -1,12 +1,12 @@
 import { RestRequest } from '@src/core/providers/rest/requests/RestRequest'
-import { RestProvider } from '@src/core/providers/rest/RestProvider'
 import { API_ENDPOINT, RestRequestMethods } from '@src/core/Constants'
 import { RestRequestResponse } from '@src/core/providers/rest/RestRequestResponse'
+import { RestManager } from '@src/rest/RestManager'
 
 /**
  * Creates a new rest request. We do not use classes here, because function+object is about 9x faster than new Class()
  * */
-export function makeRequest(rest: RestProvider): RestRequest {
+export function makeRequest(rest: RestManager<any>): RestRequest {
 
   return {
     rest,

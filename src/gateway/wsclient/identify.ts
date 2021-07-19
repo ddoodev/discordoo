@@ -1,6 +1,6 @@
 import { WebSocketClient } from '@src/gateway/WebSocketClient'
 import { IdentifyOptions } from '@src/gateway/interfaces/IdentifyOptions'
-import { WebSocketClientStates, WebSocketOPCodes } from '@src/core/Constants'
+import { WebSocketClientStates, WebSocketOpCodes } from '@src/core/Constants'
 import { GatewayIdentify, GatewayIdentifyData, GatewayResume, GatewayResumeData } from 'discord-api-types'
 
 // creates discord api identify payload
@@ -18,14 +18,14 @@ export function identify(
   console.log('shard', client.id, mode)
 
   let d: GatewayIdentifyData | GatewayResumeData,
-    op: WebSocketOPCodes.IDENTIFY | WebSocketOPCodes.RESUME
+    op: WebSocketOpCodes.IDENTIFY | WebSocketOpCodes.RESUME
 
   switch (mode) {
     case 'identify': {
       const { intents, properties, presence, compress } = options
 
       client.status = WebSocketClientStates.IDENTIFYING
-      op = WebSocketOPCodes.IDENTIFY
+      op = WebSocketOpCodes.IDENTIFY
 
       d = {
         token,
@@ -39,7 +39,7 @@ export function identify(
 
     case 'resume': {
       client.status = WebSocketClientStates.RESUMING
-      op = WebSocketOPCodes.RESUME
+      op = WebSocketOpCodes.RESUME
 
       d = {
         token,

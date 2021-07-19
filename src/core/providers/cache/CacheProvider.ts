@@ -3,12 +3,14 @@ import { CacheProviderSetOptions } from '@src/core/providers/cache/options/Cache
 import { CacheProviderDeleteOptions } from '@src/core/providers/cache/options/CacheProviderDeleteOptions'
 import { CacheProviderHasOptions } from '@src/core/providers/cache/options/CacheProviderHasOptions'
 import { CacheProviderSizeOptions } from '@src/core/providers/cache/options/CacheProviderSizeOptions'
+import { Provider } from '@src/core/providers/Provider'
 
 /**
- * Represents a cache provider. Custom caching modules must implement it
- * @note Some implementations may use remote cache, e.g. Redis, so all the methods are async
+ * Represents a cache provider. Custom caching providers must implement it
+ *
+ * Node: Some implementations may use remote cache, e.g. Redis, so all the methods are async
  */
-export interface CacheProvider<K = unknown, V = unknown> {
+export interface CacheProvider extends Provider {
 
   /**
    * Get value from key
@@ -16,7 +18,7 @@ export interface CacheProvider<K = unknown, V = unknown> {
    * @param key - key to get value
    * @param options - getting options
    */
-  get(keyspace: string, key: K, options?: CacheProviderGetOptions): Promise<V | null>
+  get<K = string, V = any>(keyspace: string, key: K, options?: CacheProviderGetOptions): Promise<V | null>
 
   /**
    * Set a key to given value
@@ -25,7 +27,7 @@ export interface CacheProvider<K = unknown, V = unknown> {
    * @param value - value to set
    * @param options - setting options
    */
-  set(keyspace: string, key: K, value: V, options?: CacheProviderSetOptions): Promise<CacheProvider<K, V>>
+  set<K = string, V = any>(keyspace: string, key: K, value: V, options?: CacheProviderSetOptions): Promise<CacheProvider>
 
   /**
    * Delete a key from cache
@@ -33,7 +35,7 @@ export interface CacheProvider<K = unknown, V = unknown> {
    * @param key - cache to delete
    * @param options - deleting options
    */
-  delete(keyspace: string, key: K, options?: CacheProviderDeleteOptions): Promise<boolean>
+  delete<K = string>(keyspace: string, key: K, options?: CacheProviderDeleteOptions): Promise<boolean>
 
   /**
    * Check if key exists in cache
@@ -41,7 +43,7 @@ export interface CacheProvider<K = unknown, V = unknown> {
    * @param key - key to check
    * @param options - checking options
    */
-  has(keyspace: string, key: K, options?: CacheProviderHasOptions): Promise<boolean>
+  has<K = string>(keyspace: string, key: K, options?: CacheProviderHasOptions): Promise<boolean>
 
   /**
    * Get size of cache in keyspace or in all cache

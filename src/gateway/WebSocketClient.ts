@@ -11,7 +11,7 @@ import { GatewayOptions } from '@src/gateway/interfaces/GatewayOptions'
 import {
   WebSocketClientEvents,
   WebSocketClientStates,
-  WebSocketOPCodes,
+  WebSocketOpCodes,
   WebSocketStates,
   WS_HANDSHAKE_TIMEOUT
 } from '@src/core/Constants'
@@ -204,7 +204,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsI> {
     if (!shouldIgnoreAck) this.missedHeartbeats += 1
 
     this.lastPingTimestamp = Date.now()
-    this.socketSend({ op: WebSocketOPCodes.HEARTBEAT, d: this.sequence })
+    this.socketSend({ op: WebSocketOpCodes.HEARTBEAT, d: this.sequence })
   }
 
   public socketSend(data: WebSocketSendPayload) {

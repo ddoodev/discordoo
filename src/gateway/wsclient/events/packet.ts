@@ -1,6 +1,6 @@
 import { WebSocketUtils } from '@src/utils/WebSocketUtils'
 import { WebSocketClient } from '@src/gateway/WebSocketClient'
-import { WebSocketClientEvents, WebSocketClientStates, WebSocketOPCodes } from '@src/core/Constants'
+import { WebSocketClientEvents, WebSocketClientStates, WebSocketOpCodes } from '@src/core/Constants'
 import { WebSocketPacket } from '@src/gateway/interfaces/WebSocketPacket'
 import { wait } from '@src/utils/wait'
 
@@ -44,7 +44,7 @@ export function packet(
   }
 
   switch (packet.op) {
-    case WebSocketOPCodes.HELLO:
+    case WebSocketOpCodes.HELLO:
 
       client.heartbeatInterval(packet.d.heartbeat_interval)
       client.handshakeTimeout()
@@ -53,7 +53,7 @@ export function packet(
 
       break
 
-    case WebSocketOPCodes.INVALID_SESSION:
+    case WebSocketOpCodes.INVALID_SESSION:
       client.emit(WebSocketClientEvents.INVALID_SESSION)
 
       wait(5000).then(() => {
@@ -63,21 +63,21 @@ export function packet(
 
       break
 
-    case WebSocketOPCodes.HEARTBEAT:
+    case WebSocketOpCodes.HEARTBEAT:
       client.heartbeat()
       break
 
-    case WebSocketOPCodes.HEARTBEAT_ACK:
+    case WebSocketOpCodes.HEARTBEAT_ACK:
       console.log('shard', client.id, 'HEARTBEAT_ACK')
       client.missedHeartbeats -= 1
       client.ping = Date.now() - client.lastPingTimestamp
       break
 
-    case WebSocketOPCodes.RECONNECT:
+    case WebSocketOpCodes.RECONNECT:
       client.destroy({ reconnect: true })
       break
 
-    case WebSocketOPCodes.DISPATCH:
+    case WebSocketOpCodes.DISPATCH:
 
       break
   }

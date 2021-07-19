@@ -2,7 +2,7 @@ import { TypedEmitter } from 'tiny-typed-emitter'
 import { IpcServerOptions } from '@src/sharding/interfaces/ipc/IpcServerOptions'
 import { IPC as RawIpc, server as RawIpcServer } from 'node-ipc'
 import { Collection } from '@src/collection'
-import { IpcEvents, IpcOPCodes, RAW_IPC_EVENT } from '@src/core/Constants'
+import { IpcEvents, IpcOpCodes, RAW_IPC_EVENT } from '@src/core/Constants'
 import { IpcPacket } from '@src/sharding'
 import { DiscordooError, DiscordooSnowflake } from '@src/utils'
 import { IpcServerSendOptions } from '@src/sharding/interfaces/ipc/IpcServerSendOptions'
@@ -82,11 +82,11 @@ export class IpcServer extends TypedEmitter<IpcServerEvents> {
 
     switch (packet.op) {
 
-      case IpcOPCodes.HELLO:
+      case IpcOpCodes.HELLO:
         this.hello(packet as IpcHelloPacket, socket)
         break
 
-      case IpcOPCodes.DISPATCH:
+      case IpcOpCodes.DISPATCH:
         break
 
     }
@@ -94,7 +94,7 @@ export class IpcServer extends TypedEmitter<IpcServerEvents> {
 
   private hello(packet: IpcHelloPacket, socket: any) {
     if (!packet.d || (packet.d && packet.d.id !== this.managerId)) {
-      return this.send({ op: IpcOPCodes.INVALID_SESSION, d: { id: this.id } }, { socket: socket })
+      return this.send({ op: IpcOpCodes.INVALID_SESSION, d: { id: this.id } }, { socket: socket })
     }
 
     const promise = this.bucket.get('__CONNECTION_PROMISE__')
@@ -113,7 +113,7 @@ export class IpcServer extends TypedEmitter<IpcServerEvents> {
 
   private identify(packet: IpcHelloPacket) {
     const data: IpcIdentifyPacket = {
-      op: IpcOPCodes.IDENTIFY,
+      op: IpcOpCodes.IDENTIFY,
       d: {
         id: this.id,
         event_id: packet.d.event_id

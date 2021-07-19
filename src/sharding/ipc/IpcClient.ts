@@ -2,7 +2,7 @@ import { TypedEmitter } from 'tiny-typed-emitter'
 import { IPC as RawIpc } from 'node-ipc'
 import { IpcClientOptions, IpcClientSendOptions, IpcPacket } from '@src/sharding'
 import { Collection } from '@src/collection'
-import { IpcOPCodes, RAW_IPC_EVENT } from '@src/core/Constants'
+import { IpcOpCodes, RAW_IPC_EVENT } from '@src/core/Constants'
 import { DiscordooError, DiscordooSnowflake } from '@src/utils'
 import { IpcHeartbeatPacket, IpcHelloPacket } from '@src/sharding/interfaces/ipc/IpcPackets'
 import { IpcClientEvents } from '@src/sharding/interfaces/ipc/IpcClientEvents'
@@ -83,7 +83,7 @@ export class IpcClient extends TypedEmitter<IpcClientEvents> {
     }
 
     switch (packet.op) {
-      case IpcOPCodes.IDENTIFY:
+      case IpcOpCodes.IDENTIFY:
         this.shardSocket = this.ipc.of[packet.d.id]
         if (this.helloInterval) clearInterval(this.helloInterval)
         break
@@ -92,7 +92,7 @@ export class IpcClient extends TypedEmitter<IpcClientEvents> {
 
   private hello(connection: any) {
     const data: IpcHelloPacket = {
-      op: IpcOPCodes.HELLO,
+      op: IpcOpCodes.HELLO,
       d: {
         id: this.managerId,
         event_id: this.generate(),
@@ -107,7 +107,7 @@ export class IpcClient extends TypedEmitter<IpcClientEvents> {
 
   private sendHeartbeat() {
     const data: IpcHeartbeatPacket = {
-      op: IpcOPCodes.HEARTBEAT,
+      op: IpcOpCodes.HEARTBEAT,
       d: {
         id: this.managerId,
         event_id: this.generate()

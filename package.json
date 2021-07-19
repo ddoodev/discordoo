@@ -9,6 +9,7 @@
     "test:fly": "node dist/on-the-fly/index.js",
     "test:fly:nsolid": "npx nsolid-quickstart --exec dist/on-the-fly/index.js",
     "build": "ttsc -p tsconfig.json",
+    "build:watch": "ttsc -p tsconfig.json --watch",
     "docs": "npx typedoc && npx tapok docs/docs/api",
     "docs:collection": "cd ./__collection__ && npm ci && npm run docs",
     "prepublishOnly": "npm run build",

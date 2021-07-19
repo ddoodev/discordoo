@@ -1,8 +1,8 @@
 import { IpcPacket } from '@src/sharding'
-import { IpcEvents, IpcOPCodes } from '@src/core/Constants'
+import { IpcEvents, IpcOpCodes } from '@src/core/Constants'
 
 export interface IpcHelloPacket extends IpcPacket {
-  op: IpcOPCodes.HELLO
+  op: IpcOpCodes.HELLO
   d: {
     id: string
     event_id: string
@@ -13,7 +13,7 @@ export interface IpcHelloPacket extends IpcPacket {
 }
 
 export interface IpcIdentifyPacket extends IpcPacket {
-  op: IpcOPCodes.IDENTIFY
+  op: IpcOpCodes.IDENTIFY
   d: {
     id: string
     event_id: string
@@ -21,7 +21,7 @@ export interface IpcIdentifyPacket extends IpcPacket {
 }
 
 export interface IpcHeartbeatPacket extends IpcPacket {
-  op: IpcOPCodes.HEARTBEAT
+  op: IpcOpCodes.HEARTBEAT
   d: {
     id: string
     event_id: string
@@ -29,7 +29,7 @@ export interface IpcHeartbeatPacket extends IpcPacket {
 }
 
 export interface IpcDispatchPacket extends IpcPacket {
-  op: IpcOPCodes.DISPATCH
+  op: IpcOpCodes.DISPATCH
   d: any
   t: IpcEvents
 }

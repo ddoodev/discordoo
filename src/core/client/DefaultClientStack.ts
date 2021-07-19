@@ -6,7 +6,7 @@ import { RestProvider } from '@src/core/providers/rest/RestProvider'
 export interface DefaultClientStack {
   cache: CacheProvider
   rest: RestProvider
-  events: ClientEventsHandlers
   gateway: GatewayProvider
   ipc: IpcServer
+  events: ClientEventsHandlers
 }

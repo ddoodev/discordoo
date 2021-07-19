@@ -1,6 +1,4 @@
 import { RestProvider } from '@src/core/providers/rest/RestProvider'
-import { RestRequest } from '@src/core/providers/rest/requests/RestRequest'
-import { makeRequest } from '@src/rest/makeRequest'
 import { RestProviderRequestOptions } from '@src/core/providers/rest/options/RestProviderRequestOptions'
 import { RestRequestResponse } from '@src/core/providers/rest/RestRequestResponse'
 import { Client } from '@src/core'
@@ -12,8 +10,8 @@ export class DefaultRestProvider implements RestProvider {
     this.client = client
   }
 
-  get api(): RestRequest {
-    return makeRequest(this)
+  async init(): Promise<unknown> {
+    return void 0
   }
 
   request<T = any>(options: RestProviderRequestOptions): RestRequestResponse<T> {

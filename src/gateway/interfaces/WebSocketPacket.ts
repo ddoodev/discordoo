@@ -1,8 +1,8 @@
-import { WebSocketOPCodes } from '@src/core/Constants'
+import { WebSocketOpCodes } from '@src/core/Constants'
 import { GatewayDispatchEvents } from 'discord-api-types'
 
 export interface WebSocketPacket {
-  op: WebSocketOPCodes
+  op: WebSocketOpCodes
   d: any
   s: number | undefined
   t: GatewayDispatchEvents

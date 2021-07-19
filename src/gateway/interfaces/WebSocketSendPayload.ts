@@ -1,7 +1,7 @@
 import { GatewaySendPayload } from 'discord-api-types'
-import { WebSocketOPCodes } from '@src/core/Constants'
+import { WebSocketOpCodes } from '@src/core/Constants'
 
 export type WebSocketSendPayload =
   GatewaySendPayload
-  | { op: WebSocketOPCodes }
-  | { op: WebSocketOPCodes; d: any }
+  | { op: WebSocketOpCodes }
+  | { op: WebSocketOpCodes; d: any }

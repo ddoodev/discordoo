@@ -22,4 +22,8 @@ export class DefaultGatewayProvider implements GatewayProvider {
   async disconnect(): Promise<unknown> {
     return this.manager.destroy()
   }
+
+  async init(): Promise<unknown> {
+    return void 0
+  }
 }

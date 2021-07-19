@@ -147,7 +147,7 @@ export enum DiscordooProviders {
 }
 
 /** Operation Codes used in Inter-process communication messages */
-export enum IpcOPCodes {
+export enum IpcOpCodes {
   /** Includes common event (t) (send/receive) */
   DISPATCH,
   /** IPC Server should send this to identify itself in IPC Client (send) */
@@ -200,7 +200,7 @@ export enum PartialShardingModes {
   CLUSTERS = 'clusters',
 }
 
-export enum WebSocketOPCodes {
+export enum WebSocketOpCodes {
   DISPATCH,
   HEARTBEAT,
   IDENTIFY,

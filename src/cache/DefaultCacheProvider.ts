@@ -6,8 +6,8 @@ import { CacheProviderHasOptions } from '@src/core/providers/cache/options/Cache
 import { CacheProviderSetOptions } from '@src/core/providers/cache/options/CacheProviderSetOptions'
 import { CacheProviderSizeOptions } from '@src/core/providers/cache/options/CacheProviderSizeOptions'
 
-export class DefaultCacheProvider<K, V> implements CacheProvider<K, V> {
-  private keyspaces: Collection<string, Collection<K, V>>
+export class DefaultCacheProvider implements CacheProvider {
+  private keyspaces: Collection<string, Collection>
   public client: Client
 
   constructor(client: Client) {
@@ -15,7 +15,7 @@ export class DefaultCacheProvider<K, V> implements CacheProvider<K, V> {
     this.client = client
   }
 
-  async delete(keyspace: string, key: K, options: CacheProviderDeleteOptions = {}): Promise<boolean> {
+  async delete<K = string>(keyspace: string, key: K, options: CacheProviderDeleteOptions = {}): Promise<boolean> {
     const space = this.keyspaces.get(keyspace)
 
     if (!space) return false
@@ -23,7 +23,7 @@ export class DefaultCacheProvider<K, V> implements CacheProvider<K, V> {
     return space.delete(key)
   }
 
-  async get(keyspace: string, key: K, options: CacheProviderGetOptions = {}): Promise<V | null> {
+  async get<K = string, V = any>(keyspace: string, key: K, options: CacheProviderGetOptions = {}): Promise<V | null> {
     const space = this.keyspaces.get(keyspace)
 
     if (!space) return null
@@ -31,7 +31,7 @@ export class DefaultCacheProvider<K, V> implements CacheProvider<K, V> {
     return space.get(key) ?? null
   }
 
-  async has(keyspace: string, key: K, options: CacheProviderHasOptions = {}): Promise<boolean> {
+  async has<K = string>(keyspace: string, key: K, options: CacheProviderHasOptions = {}): Promise<boolean> {
     const space = this.keyspaces.get(keyspace)
 
     if (!space) return false
@@ -39,7 +39,9 @@ export class DefaultCacheProvider<K, V> implements CacheProvider<K, V> {
     return space.has(key)
   }
 
-  async set(keyspace: string, key: K, value: V, options: CacheProviderSetOptions = {}): Promise<DefaultCacheProvider<K, V>> {
+  async set<K = string, V = any>(
+    keyspace: string, key: K, value: V, options: CacheProviderSetOptions = {}
+  ): Promise<DefaultCacheProvider> {
     let space = this.keyspaces.get(keyspace)
 
     if (!space) space = this.keyspaces.set(keyspace, new Collection()).get(keyspace)!
@@ -55,6 +57,10 @@ export class DefaultCacheProvider<K, V> implements CacheProvider<K, V> {
     } else {
       return this.keyspaces.map<number>(k => k.size).reduce((previous, current) => previous + current, 0)
     }
+  }
+
+  async init(): Promise<unknown> {
+    return void 0
   }
 
 }
