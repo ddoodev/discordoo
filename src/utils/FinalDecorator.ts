@@ -1,7 +1,27 @@
 /**
- * This decorator makes class methods non overridable in extended classes.
+ * This decorator makes class props/methods non overridable in extended classes.
+ *
  * When someone extends the class that decorated with @Final('method') and tries to override protected method,
  * and then executes overridden method, the code from the source class will be executed.
+ *
+ * Also this decorator hides the method code when method.toString() called.
+ *
+ * @example ```ts
+ * @Final('hello')
+ * class Test { // decorated with @Final('hello')
+ *   hello() {
+ *     return 'world'
+ *   }
+ * }
+ *
+ * class Test2 extends Test {
+ *   hello() {
+ *     return 'hi'
+ *   }
+ * }
+ *
+ * console.log(new Test2().hello()) // 'world'
+ * ```
  * */
 export function Final(...properties: string[]) {
   return function <T extends {new(...props: any[]): any}>(target: T): T {
@@ -10,11 +30,16 @@ export function Final(...properties: string[]) {
         super(...props)
 
         properties.forEach(property => {
+          if (typeof this[property] === 'function') {
+            this[property].toString = function () {
+              return `function ${property}() { [ddoo internal code] }`
+            }
+          }
           Object.defineProperty(this, property, {
             writable: false,
             configurable: false,
             enumerable: true,
-            value: super[property]
+            value: super[property] ?? this[property]
           })
         })
       }
