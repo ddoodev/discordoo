@@ -55,24 +55,24 @@ Node.js v12.18 or newer required.
 1. [Installing](https://docs.discordoo.xyz/base-guide/installing/)
 2. [First code & starting](https://docs.discordoo.xyz/base-guide/starting/)
 
-## Tests
-While the library is under development, only Discordoo Collection tests are available.
+## Benchmarks
+While the library is under development, only Discordoo Collection Benchmarks are available.
 ### djs collection VS ddoo collection
 djs is the most popular library for developing bots, so we will compare with it.
 (if you're interested, ddoo is roughly comparable to eris in collection speed)
 
-#### Test: random elements from collection
+#### Benchmark: random elements from collection
 1. [100 elements in collection, 5 random elements](https://jsben.ch/mNKer)
 2. [800 elements in collection, 150 random elements](https://jsben.ch/en4FL)
 3. [10000 elements in collection, 1000 random elements](https://jsben.ch/86Fpd)
 4. [10000 elements in collection, 8000 random elements](https://jsben.ch/q5IXT)
 
-#### Test: filter 50% of elements from collection
+#### Benchmark: filter 50% of elements from collection
 1. [100 elements in collection](https://jsben.ch/coBir)
 2. [800 elements in collection](https://jsben.ch/UcXNJ)
 3. [10000 elements in collection](https://jsben.ch/GYwWj)
 
-#### Test: map collection elements
+#### Benchmark: map collection elements
 1. [100 elements in collection](https://jsben.ch/Gqp0P)
 2. [800 elements in collection](https://jsben.ch/NNGE4)
 3. [10000 elements in collection](https://jsben.ch/rMMWl)
