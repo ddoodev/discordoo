@@ -30,9 +30,8 @@
     },
     "outDir": "./dist",
     "plugins": [
-      {
-        "transform": "@zerollup/ts-transform-paths"
-      }
+      { "transform": "@zerollup/ts-transform-paths" },
+      { "transform": "typescript-is/lib/transform-inline/transformer" }
     ]
   },
   "exclude": [
