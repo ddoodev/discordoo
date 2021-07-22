@@ -40,8 +40,8 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
     let
       restProvider: ProviderConstructor<ClientStack['rest']> = DefaultRestProvider,
       cacheProvider: ProviderConstructor<ClientStack['cache']> = DefaultCacheProvider,
-      gatewayProvider: ProviderConstructor<ClientStack['gateway']> = DefaultGatewayProvider
-    let restProviderOptions, gatewayProviderOptions = gatewayOptions, cacheProviderOptions
+      gatewayProvider: ProviderConstructor<ClientStack['gateway']> = DefaultGatewayProvider,
+      restProviderOptions, gatewayProviderOptions = gatewayOptions, cacheProviderOptions
 
     this.options.providers?.forEach(provider => {
       try {
@@ -94,6 +94,8 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
 
   async start() {
     let options: GatewayConnectOptions | undefined
+
+    console.log(this)
 
     if (this.internals.env.SHARDING_MANAGER_IPC) {
       await this.internals.ipc.serve()

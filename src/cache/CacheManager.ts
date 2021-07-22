@@ -1,5 +1,5 @@
 import { CacheProvider, Client, ProviderConstructor } from '@src/core'
-import { CacheManagerOptions } from '@src/cache/CacheManagerOptions'
+import { CacheManagerOptions } from '@src/cache/interfaces/CacheManagerOptions'
 
 export class CacheManager<P extends CacheProvider = CacheProvider> {
   public client: Client

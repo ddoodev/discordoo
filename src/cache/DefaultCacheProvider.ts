@@ -1,21 +1,20 @@
 import { CacheProvider, Client } from '@src/core'
 import { Collection } from '@src/collection'
-import { CacheProviderDeleteOptions } from '@src/core/providers/cache/options/CacheProviderDeleteOptions'
-import { CacheProviderGetOptions } from '@src/core/providers/cache/options/CacheProviderGetOptions'
-import { CacheProviderHasOptions } from '@src/core/providers/cache/options/CacheProviderHasOptions'
-import { CacheProviderSetOptions } from '@src/core/providers/cache/options/CacheProviderSetOptions'
-import { CacheProviderSizeOptions } from '@src/core/providers/cache/options/CacheProviderSizeOptions'
 
 export class DefaultCacheProvider implements CacheProvider {
   private keyspaces: Collection<string, Collection>
   public client: Client
+  public classesCompatible: boolean
+  public sharedCache: boolean
 
   constructor(client: Client) {
     this.keyspaces = new Collection()
     this.client = client
+    this.classesCompatible = true
+    this.sharedCache = false
   }
 
-  async delete<K = string>(keyspace: string, key: K, options: CacheProviderDeleteOptions = {}): Promise<boolean> {
+  async delete<K = string>(keyspace: string, key: K): Promise<boolean> {
     const space = this.keyspaces.get(keyspace)
 
     if (!space) return false
@@ -23,7 +22,7 @@ export class DefaultCacheProvider implements CacheProvider {
     return space.delete(key)
   }
 
-  async get<K = string, V = any>(keyspace: string, key: K, options: CacheProviderGetOptions = {}): Promise<V | null> {
+  async get<K = string, V = any>(keyspace: string, key: K): Promise<V | null> {
     const space = this.keyspaces.get(keyspace)
 
     if (!space) return null
@@ -31,7 +30,7 @@ export class DefaultCacheProvider implements CacheProvider {
     return space.get(key) ?? null
   }
 
-  async has<K = string>(keyspace: string, key: K, options: CacheProviderHasOptions = {}): Promise<boolean> {
+  async has<K = string>(keyspace: string, key: K): Promise<boolean> {
     const space = this.keyspaces.get(keyspace)
 
     if (!space) return false
@@ -39,24 +38,29 @@ export class DefaultCacheProvider implements CacheProvider {
     return space.has(key)
   }
 
-  async set<K = string, V = any>(
-    keyspace: string, key: K, value: V, options: CacheProviderSetOptions = {}
-  ): Promise<DefaultCacheProvider> {
+  async set<K = string, V = any>(keyspace: string, key: K, value: V): Promise<DefaultCacheProvider> {
     let space = this.keyspaces.get(keyspace)
 
     if (!space) space = this.keyspaces.set(keyspace, new Collection()).get(keyspace)!
 
-    return space.set(key, value) && this
+    return space.set(key, value) && this // returns this
   }
 
-  async size(keyspace?: string, options: CacheProviderSizeOptions = {}): Promise<number> {
-    if (keyspace) {
-      const space = this.keyspaces.get(keyspace)
+  /**
+   * Execute a provided function once for each cache element
+   * @param keyspace - keyspace in which to execute
+   * @param predicate - function to execute
+   * */
+  async forEach<K = string, V = any>(
+    keyspace: string, predicate: (value: V, key: K, provider: DefaultCacheProvider) => unknown
+  ): Promise<void> {
+    const space = this.keyspaces.get(keyspace)
 
-      return space?.size ?? 0
-    } else {
-      return this.keyspaces.map<number>(k => k.size).reduce((previous, current) => previous + current, 0)
-    }
+    if (!space) throw new Error('unknown keyspace') // TODO: rewrite
+
+    space.forEach((value, key) => {
+      predicate(value, key, this)
+    })
   }
 
   async init(): Promise<unknown> {

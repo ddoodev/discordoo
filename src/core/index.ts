@@ -1,9 +1,3 @@
-import { AbstractCacheProviderOptions } from '@src/core/providers/cache/options/AbstractCacheProviderOptions'
-import { CacheProviderDeleteOptions } from '@src/core/providers/cache/options/CacheProviderDeleteOptions'
-import { CacheProviderSizeOptions } from '@src/core/providers/cache/options/CacheProviderSizeOptions'
-import { CacheProviderGetOptions } from '@src/core/providers/cache/options/CacheProviderGetOptions'
-import { CacheProviderHasOptions } from '@src/core/providers/cache/options/CacheProviderHasOptions'
-import { CacheProviderSetOptions } from '@src/core/providers/cache/options/CacheProviderSetOptions'
 import { GatewayConnectOptions } from '@src/core/providers/gateway/options/GatewayConnectOptions'
 import { ProviderConstructor } from '@src/core/providers/ProviderConstructor'
 import { GatewayProvider } from '@src/core/providers/gateway/GatewayProvider'
@@ -19,12 +13,6 @@ import * as Constants from '@src/core/Constants'
 import { Client } from '@src/core/Client'
 
 export {
-  AbstractCacheProviderOptions,
-  CacheProviderDeleteOptions,
-  CacheProviderSizeOptions,
-  CacheProviderGetOptions,
-  CacheProviderHasOptions,
-  CacheProviderSetOptions,
   GatewayConnectOptions,
   ProviderConstructor,
   GatewayProvider,
