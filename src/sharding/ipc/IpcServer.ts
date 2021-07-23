@@ -2,7 +2,7 @@ import { TypedEmitter } from 'tiny-typed-emitter'
 import { IpcServerOptions } from '@src/sharding/interfaces/ipc/IpcServerOptions'
 import { IPC as RawIpc, server as RawIpcServer } from 'node-ipc'
 import { Collection } from '@src/collection'
-import { IpcEvents, IpcOpCodes, RAW_IPC_EVENT } from '@src/core/Constants'
+import { IpcEvents, IpcOpCodes, RAW_IPC_EVENT } from '@src/constants'
 import { IpcPacket } from '@src/sharding'
 import { DiscordooError, DiscordooSnowflake } from '@src/utils'
 import { IpcServerSendOptions } from '@src/sharding/interfaces/ipc/IpcServerSendOptions'
@@ -12,24 +12,22 @@ import { IpcServerEvents } from '@src/sharding/interfaces/ipc/IpcServerEvents'
 export class IpcServer extends TypedEmitter<IpcServerEvents> {
   private bucket: Collection<string, any> = new Collection()
   private managerSocket: any
-  private readonly managerId: string
+  private readonly managerIpc: string
   private readonly eventsHandler: any
 
   public ipc: InstanceType<typeof RawIpc>
   public server?: typeof RawIpcServer
-  public id: string
-  public shardID: number
-  public shards?: number[]
-  public totalShards?: number
+  public instanceIpc: string
+  public instance: number
 
   constructor(options: IpcServerOptions) {
     super()
 
     this.ipc = new RawIpc()
 
-    this.id = this.ipc.config.id = options.id
-    this.managerId = options.managerIpcId
-    this.shardID = options.shardId
+    this.instanceIpc = this.ipc.config.id = options.instanceIpc
+    this.managerIpc = options.managerIpc
+    this.instance = options.instance
 
     this.ipc.config = Object.assign(this.ipc.config, options.config ?? {})
 
@@ -39,7 +37,7 @@ export class IpcServer extends TypedEmitter<IpcServerEvents> {
     }
   }
 
-  public async serve() {
+  async serve(): Promise<IpcHelloPacket> {
     this.ipc.serve(() => {
       this.server!.on(RAW_IPC_EVENT, this.eventsHandler)
     })
@@ -61,7 +59,7 @@ export class IpcServer extends TypedEmitter<IpcServerEvents> {
     })
   }
 
-  public destroy() {
+  destroy() {
     if (!this.server) return
 
     this.server.off(RAW_IPC_EVENT, this.eventsHandler)
@@ -93,20 +91,18 @@ export class IpcServer extends TypedEmitter<IpcServerEvents> {
   }
 
   private hello(packet: IpcHelloPacket, socket: any) {
-    if (!packet.d || (packet.d && packet.d.id !== this.managerId)) {
-      return this.send({ op: IpcOpCodes.INVALID_SESSION, d: { id: this.id } }, { socket: socket })
+    if (!packet.d || (packet.d && packet.d.id !== this.managerIpc)) {
+      return this.send({ op: IpcOpCodes.INVALID_SESSION, d: { id: this.instanceIpc } }, { socket: socket })
     }
 
     const promise = this.bucket.get('__CONNECTION_PROMISE__')
     if (promise) {
       this.bucket.delete('__CONNECTION_PROMISE__')
-      promise.res(void 0)
+      promise.res(packet)
       clearTimeout(promise.timeout)
     }
 
     this.managerSocket = socket
-    this.shards = packet.d.shards
-    this.totalShards = packet.d.total_shards
 
     this.identify(packet)
   }
@@ -115,7 +111,7 @@ export class IpcServer extends TypedEmitter<IpcServerEvents> {
     const data: IpcIdentifyPacket = {
       op: IpcOpCodes.IDENTIFY,
       d: {
-        id: this.id,
+        id: this.instanceIpc,
         event_id: packet.d.event_id
       }
     }
@@ -132,7 +128,9 @@ export class IpcServer extends TypedEmitter<IpcServerEvents> {
     }
   }
 
-  public send(data: IpcPacket, options: IpcServerSendOptions = {}) {
+  send(data: IpcPacket, options?: IpcServerSendOptions): Promise<void>
+  send<P extends IpcPacket>(data: IpcPacket, options?: IpcServerSendOptions): Promise<P>
+  send<P extends IpcPacket = IpcPacket>(data: IpcPacket, options: IpcServerSendOptions = {}): Promise<P | void> {
     if (typeof options !== 'object') throw new DiscordooError('IpcServer#send', 'options must be object type only')
     if (!options.socket) options.socket = this.managerSocket
     if (!options.socket) throw new DiscordooError('IpcServer#send', 'cannot find socket to send packet:', data)
@@ -156,8 +154,8 @@ export class IpcServer extends TypedEmitter<IpcServerEvents> {
     })
   }
 
-  private generate() {
-    console.log('SERVER', this.shardID)
-    return DiscordooSnowflake.generate(this.shardID, process.pid)
+  public generate() {
+    console.log('SERVER', this.instance)
+    return DiscordooSnowflake.generate(this.instance, process.pid)
   }
 }

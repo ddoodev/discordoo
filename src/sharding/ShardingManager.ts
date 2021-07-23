@@ -1,18 +1,18 @@
 import { TypedEmitter } from 'tiny-typed-emitter'
 import { ShardingManagerEvents } from '@src/sharding/interfaces/manager/ShardingManagerEvents'
-import { PartialShardingModes, ShardingModes } from '@src/core/Constants'
+import { PartialShardingModes, ShardingModes } from '@src/constants'
 import { ShardingManagerOptions } from '@src/sharding/interfaces/manager/options/ShardingManagerOptions'
 import { DiscordooError, DiscordooSnowflake, wait } from '@src/utils'
 import { isMaster as isMainCluster } from 'cluster'
 import { isMainThread } from 'worker_threads'
 import { Collection } from '@src/collection'
 import { ShardingInstance } from '@src/sharding/ShardingInstance'
-import { resolveShards } from '@src/utils/resolveShards'
+import { resolveDiscordShards } from '@src/utils/resolveDiscordShards'
 import { intoChunks } from '@src/utils/intoChunks'
 
 const isMainProcess = process.send === undefined
 
-const SpawningLoopError = new DiscordooError(
+const spawningLoopError = new DiscordooError(
   'ShardingManager', 'spawning loop detected. sharding manager spawned in the shard. aborting'
 )
 
@@ -30,18 +30,18 @@ export class ShardingManager extends TypedEmitter<ShardingManagerEvents> {
 
     if ((!isMainProcess || !isMainCluster || !isMainThread) && process.env.SHARDING_MANAGER_IPC) {
       this.#died = true
-      throw SpawningLoopError
+      throw spawningLoopError
     }
 
     this.mode = options.mode
     this.options = options
-    this._shards = resolveShards(options.shards)
+    this._shards = resolveDiscordShards(options.shards)
 
     this.id = DiscordooSnowflake.generate(DiscordooSnowflake.SHARDING_MANAGER_ID, process.pid)
   }
 
-  async spawn() {
-    if (this.#died) throw SpawningLoopError
+  async spawn(): Promise<ShardingManager> {
+    if (this.#died) throw spawningLoopError
 
     const shardsPerInstance: number = this.options.shardsPerInstance || 1
 
@@ -63,10 +63,12 @@ export class ShardingManager extends TypedEmitter<ShardingManagerEvents> {
 
       await shard.create()
       this.shards.set(index, shard)
-      await wait((shardsPerInstance * 5000) + 5000)
+      await wait(5000)
 
       index++
     }
+
+    return this
   }
 
 }

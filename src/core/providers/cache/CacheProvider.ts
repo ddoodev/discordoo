@@ -40,7 +40,7 @@ export interface CacheProvider extends Provider {
    * @param keyspace - keyspace in which to search
    * @param key - key to get value
    */
-  get<K = string, V = any>(keyspace: string, key: K): Promise<V | null>
+  get<K = string, V = any>(keyspace: string, key: K): Promise<V | undefined>
 
   /**
    * Set a key to given value
@@ -108,6 +108,8 @@ export interface CacheProvider extends Provider {
 
   /**
    * Execute a provided function once for each cache element and return element that the function returned true for
+   * @param keyspace - keyspace in which to execute
+   * @param predicate - function to execute
    * */
   find?<K = string, V = any>(
     keyspace: string, predicate: (value: V, key: K, provider: CacheProvider) => boolean

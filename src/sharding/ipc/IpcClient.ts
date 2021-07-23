@@ -2,7 +2,7 @@ import { TypedEmitter } from 'tiny-typed-emitter'
 import { IPC as RawIpc } from 'node-ipc'
 import { IpcClientOptions, IpcClientSendOptions, IpcPacket } from '@src/sharding'
 import { Collection } from '@src/collection'
-import { IpcOpCodes, RAW_IPC_EVENT } from '@src/core/Constants'
+import { IpcOpCodes, RAW_IPC_EVENT } from '@src/constants'
 import { DiscordooError, DiscordooSnowflake } from '@src/utils'
 import { IpcHeartbeatPacket, IpcHelloPacket } from '@src/sharding/interfaces/ipc/IpcPackets'
 import { IpcClientEvents } from '@src/sharding/interfaces/ipc/IpcClientEvents'
@@ -46,6 +46,7 @@ export class IpcClient extends TypedEmitter<IpcClientEvents> {
 
       promise.timeout = setTimeout(() => {
         this.ipc.config.stopRetrying = true
+        this.bucket.delete(this.shardIpcId)
         const err = new DiscordooError(
           'IpcClient#connect',
           'the connection timed out.',
@@ -56,13 +57,9 @@ export class IpcClient extends TypedEmitter<IpcClientEvents> {
         promise.rej(err)
       }, 30000)
 
-      this.ipc.connectTo(this.shardIpcId, () => {
-        this.ipc.of[this.shardIpcId].once('connect', () => {
-          console.log('SHARDS', this.shards.join(', '), 'CONNECTED')
-          clearTimeout(promise.timeout)
-          promise.res(void 0)
-        })
+      this.bucket.set(this.shardIpcId, promise)
 
+      this.ipc.connectTo(this.shardIpcId, () => {
         this.ipc.of[this.shardIpcId].on(RAW_IPC_EVENT, this.eventsHandler)
 
         this.helloInterval = setInterval(() => {
@@ -78,7 +75,7 @@ export class IpcClient extends TypedEmitter<IpcClientEvents> {
 
       if (promise) {
         clearTimeout(promise.timeout)
-        promise.res(packet)
+        packet.op === IpcOpCodes.ERROR ? promise.rej(packet) : promise.res(packet)
       }
     }
 
@@ -139,7 +136,7 @@ export class IpcClient extends TypedEmitter<IpcClientEvents> {
     })
   }
 
-  private generate() {
+  public generate() {
     console.log('CLIENT', this.id)
     return DiscordooSnowflake.generate(this.id, process.pid)
   }

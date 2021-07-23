@@ -1,5 +1,5 @@
 import { Client, ClientOptions, DefaultClientStack, ProviderConstructor } from '@src/core'
-import { DiscordooProviders } from '@src/core/Constants'
+import { DiscordooProviders } from '@src/constants'
 import { CreateAppOptions } from '@src/wrapper/interfaces/CreateAppOptions'
 
 export class ClientBuilder<Stack extends DefaultClientStack = DefaultClientStack> {

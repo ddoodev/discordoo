@@ -23,4 +23,8 @@ export class RestManager<P extends RestProvider = RestProvider> {
     return this.provider.request<T>(options)
   }
 
+  init(): Promise<unknown> {
+    return this.provider.init()
+  }
+
 }

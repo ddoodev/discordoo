@@ -4,14 +4,12 @@ import { Collection } from '@src/collection'
 export class DefaultCacheProvider implements CacheProvider {
   private keyspaces: Collection<string, Collection>
   public client: Client
-  public classesCompatible: boolean
-  public sharedCache: boolean
+  public classesCompatible = true
+  public sharedCache = false
 
   constructor(client: Client) {
     this.keyspaces = new Collection()
     this.client = client
-    this.classesCompatible = true
-    this.sharedCache = false
   }
 
   async delete<K = string>(keyspace: string, key: K): Promise<boolean> {
@@ -22,12 +20,12 @@ export class DefaultCacheProvider implements CacheProvider {
     return space.delete(key)
   }
 
-  async get<K = string, V = any>(keyspace: string, key: K): Promise<V | null> {
+  async get<K = string, V = any>(keyspace: string, key: K): Promise<V | undefined> {
     const space = this.keyspaces.get(keyspace)
 
-    if (!space) return null
+    if (!space) return undefined
 
-    return space.get(key) ?? null
+    return space.get(key) ?? undefined
   }
 
   async has<K = string>(keyspace: string, key: K): Promise<boolean> {

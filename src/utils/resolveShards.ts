@@ -1,43 +1,58 @@
-import { ShardListResolvable } from '@src/core/ShardListResolvable'
-import { range } from '@src/utils/range'
-import { DiscordooError } from '@src/utils/DiscordooError'
+import { Client, ShardListResolvable } from '@src/core'
+import { DiscordooError, range } from '@src/utils'
 
-export function resolveShards(shards: ShardListResolvable): number[] {
+export function resolveShards(client: Client, shards: ShardListResolvable | 'all' | 'current'): number[] {
   const source = 'ShardListResolver'
   let result: number[]
 
   switch (typeof shards) {
-    case 'number':
-      result = range(shards)
-      break
+    case 'string': {
+      switch (true) {
+        case shards === 'all':
+          result = range(client.internals.sharding.totalShards)
+          break
 
-    case 'string':
-      if (!isNaN(parseInt(shards))) {
-        result = range(parseInt(shards))
-      } else {
-        throw new DiscordooError(source, 'received disallowed shard list type: string, value:', shards)
+        case shards === 'current':
+          result = [ ...client.internals.sharding.shards ]
+          break
+
+        case !isNaN(parseInt(shards)):
+          result = [ parseInt(shards) ]
+          break
+
+        default:
+          throw new DiscordooError(source, 'do not know how to resolve shards from this string:', shards)
       }
-      break
+    } break
 
     case 'object':
       if (Array.isArray(shards)) {
-        const arr = shards.filter(v => typeof v !== 'number' || isNaN(v))
-        if (arr.length) {
+        if (shards.filter(v => typeof v !== 'number' || isNaN(v)).length) {
           throw new DiscordooError(source, 'array of shards contains non-number value. array:', shards)
         }
 
         result = shards
       } else {
+        const shardsIsNaN = new DiscordooError(source, 'received object as shard list, but shards.from or shards.to is not a number.')
+
         if (typeof shards.from !== 'number' || typeof shards.to !== 'number') {
-          throw new DiscordooError(source, 'received object as shard list, but shards.from or shards.to is not a number.')
+          throw shardsIsNaN
+        }
+
+        if (isNaN(shards.from) || isNaN(shards.to)) {
+          throw shardsIsNaN
         }
 
         shards = range(shards.from, shards.to)
       }
       break
 
+    case 'number':
+      result = [ shards ]
+      break
+
     default:
-      throw new DiscordooError(source, 'received disallowed shard list type:', typeof shards)
+      throw new DiscordooError(source, 'do not know how to resolve shards from', typeof shards + '.', 'provided shards:', shards)
   }
 
   return result!

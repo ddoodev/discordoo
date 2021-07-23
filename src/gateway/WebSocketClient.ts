@@ -14,7 +14,7 @@ import {
   WebSocketOpCodes,
   WebSocketStates,
   WS_HANDSHAKE_TIMEOUT
-} from '@src/core/Constants'
+} from '@src/constants'
 
 import { WebSocketManager } from '@src/gateway/WebSocketManager'
 import { WebSocketUtils } from '@src/utils/WebSocketUtils'

@@ -1,6 +1,6 @@
 import { WebSocketUtils } from '@src/utils/WebSocketUtils'
 import { WebSocketClient } from '@src/gateway/WebSocketClient'
-import { WebSocketClientEvents, WebSocketClientStates, WebSocketOpCodes } from '@src/core/Constants'
+import { WebSocketClientEvents, WebSocketClientStates, WebSocketOpCodes } from '@src/constants'
 import { WebSocketPacket } from '@src/gateway/interfaces/WebSocketPacket'
 import { wait } from '@src/utils/wait'
 

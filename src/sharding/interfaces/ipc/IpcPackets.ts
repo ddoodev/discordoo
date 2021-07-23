@@ -1,5 +1,5 @@
 import { IpcPacket } from '@src/sharding'
-import { IpcEvents, IpcOpCodes } from '@src/core/Constants'
+import { IpcCacheOpCodes, IpcEvents, IpcOpCodes } from '@src/constants'
 
 export interface IpcHelloPacket extends IpcPacket {
   op: IpcOpCodes.HELLO
@@ -32,4 +32,25 @@ export interface IpcDispatchPacket extends IpcPacket {
   op: IpcOpCodes.DISPATCH
   d: any
   t: IpcEvents
+}
+
+export interface IpcCacheGetOperationRequestPacket extends IpcPacket {
+  op: IpcOpCodes.CACHE_OPERATE
+  d: {
+    event_id: string
+    op: IpcCacheOpCodes.GET
+    key: any
+    keyspace: string
+    shards: number[]
+    serialize: boolean
+  }
+}
+
+export interface IpcCacheGetOperationResponsePacket extends IpcPacket {
+  op: IpcOpCodes.CACHE_OPERATE
+  d: {
+    event_id: string
+    result: any
+    success: boolean
+  }
 }

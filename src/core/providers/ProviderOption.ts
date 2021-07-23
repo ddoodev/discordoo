@@ -1,4 +1,4 @@
-import { DiscordooProviders } from '@src/core/Constants'
+import { DiscordooProviders } from '@src/constants'
 import { ProviderConstructor } from '@src/core/providers/ProviderConstructor'
 
 export interface ProviderOption {

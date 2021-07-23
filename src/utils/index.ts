@@ -3,7 +3,7 @@ import { ValidateOptions } from '@src/utils/interfaces/ValidateOptions'
 import { DiscordooSnowflake } from '@src/utils/DiscordooSnowflake'
 import { DiscordooError } from '@src/utils/DiscordooError'
 import { WebSocketUtils } from '@src/utils/WebSocketUtils'
-import { resolveShards } from '@src/utils/resolveShards'
+import { resolveDiscordShards } from '@src/utils/resolveDiscordShards'
 import { NonOptional } from '@src/utils/NonOptional'
 import { getGateway } from '@src/utils/getGateway'
 import { intoChunks } from '@src/utils/intoChunks'
@@ -19,7 +19,7 @@ export {
   DiscordooSnowflake,
   DiscordooError,
   WebSocketUtils,
-  resolveShards,
+  resolveDiscordShards,
   NonOptional,
   getGateway,
   intoChunks,

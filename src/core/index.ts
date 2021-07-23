@@ -9,7 +9,6 @@ import { ShardListResolvable } from '@src/core/ShardListResolvable'
 import { ClientInternals } from '@src/core/client/ClientInternals'
 import { ClientOptions } from '@src/core/client/ClientOptions'
 
-import * as Constants from '@src/core/Constants'
 import { Client } from '@src/core/Client'
 
 export {
@@ -23,6 +22,5 @@ export {
   ShardListResolvable,
   ClientInternals,
   ClientOptions,
-  Constants,
   Client,
 }

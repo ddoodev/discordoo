@@ -8,6 +8,6 @@ export interface ClientOptions<CustomOptions = any> {
   providers?: ProviderOption[]
   gateway?: Optional<GatewayOptions, 'token' | 'intents' | 'properties'>
   rest?: any
-  ipc?: Optional<IpcServerOptions, 'id' | 'managerIpcId' | 'shardId'>
+  ipc?: Optional<IpcServerOptions, 'instanceIpc' | 'managerIpc' | 'instance'>
   custom?: CustomOptions
 }

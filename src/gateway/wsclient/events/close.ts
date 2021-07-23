@@ -1,6 +1,6 @@
 import { WebSocketClient } from '@src/gateway/WebSocketClient'
 import WebSocket from 'ws'
-import { WebSocketClientEvents, WebSocketClientStates } from '@src/core/Constants'
+import { WebSocketClientEvents, WebSocketClientStates } from '@src/constants'
 
 // handles websocket close event
 export function close(client: WebSocketClient, event: WebSocket.CloseEvent) {

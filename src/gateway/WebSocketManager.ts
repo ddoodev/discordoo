@@ -5,7 +5,7 @@ import { WebSocketManagerEvents } from '@src/gateway/interfaces/WebSocketManager
 import { GatewayOptions } from '@src/gateway/interfaces/GatewayOptions'
 import { WebSocketClient } from '@src/gateway/WebSocketClient'
 import { wait } from '@src/utils/wait'
-import { DEFAULT_WS_OPTIONS, WebSocketClientEvents, WebSocketManagerStates } from '@src/core/Constants'
+import { WS_DEFAULT_OPTIONS, WebSocketClientEvents, WebSocketManagerStates } from '@src/constants'
 import { inspectWsOptions } from '@src/gateway/wsmanager/inspectWsOptions'
 import { GatewayConnectOptions } from '@src/core/providers/gateway/options/GatewayConnectOptions'
 import { DiscordooError } from '@src/utils'
@@ -25,7 +25,7 @@ export class WebSocketManager extends TypedEmitter<WebSocketManagerEvents> {
   constructor(options: PartialGatewayOptions) {
     super()
 
-    this.options = Object.assign(DEFAULT_WS_OPTIONS, options)
+    this.options = Object.assign(WS_DEFAULT_OPTIONS, options)
     this.status = WebSocketManagerStates.CREATED
   }
 

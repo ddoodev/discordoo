@@ -1,4 +1,4 @@
-import { RestRequestMethods } from '@src/core/Constants'
+import { RestRequestMethods } from '@src/constants'
 
 export interface RestProviderRequestOptions {
   method: RestRequestMethods

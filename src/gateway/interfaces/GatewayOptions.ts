@@ -1,7 +1,8 @@
 // hello to djs, discord api v9 released at April 28, 2021, today is July 3, 2021,
-// the discord-api-types api v9 has not released yet
+// the discord-api-types v9 has not released yet
 // (available only through npm i discord-api-types@next, which is a copy from github)
 import { GatewayIdentifyProperties, GatewayPresenceUpdateData } from 'discord-api-types/gateway/v8'
+import { ShardListResolvable } from '@src/core'
 
 export interface GatewayOptions {
 
@@ -44,13 +45,13 @@ export interface GatewayOptions {
   intents: number
 
   /**
-   * If number is provided - WS will create X shards from 0 to X-1 (3 = 0, 1, 2).
+   * If number is provided - WS will create X shards from 0 to X - 1 (3 = 0, 1, 2).
    * If auto is provided, shards amount will be fetched from Discord.
    * If array of numbers is provided, the library will interpret it as IDs of shards to create.
    *
-   * @default auto
+   * @default 1
    * */
-  shards?: number | number[] | 'auto'
+  shards?: ShardListResolvable
 
   /** Maximum amount of shards that can be spawned by the {@link WebSocketManager}. */
   // might be useless, because it can be calculated from all values of shards

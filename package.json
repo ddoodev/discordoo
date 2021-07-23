@@ -67,6 +67,7 @@
     "./core": "./dist/src/core/index.js",
     "./cache": "./dist/src/cache/index.js",
     "./collection": "./dist/src/collection/index.js",
+    "./constants": "./dist/src/constants/index.js",
     "./rest": "./dist/src/rest/index.js",
     "./utils": "./dist/src/utils/index.js",
     "./gateway": "./dist/src/websocket/index.js",
@@ -83,6 +84,9 @@
       ],
       "collection": [
         "types/src/collection/index.d.ts"
+      ],
+      "constants": [
+        "types/src/constants/index.d.ts"
       ],
       "rest": [
         "types/src/rest/index.d.ts"

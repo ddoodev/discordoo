@@ -1,8 +1,8 @@
 import { DefaultClientStack } from '@src/core/client/DefaultClientStack'
-import { ShardingInstanceEnvironment } from '@src/sharding/interfaces/client/ShardingInstanceEnvironment'
 import { RestManager } from '@src/rest/RestManager'
 import { CacheManager } from '@src/cache/CacheManager'
 import { GatewayManager } from '@src/gateway/GatewayManager'
+import { ClientShardingMetadata } from '@src/core/client/ClientShardingMetadata'
 
 export interface ClientInternals<ClientStack extends DefaultClientStack = DefaultClientStack> {
   /** Inter-process communication server used by this client */
@@ -17,6 +17,6 @@ export interface ClientInternals<ClientStack extends DefaultClientStack = Defaul
   /** GatewayManager used by this client */
   gateway: GatewayManager<ClientStack['gateway']>
 
-  /** Sharding Environment */
-  env: ShardingInstanceEnvironment
+  /** Sharding metadata */
+  sharding: ClientShardingMetadata
 }

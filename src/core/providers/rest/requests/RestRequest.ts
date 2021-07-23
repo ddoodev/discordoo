@@ -1,4 +1,4 @@
-import { RestRequestMethods } from '@src/core/Constants'
+import { RestRequestMethods } from '@src/constants'
 import { RestRequestResponse } from '@src/core/providers/rest/RestRequestResponse'
 import { RestManager } from '@src/rest/RestManager'
 
