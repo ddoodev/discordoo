@@ -62,8 +62,8 @@ export interface CacheProvider extends Provider {
    * @param keyspace - keyspace in which to execute
    * @param predicate - function to execute
    * */
-  forEach<K = string, V = any>(
-    keyspace: string, predicate: (value: V, key: K, provider: CacheProvider) => unknown
+  forEach<K = string, V = any, P extends CacheProvider = CacheProvider>(
+    keyspace: string, predicate: (value: V, key: K, provider: P) => unknown | Promise<unknown>
   ): Promise<void>
 
   /**
@@ -84,8 +84,8 @@ export interface CacheProvider extends Provider {
    * @param keyspace - keyspace in which to execute
    * @param predicate - function to execute
    * */
-  sweep?<K = string, V = any>(
-    keyspace: string, predicate: (value: V, key: K, provider: CacheProvider) => boolean
+  sweep?<K = string, V = any, P extends CacheProvider = CacheProvider>(
+    keyspace: string, predicate: (value: V, key: K, provider: P) => boolean | Promise<boolean>
   ): Promise<void>
 
   /**
@@ -93,8 +93,8 @@ export interface CacheProvider extends Provider {
    * @param keyspace - keyspace in which to execute
    * @param predicate - function to execute
    * */
-  filter?<K = string, V = any>(
-    keyspace: string, predicate: (value: V, key: K, provider: CacheProvider) => boolean
+  filter?<K = string, V = any, P extends CacheProvider = CacheProvider>(
+    keyspace: string, predicate: (value: V, key: K, provider: P) => boolean | Promise<boolean>
   ): Promise<Array<[ K, V ]>>
 
   /**
@@ -102,8 +102,8 @@ export interface CacheProvider extends Provider {
    * @param keyspace - keyspace in which to execute
    * @param predicate - function to execute
    * */
-  map?<K = string, V = any, R = any>(
-    keyspace: string, predicate: (value: V, key: K, provider: CacheProvider) => R
+  map?<K = string, V = any, R = any, P extends CacheProvider = CacheProvider>(
+    keyspace: string, predicate: (value: V, key: K, provider: P) => R | Promise<R>
   ): Promise<R[]>
 
   /**
@@ -111,8 +111,8 @@ export interface CacheProvider extends Provider {
    * @param keyspace - keyspace in which to execute
    * @param predicate - function to execute
    * */
-  find?<K = string, V = any>(
-    keyspace: string, predicate: (value: V, key: K, provider: CacheProvider) => boolean
+  find?<K = string, V = any, P extends CacheProvider = CacheProvider>(
+    keyspace: string, predicate: (value: V, key: K, provider: P) => boolean | Promise<boolean>
   ): Promise<V | undefined>
 
 }

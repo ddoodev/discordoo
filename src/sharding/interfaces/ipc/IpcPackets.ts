@@ -34,23 +34,207 @@ export interface IpcDispatchPacket extends IpcPacket {
   t: IpcEvents
 }
 
-export interface IpcCacheGetOperationRequestPacket extends IpcPacket {
+export interface IpcCacheGetRequestPacket extends IpcPacket {
   op: IpcOpCodes.CACHE_OPERATE
   d: {
     event_id: string
     op: IpcCacheOpCodes.GET
+    serialize: boolean
+    shards: number[]
     key: any
     keyspace: string
-    shards: number[]
-    serialize: boolean
   }
 }
 
-export interface IpcCacheGetOperationResponsePacket extends IpcPacket {
+export interface IpcCacheGetResponsePacket extends IpcPacket {
   op: IpcOpCodes.CACHE_OPERATE
   d: {
     event_id: string
     result: any
     success: boolean
+  }
+}
+
+export interface IpcCacheSetRequestPacket extends IpcPacket {
+  op: IpcOpCodes.CACHE_OPERATE
+  d: {
+    event_id: string
+    op: IpcCacheOpCodes.SET
+    serialize: boolean
+    shards: number[]
+    key: any
+    keyspace: string
+    value: any
+  }
+}
+
+export interface IpcCacheSetResponsePacket extends IpcPacket {
+  op: IpcOpCodes.CACHE_OPERATE
+  d: {
+    event_id: string
+    success: boolean
+    result: any
+  }
+}
+
+export interface IpcCacheDeleteRequestPacket extends IpcPacket {
+  op: IpcOpCodes.CACHE_OPERATE
+  d: {
+    event_id: string
+    op: IpcCacheOpCodes.DELETE
+    serialize: boolean
+    shards: number[]
+    key: any
+    keyspace: string
+  }
+}
+
+export interface IpcCacheDeleteResponsePacket extends IpcPacket {
+  op: IpcOpCodes.CACHE_OPERATE
+  d: {
+    event_id: string
+    success: boolean
+  }
+}
+
+export interface IpcCacheForEachRequestPacket extends IpcPacket {
+  op: IpcOpCodes.CACHE_OPERATE
+  d: {
+    event_id: string
+    op: IpcCacheOpCodes.FOREACH
+    shards: number[]
+    keyspace: string
+    script: string
+  }
+}
+
+export interface IpcCacheForEachResponsePacket extends IpcPacket {
+  op: IpcOpCodes.CACHE_OPERATE
+  d: {
+    event_id: string
+    success: boolean
+  }
+}
+
+export interface IpcCacheSizeRequestPacket extends IpcPacket {
+  op: IpcOpCodes.CACHE_OPERATE
+  d: {
+    event_id: string
+    op: IpcCacheOpCodes.SIZE
+    serialize: boolean
+    shards: number[]
+    keyspace: string
+  }
+}
+
+export interface IpcCacheSizeResponsePacket extends IpcPacket {
+  op: IpcOpCodes.CACHE_OPERATE
+  d: {
+    event_id: string
+    success: boolean
+    result: any
+  }
+}
+
+export interface IpcCacheHasRequestPacket extends IpcPacket {
+  op: IpcOpCodes.CACHE_OPERATE
+  d: {
+    event_id: string
+    op: IpcCacheOpCodes.HAS
+    serialize: boolean
+    shards: number[]
+    keyspace: string
+    key: any
+  }
+}
+
+export interface IpcCacheHasResponsePacket extends IpcPacket {
+  op: IpcOpCodes.CACHE_OPERATE
+  d: {
+    event_id: string
+    success: boolean
+    result: any
+  }
+}
+
+export interface IpcCacheSweepRequestPacket extends IpcPacket {
+  op: IpcOpCodes.CACHE_OPERATE
+  d: {
+    event_id: string
+    op: IpcCacheOpCodes.SWEEP
+    shards: number[]
+    keyspace: string
+    script: string
+  }
+}
+
+export interface IpcCacheSweepResponsePacket extends IpcPacket {
+  op: IpcOpCodes.CACHE_OPERATE
+  d: {
+    event_id: string
+    success: boolean
+  }
+}
+
+export interface IpcCacheFilterRequestPacket extends IpcPacket {
+  op: IpcOpCodes.CACHE_OPERATE
+  d: {
+    event_id: string
+    op: IpcCacheOpCodes.FILTER
+    serialize: boolean
+    shards: number[]
+    keyspace: string
+    script: string
+  }
+}
+
+export interface IpcCacheFilterResponsePacket extends IpcPacket {
+  op: IpcOpCodes.CACHE_OPERATE
+  d: {
+    event_id: string
+    success: boolean
+    result: any
+  }
+}
+
+export interface IpcCacheMapRequestPacket extends IpcPacket {
+  op: IpcOpCodes.CACHE_OPERATE
+  d: {
+    event_id: string
+    op: IpcCacheOpCodes.MAP
+    serialize: boolean
+    shards: number[]
+    keyspace: string
+    script: string
+  }
+}
+
+export interface IpcCacheMapResponsePacket extends IpcPacket {
+  op: IpcOpCodes.CACHE_OPERATE
+  d: {
+    event_id: string
+    success: boolean
+    result: any
+  }
+}
+
+export interface IpcCacheFindRequestPacket extends IpcPacket {
+  op: IpcOpCodes.CACHE_OPERATE
+  d: {
+    event_id: string
+    op: IpcCacheOpCodes.FIND
+    serialize: boolean
+    shards: number[]
+    keyspace: string
+    script: string
+  }
+}
+
+export interface IpcCacheFindResponsePacket extends IpcPacket {
+  op: IpcOpCodes.CACHE_OPERATE
+  d: {
+    event_id: string
+    success: boolean
+    result: any
   }
 }

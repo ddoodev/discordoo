@@ -49,15 +49,15 @@ export class DefaultCacheProvider implements CacheProvider {
    * @param keyspace - keyspace in which to execute
    * @param predicate - function to execute
    * */
-  async forEach<K = string, V = any>(
-    keyspace: string, predicate: (value: V, key: K, provider: DefaultCacheProvider) => unknown
+  async forEach<K = string, V = any, P extends CacheProvider = CacheProvider>(
+    keyspace: string, predicate: (value: V, key: K, provider: P) => unknown
   ): Promise<void> {
     const space = this.keyspaces.get(keyspace)
 
     if (!space) throw new Error('unknown keyspace') // TODO: rewrite
 
     space.forEach((value, key) => {
-      predicate(value, key, this)
+      predicate(value, key, this as unknown as P)
     })
   }
 
