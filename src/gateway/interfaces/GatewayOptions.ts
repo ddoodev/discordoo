@@ -1,7 +1,4 @@
-// hello to djs, discord api v9 released at April 28, 2021, today is July 3, 2021,
-// the discord-api-types v9 has not released yet
-// (available only through npm i discord-api-types@next, which is a copy from github)
-import { GatewayIdentifyProperties, GatewayPresenceUpdateData } from 'discord-api-types/gateway/v8'
+import { GatewayIdentifyProperties, GatewayPresenceUpdateData } from 'discord-api-types/gateway/v9'
 import { ShardListResolvable } from '@src/core'
 
 export interface GatewayOptions {

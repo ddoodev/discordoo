@@ -50,7 +50,7 @@
   },
   "dependencies": {
     "@discordoo/collection": "^1.0.9",
-    "discord-api-types": "^0.18.1",
+    "discord-api-types": "^0.20.2",
     "node-ipc": "^9.1.4",
     "tiny-typed-emitter": "2.0.3",
     "undici": "^4.1.1",
