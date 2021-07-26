@@ -97,7 +97,7 @@ Release deadline: September 30, 2021
   * [x] Shards must be able to communicate in fast and scalable way
   * [x] Shards must use hello/identify algorithm
   * [ ] Shards must use heartbeat algorithm
-  * [ ] Shards must be able to send, receive and handle REQUEST_STATS messages
+  * [ ] Shards must be able to send, receive and handle CACHE_OPERATE messages
   * [ ] Shards must be able to send errors to ShardingManager, manager must handle these errors 
 * [x] User-land APIs
   * [x] User must be able to spawn shards
@@ -141,11 +141,11 @@ Release deadline: September 30, 2021
 * [x] Library must be able to store something
 * [x] Library must be able to delete something from cache
 * [x] Library must be able to check cache size
-* [ ] Library must be able to sweep cache using predicate and cycle 
-* [ ] Library must be able to iterate cache
-* [ ] Library must be able to operate with cache in a different shards from one shard
-* [ ] Caching policies
-  * [ ] Cache must handle GlobalCachingPolicy
+* [x] Library must be able to sweep cache using predicate and cycle 
+* [x] Library must be able to iterate cache
+* [x] Library must be able to operate with cache in a different shards from one shard
+* [x] Caching policies
+  * [x] Cache must handle GlobalCachingPolicy
   * [ ] Cache must handle MessagesCachingPolicy
   * [ ] Cache must handle GuildsCachingPolicy
   * [ ] Cache must handle MembersCachingPolicy
@@ -154,7 +154,7 @@ Release deadline: September 30, 2021
   * [ ] Cache must handle RolesCachingPolicy
   * [ ] Cache must handle PresencesCachingPolicy
   * [ ] Cache must handle UsersCachingPolicy
-  * [ ] All the policies listed above must be able to handle custom caching functions
+  * [x] All the policies listed above must be able to handle custom caching functions
   
 ### Entities (discord structures)
 * [ ] Must be extendable

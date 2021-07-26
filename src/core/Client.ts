@@ -16,7 +16,7 @@ import { GatewayManager } from '@src/gateway/GatewayManager'
 import { Final } from '@src/utils/FinalDecorator'
 import { ClientShardingMetadata } from '@src/core/client/ClientShardingMetadata'
 
-/** Entry point for all of Discordoo. Manages modules and events */
+/** Entry point for all of Discordoo. */
 @Final('start', 'internals')
 export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
   extends TypedEmitter<ListenerSignature<ClientStack['events']>> {

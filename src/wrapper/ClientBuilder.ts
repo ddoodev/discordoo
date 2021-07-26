@@ -27,6 +27,11 @@ export class ClientBuilder<Stack extends DefaultClientStack = DefaultClientStack
     return this
   }
 
+  cache(options: ClientOptions['cache']): ClientBuilder<Stack> {
+    this.options.cache = options
+    return this
+  }
+
   ipc(options: ClientOptions['ipc']): ClientBuilder<Stack> {
     this.options.ipc = options
     return this

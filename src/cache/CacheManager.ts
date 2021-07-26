@@ -40,14 +40,18 @@ import { cacheProviderFilterPolyfill } from '@src/cache/polyfills/cacheProviderF
 import { CacheManagerMapOptions } from '@src/cache/interfaces/CacheManagerMapOptions'
 import { cacheProviderMapPolyfill } from '@src/cache/polyfills/cacheProviderMapPolyfill'
 import { cacheProviderFindPolyfill } from '@src/cache/polyfills/cacheProviderFindPolyfill'
+import { CachingPoliciesProcessor } from '@src/cache/CachingPoliciesProcessor'
 
 export class CacheManager<P extends CacheProvider = CacheProvider> {
   public client: Client
   public provider: P
 
+  private policiesProcessor: CachingPoliciesProcessor
+
   constructor(client: Client, provider: ProviderConstructor<P>, options: CacheManagerOptions) {
     this.client = client
     this.provider = new provider(this.client, options.provider)
+    this.policiesProcessor = new CachingPoliciesProcessor(client)
   }
 
   async get<K = string, V = any>(keyspace: string, key: K, options: CacheManagerGetOptions = {}): Promise<V | undefined> {
@@ -83,6 +87,11 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
   }
 
   async set<K = string, V = any>(keyspace: string, key: K, value: V, options: CacheManagerSetOptions = {}): Promise<CacheManager> {
+    const globalPolicyLimit = this.policiesProcessor.global(value)
+    if (typeof globalPolicyLimit !== 'undefined') {
+      if (!globalPolicyLimit) return this
+    }
+
     if (!this.provider.classesCompatible) {
       // @ts-expect-error
       if (typeof value.toJSON === 'function') value = value.toJSON()

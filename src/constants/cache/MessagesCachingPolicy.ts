@@ -1,5 +1,5 @@
 /** Messages caching policy */
-export enum MessagesCachingPolicy {
+export enum MessagesCachingPolicy { // TODO: message types
   /** Cache all messages */
   ALL = 'all',
   /** Dont cache messages */
