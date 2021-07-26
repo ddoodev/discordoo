@@ -14,38 +14,36 @@ import {
 
 export class CachingPoliciesProcessor {
   public client: Client
-  private options: NonOptional<ClientOptions, 'cache'>['cache']
+  private options: NonOptional<ClientOptions, 'cache'>['cache'] // client cache options
 
   constructor(client: Client) {
     this.client = client
     this.options = this.client.options?.cache ?? {}
   }
 
-  global(entity): boolean | undefined {
+  global(entity: any): boolean | undefined {
     if (this.options.global) {
-      const results: boolean[] = []
+      const results: any[] /* [ boolean | undefined, boolean, boolean | undefined ] */ = []
 
-      results.push(this.options.global.before?.(entity) ?? true)
+      results.push(this.options.global.before?.(entity) ?? undefined)
 
       results.push(
         this.options.global.policies.some(policy => {
           switch (policy) {
-            case GlobalCachingPolicy.ALL:
-              return true
             case GlobalCachingPolicy.NONE:
               return false
+            case GlobalCachingPolicy.ALL:
             default:
               return true
           }
         })
       )
 
-      results.push(this.options.global.after?.(entity) ?? true)
+      results.push(this.options.global.after?.(entity) ?? undefined)
 
-      // when results[0] is false - returns false
-      // when results[2] is false - returns false
-      // else returns results[1]
-      return results[0] && (results[2] && results[1])
+      // when results[0] is undefined - return results[2], else return results[0]
+      // when results[2] is undefined - return results[1], else return results[2]
+      return results[0] ?? results[2] ?? results[1]
     }
   }
 
@@ -53,15 +51,13 @@ export class CachingPoliciesProcessor {
     let result = true
 
     if (this.options.channels) {
-      const results: boolean[] = []
+      const results: any[] /* [ boolean | undefined, boolean, boolean | undefined ] */ = []
 
-      results.push(this.options.channels.before?.(channel) ?? true)
+      results.push(this.options.channels.before?.(channel) ?? undefined)
 
       results.push(
         this.options.channels.policies.some(policy => {
           switch (policy) {
-            case ChannelsCachingPolicy.ALL:
-              return true
             case ChannelsCachingPolicy.CATEGORY:
               return channel.type === 'category'
             case ChannelsCachingPolicy.DM:
@@ -84,15 +80,16 @@ export class CachingPoliciesProcessor {
               return channel.type === 'privateThread'
             case ChannelsCachingPolicy.NONE:
               return false
+            case ChannelsCachingPolicy.ALL:
             default:
               return true
           }
         })
       )
 
-      results.push(this.options.channels.after?.(channel) ?? true)
+      results.push(this.options.channels.after?.(channel) ?? undefined)
 
-      result = results[0] && (results[2] && results[1])
+      result = results[0] ?? results[2] ?? results[1]
     }
 
     return result
@@ -102,29 +99,28 @@ export class CachingPoliciesProcessor {
     let result = true
 
     if (this.options.emojis) {
-      const results: boolean[] = []
+      const results: any[] /* [ boolean | undefined, boolean, boolean | undefined ] */ = []
 
-      results.push(this.options.emojis.before?.(emoji) ?? true)
+      results.push(this.options.emojis.before?.(emoji) ?? undefined)
 
       results.push(
         this.options.emojis.policies.some(policy => {
           switch (policy) {
-            case EmojisCachingPolicy.ALL:
-              return true
             case EmojisCachingPolicy.NONE:
               return false
             case EmojisCachingPolicy.STATIC:
             case EmojisCachingPolicy.ANIMATED:
               return !!emoji.animated
+            case EmojisCachingPolicy.ALL:
             default:
               return true
           }
         })
       )
 
-      results.push(this.options.emojis.after?.(emoji) ?? true)
+      results.push(this.options.emojis.after?.(emoji) ?? undefined)
 
-      result = results[0] && (results[2] && results[1])
+      result = results[0] ?? results[2] ?? results[1]
     }
 
     return result
@@ -134,26 +130,25 @@ export class CachingPoliciesProcessor {
     let result = true
 
     if (this.options.guilds) {
-      const results: boolean[] = []
+      const results: any[] /* [ boolean | undefined, boolean, boolean | undefined ] */ = []
 
-      results.push(this.options.guilds.before?.(guild) ?? true)
+      results.push(this.options.guilds.before?.(guild) ?? undefined)
 
       results.push(
         this.options.guilds.policies.some(policy => {
           switch (policy) {
-            case GuildsCachingPolicy.ALL:
-              return true
             case GuildsCachingPolicy.NONE:
-              return true
+              return false
+            case GuildsCachingPolicy.ALL:
             default:
               return true
           }
         })
       )
 
-      results.push(this.options.guilds.after?.(guild) ?? true)
+      results.push(this.options.guilds.after?.(guild) ?? undefined)
 
-      result = results[0] && (results[2] && results[1])
+      result = results[0] ?? results[2] ?? results[1]
     }
 
     return result
@@ -163,15 +158,13 @@ export class CachingPoliciesProcessor {
     let result = true
 
     if (this.options.members) {
-      const results: boolean[] = []
+      const results: any[] /* [ boolean | undefined, boolean, boolean | undefined ] */ = []
 
-      results.push(this.options.members.before?.(member) ?? true)
+      results.push(this.options.members.before?.(member) ?? undefined)
 
       results.push(
         this.options.members.policies.some(policy => {
           switch (policy) {
-            case MembersCachingPolicy.ALL:
-              return true
             case MembersCachingPolicy.ONLINE:
               return member.presence.status === 'online'
             case MembersCachingPolicy.DND:
@@ -190,15 +183,16 @@ export class CachingPoliciesProcessor {
               break
             case MembersCachingPolicy.NONE:
               return false
+            case MembersCachingPolicy.ALL:
             default:
               return true
           }
         })
       )
 
-      results.push(this.options.members.after?.(member) ?? true)
+      results.push(this.options.members.after?.(member) ?? undefined)
 
-      result = results[0] && (results[2] && results[1])
+      result = results[0] ?? results[2] ?? results[1]
     }
 
     return result
@@ -208,30 +202,29 @@ export class CachingPoliciesProcessor {
     let result = true
 
     if (this.options.messages) {
-      const results: boolean[] = []
+      const results: any[] /* [ boolean | undefined, boolean, boolean | undefined ] */ = []
 
-      results.push(this.options.messages.before?.(message) ?? true)
+      results.push(this.options.messages.before?.(message) ?? undefined)
 
       results.push(
         this.options.messages.policies.some(policy => {
           switch (policy) {
-            case MessagesCachingPolicy.ALL:
-              return true
             case MessagesCachingPolicy.BOTS:
               return message.author.bot
             case MessagesCachingPolicy.USERS:
               return !message.author.bot
             case MessagesCachingPolicy.NONE:
               return false
+            case MessagesCachingPolicy.ALL:
             default:
               return true
           }
         })
       )
 
-      results.push(this.options.messages.after?.(message) ?? true)
+      results.push(this.options.messages.after?.(message) ?? undefined)
 
-      result = results[0] && (results[2] && results[1])
+      result = results[0] ?? results[2] ?? results[1]
     }
 
     return result
@@ -241,26 +234,25 @@ export class CachingPoliciesProcessor {
     let result = true
 
     if (this.options.presences) {
-      const results: boolean[] = []
+      const results: any[] /* [ boolean | undefined, boolean, boolean | undefined ] */ = []
 
-      results.push(this.options.presences.before?.(presence) ?? true)
+      results.push(this.options.presences.before?.(presence) ?? undefined)
 
       results.push(
         this.options.presences.policies.some(policy => {
           switch (policy) {
-            case PresencesCachingPolicy.ALL:
-              return true
             case PresencesCachingPolicy.NONE:
               return false
+            case PresencesCachingPolicy.ALL:
             default:
               return true
           }
         })
       )
 
-      results.push(this.options.presences.after?.(presence) ?? true)
+      results.push(this.options.presences.after?.(presence) ?? undefined)
 
-      result = results[0] && (results[2] && results[1])
+      result = results[0] ?? results[2] ?? results[1]
     }
 
     return result
@@ -270,30 +262,29 @@ export class CachingPoliciesProcessor {
     let result = true
 
     if (this.options.roles) {
-      const results: boolean[] = []
+      const results: any[] /* [ boolean | undefined, boolean, boolean | undefined ] */ = []
 
-      results.push(this.options.roles.before?.(role) ?? true)
+      results.push(this.options.roles.before?.(role) ?? undefined)
 
       results.push(
         this.options.roles.policies.some(policy => {
           switch (policy) {
-            case RolesCachingPolicy.ALL:
-              return true
             case RolesCachingPolicy.EVERYONE:
               return role.id === role.guild.id
             case RolesCachingPolicy.MANAGED:
               return role.managed
             case RolesCachingPolicy.NONE:
               return false
+            case RolesCachingPolicy.ALL:
             default:
               return true
           }
         })
       )
 
-      results.push(this.options.roles.after?.(role) ?? true)
+      results.push(this.options.roles.after?.(role) ?? undefined)
 
-      result = results[0] && (results[2] && results[1])
+      result = results[0] ?? results[2] ?? results[1]
     }
 
     return result
@@ -303,26 +294,25 @@ export class CachingPoliciesProcessor {
     let result = true
 
     if (this.options.users) {
-      const results: boolean[] = []
+      const results: any[] /* [ boolean | undefined, boolean, boolean | undefined ] */ = []
 
-      results.push(this.options.users.before?.(user) ?? true)
+      results.push(this.options.users.before?.(user) ?? undefined)
 
       results.push(
         this.options.users.policies.some(policy => {
           switch (policy) {
-            case UsersCachingPolicy.ALL:
-              return true
             case UsersCachingPolicy.NONE:
               return false
+            case UsersCachingPolicy.ALL:
             default:
               return true
           }
         })
       )
 
-      results.push(this.options.users.after?.(user) ?? true)
+      results.push(this.options.users.after?.(user) ?? undefined)
 
-      result = results[0] && (results[2] && results[1])
+      result = results[0] ?? results[2] ?? results[1]
     }
 
     return result

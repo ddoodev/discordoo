@@ -22,7 +22,7 @@ export class DefaultCacheProvider implements CacheProvider {
 
       key.forEach(k => results.push(space.delete(k)))
 
-      return !results.includes(false) // one of keys does not deleted - returning false
+      return !results.includes(false) // one of keys does not deleted - return false
     }
 
     return space.delete(key)
