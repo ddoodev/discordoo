@@ -20,6 +20,7 @@ export class ShardingManager extends TypedEmitter<ShardingManagerEvents> {
   public mode: ShardingModes
   public options: ShardingManagerOptions
   public id: string
+  public instances: Collection<number, ShardingInstance> = new Collection()
   public shards: Collection<number, ShardingInstance> = new Collection()
 
   private readonly _shards: number[]
@@ -49,7 +50,7 @@ export class ShardingManager extends TypedEmitter<ShardingManagerEvents> {
 
     let index = 0
     for await (const shards of chunks) {
-      const shard = new ShardingInstance({
+      const instance = new ShardingInstance(this, {
         shards: shards,
         file: this.options.file,
         totalShards: this._shards.length,
@@ -61,8 +62,9 @@ export class ShardingManager extends TypedEmitter<ShardingManagerEvents> {
         }
       })
 
-      await shard.create()
-      this.shards.set(index, shard)
+      await instance.create()
+      this.instances.set(index, instance)
+      instance.shards.forEach(s => this.shards.set(s, instance))
       await wait(5000)
 
       index++

@@ -8,6 +8,7 @@ import { ShardingInstanceCreateOptions } from '@src/sharding/interfaces/client/S
 import { IpcClient } from '@src/sharding/ipc/IpcClient'
 import { DiscordooError, wait } from '@src/utils'
 import os from 'os'
+import { ShardingManager } from '@src/sharding/ShardingManager'
 
 export class ShardingInstance extends TypedEmitter {
   public id: number
@@ -18,9 +19,12 @@ export class ShardingInstance extends TypedEmitter {
   public options: ShardingInstanceOptions
   public totalShards: number
   public rawShard?: Cluster.Worker | Worker | Process.ChildProcess
+  public manager: ShardingManager
 
-  constructor(options: ShardingInstanceOptions) {
+  constructor(manager: ShardingManager, options: ShardingInstanceOptions) {
     super()
+
+    this.manager = manager
 
     this.id = options.internalEnv.SHARDING_INSTANCE
     this.ipcId = options.internalEnv.SHARDING_INSTANCE_IPC
@@ -28,7 +32,8 @@ export class ShardingInstance extends TypedEmitter {
     this.mode = options.mode
     this.totalShards = options.totalShards
     this.options = options
-    this.ipc = new IpcClient({
+
+    this.ipc = new IpcClient(this, {
       shardId: this.id,
       shardIpcId: this.ipcId,
       tls: options.ipc?.tls,

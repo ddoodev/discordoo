@@ -1,5 +1,5 @@
 import { IpcPacket } from '@src/sharding'
-import { IpcCacheOpCodes, IpcEvents, IpcOpCodes } from '@src/constants'
+import { IpcCacheOpCodes, IpcEvents, IpcOpCodes, SerializeModes } from '@src/constants'
 
 export interface IpcHelloPacket extends IpcPacket {
   op: IpcOpCodes.HELLO
@@ -39,7 +39,7 @@ export interface IpcCacheGetRequestPacket extends IpcPacket {
   d: {
     event_id: string
     op: IpcCacheOpCodes.GET
-    serialize: boolean
+    serialize?: SerializeModes.BOOLEAN
     shards: number[]
     key: any
     keyspace: string
@@ -50,8 +50,8 @@ export interface IpcCacheGetResponsePacket extends IpcPacket {
   op: IpcOpCodes.CACHE_OPERATE
   d: {
     event_id: string
-    result: any
     success: boolean
+    result: any
   }
 }
 
@@ -60,7 +60,7 @@ export interface IpcCacheSetRequestPacket extends IpcPacket {
   d: {
     event_id: string
     op: IpcCacheOpCodes.SET
-    serialize: boolean
+    serialize?: SerializeModes.BOOLEAN
     shards: number[]
     key: any
     keyspace: string
@@ -82,7 +82,7 @@ export interface IpcCacheDeleteRequestPacket extends IpcPacket {
   d: {
     event_id: string
     op: IpcCacheOpCodes.DELETE
-    serialize: boolean
+    serialize?: SerializeModes.BOOLEAN
     shards: number[]
     key: any
     keyspace: string
@@ -94,6 +94,7 @@ export interface IpcCacheDeleteResponsePacket extends IpcPacket {
   d: {
     event_id: string
     success: boolean
+    result: any
   }
 }
 
@@ -113,6 +114,7 @@ export interface IpcCacheForEachResponsePacket extends IpcPacket {
   d: {
     event_id: string
     success: boolean
+    result: any
   }
 }
 
@@ -121,7 +123,7 @@ export interface IpcCacheSizeRequestPacket extends IpcPacket {
   d: {
     event_id: string
     op: IpcCacheOpCodes.SIZE
-    serialize: boolean
+    serialize?: SerializeModes.NUMBER
     shards: number[]
     keyspace: string
   }
@@ -141,7 +143,7 @@ export interface IpcCacheHasRequestPacket extends IpcPacket {
   d: {
     event_id: string
     op: IpcCacheOpCodes.HAS
-    serialize: boolean
+    serialize?: SerializeModes.BOOLEAN
     shards: number[]
     keyspace: string
     key: any
@@ -173,6 +175,7 @@ export interface IpcCacheSweepResponsePacket extends IpcPacket {
   d: {
     event_id: string
     success: boolean
+    result: any
   }
 }
 
@@ -181,7 +184,7 @@ export interface IpcCacheFilterRequestPacket extends IpcPacket {
   d: {
     event_id: string
     op: IpcCacheOpCodes.FILTER
-    serialize: boolean
+    serialize?: SerializeModes.ARRAY
     shards: number[]
     keyspace: string
     script: string
@@ -202,7 +205,7 @@ export interface IpcCacheMapRequestPacket extends IpcPacket {
   d: {
     event_id: string
     op: IpcCacheOpCodes.MAP
-    serialize: boolean
+    serialize?: SerializeModes.ARRAY
     shards: number[]
     keyspace: string
     script: string
@@ -223,7 +226,7 @@ export interface IpcCacheFindRequestPacket extends IpcPacket {
   d: {
     event_id: string
     op: IpcCacheOpCodes.FIND
-    serialize: boolean
+    serialize?: SerializeModes.ANY
     shards: number[]
     keyspace: string
     script: string

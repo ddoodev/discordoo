@@ -2,7 +2,7 @@ import { CacheProvider, Client, ProviderConstructor } from '@src/core'
 import { CacheManagerOptions } from '@src/cache/interfaces/CacheManagerOptions'
 import { CacheManagerGetOptions } from '@src/cache/interfaces/CacheManagerGetOptions'
 import { resolveShards } from '@src/utils/resolveShards'
-import { IpcCacheOpCodes, IpcOpCodes } from '@src/constants'
+import { IpcCacheOpCodes, IpcOpCodes, SerializeModes } from '@src/constants'
 import {
   IpcCacheDeleteRequestPacket,
   IpcCacheDeleteResponsePacket,
@@ -68,7 +68,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
           key,
           keyspace,
           shards,
-          serialize: true
+          serialize: SerializeModes.BOOLEAN
         }
       }
 
@@ -109,7 +109,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
           keyspace,
           shards,
           value,
-          serialize: true
+          serialize: SerializeModes.BOOLEAN
         }
       }
 
@@ -139,7 +139,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
           key,
           keyspace,
           shards,
-          serialize: true
+          serialize: SerializeModes.BOOLEAN
         }
       }
 
@@ -192,7 +192,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
           event_id: this.client.internals.ipc.generate(),
           keyspace,
           shards,
-          serialize: true
+          serialize: SerializeModes.NUMBER
         }
       }
 
@@ -230,7 +230,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
           keyspace,
           key,
           shards,
-          serialize: true
+          serialize: SerializeModes.BOOLEAN
         }
       }
 
@@ -303,7 +303,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
           keyspace,
           shards,
           script: `(${predicate})`,
-          serialize: true
+          serialize: SerializeModes.ARRAY
         }
       }
 
@@ -343,7 +343,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
           keyspace,
           shards,
           script: `(${predicate})`,
-          serialize: true
+          serialize: SerializeModes.ARRAY
         }
       }
 
@@ -383,7 +383,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
           keyspace,
           shards,
           script: `(${predicate})`,
-          serialize: true
+          serialize: SerializeModes.ANY
         }
       }
 

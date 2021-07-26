@@ -97,8 +97,8 @@ Release deadline: September 30, 2021
   * [x] Shards must be able to communicate in fast and scalable way
   * [x] Shards must use hello/identify algorithm
   * [ ] Shards must use heartbeat algorithm
-  * [ ] Shards must be able to send, receive and handle CACHE_OPERATE messages
-  * [ ] Shards must be able to send errors to ShardingManager, manager must handle these errors 
+  * [x] Shards must be able to send, receive and handle CACHE_OPERATE messages
+  * [x] Shards must be able to send errors to ShardingManager, manager must handle these errors 
 * [x] User-land APIs
   * [x] User must be able to spawn shards
   * [ ] User must be able to restart specified shard(s)

@@ -1,27 +1,30 @@
 import { TypedEmitter } from 'tiny-typed-emitter'
 import { IPC as RawIpc } from 'node-ipc'
-import { IpcClientOptions, IpcClientSendOptions, IpcPacket } from '@src/sharding'
+import { IpcClientOptions, IpcClientSendOptions, IpcPacket, ShardingInstance } from '@src/sharding'
 import { Collection } from '@src/collection'
-import { IpcOpCodes, RAW_IPC_EVENT } from '@src/constants'
+import { IpcOpCodes, RAW_IPC_EVENT, SerializeModes } from '@src/constants'
 import { DiscordooError, DiscordooSnowflake } from '@src/utils'
 import { IpcHeartbeatPacket, IpcHelloPacket } from '@src/sharding/interfaces/ipc/IpcPackets'
 import { IpcClientEvents } from '@src/sharding/interfaces/ipc/IpcClientEvents'
 
 export class IpcClient extends TypedEmitter<IpcClientEvents> {
-  private bucket: Collection<string, any> = new Collection()
+  private bucket: Collection = new Collection()
   private shardSocket: any
   private readonly shardIpcId: string
   private readonly eventsHandler: any
   private readonly managerId: string
   private helloInterval?: NodeJS.Timeout
 
+  public instance: ShardingInstance
   public ipc: InstanceType<typeof RawIpc>
   public shards: number[]
   public id: number
   public totalShards: number
 
-  constructor(options: IpcClientOptions) {
+  constructor(instance: ShardingInstance, options: IpcClientOptions) {
     super()
+
+    this.instance = instance
 
     this.shardIpcId = options.shardIpcId
     this.shards = options.shards
@@ -84,6 +87,56 @@ export class IpcClient extends TypedEmitter<IpcClientEvents> {
         this.shardSocket = this.ipc.of[packet.d.id]
         if (this.helloInterval) clearInterval(this.helloInterval)
         break
+      case IpcOpCodes.CACHE_OPERATE:
+        this.cacheOperate(packet)
+        break
+    }
+  }
+
+  private async cacheOperate(packet: IpcPacket) {
+    const shards: number[] = packet.d.shards,
+      id = packet.d.event_id
+
+    const promises: Array<undefined | Promise<any>> = shards.map(s => {
+      const shard = this.instance.manager.shards.get(s)
+
+      packet.d.event_id = this.generate()
+
+      return shard?.ipc.send(packet, { waitResponse: true })
+    })
+
+    let results = await Promise.all(promises).catch(e => e),
+      success = false
+
+    if (Array.isArray(results)) {
+      success = true
+      if (packet.d.serialize !== undefined) {
+        results = this.serializeReplies(results, packet.d.serialize)
+      }
+    }
+
+    return this.send({
+      op: IpcOpCodes.CACHE_OPERATE,
+      d: {
+        event_id: id,
+        success,
+        result: results
+      }
+    })
+  }
+
+  private serializeReplies(replies: any[], type: SerializeModes) {
+    switch (type) {
+      case SerializeModes.ANY:
+        return replies.find(r => r)
+      case SerializeModes.ARRAY:
+        return replies.flat()
+      case SerializeModes.BOOLEAN:
+        return replies.find(r => r === true) ?? false
+      case SerializeModes.NUMBER:
+        return replies.reduce((prev, curr) => prev += curr, 0)
+      default:
+        return replies
     }
   }
 
