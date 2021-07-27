@@ -68,7 +68,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
           key,
           keyspace,
           shards,
-          serialize: SerializeModes.BOOLEAN
+          serialize: SerializeModes.ANY
         }
       }
 

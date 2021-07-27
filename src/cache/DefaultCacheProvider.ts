@@ -69,6 +69,14 @@ export class DefaultCacheProvider implements CacheProvider {
     })
   }
 
+  async size(keyspace: string): Promise<number> {
+    const space = this.keyspaces.get(keyspace)
+
+    if (!space) throw new Error('unknown keyspace') // TODO: rewrite
+
+    return space.size
+  }
+
   async init(): Promise<void> {
     setInterval(() => {
       this.keyspaces.forEach((collection, key) => {

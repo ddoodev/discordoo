@@ -4,7 +4,7 @@ import { IpcClientOptions, IpcClientSendOptions, IpcPacket, ShardingInstance } f
 import { Collection } from '@src/collection'
 import { IpcOpCodes, RAW_IPC_EVENT, SerializeModes } from '@src/constants'
 import { DiscordooError, DiscordooSnowflake } from '@src/utils'
-import { IpcHeartbeatPacket, IpcHelloPacket } from '@src/sharding/interfaces/ipc/IpcPackets'
+import { IpcCacheRequestPacket, IpcCacheResponsePacket, IpcHeartbeatPacket, IpcHelloPacket } from '@src/sharding/interfaces/ipc/IpcPackets'
 import { IpcClientEvents } from '@src/sharding/interfaces/ipc/IpcClientEvents'
 
 export class IpcClient extends TypedEmitter<IpcClientEvents> {
@@ -77,8 +77,9 @@ export class IpcClient extends TypedEmitter<IpcClientEvents> {
       const promise = this.bucket.get(packet.d.event_id)
 
       if (promise) {
+        this.bucket.delete(packet.d.event_id)
         clearTimeout(promise.timeout)
-        packet.op === IpcOpCodes.ERROR ? promise.rej(packet) : promise.res(packet)
+        return packet.op === IpcOpCodes.ERROR ? promise.rej(packet) : promise.res(packet)
       }
     }
 
@@ -88,31 +89,37 @@ export class IpcClient extends TypedEmitter<IpcClientEvents> {
         if (this.helloInterval) clearInterval(this.helloInterval)
         break
       case IpcOpCodes.CACHE_OPERATE:
-        this.cacheOperate(packet)
+        this.cacheOperate(packet as IpcCacheRequestPacket)
         break
     }
   }
 
-  private async cacheOperate(packet: IpcPacket) {
+  private async cacheOperate(packet: IpcCacheRequestPacket) {
     const shards: number[] = packet.d.shards,
       id = packet.d.event_id
 
     const promises: Array<undefined | Promise<any>> = shards.map(s => {
       const shard = this.instance.manager.shards.get(s)
 
-      packet.d.event_id = this.generate()
+      if (shard) packet.d.event_id = this.generate()
 
       return shard?.ipc.send(packet, { waitResponse: true })
     })
 
-    let results = await Promise.all(promises).catch(e => e),
-      success = false
+    const responses: Array<IpcCacheResponsePacket | undefined> = await Promise.all(promises)
 
-    if (Array.isArray(results)) {
-      success = true
-      if (packet.d.serialize !== undefined) {
-        results = this.serializeReplies(results, packet.d.serialize)
-      }
+    const success = responses.some(r => r?.d.success)
+    let result
+
+    // @ts-expect-error
+    if (packet.d.serialize !== undefined) {
+      result = this.serializeResponses(
+        responses.map(r => r?.d.success ? r?.d.result : undefined).filter(r => r ?? false), // filter undefined/null
+        // @ts-expect-error
+        packet.d.serialize
+      )
+    } else {
+      result = responses.map(r => r?.d.result)
     }
 
     return this.send({
@@ -120,12 +127,12 @@ export class IpcClient extends TypedEmitter<IpcClientEvents> {
       d: {
         event_id: id,
         success,
-        result: results
+        result
       }
     })
   }
 
-  private serializeReplies(replies: any[], type: SerializeModes) {
+  private serializeResponses(replies: any[], type: SerializeModes) {
     switch (type) {
       case SerializeModes.ANY:
         return replies.find(r => r)
@@ -134,7 +141,7 @@ export class IpcClient extends TypedEmitter<IpcClientEvents> {
       case SerializeModes.BOOLEAN:
         return replies.find(r => r === true) ?? false
       case SerializeModes.NUMBER:
-        return replies.reduce((prev, curr) => prev += curr, 0)
+        return replies.reduce((prev, curr) => prev + curr, 0)
       default:
         return replies
     }

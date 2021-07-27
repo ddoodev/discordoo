@@ -2,15 +2,22 @@ import { TypedEmitter } from 'tiny-typed-emitter'
 import { IpcServerOptions } from '@src/sharding/interfaces/ipc/IpcServerOptions'
 import { IPC as RawIpc, server as RawIpcServer } from 'node-ipc'
 import { Collection } from '@src/collection'
-import { IpcEvents, IpcOpCodes, RAW_IPC_EVENT } from '@src/constants'
+import { IpcCacheOpCodes, IpcEvents, IpcOpCodes, RAW_IPC_EVENT } from '@src/constants'
 import { IpcPacket } from '@src/sharding'
 import { DiscordooError, DiscordooSnowflake } from '@src/utils'
 import { IpcServerSendOptions } from '@src/sharding/interfaces/ipc/IpcServerSendOptions'
-import { IpcDispatchPacket, IpcHelloPacket, IpcIdentifyPacket } from '@src/sharding/interfaces/ipc/IpcPackets'
+import {
+  IpcCacheRequestPacket,
+  IpcCacheResponsePacket,
+  IpcDispatchPacket,
+  IpcHelloPacket,
+  IpcIdentifyPacket
+} from '@src/sharding/interfaces/ipc/IpcPackets'
 import { IpcServerEvents } from '@src/sharding/interfaces/ipc/IpcServerEvents'
+import { Client } from '@src/core'
 
 export class IpcServer extends TypedEmitter<IpcServerEvents> {
-  private bucket: Collection<string, any> = new Collection()
+  private bucket: Collection = new Collection()
   private managerSocket: any
   private readonly managerIpc: string
   private readonly eventsHandler: any
@@ -20,9 +27,12 @@ export class IpcServer extends TypedEmitter<IpcServerEvents> {
   public instanceIpc: string
   public instance: number
 
-  constructor(options: IpcServerOptions) {
+  public client: Client
+
+  constructor(client: Client, options: IpcServerOptions) {
     super()
 
+    this.client = client
     this.ipc = new RawIpc()
 
     this.instanceIpc = this.ipc.config.id = options.instanceIpc
@@ -33,7 +43,7 @@ export class IpcServer extends TypedEmitter<IpcServerEvents> {
 
     this.eventsHandler = (data: IpcPacket, socket: any) => {
       if (this.listeners('RAW').length) this.emit('RAW', data)
-      this.onPacket(data, socket)
+      return this.onPacket(data, socket)
     }
   }
 
@@ -67,26 +77,89 @@ export class IpcServer extends TypedEmitter<IpcServerEvents> {
     this.server = undefined
   }
 
-  private onPacket(packet: IpcPacket, socket: any) {
+  private async onPacket(packet: IpcPacket, socket: any) {
     if (packet.d?.event_id) {
       const promise = this.bucket.get(packet.d.event_id)
 
       if (promise) {
-        this.bucket.delete(packet.d.event_id)
         clearTimeout(promise.timeout)
-        promise.res(packet)
+        this.bucket.delete(packet.d.event_id)
+
+        packet.op === IpcOpCodes.ERROR ? promise.rej(packet) : promise.res(packet)
+
+        if (packet.op !== IpcOpCodes.HELLO) return
       }
     }
 
     switch (packet.op) {
 
       case IpcOpCodes.HELLO:
-        this.hello(packet as IpcHelloPacket, socket)
-        break
+        return this.hello(packet as IpcHelloPacket, socket)
 
-      case IpcOpCodes.DISPATCH:
-        break
+      case IpcOpCodes.CACHE_OPERATE: {
+        let success = true
 
+        const result = await this.cacheOperate(packet as IpcCacheRequestPacket)
+          .catch(e => {
+            success = false
+            return e
+          })
+
+        const response: IpcCacheResponsePacket = {
+          op: IpcOpCodes.CACHE_OPERATE,
+          d: {
+            event_id: packet.d.event_id,
+            success,
+            result
+          }
+        }
+
+        return this.send(response)
+      }
+
+    }
+  }
+
+  private cacheOperate(request: IpcCacheRequestPacket): any {
+    const keyspace = request.d.keyspace
+
+    switch (request.d.op) {
+      case IpcCacheOpCodes.GET:
+        return this.client.internals.cache.get(keyspace, request.d.key)
+      case IpcCacheOpCodes.SET:
+        return this.client.internals.cache.set(keyspace, request.d.key, request.d.value)
+      case IpcCacheOpCodes.DELETE:
+        return this.client.internals.cache.delete(keyspace, request.d.key)
+      case IpcCacheOpCodes.SWEEP:
+      case IpcCacheOpCodes.MAP:
+      case IpcCacheOpCodes.FIND:
+      case IpcCacheOpCodes.FOREACH: {
+        const script = request.d.script
+        let method = 'forEach'
+
+        switch (request.d.op) {
+          case IpcCacheOpCodes.SWEEP:
+            method = 'sweep'
+            break
+          case IpcCacheOpCodes.MAP:
+            method = 'map'
+            break
+          case IpcCacheOpCodes.FIND:
+            method = 'find'
+            break
+        }
+
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const predicate = (value, key, provider) => {
+          return eval(script + '.bind(provider)(value, key, provider)')
+        }
+
+        return this.client.internals.cache[method](keyspace, predicate)
+      }
+      case IpcCacheOpCodes.SIZE:
+        return this.client.internals.cache.size(keyspace)
+      case IpcCacheOpCodes.HAS:
+        return this.client.internals.cache.has(keyspace, request.d.key)
     }
   }
 
@@ -104,7 +177,7 @@ export class IpcServer extends TypedEmitter<IpcServerEvents> {
 
     this.managerSocket = socket
 
-    this.identify(packet)
+    return this.identify(packet)
   }
 
   private identify(packet: IpcHelloPacket) {
@@ -116,7 +189,7 @@ export class IpcServer extends TypedEmitter<IpcServerEvents> {
       }
     }
 
-    this.send(data)
+    return this.send(data)
   }
 
   private dispatch(packet: IpcDispatchPacket) {

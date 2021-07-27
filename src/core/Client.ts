@@ -83,6 +83,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
         active: DiscordooSnowflake.deconstruct(MANAGER_IPC).shardID === DiscordooSnowflake.SHARDING_MANAGER_ID,
       },
       ipc = new IpcServer(
+        this,
         Object.assign({
           instanceIpc: sharding.INSTANCE_IPC,
           managerIpc: sharding.MANAGER_IPC,

@@ -39,7 +39,7 @@ export interface IpcCacheGetRequestPacket extends IpcPacket {
   d: {
     event_id: string
     op: IpcCacheOpCodes.GET
-    serialize?: SerializeModes.BOOLEAN
+    serialize?: SerializeModes.ANY
     shards: number[]
     key: any
     keyspace: string
@@ -241,3 +241,25 @@ export interface IpcCacheFindResponsePacket extends IpcPacket {
     result: any
   }
 }
+
+export type IpcCacheRequestPacket = IpcCacheGetRequestPacket
+  | IpcCacheSetRequestPacket
+  | IpcCacheDeleteRequestPacket
+  | IpcCacheForEachRequestPacket
+  | IpcCacheSizeRequestPacket
+  | IpcCacheHasRequestPacket
+  | IpcCacheSweepRequestPacket
+  | IpcCacheFilterRequestPacket
+  | IpcCacheMapRequestPacket
+  | IpcCacheFindRequestPacket
+
+export type IpcCacheResponsePacket = IpcCacheGetResponsePacket
+  | IpcCacheSetResponsePacket
+  | IpcCacheDeleteResponsePacket
+  | IpcCacheForEachResponsePacket
+  | IpcCacheSizeResponsePacket
+  | IpcCacheHasResponsePacket
+  | IpcCacheSweepResponsePacket
+  | IpcCacheFilterResponsePacket
+  | IpcCacheMapResponsePacket
+  | IpcCacheFindResponsePacket
