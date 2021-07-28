@@ -19,6 +19,9 @@ export interface RestRequest {
   /** Request payload data */
   requestPayload: any
 
+  /** Major parameter of this request, used for rate limits processing */
+  majorParameter: string | undefined
+
   /** Request endpoint url */
   endpoint: string
 

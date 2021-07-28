@@ -16,6 +16,21 @@ export function makeRequest(rest: RestManager<any>): RestRequest {
     requestHeaders: {},
     requestPayload: undefined,
 
+    get majorParameter() {
+      const guilds = this.requestStack.indexOf('guilds'),
+        channels = this.requestStack.indexOf('channels'),
+        webhooks = this.requestStack.indexOf('webhooks')
+
+      switch (true) {
+        case webhooks > -1:
+          return this.requestStack[webhooks + 1] + this.requestStack[webhooks + 2]
+        case guilds > -1:
+          return this.requestStack[guilds + 1]
+        case channels > -1:
+          return this.requestStack[channels + 1]
+      }
+    },
+
     get endpoint() {
       let path = `${DISCORD_API_ENDPOINT}/${this.requestStack.join('/')}`
       if (Object.keys(this.requestQuery).length > 0) {
@@ -27,6 +42,7 @@ export function makeRequest(rest: RestManager<any>): RestRequest {
     request<T = any>(method: RestRequestMethods, options?: any): RestRequestResponse<T> {
       return this.rest.request({
         method,
+        majorParameter: this.majorParameter,
         endpoint: this.endpoint,
         headers: this.requestHeaders,
         payload: this.requestPayload,

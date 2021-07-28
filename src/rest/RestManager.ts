@@ -1,10 +1,10 @@
 import { RestProvider } from '@src/core/providers/rest/RestProvider'
 import { Client, ProviderConstructor } from '@src/core'
-import { RestProviderRequestOptions } from '@src/core/providers/rest/options/RestProviderRequestOptions'
 import { RestRequestResponse } from '@src/core/providers/rest/RestRequestResponse'
 import { RestRequest } from '@src/core/providers/rest/requests/RestRequest'
 import { makeRequest } from '@src/rest/makeRequest'
 import { RestManagerOptions } from '@src/rest/RestManagerOptions'
+import { RestManagerRequestOptions } from '@src/rest/interfaces/RestManagerRequestOptions'
 
 export class RestManager<P extends RestProvider = RestProvider> {
   public client: Client
@@ -19,7 +19,7 @@ export class RestManager<P extends RestProvider = RestProvider> {
     return makeRequest(this)
   }
 
-  request<T = any>(options: RestProviderRequestOptions): RestRequestResponse<T> {
+  request<T = any>(options: RestManagerRequestOptions): RestRequestResponse<T> {
     return this.provider.request<T>(options)
   }
 
