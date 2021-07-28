@@ -9,6 +9,8 @@ import { Collection } from '@src/collection'
 import { ShardingInstance } from '@src/sharding/ShardingInstance'
 import { resolveDiscordShards } from '@src/utils/resolveDiscordShards'
 import { intoChunks } from '@src/utils/intoChunks'
+import { Final } from '@src/utils/FinalDecorator'
+import { ShardingManagerInternals } from '@src/sharding/interfaces/manager/ShardingManagerInternals'
 
 const isMainProcess = process.send === undefined
 
@@ -16,14 +18,15 @@ const spawningLoopError = new DiscordooError(
   'ShardingManager', 'spawning loop detected. sharding manager spawned in the shard. aborting'
 )
 
+@Final('start')
 export class ShardingManager extends TypedEmitter<ShardingManagerEvents> {
   public mode: ShardingModes
   public options: ShardingManagerOptions
-  public id: string
+  public internals: ShardingManagerInternals
+
   public instances: Collection<number, ShardingInstance> = new Collection()
   public shards: Collection<number, ShardingInstance> = new Collection()
 
-  private readonly _shards: number[]
   readonly #died: boolean = false
 
   constructor(options: ShardingManagerOptions) {
@@ -36,27 +39,36 @@ export class ShardingManager extends TypedEmitter<ShardingManagerEvents> {
 
     this.mode = options.mode
     this.options = options
-    this._shards = resolveDiscordShards(options.shards)
 
-    this.id = DiscordooSnowflake.generate(DiscordooSnowflake.SHARDING_MANAGER_ID, process.pid)
+    const shards = resolveDiscordShards(options.shards),
+      id = DiscordooSnowflake.generate(DiscordooSnowflake.SHARDING_MANAGER_ID, process.pid)
+
+    this.internals = {
+      id,
+      shards,
+      rest: {
+        requests: 50,
+        invalid: 10000
+      }
+    }
   }
 
-  async spawn(): Promise<ShardingManager> {
+  async start(): Promise<ShardingManager> {
     if (this.#died) throw spawningLoopError
 
     const shardsPerInstance: number = this.options.shardsPerInstance || 1
 
-    const chunks = intoChunks<number>(this._shards, shardsPerInstance)
+    const chunks = intoChunks<number>(this.internals.shards, shardsPerInstance)
 
     let index = 0
     for await (const shards of chunks) {
       const instance = new ShardingInstance(this, {
         shards: shards,
         file: this.options.file,
-        totalShards: this._shards.length,
+        totalShards: this.internals.shards.length,
         mode: this.mode as unknown as PartialShardingModes,
         internalEnv: {
-          SHARDING_MANAGER_IPC: this.id,
+          SHARDING_MANAGER_IPC: this.internals.id,
           SHARDING_INSTANCE_IPC: DiscordooSnowflake.generate(index, process.pid),
           SHARDING_INSTANCE: index,
         }
