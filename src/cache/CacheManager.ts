@@ -41,6 +41,7 @@ import { CacheManagerMapOptions } from '@src/cache/interfaces/CacheManagerMapOpt
 import { cacheProviderMapPolyfill } from '@src/cache/polyfills/cacheProviderMapPolyfill'
 import { cacheProviderFindPolyfill } from '@src/cache/polyfills/cacheProviderFindPolyfill'
 import { CachingPoliciesProcessor } from '@src/cache/CachingPoliciesProcessor'
+import { CacheManagerFindOptions } from '@src/cache/interfaces/CacheManagerFindOptions'
 
 export class CacheManager<P extends CacheProvider = CacheProvider> {
   public client: Client
@@ -368,7 +369,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
   }
 
   async find<K = string, V = any>(
-    keyspace: string, predicate: (value: V, key: K, provider: P) => boolean | Promise<boolean>, options: CacheManagerMapOptions = {}
+    keyspace: string, predicate: (value: V, key: K, provider: P) => boolean | Promise<boolean>, options: CacheManagerFindOptions = {}
   ): Promise<V | undefined> {
     let result: V | undefined
 
