@@ -4,6 +4,6 @@ export enum PartialShardingModes {
   PROCESSES = 'processes',
   /** Spawn sharding instances in different worker threads */
   WORKERS = 'workers',
-  /** Spawn sharding instances in different node.js's clusters */
+  /** Spawn sharding instances in different clusters */
   CLUSTERS = 'clusters',
 }

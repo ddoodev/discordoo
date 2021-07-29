@@ -6,7 +6,7 @@ export enum IpcEvents {
   CONNECTED = 'CONNECTED',
   /** Stop all shards */
   DESTROYING = 'DESTROYING',
-  /** Set new shards configuration & restart (between machines only) */
+  /** Set new shards configuration & restart (across machines only) */
   RESTRUCTURING = 'RESTRUCTURING',
   /** Restart all shards */
   RESTARTING = 'RESTARTING',

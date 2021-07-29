@@ -130,6 +130,10 @@ export class IpcServer extends TypedEmitter<IpcServerEvents> {
         return this.client.internals.cache.set(keyspace, request.d.key, request.d.value)
       case IpcCacheOpCodes.DELETE:
         return this.client.internals.cache.delete(keyspace, request.d.key)
+      case IpcCacheOpCodes.SIZE:
+        return this.client.internals.cache.size(keyspace)
+      case IpcCacheOpCodes.HAS:
+        return this.client.internals.cache.has(keyspace, request.d.key)
       case IpcCacheOpCodes.SWEEP:
       case IpcCacheOpCodes.MAP:
       case IpcCacheOpCodes.FIND:
@@ -156,10 +160,6 @@ export class IpcServer extends TypedEmitter<IpcServerEvents> {
 
         return this.client.internals.cache[method](keyspace, predicate)
       }
-      case IpcCacheOpCodes.SIZE:
-        return this.client.internals.cache.size(keyspace)
-      case IpcCacheOpCodes.HAS:
-        return this.client.internals.cache.has(keyspace, request.d.key)
     }
   }
 

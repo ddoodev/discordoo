@@ -32,7 +32,7 @@
 <hr>
 
 ## WARNING
-**THIS LIBRARY UNDER DEVELOPMENT!** Parts of the stuff described here is not done yet, and we are just planning to implement it.
+**THIS LIBRARY IS UNDER DEVELOPMENT!** Parts of the stuff described here is not done yet, and we are just planning to implement it.
 
 ## About
 [Discordoo](https://discordoo.xyz/) is a [Discord API](https://discord.com/developers/docs/intro) library interface. 
@@ -57,25 +57,8 @@ Node.js v12.18 or newer required.
 
 ## Benchmarks
 While the library is under development, only Discordoo Collection Benchmarks are available.
-### djs collection VS ddoo collection
-djs is the most popular library for developing bots, so we will compare with it.
-(if you're interested, ddoo is roughly comparable to eris in collection speed)
-
-#### Benchmark: random elements from collection
-1. [100 elements in collection, 5 random elements](https://jsben.ch/mNKer)
-2. [800 elements in collection, 150 random elements](https://jsben.ch/en4FL)
-3. [10000 elements in collection, 1000 random elements](https://jsben.ch/86Fpd)
-4. [10000 elements in collection, 8000 random elements](https://jsben.ch/q5IXT)
-
-#### Benchmark: filter 50% of elements from collection
-1. [100 elements in collection](https://jsben.ch/coBir)
-2. [800 elements in collection](https://jsben.ch/UcXNJ)
-3. [10000 elements in collection](https://jsben.ch/GYwWj)
-
-#### Benchmark: map collection elements
-1. [100 elements in collection](https://jsben.ch/Gqp0P)
-2. [800 elements in collection](https://jsben.ch/NNGE4)
-3. [10000 elements in collection](https://jsben.ch/rMMWl)
+### D.js collection VS ddoo collection
+You can find these benchmarks [here](https://github.com/Discordoo/collection#djs-collection-vs-ddoo-collection-speed-tests).
 
 ## Planned features
 * **Waifoo** — a framework for creating discord bots based on Discordoo (commands, other features).

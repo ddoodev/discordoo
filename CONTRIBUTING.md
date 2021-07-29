@@ -1,5 +1,5 @@
 # Discordoo Contribution guide
-Hello and first of all thanks for your interest in contributing to Discordoo! Discordoo hasn't grown up yet, however we have some plans to develop it into a stable and production-ready library.
+Hello and first thanks for your interest in contributing to Discordoo! Discordoo hasn't grown up yet, however we have some plans to develop it into a stable and production-ready library.
 Further, in this document we'll describe all the aspects of contributing to Discordoo.
 
 ## General
@@ -19,12 +19,6 @@ Discordoo uses three types of branches: features, master and release.
 
 ## Code
 ### Documentation
-Discordoo uses `typedoc` package for documentation generation. Each method or class have to be documentated as precise as possible.
+Discordoo uses `typedoc` package for documentation generation. Each method or class have to be documented as precise as possible.
 ### Style
 We use `eslint` package for code style enforcement.
-
-## Developer's CLI
-We love our contributors! That's the reason, why we've created
-Discordoo developer utils. You can access it using
-`npm run utils` command. It is pretty straightforward
-and easy to use.
