@@ -14,7 +14,7 @@ export enum ChannelsCachingPolicy {
   CATEGORY = 'category',
   /** Cache news channels (does not includes threads) */
   NEWS = 'news',
-  /** Cache 'store' channels (does not includes threads) */
+  /** Cache 'store' channels */
   STORE = 'store',
   /** Cache news threads */
   NEWS_THREAD = 'newsThread',

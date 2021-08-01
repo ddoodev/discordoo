@@ -32,10 +32,12 @@ export function makeRequest(rest: RestManager<any>): RestRequest {
     },
 
     get endpoint() {
-      let path = `${DISCORD_API_ENDPOINT}/${this.requestStack.join('/')}`
+      const path = `${DISCORD_API_ENDPOINT}/${this.requestStack.join('/')}`
+
       if (Object.keys(this.requestQuery).length > 0) {
-        path += '&' + new URLSearchParams(this.requestQuery).toString()
+        return path + '&' + new URLSearchParams(this.requestQuery).toString()
       }
+
       return path
     },
 

@@ -9,7 +9,7 @@ import { ShardListResolvable } from '@src/core/ShardListResolvable'
 import { ClientInternals } from '@src/core/client/ClientInternals'
 import { ClientOptions } from '@src/core/client/ClientOptions'
 
-import { Client } from '@src/core/Client'
+import { Client } from '@src/core/client/Client'
 
 export {
   GatewayConnectOptions,

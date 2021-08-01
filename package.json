@@ -1,6 +1,6 @@
 {
   "name": "discordoo",
-  "version": "0.6.6",
+  "version": "0.6.8",
   "description": "Discord bots. Simplified and boosted",
   "scripts": {
     "lint": "eslint tests src",
@@ -49,7 +49,7 @@
     "typescript-is": "^0.18.3"
   },
   "dependencies": {
-    "@discordoo/collection": "^1.0.9",
+    "@discordoo/collection": "^1.0.10",
     "discord-api-types": "^0.20.2",
     "node-ipc": "^9.1.4",
     "tiny-typed-emitter": "2.0.3",

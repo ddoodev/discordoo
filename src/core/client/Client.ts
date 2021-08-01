@@ -122,7 +122,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
 
     return this.internals.gateway.connect(options)
       .then(async () => {
-        await this.internals.ipc.send({
+        if (this.internals.sharding.active) await this.internals.ipc.send({
           op: IpcOpCodes.DISPATCH,
           t: IpcEvents.CONNECTED,
           d: {
@@ -133,7 +133,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
         return this
       })
       .catch(async e => {
-        await this.internals.ipc.send({
+        if (this.internals.sharding.active) await this.internals.ipc.send({
           op: IpcOpCodes.ERROR,
           d: {
             event_id: this.internals.sharding.INSTANCE_IPC,

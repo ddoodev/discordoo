@@ -74,7 +74,6 @@ export class IpcServer extends TypedEmitter<IpcServerEvents> {
 
     this.server.off(RAW_IPC_EVENT, this.eventsHandler)
     this.server.stop()
-    this.server = undefined
   }
 
   private async onPacket(packet: IpcPacket, socket: any) {
