@@ -20,7 +20,7 @@ export interface RestRequest {
   requestPayload: any
 
   /** Major parameter of this request, used for rate limits processing */
-  majorParameter: string | undefined
+  majorParameter?: string
 
   /** Request endpoint url */
   endpoint: string

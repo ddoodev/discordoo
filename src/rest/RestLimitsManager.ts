@@ -20,8 +20,6 @@ export class RestLimitsManager {
         this.allowedInvalidRequests = 10_000
       }, 10 * 60 * 1000) // 10 minutes
     }
-
-
   }
 
 }

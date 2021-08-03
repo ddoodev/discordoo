@@ -1,5 +1,5 @@
 import { RestRequest } from '@src/core/providers/rest/requests/RestRequest'
-import { DISCORD_API_ENDPOINT, RestRequestMethods } from '@src/constants'
+import { RestRequestMethods } from '@src/constants'
 import { RestRequestResponse } from '@src/core/providers/rest/RestRequestResponse'
 import { RestManager } from '@src/rest/RestManager'
 
@@ -32,7 +32,7 @@ export function makeRequest(rest: RestManager<any>): RestRequest {
     },
 
     get endpoint() {
-      const path = `${DISCORD_API_ENDPOINT}/${this.requestStack.join('/')}`
+      const path = `${this.requestStack.join('/')}`
 
       if (Object.keys(this.requestQuery).length > 0) {
         return path + '&' + new URLSearchParams(this.requestQuery).toString()
