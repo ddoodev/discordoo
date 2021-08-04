@@ -10,6 +10,7 @@ import { getGateway } from '@src/utils/getGateway'
 import { intoChunks } from '@src/utils/intoChunks'
 import { Optional } from '@src/utils/Optional'
 import { idToDate } from '@src/utils/idToDate'
+import { version } from '@src/utils/version'
 import { range } from '@src/utils/range'
 import { swap } from '@src/utils/swap'
 import { wait } from '@src/utils/wait'
@@ -27,6 +28,7 @@ export {
   intoChunks,
   Optional,
   idToDate,
+  version,
   range,
   swap,
   wait,

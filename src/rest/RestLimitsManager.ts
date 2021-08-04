@@ -8,9 +8,13 @@ export class RestLimitsManager {
   private allowedRequestsResetInterval?: NodeJS.Timeout
   private allowedInvalidRequestsResetInterval?: NodeJS.Timeout
 
+  public limited = false
+
   constructor(client: Client) {
     this.client = client
+  }
 
+  async init() {
     if (!this.client.internals.sharding.active) {
       this.allowedRequestsResetInterval = setInterval(() => {
         this.allowedRequests = 50

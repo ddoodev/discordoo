@@ -1,57 +1,100 @@
 import { RestProvider } from '@src/core/providers/rest/RestProvider'
-import { RestProviderRequestData } from '@src/core/providers/rest/options/RestProviderRequestData'
+import { RestProviderRequestData } from '@src/core/providers/rest/RestProviderRequestData'
 import { RestRequestResponse } from '@src/core/providers/rest/RestRequestResponse'
 import { Client } from '@src/core'
 import { Client as Undici, request } from 'undici'
 import { DiscordooError } from '@src/utils'
-import { REST_DEFAULT_OPTIONS } from '@src/constants'
+import { RestOptions } from '@src/rest/interfaces/RestOptions'
+import { MultipartData } from '@src/utils/MultipartData'
 
 export class DefaultRestProvider implements RestProvider {
   public client: Client
+  public options: Required<RestOptions>
   private readonly undici: Undici
 
-  constructor(client: Client) {
+  constructor(client: Client, options: Required<RestOptions>) {
     this.client = client
-    this.undici = new Undici('https://discord.com/')
+    this.options = options
+    this.undici = new Undici(`${this.options.scheme}://${this.options.domain}/`)
   }
 
   async init(): Promise<unknown> {
     return void 0
   }
 
-  async request<T = any>(data: RestProviderRequestData): RestRequestResponse<T> {
-    const response = await request('https://discord.com/api/' + data.endpoint, {
+  async request<T = any>(data: RestProviderRequestData): Promise<RestRequestResponse<T>> {
+
+    let headers = this.options.headers
+
+    headers['Authorization'] = data.auth ?? this.options.auth
+
+    if (this.options.userAgent) {
+      headers['User-Agent'] = this.options.userAgent
+    }
+
+    if (data.reason) {
+      headers['X-Audit-Log-Reason'] = data.reason
+    }
+
+    if (data.headers) {
+      headers = { ...headers, ...data.headers }
+    }
+
+    let body: string | Buffer | undefined
+
+    if (data.attachments.length) {
+      const multipart = new MultipartData()
+      headers['Content-Type'] = 'multipart/form-data; boundary=' + multipart.boundary
+
+      if (data.attachments.length === 1) {
+        const attachment = data.attachments[0]
+
+        multipart.attach('file', attachment.data, attachment.name)
+      } else {
+        data.attachments.forEach(attachment => {
+          multipart.attach(attachment.name, attachment.data, attachment.name)
+        })
+      }
+
+      if (data.body) {
+        multipart.attach('payload_json', JSON.stringify(data.body))
+      }
+
+      body = multipart.finish()
+    } else if (data.body) {
+      headers['Content-Type'] = 'application/json'
+      body = JSON.stringify(data.body)
+    }
+
+    console.log('PROVIDER REQUEST:', data)
+
+    const response = await request(`${this.options.scheme}://${this.options.domain}/api/${this.options.version}/${data.path}`, {
       dispatcher: this.undici,
       method: data.method,
-      headers: Object.assign(data.headers ?? {}, REST_DEFAULT_OPTIONS)
+      body,
+      headers,
     })
-
-    const { body, statusCode, headers } = response
 
     // https://github.com/nodejs/undici/commit/b08399d3285f9ec78831823627f0bf49ab009bdc
     // @ts-ignore
-    const responseData = await body.text()
+    let result = response.body.text(),
+      success = response.statusCode > 199 && response.statusCode < 400
 
-    let success = statusCode > 199 && statusCode < 400, result
+    console.log('PROVIDER REQUEST EXECUTED, SUCCESS:', success, 'DATA:', response)
 
     try {
-      result = JSON.parse(responseData)
+      result = JSON.parse(result)
     } catch (e) {
       success = false
-      throw new DiscordooError( // TODO: DiscordApiError
-        'DefaultRestProvider#request',
-        'Error when parsing response for',
-        '/' + data.endpoint + '.',
-        'Unexpected response:',
-        responseData
-        )
+      // TODO: Use RestError here
+      result = new DiscordooError('DefaultRestProvider#request', 'failed to parse response:', result)
     }
 
     return {
       success,
-      headers,
-      statusCode,
-      result: result ?? null
+      result,
+      statusCode: response.statusCode,
+      headers: response.headers
     }
   }
 

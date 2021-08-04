@@ -1,10 +1,6 @@
-import { RestRequestMethods } from '@src/constants'
+import { AuthLike } from '@src/core/providers/rest/AuthLike'
 
 export interface RestManagerRequestOptions {
-  method: RestRequestMethods
-  payload?: any
-  headers?: Record<string, any>
-  endpoint: string
-  majorParameter?: string
-  options?: any
+  reason?: string
+  auth?: AuthLike
 }

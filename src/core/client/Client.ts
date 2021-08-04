@@ -37,7 +37,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
 
     const
       gatewayOptions = Object.assign(this.options.gateway ?? {}, { token: this.token }),
-      restOptions = Object.assign(REST_DEFAULT_OPTIONS, this.options.rest ?? {})
+      restOptions = Object.assign(REST_DEFAULT_OPTIONS, { auth: `Bot ${this.token}` }, this.options.rest ?? {})
 
     let
       restProvider: ProviderConstructor<ClientStack['rest']> = DefaultRestProvider,
