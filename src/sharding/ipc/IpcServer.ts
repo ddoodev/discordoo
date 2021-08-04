@@ -77,6 +77,7 @@ export class IpcServer extends TypedEmitter<IpcServerEvents> {
   }
 
   private async onPacket(packet: IpcPacket, socket: any) {
+    console.log('IPC SERVER', this.instance, 'ON PACKET', process.hrtime.bigint())
     if (packet.d?.event_id) {
       const promise = this.bucket.get(packet.d.event_id)
 
@@ -96,14 +97,17 @@ export class IpcServer extends TypedEmitter<IpcServerEvents> {
         return this.hello(packet as IpcHelloPacket, socket)
 
       case IpcOpCodes.CACHE_OPERATE: {
+        console.log('IPC SERVER', this.instance, 'ON CACHE OPERATE', process.hrtime.bigint())
         let success = true
 
+        console.log('IPC SERVER', this.instance, 'ON RESULT', process.hrtime.bigint())
         const result = await this.cacheOperate(packet as IpcCacheRequestPacket)
           .catch(e => {
             success = false
             return e
           })
 
+        console.log('IPC SERVER', this.instance, 'ON RESPONSE', process.hrtime.bigint())
         const response: IpcCacheResponsePacket = {
           op: IpcOpCodes.CACHE_OPERATE,
           d: {
@@ -113,6 +117,7 @@ export class IpcServer extends TypedEmitter<IpcServerEvents> {
           }
         }
 
+        console.log('IPC SERVER', this.instance, 'ON CACHE OPERATE REPLY', process.hrtime.bigint())
         return this.send(response)
       }
 
@@ -206,8 +211,9 @@ export class IpcServer extends TypedEmitter<IpcServerEvents> {
     if (typeof options !== 'object') throw new DiscordooError('IpcServer#send', 'options must be object type only')
     if (!options.socket) options.socket = this.managerSocket
     if (!options.socket) throw new DiscordooError('IpcServer#send', 'cannot find socket to send packet:', data)
-    if (!this.server) throw new DiscordooError('IpcServer#sebd', 'ipc server not started')
+    if (!this.server) throw new DiscordooError('IpcServer#send', 'ipc server not started')
 
+    console.log('IPC SERVER', this.instance, 'ON SEND BEFORE PROMISE', process.hrtime.bigint())
     let promise: any
     return new Promise((resolve, reject) => {
       promise = { res: resolve, rej: reject }
@@ -221,12 +227,13 @@ export class IpcServer extends TypedEmitter<IpcServerEvents> {
         this.bucket.set(data.d.event_id, promise)
       }
 
+      console.log('IPC SERVER', this.instance, 'ON SEND AFTER PROMISE', process.hrtime.bigint())
       this.server!.emit(options.socket, RAW_IPC_EVENT, data)
       if (!options.waitResponse) resolve(void 0)
     })
   }
 
-  public generate() {
+  generate() {
     console.log('SERVER', this.instance)
     return DiscordooSnowflake.generate(this.instance, process.pid)
   }

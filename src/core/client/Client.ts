@@ -2,7 +2,7 @@ import { ListenerSignature, TypedEmitter } from 'tiny-typed-emitter'
 import { DefaultClientStack } from '@src/core/client/DefaultClientStack'
 import { ClientInternals } from '@src/core/client/ClientInternals'
 import { ClientOptions } from '@src/core/client/ClientOptions'
-import { DiscordooProviders, IpcEvents, IpcOpCodes } from '@src/constants'
+import { DiscordooProviders, IpcEvents, IpcOpCodes, REST_DEFAULT_OPTIONS } from '@src/constants'
 import { DiscordooError, DiscordooSnowflake, resolveDiscordShards } from '@src/utils'
 import { IpcServer } from '@src/sharding/ipc/IpcServer'
 import { GatewayConnectOptions } from '@src/core/providers/gateway/options/GatewayConnectOptions'
@@ -35,17 +35,19 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
     this.token = token
     this.options = options
 
-    const gatewayOptions = Object.assign({}, this.options.gateway || {}, { token: this.token })
+    const
+      gatewayOptions = Object.assign(this.options.gateway ?? {}, { token: this.token }),
+      restOptions = Object.assign(REST_DEFAULT_OPTIONS, this.options.rest ?? {})
 
     let
       restProvider: ProviderConstructor<ClientStack['rest']> = DefaultRestProvider,
       cacheProvider: ProviderConstructor<ClientStack['cache']> = DefaultCacheProvider,
       gatewayProvider: ProviderConstructor<ClientStack['gateway']> = DefaultGatewayProvider,
-      restProviderOptions, gatewayProviderOptions = gatewayOptions, cacheProviderOptions
+      restProviderOptions = restOptions, gatewayProviderOptions = gatewayOptions, cacheProviderOptions
 
     const shards = resolveDiscordShards(gatewayProviderOptions.shards || [ 0 ]),
-      MANAGER_IPC = process.env.SHARDING_MANAGER_IPC || DiscordooSnowflake.generatePartial(),
-      INSTANCE_IPC = process.env.SHARDING_INSTANCE_IPC || DiscordooSnowflake.generatePartial()
+      MANAGER_IPC = process.env.SHARDING_MANAGER_IPC ?? DiscordooSnowflake.generatePartial(),
+      INSTANCE_IPC = process.env.SHARDING_INSTANCE_IPC ?? DiscordooSnowflake.generatePartial()
 
     this.options.providers?.forEach(provider => {
       try {

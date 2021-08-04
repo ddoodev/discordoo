@@ -1,4 +1,4 @@
-import { ShardListResolvable } from '@src/core/ShardListResolvable'
+import { ShardListResolvable } from '@src/utils/interfaces/ShardListResolvable'
 import { ChildShardingManagerOptions } from '@src/sharding/interfaces/manager/options/ChildShardingManagerOptions'
 import { IpcClientTlsOptions } from '@src/sharding/interfaces/ipc/IpcClientTlsOptions'
 

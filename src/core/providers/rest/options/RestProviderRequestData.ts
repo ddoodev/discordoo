@@ -1,9 +1,9 @@
 import { RestRequestMethods } from '@src/constants'
 
-export interface RestProviderRequestOptions {
+export interface RestProviderRequestData {
   method: RestRequestMethods
+  endpoint: string
   payload?: any
   headers?: Record<string, any>
-  endpoint: string
-  options?: any
+  reason?: string
 }

@@ -3,5 +3,5 @@ import { RestError } from '@src/core/providers/rest/RestError'
 
 export interface RestResponseError extends RestResponse {
   success: false
-  error: RestError
+  result: RestError
 }

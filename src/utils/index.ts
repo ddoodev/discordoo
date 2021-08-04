@@ -1,4 +1,5 @@
 import { DeconstructedDiscordooSnowflake } from '@src/utils/interfaces/DeconstructedSnowflake'
+import { ShardListResolvable } from '@src/utils/interfaces/ShardListResolvable'
 import { ValidateOptions } from '@src/utils/interfaces/ValidateOptions'
 import { DiscordooSnowflake } from '@src/utils/DiscordooSnowflake'
 import { DiscordooError } from '@src/utils/DiscordooError'
@@ -15,6 +16,7 @@ import { wait } from '@src/utils/wait'
 
 export {
   DeconstructedDiscordooSnowflake,
+  ShardListResolvable,
   ValidateOptions,
   DiscordooSnowflake,
   DiscordooError,

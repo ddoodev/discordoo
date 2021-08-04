@@ -1,5 +1,5 @@
-import { Client, ShardListResolvable } from '@src/core'
-import { DiscordooError, range } from '@src/utils'
+import { Client } from '@src/core'
+import { DiscordooError, range, ShardListResolvable } from '@src/utils'
 
 export function resolveShards(client: Client, shards: ShardListResolvable | 'all' | 'current'): number[] {
   const source = 'ShardListResolver'

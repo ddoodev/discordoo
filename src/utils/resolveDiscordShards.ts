@@ -1,4 +1,4 @@
-import { ShardListResolvable } from '@src/core/ShardListResolvable'
+import { ShardListResolvable } from '@src/utils/interfaces/ShardListResolvable'
 import { range } from '@src/utils/range'
 import { DiscordooError } from '@src/utils/DiscordooError'
 

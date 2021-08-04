@@ -1,4 +1,4 @@
-import { RestProviderRequestOptions } from '@src/core/providers/rest/options/RestProviderRequestOptions'
+import { RestProviderRequestData } from '@src/core/providers/rest/options/RestProviderRequestData'
 import { RestRequestResponse } from '@src/core/providers/rest/RestRequestResponse'
 import { Provider } from '@src/core/providers/Provider'
 
@@ -11,6 +11,6 @@ export interface RestProvider extends Provider {
    * Perform a request
    * @param options - request options
    * */
-  request<T = any>(options: RestProviderRequestOptions): RestRequestResponse<T>
+  request<T = any>(options: RestProviderRequestData): RestRequestResponse<T>
 
 }

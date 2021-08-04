@@ -1,5 +1,5 @@
 import { GatewayIdentifyProperties, GatewayPresenceUpdateData } from 'discord-api-types/gateway/v9'
-import { ShardListResolvable } from '@src/core'
+import { ShardListResolvable } from '@src/utils'
 
 export interface GatewayOptions {
 

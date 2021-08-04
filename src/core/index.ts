@@ -5,7 +5,6 @@ import { ClientEventsHandlers } from '@src/core/client/ClientEventsHandlers'
 import { DefaultClientStack } from '@src/core/client/DefaultClientStack'
 import { CacheProvider } from '@src/core/providers/cache/CacheProvider'
 import { ProviderOption } from '@src/core/providers/ProviderOption'
-import { ShardListResolvable } from '@src/core/ShardListResolvable'
 import { ClientInternals } from '@src/core/client/ClientInternals'
 import { ClientOptions } from '@src/core/client/ClientOptions'
 
@@ -19,7 +18,6 @@ export {
   DefaultClientStack,
   CacheProvider,
   ProviderOption,
-  ShardListResolvable,
   ClientInternals,
   ClientOptions,
   Client,
