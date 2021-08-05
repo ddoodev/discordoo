@@ -1,14 +1,14 @@
-import { TypedEmitter } from 'tiny-typed-emitter'
-import Cluster from 'cluster'
-import { Worker } from 'worker_threads'
-import * as Process from 'child_process'
-import { CLUSTERS_SHARDING_UNSUPPORTED_PLATFORMS, PartialShardingModes } from '@src/constants'
-import { ShardingInstanceOptions } from '@src/sharding/interfaces/client/ShardingInstanceOptions'
 import { ShardingInstanceCreateOptions } from '@src/sharding/interfaces/client/ShardingInstanceCreateOptions'
-import { IpcClient } from '@src/sharding/ipc/IpcClient'
-import { DiscordooError, wait } from '@src/utils'
-import os from 'os'
+import { ShardingInstanceOptions } from '@src/sharding/interfaces/client/ShardingInstanceOptions'
+import { CLUSTERS_SHARDING_UNSUPPORTED_PLATFORMS, PartialShardingModes } from '@src/constants'
 import { ShardingManager } from '@src/sharding/ShardingManager'
+import { IpcClient } from '@src/sharding/ipc/IpcClient'
+import { TypedEmitter } from 'tiny-typed-emitter'
+import { DiscordooError, wait } from '@src/utils'
+import * as Process from 'child_process'
+import { Worker } from 'worker_threads'
+import Cluster from 'cluster'
+import os from 'os'
 
 export class ShardingInstance extends TypedEmitter {
   public id: number

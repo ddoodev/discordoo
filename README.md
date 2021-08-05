@@ -110,8 +110,8 @@ Release deadline: September 30, 2021
 ### Rest
 * [x] Implement rest
   * [x] Implement rest provider - rest request (like constructor) & rest provider (performs requests and handles rate-limits)
-* [ ] Requests
-  * [ ] Sending requests to Discord
+* [x] Requests
+  * [x] Sending requests to Discord
 * [x] Responses
   * [x] Unified response form for library internals
 * [ ] Rate-limits
@@ -140,7 +140,7 @@ Release deadline: September 30, 2021
   * [x] All the policies listed above must be able to handle custom caching functions
   
 ### Entities (discord structures)
-* [ ] Must be extendable
+* [x] Must be extendable
 * [x] Anti monkey-patch defence
 * [ ] Implement Guilds
 * [ ] Implement Messages
