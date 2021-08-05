@@ -8,7 +8,6 @@
       "es2020",
       "dom"
     ],
-    "sourceMap": true,
     "removeComments": false,
     "alwaysStrict": true,
     "pretty": true,
@@ -20,7 +19,6 @@
     "emitDecoratorMetadata": true,
     "declaration": true,
     "declarationDir": "./types",
-    "declarationMap": true,
     "noImplicitAny": false,
     "resolveJsonModule": true,
     "isolatedModules": false,
