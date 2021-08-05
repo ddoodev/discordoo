@@ -1,6 +1,6 @@
 {
   "name": "discordoo",
-  "version": "0.6.8",
+  "version": "0.6.9",
   "description": "Discord bots. Simplified and boosted",
   "scripts": {
     "lint": "eslint tests src",
@@ -59,13 +59,6 @@
     "tiny-typed-emitter": "2.0.3",
     "undici": "^4.3.1",
     "ws": "^7.4.5"
-  },
-  "optionalDependencies": {
-    "bufferutil": "^4.0.3",
-    "erlpack": "discord/erlpack",
-    "lodash": "^4.17.21",
-    "pako": "^1.0.11",
-    "utf-8-validate": "^5.0.4"
   },
   "exports": {
     "./core": "./dist/core/index.js",
