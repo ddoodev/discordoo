@@ -4,6 +4,7 @@
     "collection",
     "constants",
     "core",
+    "entities",
     "rest",
     "sharding",
     "utils",

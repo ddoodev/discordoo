@@ -69,6 +69,7 @@
   },
   "exports": {
     "./core": "./dist/src/core/index.js",
+    "./entities": "./dist/src/entities/index.js",
     "./cache": "./dist/src/cache/index.js",
     "./collection": "./dist/src/collection/index.js",
     "./constants": "./dist/src/constants/index.js",
@@ -82,6 +83,9 @@
     "*": {
       "core": [
         "types/src/core/index.d.ts"
+      ],
+      "entities": [
+        "types/src/entities/index.d.ts"
       ],
       "cache": [
         "types/src/cache/index.d.ts"
