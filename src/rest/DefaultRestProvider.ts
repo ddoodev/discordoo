@@ -68,7 +68,7 @@ export class DefaultRestProvider implements RestProvider {
 
     // console.log('PROVIDER REQUEST:', data)
 
-    const response = await request(`${this.options.scheme}://${this.options.domain}/api/${this.options.version}/${data.path}`, {
+    const response = await request(`${this.options.scheme}://${this.options.domain}/api/v${this.options.version}/${data.path}`, {
       dispatcher: this.undici,
       method: data.method,
       body,
