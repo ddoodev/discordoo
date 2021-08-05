@@ -77,7 +77,7 @@ export class DefaultRestProvider implements RestProvider {
 
     // https://github.com/nodejs/undici/commit/b08399d3285f9ec78831823627f0bf49ab009bdc
     // @ts-ignore
-    let result = response.body.text(),
+    let result = await response.body.text(),
       success = response.statusCode > 199 && response.statusCode < 400
 
     // console.log('PROVIDER REQUEST EXECUTED, SUCCESS:', success, 'DATA:', response)
@@ -86,7 +86,7 @@ export class DefaultRestProvider implements RestProvider {
       result = JSON.parse(result)
     } catch (e) {
       success = false
-      // TODO: Use RestError here
+      // TODO: use RestError here
       result = new DiscordooError('DefaultRestProvider#request', 'failed to parse response:', result)
     }
 
