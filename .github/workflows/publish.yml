@@ -1,0 +1,32 @@
+name: Publish
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */12 * * *'
+
+jobs:
+  run-publish:
+    name: npm
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12.18
+          registry-url: https://registry.npmjs.org/
+      - name: Install required packages
+        run: npm ci
+      - name: Deprecate old versions
+        run: npm deprecate discordoo@"~1.0.0-dev" "no longer supported" || true
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish
+        run: |
+          npm version --git-tag-version=false $(jq --raw-output '.version' package.json).t$(date +%s).$(git rev-parse --short HEAD)
+          npm publish --tag dev || true
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
