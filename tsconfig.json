@@ -20,6 +20,7 @@
     "emitDecoratorMetadata": true,
     "declaration": true,
     "declarationDir": "./types",
+    "declarationMap": true,
     "noImplicitAny": false,
     "resolveJsonModule": true,
     "isolatedModules": false,
