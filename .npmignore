@@ -13,6 +13,9 @@ types/tsconfig.tsbuildinfo
 
 # Development files
 dist/on-the-fly
+types/on-the-fly
+on-the-fly
+.env
 .eslintignore
 .eslintrc.json
 commitlint.config.js

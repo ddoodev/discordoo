@@ -1,6 +1,6 @@
 {
   "name": "discordoo",
-  "version": "0.6.9",
+  "version": "0.6.9a",
   "description": "Discord bots. Simplified and boosted",
   "scripts": {
     "lint": "eslint tests src",
@@ -9,6 +9,7 @@
     "test:fly": "node dist/on-the-fly/index.js",
     "test:fly:nsolid": "npx nsolid-quickstart --exec dist/on-the-fly/index.js",
     "build": "ttsc -p tsconfig.json",
+    "build:publish": "npx rimraf dist types && ttsc -p tsconfig.publish.json",
     "build:watch": "ttsc -p tsconfig.json --watch",
     "docs": "npx typedoc && npx tapok docs/docs/api",
     "docs:collection": "cd ./__collection__ && npm ci && npm run docs",
@@ -43,6 +44,7 @@
     "eslint": "^7.22.0",
     "husky": "^6.0.0",
     "jest": "^27.0.3",
+    "rimraf": "^3.0.2",
     "ts-jest": "^27.0.3",
     "ts-node": "^10.1.0",
     "tslib": "^2.3.0",
@@ -60,54 +62,12 @@
     "undici": "^4.3.1",
     "ws": "^7.4.5"
   },
-  "exports": {
-    "./core": "./dist/core/index.js",
-    "./entities": "./dist/entities/index.js",
-    "./cache": "./dist/cache/index.js",
-    "./collection": "./dist/collection/index.js",
-    "./constants": "./dist/constants/index.js",
-    "./rest": "./dist/rest/index.js",
-    "./utils": "./dist/utils/index.js",
-    "./gateway": "./dist/websocket/index.js",
-    "./wrapper": "./dist/wrapper/index.js"
-  },
-  "typesVersions": {
-    "*": {
-      "core": [
-        "types/core/index.d.ts"
-      ],
-      "entities": [
-        "types/entities/index.d.ts"
-      ],
-      "cache": [
-        "types/cache/index.d.ts"
-      ],
-      "collection": [
-        "types/collection/index.d.ts"
-      ],
-      "constants": [
-        "types/constants/index.d.ts"
-      ],
-      "rest": [
-        "types/rest/index.d.ts"
-      ],
-      "sharding": [
-        "types/sharding/index.d.ts"
-      ],
-      "utils": [
-        "types/utils/index.d.ts"
-      ],
-      "gateway": [
-        "types/gateway/index.d.ts"
-      ],
-      "wrapper": [
-        "types/wrapper/index.d.ts"
-      ]
-    }
-  },
   "engines": {
     "node": ">=12.18"
   },
+  "files": [
+    "{dist,types}/src/**/*.{d.ts,js}"
+  ],
   "publishConfig": {
     "access": "public"
   }
