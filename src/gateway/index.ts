@@ -1,4 +1,4 @@
-import { WebSocketClientEventsI as WebSocketClientEvents } from '@src/gateway/interfaces/WebSocketClientEventsI'
+import { WebSocketClientEventsI } from '@src/gateway/interfaces/WebSocketClientEventsI'
 import { WebSocketClientDestroyOptions } from '@src/gateway/interfaces/WebSocketClientDestroyOptions'
 import { PartialGatewayOptions } from '@src/gateway/interfaces/PartialGatewayOptions'
 import { WebSocketManagerEvents } from '@src/gateway/interfaces/WebSocketManagerEvents'
@@ -12,7 +12,7 @@ import { WebSocketManager } from '@src/gateway/WebSocketManager'
 import { WebSocketClient } from '@src/gateway/WebSocketClient'
 
 export {
-  WebSocketClientEvents,
+  WebSocketClientEventsI,
   WebSocketClientDestroyOptions,
   PartialGatewayOptions,
   WebSocketManagerEvents,

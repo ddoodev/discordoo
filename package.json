@@ -1,7 +1,10 @@
 {
   "name": "discordoo",
-  "version": "0.6.9a",
+  "version": "0.6.9b",
   "description": "Discord bots. Simplified and boosted",
+  "main": "./dist/src/index.js",
+  "module": "./dist/src/index.js",
+  "types": "./types/src/index.d.ts",
   "scripts": {
     "lint": "eslint tests src",
     "lint:fix": "eslint tests src --fix",
@@ -13,7 +16,7 @@
     "build:watch": "ttsc -p tsconfig.json --watch",
     "docs": "npx typedoc && npx tapok docs/docs/api",
     "docs:collection": "cd ./__collection__ && npm ci && npm run docs",
-    "prepublishOnly": "npm run build",
+    "prepublishOnly": "npm run build:publish",
     "prepare": "husky install"
   },
   "keywords": [],
@@ -65,9 +68,6 @@
   "engines": {
     "node": ">=12.18"
   },
-  "files": [
-    "{dist,types}/src/**/*.{d.ts,js}"
-  ],
   "publishConfig": {
     "access": "public"
   }
