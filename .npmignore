@@ -9,7 +9,9 @@ theme
 
 # After-build files
 dist/tsconfig.tsbuildinfo
+dist/tsconfig.publish.tsbuildinfo
 types/tsconfig.tsbuildinfo
+types/tsconfig.publish.tsbuildinfo
 
 # Development files
 dist/on-the-fly
@@ -24,6 +26,7 @@ docs.md
 jest.config.js
 typedoc.js
 tsconfig.json
+tsconfig.publish.json
 
 # Library about files
 CODE_OF_CONDUCT.md
