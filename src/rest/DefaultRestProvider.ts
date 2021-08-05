@@ -66,7 +66,7 @@ export class DefaultRestProvider implements RestProvider {
       body = JSON.stringify(data.body)
     }
 
-    console.log('PROVIDER REQUEST:', data)
+    // console.log('PROVIDER REQUEST:', data)
 
     const response = await request(`${this.options.scheme}://${this.options.domain}/api/${this.options.version}/${data.path}`, {
       dispatcher: this.undici,
@@ -80,7 +80,7 @@ export class DefaultRestProvider implements RestProvider {
     let result = response.body.text(),
       success = response.statusCode > 199 && response.statusCode < 400
 
-    console.log('PROVIDER REQUEST EXECUTED, SUCCESS:', success, 'DATA:', response)
+    // console.log('PROVIDER REQUEST EXECUTED, SUCCESS:', success, 'DATA:', response)
 
     try {
       result = JSON.parse(result)

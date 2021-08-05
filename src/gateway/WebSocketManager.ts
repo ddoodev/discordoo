@@ -30,7 +30,7 @@ export class WebSocketManager extends TypedEmitter<WebSocketManagerEvents> {
   }
 
   public async connect(options?: GatewayConnectOptions) {
-    console.log('connecting')
+    // console.log('connecting')
     this.status = WebSocketManagerStates.CONNECTING
 
     if (options) {
@@ -46,11 +46,11 @@ export class WebSocketManager extends TypedEmitter<WebSocketManagerEvents> {
     this.totalShards = this.totalShards < shardsInTotal ? shardsInTotal : this.totalShards
     this.gateway = gateway
 
-    console.log('shards:', shards)
-    console.log('totalShards:', this.totalShards)
+    // console.log('shards:', shards)
+    // console.log('totalShards:', this.totalShards)
 
     this.shardQueue = new Set(shards.map(id => new WebSocketClient(this, id)))
-    console.log('queue:', this.shardQueue)
+    // console.log('queue:', this.shardQueue)
 
     if (!this.queueInterval) {
       this.queueInterval = setInterval(() => {
@@ -83,7 +83,7 @@ export class WebSocketManager extends TypedEmitter<WebSocketManagerEvents> {
     }
 
     try {
-      console.log('shard', shard.id, 'connecting')
+      // console.log('shard', shard.id, 'connecting')
       await shard.connect()
         .catch(e => {
           if (e && !(e instanceof DiscordooError)) shard.emit(WebSocketClientEvents.RECONNECT_ME)

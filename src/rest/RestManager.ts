@@ -15,7 +15,7 @@ export class RestManager<P extends RestProvider = RestProvider> {
   constructor(client: Client, provider: ProviderConstructor<P>, options: RestManagerOptions) {
     this.client = client
     this.provider = new provider(this.client, options.provider)
-    console.log('PROVIDER OPTIONS', options.provider)
+    // console.log('PROVIDER OPTIONS', options.provider)
     this.limiter = new RestLimitsManager(this.client)
   }
 

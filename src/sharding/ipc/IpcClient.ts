@@ -73,7 +73,7 @@ export class IpcClient extends TypedEmitter<IpcClientEvents> {
   }
 
   private onPacket(packet: IpcPacket) {
-    console.log('IPC CLIENT', this.id, 'ON PACKET', process.hrtime.bigint())
+    // console.log('IPC CLIENT', this.id, 'ON PACKET', process.hrtime.bigint())
     if (packet.d?.event_id) {
       const promise = this.bucket.get(packet.d.event_id)
 
@@ -90,7 +90,7 @@ export class IpcClient extends TypedEmitter<IpcClientEvents> {
         if (this.helloInterval) clearInterval(this.helloInterval)
         break
       case IpcOpCodes.CACHE_OPERATE:
-        console.log('IPC CLIENT', this.id, 'ON CACHE OPERATE', process.hrtime.bigint())
+        // console.log('IPC CLIENT', this.id, 'ON CACHE OPERATE', process.hrtime.bigint())
         this.cacheOperate(packet as IpcCacheRequestPacket)
         break
     }
@@ -100,7 +100,7 @@ export class IpcClient extends TypedEmitter<IpcClientEvents> {
     const shards: number[] = packet.d.shards,
       id = packet.d.event_id
 
-    console.log('IPC CLIENT', this.id, 'ON PROMISES', process.hrtime.bigint())
+    // console.log('IPC CLIENT', this.id, 'ON PROMISES', process.hrtime.bigint())
     const promises: Array<undefined | Promise<any>> = shards.map(s => {
       const shard = this.instance.manager.shards.get(s)
 
@@ -109,16 +109,16 @@ export class IpcClient extends TypedEmitter<IpcClientEvents> {
       return shard?.ipc.send(packet, { waitResponse: true })
     })
 
-    console.log('IPC CLIENT', this.id, 'ON RESPONSES', process.hrtime.bigint())
+    // console.log('IPC CLIENT', this.id, 'ON RESPONSES', process.hrtime.bigint())
     const responses: Array<IpcCacheResponsePacket | undefined> = await Promise.all(promises)
 
-    console.log('IPC CLIENT', this.id, 'ON SUCCESS', process.hrtime.bigint())
+    // console.log('IPC CLIENT', this.id, 'ON SUCCESS', process.hrtime.bigint())
     const success = responses.some(r => r?.d.success)
     let result
 
     // @ts-expect-error
     if (packet.d.serialize !== undefined) {
-      console.log('IPC CLIENT', this.id, 'ON SERIALIZE', process.hrtime.bigint())
+      // console.log('IPC CLIENT', this.id, 'ON SERIALIZE', process.hrtime.bigint())
       result = this.serializeResponses(
         responses.map(r => r?.d.success ? r?.d.result : undefined).filter(r => r ?? false), // filter undefined/null
         // @ts-expect-error
@@ -128,7 +128,7 @@ export class IpcClient extends TypedEmitter<IpcClientEvents> {
       result = responses.map(r => r?.d.result)
     }
 
-    console.log('IPC CLIENT', this.id, 'ON CACHE OPERATE REPLY', process.hrtime.bigint())
+    // console.log('IPC CLIENT', this.id, 'ON CACHE OPERATE REPLY', process.hrtime.bigint())
     return this.send({
       op: IpcOpCodes.CACHE_OPERATE,
       d: {
@@ -204,7 +204,7 @@ export class IpcClient extends TypedEmitter<IpcClientEvents> {
   }
 
   public generate() {
-    console.log('CLIENT', this.id)
+    // console.log('CLIENT', this.id)
     return DiscordooSnowflake.generate(this.id, process.pid)
   }
 }

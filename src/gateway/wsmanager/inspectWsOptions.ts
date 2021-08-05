@@ -16,7 +16,7 @@ export async function inspectWsOptions(options: GatewayOptions): Promise<WsOptio
 
   result.gateway = await getGateway(options.token)
     .catch(e => {
-      console.log(e)
+      // console.log(e)
       throw e.statusCode === 401 ?
         new DiscordooError(source, 'invalid token provided')
         : e

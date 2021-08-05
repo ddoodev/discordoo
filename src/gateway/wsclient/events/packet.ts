@@ -17,7 +17,7 @@ export function packet(
   // process sequence increase
   if (WebSocketUtils.exists(packet.s) && packet.s! > client.sequence) client.sequence = packet.s!
 
-  console.log('shard', client.id, 'SEQUENCE', client.sequence)
+  // console.log('shard', client.id, 'SEQUENCE', client.sequence)
 
   /**
    * ready and resumed events handling
@@ -34,12 +34,12 @@ export function packet(
       client.heartbeat()
 
       client.emit(WebSocketClientEvents.READY)
-      console.log('shard', client.id, 'READY')
+      // console.log('shard', client.id, 'READY')
       break
     case 'RESUMED':
       client.status = WebSocketClientStates.READY
       client.emit(WebSocketClientEvents.RESUMED)
-      console.log('shard', client.id, 'RESUMED and replayed', client.sequence - client.closeSequence, 'events')
+      // console.log('shard', client.id, 'RESUMED and replayed', client.sequence - client.closeSequence, 'events')
       break
   }
 
@@ -49,7 +49,7 @@ export function packet(
       client.heartbeatInterval(packet.d.heartbeat_interval)
       client.handshakeTimeout()
       client.identify()
-      console.log('shard', client.id, 'HELLO')
+      // console.log('shard', client.id, 'HELLO')
 
       break
 
@@ -59,7 +59,7 @@ export function packet(
       wait(5000).then(() => {
         client.destroy({ code: 1000, reconnect: true })
       })
-      console.log('shard', client.id, 'INVALID SESSION')
+      // console.log('shard', client.id, 'INVALID SESSION')
 
       break
 
@@ -68,7 +68,7 @@ export function packet(
       break
 
     case WebSocketOpCodes.HEARTBEAT_ACK:
-      console.log('shard', client.id, 'HEARTBEAT_ACK')
+      // console.log('shard', client.id, 'HEARTBEAT_ACK')
       client.missedHeartbeats -= 1
       client.ping = Date.now() - client.lastPingTimestamp
       break

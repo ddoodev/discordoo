@@ -15,7 +15,7 @@ export function identify(
     : 'identify'
   const { token } = options
 
-  console.log('shard', client.id, mode)
+  // console.log('shard', client.id, mode)
 
   let d: GatewayIdentifyData | GatewayResumeData,
     op: WebSocketOpCodes.IDENTIFY | WebSocketOpCodes.RESUME

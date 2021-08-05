@@ -16,7 +16,7 @@ export function message(
 
   let { data } = event, packet: Record<any, any> | undefined
 
-  console.log('shard', client.id, 'message', data)
+  // console.log('shard', client.id, 'message', data)
 
   if (data instanceof ArrayBuffer) data = new Uint8Array(data)
 
