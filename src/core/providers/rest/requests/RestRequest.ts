@@ -33,7 +33,7 @@ export interface RestRequest {
    * Add part(s) to the request path
    * @param parts - parts to add
    */
-  url(...parts: string[]): RestRequest
+  url(...parts: Array<string | string[]>): RestRequest
 
   /**
    * Add query data

@@ -32,6 +32,7 @@ import { DiscordooProviders } from '@src/constants/common/DiscordooProviders'
 import { DISCORD_API_ENDPOINT } from '@src/constants/rest/DiscordApiEndpoint'
 import { REST_DEFAULT_OPTIONS } from '@src/constants/rest/RestDefaultOptions'
 import { RestRequestMethods } from '@src/constants/rest/RestRequestMethods'
+import { Endpoints } from '@src/constants/rest/Endpoints'
 
 export {
   CLUSTERS_SHARDING_UNSUPPORTED_PLATFORMS,
@@ -64,4 +65,5 @@ export {
   DISCORD_API_ENDPOINT,
   REST_DEFAULT_OPTIONS,
   RestRequestMethods,
+  Endpoints,
 }

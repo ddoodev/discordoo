@@ -55,8 +55,8 @@ export function makeRequest(rest: RestManager<any>): RestRequest {
       return this
     },
 
-    url(...parts: string[]): RestRequest {
-      this.requestStack.push(...parts.map(p => encodeURIComponent(p)))
+    url(...parts: Array<string | string[]>): RestRequest {
+      this.requestStack.push(...parts.flat().map(p => encodeURIComponent(p)))
 
       return this
     },

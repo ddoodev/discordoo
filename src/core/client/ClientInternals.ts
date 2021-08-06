@@ -3,6 +3,7 @@ import { RestManager } from '@src/rest/RestManager'
 import { CacheManager } from '@src/cache/CacheManager'
 import { GatewayManager } from '@src/gateway/GatewayManager'
 import { ClientShardingMetadata } from '@src/core/client/ClientShardingMetadata'
+import { ClientActions } from '@src/core/client/ClientActions'
 
 export interface ClientInternals<ClientStack extends DefaultClientStack = DefaultClientStack> {
   /** Inter-process communication server used by this client */
@@ -19,4 +20,7 @@ export interface ClientInternals<ClientStack extends DefaultClientStack = Defaul
 
   /** Sharding metadata */
   sharding: ClientShardingMetadata
+
+  /** Rest/Ws actions that client can perform */
+  actions: ClientActions
 }

@@ -15,6 +15,7 @@ import { CacheManager } from '@src/cache/CacheManager'
 import { GatewayManager } from '@src/gateway/GatewayManager'
 import { Final } from '@src/utils/FinalDecorator'
 import { ClientShardingMetadata } from '@src/core/client/ClientShardingMetadata'
+import { ClientActions } from '@src/core/client/ClientActions'
 
 /** Entry point for all of Discordoo. */
 @Final('start', 'internals')
@@ -91,7 +92,8 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
           managerIpc: sharding.MANAGER_IPC,
           instance: sharding.instance,
         }, this.options.ipc ?? {})
-      )
+      ),
+      actions = new ClientActions(this)
 
     this.internals = {
       rest,
@@ -99,6 +101,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
       gateway,
       sharding,
       ipc,
+      actions,
     }
   }
 
