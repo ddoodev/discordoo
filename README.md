@@ -69,7 +69,7 @@ You can find these benchmarks [here](https://github.com/Discordoo/collection#djs
 ## Release milestone
 A complete description of everything that must be in Discordoo to be released
 
-Release deadline: September 30, 2021
+Release deadline: October 30, 2021
 ### Sharding
 * [x] Implement sharding
 * [x] Shards spawning
