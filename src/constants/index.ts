@@ -16,6 +16,7 @@ import { WS_DEFAULT_OPTIONS } from '@src/constants/gateway/WsDefaultOptions'
 import { WebSocketOpCodes } from '@src/constants/gateway/WebSocketOpCodes'
 import { WebSocketEvents } from '@src/constants/gateway/WebSocketEvents'
 import { WebSocketStates } from '@src/constants/gateway/WebSocketStates'
+import { GatewayIntents } from '@src/constants/gateway/GatewayIntents'
 
 import { PresencesCachingPolicy } from '@src/constants/cache/PresencesCachingPolicy'
 import { MessagesCachingPolicy } from '@src/constants/cache/MessagesCachingPolicy'
@@ -52,6 +53,7 @@ export {
   WebSocketOpCodes,
   WebSocketEvents,
   WebSocketStates,
+  GatewayIntents,
   PresencesCachingPolicy,
   MessagesCachingPolicy,
   ChannelsCachingPolicy,

@@ -10,6 +10,7 @@ import { getGateway } from '@src/utils/getGateway'
 import { intoChunks } from '@src/utils/intoChunks'
 import { Optional } from '@src/utils/Optional'
 import { idToDate } from '@src/utils/idToDate'
+import { IntentsUtil } from '@src/utils/IntentsUtil'
 import { version } from '@src/utils/version'
 import { range } from '@src/utils/range'
 import { swap } from '@src/utils/swap'
@@ -28,6 +29,7 @@ export {
   intoChunks,
   Optional,
   idToDate,
+  IntentsUtil,
   version,
   range,
   swap,
