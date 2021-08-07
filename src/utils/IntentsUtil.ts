@@ -3,15 +3,15 @@ import { GatewayIntents } from '@src/constants'
 export class IntentsUtil {
   public static FLAGS: GatewayIntents
 
-  static get ALL() {
-    return Object.values(GatewayIntents).reduce((prev: any, curr: any) => prev | curr, 0)
+  static get ALL(): GatewayIntents[] {
+    return Object.values(GatewayIntents) as GatewayIntents[]
   }
 
-  static get PRIVILEGED() {
-    return GatewayIntents.GUILD_MEMBERS | GatewayIntents.GUILD_PRESENCES
+  static get PRIVILEGED(): GatewayIntents[] {
+    return [ GatewayIntents.GUILD_MEMBERS, GatewayIntents.GUILD_PRESENCES ]
   }
 
-  static get NON_PRIVILEGED() {
-    return IntentsUtil.ALL & ~IntentsUtil.PRIVILEGED
+  static get NON_PRIVILEGED(): GatewayIntents[] {
+    return IntentsUtil.ALL.filter((bit: any) => !IntentsUtil.PRIVILEGED.includes(bit))
   }
 }
