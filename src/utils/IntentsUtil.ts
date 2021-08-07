@@ -4,7 +4,7 @@ export class IntentsUtil {
   public static FLAGS: GatewayIntents
 
   static get ALL(): GatewayIntents[] {
-    return Object.values(GatewayIntents) as GatewayIntents[]
+    return Object.values(GatewayIntents).filter(bit => typeof bit !== 'string') as GatewayIntents[]
   }
 
   static get PRIVILEGED(): GatewayIntents[] {
