@@ -9,13 +9,13 @@ describe('DiscordooSnowflake', () => {
     result: '1183444843991979760462785602312470528'
   }
 
-  test('should generate snowflake', () => {
+  test('must generate snowflake', () => {
     expect(
       DiscordooSnowflake.generate(params.shardID, params.workerID, params.timestamp)
     ).toBe(params.result)
   })
 
-  test('should deconstruct snowflake', () => {
+  test('must deconstruct snowflake', () => {
     const result = DiscordooSnowflake.deconstruct(params.result)
 
     expect(result.shardID).toBe(params.shardID)
