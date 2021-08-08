@@ -2,7 +2,7 @@ import { ExtendableEntities } from '@src/entities/ExtendableEntities'
 import { DiscordooError } from '@src/utils'
 
 type Extendable<X extends { [k: string]: abstract new (...args: any) => any }> = {
-  [D in keyof X]: new (...args: ConstructorParameters<X[D]>) => InstanceType<X[D]>
+  [D in keyof X]: X[D]
 }
 type E = Extendable<typeof ExtendableEntities>
 
