@@ -24,8 +24,7 @@
     "isolatedModules": false,
     "baseUrl": ".",
     "paths": {
-      "@src/*": [ "src/*" ],
-      "@root/*": [ "./*" ]
+      "@src/*": [ "src/*" ]
     },
     "outDir": "./dist",
     "plugins": [
