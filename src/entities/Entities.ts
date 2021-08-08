@@ -34,7 +34,7 @@ export class Entities {
         throw new DiscordooError(source + 'extend', 'Extender returned bad value:', extended)
       }
 
-      if (!(extended.prototype !instanceof extendableEntity)) {
+      if (!(extended.prototype instanceof extendableEntity)) {
         throw new DiscordooError(source + 'extend', 'Extender must return class that extends specified entity')
       }
 
