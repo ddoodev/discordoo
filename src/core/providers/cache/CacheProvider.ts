@@ -1,4 +1,5 @@
 import { Provider } from '@src/core/providers/Provider'
+import { CacheStorageKey } from '@src/cache/interfaces/CacheStorageKey'
 
 /**
  * Represents a cache provider. Custom caching providers must implement it
@@ -38,81 +39,91 @@ export interface CacheProvider extends Provider {
   /**
    * Get value from key
    * @param keyspace - keyspace in which to search
+   * @param storage - storage in which to search
    * @param key - key to get value
    */
-  get<K = string, V = any>(keyspace: string, key: K): Promise<V | undefined>
+  get<K = string, V = any>(keyspace: string, storage: CacheStorageKey, key: K): Promise<V | undefined>
 
   /**
    * Set a key to given value
    * @param keyspace - keyspace in which to set
+   * @param storage - storage in which to set
    * @param key - key to use
    * @param value - value to set
    */
-  set<K = string, V = any>(keyspace: string, key: K, value: V): Promise<CacheProvider>
+  set<K = string, V = any>(keyspace: string, storage: CacheStorageKey, key: K, value: V): Promise<CacheProvider>
 
   /**
    * Delete a key from cache
    * @param keyspace - keyspace in which to delete
+   * @param storage - storage in which to delete
    * @param key - key(s) of cache to delete
    */
-  delete<K = string>(keyspace: string, key: K | K[]): Promise<boolean>
+  delete<K = string>(keyspace: string, storage: CacheStorageKey, key: K | K[]): Promise<boolean>
 
   /**
    * Execute a provided function once for each cache element
    * @param keyspace - keyspace in which to execute
+   * @param storage - storage in which to execute
    * @param predicate - function to execute
    * */
   forEach<K = string, V = any, P extends CacheProvider = CacheProvider>(
-    keyspace: string, predicate: (value: V, key: K, provider: P) => unknown | Promise<unknown>
+    keyspace: string, storage: CacheStorageKey, predicate: (value: V, key: K, provider: P) => unknown | Promise<unknown>
   ): Promise<void>
 
   /**
    * Get size of cache in keyspace or in all cache
    * @param keyspace - keyspace in which to search
+   * @param storage - storage in which to search
    * */
-  size?(keyspace: string): Promise<number>
+  size?(keyspace: string, storage: CacheStorageKey): Promise<number>
 
   /**
    * Check if key exists in cache
    * @param keyspace - keyspace in which to search
+   * @param storage - storage in which to search
    * @param key - key to check
    */
-  has?<K = string>(keyspace: string, key: K): Promise<boolean>
+  has?<K = string>(keyspace: string, storage: CacheStorageKey, key: K): Promise<boolean>
 
   /**
    * Execute a provided function once for each cache element and then delete the elements that the function returned true for
    * @param keyspace - keyspace in which to execute
+   * @param storage - storage in which to execute
    * @param predicate - function to execute
    * */
   sweep?<K = string, V = any, P extends CacheProvider = CacheProvider>(
-    keyspace: string, predicate: (value: V, key: K, provider: P) => boolean | Promise<boolean>
+    keyspace: string, storage: CacheStorageKey, predicate: (value: V, key: K, provider: P) => boolean | Promise<boolean>
   ): Promise<void>
 
   /**
    * Execute a provided function once for each cache element and then make array of elements that the function returned true for
    * @param keyspace - keyspace in which to execute
+   * @param storage - storage in which to execute
    * @param predicate - function to execute
    * */
   filter?<K = string, V = any, P extends CacheProvider = CacheProvider>(
-    keyspace: string, predicate: (value: V, key: K, provider: P) => boolean | Promise<boolean>
+    keyspace: string, storage: CacheStorageKey, predicate: (value: V, key: K, provider: P) => boolean | Promise<boolean>
   ): Promise<Array<[ K, V ]>>
 
   /**
    * Creates a new array populated with the results of calling a provided function on every cache element
    * @param keyspace - keyspace in which to execute
+   * @param storage - storage in which to execute
    * @param predicate - function to execute
    * */
   map?<K = string, V = any, R = any, P extends CacheProvider = CacheProvider>(
-    keyspace: string, predicate: (value: V, key: K, provider: P) => R | Promise<R>
+    keyspace: string, storage: CacheStorageKey, predicate: (value: V, key: K, provider: P) => R | Promise<R>
   ): Promise<R[]>
 
   /**
    * Execute a provided function once for each cache element and return element that the function returned true for
    * @param keyspace - keyspace in which to execute
+   * @param storage - storage in which to execute
    * @param predicate - function to execute
    * */
   find?<K = string, V = any, P extends CacheProvider = CacheProvider>(
-    keyspace: string, predicate: (value: V, key: K, provider: P) => boolean | Promise<boolean>
+    keyspace: string, storage: CacheStorageKey, predicate: (value: V, key: K, provider: P) => boolean | Promise<boolean>
   ): Promise<V | undefined>
 
 }

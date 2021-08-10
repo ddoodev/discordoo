@@ -1,5 +1,6 @@
 import { IpcPacket } from '@src/sharding'
 import { IpcCacheOpCodes, IpcEvents, IpcOpCodes, SerializeModes } from '@src/constants'
+import { CacheStorageKey } from '@src/cache/interfaces/CacheStorageKey'
 
 export interface IpcHelloPacket extends IpcPacket {
   op: IpcOpCodes.HELLO
@@ -43,6 +44,7 @@ export interface IpcCacheGetRequestPacket extends IpcPacket {
     shards: number[]
     key: any
     keyspace: string
+    storage: CacheStorageKey
   }
 }
 
@@ -64,6 +66,7 @@ export interface IpcCacheSetRequestPacket extends IpcPacket {
     shards: number[]
     key: any
     keyspace: string
+    storage: CacheStorageKey
     value: any
   }
 }
@@ -86,6 +89,7 @@ export interface IpcCacheDeleteRequestPacket extends IpcPacket {
     shards: number[]
     key: any
     keyspace: string
+    storage: CacheStorageKey
   }
 }
 
@@ -105,6 +109,7 @@ export interface IpcCacheForEachRequestPacket extends IpcPacket {
     op: IpcCacheOpCodes.FOREACH
     shards: number[]
     keyspace: string
+    storage: CacheStorageKey
     script: string
   }
 }
@@ -126,6 +131,7 @@ export interface IpcCacheSizeRequestPacket extends IpcPacket {
     serialize?: SerializeModes.NUMBER
     shards: number[]
     keyspace: string
+    storage: CacheStorageKey
   }
 }
 
@@ -146,6 +152,7 @@ export interface IpcCacheHasRequestPacket extends IpcPacket {
     serialize?: SerializeModes.BOOLEAN
     shards: number[]
     keyspace: string
+    storage: CacheStorageKey
     key: any
   }
 }
@@ -166,6 +173,7 @@ export interface IpcCacheSweepRequestPacket extends IpcPacket {
     op: IpcCacheOpCodes.SWEEP
     shards: number[]
     keyspace: string
+    storage: CacheStorageKey
     script: string
   }
 }
@@ -187,6 +195,7 @@ export interface IpcCacheFilterRequestPacket extends IpcPacket {
     serialize?: SerializeModes.ARRAY
     shards: number[]
     keyspace: string
+    storage: CacheStorageKey
     script: string
   }
 }
@@ -208,6 +217,7 @@ export interface IpcCacheMapRequestPacket extends IpcPacket {
     serialize?: SerializeModes.ARRAY
     shards: number[]
     keyspace: string
+    storage: CacheStorageKey
     script: string
   }
 }
@@ -229,6 +239,7 @@ export interface IpcCacheFindRequestPacket extends IpcPacket {
     serialize?: SerializeModes.ANY
     shards: number[]
     keyspace: string
+    storage: CacheStorageKey
     script: string
   }
 }

@@ -42,6 +42,7 @@ import { cacheProviderMapPolyfill } from '@src/cache/polyfills/cacheProviderMapP
 import { cacheProviderFindPolyfill } from '@src/cache/polyfills/cacheProviderFindPolyfill'
 import { CachingPoliciesProcessor } from '@src/cache/CachingPoliciesProcessor'
 import { CacheManagerFindOptions } from '@src/cache/interfaces/CacheManagerFindOptions'
+import { CacheStorageKey } from '@src/cache/interfaces/CacheStorageKey'
 
 export class CacheManager<P extends CacheProvider = CacheProvider> {
   public client: Client
@@ -55,7 +56,12 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     this.policiesProcessor = new CachingPoliciesProcessor(client)
   }
 
-  async get<K = string, V = any>(keyspace: string, key: K, options: CacheManagerGetOptions = {}): Promise<V | undefined> {
+  async get<K = string, V = any>(
+    keyspace: string,
+    storage: CacheStorageKey,
+    key: K,
+    options: CacheManagerGetOptions = {}
+  ): Promise<V | undefined> {
     let result: any
 
     if (typeof options?.shard !== 'undefined' && this.client.internals.sharding.active && !this.provider.sharedCache) {
@@ -68,6 +74,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
           event_id: this.client.internals.ipc.generate(),
           key,
           keyspace,
+          storage,
           shards,
           serialize: SerializeModes.ANY
         }
@@ -81,13 +88,19 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       }
 
     } else {
-      result = await this.provider.get<K, V>(keyspace, key)
+      result = await this.provider.get<K, V>(keyspace, storage, key)
     }
 
     return result
   }
 
-  async set<K = string, V = any>(keyspace: string, key: K, value: V, options: CacheManagerSetOptions = {}): Promise<CacheManager> {
+  async set<K = string, V = any>(
+    keyspace: string,
+    storage: CacheStorageKey,
+    key: K,
+    value: V,
+    options: CacheManagerSetOptions = {}
+  ): Promise<CacheManager> {
     const globalPolicyLimit = this.policiesProcessor.global(value)
     if (typeof globalPolicyLimit !== 'undefined') {
       if (!globalPolicyLimit) return this
@@ -108,6 +121,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
           event_id: this.client.internals.ipc.generate(),
           key,
           keyspace,
+          storage,
           shards,
           value,
           serialize: SerializeModes.BOOLEAN
@@ -122,13 +136,18 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       }
 
     } else {
-      await this.provider.set<K, V>(keyspace, key, value)
+      await this.provider.set<K, V>(keyspace, storage, key, value)
     }
 
     return this
   }
 
-  async delete<K = string>(keyspace: string, key: K | K[], options: CacheManagerDeleteOptions = {}): Promise<boolean> {
+  async delete<K = string>(
+    keyspace: string,
+    storage: CacheStorageKey,
+    key: K | K[],
+    options: CacheManagerDeleteOptions = {}
+  ): Promise<boolean> {
     if (typeof options?.shard !== 'undefined' && this.client.internals.sharding.active && !this.provider.sharedCache) {
       const shards = resolveShards(this.client, options.shard)
 
@@ -139,6 +158,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
           event_id: this.client.internals.ipc.generate(),
           key,
           keyspace,
+          storage,
           shards,
           serialize: SerializeModes.BOOLEAN
         }
@@ -150,12 +170,15 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       return response.success
 
     } else {
-      return this.provider.delete<K>(keyspace, key)
+      return this.provider.delete<K>(keyspace, storage, key)
     }
   }
 
   async forEach<K = string, V = any>(
-    keyspace: string, predicate: (value: V, key: K, provider: P) => unknown | Promise<unknown>, options: CacheManagerForEachOptions = {}
+    keyspace: string,
+    storage: CacheStorageKey,
+    predicate: (value: V, key: K, provider: P) => unknown | Promise<unknown>,
+    options: CacheManagerForEachOptions = {}
   ): Promise<void> {
     if (typeof options?.shard !== 'undefined' && this.client.internals.sharding.active && !this.provider.sharedCache) {
       const shards = resolveShards(this.client, options.shard)
@@ -166,6 +189,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
           op: IpcCacheOpCodes.FOREACH,
           event_id: this.client.internals.ipc.generate(),
           keyspace,
+          storage,
           shards,
           script: `(${predicate})`
         }
@@ -174,13 +198,17 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       await this.client.internals.ipc.send<IpcCacheForEachResponsePacket>(request, { waitResponse: true })
 
     } else {
-      await this.provider.forEach<K, V, P>(keyspace, predicate)
+      await this.provider.forEach<K, V, P>(keyspace, storage, predicate)
     }
 
     return void 0
   }
 
-  async size(keyspace: string, options: CacheManagerSizeOptions = {}): Promise<number> {
+  async size(
+    keyspace: string,
+    storage: CacheStorageKey,
+    options: CacheManagerSizeOptions = {}
+  ): Promise<number> {
     let result = 0
 
     if (typeof options?.shard !== 'undefined' && this.client.internals.sharding.active && !this.provider.sharedCache) {
@@ -192,6 +220,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
           op: IpcCacheOpCodes.SIZE,
           event_id: this.client.internals.ipc.generate(),
           keyspace,
+          storage,
           shards,
           serialize: SerializeModes.NUMBER
         }
@@ -207,9 +236,9 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     } else {
 
       if (this.provider.size) {
-        result = await this.provider.size(keyspace)
+        result = await this.provider.size(keyspace, storage)
       } else {
-        result = await cacheProviderSizePolyfill<P>(this.provider, keyspace)
+        result = await cacheProviderSizePolyfill<P>(this.provider, keyspace, storage)
       }
 
     }
@@ -217,7 +246,12 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     return result
   }
 
-  async has<K = string>(keyspace: string, key: K, options: CacheManagerHasOptions = {}): Promise<boolean> {
+  async has<K = string>(
+    keyspace: string,
+    storage: CacheStorageKey,
+    key: K,
+    options: CacheManagerHasOptions = {}
+  ): Promise<boolean> {
     let result = false
 
     if (typeof options?.shard !== 'undefined' && this.client.internals.sharding.active && !this.provider.sharedCache) {
@@ -229,6 +263,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
           op: IpcCacheOpCodes.HAS,
           event_id: this.client.internals.ipc.generate(),
           keyspace,
+          storage,
           key,
           shards,
           serialize: SerializeModes.BOOLEAN
@@ -245,9 +280,9 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     } else {
 
       if (this.provider.has) {
-        result = await this.provider.has<K>(keyspace, key)
+        result = await this.provider.has<K>(keyspace, storage, key)
       } else {
-        result = await cacheProviderHasPolyfill<K, P>(this.provider, keyspace, key)
+        result = await cacheProviderHasPolyfill<K, P>(this.provider, keyspace, storage, key)
       }
 
     }
@@ -256,7 +291,10 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
   }
 
   async sweep<K = string, V = any>(
-    keyspace: string, predicate: (value: V, key: K, provider: P) => boolean | Promise<boolean>, options: CacheManagerSweepOptions = {}
+    keyspace: string,
+    storage: CacheStorageKey,
+    predicate: (value: V, key: K, provider: P) => boolean | Promise<boolean>,
+    options: CacheManagerSweepOptions = {}
   ): Promise<void> {
 
     if (typeof options?.shard !== 'undefined' && this.client.internals.sharding.active && !this.provider.sharedCache) {
@@ -268,6 +306,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
           op: IpcCacheOpCodes.SWEEP,
           event_id: this.client.internals.ipc.generate(),
           keyspace,
+          storage,
           shards,
           script: `(${predicate})`
         }
@@ -278,9 +317,9 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     } else {
 
       if (this.provider.sweep) {
-        await this.provider.sweep<K, V, P>(keyspace, predicate)
+        await this.provider.sweep<K, V, P>(keyspace, storage, predicate)
       } else {
-        await cacheProviderSweepPolyfill<K, V, P>(this.provider, keyspace, predicate)
+        await cacheProviderSweepPolyfill<K, V, P>(this.provider, keyspace, storage, predicate)
       }
 
     }
@@ -289,7 +328,10 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
   }
 
   async filter<K = string, V = any>(
-    keyspace: string, predicate: (value: V, key: K, provider: P) => boolean | Promise<boolean>, options: CacheManagerFilterOptions = {}
+    keyspace: string,
+    storage: CacheStorageKey,
+    predicate: (value: V, key: K, provider: P) => boolean | Promise<boolean>,
+    options: CacheManagerFilterOptions = {}
   ): Promise<[ K, V ][]> {
     let result: [ K, V ][] = []
 
@@ -302,6 +344,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
           op: IpcCacheOpCodes.FILTER,
           event_id: this.client.internals.ipc.generate(),
           keyspace,
+          storage,
           shards,
           script: `(${predicate})`,
           serialize: SerializeModes.ARRAY
@@ -318,9 +361,9 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     } else {
 
       if (this.provider.filter) {
-        result = await this.provider.filter<K, V, P>(keyspace, predicate)
+        result = await this.provider.filter<K, V, P>(keyspace, storage, predicate)
       } else {
-        result = await cacheProviderFilterPolyfill<K, V, P>(this.provider, keyspace, predicate)
+        result = await cacheProviderFilterPolyfill<K, V, P>(this.provider, keyspace, storage, predicate)
       }
 
     }
@@ -329,7 +372,10 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
   }
 
   async map<K = string, V = any, R = any>(
-    keyspace: string, predicate: (value: V, key: K, provider: P) => R | Promise<R>, options: CacheManagerMapOptions = {}
+    keyspace: string,
+    storage: CacheStorageKey,
+    predicate: (value: V, key: K, provider: P) => R | Promise<R>,
+    options: CacheManagerMapOptions = {}
   ): Promise<R[]> {
     let result: R[] = []
 
@@ -342,6 +388,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
           op: IpcCacheOpCodes.MAP,
           event_id: this.client.internals.ipc.generate(),
           keyspace,
+          storage,
           shards,
           script: `(${predicate})`,
           serialize: SerializeModes.ARRAY
@@ -358,9 +405,9 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     } else {
 
       if (this.provider.map) {
-        result = await this.provider.map<K, V, R, P>(keyspace, predicate)
+        result = await this.provider.map<K, V, R, P>(keyspace, storage, predicate)
       } else {
-        result = await cacheProviderMapPolyfill<K, V, R, P>(this.provider, keyspace, predicate)
+        result = await cacheProviderMapPolyfill<K, V, R, P>(this.provider, keyspace, storage, predicate)
       }
 
     }
@@ -369,7 +416,10 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
   }
 
   async find<K = string, V = any>(
-    keyspace: string, predicate: (value: V, key: K, provider: P) => boolean | Promise<boolean>, options: CacheManagerFindOptions = {}
+    keyspace: string,
+    storage: CacheStorageKey,
+    predicate: (value: V, key: K, provider: P) => boolean | Promise<boolean>,
+    options: CacheManagerFindOptions = {}
   ): Promise<V | undefined> {
     let result: V | undefined
 
@@ -382,6 +432,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
           op: IpcCacheOpCodes.FIND,
           event_id: this.client.internals.ipc.generate(),
           keyspace,
+          storage,
           shards,
           script: `(${predicate})`,
           serialize: SerializeModes.ANY
@@ -398,9 +449,9 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     } else {
 
       if (this.provider.find) {
-        result = await this.provider.find<K, V, P>(keyspace, predicate)
+        result = await this.provider.find<K, V, P>(keyspace, storage, predicate)
       } else {
-        result = await cacheProviderFindPolyfill<K, V, P>(this.provider, keyspace, predicate)
+        result = await cacheProviderFindPolyfill<K, V, P>(this.provider, keyspace, storage, predicate)
       }
 
     }

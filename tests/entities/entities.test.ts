@@ -1,4 +1,4 @@
-import { Attachment, Attachment as RawAttachment, Entities } from '@src/entities'
+import { Attachment as RawAttachment, Entities } from '@src/entities'
 
 describe('Entities', () => {
 
@@ -27,15 +27,15 @@ describe('Entities', () => {
 
   test('must reset entity to default', () => {
     expect(
-      Entities.get('Attachment').prototype !== Attachment.prototype
+      Entities.get('Attachment').prototype !== RawAttachment.prototype
     )
 
     expect(
-      Entities.clear('Attachment').prototype === Attachment.prototype
+      Entities.clear('Attachment').prototype === RawAttachment.prototype
     )
 
     expect(
-      Entities.get('Attachment').prototype === Attachment.prototype
+      Entities.get('Attachment').prototype === RawAttachment.prototype
     )
   })
 

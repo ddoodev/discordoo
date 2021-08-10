@@ -125,19 +125,19 @@ export class IpcServer extends TypedEmitter<IpcServerEvents> {
   }
 
   private cacheOperate(request: IpcCacheRequestPacket): any {
-    const keyspace = request.d.keyspace
+    const keyspace = request.d.keyspace, storage = request.d.storage
 
     switch (request.d.op) {
       case IpcCacheOpCodes.GET:
-        return this.client.internals.cache.get(keyspace, request.d.key)
+        return this.client.internals.cache.get(keyspace, storage, request.d.key)
       case IpcCacheOpCodes.SET:
-        return this.client.internals.cache.set(keyspace, request.d.key, request.d.value)
+        return this.client.internals.cache.set(keyspace, storage, request.d.key, request.d.value)
       case IpcCacheOpCodes.DELETE:
-        return this.client.internals.cache.delete(keyspace, request.d.key)
+        return this.client.internals.cache.delete(keyspace, storage, request.d.key)
       case IpcCacheOpCodes.SIZE:
-        return this.client.internals.cache.size(keyspace)
+        return this.client.internals.cache.size(keyspace, storage)
       case IpcCacheOpCodes.HAS:
-        return this.client.internals.cache.has(keyspace, request.d.key)
+        return this.client.internals.cache.has(keyspace, storage, request.d.key)
       case IpcCacheOpCodes.SWEEP:
       case IpcCacheOpCodes.MAP:
       case IpcCacheOpCodes.FIND:
@@ -162,7 +162,7 @@ export class IpcServer extends TypedEmitter<IpcServerEvents> {
           return eval(script + '.bind(provider)(value, key, provider)')
         }
 
-        return this.client.internals.cache[method](keyspace, predicate)
+        return this.client.internals.cache[method](keyspace, storage, predicate)
       }
     }
   }
