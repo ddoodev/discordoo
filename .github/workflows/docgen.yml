@@ -1,6 +1,9 @@
 name: Documentation generation
 
 on:
+  push:
+    branches:
+      - master
   workflow_dispatch:
     schedule:
       - cron: '0 */12 * * *'
@@ -47,7 +50,7 @@ jobs:
       - name: Deploy
         uses: s0/git-publish-subdir-action@develop
         env:
-          REPO: self
-          BRANCH: cf-pages
+          REPO: git@github.com:Discordoo/discordoocs.git
+          BRANCH: master
           FOLDER: docs/site
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_PRIVATE_KEY }}
