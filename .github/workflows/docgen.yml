@@ -48,9 +48,13 @@ jobs:
         run: mkdocs build
 
       - name: Deploy
-        uses: s0/git-publish-subdir-action@develop
+        uses: cpina/github-action-push-to-another-repository@main
         env:
-          REPO: git@github.com:Discordoo/discordoocs.git
-          BRANCH: master
-          FOLDER: docs/site
-          SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_PRIVATE_KEY }}
+          API_TOKEN_GITHUB: ${{ secrets.ACCESS_TOKEN }}
+        with:
+          source-directory: 'docs/site'
+          destination-github-username: 'Discordoo'
+          destination-repository-name: 'discordoocs'
+          user-email: github-actions@github.com
+          user-name: github-actions
+          target-branch: master
