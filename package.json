@@ -31,11 +31,12 @@
     "type": "git",
     "url": "git+https://github.com/Discordoo/discordoo.git"
   },
+  "homepage": "https://discordoo.xyz/",
   "license": "MIT",
   "devDependencies": {
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.0.1",
-    "@discordoo/tapok": "^1.0.5",
+    "@discordoo/tapok": "^1.0.6",
     "@types/jest": "^26.0.24",
     "@types/node": "^12.0.0",
     "@types/node-ipc": "^9.1.4",
