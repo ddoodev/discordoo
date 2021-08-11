@@ -1,9 +1,9 @@
 name: Documentation generation
 
 on:
-  push:
-    branches:
-      - master
+#  push:
+#    branches:
+#      - master
   workflow_dispatch:
     schedule:
       - cron: '0 */12 * * *'
