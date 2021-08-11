@@ -50,7 +50,7 @@ jobs:
       - name: Deploy
         uses: cpina/github-action-push-to-another-repository@main
         env:
-          API_TOKEN_GITHUB: ${{ secrets.ACCESS_TOKEN }}
+          API_TOKEN_GITHUB: ${{ secrets.PUSH_ACCESS_TOKEN }}
         with:
           source-directory: 'docs/site'
           destination-github-username: 'Discordoo'
