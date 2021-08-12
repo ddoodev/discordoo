@@ -9,6 +9,4 @@ export interface RestManagerRequestData {
   body?: Record<any, any>
   headers?: Record<string, any>
   majorParameter?: string
-  reason?: string
-  auth?: AuthLike
 }

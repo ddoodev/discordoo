@@ -1,6 +1,6 @@
 import { AuthLike } from '@src/core/providers/rest/AuthLike'
 
-export interface RestManagerRequestOptions {
+export interface RestRequestOptions {
   reason?: string
   auth?: AuthLike
 }

@@ -1,4 +1,3 @@
-import { RestManagerRequestOptions } from '@src/rest/interfaces/RestManagerRequestOptions'
 import { RestManagerRequestData } from '@src/rest/interfaces/RestManagerRequestData'
 import { DefaultRestProvider } from '@src/rest/DefaultRestProvider'
 import { RawAttachment } from '@src/rest/interfaces/RawAttachment'
@@ -9,7 +8,6 @@ import { makeRequest } from '@src/rest/makeRequest'
 import { RestManager } from '@src/rest/RestManager'
 
 export {
-  RestManagerRequestOptions,
   RestManagerRequestData,
   DefaultRestProvider,
   RawAttachment,

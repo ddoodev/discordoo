@@ -1,11 +1,12 @@
 import { RestProvider } from '@src/core/providers/rest/RestProvider'
-import { RestProviderRequestData } from '@src/core/providers/rest/RestProviderRequestData'
+import { RestRequestData } from '@src/core/providers/rest/requests/RestRequestData'
 import { RestRequestResponse } from '@src/core/providers/rest/RestRequestResponse'
 import { Client } from '@src/core'
 import { Client as Undici, request } from 'undici'
 import { DiscordooError } from '@src/utils'
 import { RestOptions } from '@src/rest/interfaces/RestOptions'
 import { MultipartData } from '@src/utils/MultipartData'
+import { RestRequestOptions } from '@src/core/providers/rest/requests/RestRequestOptions'
 
 export class DefaultRestProvider implements RestProvider {
   public client: Client
@@ -19,21 +20,21 @@ export class DefaultRestProvider implements RestProvider {
   }
 
   async init(): Promise<unknown> {
-    return void 0
+    return void 100500
   }
 
-  async request<T = any>(data: RestProviderRequestData): Promise<RestRequestResponse<T>> {
+  async request<T = any>(data: RestRequestData, options: RestRequestOptions = {}): Promise<RestRequestResponse<T>> {
 
     let headers = this.options.headers
 
-    headers['Authorization'] = data.auth ?? this.options.auth
+    headers['Authorization'] = options.auth ?? this.options.auth
 
     if (this.options.userAgent) {
       headers['User-Agent'] = this.options.userAgent
     }
 
-    if (data.reason) {
-      headers['X-Audit-Log-Reason'] = data.reason
+    if (options.reason) {
+      headers['X-Audit-Log-Reason'] = options.reason
     }
 
     if (data.headers) {

@@ -6,6 +6,7 @@ import { makeRequest } from '@src/rest/makeRequest'
 import { RestManagerOptions } from '@src/rest/RestManagerOptions'
 import { RestManagerRequestData } from '@src/rest/interfaces/RestManagerRequestData'
 import { RestLimitsManager } from '@src/rest/RestLimitsManager'
+import { RestRequestOptions } from '@src/core/providers/rest/requests/RestRequestOptions'
 
 export class RestManager<P extends RestProvider = RestProvider> {
   public client: Client
@@ -23,15 +24,14 @@ export class RestManager<P extends RestProvider = RestProvider> {
     return makeRequest(this)
   }
 
-  async request<T = any>(data: RestManagerRequestData, options: any): Promise<RestRequestResponse<T>> {
+  async request<T = any>(data: RestManagerRequestData, options: RestRequestOptions = {}): Promise<RestRequestResponse<T>> {
     return this.provider.request<T>({
       method: data.method,
       path: data.path,
       attachments: data.attachments ?? [],
       headers: data.headers,
-      reason: data.reason,
       body: data.body,
-    })
+    }, options)
   }
 
   async init(): Promise<void> {

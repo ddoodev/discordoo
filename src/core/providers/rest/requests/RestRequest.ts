@@ -2,6 +2,7 @@ import { RestRequestMethods } from '@src/constants'
 import { RestRequestResponse } from '@src/core/providers/rest/RestRequestResponse'
 import { RestManager } from '@src/rest/RestManager'
 import { RawAttachment } from '@src/rest/interfaces/RawAttachment'
+import { RestRequestOptions } from '@src/core/providers/rest/requests/RestRequestOptions'
 
 /** Constructor used to build and perform requests to discord rest api */
 export interface RestRequest {
@@ -65,36 +66,35 @@ export interface RestRequest {
    * @param method - method to use
    * @param options - request options
    */
-  // TODO: RestRequestOptions
-  request<T = any>(method: RestRequestMethods, options?: any): Promise<RestRequestResponse<T>>
+  request<T = any>(method: RestRequestMethods, options?: RestRequestOptions): Promise<RestRequestResponse<T>>
 
   /**
    * Perform GET request
    * @param options - request options
    */
-  get<T = any>(options?: any): Promise<RestRequestResponse<T>>
+  get<T = any>(options?: RestRequestOptions): Promise<RestRequestResponse<T>>
 
   /**
    * Perform POST request
    * @param options - request options
    */
-  post<T = any>(options?: any): Promise<RestRequestResponse<T>>
+  post<T = any>(options?: RestRequestOptions): Promise<RestRequestResponse<T>>
 
   /**
    * Perform PATCH request
    * @param options - request options
    */
-  patch<T = any>(options?: any): Promise<RestRequestResponse<T>>
+  patch<T = any>(options?: RestRequestOptions): Promise<RestRequestResponse<T>>
 
   /**
    * Perform PUT request
    * @param options - request options
    */
-  put<T = any>(options?: any): Promise<RestRequestResponse<T>>
+  put<T = any>(options?: RestRequestOptions): Promise<RestRequestResponse<T>>
 
   /**
    * Perform DELETE request
    * @param options - request options
    */
-  delete<T = any>(options?: any): Promise<RestRequestResponse<T>>
+  delete<T = any>(options?: RestRequestOptions): Promise<RestRequestResponse<T>>
 }
