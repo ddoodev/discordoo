@@ -30,8 +30,8 @@ export function Final(...properties: string[]) {
         super(...props)
 
         properties.forEach(property => {
-          if (typeof this[property] === 'function') {
-            this[property].toString = function () {
+          if (typeof super[property] === 'function') {
+            super[property].toString = function () {
               return `function ${property}() { [ddoo internal code] }`
             }
           }
