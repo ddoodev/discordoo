@@ -1,4 +1,4 @@
-import { GatewayIntents } from '@src/constants'
+import { GatewayIntents } from '@src/constants/gateway/GatewayIntents'
 
 export class IntentsUtil {
   public static FLAGS: GatewayIntents

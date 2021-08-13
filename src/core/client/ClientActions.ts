@@ -9,26 +9,26 @@ export class ClientActions {
   }
 
   addGuildDiscoverySubcategory(guildID: string, categoryID: string, reason?: string) {
-    return this.client.internals.rest.api
+    return this.client.internals.rest.api()
       .url(Endpoints.GUILD_DISCOVERY_CATEGORY(guildID, categoryID))
       .post({ reason })
   }
 
   addGuildMemberRole(guildID: string, memberID: string, roleID: string, reason?: string) {
-    return this.client.internals.rest.api
+    return this.client.internals.rest.api()
       .url(Endpoints.GUILD_MEMBER_ROLE(guildID, memberID, roleID))
       .put({ reason })
   }
 
   banGuildMember(guildID: string, userID: string, deleteMessagesDays = 0, reason?: string) {
-    return this.client.internals.rest.api
+    return this.client.internals.rest.api()
       .url(Endpoints.GUILD_BAN(guildID, userID))
       .body({ delete_message_days: deleteMessagesDays })
       .post({ reason })
   }
 
   createGuild(name: string, data: any /* TODO: GuildCreateData */) {
-    return this.client.internals.rest.api
+    return this.client.internals.rest.api()
       .url(Endpoints.GUILDS())
       .body({
         name,
@@ -47,52 +47,52 @@ export class ClientActions {
   }
 
   createGuildEmoji(guildID: string, data: any /* TODO: GuildEmojiData */, reason?: string) {
-    return this.client.internals.rest.api
+    return this.client.internals.rest.api()
       .url(Endpoints.GUILD_EMOJIS(guildID))
       .body(data)
       .post({ reason })
   }
 
   createGuildFromTemplate(code: string, name: string, icon?: string) {
-    return this.client.internals.rest.api
+    return this.client.internals.rest.api()
       .url(Endpoints.GUILD_TEMPLATE(code))
       .body({ name, icon })
       .post()
   }
 
   createGuildTemplate(guildID: string, name: string, description?: string) {
-    return this.client.internals.rest.api
+    return this.client.internals.rest.api()
       .url(Endpoints.GUILD_TEMPLATES(guildID))
       .body({ name, description })
       .post()
   }
 
   deleteGuild(guildID: string) {
-    return this.client.internals.rest.api
+    return this.client.internals.rest.api()
       .url(Endpoints.GUILD(guildID))
       .delete()
   }
 
   deleteGuildEmoji(guildID: string, emojiID: string, reason?: string) {
-    return this.client.internals.rest.api
+    return this.client.internals.rest.api()
       .url(Endpoints.GUILD_EMOJI(guildID, emojiID))
       .delete({ reason })
   }
 
   deleteGuildIntegration(guildID: string, integrationID: string) { // TODO: check if reason available
-    return this.client.internals.rest.api
+    return this.client.internals.rest.api()
       .url(Endpoints.GUILD_INTEGRATION(guildID, integrationID))
       .delete()
   }
 
   deleteGuildTemplate(guildID: string, code: string) {
-    return this.client.internals.rest.api
+    return this.client.internals.rest.api()
       .url(Endpoints.GUILD_TEMPLATE_GUILD(guildID, code))
       .delete()
   }
 
   editGuild(guildID: string, data: any /* TODO: GuildData */, reason?: string) {
-    return this.client.internals.rest.api
+    return this.client.internals.rest.api()
       .url(Endpoints.GUILD(guildID))
       .body({
         name: data.name,
@@ -119,7 +119,7 @@ export class ClientActions {
   }
 
   editGuildDiscovery(guildID: string, data: any /* TODO: GuildDiscoveryData */, reason?: string) {
-    return this.client.internals.rest.api
+    return this.client.internals.rest.api()
       .url(Endpoints.GUILD_DISCOVERY(guildID))
       .body({
         primary_category_id: data.primaryCategoryID,
@@ -130,7 +130,7 @@ export class ClientActions {
   }
 
   editGuildEmoji(guildID: string, emojiID: string, data: any /* TODO: GuildEmojiData */, reason?: string) {
-    return this.client.internals.rest.api
+    return this.client.internals.rest.api()
       .url(Endpoints.GUILD_EMOJI(guildID, emojiID))
       .body(data)
       .patch({ reason })
@@ -138,7 +138,7 @@ export class ClientActions {
 
   // TODO: Check if reason available
   editGuildIntegration(guildID: string, integrationID: string, data: any /* TODO: GuildIntegrationData */) {
-    return this.client.internals.rest.api
+    return this.client.internals.rest.api()
       .url(Endpoints.GUILD_INTEGRATION(guildID, integrationID))
       .body({
         expire_behavior: data.expireBehavior,
@@ -149,7 +149,7 @@ export class ClientActions {
   }
 
   editGuildMember(guildID: string, memberID: string, data: any /* TODO: GuildMemberData */, reason?: string) {
-    return this.client.internals.rest.api
+    return this.client.internals.rest.api()
       .url(Endpoints.GUILD_MEMBER(guildID, memberID))
       .body({
         roles: data.roles,
@@ -162,7 +162,7 @@ export class ClientActions {
   }
 
   editGuildTemplate(guildID: string, code: string, data: any /* TODO: GuildTemplateData */) { // TODO: check if reason available
-    return this.client.internals.rest.api
+    return this.client.internals.rest.api()
       .url(Endpoints.GUILD_TEMPLATE_GUILD(guildID, code))
       .body(data)
       .patch()

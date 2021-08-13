@@ -20,18 +20,27 @@ export class RestManager<P extends RestProvider = RestProvider> {
     this.limiter = new RestLimitsManager(this.client)
   }
 
-  get api(): RestRequest {
+  api(): RestRequest {
     return makeRequest(this)
   }
 
   async request<T = any>(data: RestManagerRequestData, options: RestRequestOptions = {}): Promise<RestRequestResponse<T>> {
-    return this.provider.request<T>({
+
+    if (!this.client.options.rest?.rateLimits?.disable) {
+      // do rate limits
+    }
+
+    const response = await this.provider.request<T>({
       method: data.method,
       path: data.path,
       attachments: data.attachments ?? [],
       headers: data.headers,
       body: data.body,
     }, options)
+
+    // this.limiter.passHeaders or something
+
+    return response
   }
 
   async init(): Promise<void> {

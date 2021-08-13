@@ -10,7 +10,7 @@ export interface WebSocketClientEventsI {
   WS_OPEN: (event: WebSocket.OpenEvent) => unknown
   WS_CLOSED: (code: WebSocket.CloseEvent) => unknown
 
-  RECONNECT_ME: (destroyed?: boolean) => unknown
+  __RECONNECT_ME__: (destroyed?: boolean) => unknown
 
   ready: () => unknown
   resumed: () => unknown

@@ -1,5 +1,5 @@
 import { GatewayOptions } from '@src/gateway'
-import { WebSocketUtils } from '@src/utils'
+import { IntentsUtil, WebSocketUtils } from '@src/utils'
 
 export const WS_DEFAULT_OPTIONS: Omit<GatewayOptions, 'token'> = {
   properties: {
@@ -8,7 +8,7 @@ export const WS_DEFAULT_OPTIONS: Omit<GatewayOptions, 'token'> = {
     $os: process.platform
   },
   compress: false,
-  intents: 32509, // use all intents except privileged
+  intents: IntentsUtil.NON_PRIVILEGED.reduce((prev, curr) => prev | curr, 0),
   maxShards: Infinity,
   version: 9,
   shards: 1,

@@ -10,4 +10,9 @@ export interface RestOptions {
   scheme?: 'http' | 'https'
   headers?: Record<string, any>
   auth?: AuthLike
+  rateLimits?: {
+    disable?: boolean
+    globalLimit?: number
+    invalidLimit?: number
+  }
 }

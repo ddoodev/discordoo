@@ -69,12 +69,16 @@ export class DefaultRestProvider implements RestProvider {
 
     // console.log('PROVIDER REQUEST:', data)
 
+    const before = process.hrtime.bigint()
     const response = await request(`${this.options.scheme}://${this.options.domain}/api/v${this.options.version}/${data.path}`, {
       dispatcher: this.undici,
       method: data.method,
       body,
       headers,
+      headersTimeout: this.options.requestTimeout,
+      bodyTimeout: this.options.requestTimeout,
     })
+    const after = process.hrtime.bigint()
 
     // https://github.com/nodejs/undici/commit/b08399d3285f9ec78831823627f0bf49ab009bdc
     // @ts-ignore
@@ -95,7 +99,8 @@ export class DefaultRestProvider implements RestProvider {
       success,
       result,
       statusCode: response.statusCode,
-      headers: response.headers
+      headers: response.headers,
+      latency: Number(after - before) / 1_000_000,
     }
   }
 

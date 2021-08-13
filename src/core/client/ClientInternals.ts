@@ -23,4 +23,7 @@ export interface ClientInternals<ClientStack extends DefaultClientStack = Defaul
 
   /** Rest/Ws actions that client can perform */
   actions: ClientActions
+
+  /** Version of the library, useful for custom providers */
+  version: string
 }

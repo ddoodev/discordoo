@@ -9,5 +9,10 @@ export const REST_DEFAULT_OPTIONS: Required<Omit<RestOptions, 'auth'>> = {
   latencyThreshold: 30000,
   domain: 'discord.com',
   scheme: 'https',
-  headers: {}
+  headers: {},
+  rateLimits: {
+    disable: false,
+    globalLimit: 50,
+    invalidLimit: 10_000,
+  },
 }
