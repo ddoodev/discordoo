@@ -2,7 +2,7 @@ import { ListenerSignature, TypedEmitter } from 'tiny-typed-emitter'
 import { DefaultClientStack } from '@src/core/client/DefaultClientStack'
 import { ClientInternals } from '@src/core/client/ClientInternals'
 import { ClientOptions } from '@src/core/client/ClientOptions'
-import { DiscordooProviders, IpcEvents, IpcOpCodes, REST_DEFAULT_OPTIONS } from '@src/constants'
+import { DiscordooProviders, GlobalCachingPolicy, IpcEvents, IpcOpCodes, REST_DEFAULT_OPTIONS, WS_DEFAULT_OPTIONS } from '@src/constants'
 import { DiscordooError, DiscordooSnowflake, resolveDiscordShards, version } from '@src/utils'
 import { IpcServer } from '@src/sharding/ipc/IpcServer'
 import { GatewayConnectOptions } from '@src/core/providers/gateway/options/GatewayConnectOptions'
@@ -16,6 +16,7 @@ import { GatewayManager } from '@src/gateway/GatewayManager'
 import { Final } from '@src/utils/FinalDecorator'
 import { ClientShardingMetadata } from '@src/core/client/ClientShardingMetadata'
 import { ClientActions } from '@src/core/client/ClientActions'
+import { ClientMetadata } from '@src/core/client/ClientMetadata'
 
 /** Entry point for all of Discordoo. */
 @Final('start', 'internals')
@@ -37,7 +38,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
     this.options = options
 
     const
-      gatewayOptions = Object.assign(this.options.gateway ?? {}, { token: this.token }),
+      gatewayOptions = Object.assign(WS_DEFAULT_OPTIONS, this.options.gateway ?? {}, { token: this.token }),
       restOptions = Object.assign(REST_DEFAULT_OPTIONS, { auth: `Bot ${this.token}` }, this.options.rest ?? {})
 
     let
@@ -93,7 +94,16 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
           instance: sharding.instance,
         }, this.options.ipc ?? {})
       ),
-      actions = new ClientActions(this)
+      actions = new ClientActions(this),
+      metadata: ClientMetadata = {
+        version,
+        shardingUsed: sharding.active,
+        restRateLimitsDisabled: restOptions.rateLimits.disable === true,
+        restVersion: restOptions.version,
+        gatewayVersion: gatewayOptions.version,
+        allCacheDisabled: this.options.cache?.global?.policies.includes(GlobalCachingPolicy.NONE) ?? false, // TODO: check all policies
+        machinesShardingUsed: false // not supported yet
+      }
 
     this.internals = {
       rest,
@@ -102,7 +112,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
       sharding,
       ipc,
       actions,
-      version,
+      metadata,
     }
   }
 

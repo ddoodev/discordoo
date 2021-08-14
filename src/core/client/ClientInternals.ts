@@ -4,6 +4,7 @@ import { CacheManager } from '@src/cache/CacheManager'
 import { GatewayManager } from '@src/gateway/GatewayManager'
 import { ClientShardingMetadata } from '@src/core/client/ClientShardingMetadata'
 import { ClientActions } from '@src/core/client/ClientActions'
+import { ClientMetadata } from '@src/core/client/ClientMetadata'
 
 export interface ClientInternals<ClientStack extends DefaultClientStack = DefaultClientStack> {
   /** Inter-process communication server used by this client */
@@ -24,6 +25,6 @@ export interface ClientInternals<ClientStack extends DefaultClientStack = Defaul
   /** Rest/Ws actions that client can perform */
   actions: ClientActions
 
-  /** Version of the library, useful for custom providers */
-  version: string
+  /** Metadata for custom providers and libraries */
+  metadata: ClientMetadata
 }

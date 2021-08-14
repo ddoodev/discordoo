@@ -1,7 +1,7 @@
 import { GatewayOptions } from '@src/gateway'
 import { IntentsUtil, WebSocketUtils } from '@src/utils'
 
-export const WS_DEFAULT_OPTIONS: Omit<GatewayOptions, 'token'> = {
+export const WS_DEFAULT_OPTIONS: Required<Omit<GatewayOptions, 'token' | 'presence'>> = {
   properties: {
     $browser: 'Discordoo',
     $device: 'Discordoo',
@@ -18,5 +18,7 @@ export const WS_DEFAULT_OPTIONS: Omit<GatewayOptions, 'token'> = {
   useReconnectOnly: false,
   smoothEventsPeaks: false,
   eventPeaksSmoothingMultiplier: 2,
-  maxEventsPerSecond: undefined
+  maxEventsPerSecond: Infinity,
+  largeThreshold: 50,
+  totalShards: 1,
 }
