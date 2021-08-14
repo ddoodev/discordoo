@@ -43,8 +43,12 @@ export function makeRequest(rest: RestManager<any>): RestRequest {
       return path
     },
 
-    query(k: string, v: any): RestRequest {
-      this.requestQuery[encodeURIComponent(k)] = encodeURIComponent(v)
+    query(data: Record<string, any>): RestRequest {
+      const entries = Object.entries(data)
+
+      entries.forEach(([ key, value ]) => {
+        this.requestQuery[encodeURIComponent(key)] = encodeURIComponent(value)
+      })
 
       return this
     },

@@ -38,10 +38,9 @@ export interface RestRequest {
 
   /**
    * Add query data
-   * @param k - key
-   * @param v - value
+   * @param data - query data
    */
-  query(k: string, v: any): RestRequest
+  query(data: Record<string, any>): RestRequest
 
   /**
    * Add headers to request

@@ -149,6 +149,24 @@ export class Endpoints {
     =                           (inviteID) => [ 'invites', inviteID ]
   static OAUTH2_APPLICATION
     =                              (appID) => [ 'oauth2', 'applications', appID ]
+  static STAGE_INSTANCE
+    =                          (channelID) => [ 'stage-instances', channelID ]
+  static STAGE_INSTANCES
+    =                                   () => [ 'stage-instances' ]
+  static CHANNEL_THREAD_MEMBER
+    =                (channelID, memberID) => [ 'channels', channelID, 'thread-members', memberID ]
+  static CHANNEL_THREAD_WITH_MESSAGE
+    =               (channelID, messageID) => [ 'channels', channelID, 'messages', messageID, 'threads' ]
+  static CHANNEL_THREAD_WITHOUT_MESSAGE
+    =                          (channelID) => [ 'channels', channelID, 'threads' ]
+  static CHANNEL_THREADS_ACTIVE
+    =                          (channelID) => [ 'channels', channelID, 'threads', 'active' ]
+  static CHANNEL_THREADS_ARCHIVED
+    =                    (channelID, type) => [ 'channels', channelID, 'threads', 'archived', type ]
+  static CHANNEL_THREADS_ARCHIVED_JOINED
+    =                          (channelID) => [ 'channels', channelID, 'users', '@me', 'threads', 'archived', 'private' ]
+  static GUILD_THREADS_ACTIVE
+    =                            (guildID) => [ 'guilds', guildID, 'threads', 'active' ]
   static USER
     =                             (userID) => [ 'users', userID ]
   static USER_BILLING
@@ -221,8 +239,4 @@ export class Endpoints {
     =                   (teamID, teamIcon) => [ 'team-icons', teamID, teamIcon ]
   static USER_AVATAR
     =                 (userID, userAvatar) => [ 'avatars', userID, userAvatar ]
-
-  // Client Endpoints
-  static MESSAGE_LINK
-    =     (guildID, channelID, messageID) => [ 'channels', guildID, channelID, messageID ]
 }

@@ -124,7 +124,7 @@ export class ClientActions {
       .body({
         primary_category_id: data.primaryCategoryID,
         keywords: data.keywords,
-        emoji_discoverability_enabled: data.emojiDiscoverabilityEnabled
+        emoji_discoverability_enabled: data.emojiDiscoverabilityEnabled,
       })
       .patch({ reason })
   }
@@ -143,7 +143,7 @@ export class ClientActions {
       .body({
         expire_behavior: data.expireBehavior,
         expire_grace_period: data.expireGracePeriod,
-        enable_emoticons: data.enableEmoticons
+        enable_emoticons: data.enableEmoticons,
       })
       .patch()
   }
@@ -156,7 +156,7 @@ export class ClientActions {
         nick: data.nick,
         mute: data.mute,
         deaf: data.deaf,
-        channel_id: data.channelID
+        channel_id: data.channelID,
       })
       .patch({ reason })
   }
@@ -168,5 +168,183 @@ export class ClientActions {
       .patch()
   }
 
+  editGuildVanity(guildID: string, code: string) { // TODO: check if reason available
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_VANITY_URL(guildID))
+      .body({ code })
+      .patch()
+  }
+
+  editGuildVoiceState(guildID: string, data: any /* TODO: GuildVoiceStateData */, user = '@me') { // TODO: check if reason available
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_VOICE_STATE(guildID, user))
+      .body({
+        channel_id: data.channelID,
+        request_to_speak_timestamp: data.requestToSpeakTimestamp,
+        suppress: data.suppress,
+      })
+      .patch()
+  }
+
+  editGuildWelcomeScreen(guildID: string, data: any /* TODO: GuildWelcomeScreenData */) { // TODO: check if reason available
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_WELCOME_SCREEN(guildID))
+      .body({
+        description: data.description,
+        enabled: data.enabled,
+        welcome_screens: data.welcomeScreens.map((c) => ({
+          channel_id: c.channelID,
+          description: c.description,
+          emoji_id: c.emojiID,
+          emoji_name: c.emojiName,
+        })),
+      })
+      .patch()
+  }
+
+  editGuildWidget(guildID: string, data: any /* TODO: GuildWidgetData */, reason?: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_WIDGET(guildID))
+      .body(data)
+      .patch({ reason })
+  }
+
+  getGuildAuditLog(guildID: string, data: any /* TODO: GetGuildAuditLogData */) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_AUDIT_LOGS(guildID))
+      .query({
+        user_id: data.userID,
+        action_type: data.actionType,
+        before: data.before,
+        limit: data.limit,
+      })
+      .get()
+  }
+
+  getGuildBan(guildID: string, memberID: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_BAN(guildID, memberID))
+      .get()
+  }
+
+  getGuildBans(guildID: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_BANS(guildID))
+      .get()
+  }
+
+  getGuildDiscovery(guildID: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_DISCOVERY(guildID))
+      .get()
+  }
+
+  getGuildIntegrations(guildID: string, data: any /* TODO: GetGuildIntegrationsData */ = {}) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_INTEGRATIONS(guildID))
+      .query({
+        include_applications: data.includeApplications ?? false,
+      })
+      .get()
+  }
+
+  getGuildInvites(guildID: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_INVITES(guildID))
+      .get()
+  }
+
+  getGuildPreview(guildID: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_PREVIEW(guildID))
+      .get()
+  }
+
+  getGuildTemplate(code: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_TEMPLATE(code))
+      .get()
+  }
+
+  getGuildVanity(guildID: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_VANITY_URL(guildID))
+      .get()
+  }
+
+  getGuildWebhooks(guildID: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_WEBHOOKS(guildID))
+      .get()
+  }
+
+  getGuildWelcomeScreen(guildID: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_WELCOME_SCREEN(guildID))
+      .get()
+  }
+
+  getGuildWidget(guildID: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_WIDGET(guildID))
+      .get()
+  }
+
+  kickGuildMember(guildID: string, memberID: string, reason?: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_MEMBER(guildID, memberID))
+      .delete({ reason })
+  }
+
+  leaveGuild(guildID: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.USER_GUILD('@me', guildID))
+      .delete()
+  }
+
+  pruneGuildMembers(guildID: string, data: any /* GuildMembersPruneData */ = {}, reason?: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_PRUNE(guildID))
+      .body({
+        days: data.days,
+        compute_prune_count: data.computePruneCount,
+        include_roles: data.includeRoles,
+      })
+      .delete({ reason })
+  }
+
+  removeGuildMemberRole(guildID: string, memberID: string, roleID: string, reason?: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_MEMBER_ROLE(guildID, memberID, roleID))
+      .delete({ reason })
+  }
+
+  searchGuildMembers(guildID: string, data: any /* TODO: GuildMembersSearchData */) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_MEMBERS_SEARCH(guildID))
+      .query({
+        query: data.query,
+        limit: data.limit,
+      })
+      .get()
+  }
+
+  syncGuildIntegration(guildID: string, integrationID: string) { // TODO: check if reason available
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_INTEGRATION_SYNC(guildID, integrationID))
+      .post()
+  }
+
+  syncGuildTemplate(guildID: string, code: string) { // TODO: check if reason available
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_TEMPLATE_GUILD(guildID, code))
+      .put()
+  }
+
+  unbanGuildMember(guildID: string, memberID: string, reason?: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_BAN(guildID, memberID))
+      .delete({ reason })
+  }
 
 }
