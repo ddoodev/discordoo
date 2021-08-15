@@ -25,218 +25,218 @@ http://github.com/abalabahaha/eris
 */
 
 export class Endpoints {
-  static CHANNEL
+  static readonly CHANNEL
     =                          (channelID) => [ 'channels', channelID ]
-  static CHANNEL_BULK_DELETE
+  static readonly CHANNEL_BULK_DELETE
     =                          (channelID) => [ 'channels', channelID, 'messages', 'bulk-delete' ]
-  static CHANNEL_CALL_RING
+  static readonly CHANNEL_CALL_RING
     =                          (channelID) => [ 'channels', channelID, 'call', 'ring' ]
-  static CHANNEL_CROSSPOST
+  static readonly CHANNEL_CROSSPOST
     =                   (channelID, msgID) => [ 'channels', channelID, 'messages', msgID, 'crosspost' ]
-  static CHANNEL_FOLLOW
+  static readonly CHANNEL_FOLLOW
     =                          (channelID) => [ 'channels', channelID, 'followers' ]
-  static CHANNEL_INVITES
+  static readonly CHANNEL_INVITES
     =                          (channelID) => [ 'channels', channelID, 'invites' ]
-  static CHANNEL_MESSAGE_REACTION
+  static readonly CHANNEL_MESSAGE_REACTION
     =         (channelID, msgID, reaction) => [ 'channels', channelID, 'messages', msgID, 'reactions', reaction ]
-  static CHANNEL_MESSAGE_REACTION_USER
+  static readonly CHANNEL_MESSAGE_REACTION_USER
     = (channelID, msgID, reaction, userID) => [ 'channels', channelID, 'messages', msgID, 'reactions', reaction, userID ]
-  static CHANNEL_MESSAGE_REACTIONS
+  static readonly CHANNEL_MESSAGE_REACTIONS
     =                   (channelID, msgID) => [ 'channels', channelID, 'messages', msgID, 'reactions' ]
-  static CHANNEL_MESSAGE
+  static readonly CHANNEL_MESSAGE
     =                   (channelID, msgID) => [ 'channels', channelID, 'messages', msgID ]
-  static CHANNEL_MESSAGES
+  static readonly CHANNEL_MESSAGES
     =                          (channelID) => [ 'channels', channelID, 'messages' ]
-  static CHANNEL_MESSAGES_SEARCH
+  static readonly CHANNEL_MESSAGES_SEARCH
     =                          (channelID) => [ 'channels', channelID, 'messages', 'search' ]
-  static CHANNEL_PERMISSION
+  static readonly CHANNEL_PERMISSION
     =                  (channelID, overID) => [ 'channels', channelID, 'permissions', overID ]
-  static CHANNEL_PERMISSIONS
+  static readonly CHANNEL_PERMISSIONS
     =                          (channelID) => [ 'channels', channelID, 'permissions' ]
-  static CHANNEL_PIN
+  static readonly CHANNEL_PIN
     =                   (channelID, msgID) => [ 'channels', channelID, 'pins', msgID ]
-  static CHANNEL_PINS
+  static readonly CHANNEL_PINS
     =                          (channelID) => [ 'channels', channelID, 'pins' ]
-  static CHANNEL_RECIPIENT
+  static readonly CHANNEL_RECIPIENT
     =                    (groupID, userID) => [ 'channels', groupID, 'recipients', userID ]
-  static CHANNEL_TYPING
+  static readonly CHANNEL_TYPING
     =                          (channelID) => [ 'channels', channelID, 'typing' ]
-  static CHANNEL_WEBHOOKS
+  static readonly CHANNEL_WEBHOOKS
     =                          (channelID) => [ 'channels', channelID, 'webhooks' ]
-  static CHANNELS
+  static readonly CHANNELS
     =                                   () => [ 'channels' ]
-  static CUSTOM_EMOJI_GUILD
+  static readonly CUSTOM_EMOJI_GUILD
     =                            (emojiID) => [ 'emojis', emojiID, 'guild' ]
-  static DISCOVERY_CATEGORIES
+  static readonly DISCOVERY_CATEGORIES
     =                                   () => [ 'discovery', 'categories' ]
-  static DISCOVERY_VALIDATION
+  static readonly DISCOVERY_VALIDATION
     =                                   () => [ 'discovery', 'valid-term' ]
-  static GATEWAY
+  static readonly GATEWAY
     =                                   () => [ 'gateway' ]
-  static GATEWAY_BOT
+  static readonly GATEWAY_BOT
     =                                   () => [ 'gateway', 'bot' ]
-  static GUILD
+  static readonly GUILD
     =                            (guildID) => [ 'guilds', guildID ]
-  static GUILD_AUDIT_LOGS
+  static readonly GUILD_AUDIT_LOGS
     =                            (guildID) => [ 'guilds', guildID, 'audit-logs' ]
-  static GUILD_BAN
+  static readonly GUILD_BAN
     =                  (guildID, memberID) => [ 'guilds', guildID, 'bans', memberID ]
-  static GUILD_BANS
+  static readonly GUILD_BANS
     =                            (guildID) => [ 'guilds', guildID, 'bans' ]
-  static GUILD_CHANNELS
+  static readonly GUILD_CHANNELS
     =                            (guildID) => [ 'guilds', guildID, 'channels' ]
-  static GUILD_DISCOVERY
+  static readonly GUILD_DISCOVERY
     =                            (guildID) => [ 'guilds', guildID, 'discovery-metadata' ]
-  static GUILD_DISCOVERY_CATEGORY
+  static readonly GUILD_DISCOVERY_CATEGORY
     =                (guildID, categoryID) => [ 'guilds', guildID, 'discovery-categories', categoryID ]
-  static GUILD_EMBED
+  static readonly GUILD_EMBED
     =                            (guildID) => [ 'guilds', guildID, 'embed' ]
-  static GUILD_EMOJI
+  static readonly GUILD_EMOJI
     =                   (guildID, emojiID) => [ 'guilds', guildID, 'emojis', emojiID ]
-  static GUILD_EMOJIS
+  static readonly GUILD_EMOJIS
     =                            (guildID) => [ 'guilds', guildID, 'emojis' ]
-  static GUILD_INTEGRATION
+  static readonly GUILD_INTEGRATION
     =             (guildID, integrationID) => [ 'guilds', guildID, 'integrations', integrationID ]
-  static GUILD_INTEGRATION_SYNC
+  static readonly GUILD_INTEGRATION_SYNC
     =             (guildID, integrationID) => [ 'guilds', guildID, 'integrations', integrationID, 'sync' ]
-  static GUILD_INTEGRATIONS
+  static readonly GUILD_INTEGRATIONS
     =                            (guildID) => [ 'guilds', guildID, 'integrations' ]
-  static GUILD_INVITES
+  static readonly GUILD_INVITES
     =                            (guildID) => [ 'guilds', guildID, 'invites' ]
-  static GUILD_VANITY_URL
+  static readonly GUILD_VANITY_URL
     =                            (guildID) => [ 'guilds', guildID, 'vanity-url' ]
-  static GUILD_MEMBER
+  static readonly GUILD_MEMBER
     =                  (guildID, memberID) => [ 'guilds', guildID, 'members', memberID ]
-  static GUILD_MEMBER_NICK
+  static readonly GUILD_MEMBER_NICK
     =                  (guildID, memberID) => [ 'guilds', guildID, 'members', memberID, 'nick' ]
-  static GUILD_MEMBER_ROLE
+  static readonly GUILD_MEMBER_ROLE
     =          (guildID, memberID, roleID) => [ 'guilds', guildID, 'members', memberID, 'roles', roleID ]
-  static GUILD_MEMBERS
+  static readonly GUILD_MEMBERS
     =                            (guildID) => [ 'guilds', guildID, 'members' ]
-  static GUILD_MEMBERS_SEARCH
+  static readonly GUILD_MEMBERS_SEARCH
     =                            (guildID) => [ 'guilds', guildID, 'members', 'search' ]
-  static GUILD_MESSAGES_SEARCH
+  static readonly GUILD_MESSAGES_SEARCH
     =                            (guildID) => [ 'guilds', guildID, 'messages', 'search' ]
-  static GUILD_PREVIEW
+  static readonly GUILD_PREVIEW
     =                            (guildID) => [ 'guilds', guildID, 'preview' ]
-  static GUILD_PRUNE
+  static readonly GUILD_PRUNE
     =                            (guildID) => [ 'guilds', guildID, 'prune' ]
-  static GUILD_ROLE
+  static readonly GUILD_ROLE
     =                    (guildID, roleID) => [ 'guilds', guildID, 'roles', roleID ]
-  static GUILD_ROLES
+  static readonly GUILD_ROLES
     =                            (guildID) => [ 'guilds', guildID, 'roles' ]
-  static GUILD_TEMPLATE
+  static readonly GUILD_TEMPLATE
     =                               (code) => [ 'guilds', 'templates', code ]
-  static GUILD_TEMPLATES
+  static readonly GUILD_TEMPLATES
     =                            (guildID) => [ 'guilds', guildID, 'templates' ]
-  static GUILD_TEMPLATE_GUILD
+  static readonly GUILD_TEMPLATE_GUILD
     =                      (guildID, code) => [ 'guilds', guildID, 'templates', code ]
-  static GUILD_VOICE_REGIONS
+  static readonly GUILD_VOICE_REGIONS
     =                            (guildID) => [ 'guilds', guildID, 'regions' ]
-  static GUILD_WEBHOOKS
+  static readonly GUILD_WEBHOOKS
     =                            (guildID) => [ 'guilds', guildID, 'webhooks' ]
-  static GUILD_WELCOME_SCREEN
+  static readonly GUILD_WELCOME_SCREEN
     =                            (guildID) => [ 'guilds', guildID, 'welcome-screen' ]
-  static GUILD_WIDGET_SETTINGS
+  static readonly GUILD_WIDGET_SETTINGS
     =                            (guildID) => [ 'guilds', guildID, 'widget' ]
-  static GUILD_WIDGET
+  static readonly GUILD_WIDGET
     =                            (guildID) => [ 'guilds', guildID, 'widget.json' ]
-  static GUILD_VOICE_STATE
+  static readonly GUILD_VOICE_STATE
     =                      (guildID, user) => [ 'guilds', guildID, 'voice-states', user ]
-  static GUILDS
+  static readonly GUILDS
     =                                   () => [ 'guilds' ]
-  static INVITE
+  static readonly INVITE
     =                           (inviteID) => [ 'invites', inviteID ]
-  static OAUTH2_APPLICATION
+  static readonly OAUTH2_APPLICATION
     =                              (appID) => [ 'oauth2', 'applications', appID ]
-  static STAGE_INSTANCE
+  static readonly STAGE_INSTANCE
     =                          (channelID) => [ 'stage-instances', channelID ]
-  static STAGE_INSTANCES
+  static readonly STAGE_INSTANCES
     =                                   () => [ 'stage-instances' ]
-  static CHANNEL_THREAD_MEMBER
+  static readonly CHANNEL_THREAD_MEMBER
     =                (channelID, memberID) => [ 'channels', channelID, 'thread-members', memberID ]
-  static CHANNEL_THREAD_WITH_MESSAGE
+  static readonly CHANNEL_THREAD_WITH_MESSAGE
     =               (channelID, messageID) => [ 'channels', channelID, 'messages', messageID, 'threads' ]
-  static CHANNEL_THREAD_WITHOUT_MESSAGE
+  static readonly CHANNEL_THREAD_WITHOUT_MESSAGE
     =                          (channelID) => [ 'channels', channelID, 'threads' ]
-  static CHANNEL_THREADS_ACTIVE
+  static readonly CHANNEL_THREADS_ACTIVE
     =                          (channelID) => [ 'channels', channelID, 'threads', 'active' ]
-  static CHANNEL_THREADS_ARCHIVED
+  static readonly CHANNEL_THREADS_ARCHIVED
     =                    (channelID, type) => [ 'channels', channelID, 'threads', 'archived', type ]
-  static CHANNEL_THREADS_ARCHIVED_JOINED
+  static readonly CHANNEL_THREADS_ARCHIVED_JOINED
     =                          (channelID) => [ 'channels', channelID, 'users', '@me', 'threads', 'archived', 'private' ]
-  static GUILD_THREADS_ACTIVE
+  static readonly GUILD_THREADS_ACTIVE
     =                            (guildID) => [ 'guilds', guildID, 'threads', 'active' ]
-  static USER
+  static readonly USER
     =                             (userID) => [ 'users', userID ]
-  static USER_BILLING
+  static readonly USER_BILLING
     =                             (userID) => [ 'users', userID, 'billing' ]
-  static USER_BILLING_PAYMENTS
+  static readonly USER_BILLING_PAYMENTS
     =                             (userID) => [ 'users', userID, 'billing', 'payments' ]
-  static USER_BILLING_PREMIUM_SUBSCRIPTION
+  static readonly USER_BILLING_PREMIUM_SUBSCRIPTION
     =                             (userID) => [ 'users', userID, 'billing', 'premium-subscription' ]
-  static USER_CHANNELS
+  static readonly USER_CHANNELS
     =                             (userID) => [ 'users', userID, 'channels' ]
-  static USER_CONNECTIONS
+  static readonly USER_CONNECTIONS
     =                             (userID) => [ 'users', userID, 'connections' ]
-  static USER_CONNECTION_PLATFORM
+  static readonly USER_CONNECTION_PLATFORM
     =               (userID, platform, id) => [ 'users', userID, 'connections', platform, id ]
-  static USER_GUILD
+  static readonly USER_GUILD
     =                    (userID, guildID) => [ 'users', userID, 'guilds', guildID ]
-  static USER_GUILDS
+  static readonly USER_GUILDS
     =                             (userID) => [ 'users', userID, 'guilds' ]
-  static USER_MFA_CODES
+  static readonly USER_MFA_CODES
     =                             (userID) => [ 'users', userID, 'mfa', 'codes' ]
-  static USER_MFA_TOTP_DISABLE
+  static readonly USER_MFA_TOTP_DISABLE
     =                             (userID) => [ 'users', userID, 'mfa', 'totp', 'disable' ]
-  static USER_MFA_TOTP_ENABLE
+  static readonly USER_MFA_TOTP_ENABLE
     =                             (userID) => [ 'users', userID, 'mfa', 'totp', 'enable' ]
-  static USER_NOTE
+  static readonly USER_NOTE
     =                   (userID, targetID) => [ 'users', userID, 'note', targetID ]
-  static USER_PROFILE
+  static readonly USER_PROFILE
     =                             (userID) => [ 'users', userID, 'profile' ]
-  static USER_RELATIONSHIP
+  static readonly USER_RELATIONSHIP
     =                      (userID, relID) => [ 'users', userID, 'relationships', relID ]
-  static USER_SETTINGS
+  static readonly USER_SETTINGS
     =                             (userID) => [ 'users', userID, 'settings' ]
-  static USERS
+  static readonly USERS
     =                                   () => [ 'users' ]
-  static VOICE_REGIONS
+  static readonly VOICE_REGIONS
     =                                   () => [ 'voice', 'regions' ]
-  static WEBHOOK
+  static readonly WEBHOOK
     =                             (hookID) => [ 'webhooks', hookID ]
-  static WEBHOOK_MESSAGE
+  static readonly WEBHOOK_MESSAGE
     =               (hookID, token, msgID) => [ 'webhooks', hookID, token, 'messages', msgID ]
-  static WEBHOOK_SLACK
+  static readonly WEBHOOK_SLACK
     =                             (hookID) => [ 'webhooks', hookID, 'slack' ]
-  static WEBHOOK_TOKEN
+  static readonly WEBHOOK_TOKEN
     =                      (hookID, token) => [ 'webhooks', hookID, token ]
-  static WEBHOOK_TOKEN_SLACK
+  static readonly WEBHOOK_TOKEN_SLACK
     =                      (hookID, token) => [ 'webhooks', hookID, token, 'slack' ]
 
   // CDN Endpoints
-  static ACHIEVEMENT_ICON
+  static readonly ACHIEVEMENT_ICON
     = (applicationID, achievementID, icon) => [ 'app-assets', applicationID, 'achievements', achievementID, 'icons', icon ]
-  static APPLICATION_ASSET
+  static readonly APPLICATION_ASSET
     =               (applicationID, asset) => [ 'app-assets', applicationID, asset ]
-  static APPLICATION_ICON
+  static readonly APPLICATION_ICON
     =                (applicationID, icon) => [ 'app-icons', applicationID, icon ]
-  static CHANNEL_ICON
+  static readonly CHANNEL_ICON
     =             (channelID, channelIcon) => [ 'channel-icons', channelID, channelIcon ]
-  static CUSTOM_EMOJI
+  static readonly CUSTOM_EMOJI
     =                            (emojiID) => [ 'emojis', emojiID ]
-  static DEFAULT_USER_AVATAR
+  static readonly DEFAULT_USER_AVATAR
     =                  (userDiscriminator) => [ 'embed', 'avatars', userDiscriminator ]
-  static GUILD_BANNER
+  static readonly GUILD_BANNER
     =               (guildID, guildBanner) => [ 'banners', guildID, guildBanner ]
-  static GUILD_DISCOVERY_SPLASH
+  static readonly GUILD_DISCOVERY_SPLASH
     =      (guildID, guildDiscoverySplash) => [ 'discovery-splashes', guildID, guildDiscoverySplash ]
-  static GUILD_ICON
+  static readonly GUILD_ICON
     =                 (guildID, guildIcon) => [ 'icons', guildID, guildIcon ]
-  static GUILD_SPLASH
+  static readonly GUILD_SPLASH
     =               (guildID, guildSplash) => [ 'splashes', guildID, guildSplash ]
-  static TEAM_ICON
+  static readonly TEAM_ICON
     =                   (teamID, teamIcon) => [ 'team-icons', teamID, teamIcon ]
-  static USER_AVATAR
+  static readonly USER_AVATAR
     =                 (userID, userAvatar) => [ 'avatars', userID, userAvatar ]
 }
