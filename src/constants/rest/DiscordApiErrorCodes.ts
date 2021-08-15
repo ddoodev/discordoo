@@ -1,5 +1,5 @@
 // https://discord.com/developers/docs/topics/opcodes-and-status-codes#json-json-error-codes
-export enum WebSocketErrorCodes {
+export enum DiscordApiErrorCodes {
   GENERAL_ERROR = 0,
   UNKNOWN_ACCOUNT = 10001,
   UNKNOWN_APPLICATION = 10002,
