@@ -30,6 +30,7 @@ import { UsersCachingPolicy } from '@src/constants/cache/UsersCachingPolicy'
 
 import { DiscordooProviders } from '@src/constants/common/DiscordooProviders'
 
+import { DiscordApiErrorCodes } from '@src/constants/rest/DiscordApiErrorCodes'
 import { DISCORD_API_ENDPOINT } from '@src/constants/rest/DiscordApiEndpoint'
 import { REST_DEFAULT_OPTIONS } from '@src/constants/rest/RestDefaultOptions'
 import { RestRequestMethods } from '@src/constants/rest/RestRequestMethods'
@@ -64,6 +65,7 @@ export {
   RolesCachingPolicy,
   UsersCachingPolicy,
   DiscordooProviders,
+  DiscordApiErrorCodes,
   DISCORD_API_ENDPOINT,
   REST_DEFAULT_OPTIONS,
   RestRequestMethods,
