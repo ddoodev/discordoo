@@ -1,4 +1,4 @@
-import { RestResponse } from '@src/core/providers/rest/responces/RestResponse'
+import { RestResponse } from '@src/core/providers/rest/responses/RestResponse'
 
 export interface RestResponseSuccess<Body = any> extends RestResponse {
   success: true
