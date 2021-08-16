@@ -78,7 +78,7 @@ export class DiscordooSnowflake {
   static deconstruct(snowflake: string): DeconstructedDiscordooSnowflake {
     const b = BigInt, n = Number
 
-    const res = {
+    const result = {
       // 42 bits timestamp
       timestamp: n((b(snowflake) >> b(86)) + b(EPOCH)),
 
@@ -92,13 +92,13 @@ export class DiscordooSnowflake {
       increment: n(b(snowflake) & b(0x3FFFFF)),
     }
 
-    Object.defineProperty(res, 'date', {
+    Object.defineProperty(result, 'date', {
       get: function get() {
         return new Date(this.timestamp)
       },
       enumerable: true,
     })
 
-    return res as DeconstructedDiscordooSnowflake
+    return result as DeconstructedDiscordooSnowflake
   }
 }
