@@ -5,8 +5,8 @@ on:
 #    branches:
 #      - master
   workflow_dispatch:
-    schedule:
-      - cron: '0 */12 * * *'
+  schedule:
+    - cron: '0 */12 * * *'
   repository_dispatch:
 
 jobs:
@@ -46,6 +46,10 @@ jobs:
       - name: Run mkdocs build
         working-directory: ./docs
         run: mkdocs build
+        
+      - name: Fix mkdocs search
+        working-directory: ./docs
+        run: node -e "const fs = require('fs'), p = './search/search_index.json', o = { encoding: 'utf-8' }; fs.writeFileSync(p, fs.readFileSync(p, o).replace(/(\\)?&lt;/g, '\<'), o)"
 
       - name: Deploy
         uses: cpina/github-action-push-to-another-repository@main
