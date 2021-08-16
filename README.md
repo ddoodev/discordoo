@@ -8,7 +8,7 @@
     <span> · </span>
     <a href="https://docs.discordoo.xyz">Docs & Guide</a>
     <span> · </span>
-    <a href="https://github.com/Discordoo/discordoo/blob/master/CONTRIBUTING.md">Contribute</a>
+    <a href="https://github.com/Discordoo/discordoo/blob/develop/CONTRIBUTING.md">Contribute</a>
   </b>
 </p>
 
@@ -165,4 +165,4 @@ Release deadline: October 30, 2021
 
 ## Contributing
 Feel free to create a PR, but check if there is an existing one.
-See [Contributing Guide](https://github.com/Discordoo/discordoo/blob/master/CONTRIBUTING.md).
+See [Contributing Guide](https://github.com/Discordoo/discordoo/blob/develop/CONTRIBUTING.md).
