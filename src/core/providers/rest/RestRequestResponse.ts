@@ -1,5 +1,5 @@
-import { RestResponseSuccess } from '@src/core/providers/rest/responces/RestResponseSuccess'
-import { RestResponseError } from '@src/core/providers/rest/responces/RestResponseError'
+import { RestResponseSuccess } from '@src/core/providers/rest/responses/RestResponseSuccess'
+import { RestResponseError } from '@src/core/providers/rest/responses/RestResponseError'
 
 /**
  * Just internal type alias because we don't like use ctrl+c and ctrl+v
