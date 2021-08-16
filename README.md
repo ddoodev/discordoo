@@ -22,7 +22,7 @@
   <a href="https://github.com/Discordoo/discordoo/actions">
     <img src="https://github.com/Discordoo/discordoo/workflows/Build/badge.svg" alt="Build status" />
   </a>
-  <a href="https://discord.gg/TFZtXeYVM5">
+  <a href="https://discord.gg/eHC8ynn2H3">
     <img 
       src="https://img.shields.io/discord/811663819721539674?color=7280DA&label=Discord&logo=discord&logoColor=white" 
       alt="Online"
