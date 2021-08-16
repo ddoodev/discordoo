@@ -48,8 +48,7 @@ jobs:
         run: mkdocs build
 
       - name: Fix mkdocs search
-        working-directory: ./docs
-        run: 'node -e "const fs = require(`fs`), p = `./search/search_index.json`, o = { encoding: `utf-8` }; fs.writeFileSync(p, fs.readFileSync(p, o).replace(/(\\)?&lt;/g, `\<`), o)"'
+        run: npm run docs:searchfix
 
       - name: Deploy
         uses: cpina/github-action-push-to-another-repository@main
