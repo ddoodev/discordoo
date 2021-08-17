@@ -1,7 +1,7 @@
 export class Attachment {
   public thing: any = 134
 
-  constructor(thing: boolean) {
+  constructor(client: any, thing: boolean) {
     this.thing = 123
   }
 }

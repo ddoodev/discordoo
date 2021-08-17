@@ -1,41 +1,41 @@
-import { Attachment as RawAttachment, Entities } from '@src/entities'
+import { Guild as RawGuild, EntitiesUtil } from '@src/entities'
 
 describe('Entities', () => {
 
   test('must contain entities by default', () => {
-    const Attachment = Entities.get('Attachment')
+    const Guild = EntitiesUtil.get('Guild')
 
     expect(
-      Attachment.prototype === RawAttachment.prototype
+      Guild.prototype === RawGuild.prototype
     )
   })
 
   test('must extend entities without extender function', () => {
-    class ExtendedAttachment extends RawAttachment {
+    class ExtendedGuild extends RawGuild {
       __test__(): void {
         return void 100500
       }
     }
 
     expect(
-      Entities.extend('Attachment', ExtendedAttachment).prototype === ExtendedAttachment.prototype
+      EntitiesUtil.extend('Guild', ExtendedGuild).prototype === ExtendedGuild.prototype
     )
     expect(
-      Entities.get('Attachment').prototype === ExtendedAttachment.prototype
+      EntitiesUtil.get('Guild').prototype === ExtendedGuild.prototype
     )
   })
 
   test('must reset entity to default', () => {
     expect(
-      Entities.get('Attachment').prototype !== RawAttachment.prototype
+      EntitiesUtil.get('Guild').prototype !== RawGuild.prototype
     )
 
     expect(
-      Entities.clear('Attachment').prototype === RawAttachment.prototype
+      EntitiesUtil.clear('Guild').prototype === RawGuild.prototype
     )
 
     expect(
-      Entities.get('Attachment').prototype === RawAttachment.prototype
+      EntitiesUtil.get('Guild').prototype === RawGuild.prototype
     )
   })
 
@@ -43,20 +43,20 @@ describe('Entities', () => {
     let extended
 
     expect(
-      Entities.extend('Attachment', Attachment => {
-        class ExtendedAttachment extends Attachment {
+      EntitiesUtil.extend('Guild', Guild => {
+        class ExtendedGuild extends Guild {
           __test__(): void {
             return void 100500
           }
         }
 
-        extended = ExtendedAttachment
-        return ExtendedAttachment
+        extended = ExtendedGuild
+        return ExtendedGuild
       }).prototype === extended.prototype
     )
 
     expect(
-      Entities.get('Attachment').prototype === extended.prototype
+      EntitiesUtil.get('Guild').prototype === extended.prototype
     )
   })
 

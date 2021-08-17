@@ -1,6 +1,7 @@
 import { IpcPacket } from '@src/sharding'
 import { IpcCacheOpCodes, IpcEvents, IpcOpCodes, SerializeModes } from '@src/constants'
 import { CacheStorageKey } from '@src/cache/interfaces/CacheStorageKey'
+import { EntityKey } from '@src/entities'
 
 export interface IpcHelloPacket extends IpcPacket {
   op: IpcOpCodes.HELLO
@@ -45,6 +46,7 @@ export interface IpcCacheGetRequestPacket extends IpcPacket {
     key: any
     keyspace: string
     storage: CacheStorageKey
+    entityKey: EntityKey
   }
 }
 
@@ -67,6 +69,7 @@ export interface IpcCacheSetRequestPacket extends IpcPacket {
     key: any
     keyspace: string
     storage: CacheStorageKey
+    entityKey: EntityKey
     value: any
   }
 }
@@ -110,6 +113,7 @@ export interface IpcCacheForEachRequestPacket extends IpcPacket {
     shards: number[]
     keyspace: string
     storage: CacheStorageKey
+    entityKey: EntityKey
     script: string
   }
 }
@@ -174,6 +178,7 @@ export interface IpcCacheSweepRequestPacket extends IpcPacket {
     shards: number[]
     keyspace: string
     storage: CacheStorageKey
+    entityKey: EntityKey
     script: string
   }
 }
@@ -196,6 +201,7 @@ export interface IpcCacheFilterRequestPacket extends IpcPacket {
     shards: number[]
     keyspace: string
     storage: CacheStorageKey
+    entityKey: EntityKey
     script: string
   }
 }
@@ -218,6 +224,7 @@ export interface IpcCacheMapRequestPacket extends IpcPacket {
     shards: number[]
     keyspace: string
     storage: CacheStorageKey
+    entityKey: EntityKey
     script: string
   }
 }
@@ -240,6 +247,7 @@ export interface IpcCacheFindRequestPacket extends IpcPacket {
     shards: number[]
     keyspace: string
     storage: CacheStorageKey
+    entityKey: EntityKey
     script: string
   }
 }

@@ -129,9 +129,9 @@ export class IpcServer extends TypedEmitter<IpcServerEvents> {
 
     switch (request.d.op) {
       case IpcCacheOpCodes.GET:
-        return this.client.internals.cache.get(keyspace, storage, request.d.key)
+        return this.client.internals.cache.get(keyspace, storage, request.d.entityKey, request.d.key)
       case IpcCacheOpCodes.SET:
-        return this.client.internals.cache.set(keyspace, storage, request.d.key, request.d.value)
+        return this.client.internals.cache.set(keyspace, storage, request.d.entityKey, request.d.key, request.d.value)
       case IpcCacheOpCodes.DELETE:
         return this.client.internals.cache.delete(keyspace, storage, request.d.key)
       case IpcCacheOpCodes.SIZE:
@@ -162,7 +162,9 @@ export class IpcServer extends TypedEmitter<IpcServerEvents> {
           return eval(script + '.bind(provider)(value, key, provider)')
         }
 
-        return this.client.internals.cache[method](keyspace, storage, predicate)
+        const makePredicate = this.client.internals.cache[Symbol.for('_ddooMakePredicate')]
+
+        return this.client.internals.cache[method](keyspace, storage, request.d.entityKey, makePredicate(predicate))
       }
     }
   }

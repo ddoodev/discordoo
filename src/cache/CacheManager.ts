@@ -43,6 +43,7 @@ import { cacheProviderFindPolyfill } from '@src/cache/polyfills/cacheProviderFin
 import { CachingPoliciesProcessor } from '@src/cache/CachingPoliciesProcessor'
 import { CacheManagerFindOptions } from '@src/cache/interfaces/CacheManagerFindOptions'
 import { CacheStorageKey } from '@src/cache/interfaces/CacheStorageKey'
+import { EntitiesUtil, EntityKey } from '@src/entities'
 
 export class CacheManager<P extends CacheProvider = CacheProvider> {
   public client: Client
@@ -59,6 +60,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
   async get<K = string, V = any>(
     keyspace: string,
     storage: CacheStorageKey,
+    entityKey: EntityKey,
     key: K,
     options: CacheManagerGetOptions = {}
   ): Promise<V | undefined> {
@@ -75,6 +77,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
           key,
           keyspace,
           storage,
+          entityKey,
           shards,
           serialize: SerializeModes.ANY
         }
@@ -91,28 +94,37 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       result = await this.provider.get<K, V>(keyspace, storage, key)
     }
 
+    const entity: any = EntitiesUtil.get(entityKey)
+    if (result && !(result instanceof entity)) result = await (new entity(this.client, result)).init?.()
+
     return result
   }
 
   async set<K = string, V = any>(
     keyspace: string,
     storage: CacheStorageKey,
+    entityKey: EntityKey,
     key: K,
     value: V,
     options: CacheManagerSetOptions = {}
-  ): Promise<CacheManager> {
+  ): Promise<this> {
     const globalPolicyLimit = this.policiesProcessor.global(value)
     if (typeof globalPolicyLimit !== 'undefined') {
       if (!globalPolicyLimit) return this
     }
 
-    if (!this.provider.classesCompatible) {
+    let v: any = value
+
+    if (!this.provider.classesCompatible || this.isShardedRequest(options)) {
       // @ts-expect-error
       if (typeof value.toJSON === 'function') value = value.toJSON()
+    } else {
+      const entity: any = EntitiesUtil.get(entityKey)
+      if (value && !(value instanceof entity)) v = await (new entity(this.client, value)).init?.()
     }
 
-    if (typeof options?.shard !== 'undefined' && this.client.internals.sharding.active && !this.provider.sharedCache) {
-      const shards = resolveShards(this.client, options.shard)
+    if (this.isShardedRequest(options)) {
+      const shards = resolveShards(this.client, options.shard!)
 
       const request: IpcCacheSetRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
@@ -122,6 +134,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
           key,
           keyspace,
           storage,
+          entityKey,
           shards,
           value,
           serialize: SerializeModes.BOOLEAN
@@ -136,7 +149,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       }
 
     } else {
-      await this.provider.set<K, V>(keyspace, storage, key, value)
+      await this.provider.set<K, V>(keyspace, storage, key, v)
     }
 
     return this
@@ -148,8 +161,8 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     key: K | K[],
     options: CacheManagerDeleteOptions = {}
   ): Promise<boolean> {
-    if (typeof options?.shard !== 'undefined' && this.client.internals.sharding.active && !this.provider.sharedCache) {
-      const shards = resolveShards(this.client, options.shard)
+    if (this.isShardedRequest(options)) {
+      const shards = resolveShards(this.client, options.shard!)
 
       const request: IpcCacheDeleteRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
@@ -177,11 +190,12 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
   async forEach<K = string, V = any>(
     keyspace: string,
     storage: CacheStorageKey,
-    predicate: (value: V, key: K, provider: P) => unknown | Promise<unknown>,
+    entityKey: EntityKey,
+    predicate: (value: V, key: K, provider: P) => (unknown | Promise<unknown>),
     options: CacheManagerForEachOptions = {}
   ): Promise<void> {
-    if (typeof options?.shard !== 'undefined' && this.client.internals.sharding.active && !this.provider.sharedCache) {
-      const shards = resolveShards(this.client, options.shard)
+    if (this.isShardedRequest(options)) {
+      const shards = resolveShards(this.client, options.shard!)
 
       const request: IpcCacheForEachRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
@@ -190,6 +204,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
           event_id: this.client.internals.ipc.generate(),
           keyspace,
           storage,
+          entityKey,
           shards,
           script: `(${predicate})`
         }
@@ -198,10 +213,10 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       await this.client.internals.ipc.send<IpcCacheForEachResponsePacket>(request, { waitResponse: true })
 
     } else {
-      await this.provider.forEach<K, V, P>(keyspace, storage, predicate)
+      await this.provider.forEach<K, V, P>(keyspace, storage, this._makePredicate(entityKey, predicate))
     }
 
-    return void 0
+    return void 100500
   }
 
   async size(
@@ -293,7 +308,8 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
   async sweep<K = string, V = any>(
     keyspace: string,
     storage: CacheStorageKey,
-    predicate: (value: V, key: K, provider: P) => boolean | Promise<boolean>,
+    entityKey: EntityKey,
+    predicate: (value: V, key: K, provider: P) => (boolean | Promise<boolean>),
     options: CacheManagerSweepOptions = {}
   ): Promise<void> {
 
@@ -307,6 +323,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
           event_id: this.client.internals.ipc.generate(),
           keyspace,
           storage,
+          entityKey,
           shards,
           script: `(${predicate})`
         }
@@ -317,20 +334,21 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     } else {
 
       if (this.provider.sweep) {
-        await this.provider.sweep<K, V, P>(keyspace, storage, predicate)
+        await this.provider.sweep<K, V, P>(keyspace, storage, this._makePredicate(entityKey, predicate))
       } else {
-        await cacheProviderSweepPolyfill<K, V, P>(this.provider, keyspace, storage, predicate)
+        await cacheProviderSweepPolyfill<K, V, P>(this.provider, keyspace, storage, this._makePredicate(entityKey, predicate))
       }
 
     }
 
-    return void 0
+    return void 100500
   }
 
   async filter<K = string, V = any>(
     keyspace: string,
     storage: CacheStorageKey,
-    predicate: (value: V, key: K, provider: P) => boolean | Promise<boolean>,
+    entityKey: EntityKey,
+    predicate: (value: V, key: K, provider: P) => (boolean | Promise<boolean>),
     options: CacheManagerFilterOptions = {}
   ): Promise<[ K, V ][]> {
     let result: [ K, V ][] = []
@@ -345,6 +363,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
           event_id: this.client.internals.ipc.generate(),
           keyspace,
           storage,
+          entityKey,
           shards,
           script: `(${predicate})`,
           serialize: SerializeModes.ARRAY
@@ -361,9 +380,9 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     } else {
 
       if (this.provider.filter) {
-        result = await this.provider.filter<K, V, P>(keyspace, storage, predicate)
+        result = await this.provider.filter<K, V, P>(keyspace, storage, this._makePredicate(entityKey, predicate))
       } else {
-        result = await cacheProviderFilterPolyfill<K, V, P>(this.provider, keyspace, storage, predicate)
+        result = await cacheProviderFilterPolyfill<K, V, P>(this.provider, keyspace, storage, this._makePredicate(entityKey, predicate))
       }
 
     }
@@ -374,7 +393,8 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
   async map<K = string, V = any, R = any>(
     keyspace: string,
     storage: CacheStorageKey,
-    predicate: (value: V, key: K, provider: P) => R | Promise<R>,
+    entityKey: EntityKey,
+    predicate: (value: V, key: K, provider: P) => (R | Promise<R>),
     options: CacheManagerMapOptions = {}
   ): Promise<R[]> {
     let result: R[] = []
@@ -389,6 +409,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
           event_id: this.client.internals.ipc.generate(),
           keyspace,
           storage,
+          entityKey,
           shards,
           script: `(${predicate})`,
           serialize: SerializeModes.ARRAY
@@ -405,9 +426,9 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     } else {
 
       if (this.provider.map) {
-        result = await this.provider.map<K, V, R, P>(keyspace, storage, predicate)
+        result = await this.provider.map<K, V, R, P>(keyspace, storage, this._makePredicate(entityKey, predicate))
       } else {
-        result = await cacheProviderMapPolyfill<K, V, R, P>(this.provider, keyspace, storage, predicate)
+        result = await cacheProviderMapPolyfill<K, V, R, P>(this.provider, keyspace, storage, this._makePredicate(entityKey, predicate))
       }
 
     }
@@ -418,7 +439,8 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
   async find<K = string, V = any>(
     keyspace: string,
     storage: CacheStorageKey,
-    predicate: (value: V, key: K, provider: P) => boolean | Promise<boolean>,
+    entityKey: EntityKey,
+    predicate: (value: V, key: K, provider: P) => (boolean | Promise<boolean>),
     options: CacheManagerFindOptions = {}
   ): Promise<V | undefined> {
     let result: V | undefined
@@ -433,6 +455,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
           event_id: this.client.internals.ipc.generate(),
           keyspace,
           storage,
+          entityKey,
           shards,
           script: `(${predicate})`,
           serialize: SerializeModes.ANY
@@ -449,14 +472,36 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     } else {
 
       if (this.provider.find) {
-        result = await this.provider.find<K, V, P>(keyspace, storage, predicate)
+        result = await this.provider.find<K, V, P>(keyspace, storage, this._makePredicate(entityKey, predicate))
       } else {
-        result = await cacheProviderFindPolyfill<K, V, P>(this.provider, keyspace, storage, predicate)
+        result = await cacheProviderFindPolyfill<K, V, P>(this.provider, keyspace, storage, this._makePredicate(entityKey, predicate))
       }
 
     }
 
     return result
+  }
+
+  private isShardedRequest(options?: any): boolean {
+    return typeof options.shard !== 'undefined' && this.client.internals.sharding.active && !this.provider.sharedCache
+  }
+
+  [Symbol.for('_ddooMakePredicate')](entityKey: EntityKey, predicate: any) { // for internal use by a library outside of this class
+    return this._makePredicate(entityKey, predicate)
+  }
+
+  private _makePredicate(entityKey: EntityKey, predicate: any): any {
+    const entity: any = EntitiesUtil.get(entityKey)
+
+    return async (value, key, prov) => {
+        let v = value
+
+        if (value && !(value instanceof entity)) {
+          v = await (new entity(this.client, value)).init?.()
+        }
+
+        return predicate(v, key, prov)
+      }
   }
 
   init() {
