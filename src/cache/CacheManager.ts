@@ -1,8 +1,8 @@
-import { CacheProvider, Client, ProviderConstructor } from '@src/core'
-import { CacheManagerOptions } from '@src/cache/interfaces/CacheManagerOptions'
-import { CacheManagerGetOptions } from '@src/cache/interfaces/CacheManagerGetOptions'
-import { resolveShards } from '@src/utils/resolveShards'
+import { CachingPoliciesProcessor } from '@src/cache/CachingPoliciesProcessor'
 import { IpcCacheOpCodes, IpcOpCodes, SerializeModes } from '@src/constants'
+import { CacheProvider, Client, ProviderConstructor } from '@src/core'
+import { resolveShards, DiscordooError } from '@src/utils'
+import { EntitiesUtil, EntityKey } from '@src/entities'
 import {
   IpcCacheDeleteRequestPacket,
   IpcCacheDeleteResponsePacket,
@@ -25,25 +25,28 @@ import {
   IpcCacheSweepRequestPacket,
   IpcCacheSweepResponsePacket
 } from '@src/sharding/interfaces/ipc/IpcPackets'
-import { CacheManagerSetOptions } from '@src/cache/interfaces/CacheManagerSetOptions'
-import { DiscordooError } from '@src/utils'
-import { CacheManagerDeleteOptions } from '@src/cache/interfaces/CacheManagerDeleteOptions'
-import { CacheManagerForEachOptions } from '@src/cache/interfaces/CacheManagerForEachOptions'
-import { CacheManagerSizeOptions } from '@src/cache/interfaces/CacheManagerSizeOptions'
-import { cacheProviderSizePolyfill } from '@src/cache/polyfills/cacheProviderSizePolyfill'
-import { cacheProviderHasPolyfill } from '@src/cache/polyfills/cacheProviderHasPolyfill'
-import { cacheProviderSweepPolyfill } from '@src/cache/polyfills/cacheProviderSweepPolyfill'
-import { CacheManagerHasOptions } from '@src/cache/interfaces/CacheManagerHasOptions'
-import { CacheManagerSweepOptions } from '@src/cache/interfaces/CacheManagerSweepOptions'
-import { CacheManagerFilterOptions } from '@src/cache/interfaces/CacheManagerFilterOptions'
-import { cacheProviderFilterPolyfill } from '@src/cache/polyfills/cacheProviderFilterPolyfill'
-import { CacheManagerMapOptions } from '@src/cache/interfaces/CacheManagerMapOptions'
-import { cacheProviderMapPolyfill } from '@src/cache/polyfills/cacheProviderMapPolyfill'
-import { cacheProviderFindPolyfill } from '@src/cache/polyfills/cacheProviderFindPolyfill'
-import { CachingPoliciesProcessor } from '@src/cache/CachingPoliciesProcessor'
-import { CacheManagerFindOptions } from '@src/cache/interfaces/CacheManagerFindOptions'
-import { CacheStorageKey } from '@src/cache/interfaces/CacheStorageKey'
-import { EntitiesUtil, EntityKey } from '@src/entities'
+import {
+  cacheProviderFilterPolyfill,
+  cacheProviderFindPolyfill,
+  cacheProviderHasPolyfill,
+  cacheProviderMapPolyfill,
+  cacheProviderSizePolyfill,
+  cacheProviderSweepPolyfill
+} from '@src/cache/polyfills'
+import {
+  CacheManagerForEachOptions,
+  CacheManagerDeleteOptions,
+  CacheManagerFilterOptions,
+  CacheManagerSweepOptions,
+  CacheManagerSizeOptions,
+  CacheManagerFindOptions,
+  CacheManagerGetOptions,
+  CacheManagerHasOptions,
+  CacheManagerMapOptions,
+  CacheManagerSetOptions,
+  CacheManagerOptions,
+  CacheStorageKey
+} from '@src/cache/interfaces'
 
 export class CacheManager<P extends CacheProvider = CacheProvider> {
   public client: Client
@@ -482,29 +485,29 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     return result
   }
 
-  private isShardedRequest(options?: any): boolean {
-    return typeof options.shard !== 'undefined' && this.client.internals.sharding.active && !this.provider.sharedCache
-  }
-
   [Symbol.for('_ddooMakePredicate')](entityKey: EntityKey, predicate: any) { // for internal use by a library outside of this class
     return this._makePredicate(entityKey, predicate)
+  }
+
+  init() {
+    return this.provider.init()
+  }
+
+  private isShardedRequest(options?: any): boolean {
+    return typeof options.shard !== 'undefined' && this.client.internals.sharding.active && !this.provider.sharedCache
   }
 
   private _makePredicate(entityKey: EntityKey, predicate: any): any {
     const entity: any = EntitiesUtil.get(entityKey)
 
     return async (value, key, prov) => {
-        let v = value
+      let v = value
 
-        if (value && !(value instanceof entity)) {
-          v = await (new entity(this.client, value)).init?.()
-        }
-
-        return predicate(v, key, prov)
+      if (value && !(value instanceof entity)) {
+        v = await (new entity(this.client, value)).init?.()
       }
-  }
 
-  init() {
-    return this.provider.init()
+      return predicate(v, key, prov)
+    }
   }
 }

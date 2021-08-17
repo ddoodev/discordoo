@@ -17,9 +17,10 @@ import { Final } from '@src/utils/FinalDecorator'
 import { ClientShardingMetadata } from '@src/core/client/ClientShardingMetadata'
 import { ClientActions } from '@src/core/client/ClientActions'
 import { ClientMetadata } from '@src/core/client/ClientMetadata'
+import { GuildsManager } from '@src/entities/managers'
 
 /** Entry point for all of Discordoo. */
-@Final('start', 'internals')
+@Final('start', 'internals', 'guilds')
 export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
   extends TypedEmitter<ListenerSignature<ClientStack['events']>> {
   /** Token used by this client */
@@ -30,6 +31,9 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
 
   /** Options passed to this client */
   public options: ClientOptions
+
+  /** Guilds manager of this client */
+  public guilds: GuildsManager
 
   constructor(token: string, options: ClientOptions = {}) {
     super()
@@ -114,6 +118,8 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
       actions,
       metadata,
     }
+
+    this.guilds = new GuildsManager(this)
   }
 
   async start(): Promise<Client<ClientStack>> {

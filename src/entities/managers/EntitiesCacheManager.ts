@@ -1,19 +1,21 @@
 import { EntitiesManager } from '@src/entities/managers/EntitiesManager'
 import { CacheProvider, Client } from '@src/core'
-import { CacheStorageKey } from '@src/cache/interfaces/CacheStorageKey'
-import { CacheManagerDeleteOptions } from '@src/cache/interfaces/CacheManagerDeleteOptions'
-import { CacheManagerGetOptions } from '@src/cache/interfaces/CacheManagerGetOptions'
-import { CacheManagerHasOptions } from '@src/cache/interfaces/CacheManagerHasOptions'
-import { CacheManagerFilterOptions } from '@src/cache/interfaces/CacheManagerFilterOptions'
-import { CacheManagerFindOptions } from '@src/cache/interfaces/CacheManagerFindOptions'
-import { CacheManagerForEachOptions } from '@src/cache/interfaces/CacheManagerForEachOptions'
-import { CacheManagerMapOptions } from '@src/cache/interfaces/CacheManagerMapOptions'
-import { CacheManagerSetOptions } from '@src/cache/interfaces/CacheManagerSetOptions'
-import { CacheManagerSizeOptions } from '@src/cache/interfaces/CacheManagerSizeOptions'
-import { CacheManagerSweepOptions } from '@src/cache/interfaces/CacheManagerSweepOptions'
 import { EntityKey } from '@src/entities'
+import {
+  CacheManagerForEachOptions,
+  CacheManagerDeleteOptions,
+  CacheManagerFilterOptions,
+  CacheManagerSweepOptions,
+  CacheManagerSizeOptions,
+  CacheManagerFindOptions,
+  CacheManagerGetOptions,
+  CacheManagerHasOptions,
+  CacheManagerMapOptions,
+  CacheManagerSetOptions,
+  CacheStorageKey
+} from '@src/cache/interfaces'
 
-export class EntitiesCacheManager<Entity extends new (...props: any[]) => any, EntityData = any> extends EntitiesManager {
+export class EntitiesCacheManager<Entity, EntityData = any> extends EntitiesManager {
   private readonly entityKey: EntityKey
   public readonly keyspace: string
   public readonly storage: CacheStorageKey
