@@ -12,7 +12,7 @@ on:
 jobs:
   docs:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' || github.event.action == 'docs_build' || github.event_name === 'workflow_dispatch'
+    if: github.event_name == 'push' || github.event.action == 'docs_build' || github.event_name == 'workflow_dispatch'
     steps:
       - uses: actions/checkout@v2
         with:
