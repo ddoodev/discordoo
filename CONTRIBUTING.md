@@ -14,7 +14,7 @@ that they show what do the code changes contain. E.g. ~~This commit does~~ add e
 ### Branching
 Discordoo uses three types of branches: features, master and release.
 * Features(`feat-feature-name-in-kebab-case`) branches are the branches which include any major changes to the library itself.
-* Master(`master`) branch is the main branch. It is the current version which is being developed and usually unstable.
+* Develop(`develop`) branch is the main branch. It is the current version which is being developed and usually unstable.
 * Release(`release-v1.5.3`) branches are the branches that are forked from master branch each library release. Changes in them are not allowed.
 
 ## Code
