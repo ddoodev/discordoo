@@ -28,4 +28,3 @@ export { ShardingInstance } from '@src/sharding/ShardingInstance'
 
 export { IpcClient } from '@src/sharding/ipc/IpcClient'
 export { IpcServer } from '@src/sharding/ipc/IpcServer'
-

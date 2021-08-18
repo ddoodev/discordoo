@@ -1,6 +1,3 @@
-export { DeconstructedDiscordooSnowflake } from '@src/utils/interfaces/DeconstructedSnowflake'
-export { ShardListResolvable } from '@src/utils/interfaces/ShardListResolvable'
-export { ValidateOptions } from '@src/utils/interfaces/ValidateOptions'
 export { resolveDiscordShards } from '@src/utils/resolveDiscordShards'
 export { DiscordooSnowflake } from '@src/utils/DiscordooSnowflake'
 export { DiscordooError } from '@src/utils/DiscordooError'
@@ -17,3 +14,4 @@ export { range } from '@src/utils/range'
 export { swap } from '@src/utils/swap'
 export { wait } from '@src/utils/wait'
 
+export * from '@src/utils/interfaces'
