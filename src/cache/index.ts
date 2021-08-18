@@ -1,5 +1,1 @@
-import { DefaultCacheProvider } from '@src/cache/DefaultCacheProvider'
-
-export {
-  DefaultCacheProvider
-}
+export { DefaultCacheProvider } from '@src/cache/DefaultCacheProvider'
