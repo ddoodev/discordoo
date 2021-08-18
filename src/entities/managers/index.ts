@@ -1,9 +1,3 @@
-import { EntitiesCacheManager } from '@src/entities/managers/EntitiesCacheManager'
-import { EntitiesManager } from '@src/entities/managers/EntitiesManager'
-import { GuildsManager } from '@src/entities/managers/GuildsManager'
-
-export {
-  EntitiesCacheManager,
-  EntitiesManager,
-  GuildsManager,
-}
+export { EntitiesCacheManager } from '@src/entities/managers/EntitiesCacheManager'
+export { EntitiesManager } from '@src/entities/managers/EntitiesManager'
+export { GuildsManager } from '@src/entities/managers/GuildsManager'

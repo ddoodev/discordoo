@@ -1,26 +1,12 @@
-import { WebSocketClientEventsI } from '@src/gateway/interfaces/WebSocketClientEventsI'
-import { WebSocketClientDestroyOptions } from '@src/gateway/interfaces/WebSocketClientDestroyOptions'
-import { PartialGatewayOptions } from '@src/gateway/interfaces/PartialGatewayOptions'
-import { WebSocketManagerEvents } from '@src/gateway/interfaces/WebSocketManagerEvents'
-import { WebSocketManagerLimits } from '@src/gateway/interfaces/WebSocketManagerLimits'
-import { WebSocketSendPayload } from '@src/gateway/interfaces/WebSocketSendPayload'
-import { WebSocketPacket } from '@src/gateway/interfaces/WebSocketPacket'
-import { GatewayOptions } from '@src/gateway/interfaces/GatewayOptions'
+export { WebSocketClientEventsI } from '@src/gateway/interfaces/WebSocketClientEventsI'
+export { WebSocketClientDestroyOptions } from '@src/gateway/interfaces/WebSocketClientDestroyOptions'
+export { PartialGatewayOptions } from '@src/gateway/interfaces/PartialGatewayOptions'
+export { WebSocketManagerEvents } from '@src/gateway/interfaces/WebSocketManagerEvents'
+export { WebSocketManagerLimits } from '@src/gateway/interfaces/WebSocketManagerLimits'
+export { WebSocketSendPayload } from '@src/gateway/interfaces/WebSocketSendPayload'
+export { WebSocketPacket } from '@src/gateway/interfaces/WebSocketPacket'
+export { GatewayOptions } from '@src/gateway/interfaces/GatewayOptions'
 
-import { DefaultGatewayProvider } from '@src/gateway/DefaultGatewayProvider'
-import { WebSocketManager } from '@src/gateway/WebSocketManager'
-import { WebSocketClient } from '@src/gateway/WebSocketClient'
-
-export {
-  WebSocketClientEventsI,
-  WebSocketClientDestroyOptions,
-  PartialGatewayOptions,
-  WebSocketManagerEvents,
-  WebSocketManagerLimits,
-  WebSocketSendPayload,
-  WebSocketPacket,
-  GatewayOptions,
-  DefaultGatewayProvider,
-  WebSocketManager,
-  WebSocketClient,
-}
+export { DefaultGatewayProvider } from '@src/gateway/DefaultGatewayProvider'
+export { WebSocketManager } from '@src/gateway/WebSocketManager'
+export { WebSocketClient } from '@src/gateway/WebSocketClient'
