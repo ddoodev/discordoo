@@ -109,7 +109,7 @@ Release deadline: October 30, 2021
 
 ### Rest
 * [x] Implement rest
-  * [x] Implement rest provider - rest request (like constructor) & rest provider (performs requests and handles rate-limits)
+  * [x] Implement rest provider - rest request (like constructor) & rest provider (performs requests and handles rate-limits optionally)
 * [x] Requests
   * [x] Sending requests to Discord
 * [x] Responses

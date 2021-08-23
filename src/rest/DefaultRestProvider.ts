@@ -80,9 +80,7 @@ export class DefaultRestProvider implements RestProvider {
     })
     const after = process.hrtime.bigint()
 
-    // https://github.com/nodejs/undici/commit/b08399d3285f9ec78831823627f0bf49ab009bdc
-    // @ts-ignore
-    let result = await response.body.text(),
+    let result: any = await response.body.text(),
       success = response.statusCode > 199 && response.statusCode < 400
 
     // console.log('PROVIDER REQUEST EXECUTED, SUCCESS:', success, 'DATA:', response)

@@ -1,5 +1,6 @@
 export { resolveDiscordShards } from '@src/utils/resolveDiscordShards'
 export { DiscordooSnowflake } from '@src/utils/DiscordooSnowflake'
+export { ValidationError } from '@src/utils/ValidationError'
 export { DiscordooError } from '@src/utils/DiscordooError'
 export { WebSocketUtils } from '@src/utils/WebSocketUtils'
 export { resolveShards } from '@src/utils/resolveShards'

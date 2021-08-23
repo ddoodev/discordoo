@@ -22,6 +22,7 @@
     "noImplicitAny": false,
     "resolveJsonModule": true,
     "isolatedModules": false,
+    "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
       "@src/*": [ "src/*" ]
@@ -29,7 +30,10 @@
     "outDir": "./dist",
     "plugins": [
       { "transform": "@zerollup/ts-transform-paths" },
-      { "transform": "typescript-is/lib/transform-inline/transformer" }
+      {
+        "transform": "typescript-is/lib/transform-inline/transformer",
+        "functionBehavior": "basic"
+      }
     ]
   },
   "exclude": [
