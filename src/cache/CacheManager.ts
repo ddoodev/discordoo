@@ -1,7 +1,8 @@
 import { CachingPoliciesProcessor } from '@src/cache/CachingPoliciesProcessor'
 import { IpcCacheOpCodes, IpcOpCodes, SerializeModes } from '@src/constants'
-import { CacheProvider, Client, ProviderConstructor } from '@src/core'
+import { CacheProvider, CacheStorageKey } from '@discordoo/providers'
 import { resolveShards, DiscordooError } from '@src/utils'
+import { Client, ProviderConstructor } from '@src/core'
 import { EntitiesUtil, EntityKey } from '@src/entities'
 import {
   IpcCacheDeleteRequestPacket,
@@ -44,20 +45,19 @@ import {
   CacheManagerHasOptions,
   CacheManagerMapOptions,
   CacheManagerSetOptions,
-  CacheManagerOptions,
-  CacheStorageKey
+  CacheManagerOptions
 } from '@src/cache/interfaces'
 
 export class CacheManager<P extends CacheProvider = CacheProvider> {
   public client: Client
   public provider: P
 
-  private policiesProcessor: CachingPoliciesProcessor
+  private readonly _policiesProcessor: CachingPoliciesProcessor
 
-  constructor(client: Client, provider: ProviderConstructor<P>, options: CacheManagerOptions) {
+  constructor(client: Client, Provider: ProviderConstructor<P>, options: CacheManagerOptions) {
     this.client = client
-    this.provider = new provider(this.client, options.provider)
-    this.policiesProcessor = new CachingPoliciesProcessor(client)
+    this.provider = new Provider(this.client, options.provider)
+    this._policiesProcessor = new CachingPoliciesProcessor(this.client)
   }
 
   async get<K = string, V = any>(
@@ -111,20 +111,12 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     value: V,
     options: CacheManagerSetOptions = {}
   ): Promise<this> {
-    const globalPolicyLimit = this.policiesProcessor.global(value)
+    const globalPolicyLimit = this._policiesProcessor.global(value)
     if (typeof globalPolicyLimit !== 'undefined') {
       if (!globalPolicyLimit) return this
     }
 
-    let v: any = value
-
-    if (!this.provider.classesCompatible || this.isShardedRequest(options)) {
-      // @ts-expect-error
-      if (typeof value.toJSON === 'function') value = value.toJSON()
-    } else {
-      const entity: any = EntitiesUtil.get(entityKey)
-      if (value && !(value instanceof entity)) v = await (new entity(this.client, value)).init?.()
-    }
+    const data = await this._prepareData('in', value, entityKey, this.isShardedRequest(options))
 
     if (this.isShardedRequest(options)) {
       const shards = resolveShards(this.client, options.shard!)
@@ -139,7 +131,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
           storage,
           entityKey,
           shards,
-          value,
+          value: data,
           serialize: SerializeModes.BOOLEAN
         }
       }
@@ -152,7 +144,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       }
 
     } else {
-      await this.provider.set<K, V>(keyspace, storage, key, v)
+      await this.provider.set<K, V>(keyspace, storage, key, data)
     }
 
     return this
@@ -316,8 +308,8 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     options: CacheManagerSweepOptions = {}
   ): Promise<void> {
 
-    if (typeof options?.shard !== 'undefined' && this.client.internals.sharding.active && !this.provider.sharedCache) {
-      const shards = resolveShards(this.client, options.shard)
+    if (this.isShardedRequest(options)) {
+      const shards = resolveShards(this.client, options.shard!)
 
       const request: IpcCacheSweepRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
@@ -356,8 +348,8 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
   ): Promise<[ K, V ][]> {
     let result: [ K, V ][] = []
 
-    if (typeof options?.shard !== 'undefined' && this.client.internals.sharding.active && !this.provider.sharedCache) {
-      const shards = resolveShards(this.client, options.shard)
+    if (this.isShardedRequest(options)) {
+      const shards = resolveShards(this.client, options.shard!)
 
       const request: IpcCacheFilterRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
@@ -402,8 +394,8 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
   ): Promise<R[]> {
     let result: R[] = []
 
-    if (typeof options?.shard !== 'undefined' && this.client.internals.sharding.active && !this.provider.sharedCache) {
-      const shards = resolveShards(this.client, options.shard)
+    if (this.isShardedRequest(options)) {
+      const shards = resolveShards(this.client, options.shard!)
 
       const request: IpcCacheMapRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
@@ -448,8 +440,8 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
   ): Promise<V | undefined> {
     let result: V | undefined
 
-    if (typeof options?.shard !== 'undefined' && this.client.internals.sharding.active && !this.provider.sharedCache) {
-      const shards = resolveShards(this.client, options.shard)
+    if (this.isShardedRequest(options)) {
+      const shards = resolveShards(this.client, options.shard!)
 
       const request: IpcCacheFindRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
@@ -489,6 +481,10 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     return this._makePredicate(entityKey, predicate)
   }
 
+  get [Symbol.for('_ddooPoliciesProcessor')](): CachingPoliciesProcessor { // for internal use by a library outside of this class
+    return this._policiesProcessor
+  }
+
   init() {
     return this.provider.init()
   }
@@ -498,16 +494,60 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
   }
 
   private _makePredicate(entityKey: EntityKey, predicate: any): any {
-    const entity: any = EntitiesUtil.get(entityKey)
-
     return async (value, key, prov) => {
-      let v = value
-
-      if (value && !(value instanceof entity)) {
-        v = await (new entity(this.client, value)).init?.()
-      }
-
-      return predicate(v, key, prov)
+      return predicate(await this._prepareData('out', value, entityKey), key, prov)
     }
+  }
+
+  private async _prepareData(direction: 'in' | 'out', data: any, entityKey: EntityKey, forIpcRequest?: boolean): Promise<any> {
+    const Entity: any = EntitiesUtil.get(entityKey)
+
+    function toJSON(d) {
+      if (d && typeof d.toJSON !== 'undefined') d = d.toJSON()
+      else if (d) d = JSON.parse(JSON.stringify(d))
+
+      return d
+    }
+
+    if (forIpcRequest) return toJSON(data)
+
+    // 'in' = to the cache provider
+    // 'out' = from the cache provider
+    switch (direction) {
+      case 'in':
+        switch (this.provider.compatible) {
+          case 'classes':
+            if (data && !(data instanceof Entity)) data = await (new Entity(this.client, data)).init?.()
+            break
+          case 'json':
+            data = toJSON(data)
+            break
+          case 'text':
+            data = JSON.stringify(toJSON(data))
+            break
+          case 'buffer':
+            data = Buffer.from(toJSON(data))
+            break
+        }
+        break
+      case 'out':
+        if (data && !(data instanceof Entity)) {
+          switch (this.provider.compatible) {
+            case 'classes':
+            case 'json':
+              data = new Entity(this.client, data).init?.()
+              break
+            case 'text':
+              data = new Entity(this.client, JSON.parse(data)).init?.()
+              break
+            case 'buffer':
+              data = new Entity(this.client, JSON.parse(data.toString('utf8'))).init?.()
+              break
+          }
+        }
+        break
+    }
+
+    return data
   }
 }

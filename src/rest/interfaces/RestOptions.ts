@@ -1,4 +1,4 @@
-import { AuthLike } from '@src/core/providers/rest/AuthLike'
+import { AuthLike } from '@discordoo/providers'
 
 export interface RestOptions {
   maxRetries?: number

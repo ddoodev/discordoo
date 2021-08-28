@@ -1,8 +1,10 @@
-import { RestRequest } from '@src/core/providers/rest/requests/RestRequest'
-import { RestRequestMethods } from '@src/constants'
-import { RestRequestResponse } from '@src/core/providers/rest/RestRequestResponse'
-import { RestManager } from '@src/rest/RestManager'
-import { RawAttachment } from '@src/rest/interfaces/RawAttachment'
+import { RestRequest, RestManager } from '@src/rest'
+import {
+  RawAttachment,
+  RestFinishedResponse,
+  RestRequestOptions,
+  RestRequestMethods
+} from '@discordoo/providers'
 
 /**
  * Creates a new rest request. We do not use classes here, because function+object is about 9x faster than new Class()
@@ -77,7 +79,7 @@ export function makeRequest(rest: RestManager<any>): RestRequest {
       return this
     },
 
-    request<T = any>(method: RestRequestMethods, options?: any): Promise<RestRequestResponse<T>> {
+    request<T = any>(method: RestRequestMethods, options?: RestRequestOptions): RestFinishedResponse<T> {
       return this.rest.request<T>({
         method,
         path: this.path,
@@ -88,23 +90,23 @@ export function makeRequest(rest: RestManager<any>): RestRequest {
       }, options)
     },
 
-    get<T = any>(options?: any): Promise<RestRequestResponse<T>> {
+    get<T = any>(options?: RestRequestOptions): RestFinishedResponse<T> {
       return this.request(RestRequestMethods.GET, options)
     },
 
-    delete<T = any>(options?: any): Promise<RestRequestResponse<T>> {
+    delete<T = any>(options?: RestRequestOptions): RestFinishedResponse<T> {
       return this.request(RestRequestMethods.DELETE, options)
     },
 
-    patch<T = any>(options?: any): Promise<RestRequestResponse<T>> {
+    patch<T = any>(options?: RestRequestOptions): RestFinishedResponse<T> {
       return this.request(RestRequestMethods.PATCH, options)
     },
 
-    post<T = any>(options?: any): Promise<RestRequestResponse<T>> {
+    post<T = any>(options?: RestRequestOptions): RestFinishedResponse<T> {
       return this.request(RestRequestMethods.POST, options)
     },
 
-    put<T = any>(options?: any): Promise<RestRequestResponse<T>> {
+    put<T = any>(options?: RestRequestOptions): RestFinishedResponse<T> {
       return this.request(RestRequestMethods.PUT, options)
     },
   }

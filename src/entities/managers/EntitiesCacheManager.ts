@@ -1,6 +1,6 @@
 import { EntitiesManager } from '@src/entities/managers/EntitiesManager'
-import { CacheProvider, Client } from '@src/core'
-import { EntityKey } from '@src/entities'
+import { Client } from '@src/core'
+import { EntityKey, EntitiesCacheManagerData } from '@src/entities'
 import {
   CacheManagerForEachOptions,
   CacheManagerDeleteOptions,
@@ -12,19 +12,22 @@ import {
   CacheManagerHasOptions,
   CacheManagerMapOptions,
   CacheManagerSetOptions,
-  CacheStorageKey
+  CachingOptions
 } from '@src/cache/interfaces'
+import { CacheProvider, CacheStorageKey } from '@discordoo/providers'
 
 export class EntitiesCacheManager<Entity, EntityData = any> extends EntitiesManager {
   private readonly entityKey: EntityKey
+  private readonly policy: keyof CachingOptions
   public readonly keyspace: string
   public readonly storage: CacheStorageKey
 
-  constructor(client: Client, entityKey: EntityKey, keyspace: string, storage: CacheStorageKey) {
+  constructor(client: Client, data: EntitiesCacheManagerData) {
     super(client)
-    this.entityKey = entityKey
-    this.keyspace = keyspace
-    this.storage = storage
+    this.entityKey = data.entity
+    this.keyspace = data.keyspace
+    this.storage = data.storage
+    this.policy = data.policy ?? 'global'
   }
 
   async delete(key: string[] | string, options?: CacheManagerDeleteOptions): Promise<boolean> {
@@ -103,14 +106,20 @@ export class EntitiesCacheManager<Entity, EntityData = any> extends EntitiesMana
   }
 
   async set(key: string, value: Entity, options?: CacheManagerSetOptions): Promise<EntitiesCacheManager<Entity, EntityData>> {
-    return await this.client.internals.cache.set<string, Entity>(
-      this.keyspace,
-      this.storage,
-      this.entityKey,
-      key,
-      value,
-      options,
-    ) && this // returns this
+    const allowed = this.client.internals.cache[Symbol.for('_ddooPoliciesProcessor')][this.policy](value)
+
+    if (allowed) {
+      await this.client.internals.cache.set<string, Entity>(
+        this.keyspace,
+        this.storage,
+        this.entityKey,
+        key,
+        value,
+        options,
+      )
+    }
+
+    return this
   }
 
   async size(options?: CacheManagerSizeOptions): Promise<number> {

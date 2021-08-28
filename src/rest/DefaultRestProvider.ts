@@ -1,12 +1,14 @@
-import { RestProvider } from '@src/core/providers/rest/RestProvider'
-import { RestRequestData } from '@src/core/providers/rest/requests/RestRequestData'
-import { RestRequestResponse } from '@src/core/providers/rest/RestRequestResponse'
-import { Client } from '@src/core'
+import { MultipartData } from '@src/utils/MultipartData'
 import { Client as Undici, request } from 'undici'
 import { DiscordooError } from '@src/utils'
-import { RestOptions } from '@src/rest/interfaces/RestOptions'
-import { MultipartData } from '@src/utils/MultipartData'
-import { RestRequestOptions } from '@src/core/providers/rest/requests/RestRequestOptions'
+import { RestOptions } from '@src/rest'
+import { Client } from '@src/core'
+import {
+  RestFinishedResponse,
+  RestProvider,
+  RestRequestData,
+  RestRequestOptions
+} from '@discordoo/providers'
 
 export class DefaultRestProvider implements RestProvider {
   public client: Client
@@ -23,7 +25,7 @@ export class DefaultRestProvider implements RestProvider {
     return void 100500
   }
 
-  async request<T = any>(data: RestRequestData, options: RestRequestOptions = {}): Promise<RestRequestResponse<T>> {
+  async request<T = any>(data: RestRequestData, options: RestRequestOptions = {}): RestFinishedResponse<T> {
 
     let headers = this.options.headers
 

@@ -1,6 +1,6 @@
 import { IpcPacket } from '@src/sharding'
 import { IpcCacheOpCodes, IpcEvents, IpcOpCodes, SerializeModes } from '@src/constants'
-import { CacheStorageKey } from '@src/cache/interfaces/CacheStorageKey'
+import { CacheStorageKey } from '@discordoo/providers'
 import { EntityKey } from '@src/entities'
 
 export interface IpcHelloPacket extends IpcPacket {

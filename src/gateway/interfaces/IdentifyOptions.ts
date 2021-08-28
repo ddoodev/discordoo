@@ -1,5 +1,5 @@
-import { GatewayOptions } from '@src/gateway'
+import { WebSocketManagerOptions } from '@src/gateway/interfaces/WebSocketManagerOptions'
 
-export interface IdentifyOptions extends GatewayOptions {
+export interface IdentifyOptions extends WebSocketManagerOptions {
   forceResume?: boolean
 }

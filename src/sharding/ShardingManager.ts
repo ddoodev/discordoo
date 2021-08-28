@@ -5,7 +5,7 @@ import { ShardingManagerOptions } from '@src/sharding/interfaces/manager/options
 import { DiscordooError, DiscordooSnowflake, wait } from '@src/utils'
 import { isMaster as isMainCluster } from 'cluster'
 import { isMainThread } from 'worker_threads'
-import { Collection } from '@src/collection'
+import { Collection } from '@discordoo/collection'
 import { ShardingInstance } from '@src/sharding/ShardingInstance'
 import { resolveDiscordShards } from '@src/utils/resolveDiscordShards'
 import { intoChunks } from '@src/utils/intoChunks'

@@ -1,29 +1,70 @@
-import { Client, GatewayProvider } from '@src/core'
-import { GatewayConnectOptions } from '@src/core/providers/gateway/options/GatewayConnectOptions'
-import { PartialGatewayOptions } from '@src/gateway/interfaces/PartialGatewayOptions'
+import { GatewayBotInfo, GatewayProvider, GatewayShardsInfo } from '@discordoo/providers'
+import { Client } from '@src/core'
 import { WebSocketManager } from '@src/gateway/WebSocketManager'
+import { WebSocketManagerOptions } from '@src/gateway/interfaces/WebSocketManagerOptions'
 
 export class DefaultGatewayProvider implements GatewayProvider {
-  public manager: WebSocketManager
   public client: Client
-  public options: PartialGatewayOptions
+  private manager: WebSocketManager
+  private options: WebSocketManagerOptions
 
-  constructor(client: Client, options: PartialGatewayOptions) {
+  constructor(client: Client, options: WebSocketManagerOptions) {
     this.client = client
     this.options = options
 
-    this.manager = new WebSocketManager(options)
+    this.manager = new WebSocketManager(this, options)
   }
 
-  connect(options?: GatewayConnectOptions): Promise<unknown> {
-    return this.manager.connect(options)
+  connect(shards?: GatewayShardsInfo): Promise<unknown> {
+    return this.manager.connect(shards)
   }
 
-  async disconnect(): Promise<unknown> {
-    return this.manager.destroy()
+  async disconnect(shards?: number[]): Promise<unknown> {
+    return this.manager.disconnect(shards)
+  }
+
+  emit(event: string, ...data: any[]): unknown { // TODO
+    return undefined
+  }
+
+  getGateway(): Promise<GatewayBotInfo> {
+    return this.client.internals.gateway.getGateway()
+  }
+
+  ping(): number
+  ping(shards: number[]): number[]
+  ping(shards?: number[]): number | number[] {
+    switch (Array.isArray(shards)) {
+      case true:
+        return shards!.map(id => this.manager.shards.get(id)?.ping ?? -1)
+      case false:
+        return (this.manager.shards.reduce((prev, curr) => prev + curr.ping, 0) / this.manager.shards.size) | 1
+    }
+  }
+
+  reorganizeShards(shards: GatewayShardsInfo): Promise<unknown> {
+    this.manager.destroy()
+    return this.manager.connect(shards)
+  }
+
+  send(data: Record<string, any>, shards?: number[]): unknown {
+    switch (Array.isArray(shards)) {
+      case true:
+        shards!.forEach(id => this.manager.shards.get(id)?.socketSend(data as any)) // TODO: ???
+        break
+      case false:
+        this.manager.shards.forEach(shard => shard.socketSend(data as any)) // TODO: ???
+    }
+
+    return void 100500
+  }
+
+  waitShardSpawnTurn(shardID: number): Promise<unknown> {
+    return this.client.internals.gateway.waitShardSpawnTurn(shardID)
   }
 
   async init(): Promise<unknown> {
-    return void 0
+    return void 100500
   }
+
 }

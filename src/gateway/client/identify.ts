@@ -33,7 +33,7 @@ export function identify(
         properties,
         presence: presence || undefined,
         compress,
-        shard: [ client.id, client.manager.totalShards ]
+        shard: [ client.id, client.manager.options.totalShards ]
       }
     } break
 

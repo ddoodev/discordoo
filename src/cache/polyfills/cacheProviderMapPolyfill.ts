@@ -1,5 +1,4 @@
-import { CacheProvider } from '@src/core'
-import { CacheStorageKey } from '@src/cache/interfaces/CacheStorageKey'
+import { CacheProvider, CacheStorageKey } from '@discordoo/providers'
 
 export async function cacheProviderMapPolyfill<K = string, V = any, R = any, P extends CacheProvider = CacheProvider>(
   provider: P, keyspace: string, storage: CacheStorageKey, predicate: (value: V, key: K, provider: P) => R | Promise<R>

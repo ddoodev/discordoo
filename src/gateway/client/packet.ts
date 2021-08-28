@@ -69,7 +69,7 @@ export function packet(
 
     case WebSocketOpCodes.HEARTBEAT_ACK:
       // console.log('shard', client.id, 'HEARTBEAT_ACK')
-      client.missedHeartbeats -= 1
+      client.missedHeartbeats = 0
       client.ping = Date.now() - client.lastPingTimestamp
       break
 

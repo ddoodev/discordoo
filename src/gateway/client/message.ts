@@ -5,12 +5,13 @@ import WebSocket from 'ws'
 import { WebSocketUtils } from '@src/utils/WebSocketUtils'
 import { GatewayOptions } from '@src/gateway'
 import { WebSocketPacket } from '@src/gateway/interfaces/WebSocketPacket'
+import { WebSocketManagerOptions } from '@src/gateway/interfaces/WebSocketManagerOptions'
 
 // handles websocket raw messages, decompressing/decoding it to normal javascript objects
 export function message(
   client: WebSocketClient,
   event: WebSocket.MessageEvent,
-  options: GatewayOptions,
+  options: WebSocketManagerOptions,
   inflate?: PakoTypes.Inflate
 ): WebSocketPacket | undefined {
 

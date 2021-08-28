@@ -1,5 +1,4 @@
-import { CacheProvider } from '@src/core'
-import { CacheStorageKey } from '@src/cache/interfaces/CacheStorageKey'
+import { CacheProvider, CacheStorageKey } from '@discordoo/providers'
 
 export async function cacheProviderHasPolyfill<K = string, P extends CacheProvider = CacheProvider>(
   provider: P, keyspace: string, storage: CacheStorageKey, key: K

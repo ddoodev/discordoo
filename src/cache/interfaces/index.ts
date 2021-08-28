@@ -10,5 +10,4 @@ export { CacheManagerHasOptions } from '@src/cache/interfaces/CacheManagerHasOpt
 export { CacheManagerMapOptions } from '@src/cache/interfaces/CacheManagerMapOptions'
 export { CacheManagerSetOptions } from '@src/cache/interfaces/CacheManagerSetOptions'
 export { CacheManagerOptions } from '@src/cache/interfaces/CacheManagerOptions'
-export { CacheStorageKey } from '@src/cache/interfaces/CacheStorageKey'
 export { CachingOptions } from '@src/cache/interfaces/CachingOptions'

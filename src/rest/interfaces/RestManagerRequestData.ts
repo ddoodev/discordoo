@@ -1,5 +1,7 @@
-import { RestRequestMethods } from '@src/constants'
-import { RawAttachment } from '@src/rest/interfaces/RawAttachment'
+import {
+  RestRequestMethods,
+  RawAttachment
+} from '@discordoo/providers'
 
 export interface RestManagerRequestData {
   method: RestRequestMethods

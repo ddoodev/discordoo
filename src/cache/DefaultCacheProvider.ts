@@ -1,11 +1,12 @@
-import { CacheProvider, Client } from '@src/core'
-import { Collection } from '@src/collection'
-import { CacheStorageKey } from '@src/cache/interfaces/CacheStorageKey'
+import { Client } from '@src/core'
+import { Collection } from '@discordoo/collection'
+import { CacheStorageKey, CacheProvider } from '@discordoo/providers'
 
 export class DefaultCacheProvider implements CacheProvider {
   private keyspaces: Collection<string, Collection<string, Collection>>
+
   public client: Client
-  public classesCompatible = true
+  public compatible: 'classes' = 'classes'
   public sharedCache = false
 
   constructor(client: Client) {
@@ -37,18 +38,14 @@ export class DefaultCacheProvider implements CacheProvider {
       space = this.keyspaces.get(keyspace)!
     }
 
-    if (storage === 'global') {
-      throw new Error('cannot use global storage in set')
-    } else {
-      let store = space.get(storage)
+    let store = space.get(storage)
 
-      if (!store) {
-        space.set(storage, new Collection())
-        store = space.get(storage)!
-      }
-
-      return store.set(key, value) && this // returns this
+    if (!store) {
+      space.set(storage, new Collection())
+      store = space.get(storage)!
     }
+
+    return store.set(key, value) && this // returns this
   }
 
   async get<K = string, V = any>(keyspace: string, storage: CacheStorageKey, key: K): Promise<V | undefined> {

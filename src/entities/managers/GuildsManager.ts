@@ -9,6 +9,11 @@ export class GuildsManager extends EntitiesManager {
   constructor(client: Client) {
     super(client)
 
-    this.cache = new EntitiesCacheManager<Guild>(this.client, 'Guild', 'guilds', 'global')
+    this.cache = new EntitiesCacheManager<Guild>(this.client, {
+      keyspace: 'guilds',
+      storage: 'global',
+      entity: 'Guild',
+      policy: 'guilds'
+    })
   }
 }

@@ -1,8 +1,6 @@
-export { RestManagerRequestData } from '@src/rest/interfaces/RestManagerRequestData'
 export { DefaultRestProvider } from '@src/rest/DefaultRestProvider'
-export { RawAttachment } from '@src/rest/interfaces/RawAttachment'
-export { RestManagerOptions } from '@src/rest/RestManagerOptions'
 export { RestLimitsManager } from '@src/rest/RestLimitsManager'
-export { RestOptions } from '@src/rest/interfaces/RestOptions'
-export { makeRequest } from '@src/rest/makeRequest'
 export { RestManager } from '@src/rest/RestManager'
+export { makeRequest } from '@src/rest/makeRequest'
+
+export * from './interfaces'

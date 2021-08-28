@@ -1,7 +1,7 @@
 import { TypedEmitter } from 'tiny-typed-emitter'
 import { IPC as RawIpc } from 'node-ipc'
 import { IpcClientOptions, IpcClientSendOptions, IpcPacket, ShardingInstance } from '@src/sharding'
-import { Collection } from '@src/collection'
+import { Collection } from '@discordoo/collection'
 import { IpcOpCodes, RAW_IPC_EVENT, SerializeModes } from '@src/constants'
 import { DiscordooError, DiscordooSnowflake } from '@src/utils'
 import { IpcCacheRequestPacket, IpcCacheResponsePacket, IpcHeartbeatPacket, IpcHelloPacket } from '@src/sharding/interfaces/ipc/IpcPackets'

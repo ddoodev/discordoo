@@ -1,12 +1,14 @@
-import { RestRequestMethods } from '@src/constants'
-import { RestRequestResponse } from '@src/core/providers/rest/RestRequestResponse'
+import {
+  RawAttachment,
+  RestRequestOptions,
+  RestFinishedResponse,
+  RestRequestMethods
+} from '@discordoo/providers'
 import { RestManager } from '@src/rest/RestManager'
-import { RawAttachment } from '@src/rest/interfaces/RawAttachment'
-import { RestRequestOptions } from '@src/core/providers/rest/requests/RestRequestOptions'
 
 /** Constructor used to build and perform requests to discord rest api */
 export interface RestRequest {
-  /** RestProvider to perform requests */
+  /** RestManager to perform requests */
   rest: RestManager
 
   /** Url parts */
@@ -65,35 +67,35 @@ export interface RestRequest {
    * @param method - method to use
    * @param options - request options
    */
-  request<T = any>(method: RestRequestMethods, options?: RestRequestOptions): Promise<RestRequestResponse<T>>
+  request<T = any>(method: RestRequestMethods, options?: RestRequestOptions): RestFinishedResponse<T>
 
   /**
    * Perform GET request
    * @param options - request options
    */
-  get<T = any>(options?: RestRequestOptions): Promise<RestRequestResponse<T>>
+  get<T = any>(options?: RestRequestOptions): RestFinishedResponse<T>
 
   /**
    * Perform POST request
    * @param options - request options
    */
-  post<T = any>(options?: RestRequestOptions): Promise<RestRequestResponse<T>>
+  post<T = any>(options?: RestRequestOptions): RestFinishedResponse<T>
 
   /**
    * Perform PATCH request
    * @param options - request options
    */
-  patch<T = any>(options?: RestRequestOptions): Promise<RestRequestResponse<T>>
+  patch<T = any>(options?: RestRequestOptions): RestFinishedResponse<T>
 
   /**
    * Perform PUT request
    * @param options - request options
    */
-  put<T = any>(options?: RestRequestOptions): Promise<RestRequestResponse<T>>
+  put<T = any>(options?: RestRequestOptions): RestFinishedResponse<T>
 
   /**
    * Perform DELETE request
    * @param options - request options
    */
-  delete<T = any>(options?: RestRequestOptions): Promise<RestRequestResponse<T>>
+  delete<T = any>(options?: RestRequestOptions): RestFinishedResponse<T>
 }

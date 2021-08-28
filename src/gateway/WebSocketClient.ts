@@ -4,32 +4,31 @@ import WebSocket from 'ws'
 import { TypedEmitter } from 'tiny-typed-emitter'
 
 import { WebSocketClientDestroyOptions } from '@src/gateway/interfaces/WebSocketClientDestroyOptions'
-import { WebSocketClientEventsI } from '@src/gateway/interfaces/WebSocketClientEventsI'
+import { WebSocketClientEventsHandlers } from '@src/gateway/interfaces/WebSocketClientEventsHandlers'
+import { WebSocketManagerOptions } from '@src/gateway/interfaces/WebSocketManagerOptions'
 import { WebSocketSendPayload } from '@src/gateway/interfaces/WebSocketSendPayload'
 import { WebSocketPacket } from '@src/gateway/interfaces/WebSocketPacket'
-import { GatewayOptions } from '@src/gateway/interfaces/GatewayOptions'
 import {
   WebSocketClientEvents,
   WebSocketClientStates,
   WebSocketOpCodes,
-  WebSocketStates,
-  WS_HANDSHAKE_TIMEOUT
+  WebSocketStates
 } from '@src/constants'
 
 import { WebSocketManager } from '@src/gateway/WebSocketManager'
 import { WebSocketUtils } from '@src/utils/WebSocketUtils'
 import { DiscordooError } from '@src/utils/DiscordooError'
 
-import { identify } from '@src/gateway/wsclient/identify'
-import { message } from '@src/gateway/wsclient/events/message'
-import { packet } from '@src/gateway/wsclient/events/packet'
-import { error } from '@src/gateway/wsclient/events/error'
-import { close } from '@src/gateway/wsclient/events/close'
-import { open } from '@src/gateway/wsclient/events/open'
+import { identify } from '@src/gateway/client/identify'
+import { message } from '@src/gateway/client/message'
+import { packet } from '@src/gateway/client/packet'
+import { error } from '@src/gateway/client/error'
+import { close } from '@src/gateway/client/close'
+import { open } from '@src/gateway/client/open'
 
-export class WebSocketClient extends TypedEmitter<WebSocketClientEventsI> {
+export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers> {
   private socket?: WebSocket
-  private readonly options: GatewayOptions
+  private readonly options: WebSocketManagerOptions
   private inflate?: PakoTypes.Inflate
   private _heartbeatInterval?: NodeJS.Timeout
   private _handshakeTimeout?: NodeJS.Timeout
@@ -167,7 +166,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsI> {
     } else if (create) {
       this._handshakeTimeout = setTimeout(() => {
         this.destroy({ reconnect: true })
-      }, WS_HANDSHAKE_TIMEOUT)
+      }, this.options.handshakeTimeout)
     }
   }
 

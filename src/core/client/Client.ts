@@ -5,7 +5,7 @@ import { ClientOptions } from '@src/core/client/ClientOptions'
 import { DiscordooProviders, GlobalCachingPolicy, IpcEvents, IpcOpCodes, REST_DEFAULT_OPTIONS, WS_DEFAULT_OPTIONS } from '@src/constants'
 import { DiscordooError, DiscordooSnowflake, resolveDiscordShards, version } from '@src/utils'
 import { IpcServer } from '@src/sharding/ipc/IpcServer'
-import { GatewayConnectOptions } from '@src/core/providers/gateway/options/GatewayConnectOptions'
+import { GatewayShardsInfo } from '@discordoo/providers'
 import { DefaultCacheProvider } from '@src/cache/DefaultCacheProvider'
 import { ProviderConstructor } from '@src/core/providers/ProviderConstructor'
 import { DefaultGatewayProvider } from '@src/gateway/DefaultGatewayProvider'
@@ -123,7 +123,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
   }
 
   async start(): Promise<Client<ClientStack>> {
-    let options: GatewayConnectOptions | undefined
+    let options: GatewayShardsInfo | undefined
 
     if (this.internals.sharding.active) {
       // sharding manager sends to us sharding information (shards - array of shards to serve)
