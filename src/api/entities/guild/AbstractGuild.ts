@@ -1,4 +1,4 @@
-import { AbstractEntity } from '@src/entities/AbstractEntity'
+import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 import { Client } from '@src/core'
 
 interface GuildData<A extends 'available' | 'unavailable' = 'available'> {

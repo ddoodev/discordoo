@@ -3,7 +3,7 @@ import { IpcCacheOpCodes, IpcOpCodes, SerializeModes } from '@src/constants'
 import { CacheProvider, CacheStorageKey } from '@discordoo/providers'
 import { resolveShards, DiscordooError } from '@src/utils'
 import { Client, ProviderConstructor } from '@src/core'
-import { EntitiesUtil, EntityKey } from '@src/entities'
+import { EntitiesUtil, EntityKey } from '@src/api/entities'
 import {
   IpcCacheDeleteRequestPacket,
   IpcCacheDeleteResponsePacket,

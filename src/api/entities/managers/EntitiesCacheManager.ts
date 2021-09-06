@@ -1,6 +1,6 @@
-import { EntitiesManager } from '@src/entities/managers/EntitiesManager'
+import { EntitiesManager } from '@src/api/entities/managers/EntitiesManager'
 import { Client } from '@src/core'
-import { EntityKey, EntitiesCacheManagerData } from '@src/entities'
+import { EntityKey, EntitiesCacheManagerData } from '@src/api/entities'
 import {
   CacheManagerForEachOptions,
   CacheManagerDeleteOptions,

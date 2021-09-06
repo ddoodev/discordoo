@@ -1,5 +1,5 @@
 import { CachingOptions } from '@src/cache'
-import { EntityKey } from '@src/entities'
+import { EntityKey } from '@src/api/entities'
 import { CacheStorageKey } from '@discordoo/providers'
 
 export interface EntitiesCacheManagerData {

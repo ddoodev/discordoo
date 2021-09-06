@@ -95,7 +95,7 @@ export class WebSocketManager extends TypedEmitter<WebSocketManagerEvents> {
 
     try {
       // console.log('shard', shard.id, 'connecting')
-      await shard.connect()
+      await shard.connect() // TODO: getGateway()
         .catch(e => {
           if (e && !(e instanceof DiscordooError)) shard.emit(WebSocketClientEvents.RECONNECT_ME)
           console.error(e)
@@ -107,7 +107,8 @@ export class WebSocketManager extends TypedEmitter<WebSocketManagerEvents> {
     this.shards.set(shard.id, shard)
 
     if (this.shardQueue.size) {
-      await this.provider.waitShardSpawnTurn(shard.id)
+      const [ next ] = this.shardQueue
+      await this.provider.waitShardSpawnTurn(next.id)
 
       return this.createShards()
     } else {

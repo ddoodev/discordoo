@@ -1,7 +1,7 @@
-import { EntitiesManager } from '@src/entities/managers/EntitiesManager'
+import { EntitiesManager } from '@src/api/entities/managers/EntitiesManager'
 import { Client } from '@src/core'
-import { EntitiesCacheManager } from '@src/entities/managers/EntitiesCacheManager'
-import { Guild } from '@src/entities'
+import { EntitiesCacheManager } from '@src/api/entities/managers/EntitiesCacheManager'
+import { Guild } from '@src/api/entities'
 
 export class GuildsManager extends EntitiesManager {
   public cache: EntitiesCacheManager<Guild>

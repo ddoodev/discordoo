@@ -1,3 +1,3 @@
-import { Entities } from '@src/entities'
+import { Entities } from '@src/api/entities'
 
 export type EntityKey = keyof typeof Entities

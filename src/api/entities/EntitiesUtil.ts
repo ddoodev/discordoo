@@ -1,5 +1,5 @@
-import { ExtendableEntities as DefaultExtendableEntities } from '@src/entities/ExtendableEntities'
-import { Entities } from '@src/entities/Entities'
+import { ExtendableEntities as DefaultExtendableEntities } from '@src/api/entities/ExtendableEntities'
+import { Entities } from '@src/api/entities/Entities'
 import { DiscordooError } from '@src/utils'
 
 const ExtendableEntities = Object.create(DefaultExtendableEntities) as typeof DefaultExtendableEntities

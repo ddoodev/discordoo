@@ -1,4 +1,4 @@
-import { Guild as RawGuild, EntitiesUtil } from '@src/entities'
+import { Guild as RawGuild, EntitiesUtil } from '@src/api/entities'
 
 describe('Entities', () => {
 
