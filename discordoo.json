@@ -1,10 +1,10 @@
 {
   "packages": [
+    "api",
     "cache",
     "collection",
     "constants",
     "core",
-    "entities",
     "rest",
     "sharding",
     "utils",

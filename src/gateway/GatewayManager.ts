@@ -30,7 +30,7 @@ export class GatewayManager<P extends GatewayProvider = GatewayProvider> {
   }
 
   emit(event: string, ...data: any[]) { // TODO: events overload protection
-    this.client.emit(event as any, ...data)
+    return this.client.internals.events.handlers.get(event)?.execute(...data)
   }
 
   reorganizeShards(shards: GatewayShardsInfo): Promise<unknown> {
@@ -50,8 +50,9 @@ export class GatewayManager<P extends GatewayProvider = GatewayProvider> {
     return this.provider.send(data, shards)
   }
 
+  // @ts-ignore
   async waitShardSpawnTurn(shardID: number): Promise<unknown> { // TODO
-    return void 100500
+    setTimeout(() => Promise.resolve(), 5000)
   }
 
   async init() {

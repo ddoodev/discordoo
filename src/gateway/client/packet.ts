@@ -12,12 +12,12 @@ export function packet(
   packet: WebSocketPacket
 ) {
 
-  // console.log('shard', client.id, 'packet', packet)
+  console.log('shard', client.id, 'packet', packet)
 
   // process sequence increase
   if (WebSocketUtils.exists(packet.s) && packet.s! > client.sequence) client.sequence = packet.s!
 
-  // console.log('shard', client.id, 'SEQUENCE', client.sequence)
+  console.log('shard', client.id, 'SEQUENCE', client.sequence)
 
   /**
    * ready and resumed events handling
@@ -78,7 +78,7 @@ export function packet(
       break
 
     case WebSocketOpCodes.DISPATCH:
-
+      client.manager.provider.emit(packet.t, packet.d)
       break
   }
 }

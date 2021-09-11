@@ -15,14 +15,15 @@ import { GatewayManager } from '@src/gateway/GatewayManager'
 import { GatewayShardsInfo } from '@discordoo/providers'
 import { IpcServer } from '@src/sharding/ipc/IpcServer'
 import { CacheManager } from '@src/cache/CacheManager'
-import { GuildsManager } from '@src/api/entities/managers'
+import { GuildsManager } from '@src/api/managers'
 import { RestManager } from '@src/rest/RestManager'
 import { Final } from '@src/utils/FinalDecorator'
+import { ClientEvents, MessageCreateEvent } from '@src/api/events'
 
 /** Entry point for all of Discordoo. */
 @Final('start', 'internals', 'guilds')
 export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
-  extends TypedEmitter<ListenerSignature<ClientStack['events']>> {
+  extends TypedEmitter<ListenerSignature<ClientStack['events']>> { // TODO: events does not auto-typed
   /** Token used by this client */
   public token: string
 
@@ -99,6 +100,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
         }, this.options.ipc ?? {})
       ),
       actions = new ClientActions(this),
+      events = new ClientEvents(this),
       metadata: ClientMetadata = {
         version,
         shardingUsed: sharding.active,
@@ -116,8 +118,11 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
       sharding,
       ipc,
       actions,
+      events,
       metadata,
     }
+
+    this.internals.events.register([ MessageCreateEvent ]) // TODO
 
     this.guilds = new GuildsManager(this)
   }

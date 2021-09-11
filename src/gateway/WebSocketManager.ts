@@ -3,7 +3,7 @@ import { Collection } from '@discordoo/collection'
 import { WebSocketManagerEvents } from '@src/gateway/interfaces/WebSocketManagerEvents'
 import { WebSocketClient } from '@src/gateway/WebSocketClient'
 import { WebSocketClientEvents, WebSocketClientStates, WebSocketManagerStates } from '@src/constants'
-import { DiscordooError } from '@src/utils'
+import { DiscordooError, getGateway } from '@src/utils'
 import { GatewayProvider, GatewayShardsInfo } from '@discordoo/providers'
 import { WebSocketManagerOptions } from '@src/gateway/interfaces/WebSocketManagerOptions'
 
@@ -26,7 +26,7 @@ export class WebSocketManager extends TypedEmitter<WebSocketManagerEvents> {
   }
 
   async connect(options?: GatewayShardsInfo) {
-    // console.log('connecting')
+    console.log('connecting')
     this.status = WebSocketManagerStates.CONNECTING
 
     if (options) {
@@ -36,8 +36,8 @@ export class WebSocketManager extends TypedEmitter<WebSocketManagerEvents> {
       }
     }
 
-    // console.log('shards:', shards)
-    // console.log('totalShards:', this.totalShards)
+    console.log('shards:', options)
+    console.log('totalShards:', this.options.totalShards)
 
     this.shardQueue = new Set(this.options.shards.map(id => new WebSocketClient(this, id)))
     // console.log('queue:', this.shardQueue)
@@ -49,6 +49,15 @@ export class WebSocketManager extends TypedEmitter<WebSocketManagerEvents> {
         }
       }, 1000)
     }
+
+    const gateway = await getGateway(this.options.token)
+
+    this.options.url =
+      gateway.url + '/?v=9'
+      + /* TODO: this.options.version */ '&encoding=' + this.options.encoding
+      + (this.options.compress ? '&compress=zlib-stream' : '')
+
+    console.log('URL', this.options.url)
 
     return this.createShards()
   }

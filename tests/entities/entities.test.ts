@@ -1,41 +1,41 @@
-import { Guild as RawGuild, EntitiesUtil } from '@src/api/entities'
+import { Message as RawMessage, EntitiesUtil } from '@src/api/entities'
 
 describe('Entities', () => {
 
   test('must contain entities by default', () => {
-    const Guild = EntitiesUtil.get('Guild')
+    const Message = EntitiesUtil.get('Message')
 
     expect(
-      Guild.prototype === RawGuild.prototype
+      Message.prototype === RawMessage.prototype
     )
   })
 
   test('must extend entities without extender function', () => {
-    class ExtendedGuild extends RawGuild {
+    class ExtendedMessage extends RawMessage {
       __test__(): void {
         return void 100500
       }
     }
 
     expect(
-      EntitiesUtil.extend('Guild', ExtendedGuild).prototype === ExtendedGuild.prototype
+      EntitiesUtil.extend('Message', ExtendedMessage).prototype === ExtendedMessage.prototype
     )
     expect(
-      EntitiesUtil.get('Guild').prototype === ExtendedGuild.prototype
+      EntitiesUtil.get('Message').prototype === ExtendedMessage.prototype
     )
   })
 
   test('must reset entity to default', () => {
     expect(
-      EntitiesUtil.get('Guild').prototype !== RawGuild.prototype
+      EntitiesUtil.get('Message').prototype !== RawMessage.prototype
     )
 
     expect(
-      EntitiesUtil.clear('Guild').prototype === RawGuild.prototype
+      EntitiesUtil.clear('Message').prototype === RawMessage.prototype
     )
 
     expect(
-      EntitiesUtil.get('Guild').prototype === RawGuild.prototype
+      EntitiesUtil.get('Message').prototype === RawMessage.prototype
     )
   })
 
@@ -43,20 +43,20 @@ describe('Entities', () => {
     let extended
 
     expect(
-      EntitiesUtil.extend('Guild', Guild => {
-        class ExtendedGuild extends Guild {
+      EntitiesUtil.extend('Message', Message => {
+        class ExtendedMessage extends Message {
           __test__(): void {
             return void 100500
           }
         }
 
-        extended = ExtendedGuild
-        return ExtendedGuild
+        extended = ExtendedMessage
+        return ExtendedMessage
       }).prototype === extended.prototype
     )
 
     expect(
-      EntitiesUtil.get('Guild').prototype === extended.prototype
+      EntitiesUtil.get('Message').prototype === extended.prototype
     )
   })
 

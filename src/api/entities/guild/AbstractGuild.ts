@@ -23,6 +23,8 @@ class Guild<A extends 'available' | 'unavailable' = 'available'> extends Abstrac
     this.id = this._data.id
     this.name = this._data.name
     this.available = this._data.available
+
+    return this
   }
 }
 
