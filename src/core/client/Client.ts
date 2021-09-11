@@ -18,7 +18,7 @@ import { CacheManager } from '@src/cache/CacheManager'
 import { GuildsManager } from '@src/api/managers'
 import { RestManager } from '@src/rest/RestManager'
 import { Final } from '@src/utils/FinalDecorator'
-import { ClientEvents, MessageCreateEvent } from '@src/api/events'
+import { ClientEvents, MessageCreateEvent } from '@src/events'
 
 /** Entry point for all of Discordoo. */
 @Final('start', 'internals', 'guilds')

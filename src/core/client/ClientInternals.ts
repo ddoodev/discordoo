@@ -5,7 +5,7 @@ import { GatewayManager } from '@src/gateway/GatewayManager'
 import { ClientShardingMetadata } from '@src/core/client/ClientShardingMetadata'
 import { ClientActions } from '@src/core/client/ClientActions'
 import { ClientMetadata } from '@src/core/client/ClientMetadata'
-import { ClientEvents } from '@src/api/events'
+import { ClientEvents } from '@src/events'
 
 export interface ClientInternals<ClientStack extends DefaultClientStack = DefaultClientStack> {
   /** Inter-process communication server used by this client */

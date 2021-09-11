@@ -1,4 +1,4 @@
-import { AbstractEvent } from '@src/api/events/AbstractEvent'
+import { AbstractEvent } from '@src/events/AbstractEvent'
 import { MessageData } from '@src/api/entities/message'
 import { Message } from '@src/api/entities/message/Message'
 import { EventsNames } from '@src/constants'

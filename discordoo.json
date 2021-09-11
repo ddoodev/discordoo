@@ -1,6 +1,7 @@
 {
   "packages": [
     "api",
+    "events",
     "cache",
     "collection",
     "constants",

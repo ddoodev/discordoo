@@ -1,5 +1,5 @@
 import { Client } from '@src/core'
-import { AbstractEvent } from '@src/api/events/AbstractEvent'
+import { AbstractEvent } from '@src/events/AbstractEvent'
 import { Collection } from '@discordoo/collection'
 
 export class ClientEvents {
