@@ -3,7 +3,7 @@ import { Collection } from '@discordoo/collection'
 import { WebSocketManagerEvents } from '@src/gateway/interfaces/WebSocketManagerEvents'
 import { WebSocketClient } from '@src/gateway/WebSocketClient'
 import { WebSocketClientEvents, WebSocketClientStates, WebSocketManagerStates } from '@src/constants'
-import { DiscordooError, getGateway } from '@src/utils'
+import { DiscordooError } from '@src/utils'
 import { GatewayProvider, GatewayShardsInfo } from '@discordoo/providers'
 import { WebSocketManagerOptions } from '@src/gateway/interfaces/WebSocketManagerOptions'
 
@@ -50,7 +50,7 @@ export class WebSocketManager extends TypedEmitter<WebSocketManagerEvents> {
       }, 1000)
     }
 
-    const gateway = await getGateway(this.options.token)
+    const gateway = await this.provider.getGateway()
 
     this.options.url =
       gateway.url + '/?v=9'

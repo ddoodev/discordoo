@@ -11,6 +11,7 @@ import {
   RolesCachingPolicy,
   UsersCachingPolicy
 } from '@src/constants'
+import { Message } from '@src/api'
 
 export class CachingPoliciesProcessor {
   public client: Client
@@ -198,7 +199,7 @@ export class CachingPoliciesProcessor {
     return result
   }
 
-  message(message: any): boolean {
+  message(message: Message): boolean {
     let result = true
 
     if (this.options.messages) {
@@ -210,9 +211,9 @@ export class CachingPoliciesProcessor {
         this.options.messages.policies.some(policy => {
           switch (policy) {
             case MessagesCachingPolicy.BOTS:
-              return message.author.bot
+              return !!message.author?.bot
             case MessagesCachingPolicy.USERS:
-              return !message.author.bot
+              return !message.author?.bot
             case MessagesCachingPolicy.NONE:
               return false
             case MessagesCachingPolicy.ALL:
