@@ -5,8 +5,8 @@ export class RestLimitsManager {
 
   private allowedRequests = 50
   private allowedInvalidRequests = 10_000
-  private allowedRequestsResetInterval?: NodeJS.Timeout
-  private allowedInvalidRequestsResetInterval?: NodeJS.Timeout
+  private allowedRequestsResetInterval?: ReturnType<typeof setInterval>
+  private allowedInvalidRequestsResetInterval?: ReturnType<typeof setInterval>
 
   public limited = false
 

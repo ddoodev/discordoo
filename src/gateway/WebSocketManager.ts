@@ -14,7 +14,7 @@ export class WebSocketManager extends TypedEmitter<WebSocketManagerEvents> {
   public status: WebSocketManagerStates
   public shards = new Collection<number, WebSocketClient>()
 
-  private queueInterval?: NodeJS.Timeout
+  private queueInterval?: ReturnType<typeof setInterval>
   private shardQueue = new Set<WebSocketClient>()
 
   constructor(provider: GatewayProvider, options: WebSocketManagerOptions) {

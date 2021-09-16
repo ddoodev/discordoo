@@ -1,6 +1,7 @@
 import { Message as RawMessage, EntitiesUtil } from '@src/api/entities'
+import { createApp } from '@src/wrapper'
 
-describe('Entities', () => {
+describe('EntitiesUtil', () => {
 
   test('must contain entities by default', () => {
     const Message = EntitiesUtil.get('Message')
@@ -58,6 +59,25 @@ describe('Entities', () => {
     expect(
       EntitiesUtil.get('Message').prototype === extended.prototype
     )
+
+    EntitiesUtil.clear('Message')
+  })
+
+  test('must extend entities using client options', () => {
+
+    class ExtendedMessage extends RawMessage {}
+
+    createApp('')
+      .extenders([
+        { entity: 'Message', extender: ExtendedMessage }
+      ])
+      .build()
+
+    expect(
+      EntitiesUtil.get('Message').prototype === ExtendedMessage.prototype
+    )
+
+    EntitiesUtil.clear('Message')
   })
 
 })

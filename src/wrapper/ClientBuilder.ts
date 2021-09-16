@@ -49,6 +49,11 @@ export class ClientBuilder<Stack extends DefaultClientStack = DefaultClientStack
     return this
   }
 
+  extenders(extenders: ClientOptions['extenders']): ClientBuilder<Stack> {
+    this.options.extenders = extenders
+    return this
+  }
+
   custom<T>(options: ClientOptions<T>['custom']): ClientBuilder<Stack> {
     this.options.custom = options
     return this

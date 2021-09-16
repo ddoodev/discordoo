@@ -19,9 +19,10 @@ import { GuildsManager } from '@src/api/managers'
 import { RestManager } from '@src/rest/RestManager'
 import { Final } from '@src/utils/FinalDecorator'
 import { ClientEvents, MessageCreateEvent } from '@src/events'
+import { EntitiesUtil } from '@src/api'
 
 /** Entry point for all of Discordoo. */
-@Final('start', 'internals', 'guilds')
+@Final('start', 'internals', 'guilds', 'token')
 export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
   extends TypedEmitter<ListenerSignature<ClientStack['events']>> { // TODO: events does not auto-typed
   /** Token used by this client */
@@ -38,6 +39,10 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
 
   constructor(token: string, options: ClientOptions = {}) {
     super()
+
+    options.extenders?.forEach(extender => {
+      EntitiesUtil.extend(extender.entity, extender.extender)
+    })
 
     this.token = token
     this.options = options

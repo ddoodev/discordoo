@@ -5,4 +5,9 @@ module.exports = {
     '^@src/(.*)$': '<rootDir>/src/$1',
     '^@root/(.*)$': '<rootDir>/$1',
   },
+  globals: {
+    'ts-jest': {
+      compiler: 'ttypescript'
+    }
+  }
 }

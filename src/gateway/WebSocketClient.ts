@@ -30,8 +30,8 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
   private socket?: WebSocket
   private readonly options: WebSocketManagerOptions
   private inflate?: PakoTypes.Inflate
-  private _heartbeatInterval?: NodeJS.Timeout
-  private _handshakeTimeout?: NodeJS.Timeout
+  private _heartbeatInterval?: ReturnType<typeof setInterval>
+  private _handshakeTimeout?: ReturnType<typeof setTimeout>
 
   public manager: WebSocketManager
   public status: WebSocketClientStates
