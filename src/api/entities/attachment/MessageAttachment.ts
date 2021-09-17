@@ -11,7 +11,7 @@ export class MessageAttachment extends AbstractEntity implements MessageAttachme
   public id?: string
   public size?: number
   public url?: string
-  public proxy_url?: string
+  public proxy_url?: string // TODO: snake to camel
   public height?: number
   public width?: number
 

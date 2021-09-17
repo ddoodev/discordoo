@@ -5,8 +5,8 @@ import { User } from '@src/api/entities/user/User'
 export class Message extends AbstractEntity {
   public id!: string
   public channelID!: string
-  public content!: string | null
-  public author!: User | null
+  public content?: string
+  public author?: User
 
   // TODO
   /* get editable(): boolean {
@@ -19,13 +19,13 @@ export class Message extends AbstractEntity {
     this.id = data.id
     this.channelID = data.channel_id
 
-    this.content = data.content ??= this.content ??= null
+    this.content = data.content ??= this.content ??= undefined
 
     if (data.author) {
       this.author = new User(this.client)
       await this.author.init(data.author)
     } else {
-      this.author = null
+      this.author = undefined
     }
 
     return this

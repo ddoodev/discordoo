@@ -1,0 +1,9 @@
+export enum RawColors {
+  RED = 15548997,
+  YELLOW = 16705372,
+  GREEN = 5763719,
+  PURPLE = 15418782,
+  BLURPLE = 5793266,
+  WHITE = 16777215,
+  BLACK = 0,
+}
