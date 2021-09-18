@@ -266,7 +266,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
             this.socket.close(4901, 'ddoo: reconnect with resume')
           }
         }
-      } catch (e) {
+      } catch (e: any) {
         // console.log('shard', this.id, 'ws close error:', e)
         this.emit(WebSocketClientEvents.WS_CLOSE_ERROR, e)
       }
