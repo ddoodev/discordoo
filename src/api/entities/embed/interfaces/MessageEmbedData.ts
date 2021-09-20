@@ -8,6 +8,7 @@ import {
 } from '@src/api/entities/embed/interfaces/MessageEmbedAttachmentData'
 import { MessageEmbedFooterData } from '@src/api/entities/embed/interfaces/MessageEmbedFooterData'
 import { MessageEmbedTypes } from '@src/constants'
+import { MessageEmbedProviderData } from '@src/api/entities/embed/interfaces/MessageEmbedProviderData'
 
 export interface MessageEmbedData {
   type?: MessageEmbedTypes
@@ -22,4 +23,5 @@ export interface MessageEmbedData {
   image?: MessageEmbedImageData
   video?: MessageEmbedVideoData
   footer?: MessageEmbedFooterData
+  provider?: MessageEmbedProviderData
 }

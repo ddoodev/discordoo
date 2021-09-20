@@ -1,6 +1,6 @@
 export interface MessageEmbedAuthorData {
-  name?: string
+  name: string
   url?: string
-  icon_url?: string
-  proxy_icon_url?: string
+  iconURL?: string
+  proxyIconURL?: string
 }
