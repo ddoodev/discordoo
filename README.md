@@ -1,6 +1,7 @@
 <p align="center">
-  <a href="https://docs.discordoo.xyz"><img width="420" src="https://user-images.githubusercontent.com/44965055/118376907-70cad500-b5d3-11eb-95c2-3397a3882163.png" alt=""></a>
+  <a href="https://docs.discordoo.xyz"><img width="510" src="https://cdn.discordapp.com/attachments/531549268033404928/890932679250423838/ddoologo_new_1_banner.svg" alt=""></a>
 </p>
+
 
 <p align="center">
   <b>
