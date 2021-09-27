@@ -37,7 +37,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
   public status: WebSocketClientStates
   public id: number
 
-  public sessionID?: string
+  public sessionId?: string
   public sequence = -1
   public closeSequence = -1
   public expectedGuilds: Set<any> = new Set()
@@ -252,11 +252,11 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
     ) {
       // console.log('shard', this.id, 'if this socket and dont ready')
       try {
-        if (options.reconnect && this.sessionID) {
+        if (options.reconnect && this.sessionId) {
           // console.log('shard', this.id, 'if options reconnect and sessionid')
           if (this.options.useReconnectOnly) {
             // console.log('shard', this.id, 'if useReconnectOnly')
-            this.sessionID = undefined
+            this.sessionId = undefined
             this.sequence = -1
             this.socket.close(1000, 'ddoo: reconnect without resume')
           } else {

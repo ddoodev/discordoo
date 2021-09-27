@@ -4,7 +4,7 @@ import { User } from '@src/api/entities/user/User'
 
 export class Message extends AbstractEntity {
   public id!: string
-  public channelID!: string
+  public channelId!: string
   public content?: string
   public author?: User
 
@@ -17,7 +17,7 @@ export class Message extends AbstractEntity {
 
   async init(data: MessageData): Promise<this> {
     this.id = data.id
-    this.channelID = data.channel_id
+    this.channelId = data.channel_id
 
     this.content = data.content ??= this.content ??= undefined
 

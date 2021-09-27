@@ -8,21 +8,21 @@ export class ClientActions {
     this.client = client
   }
 
-  addGuildDiscoverySubcategory(guildID: string, categoryID: string, reason?: string) {
+  addGuildDiscoverySubcategory(guildId: string, categoryId: string, reason?: string) {
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD_DISCOVERY_CATEGORY(guildID, categoryID))
+      .url(Endpoints.GUILD_DISCOVERY_CATEGORY(guildId, categoryId))
       .post({ reason })
   }
 
-  addGuildMemberRole(guildID: string, memberID: string, roleID: string, reason?: string) {
+  addGuildMemberRole(guildId: string, memberId: string, roleId: string, reason?: string) {
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD_MEMBER_ROLE(guildID, memberID, roleID))
+      .url(Endpoints.GUILD_MEMBER_ROLE(guildId, memberId, roleId))
       .put({ reason })
   }
 
-  banGuildMember(guildID: string, userID: string, deleteMessagesDays = 0, reason?: string) {
+  banGuildMember(guildId: string, userId: string, deleteMessagesDays = 0, reason?: string) {
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD_BAN(guildID, userID))
+      .url(Endpoints.GUILD_BAN(guildId, userId))
       .body({ delete_message_days: deleteMessagesDays })
       .post({ reason })
   }
@@ -37,8 +37,8 @@ export class ClientActions {
         verification_level: data.verificationLevel,
         default_message_notifications: data.defaultNotifications,
         explicit_content_filter: data.explicitContentFilter,
-        system_channel_id: data.systemChannelID,
-        afk_channel_id: data.afkChannelID,
+        system_channel_id: data.systemChannelId,
+        afk_channel_id: data.afkChannelId,
         afk_timeout: data.afkTimeout,
         roles: data.roles,
         channels: data.channels,
@@ -46,9 +46,9 @@ export class ClientActions {
       .post()
   }
 
-  createGuildEmoji(guildID: string, data: any /* TODO: GuildEmojiData */, reason?: string) {
+  createGuildEmoji(guildId: string, data: any /* TODO: GuildEmojiData */, reason?: string) {
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD_EMOJIS(guildID))
+      .url(Endpoints.GUILD_EMOJIS(guildId))
       .body(data)
       .post({ reason })
   }
@@ -60,40 +60,40 @@ export class ClientActions {
       .post()
   }
 
-  createGuildTemplate(guildID: string, name: string, description?: string) {
+  createGuildTemplate(guildId: string, name: string, description?: string) {
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD_TEMPLATES(guildID))
+      .url(Endpoints.GUILD_TEMPLATES(guildId))
       .body({ name, description })
       .post()
   }
 
-  deleteGuild(guildID: string) {
+  deleteGuild(guildId: string) {
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD(guildID))
+      .url(Endpoints.GUILD(guildId))
       .delete()
   }
 
-  deleteGuildEmoji(guildID: string, emojiID: string, reason?: string) {
+  deleteGuildEmoji(guildId: string, emojiId: string, reason?: string) {
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD_EMOJI(guildID, emojiID))
+      .url(Endpoints.GUILD_EMOJI(guildId, emojiId))
       .delete({ reason })
   }
 
-  deleteGuildIntegration(guildID: string, integrationID: string) { // TODO: check if reason available
+  deleteGuildIntegration(guildId: string, integrationId: string) { // TODO: check if reason available
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD_INTEGRATION(guildID, integrationID))
+      .url(Endpoints.GUILD_INTEGRATION(guildId, integrationId))
       .delete()
   }
 
-  deleteGuildTemplate(guildID: string, code: string) {
+  deleteGuildTemplate(guildId: string, code: string) {
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD_TEMPLATE_GUILD(guildID, code))
+      .url(Endpoints.GUILD_TEMPLATE_GUILD(guildId, code))
       .delete()
   }
 
-  editGuild(guildID: string, data: any /* TODO: GuildData */, reason?: string) {
+  editGuild(guildId: string, data: any /* TODO: GuildData */, reason?: string) {
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD(guildID))
+      .url(Endpoints.GUILD(guildId))
       .body({
         name: data.name,
         region: data.region,
@@ -101,14 +101,14 @@ export class ClientActions {
         verification_level: data.verificationLevel,
         default_message_notifications: data.defaultNotifications,
         explicit_content_filter: data.explicitContentFilter,
-        system_channel_id: data.systemChannelID,
+        system_channel_id: data.systemChannelId,
         system_channel_flags: data.systemChannelFlags,
-        rules_channel_id: data.rulesChannelID,
-        public_updates_channel_id: data.publicUpdatesChannelID,
+        rules_channel_id: data.rulesChannelId,
+        public_updates_channel_id: data.publicUpdatesChannelId,
         preferred_locale: data.preferredLocale,
-        afk_channel_id: data.afkChannelID,
+        afk_channel_id: data.afkChannelId,
         afk_timeout: data.afkTimeout,
-        owner_id: data.ownerID,
+        owner_id: data.ownerId,
         splash: data.splash,
         banner: data.banner,
         description: data.description,
@@ -118,28 +118,28 @@ export class ClientActions {
       .patch({ reason })
   }
 
-  editGuildDiscovery(guildID: string, data: any /* TODO: GuildDiscoveryData */, reason?: string) {
+  editGuildDiscovery(guildId: string, data: any /* TODO: GuildDiscoveryData */, reason?: string) {
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD_DISCOVERY(guildID))
+      .url(Endpoints.GUILD_DISCOVERY(guildId))
       .body({
-        primary_category_id: data.primaryCategoryID,
+        primary_category_id: data.primaryCategoryId,
         keywords: data.keywords,
         emoji_discoverability_enabled: data.emojiDiscoverabilityEnabled,
       })
       .patch({ reason })
   }
 
-  editGuildEmoji(guildID: string, emojiID: string, data: any /* TODO: GuildEmojiData */, reason?: string) {
+  editGuildEmoji(guildId: string, emojiId: string, data: any /* TODO: GuildEmojiData */, reason?: string) {
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD_EMOJI(guildID, emojiID))
+      .url(Endpoints.GUILD_EMOJI(guildId, emojiId))
       .body(data)
       .patch({ reason })
   }
 
   // TODO: Check if reason available
-  editGuildIntegration(guildID: string, integrationID: string, data: any /* TODO: GuildIntegrationData */) {
+  editGuildIntegration(guildId: string, integrationId: string, data: any /* TODO: GuildIntegrationData */) {
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD_INTEGRATION(guildID, integrationID))
+      .url(Endpoints.GUILD_INTEGRATION(guildId, integrationId))
       .body({
         expire_behavior: data.expireBehavior,
         expire_grace_period: data.expireGracePeriod,
@@ -148,72 +148,72 @@ export class ClientActions {
       .patch()
   }
 
-  editGuildMember(guildID: string, memberID: string, data: any /* TODO: GuildMemberData */, reason?: string) {
+  editGuildMember(guildId: string, memberId: string, data: any /* TODO: GuildMemberData */, reason?: string) {
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD_MEMBER(guildID, memberID))
+      .url(Endpoints.GUILD_MEMBER(guildId, memberId))
       .body({
         roles: data.roles,
         nick: data.nick,
         mute: data.mute,
         deaf: data.deaf,
-        channel_id: data.channelID,
+        channel_id: data.channelId,
       })
       .patch({ reason })
   }
 
-  editGuildTemplate(guildID: string, code: string, data: any /* TODO: GuildTemplateData */) { // TODO: check if reason available
+  editGuildTemplate(guildId: string, code: string, data: any /* TODO: GuildTemplateData */) { // TODO: check if reason available
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD_TEMPLATE_GUILD(guildID, code))
+      .url(Endpoints.GUILD_TEMPLATE_GUILD(guildId, code))
       .body(data)
       .patch()
   }
 
-  editGuildVanity(guildID: string, code: string) { // TODO: check if reason available
+  editGuildVanity(guildId: string, code: string) { // TODO: check if reason available
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD_VANITY_URL(guildID))
+      .url(Endpoints.GUILD_VANITY_URL(guildId))
       .body({ code })
       .patch()
   }
 
-  editGuildVoiceState(guildID: string, data: any /* TODO: GuildVoiceStateData */, user = '@me') { // TODO: check if reason available
+  editGuildVoiceState(guildId: string, data: any /* TODO: GuildVoiceStateData */, user = '@me') { // TODO: check if reason available
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD_VOICE_STATE(guildID, user))
+      .url(Endpoints.GUILD_VOICE_STATE(guildId, user))
       .body({
-        channel_id: data.channelID,
+        channel_id: data.channelId,
         request_to_speak_timestamp: data.requestToSpeakTimestamp,
         suppress: data.suppress,
       })
       .patch()
   }
 
-  editGuildWelcomeScreen(guildID: string, data: any /* TODO: GuildWelcomeScreenData */) { // TODO: check if reason available
+  editGuildWelcomeScreen(guildId: string, data: any /* TODO: GuildWelcomeScreenData */) { // TODO: check if reason available
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD_WELCOME_SCREEN(guildID))
+      .url(Endpoints.GUILD_WELCOME_SCREEN(guildId))
       .body({
         description: data.description,
         enabled: data.enabled,
         welcome_screens: data.welcomeScreens.map((c) => ({
-          channel_id: c.channelID,
+          channel_id: c.channelId,
           description: c.description,
-          emoji_id: c.emojiID,
+          emoji_id: c.emojiId,
           emoji_name: c.emojiName,
         })),
       })
       .patch()
   }
 
-  editGuildWidget(guildID: string, data: any /* TODO: GuildWidgetData */, reason?: string) {
+  editGuildWidget(guildId: string, data: any /* TODO: GuildWidgetData */, reason?: string) {
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD_WIDGET(guildID))
+      .url(Endpoints.GUILD_WIDGET(guildId))
       .body(data)
       .patch({ reason })
   }
 
-  getGuildAuditLog(guildID: string, data: any /* TODO: GetGuildAuditLogData */) {
+  getGuildAuditLog(guildId: string, data: any /* TODO: GetGuildAuditLogData */) {
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD_AUDIT_LOGS(guildID))
+      .url(Endpoints.GUILD_AUDIT_LOGS(guildId))
       .query({
-        user_id: data.userID,
+        user_id: data.userId,
         action_type: data.actionType,
         before: data.before,
         limit: data.limit,
@@ -221,42 +221,42 @@ export class ClientActions {
       .get()
   }
 
-  getGuildBan(guildID: string, memberID: string) {
+  getGuildBan(guildId: string, memberId: string) {
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD_BAN(guildID, memberID))
+      .url(Endpoints.GUILD_BAN(guildId, memberId))
       .get()
   }
 
-  getGuildBans(guildID: string) {
+  getGuildBans(guildId: string) {
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD_BANS(guildID))
+      .url(Endpoints.GUILD_BANS(guildId))
       .get()
   }
 
-  getGuildDiscovery(guildID: string) {
+  getGuildDiscovery(guildId: string) {
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD_DISCOVERY(guildID))
+      .url(Endpoints.GUILD_DISCOVERY(guildId))
       .get()
   }
 
-  getGuildIntegrations(guildID: string, data: any /* TODO: GetGuildIntegrationsData */ = {}) {
+  getGuildIntegrations(guildId: string, data: any /* TODO: GetGuildIntegrationsData */ = {}) {
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD_INTEGRATIONS(guildID))
+      .url(Endpoints.GUILD_INTEGRATIONS(guildId))
       .query({
         include_applications: data.includeApplications ?? false,
       })
       .get()
   }
 
-  getGuildInvites(guildID: string) {
+  getGuildInvites(guildId: string) {
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD_INVITES(guildID))
+      .url(Endpoints.GUILD_INVITES(guildId))
       .get()
   }
 
-  getGuildPreview(guildID: string) {
+  getGuildPreview(guildId: string) {
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD_PREVIEW(guildID))
+      .url(Endpoints.GUILD_PREVIEW(guildId))
       .get()
   }
 
@@ -266,45 +266,45 @@ export class ClientActions {
       .get()
   }
 
-  getGuildVanity(guildID: string) {
+  getGuildVanity(guildId: string) {
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD_VANITY_URL(guildID))
+      .url(Endpoints.GUILD_VANITY_URL(guildId))
       .get()
   }
 
-  getGuildWebhooks(guildID: string) {
+  getGuildWebhooks(guildId: string) {
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD_WEBHOOKS(guildID))
+      .url(Endpoints.GUILD_WEBHOOKS(guildId))
       .get()
   }
 
-  getGuildWelcomeScreen(guildID: string) {
+  getGuildWelcomeScreen(guildId: string) {
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD_WELCOME_SCREEN(guildID))
+      .url(Endpoints.GUILD_WELCOME_SCREEN(guildId))
       .get()
   }
 
-  getGuildWidget(guildID: string) {
+  getGuildWidget(guildId: string) {
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD_WIDGET(guildID))
+      .url(Endpoints.GUILD_WIDGET(guildId))
       .get()
   }
 
-  kickGuildMember(guildID: string, memberID: string, reason?: string) {
+  kickGuildMember(guildId: string, memberId: string, reason?: string) {
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD_MEMBER(guildID, memberID))
+      .url(Endpoints.GUILD_MEMBER(guildId, memberId))
       .delete({ reason })
   }
 
-  leaveGuild(guildID: string) {
+  leaveGuild(guildId: string) {
     return this.client.internals.rest.api()
-      .url(Endpoints.USER_GUILD('@me', guildID))
+      .url(Endpoints.USER_GUILD('@me', guildId))
       .delete()
   }
 
-  pruneGuildMembers(guildID: string, data: any /* GuildMembersPruneData */ = {}, reason?: string) {
+  pruneGuildMembers(guildId: string, data: any /* GuildMembersPruneData */ = {}, reason?: string) {
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD_PRUNE(guildID))
+      .url(Endpoints.GUILD_PRUNE(guildId))
       .body({
         days: data.days,
         compute_prune_count: data.computePruneCount,
@@ -313,15 +313,15 @@ export class ClientActions {
       .delete({ reason })
   }
 
-  removeGuildMemberRole(guildID: string, memberID: string, roleID: string, reason?: string) {
+  removeGuildMemberRole(guildId: string, memberId: string, roleId: string, reason?: string) {
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD_MEMBER_ROLE(guildID, memberID, roleID))
+      .url(Endpoints.GUILD_MEMBER_ROLE(guildId, memberId, roleId))
       .delete({ reason })
   }
 
-  searchGuildMembers(guildID: string, data: any /* TODO: GuildMembersSearchData */) {
+  searchGuildMembers(guildId: string, data: any /* TODO: GuildMembersSearchData */) {
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD_MEMBERS_SEARCH(guildID))
+      .url(Endpoints.GUILD_MEMBERS_SEARCH(guildId))
       .query({
         query: data.query,
         limit: data.limit,
@@ -329,21 +329,21 @@ export class ClientActions {
       .get()
   }
 
-  syncGuildIntegration(guildID: string, integrationID: string) { // TODO: check if reason available
+  syncGuildIntegration(guildId: string, integrationId: string) { // TODO: check if reason available
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD_INTEGRATION_SYNC(guildID, integrationID))
+      .url(Endpoints.GUILD_INTEGRATION_SYNC(guildId, integrationId))
       .post()
   }
 
-  syncGuildTemplate(guildID: string, code: string) { // TODO: check if reason available
+  syncGuildTemplate(guildId: string, code: string) { // TODO: check if reason available
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD_TEMPLATE_GUILD(guildID, code))
+      .url(Endpoints.GUILD_TEMPLATE_GUILD(guildId, code))
       .put()
   }
 
-  unbanGuildMember(guildID: string, memberID: string, reason?: string) {
+  unbanGuildMember(guildId: string, memberId: string, reason?: string) {
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD_BAN(guildID, memberID))
+      .url(Endpoints.GUILD_BAN(guildId, memberId))
       .delete({ reason })
   }
 

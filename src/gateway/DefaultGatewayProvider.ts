@@ -60,8 +60,8 @@ export class DefaultGatewayProvider implements GatewayProvider {
     return void 100500
   }
 
-  waitShardSpawnTurn(shardID: number): Promise<unknown> {
-    return this.client.internals.gateway.waitShardSpawnTurn(shardID)
+  waitShardSpawnTurn(shardId: number): Promise<unknown> {
+    return this.client.internals.gateway.waitShardSpawnTurn(shardId)
   }
 
   async init(): Promise<unknown> {

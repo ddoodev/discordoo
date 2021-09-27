@@ -22,12 +22,12 @@ export function packet(
   /**
    * ready and resumed events handling
    * this is necessary to resolve promise returned from WebSocketClient.connect()
-   * and also to set the expected servers, sessionID and to tell discord that we are alive
+   * and also to set the expected servers, sessionId and to tell discord that we are alive
    * */
   switch (packet.t) {
     case 'READY':
 
-      client.sessionID = packet.d.session_id
+      client.sessionId = packet.d.session_id
       client.status = WebSocketClientStates.READY
       client.expectedGuilds = new Set<any>(packet.d.guilds.map(g => g.id))
 

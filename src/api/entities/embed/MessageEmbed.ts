@@ -263,7 +263,7 @@ export class MessageEmbed {
       )
   }
 
-  toJSON(): RawMessageEmbedData {
+  toJson(): RawMessageEmbedData {
     const { title, description, url, color, timestamp, author, footer, image, thumbnail } = this
 
     return {

@@ -10,7 +10,7 @@ export function identify(
 ): GatewayIdentify | GatewayResume {
 
   const mode =
-    (client.sessionID && client.closeSequence > 0) && (!options.useReconnectOnly || options.forceResume)
+    (client.sessionId && client.closeSequence > 0) && (!options.useReconnectOnly || options.forceResume)
     ? 'resume'
     : 'identify'
   const { token } = options
@@ -43,7 +43,7 @@ export function identify(
 
       d = {
         token,
-        session_id: client.sessionID!,
+        session_id: client.sessionId!,
         seq: client.closeSequence
       }
     } break

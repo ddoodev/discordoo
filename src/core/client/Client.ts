@@ -94,7 +94,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
         instance: parseInt(process.env.SHARDING_INSTANCE ?? '0'),
         shards: shards,
         totalShards: shards.length,
-        active: DiscordooSnowflake.deconstruct(MANAGER_IPC).shardID === DiscordooSnowflake.SHARDING_MANAGER_ID,
+        active: DiscordooSnowflake.deconstruct(MANAGER_IPC).shardId === DiscordooSnowflake.SHARDING_MANAGER_Id,
       },
       ipc = new IpcServer(
         this,

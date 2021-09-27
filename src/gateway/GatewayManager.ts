@@ -51,7 +51,7 @@ export class GatewayManager<P extends GatewayProvider = GatewayProvider> {
   }
 
   // @ts-ignore
-  async waitShardSpawnTurn(shardID: number): Promise<unknown> { // TODO
+  async waitShardSpawnTurn(shardId: number): Promise<unknown> { // TODO
     setTimeout(() => Promise.resolve(), 5000)
   }
 

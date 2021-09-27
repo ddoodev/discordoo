@@ -97,8 +97,8 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       result = await this.provider.get<K, V>(keyspace, storage, key)
     }
 
-    const entity: any = EntitiesUtil.get(entityKey)
-    if (result && !(result instanceof entity)) result = await (new entity(this.client, result)).init?.()
+    const Entity: any = EntitiesUtil.get(entityKey)
+    if (result && !(result instanceof Entity)) result = await (new Entity(this.client)).init?.(result)
 
     return result
   }
@@ -502,14 +502,14 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
   private async _prepareData(direction: 'in' | 'out', data: any, entityKey: EntityKey, forIpcRequest?: boolean): Promise<any> {
     const Entity: any = EntitiesUtil.get(entityKey)
 
-    function toJSON(d) {
-      if (d && typeof d.toJSON !== 'undefined') d = d.toJSON()
+    function toJson(d) {
+      if (d && typeof d.toJson === 'function') d = d.toJson()
       else if (d) d = JSON.parse(JSON.stringify(d))
 
       return d
     }
 
-    if (forIpcRequest) return toJSON(data)
+    if (forIpcRequest) return toJson(data)
 
     // 'in' = to the cache provider
     // 'out' = from the cache provider
@@ -517,16 +517,16 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       case 'in':
         switch (this.provider.compatible) {
           case 'classes':
-            if (data && !(data instanceof Entity)) data = await (new Entity(this.client, data)).init?.()
+            if (data && !(data instanceof Entity)) data = await (new Entity(this.client)).init?.(data)
             break
           case 'json':
-            data = toJSON(data)
+            data = toJson(data)
             break
           case 'text':
-            data = JSON.stringify(toJSON(data))
+            data = JSON.stringify(toJson(data))
             break
           case 'buffer':
-            data = Buffer.from(toJSON(data))
+            data = Buffer.from(toJson(data))
             break
         }
         break
@@ -535,13 +535,13 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
           switch (this.provider.compatible) {
             case 'classes':
             case 'json':
-              data = new Entity(this.client, data).init?.()
+              data = new Entity(this.client).init?.(data)
               break
             case 'text':
-              data = new Entity(this.client, JSON.parse(data)).init?.()
+              data = new Entity(this.client).init?.(JSON.parse(data))
               break
             case 'buffer':
-              data = new Entity(this.client, JSON.parse(data.toString('utf8'))).init?.()
+              data = new Entity(this.client).init?.(JSON.parse(data.toString('utf8')))
               break
           }
         }

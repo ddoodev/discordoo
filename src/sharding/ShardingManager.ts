@@ -41,7 +41,7 @@ export class ShardingManager extends TypedEmitter<ShardingManagerEvents> {
     this.options = options
 
     const shards = resolveDiscordShards(options.shards),
-      id = DiscordooSnowflake.generate(DiscordooSnowflake.SHARDING_MANAGER_ID, process.pid)
+      id = DiscordooSnowflake.generate(DiscordooSnowflake.SHARDING_MANAGER_Id, process.pid)
 
     this.internals = {
       id,
