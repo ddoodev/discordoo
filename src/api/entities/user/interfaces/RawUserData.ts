@@ -1,17 +1,17 @@
-export interface UserData {
+export interface RawUserData {
   id: string
   username: string
   discriminator: string
   avatar?: string
   bot?: boolean
   system?: boolean
-  mfaEnabled?: boolean
+  mfa_enabled?: boolean
   banner?: string
-  accentColor?: number
+  accent_color?: number
   locale?: string
   verified?: boolean
   email?: string
   flags?: number
-  premiumType?: number
-  publicFlags?: number
+  premium_type?: number
+  public_flags?: number
 }

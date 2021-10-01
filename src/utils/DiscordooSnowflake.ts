@@ -1,7 +1,8 @@
 import { DeconstructedDiscordooSnowflake } from '@src/utils/interfaces/DeconstructedSnowflake'
 import { DiscordooError } from '@src/utils/DiscordooError'
+import { DISCORDOO_EPOCH } from '@src/constants/common'
 
-const EPOCH = 1609459200000 // 2021-01-01T00:00:00.000Z
+const EPOCH = DISCORDOO_EPOCH
 let INCREMENT = 0
 
 /**
@@ -9,7 +10,7 @@ let INCREMENT = 0
  * */
 export class DiscordooSnowflake {
   // used to identify sharding managers in snowflakes
-  public static readonly SHARDING_MANAGER_Id = 1_111_111_111
+  public static readonly SHARDING_MANAGER_ID = 1_111_111_111
 
   /**
    * Custom twitter snowflake: DiscordooSnowflake.

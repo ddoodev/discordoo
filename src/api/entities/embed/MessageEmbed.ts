@@ -31,11 +31,11 @@ export class MessageEmbed {
   public provider?: MessageEmbedProviderData
 
   constructor(data: MessageEmbedData | RawMessageEmbedData | MessageEmbed = {}) {
-    if (!is<MessageEmbedData>(data) || !(data instanceof this.constructor)) {
+    if (!is<MessageEmbedData | RawMessageEmbedData>(data) || !(data instanceof this.constructor)) {
       throw new ValidationError('MessageEmbed', 'Incorrect message embed data:', data)
     }
 
-    this._create(is<RawMessageEmbedData>(data) ? this._resolveJSON(data) : data)
+    this._create(is<RawMessageEmbedData>(data) ? MessageEmbed._resolveJson(data) : data)
   }
 
   private _create(data: MessageEmbedData  | MessageEmbed): this {
@@ -275,7 +275,7 @@ export class MessageEmbed {
     }
   }
 
-  private _resolveJSON(data: RawMessageEmbedData): MessageEmbedData {
+  private static _resolveJson(data: RawMessageEmbedData): MessageEmbedData {
     const { title, description, url, color, timestamp, author, footer, image, video, thumbnail: thumb, provider } = data
 
     return {
