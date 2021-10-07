@@ -1,4 +1,3 @@
-import { GatewayIdentifyProperties, GatewayPresenceUpdateData } from 'discord-api-types/gateway/v9'
 import { ShardListResolvable } from '@src/utils'
 
 export interface GatewayOptions {
@@ -10,7 +9,7 @@ export interface GatewayOptions {
    * Connection properties.
    * @see https://discord.com/developers/docs/topics/gateway#identify-identify-connection-properties
    * */
-  properties: GatewayIdentifyProperties
+  properties: any // TODO
 
   /**
    * Whether this connection supports compression of packets.
@@ -32,7 +31,7 @@ export interface GatewayOptions {
    *
    * @see https://discord.com/developers/docs/topics/gateway#update-status
    * */
-  presence?: GatewayPresenceUpdateData
+  presence?: any // TODO
   /**
    * The Gateway Intents you wish to receive
    *

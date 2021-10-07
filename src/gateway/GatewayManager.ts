@@ -37,6 +37,10 @@ export class GatewayManager<P extends GatewayProvider = GatewayProvider> {
     return this.provider.reorganizeShards(shards)
   }
 
+  reconnect(shards?: number[]) {
+    return this.provider.reconnect(shards)
+  }
+
   async getGateway(): Promise<GatewayBotInfo> {
     const response = await this.client.internals.rest.api()
       .url(Endpoints.GATEWAY_BOT())

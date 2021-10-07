@@ -1,6 +1,6 @@
 export interface MessageEmbedAttachmentData {
   url: string
-  proxyURL?: string
+  proxyUrl?: string
   height?: number
   width?: number
 }

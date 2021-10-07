@@ -17,7 +17,7 @@ import {
 } from '@src/cache/interfaces'
 import { CacheProvider, CacheStorageKey } from '@discordoo/providers'
 
-export class EntitiesCacheManager<Entity, EntityData = any> extends EntitiesManager {
+export class EntitiesCacheManager<Entity> extends EntitiesManager {
   private readonly entityKey: EntityKey
   private readonly policy: keyof CachingOptions
   public readonly keyspace: string
@@ -106,7 +106,7 @@ export class EntitiesCacheManager<Entity, EntityData = any> extends EntitiesMana
     )
   }
 
-  async set(key: string, value: Entity, options?: CacheManagerSetOptions): Promise<EntitiesCacheManager<Entity, EntityData>> {
+  async set(key: string, value: Entity, options?: CacheManagerSetOptions): Promise<EntitiesCacheManager<Entity>> {
     const allowed = this.client.internals.cache[Symbol.for('_ddooPoliciesProcessor')][this.policy](value)
 
     if (allowed) {

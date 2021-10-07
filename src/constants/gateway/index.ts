@@ -1,3 +1,4 @@
+export { WebSocketDispatchEvents } from '@src/constants/gateway/WebSocketDispatchEvents'
 export { WebSocketManagerStates } from '@src/constants/gateway/WebSocketManagerStates'
 export { WebSocketClientEvents } from '@src/constants/gateway/WebSocketClientEvents'
 export { WebSocketClientStates } from '@src/constants/gateway/WebSocketClientStates'

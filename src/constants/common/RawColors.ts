@@ -4,6 +4,7 @@ export enum RawColors {
   GREEN = 5763719,
   PURPLE = 15418782,
   BLURPLE = 5793266,
+  OLD_BLURPLE = 7506394,
   WHITE = 16777215,
   BLACK = 0,
 }

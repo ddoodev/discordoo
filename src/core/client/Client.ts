@@ -20,6 +20,7 @@ import { RestManager } from '@src/rest/RestManager'
 import { Final } from '@src/utils/FinalDecorator'
 import { ClientEvents, MessageCreateEvent } from '@src/events'
 import { EntitiesUtil } from '@src/api'
+import { ClientMessagesManager } from '@src/api/managers/messages/ClientMessagesManager'
 
 /** Entry point for all of Discordoo. */
 @Final('start', 'internals', 'guilds', 'token')
@@ -36,6 +37,9 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
 
   /** Guilds manager of this client */
   public guilds: GuildsManager
+
+  /** Messages manager of this client */
+  public messages: ClientMessagesManager
 
   constructor(token: string, options: ClientOptions = {}) {
     super()
@@ -57,7 +61,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
       gatewayProvider: ProviderConstructor<ClientStack['gateway']> = DefaultGatewayProvider,
       restProviderOptions = restOptions, gatewayProviderOptions = gatewayOptions, cacheProviderOptions
 
-    const shards = resolveDiscordShards(gatewayProviderOptions.shards || [ 0 ]),
+    const shards = resolveDiscordShards(gatewayProviderOptions.shards ?? [ 0 ]),
       MANAGER_IPC = process.env.SHARDING_MANAGER_IPC ?? DiscordooSnowflake.generatePartial(),
       INSTANCE_IPC = process.env.SHARDING_INSTANCE_IPC ?? DiscordooSnowflake.generatePartial()
 
@@ -130,6 +134,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
     this.internals.events.register([ MessageCreateEvent ]) // TODO
 
     this.guilds = new GuildsManager(this)
+    this.messages = new ClientMessagesManager(this)
   }
 
   async start(): Promise<Client<ClientStack>> {

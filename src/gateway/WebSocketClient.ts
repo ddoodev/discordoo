@@ -159,7 +159,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
   /**
    * this method operates with handshake timeout:
    * when handshake did not occur at the specified time,
-   * reconnects client
+   * it reconnects the client
    * */
   public handshakeTimeout(create = true) {
     if (this._handshakeTimeout) {

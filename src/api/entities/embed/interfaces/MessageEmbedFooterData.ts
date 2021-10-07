@@ -1,5 +1,5 @@
 export interface MessageEmbedFooterData {
   text: string
-  iconURL?: string
-  proxyIconURL?: string
+  iconUrl?: string
+  proxyIconUrl?: string
 }

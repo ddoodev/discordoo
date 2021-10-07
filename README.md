@@ -156,7 +156,7 @@ Release deadline: October 30, 2021
 * [ ] Entities managers
   * [ ] BaseManager
   * [ ] GuildsManager
-  * [ ] MessagesManager
+  * [ ] ChannelMessagesManager
   * [ ] ChannelsManager
   * [ ] EmojisManager
   * [ ] RolesManager

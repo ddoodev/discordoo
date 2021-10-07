@@ -1,5 +1,4 @@
 import { BufferResolvable } from '@src/api/entities/interfaces/BufferResolvable'
-import { Readable } from 'stream'
 import { ResolveBufferOptions } from '@src/utils/interfaces/ResolveBufferOptions'
 import { request } from 'undici'
 import { DiscordooError } from '@src/utils/DiscordooError'
@@ -11,12 +10,19 @@ const read = promisify(fs.readFile)
 
 export class DataResolver {
   static async resolveBuffer(buffer: BufferResolvable, options?: ResolveBufferOptions): Promise<Buffer | ArrayBuffer> {
-    if (Buffer.isBuffer(buffer)) return buffer
+    if (Buffer.isBuffer(buffer) || buffer instanceof ArrayBuffer) return buffer
 
-    if (buffer instanceof Readable) {
-      const buffers: Buffer[] = []
-      for await (const data of buffer) buffers.push(data)
-      return Buffer.concat(buffers)
+    if (typeof buffer === 'object' && typeof buffer.pipe === 'function') {
+      return new Promise<Buffer>((resolve, reject) => {
+
+        const _buf: any[] = []
+
+        buffer.on('data', chunk => _buf.push(chunk))
+        buffer.on('end', () => resolve(Buffer.concat(_buf)))
+        buffer.on('error', err => reject(`error converting stream - ${err}`))
+
+      })
+
     }
 
     if (typeof buffer === 'string') {

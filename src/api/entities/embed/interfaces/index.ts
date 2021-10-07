@@ -1,4 +1,5 @@
 export { MessageEmbedProviderData } from '@src/api/entities/embed/interfaces/MessageEmbedProviderData'
+export { MessageEmbedResolvable } from '@src/api/entities/embed/interfaces/MessageEmbedResolvable'
 export { MessageEmbedAuthorData } from '@src/api/entities/embed/interfaces/MessageEmbedAuthorData'
 export { MessageEmbedFieldData } from '@src/api/entities/embed/interfaces/MessageEmbedFieldData'
 export { RawMessageEmbedData } from '@src/api/entities/embed/interfaces/RawMessageEmbedData'

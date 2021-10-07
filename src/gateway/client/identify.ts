@@ -1,13 +1,12 @@
 import { WebSocketClient } from '@src/gateway/WebSocketClient'
 import { IdentifyOptions } from '@src/gateway/interfaces/IdentifyOptions'
 import { WebSocketClientStates, WebSocketOpCodes } from '@src/constants'
-import { GatewayIdentify, GatewayIdentifyData, GatewayResume, GatewayResumeData } from 'discord-api-types'
 
 // creates discord api identify payload
 export function identify(
   client: WebSocketClient,
   options: IdentifyOptions
-): GatewayIdentify | GatewayResume {
+): any { // TODO
 
   const mode =
     (client.sessionId && client.closeSequence > 0) && (!options.useReconnectOnly || options.forceResume)
@@ -17,7 +16,7 @@ export function identify(
 
   // console.log('shard', client.id, mode)
 
-  let d: GatewayIdentifyData | GatewayResumeData,
+  let d: any, // TODO
     op: WebSocketOpCodes.IDENTIFY | WebSocketOpCodes.RESUME
 
   switch (mode) {
@@ -51,5 +50,5 @@ export function identify(
 
   return {
     d, op
-  } as unknown as GatewayIdentify | GatewayResume
+  } as unknown as any // TODO
 }

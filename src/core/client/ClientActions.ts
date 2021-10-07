@@ -1,5 +1,8 @@
 import { Client } from '@src/core'
 import { Endpoints } from '@src/constants'
+import { MessageCreateData } from '@src/api/entities/message/interfaces/MessageCreateData'
+import { RestFailedResponse, RestFinishedResponse, RestSuccessfulResponse } from '@discordoo/providers'
+import { RawMessageData } from '@src/api/entities/message/interfaces/RawMessageData'
 
 export class ClientActions {
   public client: Client
@@ -65,6 +68,26 @@ export class ClientActions {
       .url(Endpoints.GUILD_TEMPLATES(guildId))
       .body({ name, description })
       .post()
+  }
+
+  createMessage(channelId: string, data: MessageCreateData): RestFinishedResponse<RawMessageData> {
+    const request = this.client.internals.rest.api().url(Endpoints.CHANNEL_MESSAGES(channelId))
+
+    if (data.files.length) {
+      request.attach(...data.files)
+    }
+
+    request.body({
+      content: data.content,
+      tts: data.tts,
+      embeds: data.embeds.length ? data.embeds : undefined,
+      allowed_mentions: data.allowed_mentions,
+      message_reference: data.message_reference,
+      sticker_ids: data.stickers,
+      components: data.components
+    })
+
+    return request.post()
   }
 
   deleteGuild(guildId: string) {

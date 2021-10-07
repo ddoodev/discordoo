@@ -48,6 +48,15 @@ export class DefaultGatewayProvider implements GatewayProvider {
     return this.manager.connect(shards)
   }
 
+  async reconnect(shards?: number[]): Promise<unknown> {
+    switch (Array.isArray(shards)) {
+      case true:
+        return shards!.forEach(shard => this.manager.shards.get(shard)?.destroy({ reconnect: true }))
+      case false:
+        return this.manager.shards.forEach(shard => shard.destroy({ reconnect: true }))
+    }
+  }
+
   send(data: Record<string, any>, shards?: number[]): unknown {
     switch (Array.isArray(shards)) {
       case true:

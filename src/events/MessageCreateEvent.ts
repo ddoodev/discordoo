@@ -1,12 +1,12 @@
 import { AbstractEvent } from '@src/events/AbstractEvent'
-import { MessageData } from '@src/api/entities/message'
 import { EventsNames } from '@src/constants'
 import { EntitiesUtil } from '@src/api'
+import { RawMessageData } from '@src/api/entities/message/interfaces/RawMessageData'
 
 export class MessageCreateEvent extends AbstractEvent {
   public name = EventsNames.MESSAGE_CREATE
 
-  async execute(data: MessageData) {
+  async execute(data: RawMessageData) {
     const Message = EntitiesUtil.get('Message')
 
     const msg = await new Message(this.client).init(data)

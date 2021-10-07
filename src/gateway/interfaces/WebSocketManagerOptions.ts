@@ -1,5 +1,3 @@
-import { GatewayIdentifyProperties, GatewayPresenceUpdateData } from 'discord-api-types/gateway/v9'
-
 export interface WebSocketManagerOptions {
   totalShards: number
   shards: number[]
@@ -10,6 +8,6 @@ export interface WebSocketManagerOptions {
   encoding: 'json' | 'etf'
   token: string
   intents: number
-  properties: GatewayIdentifyProperties
-  presence: GatewayPresenceUpdateData
+  properties: any // TODO
+  presence: any // TODO
 }

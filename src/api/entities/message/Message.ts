@@ -1,6 +1,6 @@
 import { AbstractEntity } from '@src/api/entities/AbstractEntity'
-import { MessageData } from '@src/api/entities/message/interfaces'
 import { User } from '@src/api/entities/user/User'
+import { RawMessageData } from '@src/api/entities/message/interfaces/RawMessageData'
 
 export class Message extends AbstractEntity {
   public id!: string
@@ -15,7 +15,7 @@ export class Message extends AbstractEntity {
     return this.author.id === this.client.user.id
   }*/
 
-  async init(data: MessageData): Promise<this> {
+  async init(data: RawMessageData): Promise<this> {
     this.id = data.id
     this.channelId = data.channel_id
 

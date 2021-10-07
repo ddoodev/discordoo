@@ -6,10 +6,11 @@ import { ClientShardingMetadata } from '@src/core/client/ClientShardingMetadata'
 import { ClientActions } from '@src/core/client/ClientActions'
 import { ClientMetadata } from '@src/core/client/ClientMetadata'
 import { ClientEvents } from '@src/events'
+import { IpcServer } from '@src/sharding'
 
 export interface ClientInternals<ClientStack extends DefaultClientStack = DefaultClientStack> {
   /** Inter-process communication server used by this client */
-  ipc: ClientStack['ipc']
+  ipc: IpcServer
 
   /** RestManager used by this client */
   rest: RestManager<ClientStack['rest']>

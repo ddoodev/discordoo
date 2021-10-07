@@ -1,13 +1,11 @@
-import { TypedEmitter } from 'tiny-typed-emitter'
 import { Collection } from '@discordoo/collection'
-import { WebSocketManagerEvents } from '@src/gateway/interfaces/WebSocketManagerEvents'
 import { WebSocketClient } from '@src/gateway/WebSocketClient'
 import { WebSocketClientEvents, WebSocketClientStates, WebSocketManagerStates } from '@src/constants'
 import { DiscordooError } from '@src/utils'
 import { GatewayProvider, GatewayShardsInfo } from '@discordoo/providers'
 import { WebSocketManagerOptions } from '@src/gateway/interfaces/WebSocketManagerOptions'
 
-export class WebSocketManager extends TypedEmitter<WebSocketManagerEvents> {
+export class WebSocketManager {
   public readonly options: WebSocketManagerOptions
 
   public provider: GatewayProvider
@@ -18,8 +16,6 @@ export class WebSocketManager extends TypedEmitter<WebSocketManagerEvents> {
   private shardQueue = new Set<WebSocketClient>()
 
   constructor(provider: GatewayProvider, options: WebSocketManagerOptions) {
-    super()
-
     this.options = options
     this.status = WebSocketManagerStates.CREATED
     this.provider = provider

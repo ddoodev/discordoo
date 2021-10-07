@@ -1,6 +1,6 @@
 import { MessageEmbedData } from '@src/api/entities/embed/interfaces/MessageEmbedData'
 import { is } from 'typescript-is'
-import { ValidationError } from '@src/utils'
+import { mergeNewOrSave, ValidationError } from '@src/utils'
 import { MessageEmbedTypes } from '@src/constants'
 import { MessageEmbedFieldData } from '@src/api/entities/embed/interfaces/MessageEmbedFieldData'
 import { MessageEmbedAuthorData } from '@src/api/entities/embed/interfaces/MessageEmbedAuthorData'
@@ -30,40 +30,30 @@ export class MessageEmbed {
   public footer?: MessageEmbedFooterData
   public provider?: MessageEmbedProviderData
 
-  constructor(data: MessageEmbedData | RawMessageEmbedData | MessageEmbed = {}) {
-    if (!is<MessageEmbedData | RawMessageEmbedData>(data) || !(data instanceof this.constructor)) {
-      throw new ValidationError('MessageEmbed', 'Incorrect message embed data:', data)
-    }
-
+  constructor(data?: MessageEmbedData | RawMessageEmbedData | MessageEmbed) {
     this._create(is<RawMessageEmbedData>(data) ? MessageEmbed._resolveJson(data) : data)
   }
 
-  private _create(data: MessageEmbedData  | MessageEmbed): this {
+  private _create(data: MessageEmbedData  | MessageEmbed = {}): this {
     this.type = data.type ?? MessageEmbedTypes.RICH
 
-    this.title = data.title ?? undefined
-
-    this.description = data.description ?? undefined
-
-    this.url = data.url ?? undefined
+    mergeNewOrSave(this, data, [
+      'title',
+      'description',
+      'url',
+      'author',
+      'thumbnail',
+      'image',
+      'video',
+      'footer',
+      'provider'
+    ])
 
     this.timestamp = data.timestamp ? new Date(data.timestamp).getTime() : undefined
 
     this.color = data.color ? resolveColor(data.color) : undefined
 
     this.fields = data.fields ? this._fixFields(data.fields) : []
-
-    this.author = data.author ?? undefined
-
-    this.thumbnail = data.thumbnail ?? undefined
-
-    this.image = data.image ?? undefined
-
-    this.video = data.video ?? undefined
-
-    this.footer = data.footer ?? undefined
-
-    this.provider = data.provider ?? undefined
 
     return this
   }
@@ -160,7 +150,7 @@ export class MessageEmbed {
       throw new ValidationError('MessageEmbed', 'Incorrect icon: must be string or null')
     }
 
-    this.footer = is<null>(text) ? undefined : { text, iconURL: is<null>(icon) ? undefined : icon }
+    this.footer = is<null>(text) ? undefined : { text, iconUrl: is<null>(icon) ? undefined : icon }
     return this
   }
 
@@ -169,7 +159,7 @@ export class MessageEmbed {
       throw new ValidationError('MessageEmbed', 'Incorrect footer text: must be string or null')
     }
 
-    this.footer = is<null>(text) ? undefined : { text, iconURL: this.footer?.iconURL }
+    this.footer = is<null>(text) ? undefined : { text, iconUrl: this.footer?.iconUrl }
     return this
   }
 
@@ -184,7 +174,7 @@ export class MessageEmbed {
       throw new ValidationError('MessageEmbed', 'Incorrect footer: cannot update footer image without footer text')
     }
 
-    this.footer = (isNull && !this.footer?.text) ? undefined : { text: this.footer!.text, iconURL: isNull ? undefined : url }
+    this.footer = (isNull && !this.footer?.text) ? undefined : { text: this.footer!.text, iconUrl: isNull ? undefined : url }
     return this
   }
 
@@ -247,7 +237,7 @@ export class MessageEmbed {
     return this
   }
 
-  setURL(url: string): this {
+  setUrl(url: string): this {
     if (!is<string | null>(url)) {
       throw new ValidationError('MessageEmbed', 'Incorrect url: must be string or null')
     }
@@ -268,8 +258,8 @@ export class MessageEmbed {
 
     return {
       type: MessageEmbedTypes.RICH, title, description, url, color, timestamp,
-      author: author ? { name: author.name, url: author.url, icon_url: author.iconURL } : undefined,
-      footer: footer ? { text: footer.text, icon_url: footer.iconURL } : undefined,
+      author: author ? { name: author.name, url: author.url, icon_url: author.iconUrl } : undefined,
+      footer: footer ? { text: footer.text, icon_url: footer.iconUrl } : undefined,
       image: image ? { url: image.url } : undefined,
       thumbnail: thumbnail ? { url: thumbnail.url } : undefined,
     }
@@ -280,11 +270,11 @@ export class MessageEmbed {
 
     return {
       type: MessageEmbedTypes.RICH, title, description, url, color, timestamp, provider,
-      author: author ? { name: author.name, url: author.url, iconURL: author.icon_url } : undefined,
-      footer: footer ? { text: footer.text, iconURL: footer.icon_url } : undefined,
-      image: image ? { url: image.url, proxyURL: image.proxy_url, width: image.width, height: image.height } : undefined,
-      thumbnail: thumb ? { url: thumb.url, proxyURL: thumb.proxy_url, width: thumb.width, height: thumb.height } : undefined,
-      video: video ? { url: video.url, proxyURL: video.proxy_url, width: video.width, height: video.height } : undefined,
+      author: author ? { name: author.name, url: author.url, iconUrl: author.icon_url } : undefined,
+      footer: footer ? { text: footer.text, iconUrl: footer.icon_url } : undefined,
+      image: image ? { url: image.url, proxyUrl: image.proxy_url, width: image.width, height: image.height } : undefined,
+      thumbnail: thumb ? { url: thumb.url, proxyUrl: thumb.proxy_url, width: thumb.width, height: thumb.height } : undefined,
+      video: video ? { url: video.url, proxyUrl: video.proxy_url, width: video.width, height: video.height } : undefined,
     }
   }
 
