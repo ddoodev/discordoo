@@ -1,5 +1,6 @@
-import { GatewayOptions } from '@src/gateway'
-import { IntentsUtil, WebSocketUtils } from '@src/utils'
+import { GatewayOptions } from '@src/gateway/interfaces/GatewayOptions'
+import { WebSocketUtils } from '@src/utils/WebSocketUtils'
+import { IntentsUtil } from '@src/utils/IntentsUtil'
 
 export const WS_DEFAULT_OPTIONS: Required<Omit<GatewayOptions, 'token' | 'presence'>> = {
   properties: {

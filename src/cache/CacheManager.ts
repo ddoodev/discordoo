@@ -97,7 +97,8 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       result = await this.provider.get<K, V>(keyspace, storage, key)
     }
 
-    const Entity: any = EntitiesUtil.get(entityKey)
+    const k = typeof entityKey === 'function' ? entityKey(result) : entityKey
+    const Entity: any = EntitiesUtil.get(k)
     if (result && !(result instanceof Entity)) result = await (new Entity(this.client)).init?.(result)
 
     return result
@@ -500,7 +501,8 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
   }
 
   private async _prepareData(direction: 'in' | 'out', data: any, entityKey: EntityKey, forIpcRequest?: boolean): Promise<any> {
-    const Entity: any = EntitiesUtil.get(entityKey)
+    const k = typeof entityKey === 'function' ? entityKey(data) : entityKey
+    const Entity: any = EntitiesUtil.get(k)
 
     function toJson(d) {
       if (d && typeof d.toJson === 'function') d = d.toJson()

@@ -90,6 +90,12 @@ export class ClientActions {
     return request.post()
   }
 
+  deleteChannel(channelId: string, reason?: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.CHANNEL(channelId))
+      .delete({ reason })
+  }
+
   deleteGuild(guildId: string) {
     return this.client.internals.rest.api()
       .url(Endpoints.GUILD(guildId))

@@ -5,7 +5,7 @@ import { RawMessageData } from '@src/api/entities/message/interfaces/RawMessageD
 export class Message extends AbstractEntity {
   public id!: string
   public channelId!: string
-  public content?: string
+  public content!: string
   public author?: User
 
   // TODO
@@ -19,7 +19,7 @@ export class Message extends AbstractEntity {
     this.id = data.id
     this.channelId = data.channel_id
 
-    this.content = data.content ??= this.content ??= undefined
+    this.content = data.content ??= this.content
 
     if (data.author) {
       this.author = new User(this.client)

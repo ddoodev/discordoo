@@ -21,6 +21,7 @@ import { Final } from '@src/utils/FinalDecorator'
 import { ClientEvents, MessageCreateEvent } from '@src/events'
 import { EntitiesUtil } from '@src/api'
 import { ClientMessagesManager } from '@src/api/managers/messages/ClientMessagesManager'
+import { ClientChannelsManager } from '@src/api/managers/channels/ClientChannelsManager'
 
 /** Entry point for all of Discordoo. */
 @Final('start', 'internals', 'guilds', 'token')
@@ -40,6 +41,9 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
 
   /** Messages manager of this client */
   public messages: ClientMessagesManager
+
+  /** Channels manager of this client */
+  public channels: ClientChannelsManager
 
   constructor(token: string, options: ClientOptions = {}) {
     super()
@@ -135,6 +139,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
 
     this.guilds = new GuildsManager(this)
     this.messages = new ClientMessagesManager(this)
+    this.channels = new ClientChannelsManager(this)
   }
 
   async start(): Promise<Client<ClientStack>> {

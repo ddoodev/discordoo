@@ -1,5 +1,4 @@
 import { Client } from '@src/core'
-import { Resolvable } from '@src/api'
 import { ToJsonProperties } from '@src/api/entities/interfaces/ToJsonProperties'
 import { Json, JsonProperties } from '@src/api/entities/interfaces/Json'
 
@@ -11,12 +10,6 @@ export abstract class AbstractEntity {
   }
 
   abstract init(data: any): Promise<this>
-
-  resolveId(resolvable: Resolvable<any>): string | undefined {
-    if (typeof resolvable === 'string') return resolvable
-
-    return resolvable.id
-  }
 
   toJson(properties: ToJsonProperties, obj?: any): Json {
     const json: Json = {}
