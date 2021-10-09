@@ -40,15 +40,15 @@
 It was built from ground-up to provide better and faster APIs, both internal and external, than existing [Node.js](https://nodejs.org/) libraries offer.
 
 ## Features
-* **Very scalable in any way** — inter-machines sharding, custom modules for events queue
+* **Very scalable in any way** — inter-machines sharding (PLANNED IN 1.2), custom modules for events queue (someone should create an appropriate provider)
 * **Really fast** — this is not a promise, but real tests
 * **Convenient to development** — we create predictable APIs and take care of the convenience of development
-* **Caching policies** — do not store a cache that your bot does not need
-* **Flexible in everything** — you can replace parts of the library as you need using our providers
-* **Safe for large bots** — global-rate-limit synchronization between shards on one machine, the ability to limit the number of events sent by gateway to your bot per second
-* **Convenient to monitor** — any statistics, from v8 to events per second, are available for each sharding instance
+* **Caching policies** — do not store a cache that your bot does not need (PLANNED IN 1.0)
+* **Flexible in everything** — you can replace parts of the library as you need using our providers (PLANNED IN 1.0)
+* **Safe for large bots** — global-rate-limit synchronization between shards on one machine (PLANNED IN 1.4), the ability to limit the number of events sent by gateway to your bot per second (PLANNED IN 1.3)
+* **Convenient to monitor** — any statistics, from v8 to events per second, are available for each sharding instance (PLANNED IN 1.2)
 * **Good TypeScript support** — the library written in TypeScript, so we naturally support integration with TypeScript well
-* **Tested** — critical components tested using various benchmarks, including testing using N|Solid platform
+* **Tested** — critical components tested using various benchmarks, including testing using deep-monitoring systems like [N|Solid](https://nodesource.com/products/nsolid)
 
 ## Let's start
 Node.js v12.18 or newer required.
@@ -57,7 +57,7 @@ Node.js v12.18 or newer required.
 
 ## Benchmarks
 While the library is under development, only Discordoo Collection Benchmarks are available.
-### D.js collection VS ddoo collection
+### Discord.js collection VS Discordoo collection
 You can find these benchmarks [here](https://github.com/Discordoo/collection#djs-collection-vs-ddoo-collection-speed-tests).
 
 ## Planned features
@@ -70,6 +70,10 @@ You can find these benchmarks [here](https://github.com/Discordoo/collection#djs
 A complete description of everything that must be in Discordoo to be released
 
 Release deadline: October 30, 2021
+
+*please read this*
+![image](https://user-images.githubusercontent.com/44965055/136671190-e9bd4dd1-f124-4670-8cd0-25c0790fb39c.png)
+
 ### Sharding
 * [x] Implement sharding
 * [x] Shards spawning
@@ -88,10 +92,9 @@ Release deadline: October 30, 2021
   * [ ] User must be able to destroy shard(s)
   * [ ] User must be able to get shard(s) statistics
     * [ ] v8 statistics
-    * [ ] eventloop lag
     * [ ] custom statistics
-    * [ ] events per gateway shard per second statistics
-    * [ ] common statistics (guilds in cache, users in cache, channels in cache, other)
+    * [ ] events per gateway shard per second
+    * [ ] common statistics (guilds in cache, users in cache, channels in cache, etc.)
   * [ ] User-friendly sharding APIs in sharding instances
   
 ### Gateway
@@ -104,8 +107,8 @@ Release deadline: October 30, 2021
 * [x] Multi gateway shards support in one WebSocketManager instance
 * [ ] Processing events/s smoothing/limiting
 * [ ] Handling gateway rate limits
-* [ ] Send events to WebSocketManager, and then to GatewayProvider
-* [ ] Gateway must be able to restart only specified shard(s)
+* [x] Send events to WebSocketManager, and then to GatewayProvider
+* [x] Gateway must be able to restart only specified shard(s)
 
 ### Rest
 * [x] Implement rest
@@ -129,38 +132,41 @@ Release deadline: October 30, 2021
 * [x] Library must be able to operate with cache in a different shards from one shard
 * [x] Caching policies
   * [x] Cache must handle GlobalCachingPolicy
-  * [ ] Cache must handle MessagesCachingPolicy
-  * [ ] Cache must handle GuildsCachingPolicy
-  * [ ] Cache must handle MembersCachingPolicy
-  * [ ] Cache must handle ChannelsCachingPolicy
-  * [ ] Cache must handle EmojisCachingPolicy
-  * [ ] Cache must handle RolesCachingPolicy
-  * [ ] Cache must handle PresencesCachingPolicy
-  * [ ] Cache must handle UsersCachingPolicy
+  * [x] Cache must handle MessagesCachingPolicy
+  * [x] Cache must handle GuildsCachingPolicy
+  * [x] Cache must handle MembersCachingPolicy
+  * [x] Cache must handle ChannelsCachingPolicy
+  * [x] Cache must handle EmojisCachingPolicy
+  * [x] Cache must handle RolesCachingPolicy
+  * [x] Cache must handle PresencesCachingPolicy
+  * [x] Cache must handle UsersCachingPolicy
   * [x] All the policies listed above must be able to handle custom caching functions
+
+SID - still in development
   
 ### Entities (discord structures)
 * [x] Must be extendable
 * [x] Anti monkey-patch defence
 * [ ] Implement Guilds
-* [ ] Implement Messages
-* [ ] Implement Channels
+* [x] Implement Messages (SID)
+* [x] Implement Channels (SID)
 * [ ] Implement Emojis
 * [ ] Implement Roles
 * [ ] Implement Presences
-* [ ] Implement Users
+* [x] Implement Users (SID)
 
 ### User-land APIs
 * [x] Collection
 * [x] Wrapper
-* [ ] Entities managers
-  * [ ] BaseManager
-  * [ ] GuildsManager
-  * [ ] ChannelMessagesManager
-  * [ ] ChannelsManager
-  * [ ] EmojisManager
-  * [ ] RolesManager
-  * [ ] PresencesManager
+* [x] Entities managers
+  * [x] EntitiesManager
+  * [x] EntitiesCacheManager
+  * [x] GuildsManager (SID)
+  * [x] ChannelMessagesManager/ClientMessagesManager (SID)
+  * [x] GuildChannelsManager/ClientChannelsManager (SID)
+  * [ ] GuildEmojisManager/ClientEmojisManager
+  * [ ] GuildRolesManager/ClientRolesManager
+  * [ ] GuildPresencesManager/ClientPresencesManager
   * [ ] UsersManager
 
 ## Contributing
