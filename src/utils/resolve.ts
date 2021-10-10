@@ -3,7 +3,7 @@ import { RawAttachment } from '@discordoo/providers'
 import { MessageAttachment } from '@src/api/entities/attachment/MessageAttachment'
 import { DataResolver } from '@src/utils/DataResolver'
 import { ColorResolvable } from '@src/api/entities/interfaces/ColorResolvable'
-import { RawColors } from '@src/constants'
+import { EmptyBigBit, EmptyBit, RawColors } from '@src/constants'
 import { DiscordooError } from '@src/utils/DiscordooError'
 import { is } from 'typescript-is'
 import { ValidationError } from '@src/utils/ValidationError'
@@ -12,6 +12,9 @@ import { ChannelResolvable } from '@src/api/entities/channel/interfaces/ChannelR
 import { MessageEmbed, MessageEmbedResolvable, RawMessageEmbedData } from '@src/api/entities/embed'
 import { GuildResolvable } from '@src/api/entities/guild/interfaces/GuildResolvable'
 import { MessageStickerResolvable } from '@src/api/entities/sticker'
+import { BigBitFieldResolvable, BitFieldResolvable } from '@src/api/entities/bitfield/interfaces'
+import { BigBitField } from '@src/api/entities/bitfield/BigBitField'
+import { BitField } from '@src/api/entities/bitfield/BitField'
 
 export function resolveFiles(resolvable: MessageAttachmentResolvable[]): Promise<RawAttachment[]> {
   return Promise.all(resolvable.map(resolveFile))
@@ -47,6 +50,53 @@ export function resolveColor(resolvable: ColorResolvable): number {
   }
 
   return result
+}
+
+const InvalidBitFieldError = (invalid: any) => new DiscordooError(undefined, 'Invalid BitField:', invalid)
+
+export function resolveBigBitField(resolvable: BigBitFieldResolvable, emptyBit: bigint = EmptyBigBit): bigint {
+  if (Array.isArray(resolvable)) {
+    return resolvable.reduce<bigint>((prev, curr) => {
+      return prev | resolveBigBitField(curr, emptyBit)
+    }, emptyBit)
+  }
+
+  switch (typeof resolvable) {
+    case 'number': {
+      if (isNaN(resolvable) || resolvable === Infinity) throw InvalidBitFieldError(resolvable)
+      return BigInt(resolvable)
+    }
+    case 'bigint':
+      return resolvable
+    case 'string':
+      if (resolvable.endsWith('n')) return BigInt(resolvable.slice(0, resolvable.length - 1))
+      break
+    default:
+      if (resolvable instanceof BigBitField) return resolvable.bitfield
+      break
+  }
+
+  throw InvalidBitFieldError(resolvable)
+}
+
+export function resolveBitField(resolvable: BitFieldResolvable, emptyBit: number = EmptyBit): number {
+  if (Array.isArray(resolvable)) {
+    return resolvable.reduce<number>((prev, curr) => {
+      return prev | resolveBitField(curr, emptyBit)
+    }, emptyBit)
+  }
+
+  switch (typeof resolvable) {
+    case 'number': {
+      if (isNaN(resolvable) || resolvable === Infinity) throw InvalidBitFieldError(resolvable)
+      return resolvable
+    }
+    default:
+      if (resolvable instanceof BitField) return resolvable.bitfield
+      break
+  }
+
+  throw InvalidBitFieldError(resolvable)
 }
 
 // TODO: optimize

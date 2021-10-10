@@ -158,6 +158,7 @@ SID - still in development
 ### User-land APIs
 * [x] Collection
 * [x] Wrapper
+* [x] BitField wrappers
 * [x] Entities managers
   * [x] EntitiesManager
   * [x] EntitiesCacheManager
