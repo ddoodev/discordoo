@@ -97,9 +97,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       result = await this.provider.get<K, V>(keyspace, storage, key)
     }
 
-    const k = typeof entityKey === 'function' ? entityKey(result) : entityKey
-    const Entity: any = EntitiesUtil.get(k)
-    if (result && !(result instanceof Entity)) result = await (new Entity(this.client)).init?.(result)
+    result = await this._prepareData('out', result, entityKey)
 
     return result
   }
@@ -504,9 +502,16 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     const k = typeof entityKey === 'function' ? entityKey(data) : entityKey
     const Entity: any = EntitiesUtil.get(k)
 
-    function toJson(d) {
-      if (d && typeof d.toJson === 'function') d = d.toJson()
-      else if (d) d = JSON.parse(JSON.stringify(d))
+    function toJson(d, returnStr?: boolean) {
+      if (d) {
+        if (returnStr) {
+          if (typeof d.toJson === 'function') return JSON.stringify(d.toJson())
+          return JSON.stringify(d)
+        } else {
+          if (typeof d.toJson === 'function') return d.toJson()
+          return JSON.parse(JSON.stringify(d))
+        }
+      }
 
       return d
     }
@@ -525,14 +530,15 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
             data = toJson(data)
             break
           case 'text':
-            data = JSON.stringify(toJson(data))
+            data = toJson(data, true)
             break
           case 'buffer':
-            data = Buffer.from(toJson(data))
+            data = Buffer.from(toJson(data, true))
             break
         }
         break
       case 'out':
+        console.log('HEYYO OUT')
         if (data && !(data instanceof Entity)) {
           switch (this.provider.compatible) {
             case 'classes':
@@ -543,6 +549,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
               data = new Entity(this.client).init?.(JSON.parse(data))
               break
             case 'buffer':
+              console.log('HEYYO OUT BUFFER', data.toString('utf8'))
               data = new Entity(this.client).init?.(JSON.parse(data.toString('utf8')))
               break
           }

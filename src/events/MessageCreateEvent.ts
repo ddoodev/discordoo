@@ -11,6 +11,8 @@ export class MessageCreateEvent extends AbstractEvent {
 
     const msg = await new Message(this.client).init(data)
 
+    await this.client.internals.cache.set('messages', msg.channelId, 'Message', msg.id, msg)
+
     this.client.emit(EventsNames.MESSAGE_CREATE, msg)
   }
 }

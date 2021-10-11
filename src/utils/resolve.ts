@@ -71,9 +71,11 @@ export function resolveBigBitField(resolvable: BigBitFieldResolvable, emptyBit: 
     case 'string':
       if (resolvable.endsWith('n')) return BigInt(resolvable.slice(0, resolvable.length - 1))
       break
-    default:
+    case 'object': {
       if (resolvable instanceof BigBitField) return resolvable.bitfield
-      break
+      if (typeof resolvable.bits === 'string' && resolvable.bits.endsWith('n'))
+        return BigInt(resolvable.bits.slice(0, resolvable.bits.length))
+    } break
   }
 
   throw InvalidBitFieldError(resolvable)
@@ -91,9 +93,10 @@ export function resolveBitField(resolvable: BitFieldResolvable, emptyBit: number
       if (isNaN(resolvable) || resolvable === Infinity) throw InvalidBitFieldError(resolvable)
       return resolvable
     }
-    default:
+    case 'object': {
       if (resolvable instanceof BitField) return resolvable.bitfield
-      break
+      if (typeof resolvable.bits === 'number') return resolvable.bits
+    }
   }
 
   throw InvalidBitFieldError(resolvable)

@@ -1,3 +1,5 @@
+import { BitFieldResolvable } from '@src/api/entities/bitfield'
+
 export interface UserData {
   id: string
   username: string
@@ -13,5 +15,5 @@ export interface UserData {
   email?: string
   flags?: number
   premiumType?: number
-  publicFlags?: number
+  publicFlags?: BitFieldResolvable
 }

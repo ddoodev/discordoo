@@ -1,6 +1,8 @@
 import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 import { User } from '@src/api/entities/user/User'
 import { RawMessageData } from '@src/api/entities/message/interfaces/RawMessageData'
+import { ToJsonProperties } from '@src/api/entities/interfaces/ToJsonProperties'
+import { Json } from '@src/api/entities/interfaces/Json'
 
 export class Message extends AbstractEntity {
   public id!: string
@@ -16,6 +18,7 @@ export class Message extends AbstractEntity {
   }*/
 
   async init(data: RawMessageData): Promise<this> {
+    console.log('MSG INIT DATA!!!!!!!11', data)
     this.id = data.id
     this.channelId = data.channel_id
 
@@ -29,5 +32,9 @@ export class Message extends AbstractEntity {
     }
 
     return this
+  }
+
+  toJson(properties: ToJsonProperties, obj?: any): Json {
+    return super.toJson({ ...properties, id: true, channelId: true, content: true, author: true }, obj)
   }
 }

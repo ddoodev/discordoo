@@ -8,7 +8,7 @@ export abstract class BitField {
   public bitfield: number
   public emptyBit = EmptyBit
 
-  protected constructor(bits: BitFieldResolvable = EmptyBit) {
+  constructor(bits: BitFieldResolvable = EmptyBit) {
     this.bitfield = resolveBitField(bits, this.emptyBit)
   }
 

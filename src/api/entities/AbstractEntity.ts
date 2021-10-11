@@ -40,6 +40,7 @@ export abstract class AbstractEntity {
       case 'bigint':
         return data.toString() + 'n'
       case 'object': {
+        if (typeof data.toJson === 'function') return data.toJson()
         return JSON.parse(JSON.stringify(data, (k, v) => typeof v === 'bigint' ? v.toString() + 'n' : v))
       }
     }

@@ -57,7 +57,8 @@ export class DefaultCacheProvider implements CacheProvider {
       let result
 
       space.forEach(store => {
-        result = store.get(key)
+        const r = store.get(key)
+        if (r) result = r
       })
 
       return result

@@ -15,7 +15,7 @@ export class Permissions extends BigBitField {
     return PermissionsFlags.MANAGE_CHANNELS | PermissionsFlags.MUTE_MEMBERS | PermissionsFlags.MOVE_MEMBERS
   }
 
-  static get MANAGE_CHANNELS_PERMISSIONS(): bigint {
+  static get MANAGE_CHANNELS_PERMISSION(): bigint {
     return PermissionsFlags.MANAGE_ROLES
   }
 
