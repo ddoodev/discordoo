@@ -1,6 +1,7 @@
 import { Client } from '@src/core'
 import { ToJsonProperties } from '@src/api/entities/interfaces/ToJsonProperties'
 import { Json, JsonProperties } from '@src/api/entities/interfaces/Json'
+import { ToJsonOverrideSymbol } from '@src/constants'
 
 export abstract class AbstractEntity {
   public client: Client
@@ -22,7 +23,8 @@ export abstract class AbstractEntity {
       const prop = properties[key], value = target[key]
 
       if (typeof prop === 'object') {
-        json[key] = this.toJson(prop, target)
+        if (prop.override === ToJsonOverrideSymbol) json[key] = AbstractEntity._handle(prop.value)
+        else json[key] = this.toJson(prop as any, target)
       } else if (prop) {
         json[key] = AbstractEntity._handle(value)
       }

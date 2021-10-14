@@ -10,6 +10,7 @@ export abstract class AbstractGuildChannel extends AbstractChannel implements Ab
   public position!: number
 
   async members(): Promise<any[]> { // TODO: GuildMember[]
+    const predicate = (member: any /** TODO: GuildMember */) => 12
     // TODO
     // @ts-ignore
     return this.client.internals.cache.filter('members', this.id, 'GuildMember')

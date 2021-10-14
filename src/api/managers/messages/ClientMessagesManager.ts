@@ -3,7 +3,15 @@ import { Client } from '@src/core'
 import { ChannelResolvable } from '@src/api/entities/channel/interfaces/ChannelResolvable'
 import { MessageContent } from '@src/api/entities/message/interfaces/MessageContent'
 import { SendOptions } from '@src/api/entities/message/interfaces/SendOptions'
-import { resolveChannel, resolveEmbed, resolveFile, resolveFiles, resolveGuild, resolveMessage, resolveSticker } from '@src/utils/resolve'
+import {
+  resolveChannelId,
+  resolveEmbed,
+  resolveFile,
+  resolveFiles,
+  resolveGuildId,
+  resolveMessageId,
+  resolveStickerId
+} from '@src/utils/resolve'
 import { MessageCreateData } from '@src/api/entities/message/interfaces/MessageCreateData'
 import { MessageEmbed } from '@src/api/entities/embed'
 import { MessageAttachment } from '@src/api/entities/attachment/MessageAttachment'
@@ -24,7 +32,7 @@ export class ClientMessagesManager extends EntitiesManager {
   }
 
   async create(channel: ChannelResolvable, content: MessageContent, options: SendOptions = {}): Promise<Message | undefined> {
-    const channelId = resolveChannel(channel)
+    const channelId = resolveChannelId(channel)
 
     const payload: MessageCreateData = {
       content: undefined,
@@ -51,9 +59,9 @@ export class ClientMessagesManager extends EntitiesManager {
       const { referenceGuild, referenceChannel, referenceMessage, guild_id, channel_id, message_id } = options.messageReference
 
       payload.message_reference = {
-        guild_id: guild_id ?? resolveGuild(referenceGuild),
-        channel_id: channel_id ?? resolveChannel(referenceChannel),
-        message_id: message_id ?? resolveMessage(referenceMessage)
+        guild_id: guild_id ?? resolveGuildId(referenceGuild),
+        channel_id: channel_id ?? resolveChannelId(referenceChannel),
+        message_id: message_id ?? resolveMessageId(referenceMessage)
       }
     }
 
@@ -66,8 +74,8 @@ export class ClientMessagesManager extends EntitiesManager {
     if (options.file) payload.files.push(await resolveFile(options.file))
     if (options.files?.length) payload.files.push(...await resolveFiles(options.files))
 
-    if (options.sticker) payload.stickers.push(resolveSticker(options.sticker))
-    if (options.stickers?.length) payload.stickers.push(...options.stickers.map(resolveSticker))
+    if (options.sticker) payload.stickers.push(resolveStickerId(options.sticker))
+    if (options.stickers?.length) payload.stickers.push(...options.stickers.map(resolveStickerId))
 
     const Message = EntitiesUtil.get('Message')
 

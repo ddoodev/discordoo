@@ -15,6 +15,10 @@ import { MessageStickerResolvable } from '@src/api/entities/sticker'
 import { BigBitFieldResolvable, BitFieldResolvable } from '@src/api/entities/bitfield/interfaces'
 import { BigBitField } from '@src/api/entities/bitfield/BigBitField'
 import { BitField } from '@src/api/entities/bitfield/BitField'
+import { UserResolvable } from '@src/api/entities/user/interfaces/UserResolvable'
+import { User } from '@src/api/entities/user'
+import { Client } from '@src/core'
+import { RoleResolvable } from '@src/api/entities/role'
 
 export function resolveFiles(resolvable: MessageAttachmentResolvable[]): Promise<RawAttachment[]> {
   return Promise.all(resolvable.map(resolveFile))
@@ -102,36 +106,47 @@ export function resolveBitField(resolvable: BitFieldResolvable, emptyBit: number
   throw InvalidBitFieldError(resolvable)
 }
 
-// TODO: optimize
-
-export function resolveMessage(resolvable: MessageResolvable): string {
-  if (typeof resolvable === 'string') return resolvable
-
-  return resolvable.id
-}
-
-export function resolveChannel(resolvable: ChannelResolvable): string {
-  if (typeof resolvable === 'string') return resolvable
-
-  return resolvable.id
-}
-
-export function resolveGuild(resolvable: GuildResolvable): string {
-  if (typeof resolvable === 'string') return resolvable
-
-  return resolvable.id
-}
-
-export function resolveSticker(resolvable: MessageStickerResolvable): string {
-  if (typeof resolvable === 'string') return resolvable
-
-  return resolvable.id
-}
-
 export function resolveEmbed(resolvable: MessageEmbedResolvable): RawMessageEmbedData {
   if (resolvable instanceof MessageEmbed) return resolvable.toJson()
 
   return new MessageEmbed(resolvable).toJson() // TODO: low performance
 }
 
-// TODO: resolveEmbeds, resolveStickers, resolveComponents
+function resolveAnythingToId(resolvable: any): string {
+  if (typeof resolvable === 'string') return resolvable
+
+  return resolvable.id
+}
+
+export function resolveMessageId(resolvable: MessageResolvable): string {
+  return resolveAnythingToId(resolvable)
+}
+
+export function resolveChannelId(resolvable: ChannelResolvable): string {
+  return resolveAnythingToId(resolvable)
+}
+
+export function resolveGuildId(resolvable: GuildResolvable): string {
+  return resolveAnythingToId(resolvable)
+}
+
+export function resolveStickerId(resolvable: MessageStickerResolvable): string {
+  return resolveAnythingToId(resolvable)
+}
+
+export function resolveUserId(resolvable: UserResolvable): string {
+  return resolveAnythingToId(resolvable)
+}
+
+export function resolveRoleId(resolvable: RoleResolvable): string {
+  return resolveAnythingToId(resolvable)
+}
+
+export async function resolveUser(client: Client, resolvable: UserResolvable): Promise<User | undefined> {
+  if (resolvable instanceof User) return resolvable
+
+  const id = resolveUserId(resolvable)
+  return client.users.cache.get(id)
+}
+
+// TODO: resolveComponents

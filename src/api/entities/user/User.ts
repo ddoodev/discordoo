@@ -42,6 +42,7 @@ export class User extends AbstractEntity implements UserData {
   }
 
   get avatarUrl(): string | undefined {
+    // TODO
     return this.avatar ? Endpoints.USER_AVATAR(this.id, this.avatar).join('/') : undefined
   }
 

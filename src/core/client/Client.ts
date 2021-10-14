@@ -22,9 +22,10 @@ import { ClientEvents, MessageCreateEvent } from '@src/events'
 import { EntitiesUtil } from '@src/api'
 import { ClientMessagesManager } from '@src/api/managers/messages/ClientMessagesManager'
 import { ClientChannelsManager } from '@src/api/managers/channels/ClientChannelsManager'
+import { UsersManager } from '@src/api/managers/UsersManager'
 
 /** Entry point for all of Discordoo. */
-@Final('start', 'internals', 'guilds', 'token')
+@Final('start', 'internals', 'guilds', 'users', 'messages', 'channels', 'token')
 export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
   extends TypedEmitter<ListenerSignature<ClientStack['events']>> { // TODO: events does not auto-typed
   /** Token used by this client */
@@ -38,6 +39,9 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
 
   /** Guilds manager of this client */
   public guilds: GuildsManager
+
+  /** Users manager of this client */
+  public users: UsersManager
 
   /** Messages manager of this client */
   public messages: ClientMessagesManager
@@ -138,6 +142,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
     this.internals.events.register([ MessageCreateEvent ]) // TODO
 
     this.guilds = new GuildsManager(this)
+    this.users = new UsersManager(this)
     this.messages = new ClientMessagesManager(this)
     this.channels = new ClientChannelsManager(this)
   }
