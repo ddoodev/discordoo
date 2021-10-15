@@ -22,7 +22,7 @@ export class DefaultRestProvider implements RestProvider {
   }
 
   async init(): Promise<unknown> {
-    return void 100500
+    return undefined
   }
 
   async request<T = any>(data: RestRequestData, options: RestRequestOptions = {}): RestFinishedResponse<T> {

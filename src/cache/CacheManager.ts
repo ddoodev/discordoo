@@ -210,7 +210,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       await this.provider.forEach<K, V, P>(keyspace, storage, this._makePredicate(entityKey, predicate))
     }
 
-    return void 100500
+    return undefined
   }
 
   async size(
@@ -335,7 +335,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
 
     }
 
-    return void 100500
+    return undefined
   }
 
   async filter<K = string, V = any>(

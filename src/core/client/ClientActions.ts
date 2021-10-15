@@ -3,6 +3,8 @@ import { Endpoints } from '@src/constants'
 import { MessageCreateData } from '@src/api/entities/message/interfaces/MessageCreateData'
 import { RestFailedResponse, RestFinishedResponse, RestSuccessfulResponse } from '@discordoo/providers'
 import { RawMessageData } from '@src/api/entities/message/interfaces/RawMessageData'
+import { RawEmojiEditData } from '@src/api/entities/emoji/interfaces/RawEmojiEditData'
+import { RawGuildEmojiData } from '@src/api/entities/emoji/interfaces/RawGuildEmojiData'
 
 export class ClientActions {
   public client: Client
@@ -158,11 +160,11 @@ export class ClientActions {
       .patch({ reason })
   }
 
-  editGuildEmoji(guildId: string, emojiId: string, data: any /* TODO: GuildEmojiData */, reason?: string) {
+  editGuildEmoji(guildId: string, emojiId: string, data: RawEmojiEditData, reason?: string) {
     return this.client.internals.rest.api()
       .url(Endpoints.GUILD_EMOJI(guildId, emojiId))
       .body(data)
-      .patch({ reason })
+      .patch<RawGuildEmojiData>({ reason })
   }
 
   // TODO: Check if reason available
@@ -317,6 +319,12 @@ export class ClientActions {
     return this.client.internals.rest.api()
       .url(Endpoints.GUILD_WIDGET(guildId))
       .get()
+  }
+
+  getGuildEmoji(guildId: string, emojiId: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_EMOJI(guildId, emojiId))
+      .get<RawGuildEmojiData>()
   }
 
   kickGuildMember(guildId: string, memberId: string, reason?: string) {

@@ -51,7 +51,7 @@ export class DefaultCacheProvider implements CacheProvider {
   async get<K = string, V = any>(keyspace: string, storage: CacheStorageKey, key: K): Promise<V | undefined> {
     const space = this.keyspaces.get(keyspace)
 
-    if (!space) return void 100500
+    if (!space) return undefined
 
     if (storage === 'global') {
       let result
@@ -65,7 +65,7 @@ export class DefaultCacheProvider implements CacheProvider {
     } else {
       const store = space.get(storage)
 
-      if (!store) return void 100500
+      if (!store) return undefined
 
       return store.get(key)
     }

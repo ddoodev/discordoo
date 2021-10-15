@@ -8,6 +8,7 @@ node_modules
 # Build
 dist
 types
+!src/*/**/types
 
 # Environment
 .env

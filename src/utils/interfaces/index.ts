@@ -1,2 +1,5 @@
 export { DeconstructedDiscordooSnowflake } from '@src/utils/interfaces/DeconstructedSnowflake'
 export { ShardListResolvable } from '@src/utils/interfaces/ShardListResolvable'
+export { AllowedImageFormats } from '@src/utils/interfaces/AllowedImageFormats'
+export { AllowedImageSizes } from '@src/utils/interfaces/AllowedImageSizes'
+export { ImageUrlOptions } from '@src/utils/interfaces/ImageUrlOptions'

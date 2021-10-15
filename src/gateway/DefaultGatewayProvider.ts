@@ -66,7 +66,7 @@ export class DefaultGatewayProvider implements GatewayProvider {
         this.manager.shards.forEach(shard => shard.socketSend(data as any)) // TODO: ???
     }
 
-    return void 100500
+    return undefined
   }
 
   waitShardSpawnTurn(shardId: number): Promise<unknown> {
@@ -74,7 +74,7 @@ export class DefaultGatewayProvider implements GatewayProvider {
   }
 
   async init(): Promise<unknown> {
-    return void 100500
+    return undefined
   }
 
 }

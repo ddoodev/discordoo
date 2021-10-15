@@ -1,11 +1,10 @@
 import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 import { UserData } from '@src/api/entities/user/interfaces'
-import { idToDate, idToTimestamp, mergeNewOrSave } from '@src/utils'
+import { idToDate, idToTimestamp, ImageUrlOptions, mergeNewOrSave } from '@src/utils'
 import { RawUserData } from '@src/api/entities/user/interfaces/RawUserData'
 import { Json } from '@src/api/entities/interfaces/Json'
 import { ToJsonProperties } from '@src/api/entities/interfaces/ToJsonProperties'
 import { UserFlagsUtil } from '@src/api/entities/bitfield'
-import { Endpoints } from '@src/constants'
 
 export class User extends AbstractEntity implements UserData {
   public accentColor?: number
@@ -37,13 +36,20 @@ export class User extends AbstractEntity implements UserData {
   }
 
   get hexAccent(): string | undefined {
-    if (!this.accentColor) return void 100500
+    if (!this.accentColor) return undefined
     return '#' + this.accentColor.toString(16).padStart(6, '0')
   }
 
-  get avatarUrl(): string | undefined {
-    // TODO
-    return this.avatar ? Endpoints.USER_AVATAR(this.id, this.avatar).join('/') : undefined
+  avatarUrl(options: ImageUrlOptions = {}): string | undefined {
+    return this.avatar ? this.client.internals.rest.cdn().avatar(this.id, this.avatar, options) : undefined
+  }
+
+  get defaultAvatarUrl(): string {
+    return this.client.internals.rest.cdn().defaultAvatar(this.discriminator)
+  }
+
+  displayAvatarUrl(options: ImageUrlOptions = {}): string {
+    return this.avatarUrl(options) ?? this.defaultAvatarUrl
   }
 
   toString(): string {

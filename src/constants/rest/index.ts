@@ -1,5 +1,7 @@
 export { DiscordApiErrorCodes } from '@src/constants/rest/DiscordApiErrorCodes'
+export { ImageFormats } from '@src/constants/rest/ImageFormats'
 export { DISCORD_API_ENDPOINT } from '@src/constants/rest/DiscordApiEndpoint'
 export { REST_DEFAULT_OPTIONS } from '@src/constants/rest/RestDefaultOptions'
 export { RestRequestMethods } from '@src/constants/rest/RestRequestMethods'
+export { ImageSizes } from '@src/constants/rest/ImageSizes'
 export { Endpoints } from '@src/constants/rest/Endpoints'

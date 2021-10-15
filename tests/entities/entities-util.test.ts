@@ -14,7 +14,7 @@ describe('EntitiesUtil', () => {
   test('must extend entities without extender function', () => {
     class ExtendedMessage extends RawMessage {
       __test__(): void {
-        return void 100500
+        return undefined
       }
     }
 
@@ -47,7 +47,7 @@ describe('EntitiesUtil', () => {
       EntitiesUtil.extend('Message', Message => {
         class ExtendedMessage extends Message {
           __test__(): void {
-            return void 100500
+            return undefined
           }
         }
 
