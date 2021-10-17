@@ -15,6 +15,7 @@ import {
   RestFinishedResponse
 } from '@discordoo/providers'
 import { ImageUrlOptions, makeImageUrl } from '@src/utils'
+import { StickerFormatTypes } from '@src/constants'
 
 export class RestManager<P extends RestProvider = RestProvider> {
   public client: Client
@@ -87,8 +88,8 @@ export class RestManager<P extends RestProvider = RestProvider> {
       teamIcon: (teamId: string, hash: string, options: ImageUrlOptions = {}) => {
         return makeImageUrl(`${cdn}/team-icons/${teamId}/${hash}`, defaultImageFormat, options)
       },
-      sticker: (stickerId: string, stickerFormat) => {
-        return `${cdn}/stickers/${stickerId}.${stickerFormat === 'LOTTIE' ? 'json' : 'png'}`
+      sticker: (stickerId: string, stickerFormat: StickerFormatTypes) => {
+        return `${cdn}/stickers/${stickerId}.${stickerFormat === StickerFormatTypes.LOTTIE ? 'json' : 'png'}`
       },
       roleIcon: (roleId: string, hash: string, options: ImageUrlOptions = {}) => {
         return makeImageUrl(`${cdn}/role-icons/${roleId}/${hash}`, defaultImageFormat, options)

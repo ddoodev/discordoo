@@ -1,4 +1,4 @@
 import { Resolvable } from '@src/api'
-import { Sticker } from '@src/api/entities/sticker'
+import { RawStickerData, Sticker, StickerData } from '@src/api/entities/sticker'
 
-export type StickerResolvable = Resolvable<Sticker>
+export type StickerResolvable = Resolvable<Sticker | StickerData | RawStickerData>

@@ -70,7 +70,7 @@ export class Sticker extends AbstractEntity {
   }
 
   get url(): string {
-    return this.client.internals.rest.cdn().sticker(this.id, { format: this.formatType })
+    return this.client.internals.rest.cdn().sticker(this.id, this.formatType)
   }
 
   async fetch(): Promise<this> {
