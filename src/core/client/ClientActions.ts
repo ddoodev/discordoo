@@ -1,10 +1,15 @@
 import { Client } from '@src/core'
 import { Endpoints } from '@src/constants'
 import { MessageCreateData } from '@src/api/entities/message/interfaces/MessageCreateData'
-import { RestFailedResponse, RestFinishedResponse, RestSuccessfulResponse } from '@discordoo/providers'
+import { RestFinishedResponse } from '@discordoo/providers'
 import { RawMessageData } from '@src/api/entities/message/interfaces/RawMessageData'
 import { RawEmojiEditData } from '@src/api/entities/emoji/interfaces/RawEmojiEditData'
 import { RawGuildEmojiData } from '@src/api/entities/emoji/interfaces/RawGuildEmojiData'
+import { RawStickerData } from '@src/api/entities/sticker/interfaces/RawStickerData'
+import { RawUserData } from '@src/api/entities/user/interfaces/RawUserData'
+import { RawStickerEditData } from '@src/api/entities/sticker/interfaces/RawStickerEditData'
+import { RawStickerCreateData } from '@src/api/entities/sticker/interfaces/RawStickerCreateData'
+import { RawStickerPackData } from '@src/api/entities/sticker'
 
 export class ClientActions {
   public client: Client
@@ -92,6 +97,18 @@ export class ClientActions {
     return request.post()
   }
 
+  createGuildSticker(guildId: string, data: RawStickerCreateData, reason?: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_STICKERS(guildId))
+      .body({
+        name: data.name,
+        description: data.description,
+        tags: data.tags
+      })
+      .attach(data.file)
+      .post<RawStickerData>({ reason })
+  }
+
   deleteChannel(channelId: string, reason?: string) {
     return this.client.internals.rest.api()
       .url(Endpoints.CHANNEL(channelId))
@@ -120,6 +137,12 @@ export class ClientActions {
     return this.client.internals.rest.api()
       .url(Endpoints.GUILD_TEMPLATE_GUILD(guildId, code))
       .delete()
+  }
+
+  deleteGuildSticker(guildId: string, stickerId: string, reason?: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_STICKER(guildId, stickerId))
+      .delete({ reason })
   }
 
   editGuild(guildId: string, data: any /* TODO: GuildData */, reason?: string) {
@@ -240,6 +263,13 @@ export class ClientActions {
       .patch({ reason })
   }
 
+  editGuildSticker(guildId: string, stickerId: string, data: RawStickerEditData, reason?: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_STICKER(guildId, stickerId))
+      .body(data)
+      .patch<RawStickerData>({ reason })
+  }
+
   getGuildAuditLog(guildId: string, data: any /* TODO: GetGuildAuditLogData */) {
     return this.client.internals.rest.api()
       .url(Endpoints.GUILD_AUDIT_LOGS(guildId))
@@ -325,6 +355,36 @@ export class ClientActions {
     return this.client.internals.rest.api()
       .url(Endpoints.GUILD_EMOJI(guildId, emojiId))
       .get<RawGuildEmojiData>()
+  }
+
+  getGuildSticker(guildId: string, stickerId: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_STICKER(guildId, stickerId))
+      .get<RawStickerData>()
+  }
+
+  getGuildStickers(guildId: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_STICKERS(guildId))
+      .get<RawStickerData[]>()
+  }
+
+  getSticker(stickerId: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.STICKER(stickerId))
+      .get<RawStickerData>()
+  }
+
+  getNitroStickerPacks() {
+    return this.client.internals.rest.api()
+      .url(Endpoints.NITRO_STICKERS())
+      .get<RawStickerPackData[]>()
+  }
+
+  getUser(userId: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.USER(userId))
+      .get<RawUserData>()
   }
 
   kickGuildMember(guildId: string, memberId: string, reason?: string) {

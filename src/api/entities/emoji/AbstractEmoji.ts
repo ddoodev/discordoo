@@ -33,7 +33,7 @@ export abstract class AbstractEmoji extends AbstractEntity implements AbstractEm
     return undefined
   }
 
-  get createdAt(): Date | undefined {
+  get createdDate(): Date | undefined {
     if (this.id) return idToDate(this.id)
     return undefined
   }

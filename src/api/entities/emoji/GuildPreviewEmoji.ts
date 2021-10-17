@@ -6,7 +6,7 @@ import { mergeNewOrSave } from '@src/utils'
 import { ToJsonProperties } from '@src/api/entities/interfaces/ToJsonProperties'
 import { Json } from '@src/api/entities/interfaces/Json'
 
-export class GuildPreviewEmoji extends AbstractEmoji implements AbstractGuildEmoji<any /* TODO: GuildPreview */> {
+export class GuildPreviewEmoji extends AbstractEmoji implements AbstractGuildEmoji {
   public available!: boolean
   public guildId!: string
   public managed!: boolean
@@ -23,10 +23,6 @@ export class GuildPreviewEmoji extends AbstractEmoji implements AbstractGuildEmo
     ])
 
     return this
-  }
-
-  getGuild(): Promise<any> {
-    return this.client.guilds.cache.get(this.guildId)
   }
 
   toJson(properties: ToJsonProperties, obj?: any): Json {

@@ -60,7 +60,7 @@ export interface RestRequest {
    * Add payload data to request
    * @param attachments - raw attachments
    */
-  attach(...attachments: RawAttachment[]): RestRequest
+  attach(...attachments: Array<Buffer | ArrayBuffer | RawAttachment>): RestRequest
 
   /**
    * Perform a request

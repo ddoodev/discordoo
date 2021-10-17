@@ -1,6 +1,7 @@
 export { PresencesCachingPolicy } from '@src/constants/cache/PresencesCachingPolicy'
 export { MessagesCachingPolicy } from '@src/constants/cache/MessagesCachingPolicy'
 export { ChannelsCachingPolicy } from '@src/constants/cache/ChannelsCachingPolicy'
+export { StickersCachingPolicy } from '@src/constants/cache/StickersCachingPolicy'
 export { MembersCachingPolicy } from '@src/constants/cache/MembersCachingPolicy'
 export { EmojisCachingPolicy } from '@src/constants/cache/EmojisCachingPolicy'
 export { GlobalCachingPolicy } from '@src/constants/cache/GlobalCachingPolicy'

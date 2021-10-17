@@ -23,7 +23,34 @@ export class User extends AbstractEntity implements UserData {
   public username!: string
   public verified?: boolean
 
-  get createdAt(): Date {
+  async init(data: UserData | RawUserData): Promise<this> {
+
+    this.id = data.id ?? this.id
+
+    mergeNewOrSave(this, data, [
+      'avatar',
+      'username',
+      'discriminator',
+      [ 'accentColor', 'accent_color' ],
+      'banner',
+      'email',
+      'flags',
+      'locale',
+      [ 'mfaEnabled', 'mfa_enabled' ],
+      [ 'premiumType', 'premium_type' ],
+      [ 'publicFlags', 'public_flags' ],
+      'verified'
+    ])
+
+    this.bot = typeof data.bot === 'boolean' ? data.bot : this.bot ?? false
+    this.system = typeof data.system === 'boolean' ? data.system : this.system ?? false
+
+    if ('publicFlags' in this) this.publicFlags = new UserFlagsUtil(this.publicFlags)
+
+    return this
+  }
+
+  get createdDate(): Date {
     return idToDate(this.id)
   }
 
@@ -54,33 +81,6 @@ export class User extends AbstractEntity implements UserData {
 
   toString(): string {
     return `<@${this.id}>`
-  }
-
-  async init(data: UserData | RawUserData): Promise<this> {
-
-    this.id = data.id
-
-    mergeNewOrSave(this, data, [
-      'avatar',
-      'username',
-      'discriminator',
-      [ 'accentColor', 'accent_color' ],
-      'banner',
-      'email',
-      'flags',
-      'locale',
-      [ 'mfaEnabled', 'mfa_enabled' ],
-      [ 'premiumType', 'premium_type' ],
-      [ 'publicFlags', 'public_flags' ],
-      'verified'
-    ])
-
-    this.bot = typeof data.bot === 'boolean' ? data.bot : this.bot ?? false
-    this.system = typeof data.system === 'boolean' ? data.system : this.system ?? false
-
-    if ('publicFlags' in this) this.publicFlags = new UserFlagsUtil(this.publicFlags)
-
-    return this
   }
 
   toJson(properties?: ToJsonProperties): Json {

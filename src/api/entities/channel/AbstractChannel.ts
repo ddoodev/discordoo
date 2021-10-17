@@ -18,7 +18,7 @@ export abstract class AbstractChannel extends AbstractEntity {
     return idToTimestamp(this.id)
   }
 
-  get createdAt(): Date {
+  get createdDate(): Date {
     return idToDate(this.id)
   }
 

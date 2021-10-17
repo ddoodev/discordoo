@@ -8,8 +8,8 @@ export interface SendOptions {
   embeds?: MessageEmbedResolvable[]
   embed?: MessageEmbedResolvable
 
-  stickers?: any[] /* TODO: MessageStickerResolvable[] */
-  sticker?: any /* TODO: MessageStickerResolvable */
+  stickers?: any[] /* TODO: StickerResolvable[] */
+  sticker?: any /* TODO: StickerResolvable */
 
   components?: any[] /* TODO: MessageComponentResolvable[] */
   component?: any /* TODO: MessageComponentResolvable */

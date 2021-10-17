@@ -1,7 +1,6 @@
 import { MessageAttachmentResolvable } from '@src/api/entities/attachment/interfaces/MessageAttachmentResolvable'
 import { RawAttachment } from '@discordoo/providers'
 import { MessageAttachment } from '@src/api/entities/attachment/MessageAttachment'
-import { DataResolver } from '@src/utils/DataResolver'
 import { ColorResolvable } from '@src/api/entities/interfaces/ColorResolvable'
 import { EmptyBigBit, EmptyBit, RawColors } from '@src/constants'
 import { DiscordooError } from '@src/utils/DiscordooError'
@@ -11,7 +10,7 @@ import { MessageResolvable } from '@src/api/entities/message/interfaces/MessageR
 import { ChannelResolvable } from '@src/api/entities/channel/interfaces/ChannelResolvable'
 import { MessageEmbed, MessageEmbedResolvable, RawMessageEmbedData } from '@src/api/entities/embed'
 import { GuildResolvable } from '@src/api/entities/guild/interfaces/GuildResolvable'
-import { MessageStickerResolvable } from '@src/api/entities/sticker'
+import { StickerResolvable } from '@src/api/entities/sticker'
 import { BigBitFieldResolvable, BitFieldResolvable } from '@src/api/entities/bitfield/interfaces'
 import { BigBitField } from '@src/api/entities/bitfield/BigBitField'
 import { BitField } from '@src/api/entities/bitfield/BitField'
@@ -24,11 +23,10 @@ export function resolveFiles(resolvable: MessageAttachmentResolvable[]): Promise
   return Promise.all(resolvable.map(resolveFile))
 }
 
-export async function resolveFile(resolvable: MessageAttachmentResolvable): Promise<RawAttachment> {
+export function resolveFile(resolvable: MessageAttachmentResolvable): Promise<RawAttachment> {
   if (resolvable instanceof MessageAttachment) return resolvable.toRaw()
 
-  // @ts-ignore
-  return { name: res.name ?? 'attachment', data: res.data ?? await DataResolver.resolveBuffer(res), ephemeral: res.ephemeral ?? false }
+  return new MessageAttachment(resolvable).toRaw() // TODO: low performance
 }
 
 export function resolveColor(resolvable: ColorResolvable): number {
@@ -112,33 +110,33 @@ export function resolveEmbed(resolvable: MessageEmbedResolvable): RawMessageEmbe
   return new MessageEmbed(resolvable).toJson() // TODO: low performance
 }
 
-function resolveAnythingToId(resolvable: any): string {
+function resolveAnythingToId(resolvable: any): string | undefined  {
   if (typeof resolvable === 'string') return resolvable
 
-  return resolvable.id
+  return resolvable?.id
 }
 
-export function resolveMessageId(resolvable: MessageResolvable): string {
+export function resolveMessageId(resolvable: MessageResolvable): string | undefined  {
   return resolveAnythingToId(resolvable)
 }
 
-export function resolveChannelId(resolvable: ChannelResolvable): string {
+export function resolveChannelId(resolvable: ChannelResolvable): string | undefined  {
   return resolveAnythingToId(resolvable)
 }
 
-export function resolveGuildId(resolvable: GuildResolvable): string {
+export function resolveGuildId(resolvable: GuildResolvable): string | undefined {
   return resolveAnythingToId(resolvable)
 }
 
-export function resolveStickerId(resolvable: MessageStickerResolvable): string {
+export function resolveStickerId(resolvable: StickerResolvable): string | undefined  {
   return resolveAnythingToId(resolvable)
 }
 
-export function resolveUserId(resolvable: UserResolvable): string {
+export function resolveUserId(resolvable: UserResolvable): string | undefined  {
   return resolveAnythingToId(resolvable)
 }
 
-export function resolveRoleId(resolvable: RoleResolvable): string {
+export function resolveRoleId(resolvable: RoleResolvable): string | undefined  {
   return resolveAnythingToId(resolvable)
 }
 
@@ -146,7 +144,9 @@ export async function resolveUser(client: Client, resolvable: UserResolvable): P
   if (resolvable instanceof User) return resolvable
 
   const id = resolveUserId(resolvable)
-  return client.users.cache.get(id)
+  if (id) return client.users.cache.get(id)
+
+  return undefined
 }
 
 // TODO: resolveComponents

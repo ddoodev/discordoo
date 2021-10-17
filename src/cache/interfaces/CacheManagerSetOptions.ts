@@ -1,6 +1,6 @@
 import { CacheManagerOperationOptions } from '@src/cache/interfaces/CacheManagerOperationOptions'
+import { CacheStorageKey } from '@discordoo/providers'
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface CacheManagerSetOptions extends CacheManagerOperationOptions {
-
+  storage?: CacheStorageKey
 }

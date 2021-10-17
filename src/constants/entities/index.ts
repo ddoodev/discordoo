@@ -1,5 +1,6 @@
 export * from './embed'
 export * from './guild'
+export * from './sticker'
 export * from './message'
 export * from './channel'
 export * from './bitfield'

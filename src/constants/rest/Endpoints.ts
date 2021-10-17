@@ -127,6 +127,14 @@ export class Endpoints {
     =                          (channelId) => [ 'stage-instances', channelId ]
   static readonly STAGE_INSTANCES
     =                                   () => [ 'stage-instances' ]
+  static readonly STICKER
+    =                          (stickerId) => [ 'stickers', stickerId ]
+  static readonly NITRO_STICKERS
+    =                                   () => [ 'sticker-packs' ]
+  static readonly GUILD_STICKER
+    =                 (guildId, stickerId) => [ 'guilds', guildId, 'stickers', stickerId ]
+  static readonly GUILD_STICKERS
+    =                            (guildId) => [ 'guilds', guildId, 'stickers' ]
   static readonly CHANNEL_THREAD_MEMBER
     =                (channelId, memberId) => [ 'channels', channelId, 'thread-members', memberId ]
   static readonly CHANNEL_THREAD_WITH_MESSAGE

@@ -26,7 +26,7 @@ export class MessageAttachment {
 
     if ('file' in data) {
       this.file = data.file
-      this.name = (data.spoiler ? SPOILER_PREFIX : '') + (data.name ?? 'attachment')
+      this.name = (data.spoiler ? SPOILER_PREFIX : '') + (data.name ?? 'attachment.png')
       this.ephemeral = data.ephemeral ?? false
     } else {
       this.file = data.url

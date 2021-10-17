@@ -1,8 +1,6 @@
-export interface AbstractGuildEmoji<GuildType> {
+export interface AbstractGuildEmoji {
   guildId: string
   requiresColons: boolean
   managed: boolean
   available: boolean
-
-  getGuild(): Promise<GuildType | undefined>
 }

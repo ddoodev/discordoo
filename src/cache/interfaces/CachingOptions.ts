@@ -7,6 +7,7 @@ import {
   MessagesCachingPolicy,
   PresencesCachingPolicy,
   RolesCachingPolicy,
+  StickersCachingPolicy,
   UsersCachingPolicy
 } from '@src/constants'
 
@@ -64,5 +65,11 @@ export interface CachingOptions {
     before?: (user: any) => boolean
     policies: UsersCachingPolicy[]
     after?: (user: any) => boolean
+  }
+
+  stickers?: {
+    before?: (sticker: any) => boolean
+    policies: StickersCachingPolicy[]
+    after?: (sticker: any) => boolean
   }
 }

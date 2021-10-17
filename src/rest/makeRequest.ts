@@ -73,8 +73,16 @@ export function makeRequest(rest: RestManager<any>): RestRequest {
       return this
     },
 
-    attach(...attachments: RawAttachment[]): RestRequest {
-      this.requestPayload.push(...attachments)
+    attach(...attachments: Array<Buffer | ArrayBuffer | RawAttachment>): RestRequest {
+      this.requestPayload.push(
+        ...attachments.map(file => {
+          if (Buffer.isBuffer(file) || file instanceof ArrayBuffer) {
+            return { name: 'file.png', data: file }
+          }
+
+          return file
+        })
+      )
 
       return this
     },

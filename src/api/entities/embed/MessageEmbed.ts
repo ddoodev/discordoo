@@ -58,7 +58,7 @@ export class MessageEmbed {
     return this
   }
 
-  get createdAt(): Date | undefined {
+  get createdDate(): Date | undefined {
     return this.timestamp ? new Date(this.timestamp) : undefined
   }
 

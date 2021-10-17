@@ -10,8 +10,10 @@ import { RoleResolvable } from '@src/api/entities/role'
 import { ToJsonProperties } from '@src/api/entities/interfaces/ToJsonProperties'
 import { Json } from '@src/api/entities/interfaces/Json'
 import { EntitiesUtil } from '@src/api'
+import { CacheManagerGetOptions } from '@src/cache'
+import { filterAndMap } from '@src/utils/filterAndMap'
 
-export class GuildEmoji extends AbstractEmoji implements AbstractGuildEmoji<any /** TODO: Guild */> {
+export class GuildEmoji extends AbstractEmoji implements AbstractGuildEmoji {
   public available!: boolean
   public guildId!: string
   public managed!: boolean
@@ -33,7 +35,12 @@ export class GuildEmoji extends AbstractEmoji implements AbstractGuildEmoji<any 
     ])
 
     if (data.roles) {
-      this.roles = data.roles.map(resolveRoleId)
+      this.roles = []
+
+      for (const role of data.roles) {
+        const id = resolveRoleId(role)
+        if (id) this.roles.push(id)
+      }
     }
 
     if (data.user) {
@@ -43,12 +50,12 @@ export class GuildEmoji extends AbstractEmoji implements AbstractGuildEmoji<any 
     return this
   }
 
-  getGuild(): Promise<any | undefined> { // TODO: Guild
-    return this.client.guilds.cache.get(this.guildId)
+  getGuild(options?: CacheManagerGetOptions): Promise<any | undefined> { // TODO: Guild
+    return this.client.guilds.cache.get(this.guildId, options)
   }
 
-  async getUser(): Promise<User | undefined> {
-    return this.userId !== undefined ? this.client.users.cache.get(this.userId) : undefined
+  async getUser(options?: CacheManagerGetOptions): Promise<User | undefined> {
+    return this.userId !== undefined ? this.client.users.cache.get(this.userId, options) : undefined
   }
 
   async fetchUser(): Promise<User | undefined> {
@@ -72,11 +79,17 @@ export class GuildEmoji extends AbstractEmoji implements AbstractGuildEmoji<any 
     if (!this.id && !data.id) throw new DiscordooError('Emoji', 'Cannot edit emoji without id')
     if (this.name === null) throw new DiscordooError('Emoji', 'Cannot edit emoji without name')
 
+    const roles = filterAndMap<RoleResolvable, string>(
+      data.roles ?? [],
+      (r) => resolveRoleId(r) !== undefined,
+      (r) => resolveRoleId(r)
+    )
+
     const response = await this.client.internals.actions.editGuildEmoji(
       (this.guildId ?? data.guildId)!,
       (this.id ?? data.id)!,
       {
-        roles: data.roles?.map(resolveRoleId),
+        roles,
         name: data.name ?? this.name
       },
       reason

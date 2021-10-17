@@ -1,5 +1,9 @@
-import type { MessageAttachment } from '@src/api/entities/attachment/MessageAttachment'
-import type { MessageEmbed } from '@src/api/entities/embed'
-import type { MessageSticker } from '@src/api/entities/sticker'
+import { MessageEmbedResolvable } from '@src/api/entities/embed'
+import { StickerResolvable } from '@src/api/entities/sticker'
+import { MessageAttachmentResolvable } from '@src/api'
 
-export type MessageContent = MessageEmbed | MessageAttachment | MessageSticker | string | number | Buffer
+export type MessageContent =
+  MessageEmbedResolvable      | MessageEmbedResolvable[]      |
+  MessageAttachmentResolvable | MessageAttachmentResolvable[] |
+  StickerResolvable    | StickerResolvable[]    |
+  string | number

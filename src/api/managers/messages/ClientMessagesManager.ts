@@ -1,4 +1,4 @@
-import { EntitiesCacheManager, EntitiesManager, EntitiesUtil, Message } from '@src/api'
+import { EntitiesCacheManager, EntitiesManager, EntitiesUtil, Message, MessageAttachmentResolvable, MessageEmbedResolvable } from '@src/api'
 import { Client } from '@src/core'
 import { ChannelResolvable } from '@src/api/entities/channel/interfaces/ChannelResolvable'
 import { MessageContent } from '@src/api/entities/message/interfaces/MessageContent'
@@ -13,9 +13,12 @@ import {
   resolveStickerId
 } from '@src/utils/resolve'
 import { MessageCreateData } from '@src/api/entities/message/interfaces/MessageCreateData'
-import { MessageEmbed } from '@src/api/entities/embed'
-import { MessageAttachment } from '@src/api/entities/attachment/MessageAttachment'
-import { MessageSticker } from '@src/api/entities/sticker'
+import { StickerResolvable } from '@src/api/entities/sticker'
+import { MessageEmbedTypes, StickerFormatTypes } from '@src/constants'
+import { DiscordooError } from '@src/utils'
+import { DataResolver } from '@src/utils/DataResolver'
+import { inspect } from 'util'
+import { filterAndMap } from '@src/utils/filterAndMap'
 
 export class ClientMessagesManager extends EntitiesManager {
   public cache: EntitiesCacheManager<Message>
@@ -31,8 +34,29 @@ export class ClientMessagesManager extends EntitiesManager {
     })
   }
 
-  async create(channel: ChannelResolvable, content: MessageContent, options: SendOptions = {}): Promise<Message | undefined> {
+  async create(channel: ChannelResolvable, content: MessageContent = '', options: SendOptions = {}): Promise<Message | undefined> {
     const channelId = resolveChannelId(channel)
+
+    if (!channelId) throw new DiscordooError('ClientMessagesManager#create', 'Cannot create message without channel id.')
+
+    let contentProvidedFromOptions = false
+
+    if (typeof channelId !== 'string'!) throw new DiscordooError('MessagesManager#create', 'Incorrect channel id:', channelId)
+    if (!content) {
+      if (
+        !options.file && !options.embed && !options.sticker && !options.content &&
+        !options.files?.length && !options.embeds?.length && !options.stickers?.length
+      ) {
+        throw new DiscordooError(
+          'MessagesManager#create',
+          'Incorrect content:', inspect(content) + '.',
+          'If content not specified, options must be provided: at least one of options.embeds/embed/files/file/stickers/sticker.')
+      } else {
+        contentProvidedFromOptions = true
+      }
+    }
+
+    const data: any /* MessageContent */ = content
 
     const payload: MessageCreateData = {
       content: undefined,
@@ -45,23 +69,67 @@ export class ClientMessagesManager extends EntitiesManager {
       components: [],
     }
 
-    if (content instanceof MessageEmbed) payload.embeds.push(content.toJson())
-    else if (content instanceof MessageAttachment) payload.files.push(await content.toRaw())
-    else if (content instanceof MessageSticker) payload.stickers.push(content.id)
-    else if (Buffer.isBuffer(content)) payload.files.push({ data: content, name: 'attachment', ephemeral: false })
-    else payload.content = content.toString()
+    const embedTypes = Object.values<any>(MessageEmbedTypes).filter(v => typeof v === 'string'),
+      stickerFormatTypes = Object.values<any>(StickerFormatTypes).filter(v => typeof v === 'number')
+
+    if (Array.isArray(data)) {
+      const target: /* MessageEmbedResolvable | StickerResolvable | MessageAttachmentResolvable */ any = content[0]
+
+      if (embedTypes.includes(target.type)) { // content = embeds
+        payload.embeds.push(...data.map(resolveEmbed))
+
+      } else if (stickerFormatTypes.includes(target.formatType ?? target.format_type)) { // content = stickers
+        const stickers = filterAndMap<StickerResolvable, string>(
+          data,
+          (s) => resolveStickerId(s) !== undefined,
+          (s) => resolveStickerId(s)
+        )
+
+        payload.stickers.push(...stickers)
+
+      } else { // content = files or unexpected things
+        try {
+          payload.files.push(...await resolveFiles(data))
+        } catch (e: any) {
+          throw new DiscordooError(
+            'MessagesManager#create',
+            'Tried to resolve array of attachments as message content, but got', (e.name ?? 'Error'),
+            'with message:', (e.message ?? 'unknown error') + '.',
+            'Check if you are pass the message content array correctly. Do not mix content types in this array.',
+            'Allowed types is MessageEmbedResolvable, StickerResolvable, MessageAttachmentResolvable.',
+            'If you pass anything other than these types to the message content array, you will get this error.'
+          )
+        }
+      }
+    }
+
+    if (!contentProvidedFromOptions) {
+      if (embedTypes.includes(data.type)) {
+        payload.embeds.push(resolveEmbed(data))
+
+      } else if (stickerFormatTypes.includes(data.formatType ?? data.format_type)) {
+        const id = resolveStickerId(data)
+        if (id) payload.stickers.push(id)
+
+      } else if (typeof data === 'object' && DataResolver.isMessageAttachmentResolvable(data)) {
+        payload.files.push(await resolveFile(data))
+
+      } else {
+        payload.content = content.toString()
+      }
+    }
 
     payload.tts = !!options.tts
 
     if (options.content) payload.content = options.content
 
     if (options.messageReference) {
-      const { referenceGuild, referenceChannel, referenceMessage, guild_id, channel_id, message_id } = options.messageReference
+      const { guild, channel, message, guild_id, channel_id, message_id } = options.messageReference
 
       payload.message_reference = {
-        guild_id: guild_id ?? resolveGuildId(referenceGuild),
-        channel_id: channel_id ?? resolveChannelId(referenceChannel),
-        message_id: message_id ?? resolveMessageId(referenceMessage)
+        guild_id: guild_id ?? resolveGuildId(guild),
+        channel_id: channel_id ?? resolveChannelId(channel),
+        message_id: message_id ?? resolveMessageId(message)
       }
     }
 
@@ -74,8 +142,19 @@ export class ClientMessagesManager extends EntitiesManager {
     if (options.file) payload.files.push(await resolveFile(options.file))
     if (options.files?.length) payload.files.push(...await resolveFiles(options.files))
 
-    if (options.sticker) payload.stickers.push(resolveStickerId(options.sticker))
-    if (options.stickers?.length) payload.stickers.push(...options.stickers.map(resolveStickerId))
+    if (options.sticker) {
+      const id = resolveStickerId(data.stickers)
+      if (id) payload.stickers.push(id)
+    }
+    if (options.stickers?.length) {
+      const stickers = filterAndMap<StickerResolvable, string>(
+        options.stickers,
+        (s) => resolveStickerId(s) !== undefined,
+        (s) => resolveStickerId(s)
+      )
+
+      payload.stickers.push(...stickers)
+    }
 
     const Message = EntitiesUtil.get('Message')
 

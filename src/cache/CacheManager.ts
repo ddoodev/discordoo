@@ -127,7 +127,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
           event_id: this.client.internals.ipc.generate(),
           key,
           keyspace,
-          storage,
+          storage: options.storage ?? storage,
           entityKey,
           shards,
           value: data,
@@ -143,7 +143,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       }
 
     } else {
-      await this.provider.set<K, V>(keyspace, storage, key, data)
+      await this.provider.set<K, V>(keyspace, options.storage ?? storage, key, data)
     }
 
     return this

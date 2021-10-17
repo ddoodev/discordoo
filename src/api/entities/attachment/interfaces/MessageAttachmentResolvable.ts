@@ -1,5 +1,5 @@
-import type { MessageAttachment } from '@src/api/entities/attachment/MessageAttachment'
-import type { BufferResolvable } from '@src/api/entities/interfaces/BufferResolvable'
+import { MessageAttachment } from '@src/api/entities/attachment/MessageAttachment'
+import { MessageAttachmentData, RawMessageAttachmentData } from '@src/api/entities/attachment/interfaces'
 
 export type MessageAttachmentResolvable =
-  MessageAttachment | BufferResolvable | { name?: string; data: BufferResolvable; ephemeral?: boolean }
+  MessageAttachment | MessageAttachmentData | RawMessageAttachmentData
