@@ -1,4 +1,4 @@
-import { EntitiesCacheManager, EntitiesManager, EntitiesUtil, Message, MessageAttachmentResolvable, MessageEmbedResolvable } from '@src/api'
+import { EntitiesCacheManager, EntitiesUtil, Message } from '@src/api'
 import { Client } from '@src/core'
 import { ChannelResolvable } from '@src/api/entities/channel/interfaces/ChannelResolvable'
 import { MessageContent } from '@src/api/entities/message/interfaces/MessageContent'
@@ -19,6 +19,7 @@ import { DiscordooError } from '@src/utils'
 import { DataResolver } from '@src/utils/DataResolver'
 import { inspect } from 'util'
 import { filterAndMap } from '@src/utils/filterAndMap'
+import { EntitiesManager } from '@src/api/managers/EntitiesManager'
 
 export class ClientMessagesManager extends EntitiesManager {
   public cache: EntitiesCacheManager<Message>

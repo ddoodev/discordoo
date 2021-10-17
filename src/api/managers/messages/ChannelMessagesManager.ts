@@ -1,9 +1,10 @@
-import { EntitiesCacheManager, EntitiesManager, Message } from '@src/api'
+import { EntitiesCacheManager, Message } from '@src/api'
 import { Client } from '@src/core'
-import { MessagesManagerData } from '@src/api/managers/interfaces/MessagesManagerData'
+import { MessagesManagerData } from '@src/api/managers/messages/MessagesManagerData'
 import { AbstractChannel } from '@src/api/entities/channel/AbstractChannel'
 import { MessageContent } from '@src/api/entities/message/interfaces/MessageContent'
 import { SendOptions } from '@src/api/entities/message/interfaces/SendOptions'
+import { EntitiesManager } from '@src/api/managers/EntitiesManager'
 
 export class ChannelMessagesManager extends EntitiesManager {
   public cache: EntitiesCacheManager<Message>

@@ -1,8 +1,9 @@
-import { EntitiesCacheManager, EntitiesManager } from '@src/api'
+import { EntitiesCacheManager } from '@src/api'
 import { AbstractChannel } from '@src/api/entities/channel/AbstractChannel'
 import { Client } from '@src/core'
 import { channelEntityKey } from '@src/utils'
 import { ChannelDeleteOptions } from '@src/api/entities/channel/interfaces/ChannelDeleteOptions'
+import { EntitiesManager } from '@src/api/managers/EntitiesManager'
 
 export class ClientChannelsManager extends EntitiesManager {
   public cache: EntitiesCacheManager<AbstractChannel>

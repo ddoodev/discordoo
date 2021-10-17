@@ -1,1 +1,1 @@
-export const nnnnn = 1
+export { GuildMemberData } from '@src/api/entities/member/interfaces/GuildMemberData'
