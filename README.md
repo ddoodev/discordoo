@@ -72,7 +72,7 @@ A complete description of everything that must be in Discordoo to be released
 Release deadline: October 30, 2021
 
 *please read this*
-![image](https://user-images.githubusercontent.com/44965055/136671190-e9bd4dd1-f124-4670-8cd0-25c0790fb39c.png)
+![image](https://user-images.githubusercontent.com/44965055/137811902-565cbdc0-7cb7-4a86-a1ef-b082839f54cc.png)
 
 ### Sharding
 * [x] Implement sharding
@@ -127,7 +127,7 @@ Release deadline: October 30, 2021
 * [x] Library must be able to store something
 * [x] Library must be able to delete something from cache
 * [x] Library must be able to check cache size
-* [x] Library must be able to sweep cache using predicate and cycle 
+* [x] Library must be able to sweep cache
 * [x] Library must be able to iterate cache
 * [x] Library must be able to operate with cache in a different shards from one shard
 * [x] Caching policies
@@ -170,6 +170,7 @@ SID - still in development
   * [ ] GuildEmojisManager/ClientEmojisManager
   * [ ] GuildRolesManager/ClientRolesManager
   * [ ] GuildPresencesManager/ClientPresencesManager
+  * [ ] GuildEmojisManager/ClientEmojisManager
   * [x] GuildMembersManager/ClientMembersManager (SID)
   * [x] UsersManager (SID)
 
