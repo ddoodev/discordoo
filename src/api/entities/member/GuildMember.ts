@@ -1,10 +1,14 @@
 import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 import { GuildMemberData, Json, Permissions, RawGuildMemberData, ToJsonProperties, User } from '@src/api'
 import { ToJsonOverrideSymbol } from '@src/constants'
-import { mergeNewOrSave } from '@src/utils'
+import { DiscordooError, ImageUrlOptions, mergeNewOrSave } from '@src/utils'
 import { filterAndMap } from '@src/utils/filterAndMap'
 import { resolveRoleId, resolveUserId } from '@src/utils/resolve'
 import { CacheManagerGetOptions } from '@src/cache'
+import { GuildMemberRolesManager } from '@src/api/managers/members/GuildMemberRolesManager'
+import { Presence } from '@src/api/entities/presence/Presence'
+import { GuildMemberEditData } from '@src/api/entities/member/interfaces/GuildMemberEditData'
+import { MemberBanOptions } from '@src/api/managers/members/MemberBanOptions'
 
 export class GuildMember extends AbstractEntity {
   public avatar?: string
@@ -15,9 +19,10 @@ export class GuildMember extends AbstractEntity {
   public pending?: boolean
   public permissions!: Permissions
   public premiumSinceDate?: Date
-  public roles: string[] = []
-  public userId?: string
-  public guildId?: string
+  public roles!: GuildMemberRolesManager
+  public rolesList: string[] = []
+  public userId!: string
+  public guildId!: string
 
   async init(data: GuildMemberData | RawGuildMemberData): Promise<this> {
     mergeNewOrSave(this, data, [
@@ -42,17 +47,37 @@ export class GuildMember extends AbstractEntity {
     }
 
     if (data.roles) {
-      this.roles = filterAndMap(
+      this.rolesList = filterAndMap(
         data.roles,
         (r) => resolveRoleId(r) !== undefined,
         (r) => resolveRoleId(r)
       )
     }
 
-    if ('userId' in data) {
-      this.userId = data.userId
+    if ('userId' in data && (data.userId || data.user)) {
+      const id = data.userId ?? (data.user ? resolveUserId(data.user) : undefined)
+      if (id) this.userId = id
     } else if (data.user) {
-      this.userId = resolveUserId(data.user)
+      const id = resolveUserId(data.user)
+      if (id) this.userId = id
+    }
+
+    if (!this.userId) {
+      throw new DiscordooError('GuildMember', 'Cannot operate without user id provided.')
+    }
+
+    if (!this.guildId) {
+      throw new DiscordooError('GuildMember', 'Cannot operate without guild id provided.')
+    }
+
+    if (!this.roles) {
+      this.roles = new GuildMemberRolesManager(this.client, {
+        user: this.userId
+      })
+    }
+
+    if (data.permissions !== undefined) {
+      this.permissions = new Permissions(data.permissions)
     }
 
     return this
@@ -66,6 +91,10 @@ export class GuildMember extends AbstractEntity {
     return this.guildId ? this.client.guilds.cache.get(this.guildId, options) : undefined
   }
 
+  async presence(options?: CacheManagerGetOptions): Promise<Presence | undefined> {
+    return this.client.internals.cache.get('presences', this.guildId, 'Presence', this.userId, options)
+  }
+
   get joinedTimestamp(): number {
     return this.joinedDate.getTime()
   }
@@ -74,7 +103,59 @@ export class GuildMember extends AbstractEntity {
     return this.premiumSinceDate?.getTime()
   }
 
-  
+  avatarUrl(options?: ImageUrlOptions): string | undefined {
+    return this.avatar ? this.client.internals.rest.cdn().guildMemberAvatar(this.guildId, this.userId, this.avatar, options) : undefined
+  }
+
+  edit(data: GuildMemberEditData, reason?: string): Promise<this | undefined> {
+    return this.client.members.edit(this.guildId, this.userId, data, { reason, patchEntity: this })
+  }
+
+  setNick(nick: string, reason?: string) {
+    return this.edit({ nick }, reason)
+  }
+
+  setDeaf(deaf: boolean, reason?: string) {
+    return this.edit({ deaf }, reason)
+  }
+
+  setMute(mute: boolean, reason?: string) {
+    return this.edit({ mute }, reason)
+  }
+
+  async ban(options?: MemberBanOptions): Promise<this | undefined> {
+    const result = await this.client.members.ban(this.guildId, this.userId, options)
+
+    if (result) {
+      return this
+    }
+
+    return undefined
+  }
+
+  async kick(reason?: string): Promise<this | undefined> {
+    const result = await this.client.members.kick(this.guildId, this.userId, reason)
+
+    if (result) {
+      return this
+    }
+
+    return undefined
+  }
+
+  async unban(reason?: string): Promise<this | undefined> {
+    const result = await this.client.members.unban(this.guildId, this.userId, reason)
+
+    if (result) {
+      return this
+    }
+
+    return undefined
+  }
+
+  toString(): string {
+    return `<@${this.nick ? '!' : ''}${this.userId}>`
+  }
 
   toJson(properties: ToJsonProperties, obj?: any): Json {
     return super.toJson({
@@ -87,7 +168,10 @@ export class GuildMember extends AbstractEntity {
       pending: true,
       permissions: true,
       premiumSinceDate: true,
-      roles: true,
+      roles: {
+        override: ToJsonOverrideSymbol,
+        value: this.rolesList
+      },
       userId: {
         override: ToJsonOverrideSymbol,
         value: this.userId

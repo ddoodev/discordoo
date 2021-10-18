@@ -14,5 +14,5 @@ export interface GuildMemberData {
   mute: boolean
   pending?: boolean
   permissions?: PermissionsResolvable
-  guildId?: string
+  guildId: string
 }

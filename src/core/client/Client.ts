@@ -24,6 +24,7 @@ import { ClientMessagesManager } from '@src/api/managers/messages/ClientMessages
 import { ClientChannelsManager } from '@src/api/managers/channels/ClientChannelsManager'
 import { UsersManager } from '@src/api/managers/UsersManager'
 import { ClientStickersManager } from '@src/api/managers/stickers/ClientStickersManager'
+import { ClientMembersManager } from '@src/api/managers/members/ClientMembersManager'
 
 /** Entry point for all of Discordoo. */
 @Final('start', 'internals', 'guilds', 'users', 'messages', 'channels', 'token')
@@ -52,6 +53,9 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
 
   /** Stickers manager of this client */
   public stickers: ClientStickersManager
+
+  /** Members manager of this client */
+  public members: ClientMembersManager
 
   constructor(token: string, options: ClientOptions = {}) {
     super()
@@ -150,6 +154,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
     this.messages = new ClientMessagesManager(this)
     this.channels = new ClientChannelsManager(this)
     this.stickers = new ClientStickersManager(this)
+    this.members = new ClientMembersManager(this)
   }
 
   async start(): Promise<Client<ClientStack>> {

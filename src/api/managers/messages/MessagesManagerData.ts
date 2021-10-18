@@ -1,6 +1,5 @@
-import { AbstractChannel } from '@src/api/entities/channel/AbstractChannel'
+import { ChannelResolvable } from '@src/api'
 
 export interface MessagesManagerData {
-  channel?: AbstractChannel
-  channelId: string
+  channel: ChannelResolvable
 }

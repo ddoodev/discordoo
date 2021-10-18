@@ -1,7 +1,7 @@
 import { RawUserData } from '@src/api/entities/user'
 
 export interface RawGuildMemberData {
-  user?: RawUserData
+  user: RawUserData
   nick?: string
   avatar?: string
   roles: string[]
@@ -11,5 +11,5 @@ export interface RawGuildMemberData {
   mute: boolean
   pending?: boolean
   permissions?: string
-  guild_id?: string
+  guild_id: string
 }

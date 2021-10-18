@@ -1,15 +1,16 @@
 import { MessageEmbedResolvable } from '@src/api/entities/embed'
-import { MessageAttachmentResolvable } from '@src/api/entities/attachment/interfaces' // thanks typescript for cool circular deps resolving
+import { MessageAttachmentResolvable } from '@src/api/entities/attachment/interfaces'
+import { StickerResolvable } from '@src/api' // thanks typescript for cool circular deps resolving
 
-export interface SendOptions {
+export interface MessageCreateOptions {
   files?: MessageAttachmentResolvable[]
   file?: MessageAttachmentResolvable
 
   embeds?: MessageEmbedResolvable[]
   embed?: MessageEmbedResolvable
 
-  stickers?: any[] /* TODO: StickerResolvable[] */
-  sticker?: any /* TODO: StickerResolvable */
+  stickers?: StickerResolvable[]
+  sticker?: StickerResolvable
 
   components?: any[] /* TODO: MessageComponentResolvable[] */
   component?: any /* TODO: MessageComponentResolvable */

@@ -6,7 +6,7 @@ import { Json } from '@src/api/entities/interfaces/Json'
 import { ToJsonProperties } from '@src/api/entities/interfaces/ToJsonProperties'
 import { UserFlagsUtil } from '@src/api/entities/bitfield'
 
-export class User extends AbstractEntity implements UserData {
+export class User extends AbstractEntity implements UserData { // TODO: implements WritableChannel
   public accentColor?: number
   public avatar?: string
   public banner?: string
@@ -67,16 +67,20 @@ export class User extends AbstractEntity implements UserData {
     return '#' + this.accentColor.toString(16).padStart(6, '0')
   }
 
-  avatarUrl(options: ImageUrlOptions = {}): string | undefined {
+  avatarUrl(options?: ImageUrlOptions): string | undefined {
     return this.avatar ? this.client.internals.rest.cdn().avatar(this.id, this.avatar, options) : undefined
   }
 
-  get defaultAvatarUrl(): string {
+  defaultAvatarUrl(): string {
     return this.client.internals.rest.cdn().defaultAvatar(this.discriminator)
   }
 
-  displayAvatarUrl(options: ImageUrlOptions = {}): string {
-    return this.avatarUrl(options) ?? this.defaultAvatarUrl
+  displayAvatarUrl(options?: ImageUrlOptions): string {
+    return this.avatarUrl(options) ?? this.defaultAvatarUrl()
+  }
+
+  bannerUrl(options?: ImageUrlOptions): string | undefined {
+    return this.banner ? this.client.internals.rest.cdn().banner(this.id, this.banner, options) : undefined
   }
 
   toString(): string {

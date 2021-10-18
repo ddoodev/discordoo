@@ -10,6 +10,8 @@ import { RawUserData } from '@src/api/entities/user/interfaces/RawUserData'
 import { RawStickerEditData } from '@src/api/entities/sticker/interfaces/RawStickerEditData'
 import { RawStickerCreateData } from '@src/api/entities/sticker/interfaces/RawStickerCreateData'
 import { RawStickerPackData } from '@src/api/entities/sticker'
+import { RawGuildMemberEditData } from '@src/api/entities/member/interfaces/RawGuildMemberEditData'
+import { RawGuildMemberData } from '@src/api'
 
 export class ClientActions {
   public client: Client
@@ -202,17 +204,11 @@ export class ClientActions {
       .patch()
   }
 
-  editGuildMember(guildId: string, memberId: string, data: any /* TODO: GuildMemberData */, reason?: string) {
+  editGuildMember(guildId: string, userId: string, data: RawGuildMemberEditData, reason?: string) {
     return this.client.internals.rest.api()
-      .url(Endpoints.GUILD_MEMBER(guildId, memberId))
-      .body({
-        roles: data.roles,
-        nick: data.nick,
-        mute: data.mute,
-        deaf: data.deaf,
-        channel_id: data.channelId,
-      })
-      .patch({ reason })
+      .url(Endpoints.GUILD_MEMBER(guildId, userId))
+      .body(data)
+      .patch<RawGuildMemberData>({ reason })
   }
 
   editGuildTemplate(guildId: string, code: string, data: any /* TODO: GuildTemplateData */) { // TODO: check if reason available

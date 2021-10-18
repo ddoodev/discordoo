@@ -4,6 +4,7 @@ import { Client } from '@src/core'
 import { channelEntityKey } from '@src/utils'
 import { ChannelDeleteOptions } from '@src/api/entities/channel/interfaces/ChannelDeleteOptions'
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
+import { Keyspaces } from '@src/constants'
 
 export class ClientChannelsManager extends EntitiesManager {
   public cache: EntitiesCacheManager<AbstractChannel>
@@ -12,7 +13,7 @@ export class ClientChannelsManager extends EntitiesManager {
     super(client)
 
     this.cache = new EntitiesCacheManager<AbstractChannel>(this.client, {
-      keyspace: 'channels',
+      keyspace: Keyspaces.GUILD_CHANNELS,
       storage: 'global',
       entity: channelEntityKey,
       policy: 'channels'

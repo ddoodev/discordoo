@@ -70,9 +70,14 @@ export function resolveBigBitField(resolvable: BigBitFieldResolvable, emptyBit: 
     }
     case 'bigint':
       return resolvable
-    case 'string':
-      if (resolvable.endsWith('n')) return BigInt(resolvable.slice(0, resolvable.length - 1))
-      break
+    case 'string': {
+      try {
+        if (resolvable.endsWith('n')) return BigInt(resolvable.slice(0, resolvable.length - 1))
+        return BigInt(resolvable)
+      } catch (e) {
+        throw new DiscordooError('BigBitFieldResolvable', 'Cannot convert', resolvable, 'to big bitfield.')
+      }
+    }
     case 'object': {
       if (resolvable instanceof BigBitField) return resolvable.bitfield
       if (typeof resolvable.bits === 'string' && resolvable.bits.endsWith('n'))

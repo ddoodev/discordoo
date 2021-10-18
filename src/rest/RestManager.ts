@@ -67,8 +67,8 @@ export class RestManager<P extends RestProvider = RestProvider> {
       discoverySplash: (guildId: string, hash: string, options: ImageUrlOptions = {}) => {
         return makeImageUrl(`${cdn}/discovery-splashes/${guildId}/${hash}`, defaultImageFormat, options)
       },
-      guildMemberAvatar: (guildId: string, memberId: string, hash: string, options: ImageUrlOptions = {}) => {
-        return makeImageUrl(`${cdn}/guilds/${guildId}/users/${memberId}/avatars/${hash}`, defaultImageFormat, {
+      guildMemberAvatar: (guildId: string, userId: string, hash: string, options: ImageUrlOptions = {}) => {
+        return makeImageUrl(`${cdn}/guilds/${guildId}/users/${userId}/avatars/${hash}`, defaultImageFormat, {
           format: options.dynamic && hash.startsWith('a_') ? 'gif' : options.format,
           size: options.size
         })

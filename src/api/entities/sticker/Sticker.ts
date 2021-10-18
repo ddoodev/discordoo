@@ -130,20 +130,7 @@ export class Sticker extends AbstractEntity {
 
     if (!guildId) throw new DiscordooError('Sticker#edit', 'Cannot edit sticker without guild id.')
 
-    const payload: RawStickerEditData = {
-      name: data.name,
-      tags: data.tags?.join(', ') ?? this.tags.join(', '),
-      description: data.description
-    }
-
-    const response = await this.client.internals.actions.editGuildSticker(guildId, this.id, payload, options.reason)
-
-    if (response.success) {
-      await this.init(response.result)
-      return this
-    }
-
-    return undefined
+    return this.client.stickers.edit(guildId, this, data, { reason: options.reason, patchEntity: this })
   }
 
   async delete(options: StickerDeleteOptions = {}): Promise<this | undefined> {

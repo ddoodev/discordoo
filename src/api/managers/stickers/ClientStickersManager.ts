@@ -13,6 +13,8 @@ import { StickerEditData } from '@src/api/entities/sticker/interfaces/StickerEdi
 import { RawStickerEditData } from '@src/api/entities/sticker/interfaces/RawStickerEditData'
 import { StickerCreateData } from '@src/api/entities/sticker/interfaces/StickerCreateData'
 import { RawStickerCreateData } from '@src/api/entities/sticker/interfaces/RawStickerCreateData'
+import { Keyspaces } from '@src/constants'
+import { StickersManagerEditOptions } from '@src/api/managers/stickers/StickersManagerEditOptions'
 
 export class ClientStickersManager extends EntitiesManager {
   public cache: EntitiesCacheManager<Sticker>
@@ -21,9 +23,9 @@ export class ClientStickersManager extends EntitiesManager {
     super(client)
 
     this.cache = new EntitiesCacheManager<Sticker>(this.client, {
-      entity: 'Sticker',
+      keyspace: Keyspaces.STICKERS,
       storage: 'global',
-      keyspace: 'stickers',
+      entity: 'Sticker',
       policy: 'stickers'
     })
   }
@@ -85,9 +87,12 @@ export class ClientStickersManager extends EntitiesManager {
     return undefined
   }
 
-  async edit(
-    guild: GuildResolvable, sticker: StickerResolvable, data: StickerEditData | RawStickerEditData, reason?: string
-  ): Promise<Sticker | undefined> {
+  async edit<R = Sticker>(
+    guild: GuildResolvable,
+    sticker: StickerResolvable,
+    data: StickerEditData | RawStickerEditData,
+    options: StickersManagerEditOptions = {}
+  ): Promise<R | undefined> {
     const stickerId = resolveStickerId(sticker),
       guildId = resolveGuildId(guild)
 
@@ -100,11 +105,15 @@ export class ClientStickersManager extends EntitiesManager {
       description: data.description
     }
 
-    const response = await this.client.internals.actions.editGuildSticker(guildId, stickerId, payload, reason)
+    const response = await this.client.internals.actions.editGuildSticker(guildId, stickerId, payload, options.reason)
     const Sticker = EntitiesUtil.get('Sticker')
 
     if (response.success) {
-      return await new Sticker(this.client).init(response.result)
+      if (options.patchEntity) {
+        return await options.patchEntity.init(response.result) as any
+      } else {
+        return await new Sticker(this.client).init(response.result) as any
+      }
     }
 
     return undefined

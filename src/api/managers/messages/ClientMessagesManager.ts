@@ -2,7 +2,7 @@ import { EntitiesCacheManager, EntitiesUtil, Message } from '@src/api'
 import { Client } from '@src/core'
 import { ChannelResolvable } from '@src/api/entities/channel/interfaces/ChannelResolvable'
 import { MessageContent } from '@src/api/entities/message/interfaces/MessageContent'
-import { SendOptions } from '@src/api/entities/message/interfaces/SendOptions'
+import { MessageCreateOptions } from '@src/api/entities/message/interfaces/MessageCreateOptions'
 import {
   resolveChannelId,
   resolveEmbed,
@@ -14,7 +14,7 @@ import {
 } from '@src/utils/resolve'
 import { MessageCreateData } from '@src/api/entities/message/interfaces/MessageCreateData'
 import { StickerResolvable } from '@src/api/entities/sticker'
-import { MessageEmbedTypes, StickerFormatTypes } from '@src/constants'
+import { Keyspaces, MessageEmbedTypes, StickerFormatTypes } from '@src/constants'
 import { DiscordooError } from '@src/utils'
 import { DataResolver } from '@src/utils/DataResolver'
 import { inspect } from 'util'
@@ -28,14 +28,14 @@ export class ClientMessagesManager extends EntitiesManager {
     super(client)
 
     this.cache = new EntitiesCacheManager<Message>(this.client, {
-      keyspace: 'messages',
+      keyspace: Keyspaces.MESSAGES,
       storage: 'global',
       entity: 'Message',
       policy: 'messages'
     })
   }
 
-  async create(channel: ChannelResolvable, content: MessageContent = '', options: SendOptions = {}): Promise<Message | undefined> {
+  async create(channel: ChannelResolvable, content: MessageContent = '', options: MessageCreateOptions = {}): Promise<Message | undefined> {
     const channelId = resolveChannelId(channel)
 
     if (!channelId) throw new DiscordooError('ClientMessagesManager#create', 'Cannot create message without channel id.')

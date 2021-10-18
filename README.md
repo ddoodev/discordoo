@@ -150,7 +150,9 @@ SID - still in development
 * [ ] Implement Guilds
 * [x] Implement Messages (SID)
 * [x] Implement Channels (SID)
-* [ ] Implement Emojis
+* [x] Implement Members
+* [x] Implement Emojis
+* [x] Implement Stickers
 * [ ] Implement Roles
 * [ ] Implement Presences
 * [x] Implement Users (SID)
@@ -168,7 +170,8 @@ SID - still in development
   * [ ] GuildEmojisManager/ClientEmojisManager
   * [ ] GuildRolesManager/ClientRolesManager
   * [ ] GuildPresencesManager/ClientPresencesManager
-  * [ ] UsersManager
+  * [x] GuildMembersManager/ClientMembersManager (SID)
+  * [x] UsersManager (SID)
 
 ## Contributing
 Feel free to create a PR, but check if there is an existing one.
