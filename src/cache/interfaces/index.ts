@@ -11,3 +11,4 @@ export { CacheManagerMapOptions } from '@src/cache/interfaces/CacheManagerMapOpt
 export { CacheManagerSetOptions } from '@src/cache/interfaces/CacheManagerSetOptions'
 export { CacheManagerOptions } from '@src/cache/interfaces/CacheManagerOptions'
 export { CachingOptions } from '@src/cache/interfaces/CachingOptions'
+export { CachePointer } from '@src/cache/interfaces/CachePointer'

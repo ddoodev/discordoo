@@ -5,15 +5,15 @@ import { ToJsonProperties } from '@src/api/entities/interfaces/ToJsonProperties'
 import { Json } from '@src/api/entities/interfaces/Json'
 
 export abstract class AbstractEmoji extends AbstractEntity implements AbstractEmojiData {
-  public animated!: boolean | null
-  public id!: string | null
-  public name!: string | null
+  public animated?: boolean
+  public id?: string
+  public name?: string
 
   async init(data: AbstractEmojiData): Promise<this> {
     mergeNewOrSave(this, data, [
-      [ 'animated', '', null ],
-      [ 'id', '', null ],
-      [ 'name', '', null ]
+      'animated',
+      'id',
+      'name'
     ])
 
     return this
@@ -22,8 +22,8 @@ export abstract class AbstractEmoji extends AbstractEntity implements AbstractEm
   get identifier(): string | undefined {
     if (this.id) return `${this.animated ? 'a:' : ''}${this.name}:${this.id}`
 
-    // !== null because name can possibly be ''
-    if (this.name !== null) return encodeURIComponent(this.name)
+    // !== undefined because name can possibly be ''
+    if (this.name !== undefined) return encodeURIComponent(this.name)
 
     return undefined
   }

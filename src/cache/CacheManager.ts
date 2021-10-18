@@ -1,7 +1,7 @@
 import { CachingPoliciesProcessor } from '@src/cache/CachingPoliciesProcessor'
 import { IpcCacheOpCodes, IpcOpCodes, SerializeModes } from '@src/constants'
 import { CacheProvider, CacheStorageKey } from '@discordoo/providers'
-import { resolveShards, DiscordooError } from '@src/utils'
+import { DiscordooError, resolveShards } from '@src/utils'
 import { Client, ProviderConstructor } from '@src/core'
 import { EntitiesUtil, EntityKey } from '@src/api/entities'
 import {
@@ -35,17 +35,18 @@ import {
   cacheProviderSweepPolyfill
 } from '@src/cache/polyfills'
 import {
-  CacheManagerForEachOptions,
   CacheManagerDeleteOptions,
   CacheManagerFilterOptions,
-  CacheManagerSweepOptions,
-  CacheManagerSizeOptions,
   CacheManagerFindOptions,
+  CacheManagerForEachOptions,
   CacheManagerGetOptions,
   CacheManagerHasOptions,
   CacheManagerMapOptions,
+  CacheManagerOptions,
   CacheManagerSetOptions,
-  CacheManagerOptions
+  CacheManagerSizeOptions,
+  CacheManagerSweepOptions,
+  CachePointer
 } from '@src/cache/interfaces'
 
 export class CacheManager<P extends CacheProvider = CacheProvider> {
@@ -97,6 +98,10 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       result = await this.provider.get<K, V>(keyspace, storage, key)
     }
 
+    if (typeof result === 'object' && result.___type___ === 'discordooCachePointer') {
+      return this.get(result.keyspace, result.storage, entityKey, result.key, options)
+    }
+
     result = await this._prepareData('out', result, entityKey)
 
     return result
@@ -107,9 +112,17 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     storage: CacheStorageKey,
     entityKey: EntityKey,
     key: K,
-    value: V,
+    value: V | CachePointer,
     options: CacheManagerSetOptions = {}
   ): Promise<this> {
+    if (typeof value !== 'object' || value === null) {
+      throw new DiscordooError(
+        'CacheManager#set',
+        'Cache cannot operate with anything expect objects. Received',
+        value === null ? 'null' : typeof value
+      )
+    }
+
     const globalPolicyLimit = this._policiesProcessor.global(value)
     if (typeof globalPolicyLimit !== 'undefined') {
       if (!globalPolicyLimit) return this
@@ -499,9 +512,6 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
   }
 
   private async _prepareData(direction: 'in' | 'out', data: any, entityKey: EntityKey, forIpcRequest?: boolean): Promise<any> {
-    const k = typeof entityKey === 'function' ? entityKey(data) : entityKey
-    const Entity: any = EntitiesUtil.get(k)
-
     function toJson(d, returnStr?: boolean) {
       if (d) {
         if (returnStr) {
@@ -518,45 +528,64 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
 
     if (forIpcRequest) return toJson(data)
 
-    // 'in' = to the cache provider
-    // 'out' = from the cache provider
-    switch (direction) {
-      case 'in':
+    if (direction === 'in') {
+      if (data.___type___ === 'discordooCachePointer') {
         switch (this.provider.compatible) {
           case 'classes':
-            if (data && !(data instanceof Entity)) data = await (new Entity(this.client)).init?.(data)
-            break
           case 'json':
-            data = toJson(data)
-            break
+            return toJson(data)
           case 'text':
-            data = toJson(data, true)
-            break
+            return toJson(data, true)
           case 'buffer':
-            data = Buffer.from(toJson(data, true))
-            break
+            return Buffer.from(toJson(data, true))
         }
-        break
-      case 'out':
-        console.log('HEYYO OUT')
-        if (data && !(data instanceof Entity)) {
-          switch (this.provider.compatible) {
-            case 'classes':
-            case 'json':
-              data = new Entity(this.client).init?.(data)
-              break
-            case 'text':
-              data = new Entity(this.client).init?.(JSON.parse(data))
-              break
-            case 'buffer':
-              console.log('HEYYO OUT BUFFER', data.toString('utf8'))
-              data = new Entity(this.client).init?.(JSON.parse(data.toString('utf8')))
-              break
-          }
-        }
-        break
-    }
+      }
 
-    return data
+      const k = typeof entityKey === 'function' ? entityKey(data) : entityKey
+      const Entity: any = EntitiesUtil.get(k)
+
+      switch (this.provider.compatible) {
+        case 'classes':
+          if (!(data instanceof Entity)) data = await new Entity(this.client).init?.(data)
+          break
+        case 'json':
+          data = toJson(data)
+          break
+        case 'text':
+          data = toJson(data, true)
+          break
+        case 'buffer':
+          data = Buffer.from(toJson(data, true))
+          break
+      }
+
+      return data
+    } else if (direction === 'out') {
+      let jsonOrEntity: any
+
+      switch (this.provider.compatible) {
+        case 'classes':
+        case 'json':
+          jsonOrEntity = data
+          break
+        case 'text':
+          jsonOrEntity = JSON.parse(data)
+          break
+        case 'buffer':
+          jsonOrEntity = JSON.parse(data.toString('utf8'))
+          break
+      }
+
+      if (jsonOrEntity.___type___ === 'discordooCachePointer') {
+        return await this.get(jsonOrEntity.keyspace, jsonOrEntity.storage, entityKey, jsonOrEntity.key)
+      }
+
+      const k = typeof entityKey === 'function' ? entityKey(data) : entityKey
+      const Entity: any = EntitiesUtil.get(k)
+
+      if (!(jsonOrEntity instanceof Entity)) jsonOrEntity = await new Entity(this.client).init?.(jsonOrEntity)
+
+      return jsonOrEntity
+    }
   }
 }

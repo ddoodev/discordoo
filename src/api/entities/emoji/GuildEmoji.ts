@@ -50,11 +50,11 @@ export class GuildEmoji extends AbstractEmoji implements AbstractGuildEmoji {
     return this
   }
 
-  getGuild(options?: CacheManagerGetOptions): Promise<any | undefined> { // TODO: Guild
+  guild(options?: CacheManagerGetOptions): Promise<any | undefined> { // TODO: Guild
     return this.client.guilds.cache.get(this.guildId, options)
   }
 
-  async getUser(options?: CacheManagerGetOptions): Promise<User | undefined> {
+  async user(options?: CacheManagerGetOptions): Promise<User | undefined> {
     return this.userId !== undefined ? this.client.users.cache.get(this.userId, options) : undefined
   }
 
@@ -77,7 +77,7 @@ export class GuildEmoji extends AbstractEmoji implements AbstractGuildEmoji {
   async edit(data: GuildEmojiEditData, reason?: string): Promise<this> {
     if (!this.guildId && !data.guildId) throw new DiscordooError('Emoji', 'Cannot edit emoji without guild id')
     if (!this.id && !data.id) throw new DiscordooError('Emoji', 'Cannot edit emoji without id')
-    if (this.name === null) throw new DiscordooError('Emoji', 'Cannot edit emoji without name')
+    if (this.name === undefined) throw new DiscordooError('Emoji', 'Cannot edit emoji without name')
 
     const roles = filterAndMap<RoleResolvable, string>(
       data.roles ?? [],

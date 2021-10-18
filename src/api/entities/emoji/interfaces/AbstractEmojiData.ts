@@ -1,5 +1,5 @@
 export interface AbstractEmojiData {
-  name: string | null
-  id: string | null
-  animated: boolean | null
+  name?: string
+  id?: string
+  animated?: boolean
 }

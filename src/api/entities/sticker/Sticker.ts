@@ -57,7 +57,7 @@ export class Sticker extends AbstractEntity {
     return this
   }
 
-  async getUser(options?: CacheManagerGetOptions): Promise<User | undefined> {
+  async user(options?: CacheManagerGetOptions): Promise<User | undefined> {
     return this.userId ? this.client.users.cache.get(this.userId, options) : undefined
   }
 

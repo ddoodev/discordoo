@@ -9,13 +9,6 @@ export abstract class AbstractGuildChannel extends AbstractChannel implements Ab
   public parentId!: string
   public position!: number
 
-  async members(): Promise<any[]> { // TODO: GuildMember[]
-    const predicate = (member: any /** TODO: GuildMember */) => 12
-    // TODO
-    // @ts-ignore
-    return this.client.internals.cache.filter('members', this.id, 'GuildMember')
-  }
-
   async init(data: AbstractGuildChannelData | RawAbstractGuildChannelData): Promise<this> {
     await super.init(data)
 
@@ -27,6 +20,13 @@ export abstract class AbstractGuildChannel extends AbstractChannel implements Ab
     ])
 
     return this
+  }
+
+  async members(): Promise<any[]> { // TODO: GuildMember[]
+    const predicate = (member: any /** TODO: GuildMember */) => 12
+    // TODO
+    // @ts-ignore
+    return this.client.internals.cache.filter('members', this.id, 'GuildMember')
   }
 
 }

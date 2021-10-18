@@ -10,6 +10,12 @@ export abstract class AbstractChannel extends AbstractEntity {
   public id!: string
   public type!: ChannelTypes
 
+  async init(data: AbstractChannelData): Promise<this> {
+    mergeNewOrSave(this, data, [ 'id', 'type' ])
+
+    return this
+  }
+
   delete(options: ChannelDeleteOptions = {}) {
     return this.client.channels.delete(this.id, options)
   }
@@ -28,12 +34,6 @@ export abstract class AbstractChannel extends AbstractEntity {
 
   toJson(properties: ToJsonProperties = {}, obj?: any): Json {
     return super.toJson({ ...properties, id: true, type: true }, obj)
-  }
-
-  async init(data: AbstractChannelData): Promise<this> {
-    mergeNewOrSave(this, data, [ 'id', 'type' ])
-
-    return this
   }
 
 }
