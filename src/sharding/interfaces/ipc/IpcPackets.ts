@@ -261,6 +261,27 @@ export interface IpcCacheFindResponsePacket extends IpcPacket {
   }
 }
 
+export interface IpcCacheClearRequestPacket extends IpcPacket {
+  op: IpcOpCodes.CACHE_OPERATE
+  d: {
+    event_id: string
+    op: IpcCacheOpCodes.CLEAR
+    serialize?: SerializeModes.BOOLEAN
+    shards: number[]
+    keyspace: string
+    storage: CacheStorageKey
+  }
+}
+
+export interface IpcCacheClearResponsePacket extends IpcPacket {
+  op: IpcOpCodes.CACHE_OPERATE
+  d: {
+    event_id: string
+    success: boolean
+    result: any
+  }
+}
+
 export type IpcCacheRequestPacket = IpcCacheGetRequestPacket
   | IpcCacheSetRequestPacket
   | IpcCacheDeleteRequestPacket
@@ -271,6 +292,7 @@ export type IpcCacheRequestPacket = IpcCacheGetRequestPacket
   | IpcCacheFilterRequestPacket
   | IpcCacheMapRequestPacket
   | IpcCacheFindRequestPacket
+  | IpcCacheClearRequestPacket
 
 export type IpcCacheResponsePacket = IpcCacheGetResponsePacket
   | IpcCacheSetResponsePacket
@@ -282,3 +304,4 @@ export type IpcCacheResponsePacket = IpcCacheGetResponsePacket
   | IpcCacheFilterResponsePacket
   | IpcCacheMapResponsePacket
   | IpcCacheFindResponsePacket
+  | IpcCacheClearResponsePacket

@@ -1,3 +1,9 @@
+/*
+* based on
+* https://github.com/DV8FromTheWorld/JDA/blob/24aed4862649b9591532e3f14a26d2963a04e1dc/src/main/java/net/dv8tion/jda/api/JDABuilder.java
+* (Apache License 2.0)
+* */
+
 import { Client, ClientOptions, DefaultClientStack, ProviderConstructor } from '@src/core'
 import { DiscordooProviders } from '@src/constants'
 import { CreateAppOptions } from '@src/wrapper/interfaces/CreateAppOptions'

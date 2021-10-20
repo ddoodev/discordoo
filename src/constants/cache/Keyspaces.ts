@@ -13,6 +13,8 @@ export enum Keyspaces {
   GUILD_PRESENCES = 'guild-presences',
   // guild-roles => guild id => role id
   GUILD_ROLES = 'guild-roles',
+  // guild-roles-positions => guild id => role id
+  GUILD_ROLES_POSITIONS = 'guild-roles-positions',
   // messages => channel id => message id
   MESSAGES = 'messages',
   // stickers => global or guild id => sticker id

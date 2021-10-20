@@ -2,7 +2,6 @@ export { ExtendableEntities } from '@src/api/entities/ExtendableEntities'
 export { AbstractEntity } from '@src/api/entities/AbstractEntity'
 export { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 export { Entities } from '@src/api/entities/Entities'
-export { Entity } from '@src/api/entities/Entity'
 
 export * from './interfaces'
 export * from './attachment'

@@ -138,6 +138,8 @@ export class IpcServer extends TypedEmitter<IpcServerEvents> {
         return this.client.internals.cache.size(keyspace, storage)
       case IpcCacheOpCodes.HAS:
         return this.client.internals.cache.has(keyspace, storage, request.d.key)
+      case IpcCacheOpCodes.CLEAR:
+        return this.client.internals.cache.clear(keyspace, storage)
       case IpcCacheOpCodes.SWEEP:
       case IpcCacheOpCodes.MAP:
       case IpcCacheOpCodes.FIND:

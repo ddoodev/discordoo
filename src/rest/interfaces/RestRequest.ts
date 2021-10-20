@@ -21,7 +21,7 @@ export interface RestRequest {
   requestHeaders: Record<string, any>
 
   /** Request body data */
-  requestBody: Record<any, any>
+  requestBody: any
 
   /** Request payload data (attachments) */
   requestPayload: RawAttachment[]

@@ -12,12 +12,14 @@ import { MessageEmbed, MessageEmbedResolvable, RawMessageEmbedData } from '@src/
 import { GuildResolvable } from '@src/api/entities/guild/interfaces/GuildResolvable'
 import { StickerResolvable } from '@src/api/entities/sticker'
 import { BigBitFieldResolvable, BitFieldResolvable } from '@src/api/entities/bitfield/interfaces'
-import { BigBitField } from '@src/api/entities/bitfield/BigBitField'
-import { BitField } from '@src/api/entities/bitfield/BitField'
+import { ReadonlyBigBitField } from '@src/api/entities/bitfield/ReadonlyBigBitField'
+import { ReadonlyBitField } from '@src/api/entities/bitfield/ReadonlyBitField'
 import { UserResolvable } from '@src/api/entities/user/interfaces/UserResolvable'
 import { User } from '@src/api/entities/user'
 import { Client } from '@src/core'
 import { RoleResolvable } from '@src/api/entities/role'
+import { RoleTagsResolvable } from '@src/api/entities/role/interfaces/RoleTagsResolvable'
+import { RoleTagsData } from '@src/api/entities/role/interfaces/RoleTagsData'
 
 export function resolveFiles(resolvable: MessageAttachmentResolvable[]): Promise<RawAttachment[]> {
   return Promise.all(resolvable.map(resolveFile))
@@ -79,7 +81,7 @@ export function resolveBigBitField(resolvable: BigBitFieldResolvable, emptyBit: 
       }
     }
     case 'object': {
-      if (resolvable instanceof BigBitField) return resolvable.bitfield
+      if (resolvable instanceof ReadonlyBigBitField) return resolvable.bitfield
       if (typeof resolvable.bits === 'string' && resolvable.bits.endsWith('n'))
         return BigInt(resolvable.bits.slice(0, resolvable.bits.length))
     } break
@@ -101,18 +103,29 @@ export function resolveBitField(resolvable: BitFieldResolvable, emptyBit: number
       return resolvable
     }
     case 'object': {
-      if (resolvable instanceof BitField) return resolvable.bitfield
-      if (typeof resolvable.bits === 'number') return resolvable.bits
+      if (resolvable instanceof ReadonlyBitField) return resolvable.bitfield
+      if (typeof resolvable.bits === 'number'!) return resolvable.bits
     }
   }
 
   throw InvalidBitFieldError(resolvable)
 }
 
-export function resolveEmbed(resolvable: MessageEmbedResolvable): RawMessageEmbedData {
+export function resolveEmbedToRaw(resolvable: MessageEmbedResolvable): RawMessageEmbedData {
   if (resolvable instanceof MessageEmbed) return resolvable.toJson()
 
   return new MessageEmbed(resolvable).toJson() // TODO: low performance
+}
+
+export function resolveRoleTags(resolvable: RoleTagsResolvable): RoleTagsData {
+  return {
+    botId:
+      'bot_id' in resolvable ? resolvable.bot_id : 'botId' in resolvable ? resolvable.botId : undefined,
+    integrationId:
+      'integration_id' in resolvable ? resolvable.integration_id : 'integrationId' in resolvable ? resolvable.integrationId : undefined,
+    premiumSubscriber:
+      'premium_subscriber' in resolvable ? true : 'premiumSubscriber' in resolvable ? resolvable.premiumSubscriber : false
+  }
 }
 
 function resolveAnythingToId(resolvable: any): string | undefined  {

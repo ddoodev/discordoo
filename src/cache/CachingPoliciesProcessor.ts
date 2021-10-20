@@ -8,7 +8,7 @@ import {
   MembersCachingPolicy,
   MessagesCachingPolicy,
   PresencesCachingPolicy,
-  RolesCachingPolicy,
+  RolesCachingPolicy, StickersCachingPolicy,
   UsersCachingPolicy
 } from '@src/constants'
 import { Message } from '@src/api'
@@ -120,6 +120,34 @@ export class CachingPoliciesProcessor {
       )
 
       results.push(this.options.emojis.after?.(emoji) ?? undefined)
+
+      result = results[0] ?? results[2] ?? results[1]
+    }
+
+    return result
+  }
+
+  sticker(sticker: any): boolean {
+    let result = true
+
+    if (this.options.stickers) {
+      const results: any[] /* [ boolean | undefined, boolean, boolean | undefined ] */ = []
+
+      results.push(this.options.stickers.before?.(sticker) ?? undefined)
+
+      results.push(
+        this.options.stickers.policies.some(policy => {
+          switch (policy) {
+            case StickersCachingPolicy.NONE:
+              return false
+            case StickersCachingPolicy.ALL:
+            default:
+              return true
+          }
+        })
+      )
+
+      results.push(this.options.stickers.after?.(sticker) ?? undefined)
 
       result = results[0] ?? results[2] ?? results[1]
     }

@@ -12,4 +12,4 @@ export const UserFlags = {
   VERIFIED_BOT: 1 << 16,
   EARLY_VERIFIED_BOT_DEVELOPER: 1 << 17,
   DISCORD_CERTIFIED_MODERATOR: 1 << 18,
-}
+} as const

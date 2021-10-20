@@ -13,7 +13,7 @@ import {
   CacheManagerHasOptions,
   CacheManagerMapOptions,
   CacheManagerSetOptions,
-  CachingOptions
+  CachingOptions, CachePointer, CacheManagerClearOptions
 } from '@src/cache/interfaces'
 import { CacheProvider, CacheStorageKey } from '@discordoo/providers'
 
@@ -106,7 +106,7 @@ export class EntitiesCacheManager<Entity> extends EntitiesManager {
     )
   }
 
-  async set(key: string, value: Entity, options?: CacheManagerSetOptions): Promise<EntitiesCacheManager<Entity>> {
+  async set(key: string, value: Entity | CachePointer, options?: CacheManagerSetOptions): Promise<EntitiesCacheManager<Entity>> {
     const allowed = this.client.internals.cache[Symbol.for('_ddooPoliciesProcessor')][this.policy](value)
 
     if (allowed) {
@@ -138,5 +138,9 @@ export class EntitiesCacheManager<Entity> extends EntitiesManager {
       predicate,
       options,
     )
+  }
+
+  async clear(options?: CacheManagerClearOptions): Promise<boolean> {
+    return this.client.internals.cache.clear(this.keyspace, this.storage, options)
   }
 }

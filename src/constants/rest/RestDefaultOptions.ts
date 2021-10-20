@@ -1,5 +1,5 @@
 import { RestOptions } from '@src/rest/interfaces/RestOptions'
-import { version } from '@src/utils'
+import { version } from '@src/utils/version'
 
 export const REST_DEFAULT_OPTIONS: Required<Omit<RestOptions, 'auth'>> = {
   version: 9,

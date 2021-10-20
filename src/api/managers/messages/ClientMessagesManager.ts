@@ -5,7 +5,7 @@ import { MessageContent } from '@src/api/entities/message/interfaces/MessageCont
 import { MessageCreateOptions } from '@src/api/entities/message/interfaces/MessageCreateOptions'
 import {
   resolveChannelId,
-  resolveEmbed,
+  resolveEmbedToRaw,
   resolveFile,
   resolveFiles,
   resolveGuildId,
@@ -51,7 +51,7 @@ export class ClientMessagesManager extends EntitiesManager {
         throw new DiscordooError(
           'MessagesManager#create',
           'Incorrect content:', inspect(content) + '.',
-          'If content not specified, options must be provided: at least one of options.embeds/embed/files/file/stickers/sticker.')
+          'If content not specified, options must be provided: at least one of options.embeds/embed/files/file/stickers/sticker/content.')
       } else {
         contentProvidedFromOptions = true
       }
@@ -77,7 +77,7 @@ export class ClientMessagesManager extends EntitiesManager {
       const target: /* MessageEmbedResolvable | StickerResolvable | MessageAttachmentResolvable */ any = content[0]
 
       if (embedTypes.includes(target.type)) { // content = embeds
-        payload.embeds.push(...data.map(resolveEmbed))
+        payload.embeds.push(...data.map(resolveEmbedToRaw))
 
       } else if (stickerFormatTypes.includes(target.formatType ?? target.format_type)) { // content = stickers
         const stickers = filterAndMap<StickerResolvable, string>(
@@ -106,7 +106,7 @@ export class ClientMessagesManager extends EntitiesManager {
 
     if (!contentProvidedFromOptions) {
       if (embedTypes.includes(data.type)) {
-        payload.embeds.push(resolveEmbed(data))
+        payload.embeds.push(resolveEmbedToRaw(data))
 
       } else if (stickerFormatTypes.includes(data.formatType ?? data.format_type)) {
         const id = resolveStickerId(data)
@@ -137,8 +137,8 @@ export class ClientMessagesManager extends EntitiesManager {
     // TODO: allowed mentions
     // TODO: components
 
-    if (options.embed) payload.embeds.push(resolveEmbed(options.embed))
-    if (options.embeds?.length) payload.embeds.push(...options.embeds.map(resolveEmbed))
+    if (options.embed) payload.embeds.push(resolveEmbedToRaw(options.embed))
+    if (options.embeds?.length) payload.embeds.push(...options.embeds.map(resolveEmbedToRaw))
 
     if (options.file) payload.files.push(await resolveFile(options.file))
     if (options.files?.length) payload.files.push(...await resolveFiles(options.files))

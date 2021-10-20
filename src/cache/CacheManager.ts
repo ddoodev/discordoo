@@ -5,6 +5,8 @@ import { DiscordooError, resolveShards } from '@src/utils'
 import { Client, ProviderConstructor } from '@src/core'
 import { EntitiesUtil, EntityKey } from '@src/api/entities'
 import {
+  IpcCacheClearRequestPacket,
+  IpcCacheClearResponsePacket,
   IpcCacheDeleteRequestPacket,
   IpcCacheDeleteResponsePacket,
   IpcCacheFilterRequestPacket,
@@ -28,15 +30,17 @@ import {
 } from '@src/sharding/interfaces/ipc/IpcPackets'
 import {
   cacheProviderFilterPolyfill,
+  cacheProviderSweepPolyfill,
   cacheProviderFindPolyfill,
   cacheProviderHasPolyfill,
   cacheProviderMapPolyfill,
   cacheProviderSizePolyfill,
-  cacheProviderSweepPolyfill
+  cacheProviderClearPolyfill,
 } from '@src/cache/polyfills'
 import {
   CacheManagerDeleteOptions,
   CacheManagerFilterOptions,
+  CacheManagerClearOptions,
   CacheManagerFindOptions,
   CacheManagerForEachOptions,
   CacheManagerGetOptions,
@@ -487,6 +491,42 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     }
 
     return result
+  }
+
+  async clear(
+    keyspace: string,
+    storage: CacheStorageKey,
+    options: CacheManagerClearOptions = {}
+  ): Promise<boolean> {
+    if (this.isShardedRequest(options)) {
+      const shards = resolveShards(this.client, options.shard!)
+
+      const request: IpcCacheClearRequestPacket = {
+        op: IpcOpCodes.CACHE_OPERATE,
+        d: {
+          op: IpcCacheOpCodes.CLEAR,
+          event_id: this.client.internals.ipc.generate(),
+          keyspace,
+          storage,
+          shards,
+          serialize: SerializeModes.BOOLEAN
+        }
+      }
+
+      const { d: response } =
+        await this.client.internals.ipc.send<IpcCacheClearResponsePacket>(request, { waitResponse: true })
+
+      return response.success
+
+    } else {
+
+      if (this.provider.clear) {
+        return this.provider.clear(keyspace, storage)
+      } else {
+        return cacheProviderClearPolyfill<P>(this.provider, keyspace, storage)
+      }
+
+    }
   }
 
   [Symbol.for('_ddooMakePredicate')](entityKey: EntityKey, predicate: any) { // for internal use by a library outside of this class

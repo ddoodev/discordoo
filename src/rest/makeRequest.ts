@@ -67,8 +67,8 @@ export function makeRequest(rest: RestManager<any>): RestRequest {
       return this
     },
 
-    body(body: Record<any, any>): RestRequest {
-      this.requestBody = { ...this.requestBody, ...body }
+    body(body: any): RestRequest {
+      this.requestBody = body
 
       return this
     },

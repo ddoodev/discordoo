@@ -1,6 +1,6 @@
 import { AbstractEntity } from '@src/api/entities/AbstractEntity'
-import { GuildMemberData, Json, Permissions, RawGuildMemberData, ToJsonProperties, User } from '@src/api'
-import { ToJsonOverrideSymbol } from '@src/constants'
+import { GuildMemberData, Json, RawGuildMemberData, ReadonlyPermissions, ToJsonProperties, User } from '@src/api'
+import { Keyspaces, PermissionsFlags, ToJsonOverrideSymbol } from '@src/constants'
 import { DiscordooError, ImageUrlOptions, mergeNewOrSave } from '@src/utils'
 import { filterAndMap } from '@src/utils/filterAndMap'
 import { resolveRoleId, resolveUserId } from '@src/utils/resolve'
@@ -17,7 +17,7 @@ export class GuildMember extends AbstractEntity {
   public mute!: boolean
   public nick?: string
   public pending?: boolean
-  public permissions!: Permissions
+  public permissions!: ReadonlyPermissions
   public premiumSinceDate?: Date
   public roles!: GuildMemberRolesManager
   public rolesList: string[] = []
@@ -46,14 +46,6 @@ export class GuildMember extends AbstractEntity {
       this.premiumSinceDate = new Date(data.premiumSinceDate)
     }
 
-    if (data.roles) {
-      this.rolesList = filterAndMap(
-        data.roles,
-        (r) => resolveRoleId(r) !== undefined,
-        (r) => resolveRoleId(r)
-      )
-    }
-
     if ('userId' in data && (data.userId || data.user)) {
       const id = data.userId ?? (data.user ? resolveUserId(data.user) : undefined)
       if (id) this.userId = id
@@ -76,8 +68,36 @@ export class GuildMember extends AbstractEntity {
       })
     }
 
+    if (data.roles) {
+      await this.roles.cache.clear()
+
+      this.rolesList = filterAndMap(
+        data.roles,
+        (r) => resolveRoleId(r) !== undefined,
+        (r) => resolveRoleId(r)
+      )
+
+      for await (const role of this.rolesList) {
+        await this.roles.cache.set(role, {
+          ___type___: 'discordooCachePointer',
+          keyspace: Keyspaces.GUILD_ROLES,
+          storage: this.guildId,
+          key: role
+        })
+      }
+    }
+
     if (data.permissions !== undefined) {
-      this.permissions = new Permissions(data.permissions)
+      const guild = await this.guild()
+      let owner = false
+
+      if (guild) {
+        if (guild.ownerId === this.userId) {
+          owner = true
+        }
+      }
+
+      this.permissions = new ReadonlyPermissions(owner ? PermissionsFlags.ADMINISTRATOR : data.permissions)
     }
 
     return this
@@ -125,32 +145,17 @@ export class GuildMember extends AbstractEntity {
 
   async ban(options?: MemberBanOptions): Promise<this | undefined> {
     const result = await this.client.members.ban(this.guildId, this.userId, options)
-
-    if (result) {
-      return this
-    }
-
-    return undefined
+    return result ? this : undefined
   }
 
   async kick(reason?: string): Promise<this | undefined> {
     const result = await this.client.members.kick(this.guildId, this.userId, reason)
-
-    if (result) {
-      return this
-    }
-
-    return undefined
+    return result ? this : undefined
   }
 
   async unban(reason?: string): Promise<this | undefined> {
     const result = await this.client.members.unban(this.guildId, this.userId, reason)
-
-    if (result) {
-      return this
-    }
-
-    return undefined
+    return result ? this : undefined
   }
 
   toString(): string {
