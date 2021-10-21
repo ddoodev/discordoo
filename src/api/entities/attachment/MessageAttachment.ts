@@ -1,5 +1,5 @@
 import { RawMessageAttachmentData } from '@src/api/entities/attachment/interfaces/RawMessageAttachmentData'
-import { BufferResolvable } from '@src/api/entities/interfaces/BufferResolvable'
+import { BufferResolvable } from '@src/utils/interfaces/BufferResolvable'
 import { RawAttachment } from '@discordoo/providers'
 import { DataResolver } from '@src/utils/DataResolver'
 import { MessageAttachmentOptions } from '@src/api/entities/attachment/interfaces/MessageAttachmentOptions'

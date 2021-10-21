@@ -12,6 +12,9 @@ import { RawStickerCreateData } from '@src/api/entities/sticker/interfaces/RawSt
 import { RawStickerPackData } from '@src/api/entities/sticker'
 import { RawGuildMemberEditData } from '@src/api/entities/member/interfaces/RawGuildMemberEditData'
 import { RawGuildMemberData } from '@src/api'
+import { RawRoleEditData } from '@src/api/entities/role/interfaces/RawRoleEditData'
+import { RawRoleData } from '@src/api/entities/role/interfaces/RawRoleData'
+import { RawRoleCreateData } from '@src/api/entities/role/interfaces/RawRoleCreateData'
 
 export class ClientActions {
   public client: Client
@@ -63,6 +66,13 @@ export class ClientActions {
       .url(Endpoints.GUILD_EMOJIS(guildId))
       .body(data)
       .post({ reason })
+  }
+
+  createGuildRole(guildId: string, data: RawRoleCreateData, reason?: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_ROLES(guildId))
+      .body(data)
+      .post<RawRoleData>({ reason })
   }
 
   createGuildFromTemplate(code: string, name: string, icon?: string) {
@@ -126,6 +136,12 @@ export class ClientActions {
   deleteGuildEmoji(guildId: string, emojiId: string, reason?: string) {
     return this.client.internals.rest.api()
       .url(Endpoints.GUILD_EMOJI(guildId, emojiId))
+      .delete({ reason })
+  }
+
+  deleteGuildRole(guildId: string, roleId: string, reason?: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_ROLE(guildId, roleId))
       .delete({ reason })
   }
 
@@ -211,6 +227,13 @@ export class ClientActions {
       .patch<RawGuildMemberData>({ reason })
   }
 
+  editGuildRole(guildId: string, roleId: string, data: RawRoleEditData, reason?: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_ROLE(guildId, roleId))
+      .body(data)
+      .patch<RawRoleData>({ reason })
+  }
+
   editGuildTemplate(guildId: string, code: string, data: any /* TODO: GuildTemplateData */) { // TODO: check if reason available
     return this.client.internals.rest.api()
       .url(Endpoints.GUILD_TEMPLATE_GUILD(guildId, code))
@@ -294,6 +317,12 @@ export class ClientActions {
     return this.client.internals.rest.api()
       .url(Endpoints.GUILD_DISCOVERY(guildId))
       .get()
+  }
+
+  getGuildRoles(guildId: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_ROLES(guildId))
+      .get<RawRoleData[]>()
   }
 
   getGuildIntegrations(guildId: string, data: any /* TODO: GetGuildIntegrationsData */ = {}) {

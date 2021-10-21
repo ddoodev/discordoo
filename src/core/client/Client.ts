@@ -25,6 +25,7 @@ import { ClientChannelsManager } from '@src/api/managers/channels/ClientChannels
 import { UsersManager } from '@src/api/managers/UsersManager'
 import { ClientStickersManager } from '@src/api/managers/stickers/ClientStickersManager'
 import { ClientMembersManager } from '@src/api/managers/members/ClientMembersManager'
+import { ClientRolesManager } from '@src/api/managers/roles'
 
 /** Entry point for all of Discordoo. */
 @Final('start', 'internals', 'guilds', 'users', 'messages', 'channels', 'token')
@@ -56,6 +57,9 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
 
   /** Members manager of this client */
   public members: ClientMembersManager
+
+  /** Roles manager of this client */
+  public roles: ClientRolesManager
 
   constructor(token: string, options: ClientOptions = {}) {
     super()
@@ -149,12 +153,13 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
 
     this.internals.events.register([ MessageCreateEvent ]) // TODO
 
-    this.guilds = new GuildsManager(this)
-    this.users = new UsersManager(this)
     this.messages = new ClientMessagesManager(this)
     this.channels = new ClientChannelsManager(this)
     this.stickers = new ClientStickersManager(this)
     this.members = new ClientMembersManager(this)
+    this.roles = new ClientRolesManager(this)
+    this.guilds = new GuildsManager(this)
+    this.users = new UsersManager(this)
   }
 
   async start(): Promise<Client<ClientStack>> {

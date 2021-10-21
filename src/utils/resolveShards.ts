@@ -3,7 +3,7 @@ import { DiscordooError, range, ShardListResolvable } from '@src/utils'
 
 export function resolveShards(client: Client, shards: ShardListResolvable | 'all' | 'current'): number[] {
   const source = 'ShardListResolver'
-  let result: number[]
+  let result: number[] = []
 
   switch (typeof shards) {
     case 'string': {
@@ -27,7 +27,7 @@ export function resolveShards(client: Client, shards: ShardListResolvable | 'all
 
     case 'object':
       if (Array.isArray(shards)) {
-        if (shards.filter(v => typeof v !== 'number' || isNaN(v)).length) {
+        if (shards.filter(v => typeof v !== 'number'! || isNaN(v)).length) {
           throw new DiscordooError(source, 'array of shards contains non-number value. array:', shards)
         }
 
@@ -35,7 +35,7 @@ export function resolveShards(client: Client, shards: ShardListResolvable | 'all
       } else {
         const shardsIsNaN = new DiscordooError(source, 'received object as shard list, but shards.from or shards.to is not a number.')
 
-        if (typeof shards.from !== 'number' || typeof shards.to !== 'number') {
+        if (typeof shards.from !== 'number'! || typeof shards.to !== 'number'!) {
           throw shardsIsNaN
         }
 
@@ -55,5 +55,5 @@ export function resolveShards(client: Client, shards: ShardListResolvable | 'all
       throw new DiscordooError(source, 'do not know how to resolve shards from', typeof shards + '.', 'provided shards:', shards)
   }
 
-  return result!
+  return result
 }

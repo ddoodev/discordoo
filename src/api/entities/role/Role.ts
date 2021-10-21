@@ -1,14 +1,16 @@
 import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 import { RoleData } from '@src/api/entities/role/interfaces/RoleData'
-import { GuildMember, Json, ReadonlyPermissions, ToJsonProperties } from '@src/api'
+import { ColorResolvable, GuildMember, Json, PermissionsResolvable, ReadonlyPermissions, ToJsonProperties } from '@src/api'
 import { RoleTagsData } from '@src/api/entities/role/interfaces/RoleTagsData'
 import { RawRoleData } from '@src/api/entities/role/interfaces/RawRoleData'
 import { idToDate, idToTimestamp, ImageUrlOptions, mergeNewOrSave } from '@src/utils'
 import { resolveRoleTags } from '@src/utils/resolve'
 import { CacheManagerFilterOptions } from '@src/cache'
 import { Keyspaces } from '@src/constants'
+import { RoleEditData } from '@src/api/entities/role/interfaces/RoleEditData'
+import { Base64Resolvable } from '@src/utils/interfaces/Base64Resolvable'
 
-export class Role extends AbstractEntity {
+export class Role extends AbstractEntity { // TODO: positions...
   public color!: number
   public hoist!: boolean
   public icon?: string
@@ -21,6 +23,7 @@ export class Role extends AbstractEntity {
   public tags?: RoleTagsData
   public unicodeEmoji?: string
   public guildId!: string
+  public deleted = false
 
   async init(data: RawRoleData | RoleData): Promise<this> {
     mergeNewOrSave(this, data, [
@@ -33,7 +36,8 @@ export class Role extends AbstractEntity {
       'name',
       [ 'rawPosition', 'position', 0 ],
       [ 'unicodeEmoji', 'unicode_emoji' ],
-      [ 'guildId', 'guild_id' ]
+      [ 'guildId', 'guild_id' ],
+      'deleted'
     ])
 
     if ('permissions' in data) {
@@ -57,6 +61,43 @@ export class Role extends AbstractEntity {
       (member) => member.rolesList.includes(this.id), // TODO: context
       options
     )
+  }
+
+  async delete(reason?: string): Promise<this | undefined> {
+    const response = await this.client.roles.delete(this.guildId, this.id, reason)
+    return response ? this : undefined
+  }
+
+  edit(data: RoleEditData, reason?: string): Promise<this | undefined> {
+    return this.client.roles.edit<this>(this.guildId, this.id, data, { reason, patchEntity: this })
+  }
+
+  setName(name: string, reason?: string) {
+    return this.edit({ name }, reason)
+  }
+
+  setColor(color: ColorResolvable, reason?: string) {
+    return this.edit({ color }, reason)
+  }
+
+  setHoist(hoist: boolean, reason?: string) {
+    return this.edit({ hoist }, reason)
+  }
+
+  setPermissions(permissions: PermissionsResolvable, reason?: string) {
+    return this.edit({ permissions }, reason)
+  }
+
+  setMentionable(mentionable: boolean, reason?: string) {
+    return this.edit({ mentionable }, reason)
+  }
+
+  setIcon(icon: Base64Resolvable, reason?: string) {
+    return this.edit({ icon }, reason)
+  }
+
+  setUnicodeEmoji(unicodeEmoji: string, reason?: string) {
+    return this.edit({ unicodeEmoji }, reason)
   }
 
   get createdTimestamp(): number {
@@ -95,6 +136,7 @@ export class Role extends AbstractEntity {
       tags: true,
       unicodeEmoji: true,
       guildId: true,
+      deleted: true,
     }, obj)
   }
 }

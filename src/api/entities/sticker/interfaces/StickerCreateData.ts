@@ -1,4 +1,4 @@
-import { BufferResolvable } from '@src/api/entities/interfaces/BufferResolvable'
+import { BufferResolvable } from '@src/utils/interfaces/BufferResolvable'
 import { MessageAttachmentResolvable } from '@src/api'
 
 export interface StickerCreateData {

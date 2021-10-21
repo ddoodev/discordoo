@@ -1,5 +1,4 @@
 export { ToJsonProperties, ToJsonProperty } from '@src/api/entities/interfaces/ToJsonProperties'
-export { BufferResolvable } from '@src/api/entities/interfaces/BufferResolvable'
 export { ColorResolvable } from '@src/api/entities/interfaces/ColorResolvable'
 export { Resolvable } from '@src/api/entities/interfaces/Resolvable'
 export { EntityKey } from '@src/api/entities/interfaces/EntityKey'
