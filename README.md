@@ -153,7 +153,7 @@ SID - still in development
 * [x] Implement Members
 * [x] Implement Emojis
 * [x] Implement Stickers
-* [ ] Implement Roles
+* [x] Implement Roles
 * [ ] Implement Presences
 * [x] Implement Users (SID)
 
@@ -167,10 +167,9 @@ SID - still in development
   * [x] GuildsManager (SID)
   * [x] ChannelMessagesManager/ClientMessagesManager (SID)
   * [x] GuildChannelsManager/ClientChannelsManager (SID)
-  * [ ] GuildEmojisManager/ClientEmojisManager
-  * [ ] GuildRolesManager/ClientRolesManager
+  * [x] GuildEmojisManager/ClientEmojisManager (SID)
+  * [x] GuildRolesManager/ClientRolesManager (SID)
   * [ ] GuildPresencesManager/ClientPresencesManager
-  * [ ] GuildEmojisManager/ClientEmojisManager
   * [x] GuildMembersManager/ClientMembersManager (SID)
   * [x] UsersManager (SID)
 
