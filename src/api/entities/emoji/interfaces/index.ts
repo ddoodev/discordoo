@@ -5,6 +5,7 @@ export { GuildPreviewEmojiData } from '@src/api/entities/emoji/interfaces/GuildP
 export { GuildEmojiEditData } from '@src/api/entities/emoji/interfaces/GuildEmojiEditData'
 export { AbstractGuildEmoji } from '@src/api/entities/emoji/interfaces/AbstractGuildEmoji'
 export { RawGuildEmojiData } from '@src/api/entities/emoji/interfaces/RawGuildEmojiData'
+export { ActivityEmojiData } from '@src/api/entities/emoji/interfaces/ActivityEmojiData'
 export { ReactionEmojiData } from '@src/api/entities/emoji/interfaces/ReactionEmojiData'
 export { AbstractEmojiData } from '@src/api/entities/emoji/interfaces/AbstractEmojiData'
 export { RawEmojiEditData } from '@src/api/entities/emoji/interfaces/RawEmojiEditData'

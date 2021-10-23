@@ -5,6 +5,7 @@ export { Entities } from '@src/api/entities/Entities'
 
 export * from './interfaces'
 export * from './attachment'
+export * from './presence'
 export * from './bitfield'
 export * from './message'
 export * from './channel'
