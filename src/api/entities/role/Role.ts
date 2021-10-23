@@ -3,7 +3,7 @@ import { RoleData } from '@src/api/entities/role/interfaces/RoleData'
 import { ColorResolvable, GuildMember, Json, PermissionsResolvable, ReadonlyPermissions, ToJsonProperties } from '@src/api'
 import { RoleTagsData } from '@src/api/entities/role/interfaces/RoleTagsData'
 import { RawRoleData } from '@src/api/entities/role/interfaces/RawRoleData'
-import { idToDate, idToTimestamp, ImageUrlOptions, mergeNewOrSave } from '@src/utils'
+import { idToDate, idToTimestamp, ImageUrlOptions, attach } from '@src/utils'
 import { resolveRoleTags } from '@src/utils/resolve'
 import { CacheManagerFilterOptions } from '@src/cache'
 import { Keyspaces } from '@src/constants'
@@ -26,7 +26,7 @@ export class Role extends AbstractEntity { // TODO: positions...
   public deleted = false
 
   async init(data: RawRoleData | RoleData): Promise<this> {
-    mergeNewOrSave(this, data, [
+    attach(this, data, [
       'color',
       'hoist',
       'icon',

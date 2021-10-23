@@ -3,10 +3,10 @@ import { WebSocketClient } from '@src/gateway/WebSocketClient'
 import { WebSocketClientEvents, WebSocketClientStates, WebSocketManagerStates } from '@src/constants'
 import { DiscordooError } from '@src/utils'
 import { GatewayProvider, GatewayShardsInfo } from '@discordoo/providers'
-import { WebSocketManagerOptions } from '@src/gateway/interfaces/WebSocketManagerOptions'
+import { CompletedGatewayOptions } from '@src/gateway/interfaces/CompletedGatewayOptions'
 
 export class WebSocketManager {
-  public readonly options: WebSocketManagerOptions
+  public readonly options: CompletedGatewayOptions
 
   public provider: GatewayProvider
   public status: WebSocketManagerStates
@@ -15,7 +15,7 @@ export class WebSocketManager {
   private queueInterval?: ReturnType<typeof setInterval>
   private shardQueue = new Set<WebSocketClient>()
 
-  constructor(provider: GatewayProvider, options: WebSocketManagerOptions) {
+  constructor(provider: GatewayProvider, options: CompletedGatewayOptions) {
     this.options = options
     this.status = WebSocketManagerStates.CREATED
     this.provider = provider
@@ -32,7 +32,8 @@ export class WebSocketManager {
       }
     }
 
-    console.log('shards:', options)
+    console.log('ws manager options:', options)
+    console.log('shards:', this.options.shards)
     console.log('totalShards:', this.options.totalShards)
 
     this.shardQueue = new Set(this.options.shards.map(id => new WebSocketClient(this, id)))
@@ -49,8 +50,8 @@ export class WebSocketManager {
     const gateway = await this.provider.getGateway()
 
     this.options.url =
-      gateway.url + '/?v=9'
-      + /* TODO: this.options.version */ '&encoding=' + this.options.encoding
+      gateway.url + '/?v='
+      + this.options.version + '&encoding=' + this.options.encoding
       + (this.options.compress ? '&compress=zlib-stream' : '')
 
     console.log('URL', this.options.url)
@@ -100,7 +101,7 @@ export class WebSocketManager {
 
     try {
       // console.log('shard', shard.id, 'connecting')
-      await shard.connect() // TODO: getGateway()
+      await shard.connect()
         .catch(e => {
           if (e && !(e instanceof DiscordooError)) shard.emit(WebSocketClientEvents.RECONNECT_ME)
           console.error(e)

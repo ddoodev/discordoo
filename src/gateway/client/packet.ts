@@ -1,16 +1,11 @@
 import { WebSocketUtils } from '@src/utils/WebSocketUtils'
 import { WebSocketClient } from '@src/gateway/WebSocketClient'
-import { WebSocketClientEvents, WebSocketClientStates, WebSocketOpCodes } from '@src/constants'
+import { WebSocketClientEvents, WebSocketClientStates } from '@src/constants'
+import { GatewayOpCodes } from '@discordoo/providers'
 import { WebSocketPacket } from '@src/gateway/interfaces/WebSocketPacket'
 import { wait } from '@src/utils/wait'
 
-export function packet(
-  client: WebSocketClient,
-  // it should have been GatewayDispatchPayload & GatewayReceivePayload, but IntelliJ says SYS LOAD 666%
-  // https://cdn.discordapp.com/attachments/531549268033404928/850888918811017256/2021-06-05_22-44-36.mp4
-  // so a warning to anyone who reads this: do not use GatewayDispatchPayload & GatewayReceivePayload type
-  packet: WebSocketPacket
-) {
+export function packet(client: WebSocketClient, packet: WebSocketPacket) {
 
   console.log('shard', client.id, 'packet', packet)
 
@@ -44,7 +39,7 @@ export function packet(
   }
 
   switch (packet.op) {
-    case WebSocketOpCodes.HELLO:
+    case GatewayOpCodes.HELLO:
 
       client.heartbeatInterval(packet.d.heartbeat_interval)
       client.handshakeTimeout()
@@ -53,7 +48,7 @@ export function packet(
 
       break
 
-    case WebSocketOpCodes.INVALID_SESSION:
+    case GatewayOpCodes.INVALID_SESSION:
       client.emit(WebSocketClientEvents.INVALID_SESSION)
 
       wait(5000).then(() => {
@@ -63,21 +58,21 @@ export function packet(
 
       break
 
-    case WebSocketOpCodes.HEARTBEAT:
+    case GatewayOpCodes.HEARTBEAT:
       client.heartbeat()
       break
 
-    case WebSocketOpCodes.HEARTBEAT_ACK:
+    case GatewayOpCodes.HEARTBEAT_ACK:
       // console.log('shard', client.id, 'HEARTBEAT_ACK')
       client.missedHeartbeats = 0
       client.ping = Date.now() - client.lastPingTimestamp
       break
 
-    case WebSocketOpCodes.RECONNECT:
+    case GatewayOpCodes.RECONNECT:
       client.destroy({ reconnect: true })
       break
 
-    case WebSocketOpCodes.DISPATCH:
+    case GatewayOpCodes.DISPATCH:
       client.manager.provider.emit(packet.t, packet.d)
       break
   }

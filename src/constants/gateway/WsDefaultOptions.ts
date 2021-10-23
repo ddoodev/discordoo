@@ -22,4 +22,5 @@ export const WS_DEFAULT_OPTIONS: Required<Omit<GatewayOptions, 'token' | 'presen
   maxEventsPerSecond: Infinity,
   largeThreshold: 50,
   totalShards: 1,
+  handshakeTimeout: 30_000,
 }

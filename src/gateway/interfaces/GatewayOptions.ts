@@ -126,4 +126,9 @@ export interface GatewayOptions {
    * @default Infinity
    * */
   maxEventsPerSecond?: number
+
+  /**
+   * The time it takes for a response from Discord to arrive when the client connects to it, in ms
+   * */
+  handshakeTimeout?: number
 }

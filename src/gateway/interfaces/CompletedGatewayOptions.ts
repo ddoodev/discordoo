@@ -1,4 +1,4 @@
-export interface WebSocketManagerOptions {
+export interface CompletedGatewayOptions {
   totalShards: number
   shards: number[]
   useReconnectOnly: boolean
@@ -8,6 +8,7 @@ export interface WebSocketManagerOptions {
   encoding: 'json' | 'etf'
   token: string
   intents: number
+  version: number
   properties: any // TODO
-  presence: any // TODO
+  presence?: any // TODO
 }

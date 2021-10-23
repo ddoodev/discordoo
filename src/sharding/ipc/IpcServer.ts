@@ -17,17 +17,17 @@ import { IpcServerEvents } from '@src/sharding/interfaces/ipc/IpcServerEvents'
 import { Client } from '@src/core'
 
 export class IpcServer extends TypedEmitter<IpcServerEvents> {
-  private bucket: Collection = new Collection()
+  private readonly bucket: Collection = new Collection()
   private managerSocket: any
-  private readonly managerIpc: string
+  private readonly MANAGER_IPC: string
   private readonly eventsHandler: any
 
   public ipc: InstanceType<typeof RawIpc>
   public server?: typeof RawIpcServer
-  public instanceIpc: string
-  public instance: number
+  public readonly INSTANCE_IPC: string
+  public readonly instance: number
 
-  public client: Client
+  public readonly client: Client
 
   constructor(client: Client, options: IpcServerOptions) {
     super()
@@ -35,8 +35,8 @@ export class IpcServer extends TypedEmitter<IpcServerEvents> {
     this.client = client
     this.ipc = new RawIpc()
 
-    this.instanceIpc = this.ipc.config.id = options.instanceIpc
-    this.managerIpc = options.managerIpc
+    this.INSTANCE_IPC = this.ipc.config.id = options.INSTANCE_IPC
+    this.MANAGER_IPC = options.MANAGER_IPC
     this.instance = options.instance
 
     this.ipc.config = Object.assign(this.ipc.config, options.config ?? {})
@@ -172,8 +172,8 @@ export class IpcServer extends TypedEmitter<IpcServerEvents> {
   }
 
   private hello(packet: IpcHelloPacket, socket: any) {
-    if (!packet.d || (packet.d && packet.d.id !== this.managerIpc)) {
-      return this.send({ op: IpcOpCodes.INVALID_SESSION, d: { id: this.instanceIpc } }, { socket: socket })
+    if (!packet.d || (packet.d && packet.d.id !== this.MANAGER_IPC)) {
+      return this.send({ op: IpcOpCodes.INVALID_SESSION, d: { id: this.INSTANCE_IPC } }, { socket: socket })
     }
 
     const promise = this.bucket.get('__CONNECTION_PROMISE__')
@@ -192,7 +192,7 @@ export class IpcServer extends TypedEmitter<IpcServerEvents> {
     const data: IpcIdentifyPacket = {
       op: IpcOpCodes.IDENTIFY,
       d: {
-        id: this.instanceIpc,
+        id: this.INSTANCE_IPC,
         event_id: packet.d.event_id
       }
     }

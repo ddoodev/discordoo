@@ -1,7 +1,8 @@
-import { WebSocketOpCodes, WebSocketDispatchEvents } from '@src/constants'
+import { WebSocketDispatchEvents } from '@src/constants'
+import { GatewayOpCodes } from '@discordoo/providers'
 
 export interface WebSocketPacket {
-  op: WebSocketOpCodes
+  op: GatewayOpCodes
   d: any
   s: number | undefined
   t: WebSocketDispatchEvents

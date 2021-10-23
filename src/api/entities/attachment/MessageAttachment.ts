@@ -89,8 +89,7 @@ export class MessageAttachment {
 
     return {
       data,
-      name: this.name,
-      ephemeral: this.ephemeral
+      name: this.name
     }
   }
 

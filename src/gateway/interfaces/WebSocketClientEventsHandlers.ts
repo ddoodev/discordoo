@@ -1,8 +1,8 @@
 import WebSocket from 'ws'
-import { WebSocketSendPayload } from '@src/gateway/interfaces/WebSocketSendPayload'
+import { GatewaySendPayloadLike } from '@discordoo/providers'
 
 export interface WebSocketClientEventsHandlers {
-  WS_SEND_ERROR: (error: Error, data: WebSocketSendPayload) => unknown
+  WS_SEND_ERROR: (error: Error, data: GatewaySendPayloadLike) => unknown
   WS_OPEN_ERROR: (error: Error) => unknown
   WS_CLOSE_ERROR: (error: Error) => unknown
 

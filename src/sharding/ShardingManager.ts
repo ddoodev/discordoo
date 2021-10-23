@@ -7,10 +7,12 @@ import { isMaster as isMainCluster } from 'cluster'
 import { isMainThread } from 'worker_threads'
 import { Collection } from '@discordoo/collection'
 import { ShardingInstance } from '@src/sharding/ShardingInstance'
-import { resolveDiscordShards } from '@src/utils/resolveDiscordShards'
+import { resolveDiscordShards } from '@src/utils/resolve'
 import { intoChunks } from '@src/utils/intoChunks'
 import { Final } from '@src/utils/FinalDecorator'
 import { ShardingManagerInternals } from '@src/sharding/interfaces/manager/ShardingManagerInternals'
+import { CompletedLocalIpcOptions } from '@src/constants/sharding/CompletedLocalIpcOptions'
+import { LOCAL_IPC_DEFAULT_OPTIONS } from '@src/constants/sharding/IpcDefaultOptions'
 
 const isMainProcess = process.send === undefined
 
@@ -71,7 +73,8 @@ export class ShardingManager extends TypedEmitter<ShardingManagerEvents> {
           SHARDING_MANAGER_IPC: this.internals.id,
           SHARDING_INSTANCE_IPC: DiscordooSnowflake.generate(index, process.pid),
           SHARDING_INSTANCE: index,
-        }
+        },
+        ipc: { config: this._makeLocalIpcOptions() }
       })
 
       await instance.create()
@@ -83,6 +86,13 @@ export class ShardingManager extends TypedEmitter<ShardingManagerEvents> {
     }
 
     return this
+  }
+
+  private _makeLocalIpcOptions(): CompletedLocalIpcOptions {
+    return Object.assign(
+      {},
+      LOCAL_IPC_DEFAULT_OPTIONS
+    )
   }
 
 }

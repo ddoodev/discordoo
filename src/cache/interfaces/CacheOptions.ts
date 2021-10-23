@@ -11,7 +11,9 @@ import {
   UsersCachingPolicy
 } from '@src/constants'
 
-export interface CachingOptions {
+export const CACHE_OPTIONS_KEYS_LENGTH = 9 // all cache options expect 'global'
+
+export interface CacheOptions {
   channels?: {
     before?: (channel: any) => boolean
     policies: ChannelsCachingPolicy[]

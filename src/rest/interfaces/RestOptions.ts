@@ -1,4 +1,5 @@
 import { AuthLike } from '@discordoo/providers'
+import { AllowedImageFormats } from '@src/utils'
 
 export interface RestOptions {
   maxRetries?: number
@@ -10,6 +11,7 @@ export interface RestOptions {
   scheme?: 'http' | 'https'
   headers?: Record<string, any>
   auth?: AuthLike
+  defaultImageFormat?: AllowedImageFormats
   rateLimits?: {
     disable?: boolean
     globalLimit?: number

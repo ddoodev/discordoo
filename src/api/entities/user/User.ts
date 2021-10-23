@@ -1,6 +1,6 @@
 import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 import { UserData } from '@src/api/entities/user/interfaces'
-import { idToDate, idToTimestamp, ImageUrlOptions, mergeNewOrSave } from '@src/utils'
+import { idToDate, idToTimestamp, ImageUrlOptions, attach } from '@src/utils'
 import { RawUserData } from '@src/api/entities/user/interfaces/RawUserData'
 import { Json } from '@src/api/entities/interfaces/Json'
 import { ToJsonProperties } from '@src/api/entities/interfaces/ToJsonProperties'
@@ -27,7 +27,7 @@ export class User extends AbstractEntity implements UserData { // TODO: implemen
 
     this.id = data.id ?? this.id
 
-    mergeNewOrSave(this, data, [
+    attach(this, data, [
       'avatar',
       'username',
       'discriminator',

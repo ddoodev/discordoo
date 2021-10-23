@@ -1,6 +1,6 @@
 import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 import { AbstractEmojiData } from '@src/api/entities/emoji/interfaces/AbstractEmojiData'
-import { idToDate, idToTimestamp, mergeNewOrSave } from '@src/utils'
+import { idToDate, idToTimestamp, attach } from '@src/utils'
 import { ToJsonProperties } from '@src/api/entities/interfaces/ToJsonProperties'
 import { Json } from '@src/api/entities/interfaces/Json'
 
@@ -10,7 +10,7 @@ export abstract class AbstractEmoji extends AbstractEntity implements AbstractEm
   public name?: string
 
   async init(data: AbstractEmojiData): Promise<this> {
-    mergeNewOrSave(this, data, [
+    attach(this, data, [
       'animated',
       'id',
       'name'

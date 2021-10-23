@@ -13,13 +13,13 @@ import {
   CacheManagerHasOptions,
   CacheManagerMapOptions,
   CacheManagerSetOptions,
-  CachingOptions, CachePointer, CacheManagerClearOptions
+  CacheOptions, CachePointer, CacheManagerClearOptions
 } from '@src/cache/interfaces'
 import { CacheProvider, CacheStorageKey } from '@discordoo/providers'
 
 export class EntitiesCacheManager<Entity> extends EntitiesManager {
   private readonly entityKey: EntityKey
-  private readonly policy: keyof CachingOptions
+  private readonly policy: keyof CacheOptions
   public readonly keyspace: string
   public readonly storage: CacheStorageKey
 

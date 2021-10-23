@@ -4,7 +4,6 @@ export { WebSocketClientEvents } from '@src/constants/gateway/WebSocketClientEve
 export { WebSocketClientStates } from '@src/constants/gateway/WebSocketClientStates'
 export { WebSocketShardStatus } from '@src/constants/gateway/WebSocketShardStatus'
 export { WS_DEFAULT_OPTIONS } from '@src/constants/gateway/WsDefaultOptions'
-export { WebSocketOpCodes } from '@src/constants/gateway/WebSocketOpCodes'
 export { WebSocketEvents } from '@src/constants/gateway/WebSocketEvents'
 export { WebSocketStates } from '@src/constants/gateway/WebSocketStates'
 export { GatewayIntents } from '@src/constants/gateway/GatewayIntents'

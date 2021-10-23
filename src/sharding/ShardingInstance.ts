@@ -34,12 +34,11 @@ export class ShardingInstance extends TypedEmitter {
     this.options = options
 
     this.ipc = new IpcClient(this, {
-      shardId: this.id,
-      shardIpcId: this.ipcId,
+      INSTANCE_IPC: this.ipcId,
       tls: options.ipc?.tls,
       config: options.ipc?.config,
       shards: this.shards,
-      managerId: this.options.internalEnv.SHARDING_MANAGER_IPC,
+      MANAGER_IPC: this.options.internalEnv.SHARDING_MANAGER_IPC,
       totalShards: this.totalShards
     })
   }

@@ -1,7 +1,7 @@
 import { CachingPoliciesProcessor } from '@src/cache/CachingPoliciesProcessor'
 import { IpcCacheOpCodes, IpcOpCodes, SerializeModes } from '@src/constants'
 import { CacheProvider, CacheStorageKey } from '@discordoo/providers'
-import { DiscordooError, resolveShards } from '@src/utils'
+import { DiscordooError, resolveDiscordooShards } from '@src/utils'
 import { Client, ProviderConstructor } from '@src/core'
 import { EntitiesUtil, EntityKey } from '@src/api/entities'
 import {
@@ -42,14 +42,14 @@ import {
   CacheManagerFilterOptions,
   CacheManagerClearOptions,
   CacheManagerFindOptions,
-  CacheManagerForEachOptions,
   CacheManagerGetOptions,
   CacheManagerHasOptions,
   CacheManagerMapOptions,
-  CacheManagerOptions,
   CacheManagerSetOptions,
   CacheManagerSizeOptions,
   CacheManagerSweepOptions,
+  CacheManagerForEachOptions,
+  CacheManagerData,
   CachePointer
 } from '@src/cache/interfaces'
 
@@ -59,9 +59,9 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
 
   private readonly _policiesProcessor: CachingPoliciesProcessor
 
-  constructor(client: Client, Provider: ProviderConstructor<P>, options: CacheManagerOptions) {
+  constructor(client: Client, Provider: ProviderConstructor<P>, data: CacheManagerData) {
     this.client = client
-    this.provider = new Provider(this.client, options.provider)
+    this.provider = new Provider(this.client, data.cacheOptions, data.providerOptions)
     this._policiesProcessor = new CachingPoliciesProcessor(this.client)
   }
 
@@ -74,8 +74,8 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
   ): Promise<V | undefined> {
     let result: any
 
-    if (typeof options?.shard !== 'undefined' && this.client.internals.sharding.active && !this.provider.sharedCache) {
-      const shards = resolveShards(this.client, options.shard)
+    if (this.isShardedRequest(options)) {
+      const shards = resolveDiscordooShards(this.client, options.shard!)
 
       const request: IpcCacheGetRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
@@ -135,7 +135,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     const data = await this._prepareData('in', value, entityKey, this.isShardedRequest(options))
 
     if (this.isShardedRequest(options)) {
-      const shards = resolveShards(this.client, options.shard!)
+      const shards = resolveDiscordooShards(this.client, options.shard!)
 
       const request: IpcCacheSetRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
@@ -173,7 +173,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     options: CacheManagerDeleteOptions = {}
   ): Promise<boolean> {
     if (this.isShardedRequest(options)) {
-      const shards = resolveShards(this.client, options.shard!)
+      const shards = resolveDiscordooShards(this.client, options.shard!)
 
       const request: IpcCacheDeleteRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
@@ -206,7 +206,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     options: CacheManagerForEachOptions = {}
   ): Promise<void> {
     if (this.isShardedRequest(options)) {
-      const shards = resolveShards(this.client, options.shard!)
+      const shards = resolveDiscordooShards(this.client, options.shard!)
 
       const request: IpcCacheForEachRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
@@ -237,8 +237,8 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
   ): Promise<number> {
     let result = 0
 
-    if (typeof options?.shard !== 'undefined' && this.client.internals.sharding.active && !this.provider.sharedCache) {
-      const shards = resolveShards(this.client, options.shard)
+    if (this.isShardedRequest(options)) {
+      const shards = resolveDiscordooShards(this.client, options.shard!)
 
       const request: IpcCacheSizeRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
@@ -280,8 +280,8 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
   ): Promise<boolean> {
     let result = false
 
-    if (typeof options?.shard !== 'undefined' && this.client.internals.sharding.active && !this.provider.sharedCache) {
-      const shards = resolveShards(this.client, options.shard)
+    if (this.isShardedRequest(options)) {
+      const shards = resolveDiscordooShards(this.client, options.shard!)
 
       const request: IpcCacheHasRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
@@ -325,7 +325,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
   ): Promise<void> {
 
     if (this.isShardedRequest(options)) {
-      const shards = resolveShards(this.client, options.shard!)
+      const shards = resolveDiscordooShards(this.client, options.shard!)
 
       const request: IpcCacheSweepRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
@@ -365,7 +365,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     let result: [ K, V ][] = []
 
     if (this.isShardedRequest(options)) {
-      const shards = resolveShards(this.client, options.shard!)
+      const shards = resolveDiscordooShards(this.client, options.shard!)
 
       const request: IpcCacheFilterRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
@@ -411,7 +411,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     let result: R[] = []
 
     if (this.isShardedRequest(options)) {
-      const shards = resolveShards(this.client, options.shard!)
+      const shards = resolveDiscordooShards(this.client, options.shard!)
 
       const request: IpcCacheMapRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
@@ -457,7 +457,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     let result: V | undefined
 
     if (this.isShardedRequest(options)) {
-      const shards = resolveShards(this.client, options.shard!)
+      const shards = resolveDiscordooShards(this.client, options.shard!)
 
       const request: IpcCacheFindRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
@@ -499,7 +499,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     options: CacheManagerClearOptions = {}
   ): Promise<boolean> {
     if (this.isShardedRequest(options)) {
-      const shards = resolveShards(this.client, options.shard!)
+      const shards = resolveDiscordooShards(this.client, options.shard!)
 
       const request: IpcCacheClearRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,

@@ -1,6 +1,17 @@
+// TODO: (╯°□°）╯︵ ┻━┻
 import { DiscordooProviders, GlobalCachingPolicy, IpcEvents, IpcOpCodes, REST_DEFAULT_OPTIONS, WS_DEFAULT_OPTIONS } from '@src/constants'
-import { DiscordooError, DiscordooSnowflake, resolveDiscordShards, version } from '@src/utils'
+import { DiscordooError, DiscordooSnowflake, ReplaceType, resolveDiscordShards, ShardListResolvable, version } from '@src/utils'
+import { CompletedLocalIpcOptions } from '@src/constants/sharding/CompletedLocalIpcOptions'
+import { CompletedGatewayOptions } from '@src/gateway/interfaces/CompletedGatewayOptions'
+import { ClientMessagesManager } from '@src/api/managers/messages/ClientMessagesManager'
+import { ClientChannelsManager } from '@src/api/managers/channels/ClientChannelsManager'
+import { ClientStickersManager } from '@src/api/managers/stickers/ClientStickersManager'
+import { LOCAL_IPC_DEFAULT_OPTIONS } from '@src/constants/sharding/IpcDefaultOptions'
+import { ClientMembersManager } from '@src/api/managers/members/ClientMembersManager'
+import { CompletedCacheOptions } from '@src/cache/interfaces/CompletedCacheOptions'
 import { ClientShardingMetadata } from '@src/core/client/ClientShardingMetadata'
+import { CompletedRestOptions } from '@src/rest/interfaces/CompletedRestOptions'
+import { CACHE_OPTIONS_KEYS_LENGTH } from '@src/cache/interfaces/CacheOptions'
 import { ProviderConstructor } from '@src/core/providers/ProviderConstructor'
 import { DefaultGatewayProvider } from '@src/gateway/DefaultGatewayProvider'
 import { DefaultClientStack } from '@src/core/client/DefaultClientStack'
@@ -11,21 +22,19 @@ import { ClientInternals } from '@src/core/client/ClientInternals'
 import { ClientMetadata } from '@src/core/client/ClientMetadata'
 import { ClientOptions } from '@src/core/client/ClientOptions'
 import { ClientActions } from '@src/core/client/ClientActions'
+import { ClientEvents, MessageCreateEvent } from '@src/events'
+import { UsersManager } from '@src/api/managers/UsersManager'
+import { ClientRolesManager } from '@src/api/managers/roles'
 import { GatewayManager } from '@src/gateway/GatewayManager'
 import { GatewayShardsInfo } from '@discordoo/providers'
 import { IpcServer } from '@src/sharding/ipc/IpcServer'
 import { CacheManager } from '@src/cache/CacheManager'
-import { GuildsManager } from '@src/api/managers'
 import { RestManager } from '@src/rest/RestManager'
+import { GuildsManager } from '@src/api/managers'
 import { Final } from '@src/utils/FinalDecorator'
-import { ClientEvents, MessageCreateEvent } from '@src/events'
+import { IpcServerOptions } from '@src/sharding'
 import { EntitiesUtil } from '@src/api'
-import { ClientMessagesManager } from '@src/api/managers/messages/ClientMessagesManager'
-import { ClientChannelsManager } from '@src/api/managers/channels/ClientChannelsManager'
-import { UsersManager } from '@src/api/managers/UsersManager'
-import { ClientStickersManager } from '@src/api/managers/stickers/ClientStickersManager'
-import { ClientMembersManager } from '@src/api/managers/members/ClientMembersManager'
-import { ClientRolesManager } from '@src/api/managers/roles'
+import * as process from 'process'
 
 /** Entry point for all of Discordoo. */
 @Final('start', 'internals', 'guilds', 'users', 'messages', 'channels', 'token')
@@ -71,19 +80,18 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
     this.token = token
     this.options = options
 
-    const
-      gatewayOptions = Object.assign(WS_DEFAULT_OPTIONS, this.options.gateway ?? {}, { token: this.token }),
-      restOptions = Object.assign(REST_DEFAULT_OPTIONS, { auth: `Bot ${this.token}` }, this.options.rest ?? {})
+    const gatewayOptions: CompletedGatewayOptions = this._makeGatewayOptions()
+    const restOptions: CompletedRestOptions = this._makeRestOptions()
+    const cacheOptions: CompletedCacheOptions = this._makeCacheOptions()
+    const ipcOptions: CompletedLocalIpcOptions = this._makeLocalIpcOptions()
 
-    let
-      restProvider: ProviderConstructor<ClientStack['rest']> = DefaultRestProvider,
-      cacheProvider: ProviderConstructor<ClientStack['cache']> = DefaultCacheProvider,
-      gatewayProvider: ProviderConstructor<ClientStack['gateway']> = DefaultGatewayProvider,
-      restProviderOptions = restOptions, gatewayProviderOptions = gatewayOptions, cacheProviderOptions
+    let restProvider: ProviderConstructor<ClientStack['rest']> = DefaultRestProvider
+    let cacheProvider: ProviderConstructor<ClientStack['cache']> = DefaultCacheProvider
+    let gatewayProvider: ProviderConstructor<ClientStack['gateway']> = DefaultGatewayProvider
+    let restProviderOptions, gatewayProviderOptions, cacheProviderOptions
 
-    const shards = resolveDiscordShards(gatewayProviderOptions.shards ?? [ 0 ]),
-      MANAGER_IPC = process.env.SHARDING_MANAGER_IPC ?? DiscordooSnowflake.generatePartial(),
-      INSTANCE_IPC = process.env.SHARDING_INSTANCE_IPC ?? DiscordooSnowflake.generatePartial()
+    const MANAGER_IPC = process.env.SHARDING_MANAGER_IPC ?? DiscordooSnowflake.generatePartial()
+    const INSTANCE_IPC = process.env.SHARDING_INSTANCE_IPC ?? DiscordooSnowflake.generatePartial()
 
     this.options.providers?.forEach(provider => {
       try {
@@ -108,47 +116,75 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
       }
     })
 
-    const
-      rest = new RestManager<ClientStack['rest']>(this, restProvider, { provider: restProviderOptions }),
-      cache = new CacheManager<ClientStack['cache']>(this, cacheProvider, { provider: cacheProviderOptions }),
-      gateway = new GatewayManager<ClientStack['gateway']>(this, gatewayProvider, { provider: gatewayProviderOptions }),
-      sharding: ClientShardingMetadata = {
-        MANAGER_IPC,
-        INSTANCE_IPC,
-        instance: parseInt(process.env.SHARDING_INSTANCE ?? '0'),
-        shards: shards,
-        totalShards: shards.length,
-        active: DiscordooSnowflake.deconstruct(MANAGER_IPC).shardId === DiscordooSnowflake.SHARDING_MANAGER_ID,
-      },
-      ipc = new IpcServer(
-        this,
-        Object.assign({
-          instanceIpc: sharding.INSTANCE_IPC,
-          managerIpc: sharding.MANAGER_IPC,
-          instance: sharding.instance,
-        }, this.options.ipc ?? {})
-      ),
-      actions = new ClientActions(this),
-      events = new ClientEvents(this),
-      metadata: ClientMetadata = {
-        version,
-        shardingUsed: sharding.active,
-        restRateLimitsDisabled: restOptions.rateLimits.disable === true,
-        restVersion: restOptions.version,
-        gatewayVersion: gatewayOptions.version,
-        allCacheDisabled: this.options.cache?.global?.policies.includes(GlobalCachingPolicy.NONE) ?? false, // TODO: check all policies
-        machinesShardingUsed: false // not supported yet
+    const shardingMetadata: ClientShardingMetadata = {
+      MANAGER_IPC,
+      INSTANCE_IPC,
+      instance: parseInt(process.env.SHARDING_INSTANCE ?? '0'),
+      shards: gatewayOptions.shards,
+      totalShards: gatewayOptions.totalShards,
+      active: DiscordooSnowflake.deconstruct(MANAGER_IPC).shardId === DiscordooSnowflake.SHARDING_MANAGER_ID,
+    }
+
+    const rest = new RestManager<ClientStack['rest']>(
+      this,
+      restProvider,
+      { restOptions, providerOptions: restProviderOptions }
+    )
+
+    const cache = new CacheManager<ClientStack['cache']>(
+      this,
+      cacheProvider,
+      { cacheOptions, providerOptions: cacheProviderOptions }
+    )
+
+    const gateway = new GatewayManager<ClientStack['gateway']>(
+      this,
+      gatewayProvider,
+      { gatewayOptions, providerOptions: gatewayProviderOptions }
+    )
+
+    const ipc = new IpcServer(
+      this,
+      this._makeIpcServerOptions(ipcOptions, shardingMetadata)
+    )
+
+    const allCacheDisabled = (() => {
+      if (this.options.cache?.global?.policies.includes(GlobalCachingPolicy.NONE)) return true
+
+      const options = Object.entries(this.options.cache ?? {})
+      const total = options.length, defaultTotal = CACHE_OPTIONS_KEYS_LENGTH
+      if (total === 0 || total < defaultTotal) return false
+
+      let disabled = 0
+
+      for (const [ policy ] of options) {
+        if (policy.includes('none')) disabled++
       }
+
+      return defaultTotal === disabled
+    })()
+
+    const clientMetadata: ClientMetadata = {
+      version,
+      shardingUsed: shardingMetadata.active,
+      restRateLimitsDisabled: restOptions.rateLimits.disable === true,
+      restVersion: restOptions.version,
+      gatewayVersion: gatewayOptions.version,
+      allCacheDisabled,
+      machinesShardingUsed: false // not supported yet
+    }
+
+    const actions = new ClientActions(this), events = new ClientEvents(this)
 
     this.internals = {
       rest,
       cache,
       gateway,
-      sharding,
+      sharding: shardingMetadata,
       ipc,
       actions,
       events,
-      metadata,
+      metadata: clientMetadata,
     }
 
     this.internals.events.register([ MessageCreateEvent ]) // TODO
@@ -205,5 +241,54 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
 
         throw e
       })
+  }
+
+  private _makeGatewayOptions(): CompletedGatewayOptions {
+    const options: ReplaceType<CompletedGatewayOptions, 'shards', ShardListResolvable> =
+      Object.assign(
+        {},
+        WS_DEFAULT_OPTIONS,
+        { token: this.token },
+        this.options.gateway
+      )
+
+    const shards = resolveDiscordShards(options.shards)
+    const totalShards = shards.length
+
+    return {
+      ...options,
+      shards,
+      totalShards,
+    }
+  }
+
+  private _makeRestOptions(): CompletedRestOptions {
+    return Object.assign(
+      {},
+      REST_DEFAULT_OPTIONS,
+      { auth: `Bot ${this.token}` },
+      this.options.rest
+    )
+  }
+
+  private _makeCacheOptions(): CompletedCacheOptions {
+    return this.options.cache ?? {}
+  }
+
+  private _makeLocalIpcOptions(): CompletedLocalIpcOptions {
+    return Object.assign(
+      {},
+      LOCAL_IPC_DEFAULT_OPTIONS,
+      this.options.ipc
+    )
+  }
+
+  private _makeIpcServerOptions(completedOptions: CompletedLocalIpcOptions, metadata: ClientShardingMetadata): IpcServerOptions {
+    const { MANAGER_IPC, INSTANCE_IPC, instance } = metadata
+    return Object.assign(
+      {},
+      { MANAGER_IPC, INSTANCE_IPC, instance },
+      { config: completedOptions }
+    )
   }
 }

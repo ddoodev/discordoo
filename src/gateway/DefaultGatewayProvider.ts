@@ -1,15 +1,16 @@
-import { GatewayBotInfo, GatewayProvider, GatewayShardsInfo } from '@discordoo/providers'
+import { GatewayBotInfo, GatewayProvider, GatewaySendOptions, GatewayShardsInfo } from '@discordoo/providers'
 import { Client } from '@src/core'
 import { WebSocketManager } from '@src/gateway/WebSocketManager'
-import { WebSocketManagerOptions } from '@src/gateway/interfaces/WebSocketManagerOptions'
 import { rawToDiscordoo } from '@src/utils/rawToDiscordoo'
+import { CompletedGatewayOptions } from '@src/gateway/interfaces/CompletedGatewayOptions'
+import { GatewaySendPayloadLike } from '@discordoo/providers'
 
 export class DefaultGatewayProvider implements GatewayProvider {
   public client: Client
   private manager: WebSocketManager
-  private options: WebSocketManagerOptions
+  private options: CompletedGatewayOptions
 
-  constructor(client: Client, options: WebSocketManagerOptions) {
+  constructor(client: Client, options: CompletedGatewayOptions) {
     this.client = client
     this.options = options
 
@@ -33,11 +34,11 @@ export class DefaultGatewayProvider implements GatewayProvider {
   }
 
   ping(): number
-  ping(shards: number[]): number[]
-  ping(shards?: number[]): number | number[] {
+  ping(shards: number[]): Array<[ number, number ]>
+  ping(shards?: number[]): number | Array<[ number, number ]> {
     switch (Array.isArray(shards)) {
       case true:
-        return shards!.map(id => this.manager.shards.get(id)?.ping ?? -1)
+        return shards!.map(id => ([ id, this.manager.shards.get(id)?.ping ?? -1 ]))
       case false:
         return (this.manager.shards.reduce((prev, curr) => prev + curr.ping, 0) / this.manager.shards.size) | 1
     }
@@ -57,13 +58,13 @@ export class DefaultGatewayProvider implements GatewayProvider {
     }
   }
 
-  send(data: Record<string, any>, shards?: number[]): unknown {
-    switch (Array.isArray(shards)) {
+  send(data: GatewaySendPayloadLike, options: GatewaySendOptions = {}): unknown {
+    switch (Array.isArray(options.shards)) {
       case true:
-        shards!.forEach(id => this.manager.shards.get(id)?.socketSend(data as any)) // TODO: ???
+        options.shards!.forEach(id => this.manager.shards.get(id)?.socketSend(data))
         break
       case false:
-        this.manager.shards.forEach(shard => shard.socketSend(data as any)) // TODO: ???
+        this.manager.shards.forEach(shard => shard.socketSend(data))
     }
 
     return undefined

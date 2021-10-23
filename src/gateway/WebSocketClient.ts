@@ -5,13 +5,12 @@ import { TypedEmitter } from 'tiny-typed-emitter'
 
 import { WebSocketClientDestroyOptions } from '@src/gateway/interfaces/WebSocketClientDestroyOptions'
 import { WebSocketClientEventsHandlers } from '@src/gateway/interfaces/WebSocketClientEventsHandlers'
-import { WebSocketManagerOptions } from '@src/gateway/interfaces/WebSocketManagerOptions'
-import { WebSocketSendPayload } from '@src/gateway/interfaces/WebSocketSendPayload'
+import { CompletedGatewayOptions } from '@src/gateway/interfaces/CompletedGatewayOptions'
 import { WebSocketPacket } from '@src/gateway/interfaces/WebSocketPacket'
+import { GatewayOpCodes, GatewaySendPayloadLike } from '@discordoo/providers'
 import {
   WebSocketClientEvents,
   WebSocketClientStates,
-  WebSocketOpCodes,
   WebSocketStates
 } from '@src/constants'
 
@@ -28,7 +27,7 @@ import { open } from '@src/gateway/client/open'
 
 export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers> {
   private socket?: WebSocket
-  private readonly options: WebSocketManagerOptions
+  private readonly options: CompletedGatewayOptions
   private inflate?: PakoTypes.Inflate
   private _heartbeatInterval?: ReturnType<typeof setInterval>
   private _handshakeTimeout?: ReturnType<typeof setTimeout>
@@ -87,8 +86,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
       if (this.options.encoding === 'etf' && WebSocketUtils.encoding !== 'etf') {
         throw new DiscordooError(
           'WebSocketShard ' + this.id,
-          'cannot use etf encoding without erlpack installed.',
-          '(if you are using worker threads sharding, node.js cannot use external modules inside workers)'
+          'cannot use etf encoding without erlpack installed.'
         )
       }
 
@@ -204,11 +202,14 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
     if (!shouldIgnoreAck) this.missedHeartbeats += 1
 
     this.lastPingTimestamp = Date.now()
-    this.socketSend({ op: WebSocketOpCodes.HEARTBEAT, d: this.sequence })
+    this.socketSend({ op: GatewayOpCodes.HEARTBEAT, d: this.sequence })
   }
 
-  public socketSend(data: WebSocketSendPayload) {
-    if (!this.socket) return
+  public socketSend(data: GatewaySendPayloadLike) {
+    if (!this.socket) {
+      this.emit(WebSocketClientEvents.WS_SEND_ERROR, new Error('Tried to send packet, but no WebSocket was found'), data)
+      return
+    }
 
     console.log('shard', this.id, 'send:', data)
 

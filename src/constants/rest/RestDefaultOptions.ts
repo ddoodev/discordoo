@@ -10,6 +10,7 @@ export const REST_DEFAULT_OPTIONS: Required<Omit<RestOptions, 'auth'>> = {
   domain: 'discord.com',
   scheme: 'https',
   headers: {},
+  defaultImageFormat: 'png',
   rateLimits: {
     disable: false,
     globalLimit: 50,

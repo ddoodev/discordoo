@@ -1,6 +1,6 @@
 import { MessageEmbedData } from '@src/api/entities/embed/interfaces/MessageEmbedData'
 import { is } from 'typescript-is'
-import { mergeNewOrSave, ValidationError } from '@src/utils'
+import { attach, ValidationError } from '@src/utils'
 import { MessageEmbedTypes } from '@src/constants'
 import { MessageEmbedFieldData } from '@src/api/entities/embed/interfaces/MessageEmbedFieldData'
 import { MessageEmbedAuthorData } from '@src/api/entities/embed/interfaces/MessageEmbedAuthorData'
@@ -37,7 +37,7 @@ export class MessageEmbed {
   private _create(data: MessageEmbedData  | MessageEmbed = {}): this {
     this.type = data.type ?? MessageEmbedTypes.RICH
 
-    mergeNewOrSave(this, data, [
+    attach(this, data, [
       'title',
       'description',
       'url',

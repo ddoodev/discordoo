@@ -1,16 +1,19 @@
-import { GatewayBotInfo, GatewayProvider, GatewayShardsInfo } from '@discordoo/providers'
-import { GatewayManagerOptions } from '@src/gateway/interfaces'
+import { GatewayBotInfo, GatewayProvider, GatewaySendOptions, GatewaySendPayloadLike, GatewayShardsInfo } from '@discordoo/providers'
+import { GatewayManagerData } from '@src/gateway/interfaces'
 import { Client, ProviderConstructor } from '@src/core'
 import { DiscordooError } from '@src/utils'
 import { Endpoints } from '@src/constants'
+import { CompletedGatewayOptions } from '@src/gateway/interfaces/CompletedGatewayOptions'
 
 export class GatewayManager<P extends GatewayProvider = GatewayProvider> {
   public provider: P
   public client: Client
+  public options: CompletedGatewayOptions
 
-  constructor(client: Client, Provider: ProviderConstructor<P>, options: GatewayManagerOptions) {
+  constructor(client: Client, Provider: ProviderConstructor<P>, data: GatewayManagerData) {
     this.client = client
-    this.provider = new Provider(this.client, options.provider)
+    this.provider = new Provider(this.client, data.gatewayOptions, data.providerOptions)
+    this.options = data.gatewayOptions
   }
 
   // TODO: resolvable shards
@@ -24,9 +27,9 @@ export class GatewayManager<P extends GatewayProvider = GatewayProvider> {
   }
 
   ping(): number
-  ping(shards: number[]): number[]
-  ping(shards?: number[]): number | number[] {
-    return this.provider.ping(shards!) // FIXME
+  ping(shards: number[]): Array<[ number, number ]>
+  ping(shards?: number[]): number | Array<[ number, number ]> {
+    return this.provider.ping(shards)
   }
 
   emit(event: string, ...data: any[]) { // TODO: events overload protection
@@ -50,8 +53,8 @@ export class GatewayManager<P extends GatewayProvider = GatewayProvider> {
     else throw new DiscordooError('GatewayManager', 'Get gateway request ended with error:', response.result)
   }
 
-  send(data: Record<string, any>, shards?: number[]): unknown {
-    return this.provider.send(data, shards)
+  send(data: GatewaySendPayloadLike, options?: GatewaySendOptions): unknown {
+    return this.provider.send(data, options)
   }
 
   // @ts-ignore

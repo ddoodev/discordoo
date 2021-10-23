@@ -1,21 +1,17 @@
 import { MultipartData } from '@src/utils/MultipartData'
 import { Client as Undici, request } from 'undici'
 import { DiscordooError } from '@src/utils'
-import { RestOptions } from '@src/rest'
 import { Client } from '@src/core'
-import {
-  RestFinishedResponse,
-  RestProvider,
-  RestRequestData,
-  RestRequestOptions
-} from '@discordoo/providers'
+import { RestFinishedResponse, RestProvider, RestRequestData, RestRequestOptions } from '@discordoo/providers'
+import { CompletedRestOptions } from '@src/rest/interfaces/CompletedRestOptions'
+import * as process from 'process'
 
 export class DefaultRestProvider implements RestProvider {
   public client: Client
-  public options: Required<RestOptions>
+  public options: CompletedRestOptions
   private readonly undici: Undici
 
-  constructor(client: Client, options: Required<RestOptions>) {
+  constructor(client: Client, options: CompletedRestOptions) {
     this.client = client
     this.options = options
     this.undici = new Undici(`${this.options.scheme}://${this.options.domain}/`)

@@ -3,15 +3,14 @@ import PakoTypes from '@types/pako'
 import { WebSocketClient } from '@src/gateway/WebSocketClient'
 import WebSocket from 'ws'
 import { WebSocketUtils } from '@src/utils/WebSocketUtils'
-import { GatewayOptions } from '@src/gateway'
 import { WebSocketPacket } from '@src/gateway/interfaces/WebSocketPacket'
-import { WebSocketManagerOptions } from '@src/gateway/interfaces/WebSocketManagerOptions'
+import { CompletedGatewayOptions } from '@src/gateway/interfaces/CompletedGatewayOptions'
 
 // handles websocket raw messages, decompressing/decoding it to normal javascript objects
 export function message(
   client: WebSocketClient,
   event: WebSocket.MessageEvent,
-  options: WebSocketManagerOptions,
+  options: CompletedGatewayOptions,
   inflate?: PakoTypes.Inflate
 ): WebSocketPacket | undefined {
 

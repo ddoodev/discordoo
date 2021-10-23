@@ -3,7 +3,7 @@ import { AbstractGuildEmoji } from '@src/api/entities/emoji/interfaces/AbstractG
 import { GuildEmojiData } from '@src/api/entities/emoji/interfaces/GuildEmojiData'
 import { User } from '@src/api/entities/user'
 import { resolveRoleId, resolveUserId } from '@src/utils/resolve'
-import { DiscordooError, mergeNewOrSave } from '@src/utils'
+import { DiscordooError, attach } from '@src/utils'
 import { RawGuildEmojiData } from '@src/api/entities/emoji/interfaces/RawGuildEmojiData'
 import { GuildEmojiEditData } from '@src/api/entities/emoji/interfaces/GuildEmojiEditData'
 import { RoleResolvable } from '@src/api/entities/role'
@@ -25,7 +25,7 @@ export class GuildEmoji extends AbstractEmoji implements AbstractGuildEmoji {
   async init(data: GuildEmojiData | RawGuildEmojiData): Promise<this> {
     await super.init(data)
 
-    mergeNewOrSave(this, data, [
+    attach(this, data, [
       [ 'available', '', false ],
       [ 'managed', '', false ],
       [ 'requiresColons', 'requires_colons', false ],

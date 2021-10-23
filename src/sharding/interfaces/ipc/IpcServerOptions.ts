@@ -4,7 +4,7 @@ import { RawIpcConfig } from '@src/sharding/interfaces/ipc/RawIpcConfig'
 export interface IpcServerOptions {
   tls?: IpcServerTlsOptions
   config?: RawIpcConfig
-  managerIpc: string
+  MANAGER_IPC: string
+  INSTANCE_IPC: string
   instance: number
-  instanceIpc: string
 }

@@ -10,15 +10,14 @@ import { IpcClientEvents } from '@src/sharding/interfaces/ipc/IpcClientEvents'
 export class IpcClient extends TypedEmitter<IpcClientEvents> {
   private bucket: Collection = new Collection()
   private shardSocket: any
-  private readonly shardIpcId: string
+  private readonly INSTANCE_IPC: string
   private readonly eventsHandler: any
-  private readonly managerId: string
+  private readonly MANAGER_IPC: string
   private helloInterval?: NodeJS.Timeout
 
   public instance: ShardingInstance
   public ipc: InstanceType<typeof RawIpc>
   public shards: number[]
-  public id: number
   public totalShards: number
 
   constructor(instance: ShardingInstance, options: IpcClientOptions) {
@@ -26,17 +25,16 @@ export class IpcClient extends TypedEmitter<IpcClientEvents> {
 
     this.instance = instance
 
-    this.shardIpcId = options.shardIpcId
+    this.INSTANCE_IPC = options.INSTANCE_IPC
     this.shards = options.shards
-    this.id = options.shardId
-    this.managerId = options.managerId
+    this.MANAGER_IPC = options.MANAGER_IPC
     this.totalShards = options.totalShards
 
     this.ipc = new RawIpc()
     this.ipc.config = Object.assign(this.ipc.config, options.config ?? {})
 
     this.eventsHandler = (packet: IpcPacket) => {
-      if (this.listeners('RAW').length) this.emit('RAW', packet)
+      this.emit('RAW', packet)
       this.onPacket(packet)
     }
   }
@@ -49,24 +47,24 @@ export class IpcClient extends TypedEmitter<IpcClientEvents> {
 
       promise.timeout = setTimeout(() => {
         this.ipc.config.stopRetrying = true
-        this.bucket.delete(this.shardIpcId)
+        this.bucket.delete(this.INSTANCE_IPC)
         const err = new DiscordooError(
           'IpcClient#connect',
           'the connection timed out.',
           'the connection had to handle shards:', this.shards.join(', ') + '.',
-          'inter-process communication shard identifier:', this.shardIpcId + '.',
-          'ipc shard id contains:', DiscordooSnowflake.deconstruct(this.shardIpcId)
+          'inter-process communication shard identifier:', this.INSTANCE_IPC + '.',
+          'ipc shard id contains:', DiscordooSnowflake.deconstruct(this.INSTANCE_IPC)
         )
         promise.rej(err)
       }, 30000)
 
-      this.bucket.set(this.shardIpcId, promise)
+      this.bucket.set(this.INSTANCE_IPC, promise)
 
-      this.ipc.connectTo(this.shardIpcId, () => {
-        this.ipc.of[this.shardIpcId].on(RAW_IPC_EVENT, this.eventsHandler)
+      this.ipc.connectTo(this.INSTANCE_IPC, () => {
+        this.ipc.of[this.INSTANCE_IPC].on(RAW_IPC_EVENT, this.eventsHandler)
 
         this.helloInterval = setInterval(() => {
-          this.hello(this.ipc.of[this.shardIpcId])
+          this.hello(this.ipc.of[this.INSTANCE_IPC])
         }, 1000)
       })
     })
@@ -158,7 +156,7 @@ export class IpcClient extends TypedEmitter<IpcClientEvents> {
     const data: IpcHelloPacket = {
       op: IpcOpCodes.HELLO,
       d: {
-        id: this.managerId,
+        id: this.MANAGER_IPC,
         event_id: this.generate(),
         heartbeat_interval: 5000,
         shards: this.shards,
@@ -173,7 +171,7 @@ export class IpcClient extends TypedEmitter<IpcClientEvents> {
     const data: IpcHeartbeatPacket = {
       op: IpcOpCodes.HEARTBEAT,
       d: {
-        id: this.managerId,
+        id: this.MANAGER_IPC,
         event_id: this.generate()
       }
     }
@@ -205,6 +203,6 @@ export class IpcClient extends TypedEmitter<IpcClientEvents> {
 
   public generate() {
     // console.log('CLIENT', this.id)
-    return DiscordooSnowflake.generate(this.id, process.pid)
+    return DiscordooSnowflake.generate(this.instance.id, process.pid)
   }
 }

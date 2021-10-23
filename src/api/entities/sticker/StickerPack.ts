@@ -3,7 +3,7 @@ import { StickerPackData } from '@src/api/entities/sticker/interfaces/StickerPac
 import { Sticker } from '@src/api/entities/sticker/Sticker'
 import { ToJsonProperties } from '@src/api/entities/interfaces/ToJsonProperties'
 import { Json } from '@src/api/entities/interfaces/Json'
-import { idToDate, idToTimestamp, ImageUrlOptions, mergeNewOrSave } from '@src/utils'
+import { idToDate, idToTimestamp, ImageUrlOptions, attach } from '@src/utils'
 import { RawStickerPackData } from '@src/api/entities/sticker/interfaces/RawStickerPackData'
 import { EntitiesUtil } from '@src/api'
 import { Collection } from '@discordoo/collection'
@@ -19,7 +19,7 @@ export class StickerPack extends AbstractEntity {
 
   async init(data: StickerPackData | RawStickerPackData): Promise<this> {
 
-    mergeNewOrSave(this, data, [
+    attach(this, data, [
       [ 'bannerAssetId', 'banner_asset_id' ],
       [ 'coverStickerId', 'cover_sticker_id' ],
       'description',

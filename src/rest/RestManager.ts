@@ -1,32 +1,21 @@
-import {
-  Client,
-  ProviderConstructor
-} from '@src/core'
-import {
-  RestRequest,
-  RestManagerOptions,
-  RestManagerRequestData,
-  RestLimitsManager,
-  makeRequest
-} from '@src/rest'
-import {
-  RestProvider,
-  RestRequestOptions,
-  RestFinishedResponse
-} from '@discordoo/providers'
+import { Client, ProviderConstructor } from '@src/core'
+import { RestRequest, RestManagerData, RestManagerRequestData, RestLimitsManager, makeRequest } from '@src/rest'
+import { RestProvider, RestRequestOptions, RestFinishedResponse } from '@discordoo/providers'
 import { ImageUrlOptions, makeImageUrl } from '@src/utils'
 import { StickerFormatTypes } from '@src/constants'
+import { CompletedRestOptions } from '@src/rest/interfaces/CompletedRestOptions'
 
 export class RestManager<P extends RestProvider = RestProvider> {
   public client: Client
   public provider: P
   public limiter: RestLimitsManager
+  public options: CompletedRestOptions
 
-  constructor(client: Client, provider: ProviderConstructor<P>, options: RestManagerOptions) {
+  constructor(client: Client, Provider: ProviderConstructor<P>, data: RestManagerData) {
     this.client = client
-    this.provider = new provider(this.client, options.provider)
-    // console.log('PROVIDER OPTIONS', options.provider)
+    this.provider = new Provider(this.client, data.restOptions, data.providerOptions)
     this.limiter = new RestLimitsManager(this.client)
+    this.options = data.restOptions
   }
 
   api(): RestRequest {
@@ -34,7 +23,7 @@ export class RestManager<P extends RestProvider = RestProvider> {
   }
 
   cdn(cdn = 'https://cdn.discordapp.com') {
-    const defaultImageFormat = 'png' // TODO
+    const { defaultImageFormat } = this.options
 
     return {
       asset: (name: string) => {

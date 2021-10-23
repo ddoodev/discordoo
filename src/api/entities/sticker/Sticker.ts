@@ -2,7 +2,7 @@ import { StickerData } from '@src/api/entities/sticker/interfaces/StickerData'
 import { StickerFormatTypes, StickerTypes } from '@src/constants'
 import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 import { RawStickerData } from '@src/api/entities/sticker/interfaces/RawStickerData'
-import { DiscordooError, idToDate, idToTimestamp, mergeNewOrSave } from '@src/utils'
+import { DiscordooError, idToDate, idToTimestamp, attach } from '@src/utils'
 import { resolveGuildId, resolveUserId } from '@src/utils/resolve'
 import { User } from '@src/api/entities/user'
 import { CacheManagerGetOptions } from '@src/cache'
@@ -31,7 +31,7 @@ export class Sticker extends AbstractEntity {
 
   async init(data: StickerData | RawStickerData): Promise<this> {
 
-    mergeNewOrSave(this, data, [
+    attach(this, data, [
       'available',
       'description',
       [ 'formatType', 'format_type' ],
