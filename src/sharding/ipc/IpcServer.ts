@@ -140,6 +140,20 @@ export class IpcServer extends TypedEmitter<IpcServerEvents> {
         return this.client.internals.cache.has(keyspace, storage, request.d.key)
       case IpcCacheOpCodes.CLEAR:
         return this.client.internals.cache.clear(keyspace, storage)
+      case IpcCacheOpCodes.COUNTS: {
+        const scripts = request.d.scripts
+
+        const predicates = scripts.map(script => {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          return (value, key, provider) => {
+            return eval(script + '.bind(provider)(value, key, provider)')
+          }
+        })
+
+        return this.client.internals.cache.counts(keyspace, storage, request.d.entityKey, predicates)
+      }
+      case IpcCacheOpCodes.COUNT:
+      case IpcCacheOpCodes.FILTER:
       case IpcCacheOpCodes.SWEEP:
       case IpcCacheOpCodes.MAP:
       case IpcCacheOpCodes.FIND:
@@ -157,6 +171,9 @@ export class IpcServer extends TypedEmitter<IpcServerEvents> {
           case IpcCacheOpCodes.FIND:
             method = 'find'
             break
+          case IpcCacheOpCodes.FILTER:
+            method = 'filter'
+            break
         }
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -164,9 +181,7 @@ export class IpcServer extends TypedEmitter<IpcServerEvents> {
           return eval(script + '.bind(provider)(value, key, provider)')
         }
 
-        const makePredicate = this.client.internals.cache[Symbol.for('_ddooMakePredicate')]
-
-        return this.client.internals.cache[method](keyspace, storage, request.d.entityKey, makePredicate(predicate))
+        return this.client.internals.cache[method](keyspace, storage, request.d.entityKey, predicate)
       }
     }
   }

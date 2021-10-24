@@ -34,7 +34,7 @@ export class Message extends AbstractEntity {
     return this
   }
 
-  toJson(properties: ToJsonProperties, obj?: any): Json {
+  toJson(properties: ToJsonProperties = {}, obj?: any): Json {
     return super.toJson({ ...properties, id: true, channelId: true, content: true, author: true }, obj)
   }
 }

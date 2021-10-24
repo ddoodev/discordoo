@@ -1,6 +1,6 @@
 {
   "name": "discordoo",
-  "version": "0.7.9",
+  "version": "0.8.0",
   "description": "Discord bots. Simplified and boosted",
   "main": "./dist/src/index.js",
   "module": "./dist/src/index.js",
@@ -59,7 +59,7 @@
   },
   "dependencies": {
     "@discordoo/collection": "^1.0.11",
-    "@discordoo/providers": "^0.8.0",
+    "@discordoo/providers": "^0.8.2",
     "node-ipc": "^9.1.4",
     "tiny-typed-emitter": "2.0.3",
     "tslib": "^2.3.0",

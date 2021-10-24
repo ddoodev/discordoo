@@ -87,7 +87,7 @@ export class User extends AbstractEntity implements UserData { // TODO: implemen
     return `<@${this.id}>`
   }
 
-  toJson(properties?: ToJsonProperties): Json {
+  toJson(properties: ToJsonProperties = {}, obj?: any): Json {
     return super.toJson({
       ...properties,
       accentColor: true,
@@ -105,7 +105,7 @@ export class User extends AbstractEntity implements UserData { // TODO: implemen
       system: true,
       username: true,
       verified: true
-    })
+    }, obj)
   }
 
 }

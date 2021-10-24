@@ -13,7 +13,7 @@ import {
   CacheManagerHasOptions,
   CacheManagerMapOptions,
   CacheManagerSetOptions,
-  CacheOptions, CachePointer, CacheManagerClearOptions
+  CacheOptions, CachePointer, CacheManagerClearOptions, CacheManagerCountOptions, CacheManagerCountsOptions
 } from '@src/cache/interfaces'
 import { CacheProvider, CacheStorageKey } from '@discordoo/providers'
 
@@ -142,5 +142,19 @@ export class EntitiesCacheManager<Entity> extends EntitiesManager {
 
   async clear(options?: CacheManagerClearOptions): Promise<boolean> {
     return this.client.internals.cache.clear(this.keyspace, this.storage, options)
+  }
+
+  async count(
+    predicate: (value: Entity, key: string, provider: CacheProvider) => (boolean | Promise<boolean>),
+    options?: CacheManagerCountOptions
+  ): Promise<number> {
+    return this.client.internals.cache.count<string, Entity>(this.keyspace, this.storage, this.entityKey, predicate, options)
+  }
+
+  async counts(
+    predicates: ((value: Entity, key: string, provider: CacheProvider) => (boolean | Promise<boolean>))[],
+    options?: CacheManagerCountsOptions
+  ): Promise<number[]> {
+    return this.client.internals.cache.counts<string, Entity>(this.keyspace, this.storage, this.entityKey, predicates, options)
   }
 }

@@ -1,8 +1,9 @@
-import { AbstractEntity, Json, ToJsonProperties } from '@src/api'
+import { Json, ToJsonProperties } from '@src/api'
 import { PresenceActivityAssetsData } from '@src/api/entities/presence/interfaces/PresenceActivityAssetsData'
 import { RawPresenceActivityAssetsData } from '@src/api/entities/presence/interfaces/RawPresenceActivityAssetsData'
 import { attach, ImageUrlOptions } from '@src/utils'
 import { SPOTIFY_CDN_IMAGES, TWITCH_CDN_LIVE_USERS_IMAGES } from '@src/constants'
+import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 
 export class PresenceActivityAssets extends AbstractEntity implements PresenceActivityAssetsData {
   public largeImage?: string

@@ -282,6 +282,52 @@ export interface IpcCacheClearResponsePacket extends IpcPacket {
   }
 }
 
+export interface IpcCacheCountRequestPacket extends IpcPacket {
+  op: IpcOpCodes.CACHE_OPERATE
+  d: {
+    event_id: string
+    op: IpcCacheOpCodes.COUNT
+    serialize?: SerializeModes.NUMBER
+    shards: number[]
+    keyspace: string
+    storage: CacheStorageKey
+    entityKey: EntityKey
+    script: string
+  }
+}
+
+export interface IpcCacheCountResponsePacket extends IpcPacket {
+  op: IpcOpCodes.CACHE_OPERATE
+  d: {
+    event_id: string
+    success: boolean
+    result: any
+  }
+}
+
+export interface IpcCacheCountsRequestPacket extends IpcPacket {
+  op: IpcOpCodes.CACHE_OPERATE
+  d: {
+    event_id: string
+    op: IpcCacheOpCodes.COUNTS
+    serialize?: SerializeModes.NUMBERS_ARRAY
+    shards: number[]
+    keyspace: string
+    storage: CacheStorageKey
+    entityKey: EntityKey
+    scripts: string[]
+  }
+}
+
+export interface IpcCacheCountsResponsePacket extends IpcPacket {
+  op: IpcOpCodes.CACHE_OPERATE
+  d: {
+    event_id: string
+    success: boolean
+    result: any
+  }
+}
+
 export type IpcCacheRequestPacket = IpcCacheGetRequestPacket
   | IpcCacheSetRequestPacket
   | IpcCacheDeleteRequestPacket
@@ -293,6 +339,8 @@ export type IpcCacheRequestPacket = IpcCacheGetRequestPacket
   | IpcCacheMapRequestPacket
   | IpcCacheFindRequestPacket
   | IpcCacheClearRequestPacket
+  | IpcCacheCountRequestPacket
+  | IpcCacheCountsRequestPacket
 
 export type IpcCacheResponsePacket = IpcCacheGetResponsePacket
   | IpcCacheSetResponsePacket
@@ -305,3 +353,5 @@ export type IpcCacheResponsePacket = IpcCacheGetResponsePacket
   | IpcCacheMapResponsePacket
   | IpcCacheFindResponsePacket
   | IpcCacheClearResponsePacket
+  | IpcCacheCountResponsePacket
+  | IpcCacheCountResponsePacket

@@ -1,14 +1,5 @@
-import {
-  AbstractEntity,
-  ActivityEmoji,
-  ActivityEmojiData,
-  BitFieldResolvable, GuildMember,
-  Json,
-  ReadonlyActivityFlagsUtil,
-  ToJsonProperties
-} from '@src/api'
+import { ActivityEmoji, Json, ReadonlyActivityFlagsUtil, ToJsonProperties } from '@src/api'
 import { PresenceActivityData } from '@src/api/entities/presence/interfaces/PresenceActivityData'
-import { PresenceActivityAssetsData } from '@src/api/entities/presence/interfaces/PresenceActivityAssetsData'
 import { PresenceActivityButtonData } from '@src/api/entities/presence/interfaces/PresenceActivityButtonData'
 import { PresenceActivityPartyData } from '@src/api/entities/presence/interfaces/PresenceActivityPartyData'
 import { PresenceActivitySecretsData } from '@src/api/entities/presence/interfaces/PresenceActivitySecretsData'
@@ -17,7 +8,7 @@ import { PresenceActivityTypes, ToJsonOverrideSymbol } from '@src/constants'
 import { RawPresenceActivityData } from '@src/api/entities/presence/interfaces/RawPresenceActivityData'
 import { PresenceActivityAssets } from '@src/api/entities/presence/PresenceActivityAssets'
 import { attach } from '@src/utils'
-import { CacheManagerGetOptions } from '@src/cache'
+import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 
 export class PresenceActivity extends AbstractEntity {
   public applicationId?: string

@@ -3,4 +3,5 @@ export enum SerializeModes {
   ARRAY,
   NUMBER,
   ANY,
+  NUMBERS_ARRAY
 }

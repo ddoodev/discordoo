@@ -12,7 +12,7 @@ export abstract class AbstractEntity {
 
   abstract init(data: any): Promise<this>
 
-  toJson(properties: ToJsonProperties, obj?: any): Json {
+  toJson(properties: ToJsonProperties = {}, obj?: any): Json {
     const json: Json = {}
 
     const keys = Object.keys(properties)

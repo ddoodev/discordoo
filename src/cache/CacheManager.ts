@@ -7,6 +7,10 @@ import { EntitiesUtil, EntityKey } from '@src/api/entities'
 import {
   IpcCacheClearRequestPacket,
   IpcCacheClearResponsePacket,
+  IpcCacheCountRequestPacket,
+  IpcCacheCountResponsePacket,
+  IpcCacheCountsRequestPacket,
+  IpcCacheCountsResponsePacket,
   IpcCacheDeleteRequestPacket,
   IpcCacheDeleteResponsePacket,
   IpcCacheFilterRequestPacket,
@@ -35,7 +39,7 @@ import {
   cacheProviderHasPolyfill,
   cacheProviderMapPolyfill,
   cacheProviderSizePolyfill,
-  cacheProviderClearPolyfill,
+  cacheProviderClearPolyfill, cacheProviderCountPolyfill, cacheProviderCountsPolyfill,
 } from '@src/cache/polyfills'
 import {
   CacheManagerDeleteOptions,
@@ -50,7 +54,7 @@ import {
   CacheManagerSweepOptions,
   CacheManagerForEachOptions,
   CacheManagerData,
-  CachePointer
+  CachePointer, CacheManagerCountOptions
 } from '@src/cache/interfaces'
 
 export class CacheManager<P extends CacheProvider = CacheProvider> {
@@ -529,8 +533,98 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     }
   }
 
-  [Symbol.for('_ddooMakePredicate')](entityKey: EntityKey, predicate: any) { // for internal use by a library outside of this class
-    return this._makePredicate(entityKey, predicate)
+  async count<K = string, V = any>(
+    keyspace: string,
+    storage: CacheStorageKey,
+    entityKey: EntityKey,
+    predicate: (value: V, key: K, provider: P) => (boolean | Promise<boolean>),
+    options: CacheManagerCountOptions = {}
+  ): Promise<number> {
+    let result = 0
+
+    if (this.isShardedRequest(options)) {
+      const shards = resolveDiscordooShards(this.client, options.shard!)
+
+      const request: IpcCacheCountRequestPacket = {
+        op: IpcOpCodes.CACHE_OPERATE,
+        d: {
+          op: IpcCacheOpCodes.COUNT,
+          event_id: this.client.internals.ipc.generate(),
+          keyspace,
+          storage,
+          entityKey,
+          shards,
+          script: `(${predicate})`,
+          serialize: SerializeModes.NUMBER
+        }
+      }
+
+      const { d: response } =
+        await this.client.internals.ipc.send<IpcCacheCountResponsePacket>(request, { waitResponse: true })
+
+      if (response.success) {
+        result = response.result
+      }
+
+    } else {
+
+      if (this.provider.count) {
+        result = await this.provider.count<K, V, P>(keyspace, storage, this._makePredicate(entityKey, predicate))
+      } else {
+        result = await cacheProviderCountPolyfill<K, V, P>(this.provider, keyspace, storage, this._makePredicate(entityKey, predicate))
+      }
+
+    }
+
+    return result
+  }
+
+  async counts<K = string, V = any>(
+    keyspace: string,
+    storage: CacheStorageKey,
+    entityKey: EntityKey,
+    predicates: ((value: V, key: K, provider: P) => (boolean | Promise<boolean>))[],
+    options: CacheManagerCountOptions = {}
+  ): Promise<number[]> {
+    let results: number[] = []
+
+    if (this.isShardedRequest(options)) {
+      const shards = resolveDiscordooShards(this.client, options.shard!)
+
+      const request: IpcCacheCountsRequestPacket = {
+        op: IpcOpCodes.CACHE_OPERATE,
+        d: {
+          op: IpcCacheOpCodes.COUNTS,
+          event_id: this.client.internals.ipc.generate(),
+          keyspace,
+          storage,
+          entityKey,
+          shards,
+          scripts: predicates.map(p => (`(${p})`)),
+          serialize: SerializeModes.NUMBERS_ARRAY
+        }
+      }
+
+      const { d: response } =
+        await this.client.internals.ipc.send<IpcCacheCountsResponsePacket>(request, { waitResponse: true })
+
+      if (response.success) {
+        results = response.result
+      }
+
+    } else {
+
+      if (this.provider.counts) {
+        results = await this.provider.counts<K, V, P>(keyspace, storage, predicates.map(p => this._makePredicate(entityKey, p)))
+      } else {
+        results = await cacheProviderCountsPolyfill<K, V, P>(
+          this.provider, keyspace, storage, predicates.map(p => this._makePredicate(entityKey, p))
+        )
+      }
+
+    }
+
+    return results
   }
 
   get [Symbol.for('_ddooPoliciesProcessor')](): CachingPoliciesProcessor { // for internal use by a library outside of this class

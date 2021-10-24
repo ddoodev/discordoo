@@ -47,7 +47,7 @@ export abstract class AbstractEmoji extends AbstractEntity implements AbstractEm
     return this.id ? `<${this.animated ? 'a' : ''}:${this.name}:${this.id}>` : (this.name ?? '__')
   }
 
-  toJson(properties: ToJsonProperties, obj?: any): Json {
+  toJson(properties: ToJsonProperties = {}, obj?: any): Json {
     return super.toJson({
       ...properties,
       animated: true,

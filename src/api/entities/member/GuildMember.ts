@@ -162,7 +162,7 @@ export class GuildMember extends AbstractEntity {
     return `<@${this.nick ? '!' : ''}${this.userId}>`
   }
 
-  toJson(properties: ToJsonProperties, obj?: any): Json {
+  toJson(properties: ToJsonProperties = {}, obj?: any): Json {
     return super.toJson({
       ...properties,
       avatar: true,

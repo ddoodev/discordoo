@@ -5,3 +5,7 @@ export { cacheProviderHasPolyfill } from '@src/cache/polyfills/cacheProviderHasP
 export { cacheProviderMapPolyfill } from '@src/cache/polyfills/cacheProviderMapPolyfill'
 export { cacheProviderSizePolyfill } from '@src/cache/polyfills/cacheProviderSizePolyfill'
 export { cacheProviderClearPolyfill } from '@src/cache/polyfills/cacheProviderClearPolyfill'
+export { cacheProviderCountsPolyfill } from '@src/cache/polyfills/cacheProviderCountsPolyfill'
+
+// breaks the pyramid
+export { cacheProviderCountPolyfill } from '@src/cache/polyfills/cacheProviderCountPolyfill'

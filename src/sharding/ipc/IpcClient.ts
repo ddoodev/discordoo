@@ -140,9 +140,15 @@ export class IpcClient extends TypedEmitter<IpcClientEvents> {
   private serializeResponses(replies: any[], type: SerializeModes) {
     switch (type) {
       case SerializeModes.ANY:
-        return replies.find(r => r)
+        return replies.find(r => r !== undefined && r !== null)
       case SerializeModes.ARRAY:
         return replies.flat()
+      case SerializeModes.NUMBERS_ARRAY: {
+        return replies.reduce((prev, curr) => {
+          if (!prev.length) return curr
+          else return prev.map((x, i) => x + (curr[i] ?? 0))
+        }, [])
+      }
       case SerializeModes.BOOLEAN:
         return replies.find(r => r === true) ?? false
       case SerializeModes.NUMBER:

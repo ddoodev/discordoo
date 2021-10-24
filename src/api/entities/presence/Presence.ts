@@ -59,7 +59,7 @@ export class Presence extends AbstractEntity {
     return this.client.users.cache.get(this.userId, options)
   }
 
-  toJson(properties: ToJsonProperties, obj?: any): Json {
+  toJson(properties: ToJsonProperties = {}, obj?: any): Json {
     return super.toJson({
       ...properties,
       activities: true,

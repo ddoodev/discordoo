@@ -10,4 +10,6 @@ export enum IpcCacheOpCodes {
   MAP,
   FIND,
   CLEAR,
+  COUNT,
+  COUNTS,
 }
