@@ -4,13 +4,13 @@ import { RawAttachment } from '@discordoo/providers'
 import { DataResolver } from '@src/utils/DataResolver'
 import { MessageAttachmentOptions } from '@src/api/entities/attachment/interfaces/MessageAttachmentOptions'
 import { MessageAttachmentData } from '@src/api/entities/attachment/interfaces/MessageAttachmentData'
-import { attach } from '@src/utils/attach'
+import { attach, randomString } from '@src/utils'
 import { SPOILER_PREFIX } from '@src/constants'
 
 export class MessageAttachment {
-  public file: BufferResolvable
-  public name: string
-  public ephemeral: boolean
+  public file!: BufferResolvable
+  public name!: string
+  public ephemeral!: boolean
   public id?: string
   public contentType?: string
   public size?: number
@@ -24,26 +24,23 @@ export class MessageAttachment {
   constructor(data: MessageAttachmentData | RawMessageAttachmentData, options?: MessageAttachmentOptions) {
     this._options = options
 
-    if ('file' in data) {
-      this.file = data.file
-      this.name = (data.spoiler ? SPOILER_PREFIX : '') + (data.name ?? 'attachment.png')
-      this.ephemeral = data.ephemeral ?? false
-    } else {
-      this.file = data.url
-      this.name = data.filename
-      this.ephemeral = data.ephemeral ?? false
+    attach(this, data, [
+      'id',
+      'size',
+      [ 'ephemeral', '', false ],
+      [ 'file', 'url' ],
+      'url',
+      [ 'contentType', 'content_type' ],
+      [ 'proxyUrl', 'proxy_url' ],
+      'height',
+      'width',
+      [ 'name', 'filename', `${randomString()}.png` ]
+    ])
 
-      this.contentType = data.content_type
-      this.proxyUrl = data.proxy_url
-
-      attach(this, data, [
-        'id',
-        'size',
-        'url',
-        'height',
-        'width',
-      ])
+    if ('spoiler' in data) {
+      this.setSpoiler(!!data.spoiler)
     }
+
   }
 
   get spoiler(): boolean {
@@ -54,19 +51,17 @@ export class MessageAttachment {
     switch (condition) {
       case true: {
         if (!this.name.startsWith(SPOILER_PREFIX)) this.name = SPOILER_PREFIX + this.name
-
-        return this
-      }
+      } break
       case false: {
         if (this.name.startsWith(SPOILER_PREFIX)) {
           while (this.spoiler) {
             this.name = this.name.slice(SPOILER_PREFIX.length)
           }
         }
-
-        return this
-      }
+      } break
     }
+
+    return this
   }
 
   setName(name: string): this {

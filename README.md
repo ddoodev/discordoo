@@ -169,7 +169,7 @@ SID - still in development
   * [x] GuildChannelsManager/ClientChannelsManager (SID)
   * [x] GuildEmojisManager/ClientEmojisManager (SID)
   * [x] GuildRolesManager/ClientRolesManager (SID)
-  * [ ] GuildPresencesManager/ClientPresencesManager
+  * [x] GuildPresencesManager/ClientPresencesManager
   * [x] GuildMembersManager/ClientMembersManager (SID)
   * [x] UsersManager (SID)
 

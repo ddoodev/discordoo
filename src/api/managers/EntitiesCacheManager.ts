@@ -6,14 +6,17 @@ import {
   CacheManagerForEachOptions,
   CacheManagerDeleteOptions,
   CacheManagerFilterOptions,
+  CacheManagerCountsOptions,
   CacheManagerSweepOptions,
+  CacheManagerCountOptions,
+  CacheManagerClearOptions,
   CacheManagerSizeOptions,
   CacheManagerFindOptions,
   CacheManagerGetOptions,
   CacheManagerHasOptions,
   CacheManagerMapOptions,
   CacheManagerSetOptions,
-  CacheOptions, CachePointer, CacheManagerClearOptions, CacheManagerCountOptions, CacheManagerCountsOptions
+  CacheOptions, CachePointer,
 } from '@src/cache/interfaces'
 import { CacheProvider, CacheStorageKey } from '@discordoo/providers'
 

@@ -354,4 +354,4 @@ export type IpcCacheResponsePacket = IpcCacheGetResponsePacket
   | IpcCacheFindResponsePacket
   | IpcCacheClearResponsePacket
   | IpcCacheCountResponsePacket
-  | IpcCacheCountResponsePacket
+  | IpcCacheCountsResponsePacket

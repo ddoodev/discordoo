@@ -5,6 +5,7 @@ import {
   RestRequestOptions,
   RestRequestMethods
 } from '@discordoo/providers'
+import { randomString } from '@src/utils'
 
 /**
  * Creates a new rest request. We do not use classes here, because function+object is about 9x faster than new Class()
@@ -77,7 +78,7 @@ export function makeRequest(rest: RestManager<any>): RestRequest {
       this.requestPayload.push(
         ...attachments.map(file => {
           if (Buffer.isBuffer(file) || file instanceof ArrayBuffer) {
-            return { name: 'file.png', data: file }
+            return { name: `${randomString()}.png`, data: file }
           }
 
           return file
@@ -92,7 +93,9 @@ export function makeRequest(rest: RestManager<any>): RestRequest {
         method,
         path: this.path,
         attachments: this.requestPayload,
-        body: Object.keys(this.requestBody).length ? this.requestBody : undefined,
+        body: (typeof this.requestBody === 'object' && Object.keys(this.requestBody).length || this.requestBody)
+          ? this.requestBody
+          : undefined,
         headers: Object.keys(this.requestHeaders).length ? this.requestHeaders : undefined,
         majorParameter: this.majorParameter,
       }, options)

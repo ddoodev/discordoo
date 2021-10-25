@@ -2,12 +2,13 @@ import { RawUserData } from '@src/api/entities/user/interfaces/RawUserData'
 import { RawMessageAttachmentData } from '@src/api/entities/attachment/interfaces'
 import { RawMessageEmbedData } from '@src/api/entities/embed'
 import { MessageTypes } from '@src/constants/entities/message/MessageTypes'
+import { RawGuildMemberData } from '@src/api'
 
 export interface RawMessageData {
   id: string
   channel_id: string
   author: RawUserData
-  member?: any // TODO: RawMemberData
+  member?: RawGuildMemberData
   content?: string
   timestamp: number
   edited_timestamp?: number

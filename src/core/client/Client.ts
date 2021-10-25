@@ -35,6 +35,7 @@ import { Final } from '@src/utils/FinalDecorator'
 import { IpcServerOptions } from '@src/sharding'
 import { EntitiesUtil } from '@src/api'
 import * as process from 'process'
+import { ClientPresencesManager } from '@src/api/managers/presences'
 
 /** Entry point for all of Discordoo. */
 @Final('start', 'internals', 'guilds', 'users', 'messages', 'channels', 'token')
@@ -69,6 +70,9 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
 
   /** Roles manager of this client */
   public roles: ClientRolesManager
+
+  /** Presences manager of this client */
+  public presences: ClientPresencesManager
 
   constructor(token: string, options: ClientOptions = {}) {
     super()
@@ -189,6 +193,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
 
     this.internals.events.register([ MessageCreateEvent ]) // TODO
 
+    this.presences = new ClientPresencesManager(this)
     this.messages = new ClientMessagesManager(this)
     this.channels = new ClientChannelsManager(this)
     this.stickers = new ClientStickersManager(this)

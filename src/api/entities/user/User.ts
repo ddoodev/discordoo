@@ -1,10 +1,13 @@
 import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 import { UserData } from '@src/api/entities/user/interfaces'
-import { idToDate, idToTimestamp, ImageUrlOptions, attach } from '@src/utils'
+import { idToDate, idToTimestamp, ImageUrlOptions, attach, resolveGuildId, DiscordooError } from '@src/utils'
 import { RawUserData } from '@src/api/entities/user/interfaces/RawUserData'
 import { Json } from '@src/api/entities/interfaces/Json'
 import { ToJsonProperties } from '@src/api/entities/interfaces/ToJsonProperties'
 import { UserFlagsUtil } from '@src/api/entities/bitfield'
+import { GuildResolvable, Presence } from '@src/api'
+import { CacheManagerFilterOptions, CacheManagerGetOptions } from '@src/cache'
+import { Keyspaces } from '@src/constants'
 
 export class User extends AbstractEntity implements UserData { // TODO: implements WritableChannel
   public accentColor?: number
@@ -48,6 +51,23 @@ export class User extends AbstractEntity implements UserData { // TODO: implemen
     if ('publicFlags' in this) this.publicFlags = new UserFlagsUtil(this.publicFlags)
 
     return this
+  }
+
+  async presence(guild: GuildResolvable, options?: CacheManagerGetOptions): Promise<Presence | undefined> {
+    const guildId = resolveGuildId(guild)
+    if (!guildId) throw new DiscordooError('User#presence', 'Cannot get presence without guild id.')
+    return this.client.internals.cache.get(
+      Keyspaces.GUILD_PRESENCES,
+      guildId,
+      'Presence',
+      this.id,
+      options
+    )
+  }
+
+  async presences(options?: CacheManagerFilterOptions): Promise<Presence[]> {
+    return this.client.presences.cache.filter(p => p.userId === this.id, options) // TODO: context
+      .then(results => results.map(result => result[1])) // FIXME: low performance
   }
 
   get createdDate(): Date {
