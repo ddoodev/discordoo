@@ -2,7 +2,7 @@
 export enum RolesCachingPolicy {
   /** Cache all roles */
   ALL = 'all',
-  /** Dont cache roles */
+  /** Don't cache roles */
   NONE = 'none',
   /** Cache @everyone roles */
   EVERYONE = 'everyone',

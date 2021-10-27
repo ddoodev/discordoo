@@ -34,11 +34,24 @@ import { GuildsManager } from '@src/api/managers'
 import { Final } from '@src/utils/FinalDecorator'
 import { IpcServerOptions } from '@src/sharding'
 import { EntitiesUtil } from '@src/api'
-import * as process from 'process'
 import { ClientPresencesManager } from '@src/api/managers/presences'
+import { ClientReactionsManager } from '@src/api/managers/reactions/ClientReactionsManager'
 
 /** Entry point for all of Discordoo. */
-@Final('start', 'internals', 'guilds', 'users', 'messages', 'channels', 'token')
+@Final(
+  'start',
+  'internals',
+  'guilds',
+  'users',
+  'messages',
+  'channels',
+  'stickers',
+  'members',
+  'roles',
+  'presences',
+  'reactions',
+  'token'
+)
 export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
   extends TypedEmitter<ListenerSignature<ClientStack['events']>> { // TODO: events does not auto-typed
   /** Token used by this client */
@@ -73,6 +86,9 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
 
   /** Presences manager of this client */
   public presences: ClientPresencesManager
+
+  /** Reactions manager of this client */
+  public reactions: ClientReactionsManager
 
   constructor(token: string, options: ClientOptions = {}) {
     super()
@@ -194,6 +210,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
     this.internals.events.register([ MessageCreateEvent ]) // TODO
 
     this.presences = new ClientPresencesManager(this)
+    this.reactions = new ClientReactionsManager(this)
     this.messages = new ClientMessagesManager(this)
     this.channels = new ClientChannelsManager(this)
     this.stickers = new ClientStickersManager(this)

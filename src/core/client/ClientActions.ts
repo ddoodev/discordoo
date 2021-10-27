@@ -15,6 +15,7 @@ import { RawGuildMemberData } from '@src/api'
 import { RawRoleEditData } from '@src/api/entities/role/interfaces/RawRoleEditData'
 import { RawRoleData } from '@src/api/entities/role/interfaces/RawRoleData'
 import { RawRoleCreateData } from '@src/api/entities/role/interfaces/RawRoleCreateData'
+import { FetchReactionUsersOptions } from '@src/api/managers/reactions/FetchReactionUsersOptions'
 
 export class ClientActions {
   public client: Client
@@ -33,6 +34,12 @@ export class ClientActions {
     return this.client.internals.rest.api()
       .url(Endpoints.GUILD_MEMBER_ROLE(guildId, memberId, roleId))
       .put({ reason })
+  }
+
+  addReaction(channelId: string, messageId: string, emojiId: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.CHANNEL_MESSAGE_REACTION_USER(channelId, messageId, emojiId, '@me'))
+      .put()
   }
 
   banGuildMember(guildId: string, userId: string, deleteMessagesDays = 0, reason?: string) {
@@ -289,6 +296,23 @@ export class ClientActions {
       .patch<RawStickerData>({ reason })
   }
 
+  getReactionUsers(
+    channelId: string, messageId: string, emojiId: string, options?: FetchReactionUsersOptions
+  ): RestFinishedResponse<RawUserData[]> {
+    const request = this.client.internals.rest.api()
+      .url(Endpoints.CHANNEL_MESSAGE_REACTION(channelId, messageId, emojiId))
+
+    if (typeof options?.limit === 'number') {
+      request.query({ limit: options.limit })
+    }
+
+    if (typeof options?.after === 'string') {
+      request.query({ after: options.after })
+    }
+
+    return request.get<RawUserData[]>()
+  }
+
   getGuildAuditLog(guildId: string, data: any /* TODO: GetGuildAuditLogData */) {
     return this.client.internals.rest.api()
       .url(Endpoints.GUILD_AUDIT_LOGS(guildId))
@@ -439,6 +463,24 @@ export class ClientActions {
     return this.client.internals.rest.api()
       .url(Endpoints.GUILD_MEMBER_ROLE(guildId, memberId, roleId))
       .delete({ reason })
+  }
+
+  removeReactionUsers(channelId: string, messageId: string, emojiId: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.CHANNEL_MESSAGE_REACTION(channelId, messageId, emojiId))
+      .delete()
+  }
+
+  removeReactionUser(channelId: string, messageId: string, emojiId: string, userId: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.CHANNEL_MESSAGE_REACTION_USER(channelId, messageId, emojiId, userId))
+      .delete()
+  }
+
+  removeReactions(channelId: string, messageId: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.CHANNEL_MESSAGE_REACTIONS(channelId, messageId))
+      .delete()
   }
 
   searchGuildMembers(guildId: string, data: any /* TODO: GuildMembersSearchData */) {

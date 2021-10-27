@@ -69,7 +69,7 @@ You can find these benchmarks [here](https://github.com/Discordoo/collection#djs
 ## Release milestone
 A complete description of everything that must be in Discordoo to be released
 
-Release deadline: October 30, 2021 7:00PM UTC
+Release deadline: November 6, 2021 7:00PM UTC
 
 *please read this*
 ![image](https://user-images.githubusercontent.com/44965055/137811902-565cbdc0-7cb7-4a86-a1ef-b082839f54cc.png)
@@ -155,6 +155,7 @@ SID - still in development
 * [x] Implement Stickers
 * [x] Implement Roles
 * [x] Implement Presences
+* [x] Implement Reactions
 * [x] Implement Users (SID)
 
 ### User-land APIs
@@ -171,6 +172,7 @@ SID - still in development
   * [x] GuildRolesManager/ClientRolesManager (SID)
   * [x] GuildPresencesManager/ClientPresencesManager
   * [x] GuildMembersManager/ClientMembersManager (SID)
+  * [x] MessageReactionsManager/ClientReactionsManager
   * [x] UsersManager (SID)
 
 ## Contributing

@@ -8,10 +8,12 @@ import {
   MembersCachingPolicy,
   MessagesCachingPolicy,
   PresencesCachingPolicy,
-  RolesCachingPolicy, StickersCachingPolicy,
+  RolesCachingPolicy,
+  StickersCachingPolicy,
   UsersCachingPolicy
 } from '@src/constants'
-import { Message } from '@src/api'
+import { Message, Role } from '@src/api'
+import { asyncSome } from '@src/utils/asyncSome'
 
 export class CachingPoliciesProcessor {
   public client: Client
@@ -22,14 +24,14 @@ export class CachingPoliciesProcessor {
     this.options = this.client.options?.cache ?? {}
   }
 
-  global(entity: any): boolean | undefined {
+  async global(entity: any): Promise<boolean | undefined> {
     if (this.options.global) {
       const results: any[] /* [ boolean | undefined, boolean, boolean | undefined ] */ = []
 
-      results.push(this.options.global.before?.(entity) ?? undefined)
+      results.push(await this.options.global.before?.(entity) ?? undefined)
 
       results.push(
-        this.options.global.policies.some(policy => {
+        await asyncSome(this.options.global.policies, policy => {
           switch (policy) {
             case GlobalCachingPolicy.NONE:
               return false
@@ -40,7 +42,7 @@ export class CachingPoliciesProcessor {
         })
       )
 
-      results.push(this.options.global.after?.(entity) ?? undefined)
+      results.push(await this.options.global.after?.(entity) ?? undefined)
 
       // when results[0] is undefined - return results[2], else return results[0]
       // when results[2] is undefined - return results[1], else return results[2]
@@ -48,16 +50,16 @@ export class CachingPoliciesProcessor {
     }
   }
 
-  channel(channel: any): boolean {
+  async channel(channel: any): Promise<boolean> {
     let result = true
 
     if (this.options.channels) {
       const results: any[] /* [ boolean | undefined, boolean, boolean | undefined ] */ = []
 
-      results.push(this.options.channels.before?.(channel) ?? undefined)
+      results.push(await this.options.channels.before?.(channel) ?? undefined)
 
       results.push(
-        this.options.channels.policies.some(policy => {
+        await asyncSome(this.options.channels.policies, policy => {
           switch (policy) {
             case ChannelsCachingPolicy.CATEGORY:
               return channel.type === 'category'
@@ -88,7 +90,7 @@ export class CachingPoliciesProcessor {
         })
       )
 
-      results.push(this.options.channels.after?.(channel) ?? undefined)
+      results.push(await this.options.channels.after?.(channel) ?? undefined)
 
       result = results[0] ?? results[2] ?? results[1]
     }
@@ -96,16 +98,16 @@ export class CachingPoliciesProcessor {
     return result
   }
 
-  emoji(emoji: any): boolean {
+  async emoji(emoji: any): Promise<boolean> {
     let result = true
 
     if (this.options.emojis) {
       const results: any[] /* [ boolean | undefined, boolean, boolean | undefined ] */ = []
 
-      results.push(this.options.emojis.before?.(emoji) ?? undefined)
+      results.push(await this.options.emojis.before?.(emoji) ?? undefined)
 
       results.push(
-        this.options.emojis.policies.some(policy => {
+        await asyncSome(this.options.emojis.policies, policy => {
           switch (policy) {
             case EmojisCachingPolicy.NONE:
               return false
@@ -119,7 +121,7 @@ export class CachingPoliciesProcessor {
         })
       )
 
-      results.push(this.options.emojis.after?.(emoji) ?? undefined)
+      results.push(await this.options.emojis.after?.(emoji) ?? undefined)
 
       result = results[0] ?? results[2] ?? results[1]
     }
@@ -127,16 +129,16 @@ export class CachingPoliciesProcessor {
     return result
   }
 
-  sticker(sticker: any): boolean {
+  async sticker(sticker: any): Promise<boolean> {
     let result = true
 
     if (this.options.stickers) {
       const results: any[] /* [ boolean | undefined, boolean, boolean | undefined ] */ = []
 
-      results.push(this.options.stickers.before?.(sticker) ?? undefined)
+      results.push(await this.options.stickers.before?.(sticker) ?? undefined)
 
       results.push(
-        this.options.stickers.policies.some(policy => {
+        await asyncSome(this.options.stickers.policies, policy => {
           switch (policy) {
             case StickersCachingPolicy.NONE:
               return false
@@ -147,7 +149,7 @@ export class CachingPoliciesProcessor {
         })
       )
 
-      results.push(this.options.stickers.after?.(sticker) ?? undefined)
+      results.push(await this.options.stickers.after?.(sticker) ?? undefined)
 
       result = results[0] ?? results[2] ?? results[1]
     }
@@ -155,16 +157,16 @@ export class CachingPoliciesProcessor {
     return result
   }
 
-  guild(guild: any): boolean {
+  async guild(guild: any): Promise<boolean> {
     let result = true
 
     if (this.options.guilds) {
       const results: any[] /* [ boolean | undefined, boolean, boolean | undefined ] */ = []
 
-      results.push(this.options.guilds.before?.(guild) ?? undefined)
+      results.push(await this.options.guilds.before?.(guild) ?? undefined)
 
       results.push(
-        this.options.guilds.policies.some(policy => {
+        await asyncSome(this.options.guilds.policies, policy => {
           switch (policy) {
             case GuildsCachingPolicy.NONE:
               return false
@@ -175,7 +177,7 @@ export class CachingPoliciesProcessor {
         })
       )
 
-      results.push(this.options.guilds.after?.(guild) ?? undefined)
+      results.push(await this.options.guilds.after?.(guild) ?? undefined)
 
       result = results[0] ?? results[2] ?? results[1]
     }
@@ -183,16 +185,16 @@ export class CachingPoliciesProcessor {
     return result
   }
 
-  member(member: any): boolean {
+  async member(member: any): Promise<boolean> {
     let result = true
 
     if (this.options.members) {
       const results: any[] /* [ boolean | undefined, boolean, boolean | undefined ] */ = []
 
-      results.push(this.options.members.before?.(member) ?? undefined)
+      results.push(await this.options.members.before?.(member) ?? undefined)
 
       results.push(
-        this.options.members.policies.some(policy => {
+        await asyncSome(this.options.members.policies, policy => {
           switch (policy) {
             case MembersCachingPolicy.ONLINE:
               return member.presence.status === 'online'
@@ -219,7 +221,7 @@ export class CachingPoliciesProcessor {
         })
       )
 
-      results.push(this.options.members.after?.(member) ?? undefined)
+      results.push(await this.options.members.after?.(member) ?? undefined)
 
       result = results[0] ?? results[2] ?? results[1]
     }
@@ -227,16 +229,16 @@ export class CachingPoliciesProcessor {
     return result
   }
 
-  message(message: Message): boolean {
+  async message(message: Message): Promise<boolean> {
     let result = true
 
     if (this.options.messages) {
       const results: any[] /* [ boolean | undefined, boolean, boolean | undefined ] */ = []
 
-      results.push(this.options.messages.before?.(message) ?? undefined)
+      results.push(await this.options.messages.before?.(message) ?? undefined)
 
       results.push(
-        this.options.messages.policies.some(policy => {
+        await asyncSome(this.options.messages.policies, policy => {
           switch (policy) {
             case MessagesCachingPolicy.BOTS:
               return !!message.author?.bot
@@ -251,7 +253,7 @@ export class CachingPoliciesProcessor {
         })
       )
 
-      results.push(this.options.messages.after?.(message) ?? undefined)
+      results.push(await this.options.messages.after?.(message) ?? undefined)
 
       result = results[0] ?? results[2] ?? results[1]
     }
@@ -259,16 +261,16 @@ export class CachingPoliciesProcessor {
     return result
   }
 
-  presence(presence: any): boolean {
+  async presence(presence: any): Promise<boolean> {
     let result = true
 
     if (this.options.presences) {
       const results: any[] /* [ boolean | undefined, boolean, boolean | undefined ] */ = []
 
-      results.push(this.options.presences.before?.(presence) ?? undefined)
+      results.push(await this.options.presences.before?.(presence) ?? undefined)
 
       results.push(
-        this.options.presences.policies.some(policy => {
+        await asyncSome(this.options.presences.policies, policy => {
           switch (policy) {
             case PresencesCachingPolicy.NONE:
               return false
@@ -279,7 +281,7 @@ export class CachingPoliciesProcessor {
         })
       )
 
-      results.push(this.options.presences.after?.(presence) ?? undefined)
+      results.push(await this.options.presences.after?.(presence) ?? undefined)
 
       result = results[0] ?? results[2] ?? results[1]
     }
@@ -287,19 +289,19 @@ export class CachingPoliciesProcessor {
     return result
   }
 
-  roles(role: any): boolean {
+  async role(role: Role): Promise<boolean> {
     let result = true
 
     if (this.options.roles) {
       const results: any[] /* [ boolean | undefined, boolean, boolean | undefined ] */ = []
 
-      results.push(this.options.roles.before?.(role) ?? undefined)
+      results.push(await this.options.roles.before?.(role) ?? undefined)
 
       results.push(
-        this.options.roles.policies.some(policy => {
+        await asyncSome(this.options.roles.policies, policy => {
           switch (policy) {
             case RolesCachingPolicy.EVERYONE:
-              return role.id === role.guild.id
+              return role.id === role.guildId
             case RolesCachingPolicy.MANAGED:
               return role.managed
             case RolesCachingPolicy.NONE:
@@ -311,7 +313,7 @@ export class CachingPoliciesProcessor {
         })
       )
 
-      results.push(this.options.roles.after?.(role) ?? undefined)
+      results.push(await this.options.roles.after?.(role) ?? undefined)
 
       result = results[0] ?? results[2] ?? results[1]
     }
@@ -319,16 +321,16 @@ export class CachingPoliciesProcessor {
     return result
   }
 
-  user(user: any): boolean {
+  async user(user: any): Promise<boolean> {
     let result = true
 
     if (this.options.users) {
       const results: any[] /* [ boolean | undefined, boolean, boolean | undefined ] */ = []
 
-      results.push(this.options.users.before?.(user) ?? undefined)
+      results.push(await this.options.users.before?.(user) ?? undefined)
 
       results.push(
-        this.options.users.policies.some(policy => {
+        await asyncSome(this.options.users.policies, policy => {
           switch (policy) {
             case UsersCachingPolicy.NONE:
               return false
@@ -339,7 +341,7 @@ export class CachingPoliciesProcessor {
         })
       )
 
-      results.push(this.options.users.after?.(user) ?? undefined)
+      results.push(await this.options.users.after?.(user) ?? undefined)
 
       result = results[0] ?? results[2] ?? results[1]
     }

@@ -2,6 +2,6 @@
 export enum UsersCachingPolicy {
   /** Cache all users */
   ALL = 'all',
-  /** Dont cache users */
+  /** Don't cache users */
   NONE = 'none',
 }

@@ -2,7 +2,7 @@
 export enum ChannelsCachingPolicy {
   /** Cache all channels */
   ALL = 'all',
-  /** Dont cache channels */
+  /** Don't cache channels */
   NONE = 'none',
   /** Cache text channels */
   TEXT = 'text',

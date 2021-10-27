@@ -10,13 +10,6 @@ export class Message extends AbstractEntity {
   public content!: string
   public author?: User
 
-  // TODO
-  /* get editable(): boolean {
-    if (!this.author || !this.client.user) return false
-
-    return this.author.id === this.client.user.id
-  }*/
-
   async init(data: RawMessageData): Promise<this> {
     console.log('MSG INIT DATA!!!!!!!11', data)
     this.id = data.id

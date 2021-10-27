@@ -110,7 +110,10 @@ export class EntitiesCacheManager<Entity> extends EntitiesManager {
   }
 
   async set(key: string, value: Entity | CachePointer, options?: CacheManagerSetOptions): Promise<EntitiesCacheManager<Entity>> {
-    const allowed = this.client.internals.cache[Symbol.for('_ddooPoliciesProcessor')][this.policy](value)
+    const allowed =
+      '___type___' in value && value.___type___ === 'discordooCachePointer'
+        ? true
+        : await this.client.internals.cache[Symbol.for('_ddooPoliciesProcessor')][this.policy](value)
 
     if (allowed) {
       await this.client.internals.cache.set<string, Entity>(
@@ -120,6 +123,13 @@ export class EntitiesCacheManager<Entity> extends EntitiesManager {
         key,
         value,
         options,
+      )
+    } else {
+      await this.client.internals.cache.delete<string>(
+        this.keyspace,
+        options?.storage ?? this.storage,
+        key,
+        options ? { shard: options?.shard } : undefined
       )
     }
 

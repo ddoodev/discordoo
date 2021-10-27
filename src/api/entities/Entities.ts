@@ -5,6 +5,8 @@ import { Sticker, StickerPack } from '@src/api/entities/sticker'
 import { Role } from '@src/api/entities/role'
 import { Presence } from '@src/api/entities/presence/Presence'
 import { GuildMember } from '@src/api/entities/member'
+import { MessageReaction } from '@src/api/entities/reaction/MessageReaction'
+import { AbstractEmoji, ActivityEmoji, GuildEmoji, ReactionEmoji } from '@src/api/entities/emoji'
 
 export const Entities = {
   Message,
@@ -15,4 +17,9 @@ export const Entities = {
   Presence,
   GuildMember,
   StickerPack,
+  MessageReaction,
+  AbstractEmoji,
+  ActivityEmoji,
+  GuildEmoji,
+  ReactionEmoji,
 }

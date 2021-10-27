@@ -1,5 +1,5 @@
 export { SystemChannelFlags } from '@src/constants/entities/bitfield/SystemChannelFlags'
-export { PermissionsFlags } from '@src/constants/entities/bitfield/PermissionsFlags'
+export { PermissionFlags } from '@src/constants/entities/bitfield/PermissionFlags'
 export { ApplicationFlags } from '@src/constants/entities/bitfield/ApplicationFlags'
 export { ActivityFlags } from '@src/constants/entities/bitfield/ActivityFlags'
 export { MessageFlags } from '@src/constants/entities/bitfield/MessageFlags'

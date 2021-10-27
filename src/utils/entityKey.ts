@@ -1,7 +1,9 @@
 import { ChannelTypes } from '@src/constants'
-import { Entities } from '@src/api'
+import { Entities } from '@src/api/entities/Entities'
 
-export function channelEntityKey(data: any): keyof typeof Entities {
+type EntitiesKeys = keyof typeof Entities
+
+export function channelEntityKey(data: any): EntitiesKeys {
   switch (data.type as ChannelTypes) {
     case ChannelTypes.DM:
     case ChannelTypes.GROUP_DM: // DirectMessagesChannel
@@ -17,4 +19,9 @@ export function channelEntityKey(data: any): keyof typeof Entities {
     default: // AbstractChannel
       return 'AbstractChannel'
   }
+}
+
+export function reactionEmojiEntityKey(data: any): EntitiesKeys {
+  if (data.id) return 'GuildEmoji'
+  return 'ReactionEmoji'
 }

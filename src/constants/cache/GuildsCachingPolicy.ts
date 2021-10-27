@@ -2,6 +2,6 @@
 export enum GuildsCachingPolicy {
   /** Cache all guilds */
   ALL = 'all',
-  /** Dont cache guilds */
+  /** Don't cache guilds */
   NONE = 'none',
 }

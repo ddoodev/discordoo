@@ -1,3 +1,4 @@
+export { ReactionsCachingPolicy } from '@src/constants/cache/ReactionsCachingPolicy'
 export { PresencesCachingPolicy } from '@src/constants/cache/PresencesCachingPolicy'
 export { MessagesCachingPolicy } from '@src/constants/cache/MessagesCachingPolicy'
 export { ChannelsCachingPolicy } from '@src/constants/cache/ChannelsCachingPolicy'

@@ -22,6 +22,8 @@ import { RoleTagsResolvable } from '@src/api/entities/role/interfaces/RoleTagsRe
 import { RoleTagsData } from '@src/api/entities/role/interfaces/RoleTagsData'
 import { ShardListResolvable } from '@src/utils/interfaces'
 import { range } from '@src/utils/range'
+import { EmojiResolvable } from '@src/api'
+import { MessageReactionResolvable } from '@src/api/entities/reaction/interfaces/MessageReactionResolvable'
 
 export function resolveFiles(resolvable: MessageAttachmentResolvable[]): Promise<RawAttachment[]> {
   return Promise.all(resolvable.map(resolveFile))
@@ -131,7 +133,7 @@ export function resolveRoleTags(resolvable: RoleTagsResolvable): RoleTagsData {
 }
 
 function resolveAnythingToId(resolvable: any): string | undefined  {
-  if (typeof resolvable === 'string') return resolvable
+  if (resolvable && typeof resolvable === 'string') return resolvable
 
   return resolvable?.id
 }
@@ -158,6 +160,27 @@ export function resolveUserId(resolvable: UserResolvable): string | undefined  {
 
 export function resolveRoleId(resolvable: RoleResolvable): string | undefined  {
   return resolveAnythingToId(resolvable)
+}
+
+export function resolveEmojiId(resolvable: EmojiResolvable | MessageReactionResolvable): string | undefined {
+  if (typeof resolvable === 'string') return encodeURIComponent(resolvable)
+
+  if ('emoji' in resolvable) {
+    if ('emojiId' in resolvable) {
+      return resolvable.emojiId
+    }
+
+    return resolveEmojiId(resolvable.emoji)
+  }
+
+  // sometimes I hate typings
+  if ('id' in resolvable && resolvable.id) {
+    return `${resolvable.animated ? 'a:' : ''}${resolvable.name}:${resolvable.id}`
+  } else if ('name' in resolvable && resolvable.name) {
+    return encodeURIComponent(resolvable.name)
+  }
+
+  return undefined
 }
 
 export async function resolveUser(client: Client, resolvable: UserResolvable): Promise<User | undefined> {

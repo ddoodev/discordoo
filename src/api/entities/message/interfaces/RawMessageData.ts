@@ -7,7 +7,7 @@ import { RawGuildMemberData } from '@src/api'
 export interface RawMessageData {
   id: string
   channel_id: string
-  author: RawUserData
+  author?: RawUserData
   member?: RawGuildMemberData
   content?: string
   timestamp: number

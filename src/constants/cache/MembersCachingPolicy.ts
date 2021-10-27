@@ -1,14 +1,14 @@
 /** Members caching policy */
 export enum MembersCachingPolicy {
-  /** Cache all members which library received */
+  /** Cache all members */
   ALL = 'all',
-  /** Dont cache members */
+  /** Don't cache members */
   NONE = 'none',
   /** Cache online members */
   ONLINE = 'online',
   /** Cache members with dnd status */
   DND = 'dnd',
-  /** Cache with idle status */
+  /** Cache members with idle status */
   IDLE = 'idle',
   /** Cache offline members */
   OFFLINE = 'offline',

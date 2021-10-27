@@ -19,13 +19,9 @@ export abstract class AbstractEmoji extends AbstractEntity implements AbstractEm
     return this
   }
 
-  get identifier(): string | undefined {
+  get identifier(): string {
     if (this.id) return `${this.animated ? 'a:' : ''}${this.name}:${this.id}`
-
-    // !== undefined because name can possibly be ''
-    if (this.name !== undefined) return encodeURIComponent(this.name)
-
-    return undefined
+    return encodeURIComponent(this.name!)
   }
 
   get createdTimestamp(): number | undefined {

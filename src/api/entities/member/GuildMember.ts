@@ -1,6 +1,6 @@
 import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 import { GuildMemberData, Json, RawGuildMemberData, ReadonlyPermissions, ToJsonProperties, User } from '@src/api'
-import { Keyspaces, PermissionsFlags, ToJsonOverrideSymbol } from '@src/constants'
+import { Keyspaces, PermissionFlags, ToJsonOverrideSymbol } from '@src/constants'
 import { DiscordooError, ImageUrlOptions, attach } from '@src/utils'
 import { filterAndMap } from '@src/utils/filterAndMap'
 import { resolveRoleId, resolveUserId } from '@src/utils/resolve'
@@ -97,7 +97,7 @@ export class GuildMember extends AbstractEntity {
         }
       }
 
-      this.permissions = new ReadonlyPermissions(owner ? PermissionsFlags.ADMINISTRATOR : data.permissions)
+      this.permissions = new ReadonlyPermissions(owner ? PermissionFlags.ADMINISTRATOR : data.permissions)
     }
 
     return this

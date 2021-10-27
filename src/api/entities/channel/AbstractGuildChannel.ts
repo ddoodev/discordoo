@@ -22,11 +22,16 @@ export abstract class AbstractGuildChannel extends AbstractChannel implements Ab
     return this
   }
 
-  async members(): Promise<any[]> { // TODO: GuildMember[]
-    const predicate = (member: any /** TODO: GuildMember */) => 12
-    // TODO
-    // @ts-ignore
-    return this.client.internals.cache.filter('members', this.id, 'GuildMember')
+  /* TODO
+  async members(): Promise<GuildMember[]> {
+
+    const predicate = (member: GuildMember) => member.permissions.has(PermissionFlags.VIEW_CHANNEL)
+
+    return this.client.internals.cache.filter('members', this.id, 'GuildMember', predicate)
+      .then(results => results.map(r => r[1])) // FIXME: low performance
   }
+  */
+
+
 
 }

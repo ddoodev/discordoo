@@ -2,6 +2,6 @@
 export enum StickersCachingPolicy {
   /** Cache all stickers */
   ALL = 'all',
-  /** Dont cache stickers */
+  /** Don't cache stickers */
   NONE = 'none',
 }

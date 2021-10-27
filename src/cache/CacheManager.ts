@@ -39,12 +39,15 @@ import {
   cacheProviderHasPolyfill,
   cacheProviderMapPolyfill,
   cacheProviderSizePolyfill,
-  cacheProviderClearPolyfill, cacheProviderCountPolyfill, cacheProviderCountsPolyfill,
+  cacheProviderClearPolyfill,
+  cacheProviderCountPolyfill,
+  cacheProviderCountsPolyfill,
 } from '@src/cache/polyfills'
 import {
   CacheManagerDeleteOptions,
   CacheManagerFilterOptions,
   CacheManagerClearOptions,
+  CacheManagerCountOptions,
   CacheManagerFindOptions,
   CacheManagerGetOptions,
   CacheManagerHasOptions,
@@ -52,9 +55,10 @@ import {
   CacheManagerSetOptions,
   CacheManagerSizeOptions,
   CacheManagerSweepOptions,
+  CacheManagerCountsOptions,
   CacheManagerForEachOptions,
   CacheManagerData,
-  CachePointer, CacheManagerCountOptions
+  CachePointer,
 } from '@src/cache/interfaces'
 
 export class CacheManager<P extends CacheProvider = CacheProvider> {
@@ -131,8 +135,12 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       )
     }
 
-    const globalPolicyLimit = this._policiesProcessor.global(value)
-    if (typeof globalPolicyLimit !== 'undefined') {
+    const globalPolicyLimit =
+      '___type___' in value && value.___type___ === 'discordooCachePointer'
+        ? undefined
+        : await this._policiesProcessor.global(value)
+
+    if (globalPolicyLimit !== undefined) {
       if (!globalPolicyLimit) return this
     }
 
@@ -584,7 +592,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     storage: CacheStorageKey,
     entityKey: EntityKey,
     predicates: ((value: V, key: K, provider: P) => (boolean | Promise<boolean>))[],
-    options: CacheManagerCountOptions = {}
+    options: CacheManagerCountsOptions = {}
   ): Promise<number[]> {
     let results: number[] = []
 

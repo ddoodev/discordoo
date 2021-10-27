@@ -1,7 +1,7 @@
 const b = BigInt
 const one = b(1)
 
-export const PermissionsFlags = {
+export const PermissionFlags = {
   CREATE_INSTANT_INVITE:      one << b(0),
   KICK_MEMBERS:               one << b(1), // one << one throws IDE error
   BAN_MEMBERS:                one << b(2),

@@ -9,4 +9,5 @@ export { ActivityEmojiData } from '@src/api/entities/emoji/interfaces/ActivityEm
 export { ReactionEmojiData } from '@src/api/entities/emoji/interfaces/ReactionEmojiData'
 export { AbstractEmojiData } from '@src/api/entities/emoji/interfaces/AbstractEmojiData'
 export { RawEmojiEditData } from '@src/api/entities/emoji/interfaces/RawEmojiEditData'
+export { EmojiResolvable } from '@src/api/entities/emoji/interfaces/EmojiResolvable'
 export { GuildEmojiData } from '@src/api/entities/emoji/interfaces/GuildEmojiData'

@@ -2,7 +2,7 @@
 export enum MessagesCachingPolicy { // TODO: message types
   /** Cache all messages */
   ALL = 'all',
-  /** Dont cache messages */
+  /** Don't cache messages */
   NONE = 'none',
   /** Cache messages from users */
   USERS = 'users',

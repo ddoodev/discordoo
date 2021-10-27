@@ -47,7 +47,7 @@ export class ClientStickersManager extends EntitiesManager {
     return undefined
   }
 
-  async fetchMany(guild: GuildResolvable): Promise<Sticker[] | undefined> {
+  async fetchMany(guild: GuildResolvable): Promise<Collection<string, Sticker> | undefined> {
     const guildId = resolveGuildId(guild)
 
     if (!guildId) throw new DiscordooError('ClientStickersManager#fetchMany', 'Cannot fetch guild stickers without guild id.')
@@ -56,12 +56,12 @@ export class ClientStickersManager extends EntitiesManager {
     const Sticker = EntitiesUtil.get('Sticker')
 
     if (response.success) {
-      const result: Sticker[] = []
+      const result = new Collection()
 
       for await (const data of response.result) {
         const sticker = await new Sticker(this.client).init(data)
         await this.cache.set(sticker.id, sticker, { storage: guildId })
-        result.push(sticker)
+        result.set(sticker.id, sticker)
       }
 
       return result
