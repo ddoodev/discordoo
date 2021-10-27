@@ -4,7 +4,7 @@ import { PermissionOverwriteTypes } from '@src/constants'
 import { attach } from '@src/utils'
 import { Json, ReadonlyPermissions, ToJsonProperties } from '@src/api'
 
-export class PermissionOverwrites extends AbstractEntity {
+export class PermissionsOverwrite extends AbstractEntity {
   public type!: PermissionOverwriteTypes
   public allow!: ReadonlyPermissions
   public deny!: ReadonlyPermissions

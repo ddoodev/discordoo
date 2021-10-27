@@ -7,6 +7,7 @@ import { Presence } from '@src/api/entities/presence/Presence'
 import { GuildMember } from '@src/api/entities/member'
 import { MessageReaction } from '@src/api/entities/reaction/MessageReaction'
 import { AbstractEmoji, ActivityEmoji, GuildEmoji, ReactionEmoji } from '@src/api/entities/emoji'
+import { PermissionsOverwrite } from '@src/api/entities/overwrites/PermissionsOverwrite'
 
 export const Entities = {
   Message,
@@ -22,4 +23,5 @@ export const Entities = {
   ActivityEmoji,
   GuildEmoji,
   ReactionEmoji,
+  PermissionsOverwrite,
 }

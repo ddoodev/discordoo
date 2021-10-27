@@ -1,4 +1,4 @@
-import { EntitiesCacheManager, EntitiesManager, EntitiesUtil, GuildResolvable, Role, RoleResolvable } from '@src/api'
+import { EntitiesCacheManager, EntitiesUtil, GuildResolvable, Role, RoleResolvable } from '@src/api'
 import { Client } from '@src/core'
 import { Keyspaces } from '@src/constants'
 import { RoleEditData } from '@src/api/entities/role/interfaces/RoleEditData'
@@ -9,6 +9,7 @@ import { DiscordooError } from '@src/utils'
 import { DataResolver } from '@src/utils/DataResolver'
 import { RoleCreateData } from '@src/api/entities/role/interfaces/RoleCreateData'
 import { RawRoleCreateData } from '@src/api/entities/role/interfaces/RawRoleCreateData'
+import { EntitiesManager } from '@src/api/managers/EntitiesManager'
 
 export class ClientRolesManager extends EntitiesManager {
   public cache: EntitiesCacheManager<Role>
