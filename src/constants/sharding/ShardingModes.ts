@@ -1,5 +1,5 @@
 /** Sharding manager modes */
-export const enum ShardingModes {
+export enum ShardingModes {
   /** Spawn sharding instances in different processes */
   PROCESSES = 'processes',
   /** Spawn sharding instances in different worker threads */

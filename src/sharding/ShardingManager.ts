@@ -30,6 +30,7 @@ export class ShardingManager extends TypedEmitter<ShardingManagerEvents> {
   public shards: Collection<number, ShardingInstance> = new Collection()
 
   readonly #died: boolean = false
+  #running = false
 
   constructor(options: ShardingManagerOptions) {
     super()
@@ -57,6 +58,8 @@ export class ShardingManager extends TypedEmitter<ShardingManagerEvents> {
 
   async start(): Promise<ShardingManager> {
     if (this.#died) throw spawningLoopError
+    if (this.#running) throw new DiscordooError('ShardingManager#start', 'Sharding manager already running.')
+    this.#running = true
 
     const shardsPerInstance: number = this.options.shardsPerInstance || 1
 

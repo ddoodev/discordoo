@@ -90,6 +90,8 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
   /** Reactions manager of this client */
   public reactions: ClientReactionsManager
 
+  #running = false
+
   constructor(token: string, options: ClientOptions = {}) {
     super()
 
@@ -221,6 +223,9 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
   }
 
   async start(): Promise<Client<ClientStack>> {
+    if (this.#running) throw new DiscordooError('Client#start', 'Client already running.')
+    this.#running = true
+
     let options: GatewayShardsInfo | undefined
 
     if (this.internals.sharding.active) {
