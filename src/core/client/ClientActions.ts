@@ -16,6 +16,10 @@ import { RawRoleEditData } from '@src/api/entities/role/interfaces/RawRoleEditDa
 import { RawRoleData } from '@src/api/entities/role/interfaces/RawRoleData'
 import { RawRoleCreateData } from '@src/api/entities/role/interfaces/RawRoleCreateData'
 import { FetchReactionUsersOptions } from '@src/api/managers/reactions/FetchReactionUsersOptions'
+import { RawGuildChannelEditData } from '@src/api/entities/channel/interfaces/RawGuildChannelEditData'
+import { RawAbstractGuildChannelData } from '@src/api/entities/channel/interfaces/RawAbstractGuildChannelData'
+import { RawThreadChannelEditData } from '@src/api/entities/channel/interfaces/RawThreadChannelEditData'
+import { RawPermissionsOverwriteData } from '@src/api/entities/overwrites/interfaces/RawPermissionsOverwriteData'
 
 export class ClientActions {
   public client: Client
@@ -134,6 +138,12 @@ export class ClientActions {
       .delete({ reason })
   }
 
+  deleteChannelPermissions(channelId: string, overwriteId: string, reason?: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.CHANNEL_PERMISSION(channelId, overwriteId))
+      .delete({ reason })
+  }
+
   deleteGuild(guildId: string) {
     return this.client.internals.rest.api()
       .url(Endpoints.GUILD(guildId))
@@ -194,6 +204,31 @@ export class ClientActions {
         discovery_splash: data.discoverySplash,
         features: data.features,
       })
+      .patch({ reason })
+  }
+
+  editGuildChannel(channelId: string, data: RawGuildChannelEditData, reason?: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.CHANNEL(channelId))
+      .body(data)
+      .patch<RawAbstractGuildChannelData>({ reason })
+  }
+
+  editGuildChannelPermissions(channelId: string, data: RawPermissionsOverwriteData, reason?: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.CHANNEL_PERMISSION(channelId, data.id))
+      .body({
+        allow: data.allow,
+        deny: data.deny,
+        type: data.type,
+      })
+      .put({ reason })
+  }
+
+  editThreadChannel(channelId: string, data: RawThreadChannelEditData, reason?: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.CHANNEL(channelId))
+      .body(data)
       .patch({ reason })
   }
 
@@ -322,6 +357,12 @@ export class ClientActions {
         before: data.before,
         limit: data.limit,
       })
+      .get()
+  }
+
+  getChannel(channelId: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.CHANNEL(channelId))
       .get()
   }
 

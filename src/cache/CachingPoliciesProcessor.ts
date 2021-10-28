@@ -8,7 +8,7 @@ import {
   MembersCachingPolicy,
   MessagesCachingPolicy,
   OverwritesCachingPolicy,
-  PermissionOverwriteTypes,
+  PermissionsOverwriteTypes,
   PresencesCachingPolicy,
   RolesCachingPolicy,
   StickerFormatTypes,
@@ -326,9 +326,9 @@ export class CachingPoliciesProcessor {
             case OverwritesCachingPolicy.NONE:
               return false
             case OverwritesCachingPolicy.MEMBERS:
-              return overwrite.type === PermissionOverwriteTypes.MEMBER
+              return overwrite.type === PermissionsOverwriteTypes.MEMBER
             case OverwritesCachingPolicy.ROLES:
-              return overwrite.type === PermissionOverwriteTypes.ROLE
+              return overwrite.type === PermissionsOverwriteTypes.ROLE
             case OverwritesCachingPolicy.ALL:
             default:
               return true

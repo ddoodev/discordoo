@@ -84,7 +84,7 @@ export class DefaultRestProvider implements RestProvider {
     // console.log('PROVIDER REQUEST EXECUTED, SUCCESS:', success, 'DATA:', response)
 
     try {
-      result = JSON.parse(result)
+      if (response.statusCode !== 204) result = JSON.parse(result)
     } catch (e) {
       success = false
       // TODO: use RestError here

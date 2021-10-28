@@ -1,4 +1,4 @@
 import { Resolvable } from '@src/api'
-import { AbstractChannel } from '@src/api/entities/channel/AbstractChannel'
+import { AnyChannel } from '@src/api/entities/channel/interfaces/AnyChannel'
 
-export type ChannelResolvable = Resolvable<AbstractChannel>
+export type ChannelResolvable = Resolvable<AnyChannel>

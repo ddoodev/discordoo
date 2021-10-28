@@ -1,6 +1,6 @@
 import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 import { ChannelTypes } from '@src/constants'
-import { ChannelDeleteOptions } from '@src/api/entities/channel/interfaces'
+import { GuildChannelDeleteOptions } from '@src/api/entities/channel/interfaces'
 import { idToDate, idToTimestamp, attach } from '@src/utils'
 import { AbstractChannelData } from '@src/api/entities/channel/interfaces/AbstractChannelData'
 import { ToJsonProperties } from '@src/api/entities/interfaces/ToJsonProperties'
@@ -16,7 +16,7 @@ export abstract class AbstractChannel extends AbstractEntity {
     return this
   }
 
-  delete(options: ChannelDeleteOptions = {}) {
+  delete(options: GuildChannelDeleteOptions = {}) {
     return this.client.channels.delete(this.id, options)
   }
 

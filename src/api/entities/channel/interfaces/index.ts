@@ -1,2 +1,2 @@
-export { ChannelDeleteOptions } from '@src/api/entities/channel/interfaces/ChannelDeleteOptions'
+export { GuildChannelDeleteOptions } from '@src/api/entities/channel/interfaces/GuildChannelDeleteOptions'
 export { ChannelResolvable } from '@src/api/entities/channel/interfaces/ChannelResolvable'

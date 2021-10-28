@@ -29,6 +29,6 @@ export enum Keyspaces {
   MESSAGE_REACTIONS = 'message-reactions',
   // message-reaction-users => message id => reaction identifier (pointer) => users => global => user id
   MESSAGE_REACTION_USERS = 'message-reaction-users',
-  // channel-permissions-overwrites => channel id =>
+  // channel-permissions-overwrites => channel id => user or role id
   CHANNEL_PERMISSIONS_OVERWRITES = 'channel-permissions-overwrites',
 }

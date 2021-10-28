@@ -2,7 +2,7 @@ import { MessageAttachmentResolvable } from '@src/api/entities/attachment/interf
 import { RawAttachment } from '@discordoo/providers'
 import { MessageAttachment } from '@src/api/entities/attachment/MessageAttachment'
 import { ColorResolvable } from '@src/api/entities/interfaces/ColorResolvable'
-import { EmptyBigBit, EmptyBit, RawColors } from '@src/constants'
+import { EmptyBigBit, EmptyBit, PermissionFlags, RawColors } from '@src/constants'
 import { DiscordooError } from '@src/utils/DiscordooError'
 import { is } from 'typescript-is'
 import { ValidationError } from '@src/utils/ValidationError'
@@ -24,6 +24,10 @@ import { ShardListResolvable } from '@src/utils/interfaces'
 import { range } from '@src/utils/range'
 import { EmojiResolvable } from '@src/api'
 import { MessageReactionResolvable } from '@src/api/entities/reaction/interfaces/MessageReactionResolvable'
+import { PermissionsOverwriteResolvable } from '@src/api/entities/overwrites/interfaces/PermissionsOverwriteResolvable'
+import { RawPermissionsOverwriteData } from '@src/api/entities/overwrites/interfaces/RawPermissionsOverwriteData'
+import { ReplaceType } from '@src/utils/types'
+import { PermissionsOverwrite } from '@src/api/entities/overwrites/PermissionsOverwrite'
 
 export function resolveFiles(resolvable: MessageAttachmentResolvable[]): Promise<RawAttachment[]> {
   return Promise.all(resolvable.map(resolveFile))
@@ -119,6 +123,49 @@ export function resolveEmbedToRaw(resolvable: MessageEmbedResolvable): RawMessag
   if (resolvable instanceof MessageEmbed) return resolvable.toJson()
 
   return new MessageEmbed(resolvable).toJson() // FIXME: low performance
+}
+
+export function resolvePermissionsOverwriteToRaw(
+  resolvable: PermissionsOverwriteResolvable, existing?: PermissionsOverwrite
+): RawPermissionsOverwriteData {
+
+  const result: ReplaceType<RawPermissionsOverwriteData, 'allow' | 'deny', bigint> = {
+    id: resolvable.id,
+    type: resolvable.type,
+    allow: existing?.allow.bitfield ?? EmptyBigBit,
+    deny: existing?.deny.bitfield ?? EmptyBigBit,
+  }
+
+  if ('allow' in resolvable) {
+    result.allow |= resolveBigBitField(resolvable.allow)
+    result.deny |= resolveBigBitField(resolvable.deny)
+  } else {
+    let { allow, deny } = result
+
+    for (const [ key, action ] of Object.entries(resolvable)) {
+      if (PermissionFlags[key] === undefined) continue
+
+      switch (action as boolean | null) {
+        case true:
+          allow |= PermissionFlags[key] // add to allow
+          deny &= (~(PermissionFlags[key] | EmptyBigBit)) // remove from deny
+          break
+        case false:
+          deny |= PermissionFlags[key] // add to deny
+          allow &= (~(PermissionFlags[key] | EmptyBigBit)) // remove from allow
+          break
+        case null:
+          allow &= (~(PermissionFlags[key] | EmptyBigBit)) // remove from allow
+          deny &= (~(PermissionFlags[key] | EmptyBigBit)) // remove from deny
+          break
+      }
+    }
+
+    result.allow = allow
+    result.deny = deny
+  }
+
+  return { ...result, deny: result.deny.toString(), allow: result.allow.toString() }
 }
 
 export function resolveRoleTags(resolvable: RoleTagsResolvable): RoleTagsData {

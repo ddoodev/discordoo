@@ -36,6 +36,7 @@ import { IpcServerOptions } from '@src/sharding'
 import { EntitiesUtil } from '@src/api'
 import { ClientPresencesManager } from '@src/api/managers/presences'
 import { ClientReactionsManager } from '@src/api/managers/reactions/ClientReactionsManager'
+import { ClientPermissionsOverwritesManager } from '@src/api/managers/overwrites/ClientPermissionsOverwritesManager'
 
 /** Entry point for all of Discordoo. */
 @Final(
@@ -50,7 +51,8 @@ import { ClientReactionsManager } from '@src/api/managers/reactions/ClientReacti
   'roles',
   'presences',
   'reactions',
-  'token'
+  'overwrites',
+  'token',
 )
 export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
   extends TypedEmitter<ListenerSignature<ClientStack['events']>> { // TODO: events does not auto-typed
@@ -89,6 +91,9 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
 
   /** Reactions manager of this client */
   public reactions: ClientReactionsManager
+
+  /** Permissions Overwrites manager of this client */
+  public overwrites: ClientPermissionsOverwritesManager
 
   #running = false
 
@@ -211,6 +216,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
 
     this.internals.events.register([ MessageCreateEvent ]) // TODO
 
+    this.overwrites = new ClientPermissionsOverwritesManager(this)
     this.presences = new ClientPresencesManager(this)
     this.reactions = new ClientReactionsManager(this)
     this.messages = new ClientMessagesManager(this)
