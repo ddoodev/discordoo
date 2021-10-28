@@ -12,4 +12,5 @@ export interface RawGuildMemberData {
   pending?: boolean
   permissions?: string
   guild_id: string
+  guild_owner: boolean
 }

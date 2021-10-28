@@ -1,3 +1,4 @@
+export { OverwritesCachingPolicy } from '@src/constants/cache/OverwritesCachingPolicy'
 export { ReactionsCachingPolicy } from '@src/constants/cache/ReactionsCachingPolicy'
 export { PresencesCachingPolicy } from '@src/constants/cache/PresencesCachingPolicy'
 export { MessagesCachingPolicy } from '@src/constants/cache/MessagesCachingPolicy'

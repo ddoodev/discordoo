@@ -15,4 +15,5 @@ export interface GuildMemberData {
   pending?: boolean
   permissions?: PermissionsResolvable
   guildId: string
+  guildOwner: boolean
 }

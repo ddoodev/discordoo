@@ -11,3 +11,4 @@ export { AbstractEmojiData } from '@src/api/entities/emoji/interfaces/AbstractEm
 export { RawEmojiEditData } from '@src/api/entities/emoji/interfaces/RawEmojiEditData'
 export { EmojiResolvable } from '@src/api/entities/emoji/interfaces/EmojiResolvable'
 export { GuildEmojiData } from '@src/api/entities/emoji/interfaces/GuildEmojiData'
+export { AnyEmoji } from '@src/api/entities/emoji/interfaces/AnyEmoji'

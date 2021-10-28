@@ -23,6 +23,7 @@ export class GuildMember extends AbstractEntity {
   public rolesList: string[] = []
   public userId!: string
   public guildId!: string
+  public guildOwner!: boolean
 
   async init(data: GuildMemberData | RawGuildMemberData): Promise<this> {
     attach(this, data, [
@@ -31,7 +32,8 @@ export class GuildMember extends AbstractEntity {
       'mute',
       'nick',
       'pending',
-      [ 'guildId', 'guild_id' ]
+      [ 'guildId', 'guild_id' ],
+      [ 'guildOwner', 'guild_owner' ]
     ])
 
     if ('joined_at' in data) {
@@ -88,16 +90,7 @@ export class GuildMember extends AbstractEntity {
     }
 
     if (data.permissions !== undefined) {
-      const guild = await this.guild()
-      let owner = false
-
-      if (guild) {
-        if (guild.ownerId === this.userId) {
-          owner = true
-        }
-      }
-
-      this.permissions = new ReadonlyPermissions(owner ? PermissionFlags.ADMINISTRATOR : data.permissions)
+      this.permissions = new ReadonlyPermissions(this.guildOwner ? PermissionFlags.ADMINISTRATOR : data.permissions)
     }
 
     return this
@@ -173,6 +166,8 @@ export class GuildMember extends AbstractEntity {
       pending: true,
       permissions: true,
       premiumSinceDate: true,
+      guildId: true,
+      guildOwner: true,
       roles: {
         override: ToJsonOverrideSymbol,
         value: this.rolesList

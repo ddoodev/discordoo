@@ -5,6 +5,7 @@ import {
   GuildsCachingPolicy,
   MembersCachingPolicy,
   MessagesCachingPolicy,
+  OverwritesCachingPolicy,
   PresencesCachingPolicy,
   ReactionsCachingPolicy,
   RolesCachingPolicy,
@@ -12,73 +13,67 @@ import {
   UsersCachingPolicy
 } from '@src/constants'
 
-export const CACHE_OPTIONS_KEYS_LENGTH = 10 // all cache options expect 'global'
+export const CACHE_OPTIONS_KEYS_LENGTH = 11 // all cache options expect 'global'
 
 export interface CacheOptions {
   channels?: {
-    before?: (channel: any) => boolean
+    custom?: (channel: any) => boolean | Promise<boolean>
     policies: ChannelsCachingPolicy[]
-    after?: (channel: any) => boolean
   }
 
   emojis?: {
-    before?: (emoji: any) => boolean
+    custom?: (emoji: any) => boolean | Promise<boolean>
     policies: EmojisCachingPolicy[]
-    after?: (emoji: any) => boolean
   }
 
   global?: {
-    before?: (entity: any) => boolean
+    custom?: (entity: any) => boolean | Promise<boolean>
     policies: GlobalCachingPolicy[]
-    after?: (entity: any) => boolean
   }
 
   guilds?: {
-    before?: (guild: any) => boolean
+    custom?: (guild: any) => boolean | Promise<boolean>
     policies: GuildsCachingPolicy[]
-    after?: (guild: any) => boolean
   }
 
   members?: {
-    before?: (member: any) => boolean
+    custom?: (member: any) => boolean | Promise<boolean>
     policies: MembersCachingPolicy[]
-    after?: (member: any) => boolean
   }
 
   messages?: {
-    before?: (emoji: any) => boolean
+    custom?: (emoji: any) => boolean | Promise<boolean>
     lifetime?: number
     policies: MessagesCachingPolicy[]
-    after?: (emoji: any) => boolean
   }
 
   presences?: {
-    before?: (presence: any) => boolean
+    custom?: (presence: any) => boolean | Promise<boolean>
     policies: PresencesCachingPolicy[]
-    after?: (presence: any) => boolean
   }
 
   roles?: {
-    before?: (role: any) => boolean
+    custom?: (role: any) => boolean | Promise<boolean>
     policies: RolesCachingPolicy[]
-    after?: (role: any) => boolean
   }
 
   users?: {
-    before?: (user: any) => boolean
+    custom?: (user: any) => boolean | Promise<boolean>
     policies: UsersCachingPolicy[]
-    after?: (user: any) => boolean
   }
 
   stickers?: {
-    before?: (sticker: any) => boolean
+    custom?: (sticker: any) => boolean | Promise<boolean>
     policies: StickersCachingPolicy[]
-    after?: (sticker: any) => boolean
   }
 
   reactions?: {
-    before?: (reaction: any) => boolean
+    custom?: (reaction: any) => boolean | Promise<boolean>
     policies: ReactionsCachingPolicy[]
-    after?: (reaction: any) => boolean
+  }
+
+  overwrites?: {
+    custom?: (overwrite: any) => boolean | Promise<boolean>
+    policies: OverwritesCachingPolicy[]
   }
 }
