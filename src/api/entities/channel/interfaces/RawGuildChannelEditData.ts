@@ -1,5 +1,5 @@
 import { ChannelTypes, VideoQualityModes } from '@src/constants'
-import { RawPermissionsOverwriteData } from '@src/api/entities/overwrites/interfaces/RawPermissionsOverwriteData'
+import { RawPermissionOverwriteData } from '@src/api/entities/overwrites/interfaces/RawPermissionOverwriteData'
 
 export interface RawGuildChannelEditData {
   name?: string
@@ -10,7 +10,7 @@ export interface RawGuildChannelEditData {
   rate_limit_per_user?: number | null
   bitrate?: number | null
   user_limit?: number | null
-  permission_overwrites?: RawPermissionsOverwriteData[] | null
+  permission_overwrites?: RawPermissionOverwriteData[] | null
   parent_id?: string | null
   rtc_region?: string | null
   video_quality_mode?: VideoQualityModes | null

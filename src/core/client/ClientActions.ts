@@ -19,7 +19,10 @@ import { FetchReactionUsersOptions } from '@src/api/managers/reactions/FetchReac
 import { RawGuildChannelEditData } from '@src/api/entities/channel/interfaces/RawGuildChannelEditData'
 import { RawAbstractGuildChannelData } from '@src/api/entities/channel/interfaces/RawAbstractGuildChannelData'
 import { RawThreadChannelEditData } from '@src/api/entities/channel/interfaces/RawThreadChannelEditData'
-import { RawPermissionsOverwriteData } from '@src/api/entities/overwrites/interfaces/RawPermissionsOverwriteData'
+import { RawPermissionOverwriteData } from '@src/api/entities/overwrites/interfaces/RawPermissionOverwriteData'
+import { RawGuildChannelCreateData } from '@src/api/entities/channel/interfaces/RawGuildChannelCreateData'
+import { RawThreadChannelWithMessageCreateData } from '@src/api/entities/channel/interfaces/RawThreadChannelWithMessageCreateData'
+import { RawThreadChannelCreateData } from '@src/api/entities/channel/interfaces/RawThreadChannelCreateData'
 
 export class ClientActions {
   public client: Client
@@ -72,6 +75,13 @@ export class ClientActions {
       .post()
   }
 
+  createGuildChannel(guildId: string, data: RawGuildChannelCreateData, reason?: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_CHANNELS(guildId))
+      .body(data)
+      .post({ reason })
+  }
+
   createGuildEmoji(guildId: string, data: any /* TODO: GuildEmojiData */, reason?: string) {
     return this.client.internals.rest.api()
       .url(Endpoints.GUILD_EMOJIS(guildId))
@@ -98,6 +108,24 @@ export class ClientActions {
       .url(Endpoints.GUILD_TEMPLATES(guildId))
       .body({ name, description })
       .post()
+  }
+
+  createThreadWithMessage(channelId: string, data: RawThreadChannelWithMessageCreateData, reason?: string) {
+    const request = this.client.internals.rest.api()
+      .url(Endpoints.CHANNEL_MESSAGE_THREADS(channelId, data.message_id))
+
+    delete (data as any).message_id
+
+    request.body(data)
+
+    return request.post({ reason })
+  }
+
+  createThread(channelId: string, data: RawThreadChannelCreateData, reason?: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.CHANNEL_THREADS(channelId))
+      .body(data)
+      .post({ reason })
   }
 
   createMessage(channelId: string, data: MessageCreateData): RestFinishedResponse<RawMessageData> {
@@ -214,7 +242,7 @@ export class ClientActions {
       .patch<RawAbstractGuildChannelData>({ reason })
   }
 
-  editGuildChannelPermissions(channelId: string, data: RawPermissionsOverwriteData, reason?: string) {
+  editGuildChannelPermissions(channelId: string, data: RawPermissionOverwriteData, reason?: string) {
     return this.client.internals.rest.api()
       .url(Endpoints.CHANNEL_PERMISSION(channelId, data.id))
       .body({

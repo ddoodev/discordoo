@@ -7,7 +7,8 @@ import { Presence } from '@src/api/entities/presence/Presence'
 import { GuildMember } from '@src/api/entities/member'
 import { MessageReaction } from '@src/api/entities/reaction/MessageReaction'
 import { AbstractEmoji, ActivityEmoji, GuildEmoji, ReactionEmoji } from '@src/api/entities/emoji'
-import { PermissionsOverwrite } from '@src/api/entities/overwrites/PermissionsOverwrite'
+import { PermissionOverwrite } from '@src/api/entities/overwrites/PermissionOverwrite'
+import { GuildCategoryChannel } from '@src/api/entities/channel/GuildCategoryChannel'
 
 export const Entities = {
   Message,
@@ -23,5 +24,6 @@ export const Entities = {
   ActivityEmoji,
   GuildEmoji,
   ReactionEmoji,
-  PermissionsOverwrite,
+  PermissionOverwrite,
+  GuildCategoryChannel,
 }

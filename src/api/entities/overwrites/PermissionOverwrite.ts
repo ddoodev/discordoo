@@ -1,21 +1,21 @@
 import { AbstractEntity } from '@src/api/entities/AbstractEntity'
-import { PermissionsOverwriteTypes, ToJsonOverrideSymbol } from '@src/constants'
+import { PermissionOverwriteTypes, ToJsonOverrideSymbol } from '@src/constants'
 import { ChannelResolvable, Json, ReadonlyPermissions, ToJsonProperties } from '@src/api'
-import { PermissionsOverwriteResolvable } from '@src/api/entities/overwrites/interfaces/PermissionsOverwriteResolvable'
-import { DiscordooError, resolveChannelId, resolvePermissionsOverwriteToRaw } from '@src/utils'
+import { PermissionOverwriteResolvable } from '@src/api/entities/overwrites/interfaces/PermissionOverwriteResolvable'
+import { DiscordooError, resolveChannelId, resolvePermissionOverwriteToRaw } from '@src/utils'
 import { CacheManagerGetOptions } from '@src/cache'
 import { AnyGuildChannel } from '@src/api/entities/channel/interfaces/AnyGuildChannel'
-import { PermissionsOverwriteEditOptions } from '@src/api/managers/overwrites/PermissionsOverwriteEditOptions'
+import { PermissionOverwriteEditOptions } from '@src/api/managers/overwrites/PermissionOverwriteEditOptions'
 
-export class PermissionsOverwrite extends AbstractEntity {
+export class PermissionOverwrite extends AbstractEntity {
   public id!: string
-  public type!: PermissionsOverwriteTypes
+  public type!: PermissionOverwriteTypes
   public allow!: ReadonlyPermissions
   public deny!: ReadonlyPermissions
   public channelId!: string
 
-  async init(data: PermissionsOverwriteResolvable & { channel: ChannelResolvable }): Promise<this> {
-    const overwrite = resolvePermissionsOverwriteToRaw(data, this)
+  async init(data: PermissionOverwriteResolvable & { channel: ChannelResolvable }): Promise<this> {
+    const overwrite = resolvePermissionOverwriteToRaw(data, this)
 
     this.id = overwrite.id
     this.type = overwrite.type
@@ -27,7 +27,7 @@ export class PermissionsOverwrite extends AbstractEntity {
       const id = resolveChannelId(data.channel)
 
       if (!id && !this.channelId) {
-        throw new DiscordooError('PermissionsOverwrite', 'Cannot operate without channel id.')
+        throw new DiscordooError('PermissionOverwrite', 'Cannot operate without channel id.')
       }
 
       if (id) this.channelId = id
@@ -40,7 +40,7 @@ export class PermissionsOverwrite extends AbstractEntity {
     return this.client.channels.cache.get(this.channelId, options) as Promise<AnyGuildChannel | undefined>
   }
 
-  async edit(overwrite: PermissionsOverwriteResolvable, options?: PermissionsOverwriteEditOptions): Promise<this | undefined> {
+  async edit(overwrite: PermissionOverwriteResolvable, options?: PermissionOverwriteEditOptions): Promise<this | undefined> {
     const result = await this.client.overwrites.upsert(this.channelId, overwrite, { ...options, existing: this })
 
     return result ? this : undefined

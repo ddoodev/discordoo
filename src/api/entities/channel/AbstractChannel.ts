@@ -16,8 +16,8 @@ export abstract class AbstractChannel extends AbstractEntity {
     return this
   }
 
-  delete(options: GuildChannelDeleteOptions = {}) {
-    return this.client.channels.delete(this.id, options)
+  delete(reason) {
+    return this.client.channels.delete(this.id, { reason, patchEntity: this })
   }
 
   get createdTimestamp(): number {

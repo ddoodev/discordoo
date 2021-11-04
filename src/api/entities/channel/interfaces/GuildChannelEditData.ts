@@ -1,5 +1,5 @@
 import { ChannelTypes, VideoQualityModes } from '@src/constants'
-import { PermissionsOverwriteResolvable } from '@src/api/entities/overwrites/interfaces/PermissionsOverwriteResolvable'
+import { PermissionOverwriteResolvable } from '@src/api/entities/overwrites/interfaces/PermissionOverwriteResolvable'
 
 export interface GuildChannelEditData {
   name?: string
@@ -10,7 +10,7 @@ export interface GuildChannelEditData {
   rateLimitPerUser?: number | null
   bitrate?: number | null
   userLimit?: number | null
-  permissionOverwrites?: PermissionsOverwriteResolvable[] | null
+  permissionOverwrites?: PermissionOverwriteResolvable[] | null
   parentId?: string | null
   rtcRegion?: string | null
   videoQualityMode?: VideoQualityModes | null

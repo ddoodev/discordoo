@@ -138,17 +138,17 @@ export class Endpoints {
     =                            (guildId) => [ 'guilds', guildId, 'stickers' ]
   static readonly CHANNEL_THREAD_MEMBER
     =                (channelId, memberId) => [ 'channels', channelId, 'thread-members', memberId ]
-  static readonly CHANNEL_THREAD_WITH_MESSAGE
+  static readonly CHANNEL_MESSAGE_THREADS
     =               (channelId, messageId) => [ 'channels', channelId, 'messages', messageId, 'threads' ]
-  static readonly CHANNEL_THREAD_WITHOUT_MESSAGE
+  static readonly CHANNEL_THREADS
     =                          (channelId) => [ 'channels', channelId, 'threads' ]
-  static readonly CHANNEL_THREADS_ACTIVE
+  static readonly CHANNEL_ACTIVE_THREADS
     =                          (channelId) => [ 'channels', channelId, 'threads', 'active' ]
-  static readonly CHANNEL_THREADS_ARCHIVED
+  static readonly CHANNEL_ARCHIVE_THREADS
     =                    (channelId, type) => [ 'channels', channelId, 'threads', 'archived', type ]
-  static readonly CHANNEL_THREADS_ARCHIVED_JOINED
+  static readonly CHANNEL_ARCHIVED_JOINED_THREADS
     =                          (channelId) => [ 'channels', channelId, 'users', '@me', 'threads', 'archived', 'private' ]
-  static readonly GUILD_THREADS_ACTIVE
+  static readonly GUILD_ACTIVE_THREADS
     =                            (guildId) => [ 'guilds', guildId, 'threads', 'active' ]
   static readonly USER
     =                             (userId) => [ 'users', userId ]

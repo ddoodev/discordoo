@@ -1,1 +1,1 @@
-export { PermissionsOverwriteTypes } from '@src/constants/entities/overwrite/PermissionsOverwriteTypes'
+export { PermissionOverwriteTypes } from '@src/constants/entities/overwrite/PermissionOverwriteTypes'

@@ -1,7 +1,14 @@
-import { ChannelResolvable, EntitiesCacheManager, EntitiesUtil } from '@src/api'
-import { AbstractChannel } from '@src/api/entities/channel/AbstractChannel'
+import { ChannelResolvable, EntitiesCacheManager, EntitiesUtil, GuildResolvable } from '@src/api'
 import { Client } from '@src/core'
-import { attach, channelEntityKey, DiscordooError, resolveChannelId, resolvePermissionsOverwriteToRaw } from '@src/utils'
+import {
+  attach,
+  channelEntityKey,
+  DiscordooError,
+  resolveChannelId,
+  resolveGuildId,
+  resolveMessageId,
+  resolvePermissionOverwriteToRaw
+} from '@src/utils'
 import { GuildChannelDeleteOptions } from '@src/api/entities/channel/interfaces/GuildChannelDeleteOptions'
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
 import { Keyspaces } from '@src/constants'
@@ -17,19 +24,150 @@ import { ThreadChannelEditData } from '@src/api/entities/channel/interfaces/Thre
 import { RawThreadChannelEditData } from '@src/api/entities/channel/interfaces/RawThreadChannelEditData'
 import { ThreadChannelEditOptions } from '@src/api/entities/channel/interfaces/ThreadChannelEditOptions'
 import { is } from 'typescript-is'
+import { GuildChannelCreateData } from '@src/api/entities/channel/interfaces/GuildChannelCreateData'
+import { RawGuildChannelCreateData } from '@src/api/entities/channel/interfaces/RawGuildChannelCreateData'
+import { ThreadChannelCreateData } from '@src/api/entities/channel/interfaces/ThreadChannelCreateData'
+import { RawThreadChannelCreateData } from '@src/api/entities/channel/interfaces/RawThreadChannelCreateData'
+import { RawThreadChannelWithMessageCreateData } from '@src/api/entities/channel/interfaces/RawThreadChannelWithMessageCreateData'
+import { RestFailedResponse, RestSuccessfulResponse } from '@discordoo/providers'
 
 export class ClientChannelsManager extends EntitiesManager {
-  public cache: EntitiesCacheManager<AbstractChannel>
+  public cache: EntitiesCacheManager<AnyChannel>
 
   constructor(client: Client) {
     super(client)
 
-    this.cache = new EntitiesCacheManager<AbstractChannel>(this.client, {
+    this.cache = new EntitiesCacheManager<AnyChannel>(this.client, {
       keyspace: Keyspaces.GUILD_CHANNELS,
       storage: 'global',
       entity: channelEntityKey,
       policy: 'channels'
     })
+  }
+
+  async createGuildChannel<R = AnyGuildChannel>(
+    guild: GuildResolvable, data: GuildChannelCreateData | RawGuildChannelCreateData, reason?: string
+  ): Promise<R | undefined> {
+    const guildId = resolveGuildId(guild)
+
+    if (!guildId) {
+      throw new DiscordooError('ClientChannelsManager#createGuildChannel', 'Cannot create guild channel without guild id.')
+    }
+
+    if (!data) {
+      throw new DiscordooError('ClientChannelsManager#createGuildChannel', 'Cannot create guild channel without create data.')
+    }
+
+    const payload: RawGuildChannelCreateData = {
+      name: data.name
+    }
+
+    attach(payload, data, [
+      'type',
+      'position',
+      'topic',
+      'nsfw',
+      [ 'rate_limit_per_user', 'rateLimitPerUser' ],
+      'bitrate',
+      [ 'parent_id', 'parentId' ],
+      [ 'rtc_region', 'rtcRegion' ],
+    ])
+
+    if ('permissionOverwrites' in data) {
+      if (data.permissionOverwrites?.length) {
+        payload.permission_overwrites = data.permissionOverwrites.map(o => resolvePermissionOverwriteToRaw(o))
+      }
+    }
+
+    if ('permission_overwrites' in data) {
+      if (data.permission_overwrites?.length) {
+        payload.permission_overwrites = data.permission_overwrites.map(o => resolvePermissionOverwriteToRaw(o))
+      }
+    }
+
+    const response = await this.client.internals.actions.createGuildChannel(guildId, data, reason)
+
+    if (response.success) {
+      const AnyGuildChannel: any = EntitiesUtil.get(channelEntityKey(response.result))
+      return await new AnyGuildChannel(this.client).init(response.result)
+    }
+
+    return undefined
+  }
+
+  async createThreadChannel<R = AnyThreadChannel>(
+    channel: GuildResolvable,
+    data: ThreadChannelCreateData | RawThreadChannelCreateData | RawThreadChannelWithMessageCreateData,
+    reason?: string
+  ): Promise<R | undefined> {
+    const channelId = resolveChannelId(channel)
+
+    if (!channelId) {
+      throw new DiscordooError('ClientChannelsManager#createThreadChannel', 'Cannot create thread channel without channel id.')
+    }
+
+    const payload: RawThreadChannelWithMessageCreateData | RawThreadChannelCreateData = {
+      name: data.name
+    }
+
+    if ('message' in data && data.message) {
+      const id = resolveMessageId(data.message)
+      // @ts-ignore
+      if (id) payload.message_id = id
+    }
+
+    attach(payload, data, [
+      [ 'auto_archive_duration', 'autoArchiveDuration' ],
+      'type',
+      'invitable'
+    ])
+
+    let response: RestFailedResponse | RestSuccessfulResponse
+
+    if ('message_id' in payload) {
+      response = await this.client.internals.actions.createThreadWithMessage(channelId, payload, reason)
+    } else {
+      response = await this.client.internals.actions.createThread(channelId, payload, reason)
+    }
+
+    if (response.success) {
+      const AnyThreadChannel: any = EntitiesUtil.get(channelEntityKey(response.result))
+      return await new AnyThreadChannel(this.client).init(response.result)
+    }
+
+    return undefined
+  }
+
+  create<R = AnyChannel>(
+    type: 'thread' | 'channel',
+    channelOrGuild: ChannelResolvable | GuildResolvable,
+    data: GuildChannelCreateData
+      | RawGuildChannelCreateData
+      | ThreadChannelCreateData
+      | RawThreadChannelCreateData
+      | RawThreadChannelWithMessageCreateData,
+    reason?: string
+  ): Promise<R | undefined> {
+    if (type === 'thread') {
+      return this.createThreadChannel(
+        channelOrGuild as ChannelResolvable,
+        data as ThreadChannelCreateData | RawThreadChannelCreateData | RawThreadChannelWithMessageCreateData,
+        reason
+      )
+    }
+
+    if (type === 'channel') {
+      return this.createGuildChannel(
+        channelOrGuild as GuildResolvable,
+        data as GuildChannelCreateData | RawGuildChannelCreateData,
+        reason
+      )
+    }
+
+    throw new DiscordooError(
+      'ClientChannelsManager#create',
+      'Unknown channel type to create. Expected "channel" or "thread", received:', type
+    )
   }
 
   async delete<R = AnyChannel>(channel: ChannelResolvable, options: GuildChannelDeleteOptions = {}): Promise<R | undefined> {
@@ -84,7 +222,7 @@ export class ClientChannelsManager extends EntitiesManager {
 
     if ('permissionOverwrites' in data) {
       if (data.permissionOverwrites?.length) {
-        payload.permission_overwrites = data.permissionOverwrites.map(o => resolvePermissionsOverwriteToRaw(o))
+        payload.permission_overwrites = data.permissionOverwrites.map(o => resolvePermissionOverwriteToRaw(o))
       } else {
         payload.permission_overwrites = null
       }
@@ -92,7 +230,7 @@ export class ClientChannelsManager extends EntitiesManager {
 
     if ('permission_overwrites' in data) {
       if (data.permission_overwrites?.length) {
-        payload.permission_overwrites = data.permission_overwrites.map(o => resolvePermissionsOverwriteToRaw(o))
+        payload.permission_overwrites = data.permission_overwrites.map(o => resolvePermissionOverwriteToRaw(o))
       } else {
         payload.permission_overwrites = null
       }
@@ -140,7 +278,7 @@ export class ClientChannelsManager extends EntitiesManager {
     const response = await this.client.internals.actions.editThreadChannel(channelId, payload, options.reason)
 
     if (response.success) {
-      const AnyThreadChannel = EntitiesUtil.get(channelEntityKey(response.result))
+      const AnyThreadChannel: any = EntitiesUtil.get(channelEntityKey(response.result))
 
       if (options.patchEntity) {
         return await options.patchEntity.init(response.result) as any

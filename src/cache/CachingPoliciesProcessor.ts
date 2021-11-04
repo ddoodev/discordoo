@@ -8,7 +8,7 @@ import {
   MembersCachingPolicy,
   MessagesCachingPolicy,
   OverwritesCachingPolicy,
-  PermissionsOverwriteTypes,
+  PermissionOverwriteTypes,
   PresencesCachingPolicy,
   RolesCachingPolicy,
   StickerFormatTypes,
@@ -28,7 +28,7 @@ import {
   Sticker,
   User
 } from '@src/api'
-import { PermissionsOverwrite } from '@src/api/entities/overwrites/PermissionsOverwrite'
+import { PermissionOverwrite } from '@src/api/entities/overwrites/PermissionOverwrite'
 
 export class CachingPoliciesProcessor {
   public client: Client
@@ -312,7 +312,7 @@ export class CachingPoliciesProcessor {
     return result
   }
 
-  async overwrite(overwrite: PermissionsOverwrite): Promise<boolean> {
+  async overwrite(overwrite: PermissionOverwrite): Promise<boolean> {
     let result = true
 
     if (this.options.overwrites) {
@@ -326,9 +326,9 @@ export class CachingPoliciesProcessor {
             case OverwritesCachingPolicy.NONE:
               return false
             case OverwritesCachingPolicy.MEMBERS:
-              return overwrite.type === PermissionsOverwriteTypes.MEMBER
+              return overwrite.type === PermissionOverwriteTypes.MEMBER
             case OverwritesCachingPolicy.ROLES:
-              return overwrite.type === PermissionsOverwriteTypes.ROLE
+              return overwrite.type === PermissionOverwriteTypes.ROLE
             case OverwritesCachingPolicy.ALL:
             default:
               return true

@@ -24,10 +24,11 @@ import { ShardListResolvable } from '@src/utils/interfaces'
 import { range } from '@src/utils/range'
 import { EmojiResolvable } from '@src/api'
 import { MessageReactionResolvable } from '@src/api/entities/reaction/interfaces/MessageReactionResolvable'
-import { PermissionsOverwriteResolvable } from '@src/api/entities/overwrites/interfaces/PermissionsOverwriteResolvable'
-import { RawPermissionsOverwriteData } from '@src/api/entities/overwrites/interfaces/RawPermissionsOverwriteData'
+import { PermissionOverwriteResolvable } from '@src/api/entities/overwrites/interfaces/PermissionOverwriteResolvable'
+import { RawPermissionOverwriteData } from '@src/api/entities/overwrites/interfaces/RawPermissionOverwriteData'
 import { ReplaceType } from '@src/utils/types'
-import { PermissionsOverwrite } from '@src/api/entities/overwrites/PermissionsOverwrite'
+import { PermissionOverwrite } from '@src/api/entities/overwrites/PermissionOverwrite'
+import { GuildMemberResolvable } from '@src/api/entities/member/interfaces/GuildMemberResolvable'
 
 export function resolveFiles(resolvable: MessageAttachmentResolvable[]): Promise<RawAttachment[]> {
   return Promise.all(resolvable.map(resolveFile))
@@ -125,11 +126,11 @@ export function resolveEmbedToRaw(resolvable: MessageEmbedResolvable): RawMessag
   return new MessageEmbed(resolvable).toJson() // FIXME: low performance
 }
 
-export function resolvePermissionsOverwriteToRaw(
-  resolvable: PermissionsOverwriteResolvable, existing?: PermissionsOverwrite
-): RawPermissionsOverwriteData {
+export function resolvePermissionOverwriteToRaw(
+  resolvable: PermissionOverwriteResolvable, existing?: PermissionOverwrite
+): RawPermissionOverwriteData {
 
-  const result: ReplaceType<RawPermissionsOverwriteData, 'allow' | 'deny', bigint> = {
+  const result: ReplaceType<RawPermissionOverwriteData, 'allow' | 'deny', bigint> = {
     id: resolvable.id,
     type: resolvable.type,
     allow: existing?.allow.bitfield ?? EmptyBigBit,
@@ -230,11 +231,15 @@ export function resolveEmojiId(resolvable: EmojiResolvable | MessageReactionReso
   return undefined
 }
 
-export async function resolveUser(client: Client, resolvable: UserResolvable): Promise<User | undefined> {
-  if (resolvable instanceof User) return resolvable
+export function resolveMemberId(member: GuildMemberResolvable): string | undefined {
+  const type = typeof member
 
-  const id = resolveUserId(resolvable)
-  if (id) return client.users.cache.get(id)
+  if (typeof member === 'string') return member
+
+  if (typeof member === 'object') {
+    if ('userId' in member) return member.userId
+    if ('user' in member && member.user) return resolveUserId(member.user)
+  }
 
   return undefined
 }
