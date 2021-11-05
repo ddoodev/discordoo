@@ -77,8 +77,8 @@ export class EntitiesCacheManager<Entity> extends EntitiesManager {
     )
   }
 
-  async get(key: string, options?: CacheManagerGetOptions): Promise<Entity | undefined> {
-    return this.client.internals.cache.get<string, Entity>(
+  async get<T = Entity>(key: string, options?: CacheManagerGetOptions): Promise<T | undefined> {
+    return this.client.internals.cache.get<string, T>(
       this.keyspace,
       this.storage,
       this.entityKey,

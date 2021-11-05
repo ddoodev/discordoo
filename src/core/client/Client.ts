@@ -16,7 +16,6 @@ import { ProviderConstructor } from '@src/core/providers/ProviderConstructor'
 import { DefaultGatewayProvider } from '@src/gateway/DefaultGatewayProvider'
 import { DefaultClientStack } from '@src/core/client/DefaultClientStack'
 import { DefaultCacheProvider } from '@src/cache/DefaultCacheProvider'
-import { ListenerSignature, TypedEmitter } from 'tiny-typed-emitter'
 import { DefaultRestProvider } from '@src/rest/DefaultRestProvider'
 import { ClientInternals } from '@src/core/client/ClientInternals'
 import { ClientMetadata } from '@src/core/client/ClientMetadata'
@@ -30,13 +29,15 @@ import { GatewayShardsInfo } from '@discordoo/providers'
 import { IpcServer } from '@src/sharding/ipc/IpcServer'
 import { CacheManager } from '@src/cache/CacheManager'
 import { RestManager } from '@src/rest/RestManager'
+import { TypedEmitter } from 'tiny-typed-emitter'
 import { GuildsManager } from '@src/api/managers'
 import { Final } from '@src/utils/FinalDecorator'
 import { IpcServerOptions } from '@src/sharding'
-import { EntitiesUtil } from '@src/api'
+import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 import { ClientPresencesManager } from '@src/api/managers/presences'
 import { ClientReactionsManager } from '@src/api/managers/reactions/ClientReactionsManager'
 import { ClientPermissionOverwritesManager } from '@src/api/managers/overwrites/ClientPermissionOverwritesManager'
+import { GuildCreateEvent } from '@src/events/GuildCreateEvent'
 
 /** Entry point for all of Discordoo. */
 @Final(
@@ -55,7 +56,8 @@ import { ClientPermissionOverwritesManager } from '@src/api/managers/overwrites/
   'token',
 )
 export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
-  extends TypedEmitter<ListenerSignature<ClientStack['events']>> { // TODO: events does not auto-typed
+  // @ts-ignore because events can be redefined, and the typed emitter library doesn't like it.
+  extends TypedEmitter<ClientStack['events']> {
   /** Token used by this client */
   public token: string
 
@@ -214,7 +216,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
       metadata: clientMetadata,
     }
 
-    this.internals.events.register([ MessageCreateEvent ]) // TODO
+    this.internals.events.register([ MessageCreateEvent, GuildCreateEvent ]) // TODO
 
     this.overwrites = new ClientPermissionOverwritesManager(this)
     this.presences = new ClientPresencesManager(this)

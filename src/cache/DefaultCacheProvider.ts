@@ -76,7 +76,7 @@ export class DefaultCacheProvider implements CacheProvider {
   ): Promise<void> {
     const space = this.keyspaces.get(keyspace)
 
-    if (!space) throw new Error('unknown keyspace')
+    if (!space) return undefined
 
     if (storage === 'global') {
       for await (const store of space.values()) {
@@ -87,7 +87,7 @@ export class DefaultCacheProvider implements CacheProvider {
     } else {
       const store = space.get(storage)
 
-      if (!store) throw new Error('unknown storage')
+      if (!store) return undefined
 
       for await (const data of store.entries()) {
         await predicate(data[1], data[0], this as unknown as P)
@@ -98,14 +98,14 @@ export class DefaultCacheProvider implements CacheProvider {
   async delete<K = string>(keyspace: string, storage: CacheStorageKey, key: K[] | K): Promise<boolean> {
     const space = this.keyspaces.get(keyspace)
 
-    if (!space) throw new Error('unknown keyspace')
+    if (!space) return false
 
     if (storage === 'global') {
       return space.some(store => Array.isArray(key) ? key.every(k => store.delete(k)) : store.delete(key))
     } else {
       const store = space.get(storage)
 
-      if (!store) throw new Error('unknown storage')
+      if (!store) return false
 
       return Array.isArray(key) ? key.every(k => store.delete(k)) : store.delete(key)
     }
@@ -114,14 +114,14 @@ export class DefaultCacheProvider implements CacheProvider {
   async has<K = string>(keyspace: string, storage: CacheStorageKey, key: K): Promise<boolean> {
     const space = this.keyspaces.get(keyspace)
 
-    if (!space) throw new Error('unknown keyspace')
+    if (!space) return false
 
     if (storage === 'global') {
       return space.some(store => store.has(key))
     } else {
       const store = space.get(storage)
 
-      if (!store) throw new Error('unknown storage')
+      if (!store) return false
 
       return store.has(key)
     }
@@ -130,14 +130,14 @@ export class DefaultCacheProvider implements CacheProvider {
   async size(keyspace: string, storage: CacheStorageKey): Promise<number> {
     const space = this.keyspaces.get(keyspace)
 
-    if (!space) throw new Error('unknown keyspace')
+    if (!space) return 0
 
     if (storage === 'global') {
       return space.reduce((prev, curr) => prev + curr.size, 0)
     } else {
       const store = space.get(storage)
 
-      if (!store) throw new Error('unknown storage')
+      if (!store) return 0
 
       return store.size
     }

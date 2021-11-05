@@ -1,5 +1,5 @@
 export { ClientShardingMetadata } from '@src/core/client/ClientShardingMetadata'
-export { ClientEventsHandlers } from '@src/core/client/ClientEventsHandlers'
+export { ClientEventsHandlers } from '@src/events/ClientEventsHandlers'
 export { DefaultClientStack } from '@src/core/client/DefaultClientStack'
 export { ClientInternals } from '@src/core/client/ClientInternals'
 export { ClientMetadata } from '@src/core/client/ClientMetadata'

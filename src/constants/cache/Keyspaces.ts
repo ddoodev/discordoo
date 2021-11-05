@@ -3,23 +3,13 @@ export enum Keyspaces {
   GUILDS = 'guilds',
   // users => global => user id
   USERS = 'users',
-  // guild-members => guild id => member user id
-  GUILD_MEMBERS = 'guild-members',
-  // guild-member-roles => guild id + member user id => role id (pointer) => guild-roles => guild id => role id
-  GUILD_MEMBER_ROLES = 'guild-member-roles',
-  // guild-channels => guild id => channel id
-  GUILD_CHANNELS = 'guild-channels',
-  // guild-presences => guild id => user id
-  GUILD_PRESENCES = 'guild-presences',
-  // guild-roles => guild id => role id
-  GUILD_ROLES = 'guild-roles',
-  // guild-emojis => guild id => emoji id
-  GUILD_EMOJIS = 'guild-emojis',
-  // guild-roles-positions => guild id => role id
-  GUILD_ROLES_POSITIONS = 'guild-roles-positions',
+  // channels => user id or guild id => channel id
+  CHANNELS = 'channels',
   // messages => channel id => message id
   MESSAGES = 'messages',
-  // stickers => global or guild id => sticker id
+  // pinned-messages => channel id => message id
+  PINNED_MESSAGES = 'pinned-messages',
+  // stickers => default or guild id => sticker id
   STICKERS = 'stickers',
   /**
    * message-reactions => message id => reaction identifier
@@ -32,5 +22,15 @@ export enum Keyspaces {
   // channel-permissions-overwrites => channel id => user or role id
   CHANNEL_PERMISSIONS_OVERWRITES = 'channel-permissions-overwrites',
   // category-channel-childrens => channel id (pointer) => guild-channels => guild id => channel id
-  CATEGORY_CHANNEL_CHILDRENS = 'category-channel-childrens'
+  CATEGORY_CHANNEL_CHILDRENS = 'category-channel-childrens',
+  // guild-members => guild id => member user id
+  GUILD_MEMBERS = 'guild-members',
+  // guild-member-roles => guild id + member user id => role id (pointer) => guild-roles => guild id => role id
+  GUILD_MEMBER_ROLES = 'guild-member-roles',
+  // guild-presences => guild id => user id
+  GUILD_PRESENCES = 'guild-presences',
+  // guild-roles => guild id => role id
+  GUILD_ROLES = 'guild-roles',
+  // guild-emojis => guild id => emoji id
+  GUILD_EMOJIS = 'guild-emojis',
 }

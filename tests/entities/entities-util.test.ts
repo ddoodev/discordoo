@@ -1,5 +1,6 @@
-import { Message as RawMessage, EntitiesUtil } from '@src/api/entities'
+import { Message as RawMessage } from '@src/api/entities'
 import { createApp } from '@src/wrapper'
+import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 
 describe('EntitiesUtil', () => {
 

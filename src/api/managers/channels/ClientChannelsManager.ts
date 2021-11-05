@@ -1,4 +1,4 @@
-import { ChannelResolvable, EntitiesCacheManager, EntitiesUtil, GuildResolvable } from '@src/api'
+import { ChannelResolvable, EntitiesCacheManager, GuildResolvable } from '@src/api'
 import { Client } from '@src/core'
 import {
   attach,
@@ -30,6 +30,7 @@ import { ThreadChannelCreateData } from '@src/api/entities/channel/interfaces/Th
 import { RawThreadChannelCreateData } from '@src/api/entities/channel/interfaces/RawThreadChannelCreateData'
 import { RawThreadChannelWithMessageCreateData } from '@src/api/entities/channel/interfaces/RawThreadChannelWithMessageCreateData'
 import { RestFailedResponse, RestSuccessfulResponse } from '@discordoo/providers'
+import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 
 export class ClientChannelsManager extends EntitiesManager {
   public cache: EntitiesCacheManager<AnyChannel>
@@ -38,7 +39,7 @@ export class ClientChannelsManager extends EntitiesManager {
     super(client)
 
     this.cache = new EntitiesCacheManager<AnyChannel>(this.client, {
-      keyspace: Keyspaces.GUILD_CHANNELS,
+      keyspace: Keyspaces.CHANNELS,
       storage: 'global',
       entity: channelEntityKey,
       policy: 'channels'
@@ -180,12 +181,12 @@ export class ClientChannelsManager extends EntitiesManager {
     const response = await this.client.internals.actions.deleteChannel(channelId, options.reason)
 
     if (response.success) {
-      const AnyChannel = EntitiesUtil.get(channelEntityKey(response.result))
+      const AnyChannel: any = EntitiesUtil.get(channelEntityKey(response.result))
 
       if (options.patchEntity) {
-        return await options.patchEntity.init(response.result) as any
+        return await options.patchEntity.init({ ...response.result, deleted: true }) as any
       } else {
-        return await new AnyChannel(this.client).init(response.result) as any
+        return await new AnyChannel(this.client).init({ ...response.result, deleted: true }) as any
       }
     }
 

@@ -9,7 +9,7 @@ import { GuildEmojiEditData } from '@src/api/entities/emoji/interfaces/GuildEmoj
 import { RoleResolvable } from '@src/api/entities/role'
 import { ToJsonProperties } from '@src/api/entities/interfaces/ToJsonProperties'
 import { Json } from '@src/api/entities/interfaces/Json'
-import { EntitiesUtil } from '@src/api'
+import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 import { CacheManagerGetOptions } from '@src/cache'
 import { filterAndMap } from '@src/utils/filterAndMap'
 

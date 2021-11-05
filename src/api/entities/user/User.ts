@@ -33,7 +33,7 @@ export class User extends AbstractEntity implements UserData { // TODO: implemen
     attach(this, data, [
       'avatar',
       'username',
-      'discriminator',
+      [ 'discriminator', '', '0000' ],
       [ 'accentColor', 'accent_color' ],
       'banner',
       'email',
@@ -45,7 +45,7 @@ export class User extends AbstractEntity implements UserData { // TODO: implemen
       'verified'
     ])
 
-    this.bot = typeof data.bot === 'boolean' ? data.bot : this.bot ?? false
+    this.bot = typeof data.bot === 'boolean' ? data.bot : this.discriminator === '0000' ? true : this.bot ?? false
     this.system = typeof data.system === 'boolean' ? data.system : this.system ?? false
 
     if ('publicFlags' in this) this.publicFlags = new UserFlagsUtil(this.publicFlags)

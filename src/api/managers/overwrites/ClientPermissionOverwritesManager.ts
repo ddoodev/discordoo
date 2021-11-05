@@ -1,5 +1,5 @@
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
-import { ChannelResolvable, EntitiesCacheManager, EntitiesUtil, RoleResolvable, UserResolvable } from '@src/api'
+import { ChannelResolvable, EntitiesCacheManager, RoleResolvable, UserResolvable } from '@src/api'
 import { PermissionOverwrite } from '@src/api/entities/overwrites/PermissionOverwrite'
 import { Client } from '@src/core'
 import { Keyspaces } from '@src/constants'
@@ -8,10 +8,10 @@ import { GuildChannelResolvable } from '@src/api/entities/channel/interfaces/Gui
 import { AnyGuildChannel } from '@src/api/entities/channel/interfaces/AnyGuildChannel'
 import { GuildChannelEditOptions } from '@src/api/entities/channel/interfaces/GuildChannelEditOptions'
 import { DiscordooError, resolveChannelId, resolvePermissionOverwriteToRaw } from '@src/utils'
-import { RawGuildChannelEditData } from '@src/api/entities/channel/interfaces/RawGuildChannelEditData'
 import { PermissionOverwriteUpsertOptions } from '@src/api/managers/overwrites/PermissionOverwriteUpsertOptions'
 import { RawPermissionOverwriteData } from '@src/api/entities/overwrites/interfaces/RawPermissionOverwriteData'
 import { PermissionOverwriteEditOptions } from '@src/api/managers/overwrites/PermissionOverwriteEditOptions'
+import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 
 export class ClientPermissionOverwritesManager extends EntitiesManager {
   public cache: EntitiesCacheManager<PermissionOverwrite>

@@ -29,6 +29,8 @@ import { RawPermissionOverwriteData } from '@src/api/entities/overwrites/interfa
 import { ReplaceType } from '@src/utils/types'
 import { PermissionOverwrite } from '@src/api/entities/overwrites/PermissionOverwrite'
 import { GuildMemberResolvable } from '@src/api/entities/member/interfaces/GuildMemberResolvable'
+import { MessageReaction } from '@src/api/entities/reaction/MessageReaction'
+import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 
 export function resolveFiles(resolvable: MessageAttachmentResolvable[]): Promise<RawAttachment[]> {
   return Promise.all(resolvable.map(resolveFile))
@@ -133,8 +135,8 @@ export function resolvePermissionOverwriteToRaw(
   const result: ReplaceType<RawPermissionOverwriteData, 'allow' | 'deny', bigint> = {
     id: resolvable.id,
     type: resolvable.type,
-    allow: existing?.allow.bitfield ?? EmptyBigBit,
-    deny: existing?.deny.bitfield ?? EmptyBigBit,
+    allow: existing?.allow?.bitfield ?? EmptyBigBit,
+    deny: existing?.deny?.bitfield ?? EmptyBigBit,
   }
 
   if ('allow' in resolvable) {
@@ -167,6 +169,16 @@ export function resolvePermissionOverwriteToRaw(
   }
 
   return { ...result, deny: result.deny.toString(), allow: result.allow.toString() }
+}
+
+export async function resolveMessageReaction(client: Client, resolvable: MessageReactionResolvable): Promise<MessageReaction | undefined> {
+  if (!resolvable) return undefined
+
+  const MessageReaction = EntitiesUtil.get('MessageReaction')
+
+  if (resolvable instanceof MessageReaction) return resolvable
+
+  return resolvable.message && resolvable.emoji && resolvable.channel ? new MessageReaction(client).init(resolvable) : undefined
 }
 
 export function resolveRoleTags(resolvable: RoleTagsResolvable): RoleTagsData {

@@ -15,7 +15,7 @@ export class PermissionOverwrite extends AbstractEntity {
   public channelId!: string
 
   async init(data: PermissionOverwriteResolvable & { channel: ChannelResolvable }): Promise<this> {
-    const overwrite = resolvePermissionOverwriteToRaw(data, this)
+    const overwrite = resolvePermissionOverwriteToRaw(data, this.allow && this.deny ? this : undefined)
 
     this.id = overwrite.id
     this.type = overwrite.type

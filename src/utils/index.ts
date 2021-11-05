@@ -1,4 +1,5 @@
 export { DiscordooSnowflake } from '@src/utils/DiscordooSnowflake'
+export { DiscordSnowflake } from '@src/utils/DiscordSnowflake'
 export { ValidationError } from '@src/utils/ValidationError'
 export { DiscordooError } from '@src/utils/DiscordooError'
 export { WebSocketUtils } from '@src/utils/WebSocketUtils'

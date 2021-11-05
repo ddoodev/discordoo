@@ -7,7 +7,7 @@ import { wait } from '@src/utils/wait'
 
 export function packet(client: WebSocketClient, packet: WebSocketPacket) {
 
-  console.log('shard', client.id, 'packet', packet)
+  // console.log('shard', client.id, 'packet', packet)
 
   // process sequence increase
   if (WebSocketUtils.exists(packet.s) && packet.s! > client.sequence) client.sequence = packet.s!

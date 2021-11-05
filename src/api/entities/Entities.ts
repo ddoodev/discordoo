@@ -9,6 +9,10 @@ import { MessageReaction } from '@src/api/entities/reaction/MessageReaction'
 import { AbstractEmoji, ActivityEmoji, GuildEmoji, ReactionEmoji } from '@src/api/entities/emoji'
 import { PermissionOverwrite } from '@src/api/entities/overwrites/PermissionOverwrite'
 import { GuildCategoryChannel } from '@src/api/entities/channel/GuildCategoryChannel'
+import { DirectMessagesChannel } from '@src/api/entities/channel/DirectMessagesChannel'
+import { AbstractGuildChannel } from '@src/api/entities/channel/AbstractGuildChannel'
+import { AbstractGuildTextChannel } from '@src/api/entities/channel/AbstractGuildTextChannel'
+import { GuildTextChannel } from '@src/api/entities/channel/GuildTextChannel'
 
 export const Entities = {
   Message,
@@ -26,4 +30,8 @@ export const Entities = {
   ReactionEmoji,
   PermissionOverwrite,
   GuildCategoryChannel,
+  DirectMessagesChannel,
+  AbstractGuildChannel,
+  AbstractGuildTextChannel,
+  GuildTextChannel,
 }

@@ -10,10 +10,19 @@ import { PermissionOverwrite } from '@src/api/entities/overwrites/PermissionOver
 import { GuildCategoryChannel } from '@src/api/entities/channel/GuildCategoryChannel'
 import { Keyspaces, PermissionFlags } from '@src/constants'
 import { CacheManagerGetOptions } from '@src/cache'
-import { PermissionsCheckOptions, ReadonlyPermissions, Permissions, Role, GuildMember, RoleResolvable, ChannelResolvable } from '@src/api'
+import {
+  PermissionsCheckOptions,
+  ReadonlyPermissions,
+  Permissions,
+  Role,
+  GuildMember,
+  RoleResolvable,
+  ChannelResolvable,
+  ToJsonProperties, Json
+} from '@src/api'
 import { GuildMemberResolvable } from '@src/api/entities/member/interfaces/GuildMemberResolvable'
 
-export abstract class AbstractGuildChannel extends AbstractChannel implements AbstractGuildChannelData {
+export abstract class AbstractGuildChannel extends AbstractChannel {
   public guildId!: string
   public name!: string
   public parentId?: string
@@ -55,7 +64,7 @@ export abstract class AbstractGuildChannel extends AbstractChannel implements Ab
     if (!this.parentId) return undefined
 
     return this.client.internals.cache.get(
-      Keyspaces.GUILD_CHANNELS,
+      Keyspaces.CHANNELS,
       this.guildId,
       'GuildCategoryChannel',
       this.parentId,
@@ -218,6 +227,16 @@ export abstract class AbstractGuildChannel extends AbstractChannel implements Ab
 
     return this.client.internals.cache.filter('members', this.id, 'GuildMember', predicate)
       .then(results => results.map(r => r[1])) // FIXME: low performance
+  }
+
+  toJson(properties: ToJsonProperties = {}, obj?: any): Json {
+    return super.toJson({
+      ...properties,
+      guildId: true,
+      name: true,
+      parentId: true,
+      position: true,
+    }, obj)
   }
 
 }

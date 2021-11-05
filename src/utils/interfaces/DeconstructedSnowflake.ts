@@ -5,3 +5,11 @@ export interface DeconstructedDiscordooSnowflake {
   increment: number
   date: Date
 }
+
+export interface DeconstructedDiscordSnowflake {
+  timestamp: number
+  workerId: number
+  processId: number
+  increment: number
+  date: Date
+}

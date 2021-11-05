@@ -1,7 +1,5 @@
-import { AbstractEntity } from '@src/api/entities/AbstractEntity'
+import { AbstractChannel } from '@src/api/entities/channel/AbstractChannel'
 
-export class AbstractThreadChannel extends AbstractEntity {
-  init(data: any): Promise<this> {
-    return Promise.resolve(this)
-  }
+export abstract class AbstractThreadChannel extends AbstractChannel {
+
 }

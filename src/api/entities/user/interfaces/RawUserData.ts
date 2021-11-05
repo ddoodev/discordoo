@@ -1,7 +1,7 @@
 export interface RawUserData {
   id: string
   username: string
-  discriminator: string
+  discriminator?: string
   avatar?: string
   bot?: boolean
   system?: boolean

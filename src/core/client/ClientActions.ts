@@ -23,6 +23,7 @@ import { RawPermissionOverwriteData } from '@src/api/entities/overwrites/interfa
 import { RawGuildChannelCreateData } from '@src/api/entities/channel/interfaces/RawGuildChannelCreateData'
 import { RawThreadChannelWithMessageCreateData } from '@src/api/entities/channel/interfaces/RawThreadChannelWithMessageCreateData'
 import { RawThreadChannelCreateData } from '@src/api/entities/channel/interfaces/RawThreadChannelCreateData'
+import { FetchManyMessagesQuery } from '@src/api/managers/messages/FetchManyMessagesQuery'
 
 export class ClientActions {
   public client: Client
@@ -176,6 +177,19 @@ export class ClientActions {
     return this.client.internals.rest.api()
       .url(Endpoints.GUILD(guildId))
       .delete()
+  }
+
+  deleteMessage(channelId: string, messageId: string, reason?: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.CHANNEL_MESSAGE(channelId, messageId))
+      .delete({ reason })
+  }
+
+  deleteMessagesBulk(channelId: string, messages: string[], reason?: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.CHANNEL_BULK_DELETE(channelId))
+      .body({ messages })
+      .post({ reason })
   }
 
   deleteGuildEmoji(guildId: string, emojiId: string, reason?: string) {
@@ -376,6 +390,25 @@ export class ClientActions {
     return request.get<RawUserData[]>()
   }
 
+  getPinnedMessages(channelId: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.CHANNEL_PINS(channelId))
+      .get<RawMessageData[]>()
+  }
+
+  getMessage(channelId: string, messageId: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.CHANNEL_MESSAGE(channelId, messageId))
+      .get<RawMessageData>()
+  }
+
+  getMessages(channelId: string, query: FetchManyMessagesQuery) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.CHANNEL_MESSAGES(channelId))
+      .query(query)
+      .get<RawMessageData[]>()
+  }
+
   getGuildAuditLog(guildId: string, data: any /* TODO: GetGuildAuditLogData */) {
     return this.client.internals.rest.api()
       .url(Endpoints.GUILD_AUDIT_LOGS(guildId))
@@ -528,6 +561,12 @@ export class ClientActions {
       .delete({ reason })
   }
 
+  pinMessage(channelId: string, messageId: string, reason?: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.CHANNEL_PIN(channelId, messageId))
+      .put({ reason })
+  }
+
   removeGuildMemberRole(guildId: string, memberId: string, roleId: string, reason?: string) {
     return this.client.internals.rest.api()
       .url(Endpoints.GUILD_MEMBER_ROLE(guildId, memberId, roleId))
@@ -577,6 +616,12 @@ export class ClientActions {
   unbanGuildMember(guildId: string, memberId: string, reason?: string) {
     return this.client.internals.rest.api()
       .url(Endpoints.GUILD_BAN(guildId, memberId))
+      .delete({ reason })
+  }
+
+  unpinMessage(channelId: string, messageId: string, reason?: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.CHANNEL_PIN(channelId, messageId))
       .delete({ reason })
   }
 

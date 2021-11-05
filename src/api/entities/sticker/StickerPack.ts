@@ -5,7 +5,7 @@ import { ToJsonProperties } from '@src/api/entities/interfaces/ToJsonProperties'
 import { Json } from '@src/api/entities/interfaces/Json'
 import { idToDate, idToTimestamp, ImageUrlOptions, attach } from '@src/utils'
 import { RawStickerPackData } from '@src/api/entities/sticker/interfaces/RawStickerPackData'
-import { EntitiesUtil } from '@src/api'
+import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 import { Collection } from '@discordoo/collection'
 
 export class StickerPack extends AbstractEntity {

@@ -1,7 +1,7 @@
 import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 import { GuildMemberData, Json, RawGuildMemberData, ReadonlyPermissions, ToJsonProperties, User } from '@src/api'
 import { Keyspaces, PermissionFlags, ToJsonOverrideSymbol } from '@src/constants'
-import { DiscordooError, ImageUrlOptions, attach } from '@src/utils'
+import { attach, DiscordooError, ImageUrlOptions } from '@src/utils'
 import { filterAndMap } from '@src/utils/filterAndMap'
 import { resolveRoleId, resolveUserId } from '@src/utils/resolve'
 import { CacheManagerGetOptions } from '@src/cache'
@@ -9,6 +9,7 @@ import { GuildMemberRolesManager } from '@src/api/managers/members/GuildMemberRo
 import { Presence } from '@src/api/entities/presence/Presence'
 import { GuildMemberEditData } from '@src/api/entities/member/interfaces/GuildMemberEditData'
 import { MemberBanOptions } from '@src/api/managers/members/MemberBanOptions'
+import { cachePointer } from '@src/utils/cachePointer'
 
 export class GuildMember extends AbstractEntity {
   public avatar?: string
@@ -80,12 +81,7 @@ export class GuildMember extends AbstractEntity {
       )
 
       for await (const role of this.rolesList) {
-        await this.roles.cache.set(role, {
-          ___type___: 'discordooCachePointer',
-          keyspace: Keyspaces.GUILD_ROLES,
-          storage: this.guildId,
-          key: role
-        })
+        await this.roles.cache.set(role, cachePointer(Keyspaces.GUILD_ROLES, this.guildId, role))
       }
     }
 

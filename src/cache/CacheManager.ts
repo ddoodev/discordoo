@@ -3,7 +3,7 @@ import { IpcCacheOpCodes, IpcOpCodes, SerializeModes } from '@src/constants'
 import { CacheProvider, CacheStorageKey } from '@discordoo/providers'
 import { DiscordooError, resolveDiscordooShards } from '@src/utils'
 import { Client, ProviderConstructor } from '@src/core'
-import { EntitiesUtil, EntityKey } from '@src/api/entities'
+import { EntityKey } from '@src/api/entities'
 import {
   IpcCacheClearRequestPacket,
   IpcCacheClearResponsePacket,
@@ -60,6 +60,7 @@ import {
   CacheManagerData,
   CachePointer,
 } from '@src/cache/interfaces'
+import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 
 export class CacheManager<P extends CacheProvider = CacheProvider> {
   public client: Client
@@ -711,21 +712,23 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
           jsonOrEntity = data
           break
         case 'text':
-          jsonOrEntity = JSON.parse(data)
+          jsonOrEntity = data ? JSON.parse(data) : data
           break
         case 'buffer':
-          jsonOrEntity = JSON.parse(data.toString('utf8'))
+          jsonOrEntity = data ? JSON.parse(data.toString('utf8')) : data
           break
       }
 
-      if (jsonOrEntity.___type___ === 'discordooCachePointer') {
+      if (jsonOrEntity?.___type___ === 'discordooCachePointer') {
         return await this.get(jsonOrEntity.keyspace, jsonOrEntity.storage, entityKey, jsonOrEntity.key)
       }
 
-      const k = typeof entityKey === 'function' ? entityKey(data) : entityKey
-      const Entity: any = EntitiesUtil.get(k)
+      if (jsonOrEntity) {
+        const k = typeof entityKey === 'function' ? entityKey(jsonOrEntity) : entityKey
+        const Entity: any = EntitiesUtil.get(k)
 
-      if (!(jsonOrEntity instanceof Entity)) jsonOrEntity = await new Entity(this.client).init?.(jsonOrEntity)
+        if (!(jsonOrEntity instanceof Entity)) jsonOrEntity = await new Entity(this.client).init?.(jsonOrEntity)
+      }
 
       return jsonOrEntity
     }

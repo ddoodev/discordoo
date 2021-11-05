@@ -62,7 +62,7 @@ export class CachingPoliciesProcessor {
     }
   }
 
-  async channel(channel: any): Promise<boolean> {
+  async channels(channel: any): Promise<boolean> {
     let result = true
 
     if (this.options.channels) {
@@ -108,7 +108,7 @@ export class CachingPoliciesProcessor {
     return result
   }
 
-  async emoji(emoji: AnyEmoji): Promise<boolean> {
+  async emojis(emoji: AnyEmoji): Promise<boolean> {
     let result = true
 
     if (this.options.emojis) {
@@ -143,7 +143,7 @@ export class CachingPoliciesProcessor {
     return result
   }
 
-  async sticker(sticker: Sticker): Promise<boolean> {
+  async stickers(sticker: Sticker): Promise<boolean> {
     let result = true
 
     if (this.options.stickers) {
@@ -179,7 +179,7 @@ export class CachingPoliciesProcessor {
     return result
   }
 
-  async guild(guild: any): Promise<boolean> {
+  async guilds(guild: any): Promise<boolean> {
     let result = true
 
     if (this.options.guilds) {
@@ -205,7 +205,7 @@ export class CachingPoliciesProcessor {
     return result
   }
 
-  async member(member: GuildMember): Promise<boolean> {
+  async members(member: GuildMember): Promise<boolean> {
     let result = true
 
     if (this.options.members) {
@@ -248,7 +248,7 @@ export class CachingPoliciesProcessor {
     return result
   }
 
-  async message(message: Message): Promise<boolean> {
+  async messages(message: Message): Promise<boolean> {
     let result = true
 
     if (this.options.messages) {
@@ -257,12 +257,13 @@ export class CachingPoliciesProcessor {
       results.push(await this.options.messages.custom?.(message) ?? undefined)
 
       results.push(
-        await asyncSome(this.options.messages.policies, policy => {
+        await asyncSome(this.options.messages.policies, async policy => {
+          const author = await message.author()
           switch (policy) {
             case MessagesCachingPolicy.BOTS:
-              return !!message.author?.bot // TODO
+              return !!author?.bot
             case MessagesCachingPolicy.USERS:
-              return !message.author?.bot // TODO
+              return !author?.bot
             case MessagesCachingPolicy.NONE:
               return false
             case MessagesCachingPolicy.ALL:
@@ -278,7 +279,7 @@ export class CachingPoliciesProcessor {
     return result
   }
 
-  async presence(presence: Presence): Promise<boolean> { // TODO
+  async presences(presence: Presence): Promise<boolean> { // TODO
     let result = true
 
     if (this.options.presences) {
@@ -312,7 +313,7 @@ export class CachingPoliciesProcessor {
     return result
   }
 
-  async overwrite(overwrite: PermissionOverwrite): Promise<boolean> {
+  async overwrites(overwrite: PermissionOverwrite): Promise<boolean> {
     let result = true
 
     if (this.options.overwrites) {
@@ -342,7 +343,7 @@ export class CachingPoliciesProcessor {
     return result
   }
 
-  async role(role: Role): Promise<boolean> {
+  async roles(role: Role): Promise<boolean> {
     let result = true
 
     if (this.options.roles) {
@@ -372,7 +373,7 @@ export class CachingPoliciesProcessor {
     return result
   }
 
-  async user(user: User): Promise<boolean> {
+  async users(user: User): Promise<boolean> {
     let result = true
 
     if (this.options.users) {

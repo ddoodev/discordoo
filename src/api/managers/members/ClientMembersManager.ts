@@ -1,4 +1,4 @@
-import { EntitiesCacheManager, EntitiesUtil, GuildMember, GuildResolvable, UserResolvable } from '@src/api'
+import { EntitiesCacheManager, GuildMember, GuildResolvable, UserResolvable } from '@src/api'
 import { Client } from '@src/core'
 import { Keyspaces } from '@src/constants'
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
@@ -9,6 +9,7 @@ import { DiscordooError } from '@src/utils'
 import { filterAndMap } from '@src/utils/filterAndMap'
 import { MemberEditOptions } from '@src/api/managers/members/MemberEditOptions'
 import { MemberBanOptions } from '@src/api/managers/members/MemberBanOptions'
+import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 
 export class ClientMembersManager extends EntitiesManager {
   public cache: EntitiesCacheManager<GuildMember>

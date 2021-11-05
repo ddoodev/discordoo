@@ -3,21 +3,38 @@ import { RawMessageAttachmentData } from '@src/api/entities/attachment/interface
 import { RawMessageEmbedData } from '@src/api/entities/embed'
 import { MessageTypes } from '@src/constants/entities/message/MessageTypes'
 import { RawGuildMemberData } from '@src/api'
+import { RawChannelMentionData } from '@src/api/entities/message/interfaces/RawChannelMentionData'
+import { MessageReactionData } from '@src/api/entities/reaction/interfaces/MessageReactionData'
 
 export interface RawMessageData {
   id: string
   channel_id: string
-  author?: RawUserData
+  guild_id?: string
+  author: RawUserData
   member?: RawGuildMemberData
   content?: string
-  timestamp: number
-  edited_timestamp?: number
+  timestamp: string
+  edited_timestamp?: string
   tts: boolean
+  mention_everyone: boolean
+  mentions: Array<RawUserData & { member: RawGuildMemberData }>
+  mention_roles: string[]
+  mention_channels: RawChannelMentionData[]
   attachments: RawMessageAttachmentData[]
   embeds: RawMessageEmbedData[]
-  reactions?: any[] // TODO: RawMessageReactionData[]
+  reactions?: MessageReactionData[]
   nonce?: string | number
   pinned: boolean
   webhook_id?: string
   type: MessageTypes
+  // TODO activity: RawMessageActivityData
+  // TODO application: RawApplicationData
+  // TODO application_id: string
+  // TODO message_reference: RawMessageReferenceData
+  flags: number
+  referenced_message?: RawMessageData
+  // TODO interaction: RawMessageInteractionData
+  // TODO thread: RawThreadChannelData
+  // TODO components: RawMessageComponentData[]
+  // TODO sticker_items: RawMessageStickerItemData[]
 }
