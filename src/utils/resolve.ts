@@ -93,7 +93,7 @@ export function resolveBigBitField(resolvable: BigBitFieldResolvable, emptyBit: 
     }
     case 'object': {
       if (resolvable instanceof ReadonlyBigBitField) return resolvable.bitfield
-      if (typeof resolvable.bits === 'string' && resolvable.bits.endsWith('n'))
+      if (typeof resolvable?.bits === 'string' && resolvable.bits?.endsWith('n'))
         return BigInt(resolvable.bits.slice(0, resolvable.bits.length))
     } break
   }

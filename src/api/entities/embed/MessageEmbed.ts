@@ -1,6 +1,6 @@
 import { MessageEmbedData } from '@src/api/entities/embed/interfaces/MessageEmbedData'
 import { is } from 'typescript-is'
-import { attach, ValidationError } from '@src/utils'
+import { attach, ValidationError, WebSocketUtils } from '@src/utils'
 import { MessageEmbedTypes } from '@src/constants'
 import { MessageEmbedFieldData } from '@src/api/entities/embed/interfaces/MessageEmbedFieldData'
 import { MessageEmbedAuthorData } from '@src/api/entities/embed/interfaces/MessageEmbedAuthorData'
@@ -49,9 +49,13 @@ export class MessageEmbed {
       'provider'
     ])
 
-    this.timestamp = data.timestamp ? new Date(data.timestamp).getTime() : undefined
+    if (WebSocketUtils.exists(data.timestamp)) {
+      this.timestamp = new Date(data.timestamp!).getTime()
+    }
 
-    this.color = data.color ? resolveColor(data.color) : undefined
+    if (WebSocketUtils.exists(data.color)) {
+      this.color = resolveColor(data.color!)
+    }
 
     this.fields = data.fields ? this._fixFields(data.fields) : []
 
@@ -256,20 +260,24 @@ export class MessageEmbed {
   toJson(): RawMessageEmbedData {
     const { title, description, url, color, timestamp, author, footer, image, thumbnail } = this
 
-    return {
-      type: MessageEmbedTypes.RICH, title, description, url, color, timestamp,
+    const result = {
+      type: MessageEmbedTypes.RICH, title, description, url, color,
+      timestamp: timestamp ? new Date(timestamp).toISOString() : undefined,
       author: author ? { name: author.name, url: author.url, icon_url: author.iconUrl } : undefined,
       footer: footer ? { text: footer.text, icon_url: footer.iconUrl } : undefined,
       image: image ? { url: image.url } : undefined,
       thumbnail: thumbnail ? { url: thumbnail.url } : undefined,
     }
+
+    return JSON.parse(JSON.stringify(result))
   }
 
   private static _resolveJson(data: RawMessageEmbedData): MessageEmbedData {
     const { title, description, url, color, timestamp, author, footer, image, video, thumbnail: thumb, provider } = data
 
     return {
-      type: MessageEmbedTypes.RICH, title, description, url, color, timestamp, provider,
+      type: MessageEmbedTypes.RICH, title, description, url, color, provider,
+      timestamp: timestamp ? new Date(timestamp).getTime() : undefined,
       author: author ? { name: author.name, url: author.url, iconUrl: author.icon_url } : undefined,
       footer: footer ? { text: footer.text, iconUrl: footer.icon_url } : undefined,
       image: image ? { url: image.url, proxyUrl: image.proxy_url, width: image.width, height: image.height } : undefined,

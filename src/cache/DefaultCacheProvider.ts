@@ -6,7 +6,7 @@ export class DefaultCacheProvider implements CacheProvider {
   private keyspaces: Collection<string, Collection<string, Collection>>
 
   public client: Client
-  public compatible: 'classes' = 'classes'
+  public compatible: 'classes' | 'json' | 'text' | 'buffer' = 'buffer'
   public sharedCache = false
 
   constructor(client: Client) {

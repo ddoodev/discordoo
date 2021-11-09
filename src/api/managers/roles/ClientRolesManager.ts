@@ -5,7 +5,7 @@ import { RoleEditData } from '@src/api/entities/role/interfaces/RoleEditData'
 import { RawRoleEditData } from '@src/api/entities/role/interfaces/RawRoleEditData'
 import { RoleEditOptions } from '@src/api/managers/roles/RoleEditOptions'
 import { resolveBigBitField, resolveColor, resolveGuildId, resolveRoleId } from '@src/utils/resolve'
-import { DiscordooError } from '@src/utils'
+import { DiscordooError, WebSocketUtils } from '@src/utils'
 import { DataResolver } from '@src/utils/DataResolver'
 import { RoleCreateData } from '@src/api/entities/role/interfaces/RoleCreateData'
 import { RawRoleCreateData } from '@src/api/entities/role/interfaces/RawRoleCreateData'
@@ -115,11 +115,11 @@ export class ClientRolesManager extends EntitiesManager {
       payload.name = data.name
     }
 
-    if (data.permissions !== undefined) {
+    if (WebSocketUtils.exists(data.permissions)) {
       payload.permissions = resolveBigBitField(data.permissions).toString()
     }
 
-    if (data.color !== undefined) {
+    if (WebSocketUtils.exists(data.color)) {
       payload.color = resolveColor(data.color)
     }
 

@@ -1,7 +1,7 @@
 import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 import { GuildMemberData, Json, RawGuildMemberData, ReadonlyPermissions, ToJsonProperties, User } from '@src/api'
 import { Keyspaces, PermissionFlags, ToJsonOverrideSymbol } from '@src/constants'
-import { attach, DiscordooError, ImageUrlOptions } from '@src/utils'
+import { attach, DiscordooError, ImageUrlOptions, WebSocketUtils } from '@src/utils'
 import { filterAndMap } from '@src/utils/filterAndMap'
 import { resolveRoleId, resolveUserId } from '@src/utils/resolve'
 import { CacheManagerGetOptions } from '@src/cache'
@@ -85,7 +85,7 @@ export class GuildMember extends AbstractEntity {
       }
     }
 
-    if (data.permissions !== undefined) {
+    if (WebSocketUtils.exists(data.permissions)) {
       this.permissions = new ReadonlyPermissions(this.guildOwner ? PermissionFlags.ADMINISTRATOR : data.permissions)
     }
 

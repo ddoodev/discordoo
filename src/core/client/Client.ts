@@ -38,6 +38,7 @@ import { ClientPresencesManager } from '@src/api/managers/presences'
 import { ClientReactionsManager } from '@src/api/managers/reactions/ClientReactionsManager'
 import { ClientPermissionOverwritesManager } from '@src/api/managers/overwrites/ClientPermissionOverwritesManager'
 import { GuildCreateEvent } from '@src/events/GuildCreateEvent'
+import { PresenceUpdateEvent } from '@src/events/PresenceUpdateEvent'
 
 /** Entry point for all of Discordoo. */
 @Final(
@@ -216,7 +217,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
       metadata: clientMetadata,
     }
 
-    this.internals.events.register([ MessageCreateEvent, GuildCreateEvent ]) // TODO
+    this.internals.events.register([ MessageCreateEvent, GuildCreateEvent, PresenceUpdateEvent ]) // TODO
 
     this.overwrites = new ClientPermissionOverwritesManager(this)
     this.presences = new ClientPresencesManager(this)

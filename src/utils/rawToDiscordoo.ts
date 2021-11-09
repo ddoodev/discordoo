@@ -1,5 +1,5 @@
-import { EventsNames } from '@src/constants'
+import { EventNames } from '@src/constants'
 
 export function rawToDiscordoo(event: string) {
-  return EventsNames[event]
+  return EventNames[event]
 }

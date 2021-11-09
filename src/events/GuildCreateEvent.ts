@@ -1,10 +1,10 @@
 import { AbstractEvent } from '@src/events/AbstractEvent'
-import { EventsNames, Keyspaces } from '@src/constants'
+import { EventNames, Keyspaces } from '@src/constants'
 import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 import { channelEntityKey } from '@src/utils'
 
 export class GuildCreateEvent extends AbstractEvent {
-  public name = EventsNames.GUILD_CREATE
+  public name = EventNames.GUILD_CREATE
 
   async execute(guild: any /* RawGuildData */) {
 
@@ -34,6 +34,19 @@ export class GuildCreateEvent extends AbstractEvent {
         })
         await this.client.members.cache.set(member.userId, member, { storage: guild.id })
       }
+    }
+
+    for await (const presenceData of guild.presences) {
+      let cache = await this.client.internals.cache.get(Keyspaces.GUILD_PRESENCES, guild.id, 'Presence', presenceData.user.id)
+
+      if (cache) {
+        cache = await cache.init(presenceData)
+      } else {
+        const Presence = EntitiesUtil.get('Presence')
+        cache = await new Presence(this.client).init(presenceData)
+      }
+
+      await this.client.presences.cache.set(cache.userId, cache, { storage: guild.id })
     }
   }
 }

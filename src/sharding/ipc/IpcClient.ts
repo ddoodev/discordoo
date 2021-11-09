@@ -56,7 +56,7 @@ export class IpcClient extends TypedEmitter<IpcClientEvents> {
           'ipc shard id contains:', DiscordooSnowflake.deconstruct(this.INSTANCE_IPC)
         )
         promise.rej(err)
-      }, 30000)
+      }, this.shards.length * 30000)
 
       this.bucket.set(this.INSTANCE_IPC, promise)
 

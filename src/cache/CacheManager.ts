@@ -138,7 +138,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
 
     const globalPolicyLimit =
       '___type___' in value && value.___type___ === 'discordooCachePointer'
-        ? undefined
+        ? await this.has(value.keyspace, value.storage, value.key, options)
         : await this._policiesProcessor.global(value)
 
     if (globalPolicyLimit !== undefined) {

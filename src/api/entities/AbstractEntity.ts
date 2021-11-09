@@ -12,6 +12,10 @@ export abstract class AbstractEntity {
 
   abstract init(data: any): Promise<this>
 
+  async _clone(): Promise<this> {
+    return await new (this.constructor as any)(this.client).init(this.toJson())
+  }
+
   toJson(properties: ToJsonProperties = {}, obj?: any): Json {
     const json: Json = {}
 
@@ -24,7 +28,7 @@ export abstract class AbstractEntity {
 
       if (typeof prop === 'object') {
         if (prop.override === ToJsonOverrideSymbol) json[key] = AbstractEntity._handle(prop.value)
-        else json[key] = this.toJson(prop as any, target)
+        else json[key] = AbstractEntity._handle(prop)
       } else if (prop) {
         json[key] = AbstractEntity._handle(value)
       }
@@ -42,6 +46,7 @@ export abstract class AbstractEntity {
       case 'bigint':
         return data.toString() + 'n'
       case 'object': {
+        if (data === null) return null
         if (typeof data.toJson === 'function') return data.toJson()
         return JSON.parse(JSON.stringify(data, (k, v) => typeof v === 'bigint' ? v.toString() + 'n' : v))
       }

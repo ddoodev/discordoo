@@ -7,7 +7,7 @@ import { RawPresenceData } from '@src/api/entities/presence/interfaces/RawPresen
 import { attach } from '@src/utils'
 import { PresenceActivity } from '@src/api/entities/presence/PresenceActivity'
 import { CacheManagerGetOptions } from '@src/cache'
-import { Keyspaces } from '@src/constants'
+import { Keyspaces, ToJsonOverrideSymbol } from '@src/constants'
 
 export class Presence extends AbstractEntity {
   public activities: PresenceActivity[] = []
@@ -62,7 +62,10 @@ export class Presence extends AbstractEntity {
   toJson(properties: ToJsonProperties = {}, obj?: any): Json {
     return super.toJson({
       ...properties,
-      activities: true,
+      activities: {
+        override: ToJsonOverrideSymbol,
+        value: this.activities.map(a => a.toJson())
+      },
       clientStatus: true,
       guildId: true,
       status: true,

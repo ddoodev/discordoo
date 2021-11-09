@@ -1,4 +1,4 @@
-import { ClientEventsHandlers } from '@src/core'
+import { ClientEventsHandlers } from '@src/events/ClientEventsHandlers'
 import { CacheProvider, GatewayProvider, RestProvider } from '@discordoo/providers'
 
 export interface DefaultClientStack {

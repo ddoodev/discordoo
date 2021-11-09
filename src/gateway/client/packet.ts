@@ -12,7 +12,7 @@ export function packet(client: WebSocketClient, packet: WebSocketPacket) {
   // process sequence increase
   if (WebSocketUtils.exists(packet.s) && packet.s! > client.sequence) client.sequence = packet.s!
 
-  console.log('shard', client.id, 'SEQUENCE', client.sequence)
+  // console.log('shard', client.id, 'SEQUENCE', client.sequence)
 
   /**
    * ready and resumed events handling
@@ -29,7 +29,7 @@ export function packet(client: WebSocketClient, packet: WebSocketPacket) {
       client.heartbeat()
 
       client.emit(WebSocketClientEvents.READY)
-      // console.log('shard', client.id, 'READY')
+      console.log('shard', client.id, 'READY')
       break
     case 'RESUMED':
       client.status = WebSocketClientStates.READY

@@ -7,7 +7,7 @@ import { PresenceActivityTimestampsData } from '@src/api/entities/presence/inter
 import { PresenceActivityTypes, ToJsonOverrideSymbol } from '@src/constants'
 import { RawPresenceActivityData } from '@src/api/entities/presence/interfaces/RawPresenceActivityData'
 import { PresenceActivityAssets } from '@src/api/entities/presence/PresenceActivityAssets'
-import { attach } from '@src/utils'
+import { attach, WebSocketUtils } from '@src/utils'
 import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 
 export class PresenceActivity extends AbstractEntity {
@@ -54,7 +54,7 @@ export class PresenceActivity extends AbstractEntity {
       this.emoji = await new ActivityEmoji(this.client).init(data.emoji)
     }
 
-    if (data.flags !== undefined) {
+    if (WebSocketUtils.exists(data.flags)) {
       this.flags = new ReadonlyActivityFlagsUtil(data.flags)
     }
 
@@ -65,7 +65,7 @@ export class PresenceActivity extends AbstractEntity {
     return this.createdTimestamp ? new Date(this.createdTimestamp) : undefined
   }
 
-  toJson(properties: ToJsonProperties, obj?: any): Json {
+  toJson(properties: ToJsonProperties = {}, obj?: any): Json {
     return super.toJson({
       ...properties,
       applicationId: true,
