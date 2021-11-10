@@ -26,7 +26,7 @@ import { UsersManager } from '@src/api/managers/UsersManager'
 import { ClientRolesManager } from '@src/api/managers/roles'
 import { GatewayManager } from '@src/gateway/GatewayManager'
 import { GatewayShardsInfo } from '@discordoo/providers'
-import { IpcServer } from '@src/sharding/ipc/IpcServer'
+import { LocalIpcServer } from '@src/sharding/ipc/LocalIpcServer'
 import { CacheManager } from '@src/cache/CacheManager'
 import { RestManager } from '@src/rest/RestManager'
 import { TypedEmitter } from 'tiny-typed-emitter'
@@ -39,6 +39,10 @@ import { ClientReactionsManager } from '@src/api/managers/reactions/ClientReacti
 import { ClientPermissionOverwritesManager } from '@src/api/managers/overwrites/ClientPermissionOverwritesManager'
 import { GuildCreateEvent } from '@src/events/GuildCreateEvent'
 import { PresenceUpdateEvent } from '@src/events/PresenceUpdateEvent'
+import { ClientQueues } from '@src/core/client/ClientQueues'
+import { Collection } from '@discordoo/collection'
+import { OtherCacheManager } from '@src/api/managers/OtherCacheManager'
+import { otherCacheSymbol } from '@src/constants'
 
 /** Entry point for all of Discordoo. */
 @Final(
@@ -54,50 +58,52 @@ import { PresenceUpdateEvent } from '@src/events/PresenceUpdateEvent'
   'presences',
   'reactions',
   'overwrites',
+  otherCacheSymbol,
   'token',
 )
 export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
   // @ts-ignore because events can be redefined, and the typed emitter library doesn't like it.
   extends TypedEmitter<ClientStack['events']> {
   /** Token used by this client */
-  public token: string
+  public readonly token: string
 
   /** Internal things used by this client */
-  public internals: ClientInternals<ClientStack>
+  public readonly internals: ClientInternals<ClientStack>
 
   /** Options passed to this client */
-  public options: ClientOptions
+  public readonly options: ClientOptions
 
   /** Guilds manager of this client */
-  public guilds: GuildsManager
+  public readonly guilds: GuildsManager
 
   /** Users manager of this client */
-  public users: UsersManager
+  public readonly users: UsersManager
 
   /** Messages manager of this client */
-  public messages: ClientMessagesManager
+  public readonly messages: ClientMessagesManager
 
   /** Channels manager of this client */
-  public channels: ClientChannelsManager
+  public readonly channels: ClientChannelsManager
 
   /** Stickers manager of this client */
-  public stickers: ClientStickersManager
+  public readonly stickers: ClientStickersManager
 
   /** Members manager of this client */
-  public members: ClientMembersManager
+  public readonly members: ClientMembersManager
 
   /** Roles manager of this client */
-  public roles: ClientRolesManager
+  public readonly roles: ClientRolesManager
 
   /** Presences manager of this client */
-  public presences: ClientPresencesManager
+  public readonly presences: ClientPresencesManager
 
   /** Reactions manager of this client */
-  public reactions: ClientReactionsManager
+  public readonly reactions: ClientReactionsManager
 
   /** Permissions Overwrites manager of this client */
-  public overwrites: ClientPermissionOverwritesManager
+  public readonly overwrites: ClientPermissionOverwritesManager
 
+  public readonly [otherCacheSymbol]: OtherCacheManager
   #running = false
 
   constructor(token: string, options: ClientOptions = {}) {
@@ -173,7 +179,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
       { gatewayOptions, providerOptions: gatewayProviderOptions }
     )
 
-    const ipc = new IpcServer(
+    const ipc = new LocalIpcServer(
       this,
       this._makeIpcServerOptions(ipcOptions, shardingMetadata)
     )
@@ -206,6 +212,10 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
 
     const actions = new ClientActions(this), events = new ClientEvents(this)
 
+    const queues: ClientQueues = {
+      members: new Collection()
+    }
+
     this.internals = {
       rest,
       cache,
@@ -215,11 +225,13 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
       actions,
       events,
       metadata: clientMetadata,
+      queues,
     }
 
     this.internals.events.register([ MessageCreateEvent, GuildCreateEvent, PresenceUpdateEvent ]) // TODO
 
     this.overwrites = new ClientPermissionOverwritesManager(this)
+    this[otherCacheSymbol] = new OtherCacheManager(this)
     this.presences = new ClientPresencesManager(this)
     this.reactions = new ClientReactionsManager(this)
     this.messages = new ClientMessagesManager(this)

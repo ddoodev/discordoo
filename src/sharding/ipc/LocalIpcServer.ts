@@ -16,7 +16,7 @@ import {
 import { IpcServerEvents } from '@src/sharding/interfaces/ipc/IpcServerEvents'
 import { Client } from '@src/core'
 
-export class IpcServer extends TypedEmitter<IpcServerEvents> {
+export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
   private readonly bucket: Collection = new Collection()
   private managerSocket: any
   private readonly MANAGER_IPC: string
@@ -62,7 +62,7 @@ export class IpcServer extends TypedEmitter<IpcServerEvents> {
 
       promise.timeout = setTimeout(() => {
         this.bucket.delete('__CONNECTION_PROMISE__')
-        reject(new DiscordooError('IpcServer#serve', 'connection to sharding manager timed out.'))
+        reject(new DiscordooError('LocalIpcServer#serve', 'connection to sharding manager timed out.'))
       }, 30000)
 
       this.bucket.set('__CONNECTION_PROMISE__', promise)
@@ -227,10 +227,10 @@ export class IpcServer extends TypedEmitter<IpcServerEvents> {
   send(data: IpcPacket, options?: IpcServerSendOptions): Promise<void>
   send<P extends IpcPacket>(data: IpcPacket, options?: IpcServerSendOptions): Promise<P>
   send<P extends IpcPacket = IpcPacket>(data: IpcPacket, options: IpcServerSendOptions = {}): Promise<P | void> {
-    if (typeof options !== 'object') throw new DiscordooError('IpcServer#send', 'options must be object type only')
+    if (typeof options !== 'object') throw new DiscordooError('LocalIpcServer#send', 'options must be object type only')
     if (!options.socket) options.socket = this.managerSocket
-    if (!options.socket) throw new DiscordooError('IpcServer#send', 'cannot find socket to send packet:', data)
-    if (!this.server) throw new DiscordooError('IpcServer#send', 'ipc server not started')
+    if (!options.socket) throw new DiscordooError('LocalIpcServer#send', 'cannot find socket to send packet:', data)
+    if (!this.server) throw new DiscordooError('LocalIpcServer#send', 'ipc server not started')
 
     // console.log('IPC SERVER', this.instance, 'ON SEND BEFORE PROMISE', process.hrtime.bigint())
     let promise: any
@@ -240,7 +240,7 @@ export class IpcServer extends TypedEmitter<IpcServerEvents> {
       if (options.waitResponse && data.d?.event_id) {
         promise.timeout = setTimeout(() => {
           this.bucket.delete(data.d.event_id)
-          reject(new DiscordooError('IpcServer#send', 'response time is up'))
+          reject(new DiscordooError('LocalIpcServer#send', 'response time is up'))
         }, 60000)
 
         this.bucket.set(data.d.event_id, promise)

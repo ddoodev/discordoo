@@ -1,5 +1,5 @@
 import { AbstractEvent } from '@src/events/AbstractEvent'
-import { EventNames, Keyspaces } from '@src/constants'
+import { EventNames, Keyspaces, otherCacheSymbol } from '@src/constants'
 import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 import { channelEntityKey } from '@src/utils'
 
@@ -48,5 +48,7 @@ export class GuildCreateEvent extends AbstractEvent {
 
       await this.client.presences.cache.set(cache.userId, cache, { storage: guild.id })
     }
+
+    await this.client[otherCacheSymbol].set(guild.id, { id: guild.owner_id }, { storage: 'guild-owners' })
   }
 }

@@ -139,7 +139,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     const globalPolicyLimit =
       '___type___' in value && value.___type___ === 'discordooCachePointer'
         ? await this.has(value.keyspace, value.storage, value.key, options)
-        : await this._policiesProcessor.global(value)
+        : entityKey === 'any' ? undefined : await this._policiesProcessor.global(value)
 
     if (globalPolicyLimit !== undefined) {
       if (!globalPolicyLimit) return this
@@ -672,7 +672,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     if (forIpcRequest) return toJson(data)
 
     if (direction === 'in') {
-      if (data.___type___ === 'discordooCachePointer') {
+      if (data.___type___ === 'discordooCachePointer' || entityKey === 'any') {
         switch (this.provider.compatible) {
           case 'classes':
           case 'json':
@@ -721,6 +721,10 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
 
       if (jsonOrEntity?.___type___ === 'discordooCachePointer') {
         return await this.get(jsonOrEntity.keyspace, jsonOrEntity.storage, entityKey, jsonOrEntity.key)
+      }
+
+      if (entityKey === 'any') {
+        return jsonOrEntity
       }
 
       if (jsonOrEntity) {

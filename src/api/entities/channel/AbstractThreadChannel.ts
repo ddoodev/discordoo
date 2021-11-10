@@ -1,20 +1,38 @@
 import { AbstractChannel } from '@src/api/entities/channel/AbstractChannel'
 import { AbstractThreadChannelData } from '@src/api/entities/channel/interfaces/AbstractThreadChannelData'
 import { RawAbstractThreadChannelData } from '@src/api/entities/channel/interfaces/RawAbstractThreadChannelData'
-import { Json, ToJsonProperties } from '@src/api'
+import {
+  ChannelMessagesManager,
+  GuildMember,
+  Json,
+  PermissionsCheckOptions,
+  ReadonlyPermissions,
+  RoleResolvable,
+  ToJsonProperties,
+  User
+} from '@src/api'
 import { ThreadMetadata } from '@src/api/entities/channel/interfaces/ThreadMetadata'
-import { attach } from '@src/utils'
+import { attach, channelEntityKey } from '@src/utils'
+import { WritableChannel } from '@src/api/entities/channel/interfaces/WritableChannel'
+import { is } from 'typescript-is'
+import { ThreadChannelEditData } from '@src/api/entities/channel/interfaces/ThreadChannelEditData'
+import { RawThreadChannelEditData } from '@src/api/entities/channel/interfaces/RawThreadChannelEditData'
+import { CacheManagerGetOptions } from '@src/cache'
+import { Keyspaces } from '@src/constants'
+import { AnyGuildChannel } from '@src/api/entities/channel/interfaces/AnyGuildChannel'
+import { GuildMemberResolvable } from '@src/api/entities/member/interfaces/GuildMemberResolvable'
 
-export abstract class AbstractThreadChannel extends AbstractChannel implements AbstractThreadChannelData {
+export abstract class AbstractThreadChannel extends AbstractChannel implements AbstractThreadChannelData, WritableChannel {
+  public messages!: ChannelMessagesManager
   public guildId!: string
   public lastMessageId?: string
-  public lastPinTimestamp?: string
+  public lastPinTimestamp?: number
   public memberCount?: number
   public messageCount?: number
   public ownerId?: string
   public parentId?: string
   public rateLimitPerUser?: number
-  public threadMetadata?: ThreadMetadata
+  public metadata?: ThreadMetadata
 
   async init(data: AbstractThreadChannelData | RawAbstractThreadChannelData): Promise<this> {
     await super.init(data)
@@ -30,7 +48,114 @@ export abstract class AbstractThreadChannel extends AbstractChannel implements A
       [ 'memberCount', 'member_count' ],
     ])
 
+    if (typeof this.lastPinTimestamp === 'string'!) { // discord sends timestamp in string
+      this.lastPinTimestamp = new Date(this.lastPinTimestamp!).getTime()
+
+      if (this.messages) {
+        this.messages.pinned.lastPinTimestamp = this.lastPinTimestamp
+      }
+    }
+
+    if ('thread_metadata' in data && data.thread_metadata) {
+      const { archived, archive_timestamp, auto_archive_duration, locked, invitable } = data.thread_metadata
+      this.metadata = {
+        archived,
+        archiveTimestamp: new Date(archive_timestamp).getTime(),
+        autoArchiveDuration: auto_archive_duration,
+        locked,
+        invitable
+      }
+    } else if ('metadata' in data && data.metadata) {
+      if (is<ThreadMetadata>(data.metadata)) this.metadata = data.metadata
+    }
+
+    if (!this.messages) {
+      this.messages = new ChannelMessagesManager(this.client, {
+        channel: this.id,
+        lastMessageId: this.lastMessageId,
+        lastPinTimestamp: this.lastPinTimestamp,
+      })
+    }
+
+    if (this.lastMessageId) {
+      this.messages.lastMessageId = this.lastMessageId
+    }
+
     return this
+  }
+
+  get archivedDate(): Date | undefined {
+    return this.metadata ? new Date(this.metadata.archiveTimestamp) : undefined
+  }
+
+  edit(data: ThreadChannelEditData | RawThreadChannelEditData, reason?: string): Promise<this | undefined> {
+    return this.client.channels.editThreadChannel(this.id, data, { reason, patchEntity: this })
+  }
+
+  setArchived(archived: boolean, reason?: string) {
+    return this.edit({ archived }, reason)
+  }
+
+  setAutoArchiveDuration(autoArchiveDuration: number, reason?: string) {
+    return this.edit({ autoArchiveDuration }, reason)
+  }
+
+  setInvitable(invitable: boolean, reason?: string) {
+    return this.edit({ invitable }, reason)
+  }
+
+  setName(name: string, reason?: string) {
+    return this.edit({ name }, reason)
+  }
+
+  setRateLimitPerUser(rateLimitPerUser: number, reason?: string) {
+    return this.edit({ rateLimitPerUser }, reason)
+  }
+
+  get send() {
+    return this.messages.create.bind(this.messages)
+  }
+
+  guild(options?: CacheManagerGetOptions): Promise<any | undefined> { // TODO: Guild
+    return this.client.guilds.cache.get(this.guildId, options)
+  }
+
+  async ownerUser(options?: CacheManagerGetOptions): Promise<User | undefined> {
+    return this.ownerId ? this.client.users.cache.get(this.ownerId, options) : undefined
+  }
+
+  async ownerMember(options?: CacheManagerGetOptions): Promise<GuildMember | undefined> {
+    if (!this.ownerId) return undefined
+
+    return this.client.internals.cache.get(
+      Keyspaces.GUILD_MEMBERS,
+      this.guildId,
+      'GuildMember',
+      this.ownerId,
+      options
+    )
+  }
+
+  async parent(options?: CacheManagerGetOptions): Promise<AnyGuildChannel | undefined> {
+    if (!this.parentId) return undefined
+
+    return this.client.internals.cache.get(
+      Keyspaces.CHANNELS,
+      this.guildId,
+      channelEntityKey,
+      this.parentId,
+      options
+    )
+  }
+
+  async memberPermissions(member: GuildMemberResolvable, options: PermissionsCheckOptions): Promise<ReadonlyPermissions | undefined> {
+    const parent = await this.parent()
+    return parent?.memberPermissions(member, options)
+  }
+
+  async rolePermissions(role: RoleResolvable, options: PermissionsCheckOptions): Promise<ReadonlyPermissions | undefined> {
+    const parent = await this.parent()
+    return parent?.rolePermissions(role, options)
   }
 
   toJson(properties: ToJsonProperties = {}, obj?: any): Json {
@@ -44,7 +169,7 @@ export abstract class AbstractThreadChannel extends AbstractChannel implements A
       ownerId: true,
       parentId: true,
       rateLimitPerUser: true,
-      threadMetadata: true,
+      metadata: true,
     }, obj)
   }
 

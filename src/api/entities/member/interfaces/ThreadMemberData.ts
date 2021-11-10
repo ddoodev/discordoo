@@ -1,8 +1,8 @@
 import { BitFieldResolvable } from '@src/api'
 
 export interface ThreadMemberData {
-  id?: string
+  threadId?: string
   userId?: string
-  joinTimestamp: string
+  joinTimestamp: number
   flags: BitFieldResolvable
 }

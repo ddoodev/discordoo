@@ -33,4 +33,6 @@ export enum Keyspaces {
   GUILD_ROLES = 'guild-roles',
   // guild-emojis => guild id => emoji id
   GUILD_EMOJIS = 'guild-emojis',
+  // other => any id (pointer) => any other cache
+  OTHER = 'other'
 }

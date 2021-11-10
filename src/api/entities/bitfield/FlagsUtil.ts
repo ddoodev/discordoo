@@ -1,6 +1,6 @@
 import { BitField } from '@src/api/entities/bitfield/BitField'
 import { ReadonlyBitField } from '@src/api/entities/bitfield/ReadonlyBitField'
-import { ActivityFlags, ApplicationFlags, MessageFlags, SystemChannelFlags, UserFlags } from '@src/constants'
+import { ActivityFlags, ApplicationFlags, MessageFlags, SystemChannelFlags, ThreadMemberFlags, UserFlags } from '@src/constants'
 
 export class ActivityFlagsUtil extends BitField {
   public static FLAGS = ActivityFlags
@@ -40,4 +40,12 @@ export class MessageFlagsUtil extends BitField {
 
 export class ReadonlyMessageFlagsUtil extends ReadonlyBitField {
   public static FLAGS = MessageFlags
+}
+
+export class ThreadMemberFlagsUtil extends BitField {
+  public static FLAGS = ThreadMemberFlags
+}
+
+export class ReadonlyThreadMemberFlagsUtil extends ReadonlyBitField {
+  public static FLAGS = ThreadMemberFlags
 }

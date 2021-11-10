@@ -26,5 +26,5 @@ export { IpcPacket } from '@src/sharding/interfaces/ipc/IpcPacket'
 export { ShardingManager } from '@src/sharding/ShardingManager'
 export { ShardingInstance } from '@src/sharding/ShardingInstance'
 
-export { IpcClient } from '@src/sharding/ipc/IpcClient'
-export { IpcServer } from '@src/sharding/ipc/IpcServer'
+export { LocalIpcClient } from '@src/sharding/ipc/LocalIpcClient'
+export { LocalIpcServer } from '@src/sharding/ipc/LocalIpcServer'

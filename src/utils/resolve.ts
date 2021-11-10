@@ -15,14 +15,13 @@ import { BigBitFieldResolvable, BitFieldResolvable } from '@src/api/entities/bit
 import { ReadonlyBigBitField } from '@src/api/entities/bitfield/ReadonlyBigBitField'
 import { ReadonlyBitField } from '@src/api/entities/bitfield/ReadonlyBitField'
 import { UserResolvable } from '@src/api/entities/user/interfaces/UserResolvable'
-import { User } from '@src/api/entities/user'
 import { Client } from '@src/core'
 import { RoleResolvable } from '@src/api/entities/role'
 import { RoleTagsResolvable } from '@src/api/entities/role/interfaces/RoleTagsResolvable'
 import { RoleTagsData } from '@src/api/entities/role/interfaces/RoleTagsData'
 import { ShardListResolvable } from '@src/utils/interfaces'
 import { range } from '@src/utils/range'
-import { EmojiResolvable } from '@src/api'
+import { EmojiResolvable, Message } from '@src/api'
 import { MessageReactionResolvable } from '@src/api/entities/reaction/interfaces/MessageReactionResolvable'
 import { PermissionOverwriteResolvable } from '@src/api/entities/overwrites/interfaces/PermissionOverwriteResolvable'
 import { RawPermissionOverwriteData } from '@src/api/entities/overwrites/interfaces/RawPermissionOverwriteData'
@@ -31,6 +30,8 @@ import { PermissionOverwrite } from '@src/api/entities/overwrites/PermissionOver
 import { GuildMemberResolvable } from '@src/api/entities/member/interfaces/GuildMemberResolvable'
 import { MessageReaction } from '@src/api/entities/reaction/MessageReaction'
 import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
+import { MessageReferenceResolvable } from '@src/api/entities/message/interfaces/MessageReferenceResolvable'
+import { RawMessageReferenceData } from '@src/api/entities/message/interfaces/RawMessageReferenceData'
 
 export function resolveFiles(resolvable: MessageAttachmentResolvable[]): Promise<RawAttachment[]> {
   return Promise.all(resolvable.map(resolveFile))
@@ -218,6 +219,10 @@ export function resolveUserId(resolvable: UserResolvable): string | undefined  {
   return resolveAnythingToId(resolvable)
 }
 
+export function resolveUserOrMemberId(resolvable: UserResolvable | GuildMemberResolvable): string | undefined {
+  return resolveMemberId(resolvable as any) ?? resolveUserId(resolvable as any)
+}
+
 export function resolveRoleId(resolvable: RoleResolvable): string | undefined  {
   return resolveAnythingToId(resolvable)
 }
@@ -244,8 +249,6 @@ export function resolveEmojiId(resolvable: EmojiResolvable | MessageReactionReso
 }
 
 export function resolveMemberId(member: GuildMemberResolvable): string | undefined {
-  const type = typeof member
-
   if (typeof member === 'string') return member
 
   if (typeof member === 'object') {
@@ -352,6 +355,16 @@ export function resolveDiscordooShards(client: Client, shards: ShardListResolvab
   }
 
   return result
+}
+
+export function resolveMessageReferenceToRaw(resolvable: MessageReferenceResolvable): RawMessageReferenceData {
+  const data: any = resolvable
+
+  return {
+    guild_id: data.guildId ?? data.guild_id ?? resolveGuildId(data.guild),
+    channel_id: data.channelId ?? data.channel_id ?? resolveChannelId(data.channel),
+    message_id: data.id ?? data.messageId ?? data.message_id ?? resolveMessageId(data.message)
+  }
 }
 
 // TODO: resolveComponents

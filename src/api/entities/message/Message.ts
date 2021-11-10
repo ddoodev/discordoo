@@ -3,7 +3,7 @@ import { ToJsonProperties } from '@src/api/entities/interfaces/ToJsonProperties'
 import { Json } from '@src/api/entities/interfaces/Json'
 import {
   GuildMember,
-  MessageAttachment,
+  MessageAttachment, MessageContent, MessageCreateOptions,
   MessageData,
   MessageEmbed,
   RawMessageData,
@@ -22,6 +22,7 @@ export class Message extends AbstractEntity {
   public authorId!: string
   public channelId!: string
   public content!: string
+  public deleted!: boolean
   public editedTimestamp?: number
   public embeds!: MessageEmbed[]
   public flags!: ReadonlyMessageFlagsUtil
@@ -52,6 +53,7 @@ export class Message extends AbstractEntity {
       'pinned',
       'tts',
       'type',
+      'deleted',
       [ 'webhookId', 'webhook_id' ],
       [ 'createdTimestamp', 'created_timestamp' ],
       [ 'editedTimestamp', 'edited_timestamp' ],
@@ -105,9 +107,36 @@ export class Message extends AbstractEntity {
       const Message = EntitiesUtil.get('Message')
       const msg = await new Message(this.client).init(data.referenced_message)
       await this.client.messages.cache.set(msg.id, msg, { storage: this.channelId })
+      this.referencedMessageId = msg.id
+    }
+
+    if (typeof this.deleted !== 'boolean'!) {
+      this.deleted = false
     }
 
     return this
+  }
+
+  reply(content: MessageContent, options?: MessageCreateOptions) {
+    return this.client.messages.create(this.channelId, content, {
+      ...options,
+      messageReference: {
+        guild: this.guildId,
+        channel: this.channelId,
+        message: this.id,
+      }
+    })
+  }
+
+  async delete(reason?: string): Promise<this | undefined> {
+    const result = await this.client.messages.deleteOne(this.channelId, this.id, reason)
+
+    if (result) {
+      this.deleted = true
+      return this
+    }
+
+    return undefined
   }
 
   get createdDate(): Date {
@@ -138,7 +167,7 @@ export class Message extends AbstractEntity {
       : undefined
   }
 
-  async referencedMessage(options?: CacheManagerGetOptions): Promise<Message | undefined> {
+  async reference(options?: CacheManagerGetOptions): Promise<Message | undefined> {
     return this.referencedMessageId
       ? this.client.internals.cache.get(Keyspaces.MESSAGES, this.channelId, 'Message', this.referencedMessageId, options)
       : undefined
@@ -150,6 +179,7 @@ export class Message extends AbstractEntity {
       channelId: true,
       guildId: true,
       content: true,
+      deleted: true,
       id: true,
       nonce: true,
       pinned: true,

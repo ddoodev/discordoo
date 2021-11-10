@@ -1,6 +1,6 @@
 import { AbstractChannelData } from '@src/api/entities/channel/interfaces/AbstractChannelData'
 import { RawThreadMetadata } from '@src/api/entities/channel/interfaces/RawThreadMetadata'
-import { RawThreadMemberData } from '@src/api/entities/channel/interfaces/RawThreadMemberData'
+import { RawThreadMemberData } from '@src/api/entities/member/interfaces/RawThreadMemberData'
 
 export interface RawAbstractThreadChannelData extends AbstractChannelData {
   guild_id: string

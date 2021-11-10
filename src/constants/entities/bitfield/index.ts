@@ -1,6 +1,7 @@
 export { SystemChannelFlags } from '@src/constants/entities/bitfield/SystemChannelFlags'
-export { PermissionFlags } from '@src/constants/entities/bitfield/PermissionFlags'
+export { ThreadMemberFlags } from '@src/constants/entities/bitfield/ThreadMemberFlags'
 export { ApplicationFlags } from '@src/constants/entities/bitfield/ApplicationFlags'
+export { PermissionFlags } from '@src/constants/entities/bitfield/PermissionFlags'
 export { ActivityFlags } from '@src/constants/entities/bitfield/ActivityFlags'
 export { MessageFlags } from '@src/constants/entities/bitfield/MessageFlags'
 export { EmptyBigBit } from '@src/constants/entities/bitfield/EmptyBigBit'

@@ -1,7 +1,5 @@
 import { AbstractChannelData } from '@src/api/entities/channel/interfaces/AbstractChannelData'
-import { RawThreadMemberData } from '@src/api/entities/channel/interfaces/RawThreadMemberData'
-import { RawThreadMetadata } from '@src/api/entities/channel/interfaces/RawThreadMetadata'
-import { ThreadMemberData } from '@src/api/entities/channel/interfaces/ThreadMemberData'
+import { ThreadMemberData } from '@src/api/entities/member/interfaces/ThreadMemberData'
 import { ThreadMetadata } from '@src/api/entities/channel/interfaces/ThreadMetadata'
 
 export interface AbstractThreadChannelData extends AbstractChannelData {
@@ -9,10 +7,10 @@ export interface AbstractThreadChannelData extends AbstractChannelData {
   parentId?: string
   ownerId?: string
   lastMessageId?: string
-  lastPinTimestamp?: string
+  lastPinTimestamp?: number
   rateLimitPerUser?: number
   messageCount?: number
   memberCount?: number
   member?: ThreadMemberData
-  threadMetadata?: ThreadMetadata
+  metadata?: ThreadMetadata
 }

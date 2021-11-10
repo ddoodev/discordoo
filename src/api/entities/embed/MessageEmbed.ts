@@ -272,6 +272,10 @@ export class MessageEmbed {
     return JSON.parse(JSON.stringify(result))
   }
 
+  get toJSON() {
+    return this.toJson.bind(this)
+  }
+
   private static _resolveJson(data: RawMessageEmbedData): MessageEmbedData {
     const { title, description, url, color, timestamp, author, footer, image, video, thumbnail: thumb, provider } = data
 

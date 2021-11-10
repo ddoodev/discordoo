@@ -27,6 +27,7 @@ export interface MessageData {
   nonce?: string | number
   pinned: boolean
   webhookId?: string
+  deleted?: boolean
   type: MessageTypes
   // TODO activity: MessageActivityData
   // TODO application: ApplicationData

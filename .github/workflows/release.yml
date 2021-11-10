@@ -1,0 +1,29 @@
+---
+name: Publish NPM Release
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  run-release-publish:
+    name: npm
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12.18
+          registry-url: https://registry.npmjs.org/
+      - name: Install required packages
+        run: npm ci
+      - name: Publish
+        run: |
+          npm version $(jq --raw-output '.version' package.json)
+          npm publish || true
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

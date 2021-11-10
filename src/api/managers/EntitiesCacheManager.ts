@@ -111,11 +111,11 @@ export class EntitiesCacheManager<Entity> extends EntitiesManager {
 
   async set(key: string, value: Entity | CachePointer, options?: CacheManagerSetOptions): Promise<EntitiesCacheManager<Entity>> {
     const allowed =
-      '___type___' in value && value.___type___ === 'discordooCachePointer'
+      '___type___' in value && value.___type___ === 'discordooCachePointer' || this.entityKey === 'any'
         ? true
         : await this.client.internals.cache[Symbol.for('_ddooPoliciesProcessor')][this.policy](value)
 
-    if (allowed) {
+    if (allowed || this.client.options.cache?.global !== undefined) {
       await this.client.internals.cache.set<string, Entity>(
         this.keyspace,
         this.storage,

@@ -7,7 +7,7 @@ import { DiscordooError, DiscordooSnowflake } from '@src/utils'
 import { IpcCacheRequestPacket, IpcCacheResponsePacket, IpcHeartbeatPacket, IpcHelloPacket } from '@src/sharding/interfaces/ipc/IpcPackets'
 import { IpcClientEvents } from '@src/sharding/interfaces/ipc/IpcClientEvents'
 
-export class IpcClient extends TypedEmitter<IpcClientEvents> {
+export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
   private bucket: Collection = new Collection()
   private shardSocket: any
   private readonly INSTANCE_IPC: string
@@ -49,7 +49,7 @@ export class IpcClient extends TypedEmitter<IpcClientEvents> {
         this.ipc.config.stopRetrying = true
         this.bucket.delete(this.INSTANCE_IPC)
         const err = new DiscordooError(
-          'IpcClient#connect',
+          'LocalIpcClient#connect',
           'the connection timed out.',
           'the connection had to handle shards:', this.shards.join(', ') + '.',
           'inter-process communication shard identifier:', this.INSTANCE_IPC + '.',
@@ -186,9 +186,9 @@ export class IpcClient extends TypedEmitter<IpcClientEvents> {
   }
 
   public send(data: IpcPacket, options: IpcClientSendOptions = {}) {
-    if (typeof options !== 'object') throw new DiscordooError('IpcClient#send', 'options must be object type only')
+    if (typeof options !== 'object') throw new DiscordooError('LocalIpcClient#send', 'options must be object type only')
     if (!options.connection) options.connection = this.shardSocket
-    if (!options.connection) throw new DiscordooError('IpcClient#send', 'cannot find socket to send packet:', data)
+    if (!options.connection) throw new DiscordooError('LocalIpcClient#send', 'cannot find socket to send packet:', data)
 
     let promise: any
     return new Promise((resolve, reject) => {
@@ -196,7 +196,7 @@ export class IpcClient extends TypedEmitter<IpcClientEvents> {
 
       if (options.waitResponse && data.d?.event_id) {
         promise.timeout = setTimeout(() => {
-          reject(new DiscordooError('IpcClient#send', 'response time is up'))
+          reject(new DiscordooError('LocalIpcClient#send', 'response time is up'))
         }, 60000)
 
         this.bucket.set(data.d.event_id, promise)

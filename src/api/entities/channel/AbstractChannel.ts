@@ -18,7 +18,7 @@ export abstract class AbstractChannel extends AbstractEntity {
     return this
   }
 
-  delete(reason) {
+  delete(reason): Promise<this | undefined> {
     return this.client.channels.delete(this.id, { reason, patchEntity: this })
   }
 

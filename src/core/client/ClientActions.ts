@@ -1,7 +1,7 @@
 import { Client } from '@src/core'
 import { Endpoints } from '@src/constants'
 import { MessageCreateData } from '@src/api/entities/message/interfaces/MessageCreateData'
-import { RestFinishedResponse } from '@discordoo/providers'
+import { GatewayOpCodes, RestFinishedResponse } from '@discordoo/providers'
 import { RawMessageData } from '@src/api/entities/message/interfaces/RawMessageData'
 import { RawEmojiEditData } from '@src/api/entities/emoji/interfaces/RawEmojiEditData'
 import { RawGuildEmojiData } from '@src/api/entities/emoji/interfaces/RawGuildEmojiData'
@@ -11,7 +11,7 @@ import { RawStickerEditData } from '@src/api/entities/sticker/interfaces/RawStic
 import { RawStickerCreateData } from '@src/api/entities/sticker/interfaces/RawStickerCreateData'
 import { RawStickerPackData } from '@src/api/entities/sticker'
 import { RawGuildMemberEditData } from '@src/api/entities/member/interfaces/RawGuildMemberEditData'
-import { RawGuildMemberData } from '@src/api'
+import { GuildMember, RawGuildMemberData } from '@src/api'
 import { RawRoleEditData } from '@src/api/entities/role/interfaces/RawRoleEditData'
 import { RawRoleData } from '@src/api/entities/role/interfaces/RawRoleData'
 import { RawRoleCreateData } from '@src/api/entities/role/interfaces/RawRoleCreateData'
@@ -24,6 +24,12 @@ import { RawGuildChannelCreateData } from '@src/api/entities/channel/interfaces/
 import { RawThreadChannelWithMessageCreateData } from '@src/api/entities/channel/interfaces/RawThreadChannelWithMessageCreateData'
 import { RawThreadChannelCreateData } from '@src/api/entities/channel/interfaces/RawThreadChannelCreateData'
 import { FetchManyMessagesQuery } from '@src/api/managers/messages/FetchManyMessagesQuery'
+import { RawGuildMembersFetchOptions } from '@src/api/managers/members/RawGuildMembersFetchOptions'
+import { GuildMembersChunkEventContext } from '@src/events'
+import { DiscordooError, DiscordSnowflake, ValidationError } from '@src/utils'
+import { GuildMembersChunkHandlerContext } from '@src/events/interfaces/GuildMembersChunkHandlerContext'
+import { is } from 'typescript-is'
+import { RawGuildMemberAddData } from '@src/api/managers/members/RawGuildMemberAddData'
 
 export class ClientActions {
   public client: Client
@@ -38,6 +44,14 @@ export class ClientActions {
       .post({ reason })
   }
 
+  // returns guild member data or empty string
+  addGuildMember(guildId: string, memberId: string, data: RawGuildMemberAddData) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_MEMBER(guildId, memberId))
+      .body(data)
+      .put<RawGuildMemberData | string>()
+  }
+
   addGuildMemberRole(guildId: string, memberId: string, roleId: string, reason?: string) {
     return this.client.internals.rest.api()
       .url(Endpoints.GUILD_MEMBER_ROLE(guildId, memberId, roleId))
@@ -48,6 +62,18 @@ export class ClientActions {
     return this.client.internals.rest.api()
       .url(Endpoints.CHANNEL_MESSAGE_REACTION_USER(channelId, messageId, emojiId, '@me'))
       .put()
+  }
+
+  addThreadMember(channelId: string, memberId: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.CHANNEL_THREAD_MEMBER(channelId, memberId))
+      .put()
+  }
+
+  removeThreadMember(channelId: string, memberId: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.CHANNEL_THREAD_MEMBER(channelId, memberId))
+      .delete()
   }
 
   banGuildMember(guildId: string, userId: string, deleteMessagesDays = 0, reason?: string) {
@@ -139,7 +165,7 @@ export class ClientActions {
     request.body({
       content: data.content,
       tts: data.tts,
-      embeds: data.embeds.length ? data.embeds : undefined,
+      embeds: data.embeds?.length ? data.embeds : undefined,
       allowed_mentions: data.allowed_mentions,
       message_reference: data.message_reference,
       sticker_ids: data.stickers,
@@ -466,6 +492,69 @@ export class ClientActions {
       .get()
   }
 
+  getGuildMember(guildId: string, memberId: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_MEMBER(guildId, memberId))
+      .get<RawGuildMemberData>()
+  }
+
+  fetchWsGuildMembers(shardId: number, options: RawGuildMembersFetchOptions): Promise<GuildMember[]> {
+    if (!is<RawGuildMembersFetchOptions>(options)) {
+      throw new ValidationError(undefined, 'Invalid members fetch options')._setInvalidOptions(options)
+    }
+
+    if (isNaN(shardId)) {
+      throw new ValidationError(undefined, 'Invalid shardId for fetching members:', shardId)
+    }
+
+    const nonce = options.nonce ?? DiscordSnowflake.generate()
+
+    let context: any
+    return new Promise((resolve, reject) => {
+
+      const handler = (eventContext: GuildMembersChunkEventContext, executionContext: GuildMembersChunkHandlerContext) => {
+        if (eventContext.nonce === executionContext.nonce) {
+          executionContext.fetched.push(eventContext.members)
+          executionContext.timeout.refresh()
+        }
+
+        if (eventContext.last) {
+          clearTimeout(executionContext.timeout)
+          executionContext.resolve(executionContext.fetched)
+          return true
+        }
+
+        return executionContext
+      }
+
+      const timeout = setTimeout(() => {
+        if (this.client.internals.queues.members.has(nonce)) {
+          this.client.internals.queues.members.delete(nonce)
+          const err = new DiscordooError(undefined, 'Guild members fetching stopped due to timeout.')
+          reject(err)
+        }
+      }, 120_000)
+
+      context = {
+        handler,
+        timeout,
+        resolve,
+        reject,
+        nonce,
+        fetched: []
+      }
+
+      this.client.internals.queues.members.set(nonce, context)
+      this.client.internals.gateway.send({
+        op: GatewayOpCodes.REQUEST_GUILD_MEMBERS,
+        d: {
+          ...options,
+          nonce
+        }
+      }, { shards: [ shardId ]})
+    })
+  }
+
   getGuildPreview(guildId: string) {
     return this.client.internals.rest.api()
       .url(Endpoints.GUILD_PREVIEW(guildId))
@@ -548,6 +637,12 @@ export class ClientActions {
     return this.client.internals.rest.api()
       .url(Endpoints.USER_GUILD('@me', guildId))
       .delete()
+  }
+
+  listGuildMembers(guildId: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_MEMBERS(guildId))
+      .get<RawGuildMemberData[]>()
   }
 
   pruneGuildMembers(guildId: string, data: any /* GuildMembersPruneData */ = {}, reason?: string) {

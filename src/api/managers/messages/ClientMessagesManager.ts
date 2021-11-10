@@ -9,7 +9,7 @@ import {
   resolveFile,
   resolveFiles,
   resolveGuildId,
-  resolveMessageId,
+  resolveMessageId, resolveMessageReferenceToRaw,
   resolveStickerId
 } from '@src/utils/resolve'
 import { MessageCreateData } from '@src/api/entities/message/interfaces/MessageCreateData'
@@ -248,13 +248,7 @@ export class ClientMessagesManager extends EntitiesManager {
     if (options.content) payload.content = options.content
 
     if (options.messageReference) {
-      const { guild, channel, message, guild_id, channel_id, message_id } = options.messageReference
-
-      payload.message_reference = {
-        guild_id: guild_id ?? resolveGuildId(guild),
-        channel_id: channel_id ?? resolveChannelId(channel),
-        message_id: message_id ?? resolveMessageId(message)
-      }
+      payload.message_reference = resolveMessageReferenceToRaw(options.messageReference)
     }
 
     // TODO: allowed mentions

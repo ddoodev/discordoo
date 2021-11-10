@@ -2,7 +2,7 @@ import { ShardingInstanceCreateOptions } from '@src/sharding/interfaces/client/S
 import { ShardingInstanceOptions } from '@src/sharding/interfaces/client/ShardingInstanceOptions'
 import { CLUSTERS_SHARDING_UNSUPPORTED_PLATFORMS, PartialShardingModes } from '@src/constants'
 import { ShardingManager } from '@src/sharding/ShardingManager'
-import { IpcClient } from '@src/sharding/ipc/IpcClient'
+import { LocalIpcClient } from '@src/sharding/ipc/LocalIpcClient'
 import { TypedEmitter } from 'tiny-typed-emitter'
 import { DiscordooError, wait } from '@src/utils'
 import * as Process from 'child_process'
@@ -13,7 +13,7 @@ import os from 'os'
 export class ShardingInstance extends TypedEmitter {
   public id: number
   public ipcId: string
-  public ipc: IpcClient
+  public ipc: LocalIpcClient
   public shards: number[]
   public mode: PartialShardingModes
   public options: ShardingInstanceOptions
@@ -33,7 +33,7 @@ export class ShardingInstance extends TypedEmitter {
     this.totalShards = options.totalShards
     this.options = options
 
-    this.ipc = new IpcClient(this, {
+    this.ipc = new LocalIpcClient(this, {
       INSTANCE_IPC: this.ipcId,
       tls: options.ipc?.tls,
       config: options.ipc?.config,

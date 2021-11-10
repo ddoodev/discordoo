@@ -67,7 +67,8 @@ export class GuildMember extends AbstractEntity {
 
     if (!this.roles) {
       this.roles = new GuildMemberRolesManager(this.client, {
-        user: this.userId
+        user: this.userId,
+        guild: this.guildId,
       })
     }
 

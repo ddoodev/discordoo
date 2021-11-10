@@ -1,6 +1,7 @@
 import { MessageEmbedResolvable } from '@src/api/entities/embed'
 import { MessageAttachmentResolvable } from '@src/api/entities/attachment/interfaces'
-import { StickerResolvable } from '@src/api' // thanks typescript for cool circular deps resolving
+import { StickerResolvable } from '@src/api'
+import { MessageReferenceResolvable } from '@src/api/entities/message/interfaces/MessageReferenceResolvable'
 
 export interface MessageCreateOptions {
   files?: MessageAttachmentResolvable[]
@@ -16,7 +17,7 @@ export interface MessageCreateOptions {
   component?: any /* TODO: MessageComponentResolvable */
 
   allowedMentions?: any /* TODO: AllowedMentionsResolvable */
-  messageReference?: any /* TODO: MessageReferenceResolvable */
+  messageReference?: MessageReferenceResolvable
 
   content?: string
   tts?: boolean
