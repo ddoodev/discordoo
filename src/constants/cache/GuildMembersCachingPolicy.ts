@@ -1,5 +1,5 @@
 /** Members caching policy */
-export enum MembersCachingPolicy {
+export enum GuildMembersCachingPolicy {
   /** Cache all members */
   ALL = 'all',
   /** Don't cache members */

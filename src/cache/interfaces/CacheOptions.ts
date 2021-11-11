@@ -3,31 +3,50 @@ import {
   EmojisCachingPolicy,
   GlobalCachingPolicy,
   GuildsCachingPolicy,
-  MembersCachingPolicy,
+  GuildMembersCachingPolicy,
   MessagesCachingPolicy,
   OverwritesCachingPolicy,
   PresencesCachingPolicy,
   ReactionsCachingPolicy,
   RolesCachingPolicy,
   StickersCachingPolicy,
+  ThreadMembersCachingPolicy,
   UsersCachingPolicy
 } from '@src/constants'
+import { ThreadMember } from '@src/api/entities/member/ThreadMember'
+import { AnyChannel } from '@src/api/entities/channel/interfaces/AnyChannel'
+import { AnyEmoji, GuildMember, Message, Presence, Role, Sticker, User } from '@src/api'
+import { MessageReaction } from '@src/api/entities/reaction/MessageReaction'
+import { PermissionOverwrite } from '@src/api/entities/overwrites/PermissionOverwrite'
 
-export const CACHE_OPTIONS_KEYS_LENGTH = 11 // all cache options expect 'global'
+export const CACHE_OPTIONS_KEYS_LENGTH = 12 // all cache options expect 'global'
+
+type AnyEntity = AnyChannel
+  | AnyEmoji
+  | any /* TODO: Guild */
+  | GuildMember
+  | Message
+  | Presence
+  | Role
+  | User
+  | Sticker
+  | MessageReaction
+  | PermissionOverwrite
+  | ThreadMember
 
 export interface CacheOptions {
   channels?: {
-    custom?: (channel: any) => boolean | Promise<boolean>
+    custom?: (channel: AnyChannel) => boolean | Promise<boolean>
     policies: ChannelsCachingPolicy[]
   }
 
   emojis?: {
-    custom?: (emoji: any) => boolean | Promise<boolean>
+    custom?: (emoji: AnyEmoji) => boolean | Promise<boolean>
     policies: EmojisCachingPolicy[]
   }
 
   global?: {
-    custom?: (entity: any) => boolean | Promise<boolean>
+    custom?: (entity: AnyEntity) => boolean | Promise<boolean>
     policies: GlobalCachingPolicy[]
   }
 
@@ -37,43 +56,48 @@ export interface CacheOptions {
   }
 
   members?: {
-    custom?: (member: any) => boolean | Promise<boolean>
-    policies: MembersCachingPolicy[]
+    custom?: (member: GuildMember) => boolean | Promise<boolean>
+    policies: GuildMembersCachingPolicy[]
   }
 
   messages?: {
-    custom?: (emoji: any) => boolean | Promise<boolean>
+    custom?: (message: Message) => boolean | Promise<boolean>
     lifetime?: number
     policies: MessagesCachingPolicy[]
   }
 
   presences?: {
-    custom?: (presence: any) => boolean | Promise<boolean>
+    custom?: (presence: Presence) => boolean | Promise<boolean>
     policies: PresencesCachingPolicy[]
   }
 
   roles?: {
-    custom?: (role: any) => boolean | Promise<boolean>
+    custom?: (role: Role) => boolean | Promise<boolean>
     policies: RolesCachingPolicy[]
   }
 
   users?: {
-    custom?: (user: any) => boolean | Promise<boolean>
+    custom?: (user: User) => boolean | Promise<boolean>
     policies: UsersCachingPolicy[]
   }
 
   stickers?: {
-    custom?: (sticker: any) => boolean | Promise<boolean>
+    custom?: (sticker: Sticker) => boolean | Promise<boolean>
     policies: StickersCachingPolicy[]
   }
 
   reactions?: {
-    custom?: (reaction: any) => boolean | Promise<boolean>
+    custom?: (reaction: MessageReaction) => boolean | Promise<boolean>
     policies: ReactionsCachingPolicy[]
   }
 
   overwrites?: {
-    custom?: (overwrite: any) => boolean | Promise<boolean>
+    custom?: (overwrite: PermissionOverwrite) => boolean | Promise<boolean>
     policies: OverwritesCachingPolicy[]
+  }
+
+  threadMembers?: {
+    custom?: (threadMember: ThreadMember) => boolean | Promise<boolean>
+    policies: ThreadMembersCachingPolicy[]
   }
 }

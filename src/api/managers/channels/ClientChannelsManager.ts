@@ -96,6 +96,22 @@ export class ClientChannelsManager extends EntitiesManager {
     return undefined
   }
 
+  async addFollower(sender: ChannelResolvable, follower: ChannelResolvable, reason?: string): Promise<boolean> {
+    const senderId = resolveChannelId(sender),
+      followerId = resolveChannelId(follower)
+
+    if (!senderId) {
+      throw new DiscordooError('ClientChannelsManager#addFollower', 'Cannot add channel follower without sender id.')
+    }
+    if (!followerId) {
+      throw new DiscordooError('ClientChannelsManager#addFollower', 'Cannot add channel follower without follower id.')
+    }
+
+    const response = await this.client.internals.actions.addFollower(senderId, followerId, reason)
+
+    return response.success
+  }
+
   async createThreadChannel<R = AnyThreadChannel>(
     channel: GuildResolvable,
     data: ThreadChannelCreateData | RawThreadChannelCreateData | RawThreadChannelWithMessageCreateData,

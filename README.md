@@ -69,7 +69,7 @@ You can find these benchmarks [here](https://github.com/Discordoo/collection#djs
 ## Release milestone
 A complete description of everything that must be in Discordoo to be released
 
-Release deadline: November 13, 2021 7:00PM UTC
+Release deadline: November 15, 2021 7:00PM UTC
 
 *please read this*
 ![image](https://user-images.githubusercontent.com/44965055/137811902-565cbdc0-7cb7-4a86-a1ef-b082839f54cc.png)
@@ -134,12 +134,14 @@ Release deadline: November 13, 2021 7:00PM UTC
   * [x] Cache must handle GlobalCachingPolicy
   * [x] Cache must handle MessagesCachingPolicy
   * [x] Cache must handle GuildsCachingPolicy
-  * [x] Cache must handle MembersCachingPolicy
+  * [x] Cache must handle GuildMembersCachingPolicy
+  * [x] Cache must handle ThreadMembersCachingPolicy
   * [x] Cache must handle ChannelsCachingPolicy
   * [x] Cache must handle EmojisCachingPolicy
   * [x] Cache must handle RolesCachingPolicy
   * [x] Cache must handle PresencesCachingPolicy
   * [x] Cache must handle UsersCachingPolicy
+  * [x] Cache must handle OverwritesCachingPolicy
   * [x] All the policies listed above must be able to handle custom caching functions
 
 SID - still in development
@@ -148,7 +150,7 @@ SID - still in development
 * [x] Must be extendable
 * [x] Anti monkey-patch defence
 * [ ] Implement Guilds
-* [x] Implement Messages (SID)
+* [x] Implement Messages
 * [x] Implement Channels (SID)
 * [x] Implement Members
 * [x] Implement Emojis
@@ -156,7 +158,7 @@ SID - still in development
 * [x] Implement Roles
 * [x] Implement Presences
 * [x] Implement Reactions
-* [x] Implement Users (SID)
+* [x] Implement Users
 
 ### User-land APIs
 * [x] Collection
@@ -171,7 +173,8 @@ SID - still in development
   * [x] GuildEmojisManager/ClientEmojisManager (SID)
   * [x] GuildRolesManager/ClientRolesManager (SID)
   * [x] GuildPresencesManager/ClientPresencesManager
-  * [x] GuildMembersManager/ClientMembersManager (SID)
+  * [x] GuildMembersManager/ClientGuildMembersManager (SID)
+  * [x] ThreadMembersManager/ClientThreadMembersManager (SID)
   * [x] MessageReactionsManager/ClientReactionsManager
   * [x] UsersManager (SID)
 

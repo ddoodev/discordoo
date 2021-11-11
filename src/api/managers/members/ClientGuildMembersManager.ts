@@ -16,8 +16,9 @@ import { RawGuildMembersFetchOptions } from '@src/api/managers/members/RawGuildM
 import { GuildMemberAddData } from '@src/api/managers/members/GuildMemberAddData'
 import { RawGuildMemberAddData } from '@src/api/managers/members/RawGuildMemberAddData'
 import { ThreadChannelResolvable } from '@src/api/entities/channel/interfaces/ThreadChannelResolvable'
+import { ThreadMemberResolvable } from '@src/api/entities/member/interfaces/ThreadMemberResolvable'
 
-export class ClientMembersManager extends EntitiesManager {
+export class ClientGuildMembersManager extends EntitiesManager {
   public cache: EntitiesCacheManager<GuildMember>
 
   constructor(client: Client) {
@@ -31,14 +32,14 @@ export class ClientMembersManager extends EntitiesManager {
     })
   }
 
-  async addGuildMember(
+  async add(
     guild: GuildResolvable, user: UserResolvable, data: GuildMemberAddData | RawGuildMemberAddData
   ): Promise<GuildMember | undefined> {
     const guildId = resolveGuildId(guild),
       userId = resolveUserOrMemberId(user)
 
-    if (!guildId) throw new DiscordooError('ClientMembersManager#addGuildMember', 'Cannot add member without guild id.')
-    if (!userId) throw new DiscordooError('ClientMembersManager#addGuildMember', 'Cannot add member without member id.')
+    if (!guildId) throw new DiscordooError('ClientGuildMembersManager#add', 'Cannot add member without guild id.')
+    if (!userId) throw new DiscordooError('ClientGuildMembersManager#add', 'Cannot add member without member id.')
 
     const payload: RawGuildMemberAddData = {
       access_token: 'accessToken' in data ? data.accessToken : data.access_token,
@@ -65,36 +66,12 @@ export class ClientMembersManager extends EntitiesManager {
     return undefined
   }
 
-  async addThreadMember(thread: ThreadChannelResolvable, user: UserResolvable | GuildMemberResolvable): Promise<boolean> {
-    const channelId = resolveGuildId(thread),
-      userId = resolveUserOrMemberId(user)
-
-    if (!channelId) throw new DiscordooError('ClientMembersManager#addThreadMember', 'Cannot add member without thread id.')
-    if (!userId) throw new DiscordooError('ClientMembersManager#addThreadMember', 'Cannot add member without member id.')
-
-    const response = await this.client.internals.actions.addThreadMember(channelId, userId)
-
-    return response.success
-  }
-
-  async removeThreadMember(thread: ThreadChannelResolvable, user: UserResolvable | GuildMemberResolvable | '@me'): Promise<boolean> {
-    const channelId = resolveGuildId(thread),
-      userId = user === '@me' ? user : resolveUserOrMemberId(user)
-
-    if (!channelId) throw new DiscordooError('ClientMembersManager#addThreadMember', 'Cannot add member without thread id.')
-    if (!userId) throw new DiscordooError('ClientMembersManager#addThreadMember', 'Cannot add member without member id.')
-
-    const response = await this.client.internals.actions.removeThreadMember(channelId, userId)
-
-    return response.success
-  }
-
   async fetchOne(guild: GuildResolvable, user: UserResolvable | GuildMemberResolvable): Promise<GuildMember | undefined> {
     const guildId = resolveGuildId(guild),
       userId = resolveUserOrMemberId(user)
 
-    if (!guildId) throw new DiscordooError('ClientMembersManager#fetchOne', 'Cannot fetch member without guild id.')
-    if (!userId) throw new DiscordooError('ClientMembersManager#fetchOne', 'Cannot fetch member without member id.')
+    if (!guildId) throw new DiscordooError('ClientGuildMembersManager#fetchOne', 'Cannot fetch member without guild id.')
+    if (!userId) throw new DiscordooError('ClientGuildMembersManager#fetchOne', 'Cannot fetch member without member id.')
 
     const response = await this.client.internals.actions.getGuildMember(guildId, userId)
     const Member = EntitiesUtil.get('GuildMember')
@@ -111,7 +88,7 @@ export class ClientMembersManager extends EntitiesManager {
   async fetchMany(guild: GuildResolvable, options: GuildMembersFetchOptions = {}): Promise<GuildMember[] | undefined> {
     const guildId = resolveGuildId(guild)
 
-    if (!guildId) throw new DiscordooError('ClientMembersManager#fetchMany', 'Cannot fetch members without guild id.')
+    if (!guildId) throw new DiscordooError('ClientGuildMembersManager#fetchMany', 'Cannot fetch members without guild id.')
 
     const b = BigInt
     const shardId = Number(b(guildId) >> b(22) % b(this.client.internals.sharding.totalShards))
@@ -156,8 +133,8 @@ export class ClientMembersManager extends EntitiesManager {
     const userId = user === '@me' ? user : resolveUserOrMemberId(user),
       guildId = resolveGuildId(guild)
 
-    if (!userId) throw new DiscordooError('ClientMembersManager#edit', 'Cannot edit member without id.')
-    if (!guildId) throw new DiscordooError('ClientMembersManager#edit', 'Cannot edit member without guild id.')
+    if (!userId) throw new DiscordooError('ClientGuildMembersManager#edit', 'Cannot edit member without id.')
+    if (!guildId) throw new DiscordooError('ClientGuildMembersManager#edit', 'Cannot edit member without guild id.')
 
     const payload: RawGuildMemberEditData = {}
 
@@ -220,8 +197,8 @@ export class ClientMembersManager extends EntitiesManager {
     const userId = resolveUserOrMemberId(user),
       guildId = resolveGuildId(guild)
 
-    if (!userId) throw new DiscordooError('ClientMembersManager#ban', 'Cannot ban member without id.')
-    if (!guildId) throw new DiscordooError('ClientMembersManager#ban', 'Cannot ban member without guild id.')
+    if (!userId) throw new DiscordooError('ClientGuildMembersManager#ban', 'Cannot ban member without id.')
+    if (!guildId) throw new DiscordooError('ClientGuildMembersManager#ban', 'Cannot ban member without guild id.')
 
     const response = await this.client.internals.actions.banGuildMember(guildId, userId, options.deleteMessagesDays, options.reason)
 
@@ -236,8 +213,8 @@ export class ClientMembersManager extends EntitiesManager {
     const userId = resolveUserOrMemberId(user),
       guildId = resolveGuildId(guild)
 
-    if (!userId) throw new DiscordooError('ClientMembersManager#unban', 'Cannot unban member without id.')
-    if (!guildId) throw new DiscordooError('ClientMembersManager#unban', 'Cannot unban member without guild id.')
+    if (!userId) throw new DiscordooError('ClientGuildMembersManager#unban', 'Cannot unban member without id.')
+    if (!guildId) throw new DiscordooError('ClientGuildMembersManager#unban', 'Cannot unban member without guild id.')
 
     const response = await this.client.internals.actions.unbanGuildMember(guildId, userId, reason)
 
@@ -252,8 +229,8 @@ export class ClientMembersManager extends EntitiesManager {
     const userId = resolveUserOrMemberId(user),
       guildId = resolveGuildId(guild)
 
-    if (!userId) throw new DiscordooError('ClientMembersManager#ban', 'Cannot kick member without id.')
-    if (!guildId) throw new DiscordooError('ClientMembersManager#ban', 'Cannot kick member without guild id.')
+    if (!userId) throw new DiscordooError('ClientGuildMembersManager#ban', 'Cannot kick member without id.')
+    if (!guildId) throw new DiscordooError('ClientGuildMembersManager#ban', 'Cannot kick member without guild id.')
 
     const response = await this.client.internals.actions.kickGuildMember(guildId, userId, reason)
 
@@ -270,9 +247,15 @@ export class ClientMembersManager extends EntitiesManager {
       guildId = resolveGuildId(guild),
       roleId = resolveRoleId(role)
 
-    if (!userId) throw new DiscordooError('ClientMembersManager#addRole', 'Cannot add role to member roles without member id.')
-    if (!guildId) throw new DiscordooError('ClientMembersManager#addRole', 'Cannot add role to member roles without guild id.')
-    if (!roleId) throw new DiscordooError('ClientMembersManager#addRole', 'Cannot add role to member roles without role id.')
+    if (!userId) {
+      throw new DiscordooError('ClientGuildMembersManager#addRole', 'Cannot add role to member roles without member id.')
+    }
+    if (!guildId) {
+      throw new DiscordooError('ClientGuildMembersManager#addRole', 'Cannot add role to member roles without guild id.')
+    }
+    if (!roleId) {
+      throw new DiscordooError('ClientGuildMembersManager#addRole', 'Cannot add role to member roles without role id.')
+    }
 
     const response = await this.client.internals.actions.addGuildMemberRole(guildId, userId, roleId, reason)
 
@@ -290,13 +273,15 @@ export class ClientMembersManager extends EntitiesManager {
       roleId = resolveRoleId(role)
 
     if (!userId) {
-      throw new DiscordooError('ClientMembersManager#removeRole', 'Cannot remove role from member roles without member id.')
+      throw new DiscordooError(
+        'ClientGuildMembersManager#removeRole', 'Cannot remove role from member roles without member id.'
+      )
     }
     if (!guildId) {
-      throw new DiscordooError('ClientMembersManager#removeRole', 'Cannot remove role from member roles without guild id.')
+      throw new DiscordooError('ClientGuildMembersManager#removeRole', 'Cannot remove role from member roles without guild id.')
     }
     if (!roleId) {
-      throw new DiscordooError('ClientMembersManager#removeRole', 'Cannot remove role from member roles without role id.')
+      throw new DiscordooError('ClientGuildMembersManager#removeRole', 'Cannot remove role from member roles without role id.')
     }
 
     const response = await this.client.internals.actions.removeGuildMemberRole(guildId, userId, roleId, reason)

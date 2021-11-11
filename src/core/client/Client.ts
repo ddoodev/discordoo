@@ -7,7 +7,7 @@ import { ClientMessagesManager } from '@src/api/managers/messages/ClientMessages
 import { ClientChannelsManager } from '@src/api/managers/channels/ClientChannelsManager'
 import { ClientStickersManager } from '@src/api/managers/stickers/ClientStickersManager'
 import { LOCAL_IPC_DEFAULT_OPTIONS } from '@src/constants/sharding/IpcDefaultOptions'
-import { ClientMembersManager } from '@src/api/managers/members/ClientMembersManager'
+import { ClientGuildMembersManager } from '@src/api/managers/members/ClientGuildMembersManager'
 import { CompletedCacheOptions } from '@src/cache/interfaces/CompletedCacheOptions'
 import { ClientShardingMetadata } from '@src/core/client/ClientShardingMetadata'
 import { CompletedRestOptions } from '@src/rest/interfaces/CompletedRestOptions'
@@ -43,6 +43,7 @@ import { ClientQueues } from '@src/core/client/ClientQueues'
 import { Collection } from '@discordoo/collection'
 import { OtherCacheManager } from '@src/api/managers/OtherCacheManager'
 import { otherCacheSymbol } from '@src/constants'
+import { ClientThreadMembersManager } from '@src/api/managers/members/ClientThreadMembersManager'
 
 /** Entry point for all of Discordoo. */
 @Final(
@@ -89,7 +90,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
   public readonly stickers: ClientStickersManager
 
   /** Members manager of this client */
-  public readonly members: ClientMembersManager
+  public readonly members: ClientGuildMembersManager
 
   /** Roles manager of this client */
   public readonly roles: ClientRolesManager
@@ -102,6 +103,9 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
 
   /** Permissions Overwrites manager of this client */
   public readonly overwrites: ClientPermissionOverwritesManager
+
+  /** Thread Members manager of this client */
+  public readonly threadMembers: ClientThreadMembersManager
 
   public readonly [otherCacheSymbol]: OtherCacheManager
   #running = false
@@ -231,13 +235,14 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
     this.internals.events.register([ MessageCreateEvent, GuildCreateEvent, PresenceUpdateEvent ]) // TODO
 
     this.overwrites = new ClientPermissionOverwritesManager(this)
+    this.threadMembers = new ClientThreadMembersManager(this)
     this[otherCacheSymbol] = new OtherCacheManager(this)
     this.presences = new ClientPresencesManager(this)
     this.reactions = new ClientReactionsManager(this)
     this.messages = new ClientMessagesManager(this)
     this.channels = new ClientChannelsManager(this)
     this.stickers = new ClientStickersManager(this)
-    this.members = new ClientMembersManager(this)
+    this.members = new ClientGuildMembersManager(this)
     this.roles = new ClientRolesManager(this)
     this.guilds = new GuildsManager(this)
     this.users = new UsersManager(this)

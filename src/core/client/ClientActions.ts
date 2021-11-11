@@ -70,6 +70,13 @@ export class ClientActions {
       .put()
   }
 
+  addFollower(senderId: string, followerId: string, reason?: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.CHANNEL_FOLLOW(senderId))
+      .body({ webhook_channel_id: followerId })
+      .post({ reason })
+  }
+
   removeThreadMember(channelId: string, memberId: string) {
     return this.client.internals.rest.api()
       .url(Endpoints.CHANNEL_THREAD_MEMBER(channelId, memberId))

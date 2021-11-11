@@ -21,9 +21,12 @@ import { CacheManagerGetOptions } from '@src/cache'
 import { Keyspaces } from '@src/constants'
 import { AnyGuildChannel } from '@src/api/entities/channel/interfaces/AnyGuildChannel'
 import { GuildMemberResolvable } from '@src/api/entities/member/interfaces/GuildMemberResolvable'
+import { ThreadMembersManager } from '@src/api/managers/members/ThreadMembersManager'
+import { ThreadMember } from '@src/api/entities/member/ThreadMember'
 
 export abstract class AbstractThreadChannel extends AbstractChannel implements AbstractThreadChannelData, WritableChannel {
   public messages!: ChannelMessagesManager
+  public members!: ThreadMembersManager
   public guildId!: string
   public lastMessageId?: string
   public lastPinTimestamp?: number
@@ -81,11 +84,28 @@ export abstract class AbstractThreadChannel extends AbstractChannel implements A
       this.messages.lastMessageId = this.lastMessageId
     }
 
+    if (!this.members) {
+      this.members = new ThreadMembersManager(this.client, {
+        thread: this.id,
+        guild: this.guildId,
+      })
+    }
+
     return this
   }
 
   get archivedDate(): Date | undefined {
     return this.metadata ? new Date(this.metadata.archiveTimestamp) : undefined
+  }
+
+  async join(): Promise<this | undefined> {
+    const result = await this.members.add('@me')
+    return result ? this : undefined
+  }
+
+  async leave(): Promise<this | undefined> {
+    const result = await this.members.remove('@me')
+    return result ? this : undefined
   }
 
   edit(data: ThreadChannelEditData | RawThreadChannelEditData, reason?: string): Promise<this | undefined> {
@@ -120,11 +140,11 @@ export abstract class AbstractThreadChannel extends AbstractChannel implements A
     return this.client.guilds.cache.get(this.guildId, options)
   }
 
-  async ownerUser(options?: CacheManagerGetOptions): Promise<User | undefined> {
+  async owner(options?: CacheManagerGetOptions): Promise<User | undefined> {
     return this.ownerId ? this.client.users.cache.get(this.ownerId, options) : undefined
   }
 
-  async ownerMember(options?: CacheManagerGetOptions): Promise<GuildMember | undefined> {
+  async ownerGuildMember(options?: CacheManagerGetOptions): Promise<GuildMember | undefined> {
     if (!this.ownerId) return undefined
 
     return this.client.internals.cache.get(
@@ -134,6 +154,11 @@ export abstract class AbstractThreadChannel extends AbstractChannel implements A
       this.ownerId,
       options
     )
+  }
+
+  async ownerThreadMember(options?: CacheManagerGetOptions): Promise<ThreadMember | undefined> {
+    if (!this.ownerId) return undefined
+    return this.members.cache.get(this.ownerId, options)
   }
 
   async parent(options?: CacheManagerGetOptions): Promise<AnyGuildChannel | undefined> {
@@ -148,12 +173,12 @@ export abstract class AbstractThreadChannel extends AbstractChannel implements A
     )
   }
 
-  async memberPermissions(member: GuildMemberResolvable, options: PermissionsCheckOptions): Promise<ReadonlyPermissions | undefined> {
+  async memberPermissions(member: GuildMemberResolvable, options?: PermissionsCheckOptions): Promise<ReadonlyPermissions | undefined> {
     const parent = await this.parent()
     return parent?.memberPermissions(member, options)
   }
 
-  async rolePermissions(role: RoleResolvable, options: PermissionsCheckOptions): Promise<ReadonlyPermissions | undefined> {
+  async rolePermissions(role: RoleResolvable, options?: PermissionsCheckOptions): Promise<ReadonlyPermissions | undefined> {
     const parent = await this.parent()
     return parent?.rolePermissions(role, options)
   }

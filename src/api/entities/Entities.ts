@@ -13,6 +13,7 @@ import { DirectMessagesChannel } from '@src/api/entities/channel/DirectMessagesC
 import { AbstractGuildChannel } from '@src/api/entities/channel/AbstractGuildChannel'
 import { AbstractGuildTextChannel } from '@src/api/entities/channel/AbstractGuildTextChannel'
 import { GuildTextChannel } from '@src/api/entities/channel/GuildTextChannel'
+import { ThreadMember } from '@src/api/entities/member/ThreadMember'
 
 export const Entities = {
   Message,
@@ -34,4 +35,5 @@ export const Entities = {
   AbstractGuildChannel,
   AbstractGuildTextChannel,
   GuildTextChannel,
+  ThreadMember,
 }

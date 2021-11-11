@@ -5,7 +5,7 @@ import {
   EmojisCachingPolicy,
   GlobalCachingPolicy,
   GuildsCachingPolicy,
-  MembersCachingPolicy,
+  GuildMembersCachingPolicy,
   MessagesCachingPolicy,
   OverwritesCachingPolicy,
   PermissionOverwriteTypes,
@@ -217,25 +217,25 @@ export class CachingPoliciesProcessor {
       results.push(
         await asyncSome(this.options.members.policies, policy => {
           switch (policy) {
-            case MembersCachingPolicy.ONLINE:
+            case GuildMembersCachingPolicy.ONLINE:
               return presence?.status === 'online'
-            case MembersCachingPolicy.DND:
+            case GuildMembersCachingPolicy.DND:
               return presence?.status === 'dnd'
-            case MembersCachingPolicy.IDLE:
+            case GuildMembersCachingPolicy.IDLE:
               return presence?.status === 'idle'
-            case MembersCachingPolicy.OFFLINE:
+            case GuildMembersCachingPolicy.OFFLINE:
               return presence?.status === 'offline'
-            case MembersCachingPolicy.OWNER:
+            case GuildMembersCachingPolicy.OWNER:
               return member.guildOwner
-            case MembersCachingPolicy.PENDING:
+            case GuildMembersCachingPolicy.PENDING:
               return !!member.pending
-            case MembersCachingPolicy.VOICE: // TODO
+            case GuildMembersCachingPolicy.VOICE: // TODO
               return false
-            case MembersCachingPolicy.RECENT_MESSAGE: // TODO
+            case GuildMembersCachingPolicy.RECENT_MESSAGE: // TODO
               return false
-            case MembersCachingPolicy.NONE:
+            case GuildMembersCachingPolicy.NONE:
               return false
-            case MembersCachingPolicy.ALL:
+            case GuildMembersCachingPolicy.ALL:
             default:
               return true
           }

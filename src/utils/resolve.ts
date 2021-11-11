@@ -32,6 +32,7 @@ import { MessageReaction } from '@src/api/entities/reaction/MessageReaction'
 import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 import { MessageReferenceResolvable } from '@src/api/entities/message/interfaces/MessageReferenceResolvable'
 import { RawMessageReferenceData } from '@src/api/entities/message/interfaces/RawMessageReferenceData'
+import { ThreadMemberResolvable } from '@src/api/entities/member/interfaces/ThreadMemberResolvable'
 
 export function resolveFiles(resolvable: MessageAttachmentResolvable[]): Promise<RawAttachment[]> {
   return Promise.all(resolvable.map(resolveFile))
@@ -219,7 +220,7 @@ export function resolveUserId(resolvable: UserResolvable): string | undefined  {
   return resolveAnythingToId(resolvable)
 }
 
-export function resolveUserOrMemberId(resolvable: UserResolvable | GuildMemberResolvable): string | undefined {
+export function resolveUserOrMemberId(resolvable: UserResolvable | GuildMemberResolvable | ThreadMemberResolvable): string | undefined {
   return resolveMemberId(resolvable as any) ?? resolveUserId(resolvable as any)
 }
 
@@ -248,12 +249,13 @@ export function resolveEmojiId(resolvable: EmojiResolvable | MessageReactionReso
   return undefined
 }
 
-export function resolveMemberId(member: GuildMemberResolvable): string | undefined {
+export function resolveMemberId(member: GuildMemberResolvable | ThreadMemberResolvable): string | undefined {
   if (typeof member === 'string') return member
 
   if (typeof member === 'object') {
     if ('userId' in member) return member.userId
     if ('user' in member && member.user) return resolveUserId(member.user)
+    if ('user_id' in member) return member.user_id
   }
 
   return undefined

@@ -71,11 +71,13 @@ export class GuildMembersChunkEvent extends AbstractEvent {
       nonce: data.nonce,
     }
 
+    /*
     const handler = data.nonce ? this.client.internals.queues.members.get(data.nonce) : undefined
 
     if (handler) {
       handler(context)
     }
+     */
 
     this.client.emit(EventNames.GUILD_MEMBERS_CHUNK, context)
   }

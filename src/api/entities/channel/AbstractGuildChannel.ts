@@ -92,7 +92,7 @@ export abstract class AbstractGuildChannel extends AbstractChannel {
    * Calculated member permissions for this channel, includes overwrites. If overwrites are not cached, this method is useless.
    * When checkAdmin option provided, tries to find member or guild in cache to check ownership.
    * */
-  async memberPermissions(member: GuildMemberResolvable, options: PermissionsCheckOptions): Promise<ReadonlyPermissions> {
+  async memberPermissions(member: GuildMemberResolvable, options?: PermissionsCheckOptions): Promise<ReadonlyPermissions> {
     const id = resolveMemberId(member)
 
     if (!id) throw new DiscordooError('Channel#memberPermissions', 'Cannot check member permissions without member')
@@ -130,7 +130,7 @@ export abstract class AbstractGuildChannel extends AbstractChannel {
       (role: Role) => (permissions.add(role.permissions) && rolesIds.push(id))
     )
 
-    if (options.checkAdmin && permissions.has(PermissionFlags.ADMINISTRATOR)) return new ReadonlyPermissions(Permissions.ALL)
+    if (options?.checkAdmin && permissions.has(PermissionFlags.ADMINISTRATOR)) return new ReadonlyPermissions(Permissions.ALL)
 
     const predicate = async (overwrite: PermissionOverwrite) => {
       switch (true) {
@@ -182,14 +182,14 @@ export abstract class AbstractGuildChannel extends AbstractChannel {
    * If the role is not in the cache,
    * the permissions of the role will be calculated without taking into account the original permissions of the role.
    * */
-  async rolePermissions(role: RoleResolvable, options: PermissionsCheckOptions): Promise<ReadonlyPermissions> {
+  async rolePermissions(role: RoleResolvable, options?: PermissionsCheckOptions): Promise<ReadonlyPermissions> {
     const id = resolveRoleId(role)
 
     if (!id) throw new DiscordooError('Channel#rolePermissions', 'Cannot check role permissions without role')
 
     const roleCache = await this.client.internals.cache.get<string, Role>(Keyspaces.GUILD_ROLES, this.guildId, 'Role', id)
 
-    if (options.checkAdmin) {
+    if (options?.checkAdmin) {
       if (roleCache?.permissions.has(PermissionFlags.ADMINISTRATOR)) return new ReadonlyPermissions(Permissions.ALL)
     }
 

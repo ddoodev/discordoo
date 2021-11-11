@@ -7,7 +7,7 @@ export interface GuildMembersChunkHandlerContext {
   ) => GuildMembersChunkHandlerContext | true
   resolve: any
   reject: any
-  timeout: ReturnType<typeof setTimeout>
+  timeout: NodeJS.Timeout
   fetched: GuildMember[][]
   nonce: string
 }
