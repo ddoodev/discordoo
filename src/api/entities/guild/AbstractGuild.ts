@@ -1,39 +1,74 @@
 import { AbstractEntity } from '@src/api/entities/AbstractEntity'
-import { Client } from '@src/core'
+import { AbstractGuildData } from '@src/api/entities/guild/interfaces/AbstractGuildData'
+import { Json, ToJsonProperties } from '@src/api'
+import { GuildFeatures } from '@src/constants'
+import { attach, idToDate, idToTimestamp, ImageUrlOptions } from '@src/utils'
 
-interface GuildData<A extends 'available' | 'unavailable' = 'available'> {
-  id: string
-  name: A extends 'available' ? string : undefined
-  available: A extends 'available' ? true : false
-}
+export class AbstractGuild extends AbstractEntity implements AbstractGuildData {
+  public features!: GuildFeatures[]
+  public icon?: string
+  public id!: string
+  public name!: string
 
-class Guild<A extends 'available' | 'unavailable' = 'available'> extends AbstractEntity implements GuildData<A> {
-  id!: string
-  name!: A extends 'available' ? string : undefined
-  available!: A extends 'available' ? true : false
-
-  private _data: GuildData<A>
-
-  constructor(client: Client, data: GuildData<A>) {
-    super(client)
-    this._data = data
-  }
-
-  async init() {
-    this.id = this._data.id
-    this.name = this._data.name
-    this.available = this._data.available
+  async init(data: AbstractGuildData): Promise<this> {
+    attach(this, data, [
+      'features',
+      'icon',
+      'id',
+      'name'
+    ])
 
     return this
   }
-}
 
-type idk = Guild<'unavailable'> | Guild
-
-function idk1(g: idk) {
-  if (g.available) {
-    console.log(g.name)
-  } else {
-    console.log(g.name)
+  get createdTimestamp(): number {
+    return idToTimestamp(this.id)
   }
+
+  get createdDate(): Date {
+    return idToDate(this.id)
+  }
+
+  get partnered(): boolean {
+    return !!this.features?.includes(GuildFeatures.PARTNERED)
+  }
+
+  get verified(): boolean {
+    return !!this.features?.includes(GuildFeatures.VERIFIED)
+  }
+
+  get discoverable(): boolean {
+    return !!this.features?.includes(GuildFeatures.DISCOVERABLE)
+  }
+
+  get nameAcronym(): string {
+    return this.name.replace(/('s )|\w+|\s/g, (substring) => {
+      switch (substring) {
+        case ' ':
+        case '\'s ': // discord for some reason replaces ('s )
+          return ''
+        default:
+          return substring[0]
+      }
+    })
+  }
+
+  iconUrl(options?: ImageUrlOptions): string | undefined {
+    return this.icon ? this.client.internals.rest.cdn().icon(this.id, this.icon, options) : undefined
+  }
+
+  toString() {
+    return this.name
+  }
+
+  toJson(properties: ToJsonProperties = {}, obj?: any): Json {
+    return super.toJson({
+      ...properties,
+      features: true,
+      icon: true,
+      id: true,
+      name: true,
+    }, obj)
+  }
+
 }

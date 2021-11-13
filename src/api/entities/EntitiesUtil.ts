@@ -29,7 +29,7 @@ export class EntitiesUtil {
     }
 
     if (extender.prototype instanceof extendableEntity || extender.prototype === defaultExtendableEntity.prototype) {
-      return Entities[entity] = extender as T
+      return Entities[entity] = extender as any
     } else {
       const extended = (extender as (base: Ext[K]) => T)(extendableEntity)
 
@@ -41,7 +41,7 @@ export class EntitiesUtil {
         throw new DiscordooError(source + 'extend', 'Extender must return class that extends specified entity')
       }
 
-      return Entities[entity] = extended
+      return Entities[entity] = extended as any
     }
   }
 
