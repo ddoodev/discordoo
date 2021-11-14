@@ -316,7 +316,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
           this.readyDate = new Date()
           resolve(this)
         }
-      }, 1000)
+      }, 1000) as any // HELLO JEST!! THIS IS FOR YOU.
     })
   }
 

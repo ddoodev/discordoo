@@ -69,7 +69,9 @@ You can find these benchmarks [here](https://github.com/Discordoo/collection#djs
 ## Release milestone
 A complete description of everything that must be in Discordoo to be released
 
-Release deadline: November 15, 2021 7:00PM UTC
+Release deadline: When it's ready. 
+I'm tired of trying to cram an unrealistic amount of work into a couple of days and make commits with 1000 lines at once.
+You can blame me for that, I understand this. Sorry.
 
 *please read this*
 ![image](https://user-images.githubusercontent.com/44965055/137811902-565cbdc0-7cb7-4a86-a1ef-b082839f54cc.png)
