@@ -4,6 +4,7 @@ import { WebSocketManager } from '@src/gateway/WebSocketManager'
 import { rawToDiscordoo } from '@src/utils/rawToDiscordoo'
 import { CompletedGatewayOptions } from '@src/gateway/interfaces/CompletedGatewayOptions'
 import { GatewaySendPayloadLike } from '@discordoo/providers'
+import { WebSocketClientEvents } from '@src/constants'
 
 export class DefaultGatewayProvider implements GatewayProvider {
   public client: Client
@@ -25,8 +26,12 @@ export class DefaultGatewayProvider implements GatewayProvider {
     return this.manager.disconnect(shards)
   }
 
-  emit(event: string, ...data: any[]): unknown {
-    return this.client.internals.gateway.emit(rawToDiscordoo(event), ...data)
+  emit(shardId: number, event: string, ...data: any[]): unknown {
+    return this.client.internals.gateway.emit(
+      shardId,
+      event === WebSocketClientEvents.CONNECTED ? 'shardConnected' : rawToDiscordoo(event),
+      ...data
+    )
   }
 
   getGateway(): Promise<GatewayBotInfo> {

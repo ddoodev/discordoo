@@ -6,7 +6,7 @@ import { channelEntityKey } from '@src/utils'
 export class GuildCreateEvent extends AbstractEvent {
   public name = EventNames.GUILD_CREATE
 
-  async execute(guild: any /* RawGuildData */) {
+  async execute(shardId: number, guild: any /* RawGuildData */) {
 
     for await (const channelData of guild.channels) {
       let cache = await this.client.internals.cache.get(Keyspaces.CHANNELS, guild.id, channelEntityKey, channelData.id)
@@ -50,5 +50,13 @@ export class GuildCreateEvent extends AbstractEvent {
     }
 
     await this.client[otherCacheSymbol].set(guild.id, { id: guild.owner_id }, { storage: 'guild-owners' })
+
+    const queue = this.client.internals.queues.ready.get(shardId)
+
+    if (queue) {
+      queue.handler(this.client, { ...queue, guild: guild.id })
+    } else {
+      // emit guild create
+    }
   }
 }

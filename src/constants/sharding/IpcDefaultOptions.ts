@@ -6,5 +6,5 @@ export const LOCAL_IPC_DEFAULT_OPTIONS: CompletedLocalIpcOptions = {
   encoding: 'utf8',
   socketRoot: os.platform() === 'win32' ? '\\\\\\\\.\\\\pipe\\\\\\tmp\\' : '/tmp/',
   logDepth: 5,
-  logger: msg => console.log(msg) // TODO
+  logger: msg => undefined // console.log(msg) // TODO
 }

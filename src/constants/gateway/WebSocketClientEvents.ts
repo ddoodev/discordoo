@@ -8,6 +8,7 @@ export enum WebSocketClientEvents {
   WS_CLOSED = 'WS_CLOSED',
 
   RECONNECT_ME = '__RECONNECT_ME__',
+  CONNECTED = '__CONNECTED__',
 
   READY = 'ready',
   RESUMED = 'resumed',

@@ -8,7 +8,7 @@ import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 export class MessageCreateEvent extends AbstractEvent {
   public name = EventNames.MESSAGE_CREATE
 
-  async execute(data: RawMessageData) {
+  async execute(shardId: number, data: RawMessageData) {
     const Message = EntitiesUtil.get('Message')
 
     const message = await new Message(this.client).init(data)

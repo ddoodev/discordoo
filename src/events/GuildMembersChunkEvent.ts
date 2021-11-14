@@ -8,7 +8,7 @@ import { GuildMembersChunkEventContext } from '@src/events/ctx'
 export class GuildMembersChunkEvent extends AbstractEvent {
   public name = EventNames.GUILD_MEMBERS_CHUNK
 
-  async execute(data: RawGuildMembersChunkData) {
+  async execute(shardId: number, data: RawGuildMembersChunkData) {
 
     const owner = await this.client.internals.cache.get(
       Keyspaces.OTHER,

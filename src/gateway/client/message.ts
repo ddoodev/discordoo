@@ -55,7 +55,7 @@ export function message(
     packet = WebSocketUtils.unpack(data)
   } catch (e) {
     // packet is broken (invalid json, for example)
-    console.error('shard', client.id, 'error', e)
+    // console.error('shard', client.id, 'error', e)
   }
 
   // data is fully ready, return it (or return nothing in error case)

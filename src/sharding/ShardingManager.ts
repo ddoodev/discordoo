@@ -83,7 +83,7 @@ export class ShardingManager extends TypedEmitter<ShardingManagerEvents> {
       await instance.create()
       this.instances.set(index, instance)
       instance.shards.forEach(s => this.shards.set(s, instance))
-      await wait(5000)
+      await wait(1000)
 
       index++
     }

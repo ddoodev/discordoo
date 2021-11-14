@@ -55,7 +55,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
   }
 
   public connect() {
-    console.log('SHARD', this.id, 'CONNECTING')
+    // console.log('SHARD', this.id, 'CONNECTING')
     return new Promise<void>((resolve, reject) => {
 
       // cannot connect without websocket url
@@ -80,7 +80,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
         }
       }
 
-      console.log('SHARD', this.id, 'ENCODING', this.options.encoding, 'REAL ENCODING', WebSocketUtils.encoding)
+      // console.log('SHARD', this.id, 'ENCODING', this.options.encoding, 'REAL ENCODING', WebSocketUtils.encoding)
 
       // cannot use etf encoding without erlpack
       if (this.options.encoding === 'etf' && WebSocketUtils.encoding !== 'etf') {
@@ -119,7 +119,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
 
       // in case if websocket already running
       if (this.socket?.readyState === WebSocketStates.OPEN) {
-        console.log('shard', this.id, 'identify open websocket')
+        // console.log('shard', this.id, 'identify open websocket')
         return this.identify()
       } else if (this.socket) { // remove websocket object because it is no longer needed
         this.socket = undefined
@@ -131,17 +131,17 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
         : WebSocketClientStates.CONNECTING
 
       try {
-        console.log('shard', this.id, 'creating websocket', this.options.url)
+        // console.log('shard', this.id, 'creating websocket', this.options.url)
         this.socket = new WebSocket(this.options.url)
 
         this.handshakeTimeout()
-        console.log('shard', this.id, 'subscribe')
+        // console.log('shard', this.id, 'subscribe')
         this.socket.onopen = this.onOpen.bind(this)
         this.socket.onclose = this.onClose.bind(this)
         this.socket.onerror = this.onError.bind(this)
         this.socket.onmessage = this.onMessage.bind(this)
       } catch (e) {
-        console.error('shard', this.id, 'error', e)
+        // console.error('shard', this.id, 'error', e)
         this.status = WebSocketClientStates.DISCONNECTED
         reject()
       }
@@ -211,7 +211,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
       return
     }
 
-    console.log('shard', this.id, 'send:', data)
+    // console.log('shard', this.id, 'send:', data)
 
     this.socket.send(WebSocketUtils.pack(data), err => {
       if (err) this.emit(WebSocketClientEvents.WS_SEND_ERROR, err, data)
@@ -229,17 +229,17 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
   }
 
   private onClose(event: WebSocket.CloseEvent) {
-     console.log('shard', this.id, 'closed', event)
+    // console.log('shard', this.id, 'closed', event)
     close(this, event)
   }
 
   private onOpen(event: WebSocket.OpenEvent) {
-     console.log('shard', this.id, 'open', event)
+    // console.log('shard', this.id, 'open', event)
     open(this, event)
   }
 
   private onError(event: WebSocket.ErrorEvent) {
-    console.log('shard', this.id, 'error', event)
+    // console.log('shard', this.id, 'error', event)
     error(this, event)
   }
 

@@ -1,7 +1,7 @@
 import { GatewayBotInfo, GatewayProvider, GatewaySendOptions, GatewaySendPayloadLike, GatewayShardsInfo } from '@discordoo/providers'
 import { GatewayManagerData } from '@src/gateway/interfaces'
 import { Client, ProviderConstructor } from '@src/core'
-import { DiscordooError } from '@src/utils'
+import { DiscordooError, wait } from '@src/utils'
 import { Endpoints } from '@src/constants'
 import { CompletedGatewayOptions } from '@src/gateway/interfaces/CompletedGatewayOptions'
 
@@ -32,8 +32,8 @@ export class GatewayManager<P extends GatewayProvider = GatewayProvider> {
     return this.provider.ping(shards)
   }
 
-  emit(event: string, ...data: any[]) { // TODO: events overload protection
-    return this.client.internals.events.handlers.get(event)?.execute(...data)
+  emit(shardId: number, event: string, ...data: any[]) { // TODO: events overload protection
+    return this.client.internals.events.handlers.get(event)?.execute(shardId, ...data)
   }
 
   reorganizeShards(shards: GatewayShardsInfo): Promise<unknown> {
@@ -59,7 +59,7 @@ export class GatewayManager<P extends GatewayProvider = GatewayProvider> {
 
   // @ts-ignore
   async waitShardSpawnTurn(shardId: number): Promise<unknown> { // TODO
-    setTimeout(() => Promise.resolve(), 5000)
+    await wait(6000)
   }
 
   async init() {

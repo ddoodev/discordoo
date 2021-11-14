@@ -6,7 +6,7 @@ import { Presence, RawPresenceData } from '@src/api'
 export class PresenceUpdateEvent extends AbstractEvent {
   public name = EventNames.PRESENCE_UPDATE
 
-  async execute(data: RawPresenceData) {
+  async execute(shardId: number, data: RawPresenceData) {
 
     let presence = await this.client.internals.cache.get<string, Presence>(
       Keyspaces.GUILD_PRESENCES, data.guild_id, 'Presence', data.user.id

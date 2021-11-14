@@ -29,7 +29,8 @@ export function packet(client: WebSocketClient, packet: WebSocketPacket) {
       client.heartbeat()
 
       client.emit(WebSocketClientEvents.READY)
-      console.log('shard', client.id, 'READY')
+      client.manager.provider.emit(client.id, WebSocketClientEvents.CONNECTED, packet.d)
+      // console.log('shard', client.id, 'READY')
       break
     case 'RESUMED':
       client.status = WebSocketClientStates.READY
@@ -50,10 +51,9 @@ export function packet(client: WebSocketClient, packet: WebSocketPacket) {
 
     case GatewayOpCodes.INVALID_SESSION:
       client.emit(WebSocketClientEvents.INVALID_SESSION)
+      console.log('SHARD', client.id, 'INVALID SESSION')
 
-      wait(5000).then(() => {
-        client.destroy({ code: 1000, reconnect: true })
-      })
+      client.destroy({ code: 1000, reconnect: true })
       // console.log('shard', client.id, 'INVALID SESSION')
 
       break
@@ -73,7 +73,7 @@ export function packet(client: WebSocketClient, packet: WebSocketPacket) {
       break
 
     case GatewayOpCodes.DISPATCH:
-      client.manager.provider.emit(packet.t, packet.d)
+      client.manager.provider.emit(client.id, packet.t, packet.d)
       break
   }
 }

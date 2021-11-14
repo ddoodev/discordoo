@@ -22,7 +22,7 @@ export class WebSocketManager {
   }
 
   async connect(options?: GatewayShardsInfo) {
-    console.log('connecting')
+    // console.log('connecting')
     this.status = WebSocketManagerStates.CONNECTING
 
     if (options) {
@@ -32,9 +32,9 @@ export class WebSocketManager {
       }
     }
 
-    console.log('ws manager options:', options)
-    console.log('shards:', this.options.shards)
-    console.log('totalShards:', this.options.totalShards)
+    // console.log('ws manager options:', options)
+    // console.log('shards:', this.options.shards)
+    // console.log('totalShards:', this.options.totalShards)
 
     this.shardQueue = new Set(this.options.shards.map(id => new WebSocketClient(this, id)))
     // console.log('queue:', this.shardQueue)
@@ -54,7 +54,7 @@ export class WebSocketManager {
       + this.options.version + '&encoding=' + this.options.encoding
       + (this.options.compress ? '&compress=zlib-stream' : '')
 
-    console.log('URL', this.options.url)
+    // console.log('URL', this.options.url)
 
     return this.createShards()
   }
@@ -104,10 +104,10 @@ export class WebSocketManager {
       await shard.connect()
         .catch(e => {
           if (e && !(e instanceof DiscordooError)) shard.emit(WebSocketClientEvents.RECONNECT_ME)
-          console.error(e)
+          // console.error(e)
         })
     } catch (e) {
-      console.error(e)
+      // console.error(e)
     }
 
     this.shards.set(shard.id, shard)

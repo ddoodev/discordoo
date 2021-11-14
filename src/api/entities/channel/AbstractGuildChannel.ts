@@ -8,7 +8,7 @@ import { ChannelPermissionOverwritesManager } from '@src/api/managers/overwrites
 import { PermissionOverwriteResolvable } from '@src/api/entities/overwrites/interfaces/PermissionOverwriteResolvable'
 import { PermissionOverwrite } from '@src/api/entities/overwrites/PermissionOverwrite'
 import { GuildCategoryChannel } from '@src/api/entities/channel/GuildCategoryChannel'
-import { Keyspaces, PermissionFlags } from '@src/constants'
+import { ChannelTypes, Keyspaces, PermissionFlags } from '@src/constants'
 import { CacheManagerGetOptions } from '@src/cache'
 import {
   PermissionsCheckOptions,
@@ -23,6 +23,12 @@ import {
 import { GuildMemberResolvable } from '@src/api/entities/member/interfaces/GuildMemberResolvable'
 
 export abstract class AbstractGuildChannel extends AbstractChannel {
+  public type!: ChannelTypes.GUILD_CATEGORY
+    | ChannelTypes.GUILD_TEXT
+    | ChannelTypes.GUILD_NEWS
+    | ChannelTypes.GUILD_STAGE_VOICE
+    | ChannelTypes.GUILD_VOICE
+    | ChannelTypes.GUILD_STORE
   public guildId!: string
   public name!: string
   public parentId?: string

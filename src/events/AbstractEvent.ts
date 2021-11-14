@@ -8,5 +8,5 @@ export abstract class AbstractEvent {
     this.client = client
   }
 
-  abstract execute(...args): unknown
+  abstract execute(shardId: number, ...args: any[])
 }

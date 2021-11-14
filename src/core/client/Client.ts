@@ -1,6 +1,14 @@
 // TODO: (╯°□°）╯︵ ┻━┻
-import { DiscordooProviders, GlobalCachingPolicy, IpcEvents, IpcOpCodes, REST_DEFAULT_OPTIONS, WS_DEFAULT_OPTIONS } from '@src/constants'
-import { DiscordooError, DiscordooSnowflake, ReplaceType, resolveDiscordShards, ShardListResolvable, version } from '@src/utils'
+import {
+  DiscordooProviders,
+  EventNames,
+  GlobalCachingPolicy,
+  IpcEvents,
+  IpcOpCodes,
+  REST_DEFAULT_OPTIONS,
+  WS_DEFAULT_OPTIONS
+} from '@src/constants'
+import { DiscordooError, DiscordooSnowflake, ReplaceType, resolveDiscordShards, ShardListResolvable, version, wait } from '@src/utils'
 import { CompletedLocalIpcOptions } from '@src/constants/sharding/CompletedLocalIpcOptions'
 import { CompletedGatewayOptions } from '@src/gateway/interfaces/CompletedGatewayOptions'
 import { ClientMessagesManager } from '@src/api/managers/messages/ClientMessagesManager'
@@ -44,6 +52,8 @@ import { Collection } from '@discordoo/collection'
 import { OtherCacheManager } from '@src/api/managers/OtherCacheManager'
 import { otherCacheSymbol } from '@src/constants'
 import { ClientThreadMembersManager } from '@src/api/managers/members/ClientThreadMembersManager'
+import { ReadyEventContext } from '@src/events/ctx/ReadyEventContext'
+import { ShardConnectedEvent } from '@src/events/ShardConnectedEvent'
 
 /** Entry point for all of Discordoo. */
 @Final(
@@ -109,6 +119,9 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
 
   public readonly [otherCacheSymbol]: OtherCacheManager
   #running = false
+  #shardsConnected = 0
+
+  public readyDate?: Date
 
   constructor(token: string, options: ClientOptions = {}) {
     super()
@@ -217,7 +230,8 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
     const actions = new ClientActions(this), events = new ClientEvents(this)
 
     const queues: ClientQueues = {
-      members: new Collection()
+      members: new Collection(),
+      ready: new Collection()
     }
 
     this.internals = {
@@ -232,17 +246,17 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
       queues,
     }
 
-    this.internals.events.register([ MessageCreateEvent, GuildCreateEvent, PresenceUpdateEvent ]) // TODO
+    this.internals.events.register([ MessageCreateEvent, GuildCreateEvent, PresenceUpdateEvent, ShardConnectedEvent ]) // TODO
 
     this.overwrites = new ClientPermissionOverwritesManager(this)
     this.threadMembers = new ClientThreadMembersManager(this)
     this[otherCacheSymbol] = new OtherCacheManager(this)
+    this.members = new ClientGuildMembersManager(this)
     this.presences = new ClientPresencesManager(this)
     this.reactions = new ClientReactionsManager(this)
     this.messages = new ClientMessagesManager(this)
     this.channels = new ClientChannelsManager(this)
     this.stickers = new ClientStickersManager(this)
-    this.members = new ClientGuildMembersManager(this)
     this.roles = new ClientRolesManager(this)
     this.guilds = new GuildsManager(this)
     this.users = new UsersManager(this)
@@ -271,7 +285,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
     await this.internals.cache.init()
     await this.internals.rest.init()
 
-    return this.internals.gateway.connect(options)
+    await this.internals.gateway.connect(options)
       .then(async () => {
         if (this.internals.sharding.active) await this.internals.ipc.send({
           op: IpcOpCodes.DISPATCH,
@@ -280,8 +294,6 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
             event_id: this.internals.sharding.INSTANCE_IPC,
           }
         })
-
-        return this
       })
       .catch(async e => {
         if (this.internals.sharding.active) await this.internals.ipc.send({
@@ -294,6 +306,22 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
 
         throw e
       })
+
+    return new Promise(resolve => {
+      const interval: NodeJS.Timeout = setInterval(() => {
+        if (this._ready) {
+          // @ts-ignore
+          this.emit(EventNames.READY, { client: this })
+          clearInterval(interval)
+          this.readyDate = new Date()
+          resolve(this)
+        }
+      }, 1000)
+    })
+  }
+
+  get readyTimestamp(): number | undefined {
+    return this.readyDate ? this.readyDate.getTime() : undefined
   }
 
   private _makeGatewayOptions(): CompletedGatewayOptions {
@@ -343,5 +371,13 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
       { MANAGER_IPC, INSTANCE_IPC, instance },
       { config: completedOptions }
     )
+  }
+
+  private get _ready(): boolean {
+    return this.#shardsConnected >= this.internals.sharding.shards.length
+  }
+
+  public _increaseConnected() {
+    this.#shardsConnected++
   }
 }
