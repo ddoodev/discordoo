@@ -14,6 +14,9 @@ import { AbstractGuildChannel } from '@src/api/entities/channel/AbstractGuildCha
 import { AbstractGuildTextChannel } from '@src/api/entities/channel/AbstractGuildTextChannel'
 import { GuildTextChannel } from '@src/api/entities/channel/GuildTextChannel'
 import { ThreadMember } from '@src/api/entities/member/ThreadMember'
+import { GuildNewsChannel } from '@src/api/entities/channel/GuildNewsChannel'
+import { GuildNewsThreadChannel } from '@src/api/entities/channel/GuildNewsThreadChannel'
+import { GuildThreadChannel } from '@src/api/entities/channel/GuildThreadChannel'
 
 export const Entities = {
   Message,
@@ -36,4 +39,7 @@ export const Entities = {
   AbstractGuildTextChannel,
   GuildTextChannel,
   ThreadMember,
+  GuildNewsChannel,
+  GuildNewsThreadChannel,
+  GuildThreadChannel,
 }

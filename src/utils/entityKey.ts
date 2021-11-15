@@ -11,12 +11,15 @@ export function channelEntityKey(data: any): EntitiesKeys {
     case ChannelTypes.GUILD_CATEGORY: // GuildCategoryChannel
       return 'GuildCategoryChannel'
     case ChannelTypes.GUILD_NEWS: // GuildNewsChannel
+      return 'GuildNewsChannel'
     case ChannelTypes.GUILD_NEWS_THREAD: // GuildNewsThreadChannel
+      return 'GuildNewsThreadChannel'
     case ChannelTypes.GUILD_PRIVATE_THREAD:
     case ChannelTypes.GUILD_PUBLIC_THREAD: // GuildThreadChannel
+      return 'GuildThreadChannel'
     case ChannelTypes.GUILD_STAGE_VOICE: // GuildStageVoiceChannel
     case ChannelTypes.GUILD_STORE: // GuildStoreChannel
-      return 'AbstractGuildChannel'
+      return 'AbstractChannel'
     case ChannelTypes.GUILD_TEXT: // GuildTextChannel
       return 'GuildTextChannel'
     case ChannelTypes.GUILD_VOICE: // GuildVoiceChannel

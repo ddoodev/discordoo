@@ -29,7 +29,14 @@ import { ClientInternals } from '@src/core/client/ClientInternals'
 import { ClientMetadata } from '@src/core/client/ClientMetadata'
 import { ClientOptions } from '@src/core/client/ClientOptions'
 import { ClientActions } from '@src/core/client/ClientActions'
-import { ClientEvents, MessageCreateEvent } from '@src/events'
+import {
+  ChannelCreateEvent,
+  ChannelDeleteEvent, ChannelPinsUpdateEvent,
+  ChannelUpdateEvent,
+  ClientEvents,
+  MessageCreateEvent,
+  ThreadCreateEvent, ThreadDeleteEvent, ThreadListSyncEvent, ThreadUpdateEvent
+} from '@src/events'
 import { UsersManager } from '@src/api/managers/UsersManager'
 import { ClientRolesManager } from '@src/api/managers/roles'
 import { GatewayManager } from '@src/gateway/GatewayManager'
@@ -246,7 +253,11 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
       queues,
     }
 
-    this.internals.events.register([ MessageCreateEvent, GuildCreateEvent, PresenceUpdateEvent, ShardConnectedEvent ]) // TODO
+    this.internals.events.register([
+      MessageCreateEvent, GuildCreateEvent, PresenceUpdateEvent, ShardConnectedEvent,
+      ChannelCreateEvent, ChannelUpdateEvent, ChannelDeleteEvent, ChannelPinsUpdateEvent,
+      ThreadCreateEvent, ThreadUpdateEvent, ThreadDeleteEvent, ThreadListSyncEvent,
+    ]) // TODO
 
     this.overwrites = new ClientPermissionOverwritesManager(this)
     this.threadMembers = new ClientThreadMembersManager(this)

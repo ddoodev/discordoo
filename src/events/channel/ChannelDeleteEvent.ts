@@ -26,9 +26,9 @@ export class ChannelDeleteEvent extends AbstractEvent {
     )
 
     if (channel) {
-      channel = await channel.init(data)
+      channel = await channel.init({ ...data, deleted: true })
     } else {
-      channel = await new Channel(this.client).init(data)
+      channel = await new Channel(this.client).init({ ...data, deleted: true })
     }
 
     await this.client.internals.cache.delete(
