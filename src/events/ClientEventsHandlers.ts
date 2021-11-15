@@ -85,7 +85,7 @@ export interface ClientEventsHandlers {
   // guildMemberUpdate: (context: ChannelCreateEventContext) => unknown
 
   /** Response to [Request Guild Members](https://discord.com/developers/docs/topics/gateway#request-guild-members) */
-  // guildMembersChunk: (context: GuildMembersChunkEventContext) => unknown
+  guildMembersChunk: (context: GuildMembersChunkEventContext) => unknown
 
   /** Guild role was created */
   // guildRoleCreate: (context: ChannelCreateEventContext) => unknown
