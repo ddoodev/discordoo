@@ -12,7 +12,7 @@ import {
 } from '@src/api'
 import { MessageReactionsManager } from '@src/api/managers/reactions'
 import { Keyspaces, MessageTypes } from '@src/constants'
-import { attach, channelEntityKey, resolveMessageReaction } from '@src/utils'
+import { attach, resolveMessageReaction } from '@src/utils'
 import { AnyWritableChannel } from '@src/api/entities/channel/interfaces/AnyWritableChannel'
 import { CacheManagerGetOptions } from '@src/cache'
 import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
@@ -157,7 +157,7 @@ export class Message extends AbstractEntity {
 
   async channel(options?: CacheManagerGetOptions): Promise<AnyWritableChannel | undefined> {
     return this.client.internals.cache.get(
-      Keyspaces.CHANNELS, this.guildId ?? this.authorId, channelEntityKey, this.channelId, options
+      Keyspaces.CHANNELS, this.guildId ?? this.authorId, 'channelEntityKey', this.channelId, options
     )
   }
 
@@ -177,6 +177,7 @@ export class Message extends AbstractEntity {
     return super.toJson({
       ...properties,
       channelId: true,
+      authorId: true,
       guildId: true,
       content: true,
       deleted: true,

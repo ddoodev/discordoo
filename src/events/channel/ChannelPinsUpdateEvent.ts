@@ -12,7 +12,7 @@ export class ChannelPinsUpdateEvent extends AbstractEvent {
     const channel = await this.client.internals.cache.get(
       Keyspaces.CHANNELS,
       data.guild_id ?? 'global',
-      channelEntityKey,
+      'channelEntityKey',
       data.channel_id
     ) // TODO: reset last pin timestamp
 

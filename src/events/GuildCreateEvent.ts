@@ -9,7 +9,7 @@ export class GuildCreateEvent extends AbstractEvent {
   async execute(shardId: number, guild: any /* RawGuildData */) {
 
     for await (const channelData of guild.channels) {
-      let cache = await this.client.internals.cache.get(Keyspaces.CHANNELS, guild.id, channelEntityKey, channelData.id)
+      let cache = await this.client.internals.cache.get(Keyspaces.CHANNELS, guild.id, 'channelEntityKey', channelData.id)
 
       if (cache) {
         cache = await cache.init(channelData)
@@ -43,7 +43,7 @@ export class GuildCreateEvent extends AbstractEvent {
         cache = await cache.init(presenceData)
       } else {
         const Presence = EntitiesUtil.get('Presence')
-        cache = await new Presence(this.client).init(presenceData)
+        cache = await new Presence(this.client).init({ ...presenceData, guild_id: guild.id })
       }
 
       await this.client.presences.cache.set(cache.userId, cache, { storage: guild.id })

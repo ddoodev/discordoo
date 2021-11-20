@@ -13,7 +13,6 @@ export interface UserData {
   locale?: string
   verified?: boolean
   email?: string
-  flags?: number
+  flags?: BitFieldResolvable
   premiumType?: number
-  publicFlags?: BitFieldResolvable
 }

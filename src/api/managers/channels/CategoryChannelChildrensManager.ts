@@ -3,7 +3,7 @@ import { EntitiesCacheManager } from '@src/api'
 import { AnyGuildChannel } from '@src/api/entities/channel/interfaces/AnyGuildChannel'
 import { Client } from '@src/core'
 import { CategoryChannelChildrensManagerData } from '@src/api/managers/channels/CategoryChannelChildrensManagerData'
-import { channelEntityKey, DiscordooError, resolveChannelId } from '@src/utils'
+import { DiscordooError, resolveChannelId } from '@src/utils'
 import { Keyspaces } from '@src/constants'
 import { GuildChannelCreateData } from '@src/api/entities/channel/interfaces/GuildChannelCreateData'
 import { RawGuildChannelCreateData } from '@src/api/entities/channel/interfaces/RawGuildChannelCreateData'
@@ -27,7 +27,7 @@ export class CategoryChannelChildrensManager extends EntitiesManager {
     this.cache = new EntitiesCacheManager<AnyGuildChannel>(this.client, {
       keyspace: Keyspaces.CATEGORY_CHANNEL_CHILDRENS,
       storage: this.categoryId,
-      entity: channelEntityKey,
+      entity: 'channelEntityKey',
       policy: 'channels'
     })
   }

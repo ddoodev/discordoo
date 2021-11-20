@@ -87,6 +87,7 @@ export class ClientMessagesManager extends EntitiesManager {
           Keyspaces.PINNED_MESSAGES,
           channelId,
           'Message',
+          'messages',
           message.id,
           cachePointer(Keyspaces.MESSAGES, channelId, message.id)
         )

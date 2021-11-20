@@ -1,6 +1,6 @@
 import { EntitiesCacheManager, GuildMember, GuildResolvable, RoleResolvable, UserResolvable } from '@src/api'
 import { Client } from '@src/core'
-import { Keyspaces } from '@src/constants'
+import { IpcEvents, IpcOpCodes, Keyspaces } from '@src/constants'
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
 import { GuildMemberEditData } from '@src/api/entities/member/interfaces/GuildMemberEditData'
 import { RawGuildMemberEditData } from '@src/api/entities/member/interfaces/RawGuildMemberEditData'
@@ -15,8 +15,7 @@ import { GuildMembersFetchOptions } from '@src/api/managers/members/GuildMembers
 import { RawGuildMembersFetchOptions } from '@src/api/managers/members/RawGuildMembersFetchOptions'
 import { GuildMemberAddData } from '@src/api/managers/members/GuildMemberAddData'
 import { RawGuildMemberAddData } from '@src/api/managers/members/RawGuildMemberAddData'
-import { ThreadChannelResolvable } from '@src/api/entities/channel/interfaces/ThreadChannelResolvable'
-import { ThreadMemberResolvable } from '@src/api/entities/member/interfaces/ThreadMemberResolvable'
+import { IpcGuildMembersRequestPacket, IpcGuildMembersResponsePacket } from '@src/sharding/interfaces/ipc/IpcPackets'
 
 export class ClientGuildMembersManager extends EntitiesManager {
   public cache: EntitiesCacheManager<GuildMember>
@@ -91,7 +90,7 @@ export class ClientGuildMembersManager extends EntitiesManager {
     if (!guildId) throw new DiscordooError('ClientGuildMembersManager#fetchMany', 'Cannot fetch members without guild id.')
 
     const b = BigInt
-    const shardId = Number(b(guildId) >> b(22) % b(this.client.internals.sharding.totalShards))
+    const shardId = Number((b(guildId) >> b(22)) % b(this.client.internals.sharding.totalShards))
 
     const users: string | string[] | undefined =
       options.users !== undefined && Array.isArray(options.users)
@@ -105,8 +104,37 @@ export class ClientGuildMembersManager extends EntitiesManager {
       limit: options.limit ?? 0,
       query: options.query ?? '',
       presences: !!options.presences,
-      user_ids: users,
       nonce: options.nonce ?? DiscordSnowflake.generate()
+    }
+
+    if (users) payload.user_ids = users
+
+    if (!this.client.internals.sharding.shards.includes(shardId)) {
+      const request: IpcGuildMembersRequestPacket = {
+        op: IpcOpCodes.DISPATCH,
+        t: IpcEvents.GUILD_MEMBERS_REQUEST,
+        d: {
+          event_id: this.client.internals.ipc.generate(),
+          shard_id: shardId,
+          ...payload
+        }
+      }
+
+      const result = await this.client.internals.ipc.send<IpcGuildMembersResponsePacket>(request, {
+        waitResponse: true,
+        responseTimeout: 100_000
+      }), members: GuildMember[] = []
+
+      if (Array.isArray(result.d?.members)) {
+        const Member = EntitiesUtil.get('GuildMember')
+
+        for await (const memberData of result.d.members) {
+          const member = await new Member(this.client).init(memberData)
+          members.push(member)
+        }
+      }
+
+      return members
     }
 
     return this.client.internals.actions.fetchWsGuildMembers(shardId, payload)
@@ -167,6 +195,12 @@ export class ClientGuildMembersManager extends EntitiesManager {
 
     if ('nick' in data) {
       payload.nick = data.nick
+    }
+
+    if ('muteUntil' in data && data.muteUntil !== undefined) {
+      payload.communication_disabled_until = data.muteUntil === null ? null : new Date(data.muteUntil).toISOString()
+    } else if ('communication_disabled_until' in data) {
+      payload.communication_disabled_until = data.communication_disabled_until
     }
 
     const response = await this.client.internals.actions.editGuildMember(

@@ -99,6 +99,7 @@ export class ClientReactionsManager extends EntitiesManager {
           Keyspaces.MESSAGE_REACTION_USERS,
           emojiId,
           'User',
+          'users',
           user.id,
           cachePointer(Keyspaces.USERS, 'global', user.id)
         )

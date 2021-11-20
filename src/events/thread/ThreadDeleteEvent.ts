@@ -21,7 +21,7 @@ export class ThreadDeleteEvent extends AbstractEvent {
     let thread = await this.client.internals.cache.get(
       Keyspaces.CHANNELS,
       data.guild_id,
-      channelEntityKey,
+      'channelEntityKey',
       data.id,
     )
 

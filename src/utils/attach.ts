@@ -16,14 +16,22 @@ export function attach(to: any, from: any, props: Array<string | [ string, strin
     if (typeof property === 'string' && WebSocketUtils.exists(from[property])) {
       to[property] = from[property]
     } else if (Array.isArray(property)) {
-      // sorry for this code
-      WebSocketUtils.exists(from[property[0]])
-        ? to[property[0]] = from[property[0]]
-        : WebSocketUtils.exists(from[property[1]])
-          ? to[property[0]] = from[property[1]]
-        : property[2] !== undefined && to[property[0]] === undefined
-            ? to[property[0]] = property[2]
-            : undefined
+
+      if (from[property[0]] !== undefined) {
+        if (from[property[0]] === null) {
+          delete to[property[0]]
+        } else {
+          to[property[0]] = from[property[0]]
+        }
+      } else if (from[property[1]] !== undefined) {
+        if (from[property[1]] === null) {
+          delete to[property[0]]
+        } else {
+          to[property[0]] = from[property[1]]
+        }
+      } else if (property[2] !== undefined && to[property[0]] === undefined) {
+        to[property[0]] = property[2]
+      }
     }
   })
 }

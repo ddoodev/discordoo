@@ -21,7 +21,7 @@ export class ChannelDeleteEvent extends AbstractEvent {
     let channel = await this.client.internals.cache.get(
       Keyspaces.CHANNELS,
       data.guild_id,
-      channelEntityKey,
+      'channelEntityKey',
       data.id,
     )
 

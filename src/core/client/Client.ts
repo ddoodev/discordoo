@@ -61,6 +61,7 @@ import { otherCacheSymbol } from '@src/constants'
 import { ClientThreadMembersManager } from '@src/api/managers/members/ClientThreadMembersManager'
 import { ReadyEventContext } from '@src/events/ctx/ReadyEventContext'
 import { ShardConnectedEvent } from '@src/events/ShardConnectedEvent'
+import { GuildMembersChunkEvent } from '@src/events/GuildMembersChunkEvent'
 
 /** Entry point for all of Discordoo. */
 @Final(
@@ -257,6 +258,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
       MessageCreateEvent, GuildCreateEvent, PresenceUpdateEvent, ShardConnectedEvent,
       ChannelCreateEvent, ChannelUpdateEvent, ChannelDeleteEvent, ChannelPinsUpdateEvent,
       ThreadCreateEvent, ThreadUpdateEvent, ThreadDeleteEvent, ThreadListSyncEvent,
+      GuildMembersChunkEvent,
     ]) // TODO
 
     this.overwrites = new ClientPermissionOverwritesManager(this)

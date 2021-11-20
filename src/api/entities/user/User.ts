@@ -16,12 +16,11 @@ export class User extends AbstractEntity implements UserData { // TODO: implemen
   public bot!: boolean
   public discriminator!: string
   public email?: string
-  public flags?: number
   public id!: string
   public locale?: string
   public mfaEnabled?: boolean
   public premiumType?: number
-  public publicFlags?: UserFlagsUtil
+  public flags!: UserFlagsUtil
   public system!: boolean
   public username!: string
   public verified?: boolean
@@ -37,18 +36,17 @@ export class User extends AbstractEntity implements UserData { // TODO: implemen
       [ 'accentColor', 'accent_color' ],
       'banner',
       'email',
-      'flags',
       'locale',
       [ 'mfaEnabled', 'mfa_enabled' ],
       [ 'premiumType', 'premium_type' ],
-      [ 'publicFlags', 'public_flags' ],
+      [ 'flags', 'public_flags' ],
       'verified'
     ])
 
     this.bot = typeof data.bot === 'boolean' ? data.bot : this.discriminator === '0000' ? true : this.bot ?? false
     this.system = typeof data.system === 'boolean' ? data.system : this.system ?? false
 
-    if ('publicFlags' in this) this.publicFlags = new UserFlagsUtil(this.publicFlags)
+    this.flags = new UserFlagsUtil(this.flags)
 
     return this
   }
@@ -121,7 +119,6 @@ export class User extends AbstractEntity implements UserData { // TODO: implemen
       locale: true,
       mfaEnabled: true,
       premiumType: true,
-      publicFlags: true,
       system: true,
       username: true,
       verified: true

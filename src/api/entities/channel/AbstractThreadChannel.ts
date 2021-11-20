@@ -167,7 +167,7 @@ export abstract class AbstractThreadChannel extends AbstractChannel implements A
     return this.client.internals.cache.get(
       Keyspaces.CHANNELS,
       this.guildId,
-      channelEntityKey,
+      'channelEntityKey',
       this.parentId,
       options
     )

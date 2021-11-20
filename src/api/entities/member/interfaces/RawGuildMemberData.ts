@@ -11,6 +11,7 @@ export interface RawGuildMemberData {
   mute: boolean
   pending?: boolean
   permissions?: string
+  communication_disabled_until?: string
   // DISCORD DOES NOT RETURN THIS PROPERTY.
   guild_id?: string
   // DISCORD DOES NOT RETURN THIS PROPERTY.

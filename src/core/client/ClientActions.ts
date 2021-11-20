@@ -527,7 +527,7 @@ export class ClientActions {
 
         if (eventContext.last) {
           clearTimeout(executionContext.timeout)
-          executionContext.resolve(executionContext.fetched)
+          executionContext.resolve(executionContext.fetched.flat())
           return true
         }
 

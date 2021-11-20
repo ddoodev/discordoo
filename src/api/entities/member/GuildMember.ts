@@ -13,9 +13,9 @@ import { cachePointer } from '@src/utils/cachePointer'
 
 export class GuildMember extends AbstractEntity {
   public avatar?: string
-  public deaf!: boolean
+  public voiceDeaf!: boolean
   public joinedDate!: Date
-  public mute!: boolean
+  public voiceMute!: boolean
   public nick?: string
   public pending?: boolean
   public permissions!: ReadonlyPermissions
@@ -25,16 +25,18 @@ export class GuildMember extends AbstractEntity {
   public userId!: string
   public guildId!: string
   public guildOwner!: boolean
+  public muteUntilDate?: Date
 
   async init(data: GuildMemberData | RawGuildMemberData): Promise<this> {
     attach(this, data, [
       'avatar',
-      'deaf',
-      'mute',
+      [ 'voiceDeaf', 'deaf', ],
+      [ 'voiceMute', 'mute' ],
       'nick',
       'pending',
       [ 'guildId', 'guild_id' ],
-      [ 'guildOwner', 'guild_owner' ]
+      [ 'guildOwner', 'guild_owner' ],
+      [ 'muteUntilDate', 'communication_disabled_until' ],
     ])
 
     if ('joined_at' in data) {
@@ -90,6 +92,10 @@ export class GuildMember extends AbstractEntity {
       this.permissions = new ReadonlyPermissions(this.guildOwner ? PermissionFlags.ADMINISTRATOR : data.permissions)
     }
 
+    if (typeof this.muteUntilDate === 'string'!) {
+      this.muteUntilDate = new Date(this.muteUntilDate!)
+    }
+
     return this
   }
 
@@ -113,6 +119,10 @@ export class GuildMember extends AbstractEntity {
     return this.premiumSinceDate?.getTime()
   }
 
+  get muteUntilTimestamp(): number | undefined {
+    return this.muteUntilDate?.getTime()
+  }
+
   avatarUrl(options?: ImageUrlOptions): string | undefined {
     return this.avatar ? this.client.internals.rest.cdn().guildMemberAvatar(this.guildId, this.userId, this.avatar, options) : undefined
   }
@@ -125,12 +135,16 @@ export class GuildMember extends AbstractEntity {
     return this.edit({ nick }, reason)
   }
 
-  setDeaf(deaf: boolean, reason?: string) {
-    return this.edit({ deaf }, reason)
+  setVoiceDeaf(voiceDeaf: boolean, reason?: string) {
+    return this.edit({ voiceDeaf }, reason)
   }
 
-  setMute(mute: boolean, reason?: string) {
-    return this.edit({ mute }, reason)
+  setVoiceMute(voiceMute: boolean, reason?: string) {
+    return this.edit({ voiceMute }, reason)
+  }
+
+  muteUntil(muteUntil: Date | number | string | null, reason?: string): Promise<this | undefined> {
+    return this.edit({ muteUntil }, reason)
   }
 
   async ban(options?: MemberBanOptions): Promise<this | undefined> {
@@ -156,15 +170,16 @@ export class GuildMember extends AbstractEntity {
     return super.toJson({
       ...properties,
       avatar: true,
-      deaf: true,
+      voiceDeaf: true,
       joinedDate: true,
-      mute: true,
+      voiceMute: true,
       nick: true,
       pending: true,
       permissions: true,
       premiumSinceDate: true,
       guildId: true,
       guildOwner: true,
+      muteUntilDate: true,
       roles: {
         override: ToJsonOverrideSymbol,
         value: this.rolesList

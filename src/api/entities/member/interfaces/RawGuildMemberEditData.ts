@@ -4,4 +4,5 @@ export interface RawGuildMemberEditData {
   mute?: boolean
   deaf?: boolean
   channel_id?: string | null
+  communication_disabled_until?: string | null
 }

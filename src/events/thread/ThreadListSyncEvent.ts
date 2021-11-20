@@ -32,7 +32,7 @@ export class ThreadListSyncEvent extends AbstractEvent {
     await this.client.internals.cache.sweep<string, AnyGuildChannel | AnyThreadChannel>(
       Keyspaces.CHANNELS,
       data.guild_id,
-      channelEntityKey,
+      'channelEntityKey',
       predicate
     )
 
@@ -40,14 +40,14 @@ export class ThreadListSyncEvent extends AbstractEvent {
       let thread = await this.client.internals.cache.get(
         Keyspaces.CHANNELS,
         data.guild_id,
-        channelEntityKey,
+        'channelEntityKey',
         threadData.id,
       )
 
       if (thread) {
         thread = await thread.init(threadData)
       } else {
-        const Thread: any = EntitiesUtil.get(channelEntityKey(threadData))
+        const Thread: any = EntitiesUtil.get('channelEntityKey', threadData)
         thread = await new Thread(this.client).init(threadData)
       }
 

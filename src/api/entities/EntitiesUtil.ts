@@ -1,12 +1,14 @@
 import { ExtendableEntities as DefaultExtendableEntities } from '@src/api/entities/ExtendableEntities'
 import { Entities } from '@src/api/entities/Entities'
 import { DiscordooError } from '@src/utils/DiscordooError'
+import { EntityKeyFunctions } from '@src/api/entities/EntityKeyFunctions'
 
 const ExtendableEntities = Object.create(DefaultExtendableEntities ?? null) as typeof DefaultExtendableEntities
 
 type Ext = typeof ExtendableEntities
 type Def = typeof DefaultExtendableEntities
 type Ent = typeof Entities
+type Enf = typeof EntityKeyFunctions
 
 const source = 'EntitiesUtil#'
 
@@ -45,9 +47,17 @@ export class EntitiesUtil {
     }
   }
 
-  static get<K extends keyof Ent = keyof Ent>(entity: K): Ent[K] {
-    if (!Entities[entity]) throw new DiscordooError(source + 'get', 'Unknown entity')
-    return Entities[entity]
+  static get<K extends keyof Ent = keyof Ent>(entity: K | keyof Enf, data?: any): Ent[K] {
+    let key: keyof Ent
+
+    if (EntityKeyFunctions[entity as string]) {
+      key = EntityKeyFunctions[entity as string](data)
+    } else {
+      if (!Entities[entity as string]) throw new DiscordooError(source + 'get', 'Unknown entity:', entity)
+      key = entity as any
+    }
+
+    return Entities[key] as Ent[K]
   }
 
   static clear<K extends keyof Ext = keyof Ext>(entity: K): Def[K] {

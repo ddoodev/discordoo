@@ -71,7 +71,7 @@ export class MessageReaction extends AbstractEntity {
     return this.client.internals.cache.get(
       Keyspaces.MESSAGE_REACTIONS,
       this.messageId,
-      reactionEmojiEntityKey,
+      'reactionEmojiEntityKey',
       this.emojiId,
       options
     )

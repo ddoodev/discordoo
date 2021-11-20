@@ -31,7 +31,7 @@ export class GuildCategoryChannel extends AbstractGuildChannel {
     await this.client.internals.cache.forEach(
       Keyspaces.CHANNELS,
       this.guildId,
-      channelEntityKey,
+      'channelEntityKey',
       predicate
     )
 

@@ -62,6 +62,7 @@ export class GuildMembersChunkEvent extends AbstractEvent {
     })
 
     const context: GuildMembersChunkEventContext = {
+      shardId,
       members: await Promise.all(members),
       presences: presences ? await Promise.all(presences) : undefined,
       guildId: data.guild_id,
@@ -71,13 +72,17 @@ export class GuildMembersChunkEvent extends AbstractEvent {
       nonce: data.nonce,
     }
 
-    /*
-    const handler = data.nonce ? this.client.internals.queues.members.get(data.nonce) : undefined
+    // console.log(context)
 
-    if (handler) {
-      handler(context)
+    const queue = data.nonce ? this.client.internals.queues.members.get(data.nonce) : undefined
+
+    if (queue) {
+      const result = queue.handler(context, queue)
+
+      if (result !== true) {
+        this.client.internals.queues.members.set(result.nonce, result)
+      }
     }
-     */
 
     this.client.emit(EventNames.GUILD_MEMBERS_CHUNK, context)
   }

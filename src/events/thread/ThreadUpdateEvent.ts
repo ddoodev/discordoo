@@ -23,7 +23,7 @@ export class ThreadUpdateEvent extends AbstractEvent {
     const stored = await this.client.internals.cache.get<string, AnyThreadChannel>(
       Keyspaces.CHANNELS,
       data.guild_id,
-      channelEntityKey,
+      'channelEntityKey',
       data.id
     )
 

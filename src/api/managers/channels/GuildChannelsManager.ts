@@ -3,7 +3,7 @@ import { ChannelResolvable, EntitiesCacheManager, GuildChannelDeleteOptions } fr
 import { AnyGuildChannel } from '@src/api/entities/channel/interfaces/AnyGuildChannel'
 import { Client } from '@src/core'
 import { GuildChannelsManagerData } from '@src/api/managers/channels/GuildChannelsManagerData'
-import { channelEntityKey, DiscordooError, resolveGuildId } from '@src/utils'
+import { DiscordooError, resolveGuildId } from '@src/utils'
 import { Keyspaces } from '@src/constants'
 import { GuildChannelResolvable } from '@src/api/entities/channel/interfaces/GuildChannelResolvable'
 import { GuildChannelEditData } from '@src/api/entities/channel/interfaces/GuildChannelEditData'
@@ -29,7 +29,7 @@ export class GuildChannelsManager extends EntitiesManager {
     this.cache = new EntitiesCacheManager<AnyGuildChannel>(this.client, {
       keyspace: Keyspaces.CHANNELS,
       storage: this.guildId,
-      entity: channelEntityKey,
+      entity: 'channelEntityKey',
       policy: 'channels'
     })
   }

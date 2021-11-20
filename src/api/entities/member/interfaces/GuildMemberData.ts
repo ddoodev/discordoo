@@ -10,10 +10,11 @@ export interface GuildMemberData {
   roles: RoleResolvable[]
   joinedDate: Date
   premiumSinceDate?: Date
-  deaf: boolean
-  mute: boolean
+  voiceDeaf: boolean
+  voiceMute: boolean
   pending?: boolean
   permissions?: PermissionsResolvable
   guildId: string
   guildOwner: boolean
+  textMuteUntilDate?: Date
 }

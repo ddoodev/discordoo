@@ -1,3 +1,4 @@
 import { Entities } from '@src/api/entities/Entities'
+import { EntityKeyFunctions } from '@src/api/entities/EntityKeyFunctions'
 
-export type EntityKey = ((data: any) => keyof typeof Entities) | keyof typeof Entities | 'any'
+export type EntityKey = keyof typeof Entities | 'any' | keyof typeof EntityKeyFunctions

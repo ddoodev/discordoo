@@ -48,6 +48,11 @@ export class AbstractGuildTextChannel extends AbstractGuildChannel implements Wr
     return this
   }
 
+  set lastMsgId(id: string) {
+    this.lastMessageId = id
+    this.messages.lastMessageId = id
+  }
+
   get send() {
     return this.messages.create.bind(this.messages)
   }

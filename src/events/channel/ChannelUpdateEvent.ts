@@ -21,7 +21,7 @@ export class ChannelUpdateEvent extends AbstractEvent {
     const stored = await this.client.internals.cache.get<string, AnyGuildChannel>(
       Keyspaces.CHANNELS,
       data.guild_id,
-      channelEntityKey,
+      'channelEntityKey',
       data.id
     )
 

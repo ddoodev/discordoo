@@ -41,7 +41,7 @@ export class ClientChannelsManager extends EntitiesManager {
     this.cache = new EntitiesCacheManager<AnyChannel>(this.client, {
       keyspace: Keyspaces.CHANNELS,
       storage: 'global',
-      entity: channelEntityKey,
+      entity: 'channelEntityKey',
       policy: 'channels'
     })
   }

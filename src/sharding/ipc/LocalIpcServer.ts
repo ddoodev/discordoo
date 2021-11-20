@@ -10,11 +10,15 @@ import {
   IpcCacheRequestPacket,
   IpcCacheResponsePacket,
   IpcDispatchPacket,
+  IpcGuildMembersRequestPacket,
+  IpcGuildMembersResponsePacket,
   IpcHelloPacket,
   IpcIdentifyPacket
 } from '@src/sharding/interfaces/ipc/IpcPackets'
 import { IpcServerEvents } from '@src/sharding/interfaces/ipc/IpcServerEvents'
 import { Client } from '@src/core'
+import { GuildMemberData } from '@src/api'
+import { RawGuildMembersFetchOptions } from '@src/api/managers/members/RawGuildMembersFetchOptions'
 
 export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
   private readonly bucket: Collection = new Collection()
@@ -96,32 +100,78 @@ export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
       case IpcOpCodes.HELLO:
         return this.hello(packet as IpcHelloPacket, socket)
 
+      case IpcOpCodes.DISPATCH:
+        return this.dispatch(packet as IpcDispatchPacket)
+
       case IpcOpCodes.CACHE_OPERATE: {
         // console.log('IPC SERVER', this.instance, 'ON CACHE OPERATE', process.hrtime.bigint())
         let success = true
 
-        // console.log('IPC SERVER', this.instance, 'ON RESULT', process.hrtime.bigint())
+        // console.log('IPC SERVER', this.instance, 'ON RESULT', packet)
         const result = await this.cacheOperate(packet as IpcCacheRequestPacket)
           .catch(e => {
             success = false
             return e
           })
 
-        // console.log('IPC SERVER', this.instance, 'ON RESPONSE', process.hrtime.bigint())
+        // console.log('IPC SERVER', this.instance, 'ON RESPONSE', result)
         const response: IpcCacheResponsePacket = {
           op: IpcOpCodes.CACHE_OPERATE,
           d: {
             event_id: packet.d.event_id,
             success,
-            result
+            result: this.client.internals.cache.convertToJson(result)
           }
         }
 
         // console.log('IPC SERVER', this.instance, 'ON CACHE OPERATE REPLY', process.hrtime.bigint())
         return this.send(response)
       }
-
     }
+  }
+
+  private async dispatch(packet: IpcDispatchPacket) { // TODO: IpcDispatchPackets
+    switch (packet.t) {
+      case IpcEvents.DESTROYING:
+        this.destroy()
+        process.exit(0)
+        break
+      case IpcEvents.GUILD_MEMBERS_REQUEST: {
+        const members = await this.guildMembersRequest(packet as IpcGuildMembersRequestPacket)
+
+        const response: IpcGuildMembersResponsePacket = {
+          op: IpcOpCodes.DISPATCH,
+          t: IpcEvents.GUILD_MEMBERS_REQUEST,
+          d: {
+            shard_id: packet.d.shard_id,
+            members,
+            event_id: packet.d.event_id
+          }
+        }
+
+        await this.send(response)
+      } break
+    }
+  }
+
+  private async guildMembersRequest(packet: IpcGuildMembersRequestPacket): Promise<GuildMemberData[]> {
+    const data = packet.d
+
+    const options: RawGuildMembersFetchOptions = {
+      nonce: data.nonce,
+      limit: data.limit,
+      guild_id: data.guild_id,
+      presences: data.presences,
+      query: data.query,
+    }
+
+    if (data.user_ids) {
+      options.user_ids = data.user_ids
+    }
+
+    const members = await this.client.internals.actions.fetchWsGuildMembers(data.shard_id, options)
+
+    return members.map(m => m.toJson()) as any
   }
 
   private cacheOperate(request: IpcCacheRequestPacket): any {
@@ -129,9 +179,9 @@ export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
 
     switch (request.d.op) {
       case IpcCacheOpCodes.GET:
-        return this.client.internals.cache.get(keyspace, storage, request.d.entityKey, request.d.key)
+        return this.client.internals.cache.get(keyspace, storage, request.d.entity_key, request.d.key)
       case IpcCacheOpCodes.SET:
-        return this.client.internals.cache.set(keyspace, storage, request.d.entityKey, request.d.key, request.d.value)
+        return this.client.internals.cache.set(keyspace, storage, request.d.entity_key, request.d.policy, request.d.key, request.d.value)
       case IpcCacheOpCodes.DELETE:
         return this.client.internals.cache.delete(keyspace, storage, request.d.key)
       case IpcCacheOpCodes.SIZE:
@@ -150,7 +200,7 @@ export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
           }
         })
 
-        return this.client.internals.cache.counts(keyspace, storage, request.d.entityKey, predicates)
+        return this.client.internals.cache.counts(keyspace, storage, request.d.entity_key, predicates)
       }
       case IpcCacheOpCodes.COUNT:
       case IpcCacheOpCodes.FILTER:
@@ -181,7 +231,7 @@ export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
           return eval(script + '.bind(provider)(value, key, provider)')
         }
 
-        return this.client.internals.cache[method](keyspace, storage, request.d.entityKey, predicate)
+        return this.client.internals.cache[method](keyspace, storage, request.d.entity_key, predicate)
       }
     }
   }
@@ -215,15 +265,6 @@ export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
     return this.send(data)
   }
 
-  private dispatch(packet: IpcDispatchPacket) {
-    switch (packet.t) {
-      case IpcEvents.DESTROYING:
-        this.destroy()
-        process.exit(0)
-        break
-    }
-  }
-
   send(data: IpcPacket, options?: IpcServerSendOptions): Promise<void>
   send<P extends IpcPacket>(data: IpcPacket, options?: IpcServerSendOptions): Promise<P>
   send<P extends IpcPacket = IpcPacket>(data: IpcPacket, options: IpcServerSendOptions = {}): Promise<P | void> {
@@ -232,7 +273,7 @@ export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
     if (!options.socket) throw new DiscordooError('LocalIpcServer#send', 'cannot find socket to send packet:', data)
     if (!this.server) throw new DiscordooError('LocalIpcServer#send', 'ipc server not started')
 
-    // console.log('IPC SERVER', this.instance, 'ON SEND BEFORE PROMISE', process.hrtime.bigint())
+    // console.log('IPC SERVER', this.instance, 'ON SEND BEFORE PROMISE', data)
     let promise: any
     return new Promise((resolve, reject) => {
       promise = { res: resolve, rej: reject }
@@ -241,7 +282,7 @@ export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
         promise.timeout = setTimeout(() => {
           this.bucket.delete(data.d.event_id)
           reject(new DiscordooError('LocalIpcServer#send', 'response time is up'))
-        }, 60000)
+        }, options.responseTimeout ?? 60_000)
 
         this.bucket.set(data.d.event_id, promise)
       }

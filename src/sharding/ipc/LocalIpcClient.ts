@@ -2,9 +2,15 @@ import { TypedEmitter } from 'tiny-typed-emitter'
 import { IPC as RawIpc } from 'node-ipc'
 import { IpcClientOptions, IpcClientSendOptions, IpcPacket, ShardingInstance } from '@src/sharding'
 import { Collection } from '@discordoo/collection'
-import { IpcOpCodes, RAW_IPC_EVENT, SerializeModes } from '@src/constants'
+import { IpcEvents, IpcOpCodes, RAW_IPC_EVENT, SerializeModes } from '@src/constants'
 import { DiscordooError, DiscordooSnowflake } from '@src/utils'
-import { IpcCacheRequestPacket, IpcCacheResponsePacket, IpcHeartbeatPacket, IpcHelloPacket } from '@src/sharding/interfaces/ipc/IpcPackets'
+import {
+  IpcCacheRequestPacket,
+  IpcCacheResponsePacket,
+  IpcDispatchPacket, IpcGuildMembersRequestPacket, IpcGuildMembersResponsePacket,
+  IpcHeartbeatPacket,
+  IpcHelloPacket
+} from '@src/sharding/interfaces/ipc/IpcPackets'
 import { IpcClientEvents } from '@src/sharding/interfaces/ipc/IpcClientEvents'
 
 export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
@@ -91,6 +97,31 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
         // console.log('IPC CLIENT', this.id, 'ON CACHE OPERATE', process.hrtime.bigint())
         this.cacheOperate(packet as IpcCacheRequestPacket)
         break
+      case IpcOpCodes.DISPATCH:
+        this.dispatch(packet as IpcDispatchPacket)
+        break
+    }
+  }
+
+  private async dispatch(packet: IpcDispatchPacket) { // TODO: IpcDispatchPackets
+    switch (packet.t) {
+      case IpcEvents.GUILD_MEMBERS_REQUEST:
+        await this.guildMembersRequest(packet as IpcGuildMembersRequestPacket)
+        break
+    }
+  }
+
+  private async guildMembersRequest(packet: IpcGuildMembersRequestPacket) {
+    const shard = this.instance.manager.shards.get(packet.d.shard_id),
+      id = packet.d.event_id
+
+    if (shard) {
+      packet.d.event_id = this.generate()
+      const result: any = await shard.ipc.send(packet, { waitResponse: true, responseTimeout: 100_000 })
+
+      result.d.event_id = id
+
+      await this.send(result)
     }
   }
 
@@ -114,12 +145,10 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
     const success = responses.some(r => r?.d.success)
     let result
 
-    // @ts-expect-error
-    if (packet.d.serialize !== undefined) {
+    if ('serialize' in packet.d && packet.d.serialize !== undefined) {
       // console.log('IPC CLIENT', this.id, 'ON SERIALIZE', process.hrtime.bigint())
       result = this.serializeResponses(
         responses.map(r => r?.d.success ? r?.d.result : undefined).filter(r => r ?? false), // filter undefined/null
-        // @ts-expect-error
         packet.d.serialize
       )
     } else {
@@ -197,7 +226,7 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
       if (options.waitResponse && data.d?.event_id) {
         promise.timeout = setTimeout(() => {
           reject(new DiscordooError('LocalIpcClient#send', 'response time is up'))
-        }, 60000)
+        }, options.responseTimeout ?? 60_000)
 
         this.bucket.set(data.d.event_id, promise)
       }

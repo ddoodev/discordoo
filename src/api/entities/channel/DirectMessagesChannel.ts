@@ -49,6 +49,11 @@ export class DirectMessagesChannel extends AbstractChannel implements WritableCh
     return this.client.messages.create(this.id, content, options)
   }
 
+  set lastMsgId(id: string) {
+    this.lastMessageId = id
+    this.messages.lastMessageId = id
+  }
+
   toJson(properties: ToJsonProperties = {}, obj?: any): Json {
     return super.toJson({
       ...properties,

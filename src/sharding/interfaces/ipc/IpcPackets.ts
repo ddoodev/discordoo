@@ -2,6 +2,9 @@ import { IpcPacket } from '@src/sharding'
 import { IpcCacheOpCodes, IpcEvents, IpcOpCodes, SerializeModes } from '@src/constants'
 import { CacheStorageKey } from '@discordoo/providers'
 import { EntityKey } from '@src/api/entities/interfaces'
+import { CacheOptions } from '@src/cache'
+import { RawGuildMembersFetchOptions } from '@src/api/managers/members/RawGuildMembersFetchOptions'
+import { GuildMemberData, RawGuildMemberData } from '@src/api'
 
 export interface IpcHelloPacket extends IpcPacket {
   op: IpcOpCodes.HELLO
@@ -32,8 +35,22 @@ export interface IpcHeartbeatPacket extends IpcPacket {
 
 export interface IpcDispatchPacket extends IpcPacket {
   op: IpcOpCodes.DISPATCH
-  d: any
   t: IpcEvents
+  d: any
+}
+
+export interface IpcGuildMembersRequestPacket extends IpcDispatchPacket {
+  t: IpcEvents.GUILD_MEMBERS_REQUEST
+  d: RawGuildMembersFetchOptions & { event_id: string; shard_id: number }
+}
+
+export interface IpcGuildMembersResponsePacket extends IpcDispatchPacket {
+  t: IpcEvents.GUILD_MEMBERS_REQUEST
+  d: {
+    event_id: string
+    shard_id: string
+    members: GuildMemberData[]
+  }
 }
 
 export interface IpcCacheGetRequestPacket extends IpcPacket {
@@ -46,7 +63,7 @@ export interface IpcCacheGetRequestPacket extends IpcPacket {
     key: any
     keyspace: string
     storage: CacheStorageKey
-    entityKey: EntityKey
+    entity_key: EntityKey
   }
 }
 
@@ -69,7 +86,8 @@ export interface IpcCacheSetRequestPacket extends IpcPacket {
     key: any
     keyspace: string
     storage: CacheStorageKey
-    entityKey: EntityKey
+    policy: keyof CacheOptions
+    entity_key: EntityKey
     value: any
   }
 }
@@ -113,7 +131,7 @@ export interface IpcCacheForEachRequestPacket extends IpcPacket {
     shards: number[]
     keyspace: string
     storage: CacheStorageKey
-    entityKey: EntityKey
+    entity_key: EntityKey
     script: string
   }
 }
@@ -178,7 +196,7 @@ export interface IpcCacheSweepRequestPacket extends IpcPacket {
     shards: number[]
     keyspace: string
     storage: CacheStorageKey
-    entityKey: EntityKey
+    entity_key: EntityKey
     script: string
   }
 }
@@ -201,7 +219,7 @@ export interface IpcCacheFilterRequestPacket extends IpcPacket {
     shards: number[]
     keyspace: string
     storage: CacheStorageKey
-    entityKey: EntityKey
+    entity_key: EntityKey
     script: string
   }
 }
@@ -224,7 +242,7 @@ export interface IpcCacheMapRequestPacket extends IpcPacket {
     shards: number[]
     keyspace: string
     storage: CacheStorageKey
-    entityKey: EntityKey
+    entity_key: EntityKey
     script: string
   }
 }
@@ -247,7 +265,7 @@ export interface IpcCacheFindRequestPacket extends IpcPacket {
     shards: number[]
     keyspace: string
     storage: CacheStorageKey
-    entityKey: EntityKey
+    entity_key: EntityKey
     script: string
   }
 }
@@ -291,7 +309,7 @@ export interface IpcCacheCountRequestPacket extends IpcPacket {
     shards: number[]
     keyspace: string
     storage: CacheStorageKey
-    entityKey: EntityKey
+    entity_key: EntityKey
     script: string
   }
 }
@@ -314,7 +332,7 @@ export interface IpcCacheCountsRequestPacket extends IpcPacket {
     shards: number[]
     keyspace: string
     storage: CacheStorageKey
-    entityKey: EntityKey
+    entity_key: EntityKey
     scripts: string[]
   }
 }

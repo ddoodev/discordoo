@@ -27,6 +27,7 @@ export class DefaultGatewayProvider implements GatewayProvider {
   }
 
   emit(shardId: number, event: string, ...data: any[]): unknown {
+    // if (event !== 'PRESENCE_UPDATE') console.log('shard', shardId, 'event', event)
     return this.client.internals.gateway.emit(
       shardId,
       event === WebSocketClientEvents.CONNECTED ? 'shardConnected' : rawToDiscordoo(event),
@@ -64,6 +65,7 @@ export class DefaultGatewayProvider implements GatewayProvider {
   }
 
   send(data: GatewaySendPayloadLike, options: GatewaySendOptions = {}): unknown {
+    // console.log('provider send', data, 'shards', this.manager.shards, 'options', options)
     switch (Array.isArray(options.shards)) {
       case true:
         options.shards!.forEach(id => this.manager.shards.get(id)?.socketSend(data))

@@ -4,6 +4,8 @@ import { RawMessageData } from '@src/api/entities/message/interfaces/RawMessageD
 import { channelEntityKey } from '@src/utils'
 import { MessageCreateEventContext } from '@src/events/ctx/MessageCreateEventContext'
 import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
+import { AnyGuildChannel } from '@src/api/entities/channel/interfaces/AnyGuildChannel'
+import { AnyWritableChannel } from '@src/api/entities/channel/interfaces/AnyWritableChannel'
 
 export class MessageCreateEvent extends AbstractEvent {
   public name = EventNames.MESSAGE_CREATE
@@ -25,12 +27,16 @@ export class MessageCreateEvent extends AbstractEvent {
 
     await this.client.users.cache.set(author.id, author)
 
-    const channel = await this.client.internals.cache.get(
-      Keyspaces.CHANNELS,
-      message.guildId ?? message.authorId,
-      channelEntityKey,
-      message.channelId
-    )
+    const channel = await this.client.channels.cache.get<AnyWritableChannel>(message.channelId, {
+      storage: message.guildId ?? message.authorId
+    })
+
+    if (channel) {
+      channel.lastMsgId = message.id
+      await this.client.channels.cache.set(message.channelId, channel, {
+        storage: message.guildId ?? message.authorId
+      })
+    }
 
     const context: MessageCreateEventContext = {
       message,
