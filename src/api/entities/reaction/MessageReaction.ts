@@ -1,8 +1,8 @@
 import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 import { GuildEmoji, Json, Message, ReactionEmoji, ToJsonProperties } from '@src/api'
-import { attach, DiscordooError, reactionEmojiEntityKey, resolveChannelId, resolveEmojiId, resolveMessageId } from '@src/utils'
+import { attach, DiscordooError, resolveChannelId, resolveEmojiId, resolveMessageId } from '@src/utils'
 import { MessageReactionData } from '@src/api/entities/reaction/interfaces/MessageReactionData'
-import { Keyspaces, ToJsonOverrideSymbol } from '@src/constants'
+import { ToJsonOverrideSymbol } from '@src/constants'
 import { CacheManagerGetOptions } from '@src/cache'
 import { ReactionUsersManager } from '@src/api/managers/reactions/ReactionUsersManager'
 
@@ -68,23 +68,11 @@ export class MessageReaction extends AbstractEntity {
   }
 
   async emoji(options?: CacheManagerGetOptions): Promise<ReactionEmoji | GuildEmoji | undefined> {
-    return this.client.internals.cache.get(
-      Keyspaces.MESSAGE_REACTIONS,
-      this.messageId,
-      'reactionEmojiEntityKey',
-      this.emojiId,
-      options
-    )
+    return this.client.emojis.cache.get(this.emojiId, { ...options, storage: this.messageId })
   }
 
   async message(options?: CacheManagerGetOptions): Promise<Message | undefined> {
-    return this.client.internals.cache.get(
-      Keyspaces.MESSAGES,
-      this.channelId,
-      'Message',
-      this.messageId,
-      options
-    )
+    return this.client.messages.cache.get(this.messageId, { ...options, storage: this.channelId })
   }
 
   toJson(properties: ToJsonProperties = {}, obj?: any): Json {

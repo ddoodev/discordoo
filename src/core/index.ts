@@ -1,3 +1,4 @@
+export { ClientShardingApplication } from '@src/core/client/app/ClientShardingApplication'
 export { ClientShardingMetadata } from '@src/core/client/ClientShardingMetadata'
 export { DefaultClientStack } from '@src/core/client/DefaultClientStack'
 export { ClientInternals } from '@src/core/client/ClientInternals'

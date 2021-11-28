@@ -5,13 +5,16 @@ import { Collection } from '@discordoo/collection'
 import { IpcEvents, IpcOpCodes, RAW_IPC_EVENT, SerializeModes } from '@src/constants'
 import { DiscordooError, DiscordooSnowflake } from '@src/utils'
 import {
+  IpcBroadcastEvalResponsePacket,
   IpcCacheRequestPacket,
   IpcCacheResponsePacket,
-  IpcDispatchPacket, IpcGuildMembersRequestPacket, IpcGuildMembersResponsePacket,
+  IpcDispatchPacket,
+  IpcGuildMembersRequestPacket,
   IpcHeartbeatPacket,
   IpcHelloPacket
 } from '@src/sharding/interfaces/ipc/IpcPackets'
 import { IpcClientEvents } from '@src/sharding/interfaces/ipc/IpcClientEvents'
+import { filterAndMap } from '@src/utils/filterAndMap'
 
 export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
   private bucket: Collection = new Collection()
@@ -108,6 +111,49 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
       case IpcEvents.GUILD_MEMBERS_REQUEST:
         await this.guildMembersRequest(packet as IpcGuildMembersRequestPacket)
         break
+      case IpcEvents.BROADCAST_EVAL: {
+        const shards = packet.d.shards,
+          id = packet.d.event_id
+
+        const promises: Array<undefined | Promise<any>> = shards.map(s => {
+          const shard = this.instance.manager.instances.get(s)
+
+          if (shard) packet.d.event_id = this.generate()
+
+          return shard?.ipc.send(packet, { waitResponse: true })
+        })
+
+        await Promise.all(promises)
+          .then(r => {
+            r = r.filter(r => r !== undefined)
+
+            const response: IpcBroadcastEvalResponsePacket = {
+              op: IpcOpCodes.DISPATCH,
+              t: IpcEvents.BROADCAST_EVAL,
+              d: {
+                event_id: id,
+                result: r.map(p => p.d.result)
+              }
+            }
+
+            this.send(response)
+          })
+          .catch(e => {
+            e.d.event_id = id
+            this.send(e)
+          })
+      } break
+      case IpcEvents.MESSAGE: {
+        const shards = filterAndMap<any, ShardingInstance>(
+          packet.d.shards,
+          id => this.instance.manager.instances.has(id),
+          id => this.instance.manager.instances.get(id)
+        )
+
+        shards.forEach(s => {
+          s.ipc.send(packet)
+        })
+      } break
     }
   }
 

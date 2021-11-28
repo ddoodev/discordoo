@@ -62,6 +62,7 @@ import {
   CachePointer,
 } from '@src/cache/interfaces'
 import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
+import { toJson } from '@src/utils/toJson'
 
 export class CacheManager<P extends CacheProvider = CacheProvider> {
   public client: Client
@@ -698,36 +699,20 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     }
   }
 
-  public convertToJson(data: any, returnString?: boolean): any {
-    if (Array.isArray(data)) return data.map(d => this.convertToJson(d, returnString))
-
-    if (data) {
-      if (returnString) {
-        if (typeof data.toJson === 'function') return JSON.stringify(data.toJson())
-        return JSON.stringify(data)
-      } else {
-        if (typeof data.toJson === 'function') return data.toJson()
-        return JSON.parse(JSON.stringify(data))
-      }
-    }
-
-    return data
-  }
-
   private async _prepareData(direction: 'in' | 'out', data: any, entityKey: EntityKey, forIpcRequest?: boolean): Promise<any> {
 
-    if (forIpcRequest) return this.convertToJson(data)
+    if (forIpcRequest) return toJson(data)
 
     if (direction === 'in') {
       if (data.___type___ === 'discordooCachePointer' || entityKey === 'any') {
         switch (this.provider.compatible) {
           case 'classes':
           case 'json':
-            return this.convertToJson(data)
+            return toJson(data)
           case 'text':
-            return this.convertToJson(data, true)
+            return toJson(data, true)
           case 'buffer':
-            return Buffer.from(this.convertToJson(data, true))
+            return Buffer.from(toJson(data, true))
         }
       }
 
@@ -738,13 +723,13 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
           if (!(data instanceof Entity)) data = await new Entity(this.client).init?.(data)
           break
         case 'json':
-          data = this.convertToJson(data)
+          data = toJson(data)
           break
         case 'text':
-          data = this.convertToJson(data, true)
+          data = toJson(data, true)
           break
         case 'buffer':
-          data = Buffer.from(this.convertToJson(data, true))
+          data = Buffer.from(toJson(data, true))
           break
       }
 

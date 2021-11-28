@@ -344,7 +344,7 @@ export function resolveDiscordooShards(client: Client, shards: ShardListResolvab
           throw shardsIsNaN
         }
 
-        shards = range(shards.from, shards.to)
+        result = range(shards.from, shards.to)
       }
       break
 
@@ -353,7 +353,7 @@ export function resolveDiscordooShards(client: Client, shards: ShardListResolvab
       break
 
     default:
-      throw new DiscordooError(source, 'do not know how to resolve shards from', typeof shards + '.', 'provided shards:', shards)
+      throw new DiscordooError(source, 'do not know how to resolve shards from', typeof shards + '.', 'Provided shards:', shards)
   }
 
   return result

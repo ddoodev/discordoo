@@ -5,10 +5,19 @@ import {
   GlobalCachingPolicy,
   IpcEvents,
   IpcOpCodes,
+  otherCacheSymbol,
   REST_DEFAULT_OPTIONS,
   WS_DEFAULT_OPTIONS
 } from '@src/constants'
-import { DiscordooError, DiscordooSnowflake, ReplaceType, resolveDiscordShards, ShardListResolvable, version, wait } from '@src/utils'
+import {
+  DiscordooError,
+  DiscordooSnowflake,
+  ReplaceType,
+  resolveDiscordooShards,
+  resolveDiscordShards,
+  ShardListResolvable,
+  version
+} from '@src/utils'
 import { CompletedLocalIpcOptions } from '@src/constants/sharding/CompletedLocalIpcOptions'
 import { CompletedGatewayOptions } from '@src/gateway/interfaces/CompletedGatewayOptions'
 import { ClientMessagesManager } from '@src/api/managers/messages/ClientMessagesManager'
@@ -31,11 +40,15 @@ import { ClientOptions } from '@src/core/client/ClientOptions'
 import { ClientActions } from '@src/core/client/ClientActions'
 import {
   ChannelCreateEvent,
-  ChannelDeleteEvent, ChannelPinsUpdateEvent,
+  ChannelDeleteEvent,
+  ChannelPinsUpdateEvent,
   ChannelUpdateEvent,
   ClientEvents,
   MessageCreateEvent,
-  ThreadCreateEvent, ThreadDeleteEvent, ThreadListSyncEvent, ThreadUpdateEvent
+  ThreadCreateEvent,
+  ThreadDeleteEvent,
+  ThreadListSyncEvent,
+  ThreadUpdateEvent
 } from '@src/events'
 import { UsersManager } from '@src/api/managers/UsersManager'
 import { ClientRolesManager } from '@src/api/managers/roles'
@@ -57,11 +70,22 @@ import { PresenceUpdateEvent } from '@src/events/PresenceUpdateEvent'
 import { ClientQueues } from '@src/core/client/ClientQueues'
 import { Collection } from '@discordoo/collection'
 import { OtherCacheManager } from '@src/api/managers/OtherCacheManager'
-import { otherCacheSymbol } from '@src/constants'
 import { ClientThreadMembersManager } from '@src/api/managers/members/ClientThreadMembersManager'
-import { ReadyEventContext } from '@src/events/ctx/ReadyEventContext'
 import { ShardConnectedEvent } from '@src/events/ShardConnectedEvent'
 import { GuildMembersChunkEvent } from '@src/events/GuildMembersChunkEvent'
+import { ClientEmojisManager } from '@src/api/managers/emoji/ClientEmojisManager'
+import { ClientShardingApplication } from '@src/core/client/app/ClientShardingApplication'
+import { BroadcastEvalOptions } from '@src/sharding/interfaces/ipc/BroadcastEvalOptions'
+import { BroadcastOptions } from '@src/sharding/interfaces/ipc/BroadcastOptions'
+import { fromJson, toJson } from '@src/utils/toJson'
+import { evalWithoutScopeChain } from '@src/utils/evalWithoutScopeChain'
+import {
+  IpcBroadcastEvalRequestPacket,
+  IpcBroadcastEvalResponsePacket,
+  IpcBroadcastMessagePacket
+} from '@src/sharding/interfaces/ipc/IpcPackets'
+import { deserializeError } from 'serialize-error'
+import { is } from 'typescript-is'
 
 /** Entry point for all of Discordoo. */
 @Final(
@@ -92,38 +116,41 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
   /** Options passed to this client */
   public readonly options: ClientOptions
 
-  /** Guilds manager of this client */
+  /** Guilds manager for this client */
   public readonly guilds: GuildsManager
 
-  /** Users manager of this client */
+  /** Users manager for this client */
   public readonly users: UsersManager
 
-  /** Messages manager of this client */
+  /** Messages manager for this client */
   public readonly messages: ClientMessagesManager
 
-  /** Channels manager of this client */
+  /** Channels manager for this client */
   public readonly channels: ClientChannelsManager
 
-  /** Stickers manager of this client */
+  /** Stickers manager for this client */
   public readonly stickers: ClientStickersManager
 
-  /** Members manager of this client */
+  /** Members manager for this client */
   public readonly members: ClientGuildMembersManager
 
-  /** Roles manager of this client */
+  /** Roles manager for this client */
   public readonly roles: ClientRolesManager
 
-  /** Presences manager of this client */
+  /** Presences manager for this client */
   public readonly presences: ClientPresencesManager
 
-  /** Reactions manager of this client */
+  /** Reactions manager for this client */
   public readonly reactions: ClientReactionsManager
 
-  /** Permissions Overwrites manager of this client */
+  /** Permissions Overwrites manager for this client */
   public readonly overwrites: ClientPermissionOverwritesManager
 
-  /** Thread Members manager of this client */
+  /** Thread Members manager for this client */
   public readonly threadMembers: ClientThreadMembersManager
+
+  /** Emojis manager for this client */
+  public readonly emojis: ClientEmojisManager
 
   public readonly [otherCacheSymbol]: OtherCacheManager
   #running = false
@@ -270,6 +297,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
     this.messages = new ClientMessagesManager(this)
     this.channels = new ClientChannelsManager(this)
     this.stickers = new ClientStickersManager(this)
+    this.emojis = new ClientEmojisManager(this)
     this.roles = new ClientRolesManager(this)
     this.guilds = new GuildsManager(this)
     this.users = new UsersManager(this)
@@ -333,6 +361,91 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
     })
   }
 
+  get sharding(): ClientShardingApplication {
+    return {
+      client: this,
+      active: this.internals.sharding.active,
+      shards: this.internals.sharding.shards,
+      totalShards: this.internals.sharding.totalShards,
+      instance: this.internals.sharding.instance,
+
+      async eval<R = any, C = Record<any, any>>(
+        script: string | ((context: (C & { client: Client })) => any), options?: BroadcastEvalOptions
+      ): Promise<R[]> {
+        const context = {
+          ...options?.context ? toJson(options?.context) : {}
+        }
+
+        const type = typeof script
+
+        if (type !== 'string' && type !== 'function') {
+          throw new DiscordooError('ClientShardingApplication#eval', 'Script to eval must be function or string.')
+        }
+
+        const func = type === 'string'
+          ? `(async (context) => { ${script} })`
+          : `(${script})`
+
+        if (!this.active) {
+          context.client = this.client
+
+          const result = await evalWithoutScopeChain(context, func)
+
+          return toJson([ result ])
+        } else {
+          const request: IpcBroadcastEvalRequestPacket = {
+            op: IpcOpCodes.DISPATCH,
+            t: IpcEvents.BROADCAST_EVAL,
+            d: {
+              event_id: this.client.internals.ipc.generate(),
+              script: func,
+              shards: resolveDiscordooShards(this.client, options?.instance ?? 'all'),
+              context,
+            }
+          }
+
+          return this.client.internals.ipc.send<IpcBroadcastEvalResponsePacket>(
+            request, { waitResponse: true }
+          )
+            .then(r => fromJson(r.d.result)) // convert bigint pointer to bigint
+            .catch(p => { throw p.d?.result ? deserializeError(p.d.result) : p })
+        }
+      },
+
+      send(message: string, options?: BroadcastOptions): unknown {
+        if (!is<string>(message)) {
+          throw new DiscordooError('ClientShardingApplication#broadcast', 'Message must be string.')
+        }
+
+        const shards = resolveDiscordooShards(this.client, options?.instance ?? 'all')
+
+        if (!this.active) {
+          if (shards.includes(this.instance)) {
+            this.client.emit('ipcMessage', {
+              from: this.instance,
+              message
+            })
+          }
+        } else {
+          const packet: IpcBroadcastMessagePacket = {
+            op: IpcOpCodes.DISPATCH,
+            t: IpcEvents.MESSAGE,
+            d: {
+              event_id: this.client.internals.ipc.generate(),
+              message,
+              shards,
+              from: this.instance
+            }
+          }
+
+          void this.client.internals.ipc.send(packet)
+        }
+
+        return undefined
+      }
+    }
+  }
+
   get readyTimestamp(): number | undefined {
     return this.readyDate ? this.readyDate.getTime() : undefined
   }
@@ -392,5 +505,9 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
 
   public _increaseConnected() {
     this.#shardsConnected++
+  }
+
+  toJSON() {
+    return `[client ${this.constructor.name}]`
   }
 }

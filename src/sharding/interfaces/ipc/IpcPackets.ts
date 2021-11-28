@@ -53,6 +53,34 @@ export interface IpcGuildMembersResponsePacket extends IpcDispatchPacket {
   }
 }
 
+export interface IpcBroadcastEvalRequestPacket extends IpcDispatchPacket {
+  t: IpcEvents.BROADCAST_EVAL
+  d: {
+    event_id: string
+    shards: number[]
+    script: string
+    context?: any
+  }
+}
+
+export interface IpcBroadcastEvalResponsePacket extends IpcDispatchPacket {
+  t: IpcEvents.BROADCAST_EVAL
+  d: {
+    event_id: string
+    result: any[]
+  }
+}
+
+export interface IpcBroadcastMessagePacket extends IpcDispatchPacket {
+  t: IpcEvents.MESSAGE
+  d: {
+    event_id: string
+    message: string
+    shards: number[]
+    from: number
+  }
+}
+
 export interface IpcCacheGetRequestPacket extends IpcPacket {
   op: IpcOpCodes.CACHE_OPERATE
   d: {

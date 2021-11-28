@@ -19,6 +19,9 @@ import { IpcServerEvents } from '@src/sharding/interfaces/ipc/IpcServerEvents'
 import { Client } from '@src/core'
 import { GuildMemberData } from '@src/api'
 import { RawGuildMembersFetchOptions } from '@src/api/managers/members/RawGuildMembersFetchOptions'
+import { fromJson, toJson } from '@src/utils/toJson'
+import { evalWithoutScopeChain } from '@src/utils/evalWithoutScopeChain'
+import { serializeError } from 'serialize-error'
 
 export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
   private readonly bucket: Collection = new Collection()
@@ -120,7 +123,7 @@ export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
           d: {
             event_id: packet.d.event_id,
             success,
-            result: this.client.internals.cache.convertToJson(result)
+            result: toJson(result)
           }
         }
 
@@ -150,6 +153,47 @@ export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
         }
 
         await this.send(response)
+      } break
+      case IpcEvents.BROADCAST_EVAL: {
+        const context = packet.d.context ?? {},
+          script = packet.d.script
+
+        let isError = false
+        // console.log('context', context)
+        const result = await evalWithoutScopeChain({ ...fromJson(context), client: this.client }, script)
+          .catch(e => { isError = true; return e })
+
+        let response
+
+        try {
+          response = {
+            op: isError ? IpcOpCodes.ERROR : IpcOpCodes.DISPATCH,
+            t: IpcEvents.BROADCAST_EVAL,
+            d: {
+              event_id: packet.d.event_id,
+              result: isError ? serializeError(result) : toJson(result)
+            }
+          }
+        } catch (e) {
+          response = {
+            op: IpcOpCodes.ERROR,
+            t: IpcEvents.BROADCAST_EVAL,
+            d: {
+              event_id: packet.d.event_id,
+              result: serializeError(result)
+            }
+          }
+        }
+
+        // console.log(response)
+
+        await this.send(response)
+      } break
+      case IpcEvents.MESSAGE: {
+        this.client.emit('ipcMessage', {
+          message: packet.d.message,
+          from: packet.d.from,
+        })
       } break
     }
   }

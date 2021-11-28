@@ -7,7 +7,6 @@ import { ToJsonProperties } from '@src/api/entities/interfaces/ToJsonProperties'
 import { UserFlagsUtil } from '@src/api/entities/bitfield'
 import { GuildResolvable, Presence } from '@src/api'
 import { CacheManagerFilterOptions, CacheManagerGetOptions } from '@src/cache'
-import { Keyspaces } from '@src/constants'
 
 export class User extends AbstractEntity implements UserData { // TODO: implements WritableChannel
   public accentColor?: number
@@ -54,13 +53,7 @@ export class User extends AbstractEntity implements UserData { // TODO: implemen
   async presence(guild: GuildResolvable, options?: CacheManagerGetOptions): Promise<Presence | undefined> {
     const guildId = resolveGuildId(guild)
     if (!guildId) throw new DiscordooError('User#presence', 'Cannot get presence without guild id.')
-    return this.client.internals.cache.get(
-      Keyspaces.GUILD_PRESENCES,
-      guildId,
-      'Presence',
-      this.id,
-      options
-    )
+    return this.client.presences.cache.get(this.id, { ...options, storage: guildId })
   }
 
   async presences(options?: CacheManagerFilterOptions): Promise<Presence[]> {

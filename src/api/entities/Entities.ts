@@ -6,7 +6,7 @@ import { Role } from '@src/api/entities/role'
 import { Presence } from '@src/api/entities/presence/Presence'
 import { GuildMember } from '@src/api/entities/member'
 import { MessageReaction } from '@src/api/entities/reaction/MessageReaction'
-import { AbstractEmoji, ActivityEmoji, GuildEmoji, ReactionEmoji } from '@src/api/entities/emoji'
+import { AbstractEmoji, ActivityEmoji, GuildEmoji, GuildPreviewEmoji, ReactionEmoji } from '@src/api/entities/emoji'
 import { PermissionOverwrite } from '@src/api/entities/overwrites/PermissionOverwrite'
 import { GuildCategoryChannel } from '@src/api/entities/channel/GuildCategoryChannel'
 import { DirectMessagesChannel } from '@src/api/entities/channel/DirectMessagesChannel'
@@ -42,4 +42,5 @@ export const Entities = {
   GuildNewsChannel,
   GuildNewsThreadChannel,
   GuildThreadChannel,
+  GuildPreviewEmoji,
 }

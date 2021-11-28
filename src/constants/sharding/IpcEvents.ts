@@ -14,4 +14,6 @@ export enum IpcEvents {
   PARTIAL_RESTARTING = 'PARTIAL_RESTARTING',
   /** Request guild members in guild from another shard / Request response (guild members array/error) */
   GUILD_MEMBERS_REQUEST = 'GUILD_MEMBERS_REQUEST',
+  /** Eval script in specified shards */
+  BROADCAST_EVAL = 'BROADCAST_EVAL',
 }

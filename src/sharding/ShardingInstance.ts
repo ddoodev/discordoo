@@ -59,7 +59,7 @@ export class ShardingInstance extends TypedEmitter {
           throw new DiscordooError(
             'ShardingInstance#create',
             '[UNSUPPORTED PLATFORM]',
-            'cannot use sharding mode "clusters" on the os that does not supports unix sockets (windows is not supported)'
+            'cannot use sharding mode "clusters" on the os that does not support unix sockets (windows is not supported)'
           )
         }
 

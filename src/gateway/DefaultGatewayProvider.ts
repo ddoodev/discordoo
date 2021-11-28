@@ -65,7 +65,6 @@ export class DefaultGatewayProvider implements GatewayProvider {
   }
 
   send(data: GatewaySendPayloadLike, options: GatewaySendOptions = {}): unknown {
-    // console.log('provider send', data, 'shards', this.manager.shards, 'options', options)
     switch (Array.isArray(options.shards)) {
       case true:
         options.shards!.forEach(id => this.manager.shards.get(id)?.socketSend(data))

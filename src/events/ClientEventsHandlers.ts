@@ -11,12 +11,16 @@ import { ThreadCreateEventContext } from '@src/events/thread/ctx/ThreadCreateEve
 import { ThreadUpdateEventContext } from '@src/events/thread/ctx/ThreadUpdateEventContext'
 import { ThreadDeleteEventContext } from '@src/events/thread/ctx/ThreadDeleteEventContext'
 import { ThreadListSyncEventContext } from '@src/events/thread/ctx/ThreadListSyncEventContext'
+import { IpcMessageEventContext } from '@src/events/ctx/IpcMessageEventContext'
 
 /** Client events */
 export interface ClientEventsHandlers {
 
   /** Emitted once when the client is ready */
   ready: (context: ReadyEventContext) => unknown
+
+  /** Emitted when client receives message from another sharding instance through ipc */
+  ipcMessage: (context: IpcMessageEventContext) => unknown
 
   /** Gateway shard connected and received expected guilds (or a guilds receiving timeout) */
   shardConnected: (context: ShardConnectedEventContext) => unknown
