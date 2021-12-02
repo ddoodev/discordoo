@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://docs.discordoo.xyz"><img width="520" src="https://cdn.discordapp.com/attachments/531549268033404928/891032901007851581/ddoologo_new_1.2_banner.svg" alt=""></a>
+  <a href="https://docs.discordoo.xyz"><img width="520" src="https://cdn.discordapp.com/attachments/531549268033404928/916014919449714728/ddoologo_new_1.2_banner.svg" alt=""></a>
 </p>
 
 
