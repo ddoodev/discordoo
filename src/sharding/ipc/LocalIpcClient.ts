@@ -175,7 +175,7 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
     const shards: number[] = packet.d.shards,
       id = packet.d.event_id
 
-    // console.log('IPC CLIENT', this.id, 'ON PROMISES', process.hrtime.bigint())
+    // console.log('IPC CLIENT', this.instance.id, 'ON PROMISES', process.hrtime.bigint())
     const promises: Array<undefined | Promise<any>> = shards.map(s => {
       const shard = this.instance.manager.shards.get(s)
 
@@ -184,15 +184,15 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
       return shard?.ipc.send(packet, { waitResponse: true })
     })
 
-    // console.log('IPC CLIENT', this.id, 'ON RESPONSES', process.hrtime.bigint())
+    // console.log('IPC CLIENT', this.instance.id, 'ON RESPONSES', process.hrtime.bigint())
     const responses: Array<IpcCacheResponsePacket | undefined> = await Promise.all(promises)
 
-    // console.log('IPC CLIENT', this.id, 'ON SUCCESS', process.hrtime.bigint())
+    // console.log('IPC CLIENT', this.instance.id, 'ON SUCCESS', process.hrtime.bigint())
     const success = responses.some(r => r?.d.success)
     let result
 
     if ('serialize' in packet.d && packet.d.serialize !== undefined) {
-      // console.log('IPC CLIENT', this.id, 'ON SERIALIZE', process.hrtime.bigint())
+      // console.log('IPC CLIENT', this.instance.id, 'ON SERIALIZE', process.hrtime.bigint())
       result = this.serializeResponses(
         responses.map(r => r?.d.success ? r?.d.result : undefined).filter(r => r ?? false), // filter undefined/null
         packet.d.serialize
@@ -201,7 +201,7 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
       result = responses.map(r => r?.d.result)
     }
 
-    // console.log('IPC CLIENT', this.id, 'ON CACHE OPERATE REPLY', process.hrtime.bigint())
+    // console.log('IPC CLIENT', this.instance.id, 'ON CACHE OPERATE REPLY', process.hrtime.bigint())
     return this.send({
       op: IpcOpCodes.CACHE_OPERATE,
       d: {

@@ -5,7 +5,7 @@ import { resolveBigBitField } from '@src/utils/resolve'
 
 export abstract class ReadonlyBigBitField {
   public static FLAGS: Readonly<Record<string, bigint>>
-  public bitfield: Readonly<bigint>
+  public readonly bitfield: bigint
   public emptyBit = EmptyBigBit
 
   constructor(bits: BigBitFieldResolvable = EmptyBigBit) {

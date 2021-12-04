@@ -3,7 +3,6 @@ import { WebSocketClient } from '@src/gateway/WebSocketClient'
 import { WebSocketClientEvents, WebSocketClientStates } from '@src/constants'
 import { GatewayOpCodes } from '@discordoo/providers'
 import { WebSocketPacket } from '@src/gateway/interfaces/WebSocketPacket'
-import { wait } from '@src/utils/wait'
 
 export function packet(client: WebSocketClient, packet: WebSocketPacket) {
 
@@ -51,7 +50,7 @@ export function packet(client: WebSocketClient, packet: WebSocketPacket) {
 
     case GatewayOpCodes.INVALID_SESSION:
       client.emit(WebSocketClientEvents.INVALID_SESSION)
-      console.log('SHARD', client.id, 'INVALID SESSION')
+      // console.log('SHARD', client.id, 'INVALID SESSION')
 
       client.destroy({ code: 1000, reconnect: true })
       // console.log('shard', client.id, 'INVALID SESSION')

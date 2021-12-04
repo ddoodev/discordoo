@@ -10,7 +10,7 @@ export interface PresenceActivityData {
   name: string
   type: PresenceActivityTypes
   url?: string
-  createdAt: number
+  createdTimestamp: number
   timestamps?: PresenceActivityTimestampsData
   applicationId?: string
   details?: string

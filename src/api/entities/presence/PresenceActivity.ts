@@ -39,12 +39,9 @@ export class PresenceActivity extends AbstractEntity {
       'state',
       'timestamps',
       'type',
-      'url'
+      'url',
+      [ 'createdTimestamp', 'created_at' ],
     ])
-
-    if ('createdAt' in data) {
-      this.createdTimestamp = data.createdAt
-    }
 
     if (data.assets) {
       this.assets = await new PresenceActivityAssets(this.client).init({ ...data.assets, applicationId: this.applicationId })
@@ -71,10 +68,7 @@ export class PresenceActivity extends AbstractEntity {
       applicationId: true,
       assets: true,
       buttons: true,
-      createdAt: {
-        override: ToJsonOverrideSymbol,
-        value: this.createdTimestamp
-      },
+      createdTimestamp: true,
       details: true,
       emoji: true,
       flags: true,
