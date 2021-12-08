@@ -1,7 +1,10 @@
 export interface ShardingManagerInternals {
   rest: {
-    requests: number
+    allowed: number
+    allowedResetAt: number
     invalid: number
+    invalidResetAt: number
+    locked: boolean
   }
   shards: number[]
   id: string

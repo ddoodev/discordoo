@@ -14,4 +14,6 @@ export enum IpcOpCodes {
   CACHE_OPERATE,
   /** Looks like something went wrong */
   ERROR,
+  /** Something urgent is happening. We need to react now. */
+  EMERGENCY,
 }

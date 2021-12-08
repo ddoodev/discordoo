@@ -5,16 +5,19 @@ import { Collection } from '@discordoo/collection'
 import { IpcEvents, IpcOpCodes, RAW_IPC_EVENT, SerializeModes } from '@src/constants'
 import { DiscordooError, DiscordooSnowflake } from '@src/utils'
 import {
+  IpcBroadcastEvalRequestPacket,
   IpcBroadcastEvalResponsePacket,
   IpcCacheRequestPacket,
   IpcCacheResponsePacket,
-  IpcDispatchPacket,
+  IpcDispatchPackets, IpcEmergencyPackets,
+  IpcEmergencyRestBlockPacket,
   IpcGuildMembersRequestPacket,
   IpcHeartbeatPacket,
   IpcHelloPacket
 } from '@src/sharding/interfaces/ipc/IpcPackets'
 import { IpcClientEvents } from '@src/sharding/interfaces/ipc/IpcClientEvents'
 import { filterAndMap } from '@src/utils/filterAndMap'
+import { IpcEmergencyOpCodes } from '@src/constants/sharding/IpcEmergencyOpCodes'
 
 export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
   private bucket: Collection = new Collection()
@@ -101,18 +104,21 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
         this.cacheOperate(packet as IpcCacheRequestPacket)
         break
       case IpcOpCodes.DISPATCH:
-        this.dispatch(packet as IpcDispatchPacket)
+        this.dispatch(packet as IpcDispatchPackets)
+        break
+      case IpcOpCodes.EMERGENCY:
         break
     }
   }
 
-  private async dispatch(packet: IpcDispatchPacket) { // TODO: IpcDispatchPackets
+  private async dispatch(packet: IpcDispatchPackets) {
     switch (packet.t) {
       case IpcEvents.GUILD_MEMBERS_REQUEST:
         await this.guildMembersRequest(packet as IpcGuildMembersRequestPacket)
         break
+
       case IpcEvents.BROADCAST_EVAL: {
-        const shards = packet.d.shards,
+        const shards = (packet as IpcBroadcastEvalRequestPacket).d.shards,
           id = packet.d.event_id
 
         const promises: Array<undefined | Promise<any>> = shards.map(s => {
@@ -143,6 +149,7 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
             this.send(e)
           })
       } break
+
       case IpcEvents.MESSAGE: {
         const shards = filterAndMap<any, ShardingInstance>(
           packet.d.shards,
@@ -153,6 +160,52 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
         shards.forEach(s => {
           s.ipc.send(packet)
         })
+      } break
+
+      case IpcEvents.REST_LIMITS_SYNC: {
+        if (!this.instance.manager.internals.rest.locked) {
+          this.instance.manager.internals.rest.allowed -= 1
+          if (!packet.d.success) this.instance.manager.internals.rest.invalid -= 1
+
+          if (this.instance.manager.internals.rest.invalid <= 1) {
+            this.instance.manager.internals.rest.locked = true
+
+            setTimeout(() => {
+              this.instance.manager.internals.rest.locked = false
+            }, this.instance.manager.internals.rest.invalidResetAt - Date.now())
+
+            const request: IpcEmergencyRestBlockPacket = {
+              op: IpcOpCodes.EMERGENCY,
+              d: {
+                op: IpcEmergencyOpCodes.INVALID_REQUEST_LIMIT_ALMOST_REACHED,
+                block_until: this.instance.manager.internals.rest.invalidResetAt
+              }
+            }
+
+            this.instance.manager.instances.forEach(instance => {
+              instance.ipc.send(request)
+            })
+
+          } else if (this.instance.manager.internals.rest.allowed <= 1) {
+            this.instance.manager.internals.rest.locked = true
+
+            setTimeout(() => {
+              this.instance.manager.internals.rest.locked = false
+            }, this.instance.manager.internals.rest.allowedResetAt - Date.now())
+
+            const request: IpcEmergencyRestBlockPacket = {
+              op: IpcOpCodes.EMERGENCY,
+              d: {
+                op: IpcEmergencyOpCodes.GLOBAL_RATE_LIMIT_ALMOST_REACHED,
+                block_until: this.instance.manager.internals.rest.allowedResetAt
+              }
+            }
+
+            this.instance.manager.instances.forEach(instance => {
+              instance.ipc.send(request)
+            })
+          }
+        }
       } break
     }
   }

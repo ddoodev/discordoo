@@ -447,7 +447,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
   }
 
   get readyTimestamp(): number | undefined {
-    return this.readyDate ? this.readyDate.getTime() : undefined
+    return this.readyDate?.getTime()
   }
 
   private _makeGatewayOptions(): CompletedGatewayOptions {

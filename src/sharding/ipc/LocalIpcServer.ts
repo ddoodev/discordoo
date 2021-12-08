@@ -9,7 +9,7 @@ import { IpcServerSendOptions } from '@src/sharding/interfaces/ipc/IpcServerSend
 import {
   IpcCacheRequestPacket,
   IpcCacheResponsePacket,
-  IpcDispatchPacket,
+  IpcDispatchPacket, IpcEmergencyPacket, IpcEmergencyPackets,
   IpcGuildMembersRequestPacket,
   IpcGuildMembersResponsePacket,
   IpcHelloPacket,
@@ -22,6 +22,7 @@ import { RawGuildMembersFetchOptions } from '@src/api/managers/members/RawGuildM
 import { fromJson, toJson } from '@src/utils/toJson'
 import { evalWithoutScopeChain } from '@src/utils/evalWithoutScopeChain'
 import { serializeError } from 'serialize-error'
+import { IpcEmergencyOpCodes } from '@src/constants/sharding/IpcEmergencyOpCodes'
 
 export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
   private readonly bucket: Collection = new Collection()
@@ -130,6 +131,26 @@ export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
         // console.log('IPC SERVER', this.instance, 'ON CACHE OPERATE REPLY', process.hrtime.bigint())
         return this.send(response)
       }
+    }
+  }
+
+  private emergency(packet: IpcEmergencyPackets) {
+    switch (packet.d.op) {
+      case IpcEmergencyOpCodes.GLOBAL_RATE_LIMIT_ALMOST_REACHED:
+      case IpcEmergencyOpCodes.GLOBAL_RATE_LIMIT_HIT:
+      case IpcEmergencyOpCodes.INVALID_REQUEST_LIMIT_ALMOST_REACHED:
+      case IpcEmergencyOpCodes.INVALID_REQUEST_LIMIT_HIT: {
+        const now = Date.now()
+
+        if (now < packet.d.block_until) {
+          console.error(
+            `[DISCORDOO]: SHARDING INSTANCE NUMBER ${this.instance} RECEIVED EMERGENCY COMMAND.`,
+            'IF YOU SEE THIS MESSAGE,',
+            'IT MEANS THAT YOUR CLIENT VIOLATES OR ALMOST VIOLATES DISCORD\'S GLOBAL RATE LIMIT OR CLOUDFLARE\'S INVALID REQUEST LIMIT.',
+            `WE STOP ANY API REQUESTS FOR ${packet.d.block_until - now} MILLISECONDS.`,
+          )
+        }
+      } break
     }
   }
 

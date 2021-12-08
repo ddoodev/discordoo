@@ -1,7 +1,10 @@
 import { GatewaySendOptions, GatewaySendPayloadLike } from '@discordoo/providers'
+import { Client } from '@src/core'
 
 /** Gateway application that contains useful info/methods */
 export interface ClientGatewayApplication {
+  /** Client to which this application is attached */
+  client: Client
 
   /** Average delay to Discord gateway, calculated from the delay of all the shards that are in this application. */
   ping: number
@@ -16,7 +19,7 @@ export interface ClientGatewayApplication {
   send(data: GatewaySendPayloadLike, options?: GatewaySendOptions): unknown
 
   events: {
-    currently: number
+    currentSecond: number
     previousSecond: number
   }
 

@@ -5,7 +5,7 @@ import { AbstractGuildTextChannelData } from '@src/api/entities/channel/interfac
 import { RawAbstractGuildTextChannelData } from '@src/api/entities/channel/interfaces/RawAbstractGuildTextChannelData'
 import { attach } from '@src/utils'
 
-export class AbstractGuildTextChannel extends AbstractGuildChannel implements WritableChannel {
+export abstract class AbstractGuildTextChannel extends AbstractGuildChannel implements WritableChannel {
   public messages!: ChannelMessagesManager
   public nsfw!: boolean
   public topic?: string

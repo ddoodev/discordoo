@@ -2,6 +2,7 @@ import { Client } from '@src/core'
 import { BroadcastEvalOptions } from '@src/sharding/interfaces/ipc/BroadcastEvalOptions'
 import { BroadcastOptions } from '@src/sharding/interfaces/ipc/BroadcastOptions'
 
+/** Sharding application that contains useful info/methods */
 export interface ClientShardingApplication {
   /** Client to which this application is attached */
   client: Client

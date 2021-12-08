@@ -4,7 +4,8 @@ import { CacheStorageKey } from '@discordoo/providers'
 import { EntityKey } from '@src/api/entities/interfaces'
 import { CacheOptions } from '@src/cache'
 import { RawGuildMembersFetchOptions } from '@src/api/managers/members/RawGuildMembersFetchOptions'
-import { GuildMemberData, RawGuildMemberData } from '@src/api'
+import { GuildMemberData } from '@src/api'
+import { IpcEmergencyOpCodes } from '@src/constants/sharding/IpcEmergencyOpCodes'
 
 export interface IpcHelloPacket extends IpcPacket {
   op: IpcOpCodes.HELLO
@@ -33,10 +34,43 @@ export interface IpcHeartbeatPacket extends IpcPacket {
   }
 }
 
+export interface IpcEmergencyPacket extends IpcPacket {
+  op: IpcOpCodes.EMERGENCY
+  d: {
+    op: IpcEmergencyOpCodes
+  }
+}
+
+export interface IpcEmergencyRestBlockPacket extends IpcEmergencyPacket {
+  d: {
+    op: IpcEmergencyOpCodes.GLOBAL_RATE_LIMIT_ALMOST_REACHED
+      | IpcEmergencyOpCodes.GLOBAL_RATE_LIMIT_HIT
+      | IpcEmergencyOpCodes.INVALID_REQUEST_LIMIT_ALMOST_REACHED
+      | IpcEmergencyOpCodes.INVALID_REQUEST_LIMIT_HIT
+    block_until: number
+  }
+}
+
+export interface IpcEmergencyGrlHitPacket extends IpcEmergencyPacket {
+  d: {
+    op: IpcEmergencyOpCodes.GLOBAL_RATE_LIMIT_HIT
+  }
+}
+
+export type IpcEmergencyPackets = IpcEmergencyRestBlockPacket
+
 export interface IpcDispatchPacket extends IpcPacket {
   op: IpcOpCodes.DISPATCH
   t: IpcEvents
   d: any
+}
+
+// sends by sharding instance when some rest request was completed
+export interface IpcRestLimitsSyncPacket extends IpcDispatchPacket {
+  t: IpcEvents.REST_LIMITS_SYNC
+  d: {
+    success: boolean
+  }
 }
 
 export interface IpcGuildMembersRequestPacket extends IpcDispatchPacket {
@@ -80,6 +114,13 @@ export interface IpcBroadcastMessagePacket extends IpcDispatchPacket {
     from: number
   }
 }
+
+export type IpcDispatchPackets = IpcBroadcastMessagePacket
+  | IpcBroadcastEvalResponsePacket
+  | IpcBroadcastEvalRequestPacket
+  | IpcGuildMembersResponsePacket
+  | IpcGuildMembersRequestPacket
+  | IpcRestLimitsSyncPacket
 
 export interface IpcCacheGetRequestPacket extends IpcPacket {
   op: IpcOpCodes.CACHE_OPERATE

@@ -16,4 +16,6 @@ export enum IpcEvents {
   GUILD_MEMBERS_REQUEST = 'GUILD_MEMBERS_REQUEST',
   /** Eval script in specified shards */
   BROADCAST_EVAL = 'BROADCAST_EVAL',
+  /** Rest rate limits synchronization request/response */
+  REST_LIMITS_SYNC = 'REST_LIMITS_SYNC',
 }
