@@ -9,7 +9,7 @@ import {
   IpcBroadcastEvalResponsePacket,
   IpcCacheRequestPacket,
   IpcCacheResponsePacket,
-  IpcDispatchPackets, IpcEmergencyPackets,
+  IpcDispatchPackets, IpcEmergencyGrlHitPacket,
   IpcEmergencyRestBlockPacket,
   IpcGuildMembersRequestPacket,
   IpcHeartbeatPacket,
@@ -107,7 +107,32 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
         this.dispatch(packet as IpcDispatchPackets)
         break
       case IpcOpCodes.EMERGENCY:
+        this.emergency(packet as IpcEmergencyGrlHitPacket)
         break
+    }
+  }
+
+  private emergency(packet: IpcEmergencyGrlHitPacket) {
+    const now = Date.now()
+
+    if (packet.d.block_until > now) {
+      this.instance.manager.internals.rest.locked = true
+
+      setTimeout(() => {
+        this.instance.manager.internals.rest.locked = false
+      }, packet.d.block_until - now)
+
+      const request: IpcEmergencyRestBlockPacket = {
+        op: IpcOpCodes.EMERGENCY,
+        d: {
+          op: IpcEmergencyOpCodes.GLOBAL_RATE_LIMIT_HIT,
+          block_until: packet.d.block_until
+        }
+      }
+
+      this.instance.manager.instances.forEach(instance => {
+        instance.ipc.send(request)
+      })
     }
   }
 

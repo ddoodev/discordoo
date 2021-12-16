@@ -9,6 +9,7 @@ export { StickersCachingPolicy } from '@src/constants/cache/StickersCachingPolic
 export { EmojisCachingPolicy } from '@src/constants/cache/EmojisCachingPolicy'
 export { GlobalCachingPolicy } from '@src/constants/cache/GlobalCachingPolicy'
 export { GuildsCachingPolicy } from '@src/constants/cache/GuildsCachingPolicy'
+export { CACHE_POINTER_PREFIX } from '@src/constants/cache/CachePointerPrefix'
 export { RolesCachingPolicy } from '@src/constants/cache/RolesCachingPolicy'
 export { UsersCachingPolicy } from '@src/constants/cache/UsersCachingPolicy'
 export { otherCacheSymbol } from '@src/constants/cache/otherCacheSymbol'

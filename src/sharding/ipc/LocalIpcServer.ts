@@ -9,7 +9,7 @@ import { IpcServerSendOptions } from '@src/sharding/interfaces/ipc/IpcServerSend
 import {
   IpcCacheRequestPacket,
   IpcCacheResponsePacket,
-  IpcDispatchPacket, IpcEmergencyPacket, IpcEmergencyPackets,
+  IpcDispatchPacket, IpcEmergencyPackets,
   IpcGuildMembersRequestPacket,
   IpcGuildMembersResponsePacket,
   IpcHelloPacket,

@@ -54,6 +54,7 @@ export interface IpcEmergencyRestBlockPacket extends IpcEmergencyPacket {
 export interface IpcEmergencyGrlHitPacket extends IpcEmergencyPacket {
   d: {
     op: IpcEmergencyOpCodes.GLOBAL_RATE_LIMIT_HIT
+    block_until: number
   }
 }
 

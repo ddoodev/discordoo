@@ -1,3 +1,5 @@
+import { RestManagerRequestData } from '@src/rest'
+
 export interface RestRateLimitBucket {
   /** Bucket hash (unique id) */
   hash: string
@@ -9,4 +11,6 @@ export interface RestRateLimitBucket {
   resetAfter: number
   /** Reset time (epoch, in ms) */
   resetTime: number
+  /** Requests queue */
+  queue: RestManagerRequestData[]
 }

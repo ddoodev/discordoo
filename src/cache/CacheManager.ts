@@ -1,5 +1,5 @@
 import { CachingPoliciesProcessor } from '@src/cache/CachingPoliciesProcessor'
-import { IpcCacheOpCodes, IpcOpCodes, SerializeModes } from '@src/constants'
+import { CACHE_POINTER_PREFIX, IpcCacheOpCodes, IpcOpCodes, SerializeModes } from '@src/constants'
 import { CacheProvider, CacheStorageKey } from '@discordoo/providers'
 import { DiscordooError, resolveDiscordooShards } from '@src/utils'
 import { Client, ProviderConstructor } from '@src/core'
@@ -63,6 +63,7 @@ import {
 } from '@src/cache/interfaces'
 import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 import { toJson } from '@src/utils/toJson'
+import { isCachePointer } from '@src/utils/cachePointer'
 
 export class CacheManager<P extends CacheProvider = CacheProvider> {
   public client: Client
@@ -81,7 +82,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     storage: CacheStorageKey,
     entityKey: EntityKey,
     key: K,
-    options: CacheManagerGetOptions = {}
+    options: CacheManagerGetOptions & { __ddcp?: boolean } = {}
   ): Promise<V | undefined> {
     let result: any
 
@@ -113,8 +114,16 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       result = await this.provider.get<K, V>(keyspace, options?.storage ?? storage, key)
     }
 
-    if (typeof result === 'object' && result.___type___ === 'discordooCachePointer') {
-      return this.get(result.keyspace, result.storage, entityKey, result.key, options)
+    const pointer = isCachePointer(result)
+
+    if (pointer) {
+      // __ddcp option means that previous value are cache pointer. cache pointer cannot point to another cache pointer.
+      if (options.__ddcp) {
+        console.log('recursive cache pointer', pointer)
+        return undefined
+      }
+      console.log('get pointer', pointer)
+      return this.get(pointer[0], pointer[1], entityKey, pointer[2], { ...options, storage: pointer[1], __ddcp: true })
     }
 
     result = await this._prepareData('out', result, entityKey)
@@ -131,7 +140,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     value: V | CachePointer,
     options: CacheManagerSetOptions = {}
   ): Promise<this> {
-    if (typeof value !== 'object' || value === null) {
+    if (typeof value !== 'object' && typeof value !== 'string'!) {
       throw new DiscordooError(
         'CacheManager#set',
         'Cache cannot operate with anything expect objects. Received',
@@ -148,17 +157,19 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
      * If any cache policy prohibits writing, clear the existing cache.
      * */
     if (entityKey !== 'any') {
-      if (!('___type___' in value && value.___type___ === 'discordooCachePointer')) {
+      const pointer = isCachePointer(value)
+
+      if (pointer) {
+        const allowed = await this.has(pointer[0], pointer[1], pointer[2])
+        limited = !allowed
+        shouldClear = limited
+      } else {
         const globalAllowed = await this._policiesProcessor.global(value)
         if (globalAllowed !== undefined) {
           limited = !globalAllowed
         } else {
           limited = !(await this._policiesProcessor[policy](value))
         }
-      } else {
-        const allowed = await this.has(value.keyspace, value.storage, value.key)
-        limited = !allowed
-        shouldClear = limited
       }
     }
 
@@ -704,7 +715,9 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     if (forIpcRequest) return toJson(data)
 
     if (direction === 'in') {
-      if (data.___type___ === 'discordooCachePointer' || entityKey === 'any') {
+      const pointer = isCachePointer(data)
+
+      if (pointer || entityKey === 'any') {
         switch (this.provider.compatible) {
           case 'classes':
           case 'json':
@@ -750,8 +763,10 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
           break
       }
 
-      if (jsonOrEntity?.___type___ === 'discordooCachePointer') {
-        return await this.get(jsonOrEntity.keyspace, jsonOrEntity.storage, entityKey, jsonOrEntity.key)
+      const pointer = isCachePointer(jsonOrEntity)
+
+      if (pointer) {
+        return await this.get(pointer[0], pointer[1], entityKey, pointer[2])
       }
 
       if (entityKey === 'any') {

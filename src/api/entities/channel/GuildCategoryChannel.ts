@@ -5,7 +5,7 @@ import { RawAbstractGuildChannelData } from '@src/api/entities/channel/interface
 import { Keyspaces } from '@src/constants'
 import { channelEntityKey } from '@src/utils'
 import { AnyGuildChannel } from '@src/api/entities/channel/interfaces/AnyGuildChannel'
-import { cachePointer } from '@src/utils/cachePointer'
+import { makeCachePointer } from '@src/utils/cachePointer'
 
 export class GuildCategoryChannel extends AbstractGuildChannel {
   public childrens!: CategoryChannelChildrensManager
@@ -24,7 +24,7 @@ export class GuildCategoryChannel extends AbstractGuildChannel {
 
     const predicate = async (channel: AnyGuildChannel) => {
       if (channel.parentId === this.id) {
-        await this.childrens.cache.set(channel.id, cachePointer(Keyspaces.CHANNELS, 'global', channel.id))
+        await this.childrens.cache.set(channel.id, makeCachePointer(Keyspaces.CHANNELS, 'global', channel.id))
       }
     }
 

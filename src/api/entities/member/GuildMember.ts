@@ -9,7 +9,7 @@ import { GuildMemberRolesManager } from '@src/api/managers/members/GuildMemberRo
 import { Presence } from '@src/api/entities/presence/Presence'
 import { GuildMemberEditData } from '@src/api/entities/member/interfaces/GuildMemberEditData'
 import { MemberBanOptions } from '@src/api/managers/members/MemberBanOptions'
-import { cachePointer } from '@src/utils/cachePointer'
+import { makeCachePointer } from '@src/utils/cachePointer'
 
 export class GuildMember extends AbstractEntity {
   public avatar?: string
@@ -84,7 +84,7 @@ export class GuildMember extends AbstractEntity {
       )
 
       for await (const role of this.rolesList) {
-        await this.roles.cache.set(role, cachePointer(Keyspaces.GUILD_ROLES, this.guildId, role))
+        await this.roles.cache.set(role, makeCachePointer(Keyspaces.GUILD_ROLES, this.guildId, role))
       }
     }
 

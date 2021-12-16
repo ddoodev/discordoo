@@ -20,7 +20,7 @@ import { DataResolver } from '@src/utils/DataResolver'
 import { inspect } from 'util'
 import { filterAndMap } from '@src/utils/filterAndMap'
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
-import { cachePointer } from '@src/utils/cachePointer'
+import { makeCachePointer } from '@src/utils/cachePointer'
 import { DeleteManyMessagesOptions } from '@src/api/managers/messages/DeleteManyMessagesOptions'
 import { FetchOneMessageOptions } from '@src/api/managers/messages/FetchOneMessageOptions'
 import { FetchManyMessagesQuery } from '@src/api/managers/messages/FetchManyMessagesQuery'
@@ -89,7 +89,7 @@ export class ClientMessagesManager extends EntitiesManager {
           'Message',
           'messages',
           message.id,
-          cachePointer(Keyspaces.MESSAGES, channelId, message.id)
+          makeCachePointer(Keyspaces.MESSAGES, channelId, message.id)
         )
         result.push(message)
       }

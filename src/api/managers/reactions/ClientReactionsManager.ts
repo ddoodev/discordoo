@@ -7,7 +7,7 @@ import { DiscordooError, resolveChannelId, resolveEmojiId, resolveMessageId, res
 import { FetchReactionUsersOptions } from '@src/api/managers/reactions/FetchReactionUsersOptions'
 import { Collection } from '@discordoo/collection'
 import { MessageReactionResolvable } from '@src/api/entities/reaction/interfaces/MessageReactionResolvable'
-import { cachePointer } from '@src/utils/cachePointer'
+import { makeCachePointer } from '@src/utils/cachePointer'
 import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 
 export class ClientReactionsManager extends EntitiesManager {
@@ -101,7 +101,7 @@ export class ClientReactionsManager extends EntitiesManager {
           'User',
           'users',
           user.id,
-          cachePointer(Keyspaces.USERS, 'global', user.id)
+          makeCachePointer(Keyspaces.USERS, 'global', user.id)
         )
         result.set(user.id, user)
       }
