@@ -14,9 +14,7 @@
     "build": "ttsc -p tsconfig.json",
     "build:publish": "npx rimraf dist types && ttsc -p tsconfig.publish.json",
     "build:watch": "ttsc -p tsconfig.json --watch",
-    "docs": "npx typedoc && npx tapok docs/docs/api",
-    "docs:searchfix": "npx tapok docs/site/search/search_index.json --mode search",
-    "docs:collection": "cd ./__collection__ && npm ci && npm run docs",
+    "docs": "npx tapok ./docs.json -c typedoc.js",
     "prepublishOnly": "npm run build:publish",
     "prepare": "husky install"
   },
@@ -37,7 +35,7 @@
   "devDependencies": {
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.0.1",
-    "@discordoo/tapok": "^1.0.9",
+    "@discordoo/tapok": "^2.0.0",
     "@types/jest": "^26.0.24",
     "@types/node": "^12.0.0",
     "@types/node-ipc": "^9.1.4",
@@ -53,8 +51,6 @@
     "ts-jest": "^27.0.3",
     "ts-node": "^10.1.0",
     "ttypescript": "^1.5.12",
-    "typedoc": "^0.22.6",
-    "typedoc-plugin-markdown": "^3.11.3",
     "typescript": "^4.3.4"
   },
   "dependencies": {

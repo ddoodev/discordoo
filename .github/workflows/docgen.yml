@@ -38,17 +38,17 @@ jobs:
       - name: Clone guide repo
         run: git clone https://github.com/Discordoo/discordoo-guide docs
 
-      - name: Clone collection repo
-        run: git clone https://github.com/Discordoo/collection __collection__
+      #- name: Clone collection repo
+      #  run: git clone https://github.com/Discordoo/collection __collection__
 
-      - name: Run collection docs generation
-        run: npm run docs:collection
+      #- name: Run collection docs generation
+      #  run: npm run docs:collection
 
-      - name: Install ddoo required packages
-        run: npm ci
+      #- name: Install ddoo required packages
+      #  run: npm ci
 
-      - name: Run ddoo docs generation
-        run: npm run docs
+      #- name: Run ddoo docs generation
+      #  run: npm run docs
 
       - name: Install mkdocs required packages
         run: pip install -r ./docs/requirements.txt
@@ -57,8 +57,8 @@ jobs:
         working-directory: ./docs
         run: mkdocs build
 
-      - name: Fix mkdocs search
-        run: npm run docs:searchfix
+      #- name: Fix mkdocs search
+      #  run: npm run docs:searchfix
 
       - name: Deploy
         uses: cpina/github-action-push-to-another-repository@main
