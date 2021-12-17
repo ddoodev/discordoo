@@ -5,8 +5,7 @@
     "moduleResolution": "node",
     "target": "es2019",
     "lib": [
-      "es2020",
-      "dom"
+      "es2020"
     ],
     "removeComments": false,
     "alwaysStrict": true,
