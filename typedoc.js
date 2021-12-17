@@ -3,7 +3,7 @@ const { packages } = require('./discordoo.json')
 
 module.exports = {
   entryPoints: packages.map(e => `./src/${e}/index.ts`),
-  json: './docs.json',
+  json: './docs/docs.json',
   name: 'Discordoo',
   excludeExternals: true
 }
