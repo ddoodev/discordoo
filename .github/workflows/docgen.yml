@@ -23,7 +23,7 @@ jobs:
       - name: Run docs generation
         run: npm run docs
       - name: Clone actions to docs folder
-        run: cp ./.github ./docs
+        run: cp -r ./.github ./docs
       - name: Push
         uses: s0/git-publish-subdir-action@develop
         env:
