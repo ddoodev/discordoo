@@ -1,0 +1,61 @@
+---
+name: Write commit hash
+
+on:
+  push:
+    branches:
+      - docs
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12.20.0
+      - name: Declare variables
+        id: vars
+        shell: bash
+        run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
+      - name: Write
+        run: |
+          node -e `
+            const msg = ${{ github.event.head_commit.message }}
+            const msgHash = msg.split(': (')[1].split(')')[0]
+            const currHash = ${{ steps.vars.outputs.sha_short }}
+
+            const https = require('https')
+            const data = JSON.stringify({
+              hash: { key: msgHash, value: currHash }
+            })
+
+            const options = {
+              hostname: 'ddoo.dev',
+              port: 443,
+              path: '/map',
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': ${{ secrets.CF_KV_WRITE_TOKEN }}
+              }
+            }
+
+            const req = https.request(options, res => {
+              console.log(`statusCode: ${res.statusCode}`)
+
+              res.on('data', d => {
+                process.stdout.write(d)
+              })
+            })
+
+            req.on('error', error => {
+              console.error(error)
+            })
+
+            req.write(data)
+            req.end()
+          `
