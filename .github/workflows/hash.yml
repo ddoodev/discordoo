@@ -4,10 +4,13 @@ on:
   push:
     branches:
       - docs
+  workflow_dispatch:
+  repository_dispatch:
 
 jobs:
   send-mappings:
     runs-on: ubuntu-latest
+    if: github.event_name == 'push' || github.event.action == 'docs_build' || github.event_name === 'workflow_dispatch'
     steps:
       - uses: actions/checkout@v2
         with:
@@ -20,4 +23,4 @@ jobs:
       - name: Set env vars
         run: echo "SECRET=${{ secrets.CF_KV_WRITE_TOKEN }}" > $GITHUB_ENV >> $GITHUB_ENV
       - name: Send request to mappings server
-        run: node sendMappings.js
+        run: node mappings.js
