@@ -28,5 +28,6 @@ jobs:
           REPO: self
           BRANCH: docs
           FOLDER: docs
+          TAG: "{sha}"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MESSAGE: "{sha}"
+          MESSAGE: "generating docs for commit: {sha}"
