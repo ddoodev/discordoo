@@ -41,7 +41,7 @@ It was built from ground-up to provide better and faster APIs, both internal and
 
 ## Features
 * **Very scalable in any way** — inter-machines sharding (PLANNED IN 1.2), custom modules for events queue (someone should create an appropriate provider)
-* **Really fast** — this is not a promise, but real tests
+* **Really fast** — this is not a promise, but real tests!
 * **Convenient to development** — we create predictable APIs and take care of the convenience of development
 * **Caching policies** — do not store a cache that your bot does not need (PLANNED IN 1.0)
 * **Flexible in everything** — you can replace parts of the library as you need using our providers (PLANNED IN 1.0)
