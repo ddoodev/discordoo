@@ -36,9 +36,14 @@ jobs:
           FOLDER: docs
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MESSAGE: "generating docs for commit: {sha}"
+      - name: Set env vars
+        id: vars
+        shell: bash
+        run: |
+          echo "::set-output name=sha::$(git rev-parse --short HEAD)"
       - name: Trigger hash write
         run: |
           curl -X POST https://api.github.com/repos/Discordoo/discordoo/dispatches \
                          -H 'Accept: application/vnd.github.everest-preview+json' \
                          -u ${{ secrets.ACCESS_TOKEN }} \
-                         --data '{"event_type": "docs_build", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
+                         --data '{"event_type": "docs_build", "client_payload": { "sha": "${{ steps.vars.outputs.sha }}" }}'
