@@ -25,6 +25,6 @@ jobs:
       - name: Send request to mappings server
         run: |
           npm init -y
-          npm i node-fetch
+          npm i node-fetch@2.0.0
           node -e 'const fetch = require("node-fetch"); const [key, secret, value] = [process.env.COMMIT_HASH_KEY, process.env.SECRET, process.env.COMMIT_HASH_VALUE]; fetch("https://ddoo.dev/map", { method: 'POST', headers: { Authorization: secret, "Content-Type": "application.json" }, data: { hash: { key, value } } }).then(console.log).catch(console.error)'
         
