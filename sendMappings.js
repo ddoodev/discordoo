@@ -12,7 +12,7 @@ async function run() {
       Authorization: secret.toString(),
       'Content-Type': 'application/json'
     },
-    data: JSON.stringify({
+    body: JSON.stringify({
       hash: { key, value }
     })
   })
