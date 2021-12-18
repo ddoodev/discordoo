@@ -1,0 +1,23 @@
+name: Hash mappings
+
+on:
+  push:
+    branches:
+      - docs
+
+jobs:
+  send-mappings:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: Set env vars
+        run: echo "SECRET=${{ secrets.CF_KV_WRITE_TOKEN }}" > $GITHUB_ENV >> $GITHUB_ENV
+      - name: Send request to mappings server
+        run: node sendMappings.js
