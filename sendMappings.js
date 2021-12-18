@@ -5,6 +5,8 @@ const secret = process.env.SECRET
 const key = process.env.COMMIT_HASH_KEY
 const value = process.env.COMMIT_HASH_VALUE
 
+console.log(key, value)
+
 async function run() {
   const resp = await fetch(apiURL, { 
     method: 'POST', 
