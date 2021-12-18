@@ -19,9 +19,8 @@ jobs:
         id: vars
         shell: bash
         run: |
-          echo "SECRET=${{ secrets.CF_KV_WRITE_TOKEN }}" > $GITHUB_ENV >> $GITHUB_ENV
           echo "::set-output name=sha_curr_short::$(git rev-parse --short HEAD)"
-          echo "::set-output name=sha_prev_short::${{ github.event.payload.sha }}
+          echo "::set-output name=sha_prev_short::${{ github.event.payload.sha }}"
       - name: Send request to mappings server
         run: |
           curl -X POST https://ddoo.dev/map \
