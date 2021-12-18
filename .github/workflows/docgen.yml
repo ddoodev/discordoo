@@ -27,7 +27,6 @@ jobs:
           mkdir ./docs/.github
           mkdir ./docs/.github/workflows
           cp -r ./.github/workflows/hash.yml ./docs/.github/workflows
-          cp -r ./.github/mappings.js ./docs
       - name: Push
         uses: s0/git-publish-subdir-action@develop
         env:
