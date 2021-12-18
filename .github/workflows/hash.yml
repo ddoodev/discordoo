@@ -20,8 +20,8 @@ jobs:
       - name: Set env vars
         run: |
           echo "COMMIT_HASH_KEY=$(git log -1 --pretty=%B | xargs)" >> $GITHUB_ENV
-          echo "COMMIT_HASH_VALUE=$(git log -1 --pretty=%h | xargs)"
-          echo "SECRET=${{ secrets.CF_KV_WRITE_TOKEN }}" > $GITHUB_ENV
+          echo "COMMIT_HASH_VALUE=$(git log -1 --pretty=%h | xargs)" >> $GITHUB_ENV
+          echo "SECRET=${{ secrets.CF_KV_WRITE_TOKEN }}" > $GITHUB_ENV >> $GITHUB_ENV
       - name: Send request to mappings server
         run: |
           npm install
