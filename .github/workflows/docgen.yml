@@ -24,7 +24,8 @@ jobs:
         run: npm run docs
       - name: Copy required things
         run: |
-          cp -r ./.github/workflows/hash.yml ./docs
+          mkdir ./docs/.github/workflows
+          cp -r ./.github/workflows/hash.yml ./docs/.github/workflows
           cp -r ./.github/mappings.js ./docs
       - name: Push
         uses: s0/git-publish-subdir-action@develop
@@ -34,7 +35,7 @@ jobs:
           FOLDER: docs
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MESSAGE: "generating docs for commit: {sha}"
-      - name: Trigger docs build
+      - name: Trigger hash write
         run: |
           curl -X POST https://api.github.com/repos/Discordoo/discordoo/dispatches \
                          -H 'Accept: application/vnd.github.everest-preview+json' \
