@@ -1,9 +1,10 @@
 const fetch = require('node-fetch')
+const child_process = require('child_process')
 const apiURL = 'https://ddoo.dev/map'
 
 const secret = process.env.SECRET
-const key = process.env.COMMIT_HASH_KEY
-const value = process.env.COMMIT_HASH_VALUE
+const key = child_process.execSync('git log -1 --pretty=%B').toString()
+const value = child_process.execSync('git log -1 --pretty=%h').toString()
 
 console.log({ key, value })
 
