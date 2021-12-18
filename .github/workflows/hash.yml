@@ -23,6 +23,7 @@ jobs:
           echo "::set-output name=sha_prev_short::${{ github.event.payload.sha }}"
       - name: Send request to mappings server
         run: |
+          echo '{"hash": { "key": "${{ steps.vars.outputs.sha_prev_short }}", "value": "${{ steps.vars.outputs.sha_curr_short }}" }}'
           curl -X POST https://ddoo.dev/map \
             -H 'Content-Type: application/json' \
             -H 'Authorization: ${{ secrets.CF_KV_WRITE_TOKEN }}' \
