@@ -26,4 +26,4 @@ jobs:
           curl -X POST https://ddoo.dev/map \
             -H 'Content-Type: application/json' \
             -H 'Authorization: ${{ secrets.CF_KV_WRITE_TOKEN }}' \
-            --data '{"hash": { "key": "${{ steps.vars.outputs.sha_prev_short }}", "value": "${{ steps.vars.outputs.sha_curr }}" }}'
+            --data '{"hash": { "key": "${{ steps.vars.outputs.sha_prev_short }}", "value": "${{ steps.vars.outputs.sha_curr_short }}" }}'
