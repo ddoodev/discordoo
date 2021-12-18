@@ -29,4 +29,4 @@ jobs:
           BRANCH: docs
           FOLDER: docs
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MESSAGE: "Generating docs: ({sha}) {msg}"
+          MESSAGE: "{sha}"
