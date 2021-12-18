@@ -1,0 +1,29 @@
+name: Hash mappings
+
+on:
+  push:
+    branches:
+      - docs
+
+jobs:
+  send-mappings:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: Set env vars
+        run: |
+          echo "COMMIT_HASH_KEY=$(git log -1 --pretty=%B | xargs)" >> $GITHUB_ENV
+          echo "COMMIT_HASH_VALUE=$(git log -1 --pretty=%h | xargs)"
+          echo "SECRET=${{ secrets.CF_KV_WRITE_TOKEN }}" > $GITHUB_ENV
+      - name: Send request to mappings server
+        run: |
+          npm i node-fetch
+          node -e 'const fetch = require("node-fetch"); const [key, secret, value] = [process.env.COMMIT_HASH_KEY, process.env.SECRET, process.env.COMMIT_HASH_VALUE]; fetch("https://ddoo.dev/map", { method: 'POST', headers: { Authorization: secret, "Content-Type": "application.json" }, data: { hash: { key, value } } }).then(console.log).catch(console.error)'
+        
