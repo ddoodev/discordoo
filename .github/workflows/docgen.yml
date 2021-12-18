@@ -22,16 +22,11 @@ jobs:
         run: npm ci
       - name: Run docs generation
         run: npm run docs
-      - name: Set env vars
-        id: vars
-        shell: bash
-        run: |
-          echo "::set-output name=sha::$(git rev-parse --short HEAD)"
-      - name: Copy required things
-        run: |
-          mkdir ./docs/.github
-          mkdir ./docs/.github/workflows
-          cp -r ./.github/workflows/hash.yml ./docs/.github/workflows
+      #- name: Copy required things
+      #  run: |
+      #    mkdir ./docs/.github
+      #    mkdir ./docs/.github/workflows
+      #    cp -r ./.github/workflows/hash.yml ./docs/.github/workflows
       - name: Push
         uses: s0/git-publish-subdir-action@develop
         env:
@@ -40,9 +35,16 @@ jobs:
           FOLDER: docs
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MESSAGE: "generating docs for commit: {sha}"
+      - name: Set env vars
+        id: vars
+        shell: bash
+        run: |
+          echo "::set-output name=sha_prev_short::$(git rev-parse --short HEAD)"
+          echo "::set-output name=sha_curr_short::$(git log -n 1 --pretty=format:"%h" origin/docs)"
       - name: Trigger hash write
         run: |
-          curl -X POST https://api.github.com/repos/Discordoo/discordoo/dispatches \
-                         -H 'Accept: application/vnd.github.everest-preview+json' \
-                         -u ${{ secrets.ACCESS_TOKEN }} \
-                         --data '{"event_type": "docs_build", "client_payload": { "sha": "${{ steps.vars.outputs.sha }}" }}'
+          echo '{"hash": { "key": "${{ steps.vars.outputs.sha_prev_short }}", "value": "${{ steps.vars.outputs.sha_curr_short }}" }}'
+          curl -X POST https://ddoo.dev/map \
+            -H 'Content-Type: application/json' \
+            -H 'Authorization: ${{ secrets.CF_KV_WRITE_TOKEN }}' \
+            --data '{"hash": { "key": "${{ steps.vars.outputs.sha_prev_short }}", "value": "${{ steps.vars.outputs.sha_curr_short }}" }}'
