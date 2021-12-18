@@ -24,6 +24,7 @@ jobs:
         run: npm run docs
       - name: Copy required things
         run: |
+          mkdir ./docs/.github
           mkdir ./docs/.github/workflows
           cp -r ./.github/workflows/hash.yml ./docs/.github/workflows
           cp -r ./.github/mappings.js ./docs
