@@ -9,7 +9,7 @@ async function run() {
   const resp = await fetch(apiURL, { 
     method: 'POST', 
     headers: {
-      Authorization: secret,
+      Authorization: secret.toString(),
       'Content-Type': 'application/json'
     },
     data: JSON.stringify({
