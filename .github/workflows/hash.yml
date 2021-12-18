@@ -20,7 +20,7 @@ jobs:
         shell: bash
         run: |
           echo "::set-output name=sha_curr_short::$(git rev-parse --short HEAD)"
-          echo "::set-output name=sha_prev_short::${{ github.event.payload.sha }}"
+          echo "::set-output name=sha_prev_short::${{ github.event.client_payload.sha }}"
       - name: Send request to mappings server
         run: |
           echo '{"hash": { "key": "${{ steps.vars.outputs.sha_prev_short }}", "value": "${{ steps.vars.outputs.sha_curr_short }}" }}'
