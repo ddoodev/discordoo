@@ -42,8 +42,8 @@ jobs:
           echo "::set-output name=sha_curr_short::$(git log -n 1 --pretty=format:"%h" origin/docs)"
       - name: Trigger hash write
         run: |
-          echo '{"hash": { "key": "${{ steps.vars.outputs.sha_prev_short }}", "value": "${{ steps.vars.outputs.sha_curr_short }}" }}'
+          echo '{"hash": { "key": "ddoo:${{ steps.vars.outputs.sha_prev_short }}", "value": "${{ steps.vars.outputs.sha_curr_short }}" }}'
           curl -X POST https://ddoo.dev/map \
             -H 'Content-Type: application/json' \
             -H 'Authorization: ${{ secrets.CF_KV_WRITE_TOKEN }}' \
-            --data '{"hash": { "key": "${{ steps.vars.outputs.sha_prev_short }}", "value": "${{ steps.vars.outputs.sha_curr_short }}" }}'
+            --data '{"hash": { "key": "ddoo:${{ steps.vars.outputs.sha_prev_short }}", "value": "${{ steps.vars.outputs.sha_curr_short }}" }}'
