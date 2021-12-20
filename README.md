@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://docs.discordoo.xyz"><img width="520" src="https://cdn.discordapp.com/attachments/531549268033404928/916014919449714728/ddoologo_new_1.2_banner.svg" alt=""></a>
+  <a href="https://ddoo.dev/"><img width="520" src="https://cdn.discordapp.com/attachments/531549268033404928/916014919449714728/ddoologo_new_1.2_banner.svg" alt=""></a>
 </p>
 
 
@@ -7,7 +7,7 @@
   <b>
     Discord bots. Simplified and boosted
     <span> · </span>
-    <a href="https://docs.discordoo.xyz">Docs & Guide</a>
+    <a href="https://ddoo.dev/">Docs & Guide</a>
     <span> · </span>
     <a href="https://github.com/Discordoo/discordoo/blob/develop/CONTRIBUTING.md">Contribute</a>
   </b>
@@ -23,7 +23,7 @@
   <a href="https://github.com/Discordoo/discordoo/actions">
     <img src="https://github.com/Discordoo/discordoo/workflows/Build/badge.svg" alt="Build status" />
   </a>
-  <a href="https://discord.gg/eHC8ynn2H3">
+  <a href="https://ddoo.dev/discord">
     <img 
       src="https://img.shields.io/discord/811663819721539674?color=7280DA&label=Discord&logo=discord&logoColor=white" 
       alt="Online"

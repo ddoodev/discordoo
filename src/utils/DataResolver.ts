@@ -107,14 +107,14 @@ export class DataResolver {
     return base64
   }
 
-  static isBufferResolvable(resolvable: BufferResolvable): boolean {
+  static isBufferResolvable(resolvable: any): resolvable is BufferResolvable {
     if (Buffer.isBuffer(resolvable) || resolvable instanceof ArrayBuffer) return true
     if (typeof resolvable === 'object' && typeof resolvable.pipe === 'function') return true
 
     return typeof resolvable === 'string' && (resolvable.startsWith('https://') || resolvable.startsWith('http://'))
   }
 
-  static isMessageAttachmentResolvable(resolvable: MessageAttachmentResolvable) {
+  static isMessageAttachmentResolvable(resolvable: any): resolvable is MessageAttachmentResolvable {
     if (typeof resolvable !== 'object') return false
 
     if ('file' in resolvable) {
