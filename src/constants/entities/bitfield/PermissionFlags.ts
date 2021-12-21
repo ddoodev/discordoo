@@ -41,4 +41,5 @@ export const PermissionFlags = {
   USE_EXTERNAL_STICKERS:      one << b(37),
   SEND_MESSAGES_IN_THREADS:   one << b(38),
   START_EMBEDDED_ACTIVITIES:  one << b(39),
+  MODERATE_MEMBERS:           one << b(40),
 }
