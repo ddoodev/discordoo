@@ -1,6 +1,8 @@
 import { DeconstructedDiscordooSnowflake } from '@src/utils/interfaces/DeconstructedSnowflake'
 import { DiscordooError } from '@src/utils/DiscordooError'
 import { DISCORDOO_EPOCH } from '@src/constants/common'
+import { is } from 'typescript-is'
+import { ValidationError } from '@src/utils/ValidationError'
 
 const EPOCH = DISCORDOO_EPOCH
 let INCREMENT = 0
@@ -44,6 +46,18 @@ export class DiscordooSnowflake {
 
     if (INCREMENT >= 4194302) INCREMENT = 0
 
+    if (!is<number>(shardId)) {
+      throw new ValidationError('DiscordooSnowflake#generate', 'shardId must be number.')
+    }
+
+    if (!is<number>(workerId)) {
+      throw new ValidationError('DiscordooSnowflake#generate', 'workerId must be number.')
+    }
+
+    if (!is<number>(timestamp)) {
+      throw new ValidationError('DiscordooSnowflake#generate', 'timestamp must be number or Date.')
+    }
+
     if (shardId.toString(2).length > 32 || workerId.toString(2).length > 32) {
       throw new DiscordooError(
         'DiscordooSnowflake#generate',
@@ -77,29 +91,24 @@ export class DiscordooSnowflake {
   }
 
   static deconstruct(snowflake: string): DeconstructedDiscordooSnowflake {
-    const b = BigInt, n = Number
+    const b = BigInt, n = Number, bigSnowflake = b(snowflake)
 
-    const result = {
+    return {
       // 42 bits timestamp
-      timestamp: n((b(snowflake) >> b(86)) + b(EPOCH)),
+      timestamp: n((bigSnowflake >> b(86)) + b(EPOCH)),
 
       // 32 bits workerId, 0x3FFFFFFFC0000000000000 is a 86 bit integer (22 for increment (0) + 32 for shardId (0) + 32 for workerId (1))
-      workerId: n((b(snowflake) & b(0x3FFFFFFFC0000000000000)) >> b(54)),
+      workerId: n((bigSnowflake & b(0x3FFFFFFFC0000000000000)) >> b(54)),
 
       // 32 bits shardId, 0x3FFFFFFFC00000 is a 54 bit integer (22 for increment (0) + 32 for shardId (1))
-      shardId: n((b(snowflake) & b(0x3FFFFFFFC00000)) >> b(22)),
+      shardId: n((bigSnowflake & b(0x3FFFFFFFC00000)) >> b(22)),
 
       // 22 bits increment, 0x3FFFFF is a max 22 bit integer
-      increment: n(b(snowflake) & b(0x3FFFFF)),
-    }
+      increment: n(bigSnowflake & b(0x3FFFFF)),
 
-    Object.defineProperty(result, 'date', {
-      get: function get() {
+      get date() {
         return new Date(this.timestamp)
-      },
-      enumerable: true,
-    })
-
-    return result as DeconstructedDiscordooSnowflake
+      }
+    }
   }
 }

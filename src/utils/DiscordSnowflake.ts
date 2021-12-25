@@ -64,7 +64,7 @@ export class DiscordSnowflake {
     const b = BigInt, n = Number, bigSnowflake = b(snowflake)
 
     // https://discord.com/developers/docs/reference#snowflakes-snowflake-id-format-structure-left-to-right
-    const result = {
+    return {
       // 42 bits timestamp
       timestamp: n((bigSnowflake >> b(22)) + b(EPOCH)),
 
@@ -76,15 +76,10 @@ export class DiscordSnowflake {
 
       // 12 bits increment, 0xFFF is a max 12 bit integer
       increment: n(bigSnowflake & b(0xFFF)),
-    }
 
-    Object.defineProperty(result, 'date', {
-      get: function get() {
+      get date() {
         return new Date(this.timestamp)
-      },
-      enumerable: true,
-    })
-
-    return result as DeconstructedDiscordSnowflake
+      }
+    }
   }
 }
