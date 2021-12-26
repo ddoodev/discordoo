@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://ddoo.dev/"><img width="520" src="https://cdn.discordapp.com/attachments/531549268033404928/916014919449714728/ddoologo_new_1.2_banner.svg" alt=""></a>
+  <a href="https://ddoo.dev/"><img width="520" src="https://cdn.discordapp.com/attachments/531549268033404928/924729757583700020/ddoologo_v2_banner.svg" alt=""></a>
 </p>
 
 
@@ -74,7 +74,7 @@ I'm tired of trying to cram an unrealistic amount of work into a couple of days 
 You can blame me for that, I understand this. Sorry.
 
 *please read this*
-![image](https://user-images.githubusercontent.com/44965055/137811902-565cbdc0-7cb7-4a86-a1ef-b082839f54cc.png)
+![image](https://user-images.githubusercontent.com/44965055/147416937-d10a141c-665c-4321-84d5-256979862ddf.png)
 
 ### Sharding
 * [x] Implement sharding
