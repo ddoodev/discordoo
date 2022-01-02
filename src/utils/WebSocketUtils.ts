@@ -41,7 +41,7 @@ export class WebSocketUtils {
     return unpack(data)
   }
 
-  static exists(packet: any): boolean {
+  static exists<T>(packet: any): packet is T {
     return packet !== undefined && packet !== null
   }
 }

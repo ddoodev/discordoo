@@ -1,4 +1,5 @@
 export { TWITCH_CDN_LIVE_USERS_IMAGES } from '@src/constants/common/TwitchCdnLiveUsersImages'
+export { ProxyFilterPointerSymbol } from '@src/constants/common/ProxyFilterPointerSymbol'
 export { ToJsonOverrideSymbol } from '@src/constants/common/ToJsonOverrideSymbol'
 export { DiscordooProviders } from '@src/constants/common/DiscordooProviders'
 export { SPOTIFY_CDN_IMAGES } from '@src/constants/common/SpotifyCdnImages'

@@ -9,7 +9,7 @@ export function packet(client: WebSocketClient, packet: WebSocketPacket) {
   // console.log('shard', client.id, 'packet', packet)
 
   // process sequence increase
-  if (WebSocketUtils.exists(packet.s) && packet.s! > client.sequence) client.sequence = packet.s!
+  if (WebSocketUtils.exists<number>(packet.s) && packet.s > client.sequence) client.sequence = packet.s
 
   // console.log('shard', client.id, 'SEQUENCE', client.sequence)
 

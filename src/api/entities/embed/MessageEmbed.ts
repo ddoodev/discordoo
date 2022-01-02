@@ -49,12 +49,12 @@ export class MessageEmbed {
       'provider'
     ])
 
-    if (WebSocketUtils.exists(data.timestamp)) {
-      this.timestamp = new Date(data.timestamp!).getTime()
+    if (WebSocketUtils.exists<number | Date>(data.timestamp)) {
+      this.timestamp = new Date(data.timestamp).getTime()
     }
 
-    if (WebSocketUtils.exists(data.color)) {
-      this.color = resolveColor(data.color!)
+    if (WebSocketUtils.exists<ColorResolvable>(data.color)) {
+      this.color = resolveColor(data.color)
     }
 
     this.fields = data.fields ? this._fixFields(data.fields) : []
@@ -241,7 +241,7 @@ export class MessageEmbed {
     return this
   }
 
-  setUrl(url: string): this {
+  setUrl(url: string | null): this {
     if (!is<string | null>(url)) {
       throw new ValidationError('MessageEmbed', 'Incorrect url: must be string or null')
     }

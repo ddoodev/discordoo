@@ -1,3 +1,4 @@
+export { KNOWN_CACHE_OPERATE_METHODS } from '@src/constants/cache/KnownCacheOperateMethods'
 export { ThreadMembersCachingPolicy } from '@src/constants/cache/ThreadMembersCachingPolicy'
 export { GuildMembersCachingPolicy } from '@src/constants/cache/GuildMembersCachingPolicy'
 export { OverwritesCachingPolicy } from '@src/constants/cache/OverwritesCachingPolicy'

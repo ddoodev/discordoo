@@ -1,4 +1,4 @@
-import { EntitiesCacheManager, GuildResolvable, Role, RoleResolvable } from '@src/api'
+import { ColorResolvable, EntitiesCacheManager, GuildResolvable, Role, RoleResolvable } from '@src/api'
 import { Client } from '@src/core'
 import { Keyspaces } from '@src/constants'
 import { RoleEditData } from '@src/api/entities/role/interfaces/RoleEditData'
@@ -119,7 +119,7 @@ export class ClientRolesManager extends EntitiesManager {
       payload.permissions = resolveBigBitField(data.permissions).toString()
     }
 
-    if (WebSocketUtils.exists(data.color)) {
+    if (WebSocketUtils.exists<ColorResolvable>(data.color)) {
       payload.color = resolveColor(data.color)
     }
 

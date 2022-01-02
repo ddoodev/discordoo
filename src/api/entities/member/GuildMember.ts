@@ -25,7 +25,8 @@ export class GuildMember extends AbstractEntity {
   public userId!: string
   public guildId!: string
   public guildOwner!: boolean
-  public muteUntilDate?: Date
+
+  private _muteUntilRaw?: string
 
   async init(data: GuildMemberData | RawGuildMemberData): Promise<this> {
     attach(this, data, [
@@ -36,7 +37,7 @@ export class GuildMember extends AbstractEntity {
       'pending',
       [ 'guildId', 'guild_id' ],
       [ 'guildOwner', 'guild_owner' ],
-      [ 'muteUntilDate', 'communication_disabled_until' ],
+      [ '_muteUntilRaw', 'communication_disabled_until' ],
     ])
 
     if ('joined_at' in data) {
@@ -92,19 +93,21 @@ export class GuildMember extends AbstractEntity {
       this.permissions = new ReadonlyPermissions(this.guildOwner ? PermissionFlags.ADMINISTRATOR : data.permissions)
     }
 
-    if (typeof this.muteUntilDate === 'string'!) {
-      this.muteUntilDate = new Date(this.muteUntilDate!)
+    if (typeof this._muteUntilRaw === 'string') {
+      const time = new Date(this._muteUntilRaw).getTime()
+
+      if (time <= Date.now()) delete this._muteUntilRaw
     }
 
     return this
   }
 
   async user(options?: CacheManagerGetOptions): Promise<User | undefined> {
-    return this.userId ? this.client.users.cache.get(this.userId, options) : undefined
+    return this.client.users.cache.get(this.userId, options)
   }
 
   async guild(options?: CacheManagerGetOptions): Promise<any | undefined> { // TODO: Guild
-    return this.guildId ? this.client.guilds.cache.get(this.guildId, options) : undefined
+    return this.client.guilds.cache.get(this.guildId, options)
   }
 
   async presence(options?: CacheManagerGetOptions): Promise<Presence | undefined> {
@@ -120,7 +123,27 @@ export class GuildMember extends AbstractEntity {
   }
 
   get muteUntilTimestamp(): number | undefined {
-    return this.muteUntilDate?.getTime()
+    const date = this._muteUntilRaw ? new Date(this._muteUntilRaw) : undefined
+    let time = date?.getTime()
+
+    if (time && time <= Date.now()) {
+      delete this._muteUntilRaw
+      time = undefined
+    }
+
+    return time
+  }
+
+  get muteUntilDate(): Date | undefined {
+    let date = this._muteUntilRaw ? new Date(this._muteUntilRaw) : undefined
+    const time = date?.getTime()
+
+    if (time && time <= Date.now()) {
+      delete this._muteUntilRaw
+      date = undefined
+    }
+
+    return date
   }
 
   avatarUrl(options?: ImageUrlOptions): string | undefined {
@@ -143,7 +166,7 @@ export class GuildMember extends AbstractEntity {
     return this.edit({ voiceMute }, reason)
   }
 
-  muteUntil(muteUntil: Date | number | string | null, reason?: string): Promise<this | undefined> {
+  muteUntil(muteUntil: Date | number | string | null, reason?: string) {
     return this.edit({ muteUntil }, reason)
   }
 
@@ -179,14 +202,11 @@ export class GuildMember extends AbstractEntity {
       premiumSinceDate: true,
       guildId: true,
       guildOwner: true,
-      muteUntilDate: true,
+      _muteUntilRaw: true,
+      userId: true,
       roles: {
         override: ToJsonOverrideSymbol,
         value: this.rolesList
-      },
-      userId: {
-        override: ToJsonOverrideSymbol,
-        value: this.userId
       },
     }, obj)
   }

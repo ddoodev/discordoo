@@ -16,5 +16,5 @@ export interface GuildMemberData {
   permissions?: PermissionsResolvable
   guildId: string
   guildOwner: boolean
-  textMuteUntilDate?: Date
+  _muteUntilRaw?: string
 }
