@@ -1,6 +1,6 @@
 import { ChannelResolvable, GuildResolvable } from '@src/api'
 
-export interface CategoryChannelChildrensManagerData {
+export interface CategoryChannelChildrenManagerData {
   category: ChannelResolvable
   guild: GuildResolvable
 }

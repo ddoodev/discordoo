@@ -1,4 +1,4 @@
-export enum ApplicationCommandOptionTypes {
+export enum AppCommandOptionTypes {
   SUB_COMMAND = 1,
   SUB_COMMAND_GROUP,
   STRING,

@@ -1,5 +1,5 @@
 import { CachingPoliciesProcessor } from '@src/cache/CachingPoliciesProcessor'
-import { CACHE_POINTER_PREFIX, IpcCacheOpCodes, IpcOpCodes, SerializeModes } from '@src/constants'
+import { IpcCacheOpCodes, IpcOpCodes, SerializeModes } from '@src/constants'
 import { CacheProvider, CacheStorageKey } from '@discordoo/providers'
 import { DiscordooError, resolveDiscordooShards } from '@src/utils'
 import { Client, ProviderConstructor } from '@src/core'

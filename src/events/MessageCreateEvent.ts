@@ -1,10 +1,8 @@
 import { AbstractEvent } from '@src/events/AbstractEvent'
-import { EventNames, Keyspaces } from '@src/constants'
+import { EventNames } from '@src/constants'
 import { RawMessageData } from '@src/api/entities/message/interfaces/RawMessageData'
-import { channelEntityKey } from '@src/utils'
 import { MessageCreateEventContext } from '@src/events/ctx/MessageCreateEventContext'
 import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
-import { AnyGuildChannel } from '@src/api/entities/channel/interfaces/AnyGuildChannel'
 import { AnyWritableChannel } from '@src/api/entities/channel/interfaces/AnyWritableChannel'
 
 export class MessageCreateEvent extends AbstractEvent {

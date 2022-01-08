@@ -12,7 +12,7 @@ import {
   User
 } from '@src/api'
 import { ThreadMetadata } from '@src/api/entities/channel/interfaces/ThreadMetadata'
-import { attach, channelEntityKey } from '@src/utils'
+import { attach } from '@src/utils'
 import { WritableChannel } from '@src/api/entities/channel/interfaces/WritableChannel'
 import { is } from 'typescript-is'
 import { ThreadChannelEditData } from '@src/api/entities/channel/interfaces/ThreadChannelEditData'

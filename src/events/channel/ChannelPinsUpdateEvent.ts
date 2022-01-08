@@ -1,7 +1,6 @@
 import { AbstractEvent } from '@src/events'
 import { EventNames, Keyspaces } from '@src/constants'
 import { RawChannelPinsUpdateEventData } from '@src/events/channel/RawChannelPinsUpdateEventData'
-import { channelEntityKey } from '@src/utils'
 
 export class ChannelPinsUpdateEvent extends AbstractEvent {
   public name = EventNames.CHANNEL_PINS_UPDATE

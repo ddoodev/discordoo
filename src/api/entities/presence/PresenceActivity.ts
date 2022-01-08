@@ -4,7 +4,7 @@ import { PresenceActivityButtonData } from '@src/api/entities/presence/interface
 import { PresenceActivityPartyData } from '@src/api/entities/presence/interfaces/PresenceActivityPartyData'
 import { PresenceActivitySecretsData } from '@src/api/entities/presence/interfaces/PresenceActivitySecretsData'
 import { PresenceActivityTimestampsData } from '@src/api/entities/presence/interfaces/PresenceActivityTimestampsData'
-import { PresenceActivityTypes, ToJsonOverrideSymbol } from '@src/constants'
+import { PresenceActivityTypes } from '@src/constants'
 import { RawPresenceActivityData } from '@src/api/entities/presence/interfaces/RawPresenceActivityData'
 import { PresenceActivityAssets } from '@src/api/entities/presence/PresenceActivityAssets'
 import { attach, WebSocketUtils } from '@src/utils'

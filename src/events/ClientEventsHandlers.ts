@@ -17,153 +17,153 @@ import { IpcMessageEventContext } from '@src/events/ctx/IpcMessageEventContext'
 export interface ClientEventsHandlers {
 
   /** Emitted once when the client is ready */
-  ready: (context: ReadyEventContext) => unknown
+  ready: (context: ReadyEventContext) => any
 
   /** Emitted when client receives message from another sharding instance through ipc */
-  ipcMessage: (context: IpcMessageEventContext) => unknown
+  ipcMessage: (context: IpcMessageEventContext) => any
 
   /** Gateway shard connected and received expected guilds (or a guilds receiving timeout) */
-  shardConnected: (context: ShardConnectedEventContext) => unknown
+  shardConnected: (context: ShardConnectedEventContext) => any
 
   /** New guild channel created */
-  channelCreate: (context: ChannelCreateEventContext) => unknown
+  channelCreate: (context: ChannelCreateEventContext) => any
 
   /** Channel was updated */
-  channelUpdate: (context: ChannelUpdateEventContext) => unknown
+  channelUpdate: (context: ChannelUpdateEventContext) => any
 
   /** Channel was deleted */
-  channelDelete: (context: ChannelDeleteEventContext) => unknown
+  channelDelete: (context: ChannelDeleteEventContext) => any
 
   /** Message was pinned or unpinned */
-  channelPinsUpdate: (context: ChannelPinsUpdateEventContext) => unknown
+  channelPinsUpdate: (context: ChannelPinsUpdateEventContext) => any
 
   /** Thread created, also sent when being added to a private thread */
-  threadCreate: (context: ThreadCreateEventContext) => unknown
+  threadCreate: (context: ThreadCreateEventContext) => any
 
   /** Thread was updated */
-  threadUpdate: (context: ThreadUpdateEventContext) => unknown
+  threadUpdate: (context: ThreadUpdateEventContext) => any
 
   /** Thread was deleted */
-  threadDelete: (context: ThreadDeleteEventContext) => unknown
+  threadDelete: (context: ThreadDeleteEventContext) => any
 
   /** Sent when gaining access to a channel, contains all active threads in that channel */
-  threadListSync: (context: ThreadListSyncEventContext) => unknown
+  threadListSync: (context: ThreadListSyncEventContext) => any
 
   /** Thread member for the client was updated */
-  // threadMemberUpdate: (context: ChannelCreateEventContext) => unknown
+  // threadMemberUpdate: (context: ChannelCreateEventContext) => any
 
   /** Some user(s) were added to or removed from a thread */
- //  threadMembersUpdate: (context: ChannelCreateEventContext) => unknown
+ //  threadMembersUpdate: (context: ChannelCreateEventContext) => any
 
   /** Client joined a new guild */
-  // guildCreate: (context: ChannelCreateEventContext) => unknown
+  // guildCreate: (context: ChannelCreateEventContext) => any
 
   /** Guild was updated */
-  // guildUpdate: (context: ChannelCreateEventContext) => unknown
+  // guildUpdate: (context: ChannelCreateEventContext) => any
 
   /** Client left/was removed from a guild */
-  // guildDelete: (context: ChannelCreateEventContext) => unknown
+  // guildDelete: (context: ChannelCreateEventContext) => any
 
   /** User was banned from a guild */
-  // guildBanAdd: (context: ChannelCreateEventContext) => unknown
+  // guildBanAdd: (context: ChannelCreateEventContext) => any
 
   /** User was unbanned from a guild */
-  // guildBanRemove: (context: ChannelCreateEventContext) => unknown
+  // guildBanRemove: (context: ChannelCreateEventContext) => any
 
   /** Guild emojis were updated */
-  // guildEmojisUpdate: (context: ChannelCreateEventContext) => unknown
+  // guildEmojisUpdate: (context: ChannelCreateEventContext) => any
 
   /** Guild stickers were updated */
-  // guildStickersUpdate: (context: ChannelCreateEventContext) => unknown
+  // guildStickersUpdate: (context: ChannelCreateEventContext) => any
 
   /** Guild integration was updated */
-  // guildIntegrationsUpdate: (context: ChannelCreateEventContext) => unknown
+  // guildIntegrationsUpdate: (context: ChannelCreateEventContext) => any
 
   /** New user joined a guild */
-  // guildMemberAdd: (context: ChannelCreateEventContext) => unknown
+  // guildMemberAdd: (context: ChannelCreateEventContext) => any
 
   /** User was removed from a guild */
-  // guildMemberRemove: (context: ChannelCreateEventContext) => unknown
+  // guildMemberRemove: (context: ChannelCreateEventContext) => any
 
   /** Guild member was updated */
-  // guildMemberUpdate: (context: ChannelCreateEventContext) => unknown
+  // guildMemberUpdate: (context: ChannelCreateEventContext) => any
 
   /** Response to [Request Guild Members](https://discord.com/developers/docs/topics/gateway#request-guild-members) */
-  guildMembersChunk: (context: GuildMembersChunkEventContext) => unknown
+  guildMembersChunk: (context: GuildMembersChunkEventContext) => any
 
   /** Guild role was created */
-  // guildRoleCreate: (context: ChannelCreateEventContext) => unknown
+  // guildRoleCreate: (context: ChannelCreateEventContext) => any
 
   /** Guild role was updated */
-  // guildRoleUpdate: (context: ChannelCreateEventContext) => unknown
+  // guildRoleUpdate: (context: ChannelCreateEventContext) => any
 
   /** Guild role was deleted */
-  // guildRoleDelete: (context: ChannelCreateEventContext) => unknown
+  // guildRoleDelete: (context: ChannelCreateEventContext) => any
 
   /** Guild integration was created */
-  // integrationCreate: (context: ChannelCreateEventContext) => unknown
+  // integrationCreate: (context: ChannelCreateEventContext) => any
 
   /** Guild integration was updated */
-  // integrationUpdate: (context: ChannelCreateEventContext) => unknown
+  // integrationUpdate: (context: ChannelCreateEventContext) => any
 
   /** Guild integration was deleted */
-  // integrationDelete: (context: ChannelCreateEventContext) => unknown
+  // integrationDelete: (context: ChannelCreateEventContext) => any
 
   /** User used an interaction */
-  // interactionCreate: (context: ChannelCreateEventContext) => unknown
+  // interactionCreate: (context: ChannelCreateEventContext) => any
 
   /** Invite to a channel was created */
-  // inviteCreate: (context: ChannelCreateEventContext) => unknown
+  // inviteCreate: (context: ChannelCreateEventContext) => any
 
   /** Invite to a channel was deleted  */
-  // inviteDelete: (context: ChannelCreateEventContext) => unknown
+  // inviteDelete: (context: ChannelCreateEventContext) => any
 
   /** Message was created */
-  messageCreate: (context: MessageCreateEventContext) => unknown
+  messageCreate: (context: MessageCreateEventContext) => any
 
   /** Message was updated */
-  // messageUpdate: (context: MessageCreateEventContext) => unknown
+  // messageUpdate: (context: MessageCreateEventContext) => any
 
   /** Message was deleted */
-  // messageDelete: (context: MessageCreateEventContext) => unknown
+  // messageDelete: (context: MessageCreateEventContext) => any
 
   /** Multiple messages were deleted at once */
-  // messageDeleteBulk: (context: MessageCreateEventContext) => unknown
+  // messageDeleteBulk: (context: MessageCreateEventContext) => any
 
   /** User reacted to a message */
-  // messageReactionAdd: (context: MessageCreateEventContext) => unknown
+  // messageReactionAdd: (context: MessageCreateEventContext) => any
 
   /** User removed a reaction from a message */
-  // messageReactionRemove: (context: MessageCreateEventContext) => unknown
+  // messageReactionRemove: (context: MessageCreateEventContext) => any
 
   /** All reactions were explicitly removed from a message */
-  // messageReactionRemoveAll: (context: MessageCreateEventContext) => unknown
+  // messageReactionRemoveAll: (context: MessageCreateEventContext) => any
 
   /** All reactions for a given emoji were explicitly removed from a message */
-  // messageReactionRemoveEmoji: (context: MessageCreateEventContext) => unknown
+  // messageReactionRemoveEmoji: (context: MessageCreateEventContext) => any
 
   /** Presence was updated */
-  presenceUpdate: (context: PresenceUpdateEventContext) => unknown
+  presenceUpdate: (context: PresenceUpdateEventContext) => any
 
   /** Stage instance was created */
-  // stageInstanceCreate: (context: PresenceUpdateEventContext) => unknown
+  // stageInstanceCreate: (context: PresenceUpdateEventContext) => any
 
   /** Stage instance was updated */
-  // stageInstanceUpdate: (context: PresenceUpdateEventContext) => unknown
+  // stageInstanceUpdate: (context: PresenceUpdateEventContext) => any
 
   /** Stage instance was deleted or closed */
-  // stageInstanceDelete: (context: PresenceUpdateEventContext) => unknown
+  // stageInstanceDelete: (context: PresenceUpdateEventContext) => any
 
   /** User started typing in a channel */
-  // typingStart: (context: PresenceUpdateEventContext) => unknown
+  // typingStart: (context: PresenceUpdateEventContext) => any
 
   /** Properties about the user changed */
-  // userUpdate: (context: PresenceUpdateEventContext) => unknown
+  // userUpdate: (context: PresenceUpdateEventContext) => any
 
   /** Someone joined, left, or moved a voice channel */
-  // voiceStateUpdate: (context: PresenceUpdateEventContext) => unknown
+  // voiceStateUpdate: (context: PresenceUpdateEventContext) => any
 
   /** Guild channel webhook was created, updated, or deleted */
-  // webhooksUpdate: (context: PresenceUpdateEventContext) => unknown
+  // webhooksUpdate: (context: PresenceUpdateEventContext) => any
 
 }

@@ -1,7 +1,6 @@
-import { ApplicationCommandTypes } from '@src/constants'
-import { RawApplicationCommandOptionData } from '@src/api/entities/interaction/interfaces/RawApplicationCommandOptionData'
+import { AppCommandTypes } from '@src/constants'
 
-export interface RawApplicationCommandData {
+export interface RawAppCommandData {
   /** unique id of the command */
   id: string
   /** 1-32 character name */
@@ -13,11 +12,9 @@ export interface RawApplicationCommandData {
   /** unique id of the parent application */
   application_id: string
   /** the type of command, defaults `1` (`CHAT_INPUT`) if not set */
-  type?: ApplicationCommandTypes
+  type?: AppCommandTypes
   /** guild id of the command, if not global */
   guild_id?: string
   /** whether the command is enabled by default when the app is added to a guild */
   default_permission?: boolean
-  /** the parameters for the command, max 25. valid only for `CHAT_INPUT` commands */
-  options?: RawApplicationCommandOptionData[]
 }

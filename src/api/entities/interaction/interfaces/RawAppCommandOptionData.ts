@@ -1,9 +1,9 @@
-import { ApplicationCommandOptionTypes, ChannelTypes } from '@src/constants'
-import { ApplicationCommandOptionChoiceData } from '@src/api/entities/interaction/interfaces/ApplicationCommandOptionChoiceData'
+import { AppCommandOptionTypes, ChannelTypes } from '@src/constants'
+import { AppCommandOptionChoiceData } from '@src/api/entities/interaction/interfaces/AppCommandOptionChoiceData'
 
-export interface RawApplicationCommandOptionData {
+export interface RawAppCommandOptionData {
   /** the type of option */
-  type: ApplicationCommandOptionTypes
+  type: AppCommandOptionTypes
   /** 1-32 character name */
   name: string
   /** 1-100 character description */
@@ -14,9 +14,9 @@ export interface RawApplicationCommandOptionData {
    * */
   required?: boolean
   /** choices for `STRING`, `INTEGER`, and `NUMBER` types for the user to pick from, max 25 */
-  choices?: ApplicationCommandOptionChoiceData[]
+  choices?: AppCommandOptionChoiceData[]
   /** if the option is a subcommand or subcommand group type, these nested options will be the parameters */
-  options?: RawApplicationCommandOptionData[]
+  options?: RawAppCommandOptionData[]
   /** if the option is a channel type, the channels shown will be restricted to these types */
   channel_types?: ChannelTypes[]
   /** if the option is an `INTEGER` or `NUMBER` type, the minimum value permitted */

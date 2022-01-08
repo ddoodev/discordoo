@@ -21,7 +21,7 @@ import { RoleTagsResolvable } from '@src/api/entities/role/interfaces/RoleTagsRe
 import { RoleTagsData } from '@src/api/entities/role/interfaces/RoleTagsData'
 import { ShardListResolvable } from '@src/utils/interfaces'
 import { range } from '@src/utils/range'
-import { EmojiResolvable, Message } from '@src/api'
+import { EmojiResolvable } from '@src/api'
 import { MessageReactionResolvable } from '@src/api/entities/reaction/interfaces/MessageReactionResolvable'
 import { PermissionOverwriteResolvable } from '@src/api/entities/overwrites/interfaces/PermissionOverwriteResolvable'
 import { RawPermissionOverwriteData } from '@src/api/entities/overwrites/interfaces/RawPermissionOverwriteData'

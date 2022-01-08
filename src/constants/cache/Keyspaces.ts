@@ -21,8 +21,8 @@ export enum Keyspaces {
   MESSAGE_REACTION_USERS = 'message-reaction-users',
   // channel-permissions-overwrites => channel id => user or role id
   CHANNEL_PERMISSIONS_OVERWRITES = 'channel-permissions-overwrites',
-  // category-channel-childrens => channel id (pointer) => guild-channels => guild id => channel id
-  CATEGORY_CHANNEL_CHILDRENS = 'category-channel-childrens',
+  // category-channel-children => channel id (pointer) => guild-channels => guild id => channel id
+  CATEGORY_CHANNEL_CHILDREN = 'category-channel-children',
   // guild-members => guild id => member user id
   GUILD_MEMBERS = 'guild-members',
   // guild-member-roles => guild id + member user id => role id (pointer) => guild-roles => guild id => role id

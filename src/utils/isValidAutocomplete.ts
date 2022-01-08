@@ -1,9 +1,9 @@
-import { AutocompleteInteractionData } from '@src/api/entities/interaction/interfaces/AutocompleteInteractionData'
+import { AppCommandInteractionOptionData } from '@src/api/entities/interaction/interfaces/AppCommandInteractionOptionData'
 import { is } from 'typescript-is'
-import { ApplicationCommandOptionTypes } from '@src/constants'
+import { AppCommandOptionTypes } from '@src/constants'
 import { WebSocketUtils } from '@src/utils/WebSocketUtils'
 
-export function isValidAutocomplete(data: any): data is AutocompleteInteractionData {
+export function isValidAutocomplete(data: any): data is AppCommandInteractionOptionData {
   // value and options are mutually exclusive
   if (WebSocketUtils.exists(data?.value) && WebSocketUtils.exists(data?.options)) return false
 
@@ -14,16 +14,16 @@ export function isValidAutocomplete(data: any): data is AutocompleteInteractionD
   if (
     data?.options?.some(option => {
       if (
-        option?.type !== ApplicationCommandOptionTypes.SUB_COMMAND_GROUP &&
-        option?.type !== ApplicationCommandOptionTypes.SUB_COMMAND &&
+        option?.type !== AppCommandOptionTypes.SUB_COMMAND_GROUP &&
+        option?.type !== AppCommandOptionTypes.SUB_COMMAND &&
         Array.isArray(option?.options)
       ) return true
 
       if (
-        option?.some(o => o?.type !== ApplicationCommandOptionTypes.SUB_COMMAND && Array.isArray(o?.options))
+        option?.some(o => o?.type !== AppCommandOptionTypes.SUB_COMMAND && Array.isArray(o?.options))
       ) return true
     })
   ) return false
 
-  return is<AutocompleteInteractionData>(data)
+  return is<AppCommandInteractionOptionData>(data)
 }

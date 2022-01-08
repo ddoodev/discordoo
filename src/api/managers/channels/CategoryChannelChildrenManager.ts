@@ -2,30 +2,30 @@ import { EntitiesManager } from '@src/api/managers/EntitiesManager'
 import { EntitiesCacheManager } from '@src/api'
 import { AnyGuildChannel } from '@src/api/entities/channel/interfaces/AnyGuildChannel'
 import { Client } from '@src/core'
-import { CategoryChannelChildrensManagerData } from '@src/api/managers/channels/CategoryChannelChildrensManagerData'
+import { CategoryChannelChildrenManagerData } from '@src/api/managers/channels/CategoryChannelChildrenManagerData'
 import { DiscordooError, resolveChannelId } from '@src/utils'
 import { Keyspaces } from '@src/constants'
 import { GuildChannelCreateData } from '@src/api/entities/channel/interfaces/GuildChannelCreateData'
 import { RawGuildChannelCreateData } from '@src/api/entities/channel/interfaces/RawGuildChannelCreateData'
 
-export class CategoryChannelChildrensManager extends EntitiesManager {
+export class CategoryChannelChildrenManager extends EntitiesManager {
   public cache: EntitiesCacheManager<AnyGuildChannel>
   public categoryId: string
   public guildId: string
 
-  constructor(client: Client, data: CategoryChannelChildrensManagerData) {
+  constructor(client: Client, data: CategoryChannelChildrenManagerData) {
     super(client)
 
     const channelId = resolveChannelId(data.category)
-    if (!channelId) throw new DiscordooError('CategoryChannelChildrensManager', 'Cannot operate without category channel id.')
+    if (!channelId) throw new DiscordooError('CategoryChannelChildrenManager', 'Cannot operate without category channel id.')
     this.categoryId = channelId
 
     const guildId = resolveChannelId(data.category)
-    if (!guildId) throw new DiscordooError('CategoryChannelChildrensManager', 'Cannot operate without guild id id.')
+    if (!guildId) throw new DiscordooError('CategoryChannelChildrenManager', 'Cannot operate without guild id id.')
     this.guildId = guildId
 
     this.cache = new EntitiesCacheManager<AnyGuildChannel>(this.client, {
-      keyspace: Keyspaces.CATEGORY_CHANNEL_CHILDRENS,
+      keyspace: Keyspaces.CATEGORY_CHANNEL_CHILDREN,
       storage: this.categoryId,
       entity: 'channelEntityKey',
       policy: 'channels'

@@ -1,7 +1,6 @@
 import { AbstractEvent } from '@src/events'
-import { ChannelTypes, EventNames, Keyspaces, ThreadTypes } from '@src/constants'
+import { ChannelTypes, EventNames, Keyspaces } from '@src/constants'
 import { RawThreadListSyncEventData } from '@src/events/thread/RawThreadListSyncEventData'
-import { channelEntityKey } from '@src/utils'
 import { AnyThreadChannel } from '@src/api/entities/channel/interfaces/AnyThreadChannel'
 import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 import { ThreadMember } from '@src/api/entities/member/ThreadMember'

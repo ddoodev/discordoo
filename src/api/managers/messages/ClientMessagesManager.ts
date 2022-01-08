@@ -8,7 +8,6 @@ import {
   resolveEmbedToRaw,
   resolveFile,
   resolveFiles,
-  resolveGuildId,
   resolveMessageId, resolveMessageReferenceToRaw,
   resolveStickerId
 } from '@src/utils/resolve'
@@ -330,8 +329,8 @@ export class ClientMessagesManager extends EntitiesManager {
       const response = await this.client.internals.actions.deleteMessagesBulk(channelId, ids, options?.reason)
       if (response.success) return ids
     } else if (!isNaN(messages)) {
-      const msgs = await this.fetchMany(channelId, { limit: messages })
-      if (msgs) return this.deleteMany(channelId, msgs, options)
+      const m = await this.fetchMany(channelId, { limit: messages })
+      if (m) return this.deleteMany(channelId, m, options)
     }
 
     return undefined

@@ -1,4 +1,6 @@
 export { GuildMembersChunkEventContext } from '@src/events/ctx/GuildMembersChunkEventContext'
 export { PresenceUpdateEventContext } from '@src/events/ctx/PresenceUpdateEventContext'
+export { ShardConnectedEventContext } from '@src/events/ctx/ShardConnectedEventContext'
 export { MessageCreateEventContext } from '@src/events/ctx/MessageCreateEventContext'
 export { IpcMessageEventContext } from '@src/events/ctx/IpcMessageEventContext'
+export { ReadyEventContext } from '@src/events/ctx/ReadyEventContext'
