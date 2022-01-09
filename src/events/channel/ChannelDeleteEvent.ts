@@ -1,6 +1,6 @@
 import { AbstractEvent } from '@src/events'
 import { EventNames, Keyspaces } from '@src/constants'
-import { AnyRawGuildChannelData } from '@src/api/entities/channel/interfaces/AnyGuildChannelData'
+import { AnyRawGuildChannelData } from '@src/api/entities/channel/interfaces/AnyRawGuildChannelData'
 import { channelEntityKey } from '@src/utils'
 import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 import { ChannelDeleteEventContext } from '@src/events/channel/ctx/ChannelDeleteEventContext'

@@ -1,0 +1,6 @@
+export { identify } from '@src/gateway/client/identify'
+export { message } from '@src/gateway/client/message'
+export { packet } from '@src/gateway/client/packet'
+export { close } from '@src/gateway/client/close'
+export { error } from '@src/gateway/client/error'
+export { open } from '@src/gateway/client/open'

@@ -4,7 +4,7 @@ import { channelEntityKey } from '@src/utils'
 import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 import { AnyGuildChannel } from '@src/api/entities/channel/interfaces/AnyGuildChannel'
 import { ChannelCreateEventContext } from '@src/events/channel/ctx/ChannelCreateEventContext'
-import { AnyRawGuildChannelData } from '@src/api/entities/channel/interfaces/AnyGuildChannelData'
+import { AnyRawGuildChannelData } from '@src/api/entities/channel/interfaces/AnyRawGuildChannelData'
 
 export class ChannelCreateEvent extends AbstractEvent {
   public name = EventNames.CHANNEL_CREATE

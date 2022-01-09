@@ -1,6 +1,7 @@
 export { WebSocketClientDestroyOptions } from '@src/gateway/interfaces/WebSocketClientDestroyOptions'
 export { WebSocketClientEventsHandlers } from '@src/gateway/interfaces/WebSocketClientEventsHandlers'
+export { CompletedGatewayOptions } from '@src/gateway/interfaces/CompletedGatewayOptions'
 export { GatewayManagerData } from '@src/gateway/interfaces/GatewayManagerData'
-export { GatewayOptions } from '@src/gateway/interfaces/GatewayOptions'
 export { IdentifyOptions } from '@src/gateway/interfaces/IdentifyOptions'
 export { WebSocketPacket } from '@src/gateway/interfaces/WebSocketPacket'
+export { GatewayOptions } from '@src/gateway/interfaces/GatewayOptions'

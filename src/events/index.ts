@@ -1,8 +1,13 @@
+export { GuildMembersChunkEvent } from '@src/events/GuildMembersChunkEvent'
 export { ClientEventsHandlers } from '@src/events/ClientEventsHandlers'
+export { PresenceUpdateEvent } from '@src/events/PresenceUpdateEvent'
+export { ShardConnectedEvent } from '@src/events/ShardConnectedEvent'
 export { MessageCreateEvent } from '@src/events/MessageCreateEvent'
+export { GuildCreateEvent } from '@src/events/GuildCreateEvent'
 export { AbstractEvent } from '@src/events/AbstractEvent'
 export { ClientEvents } from '@src/events/ClientEvents'
 
+export * from './interfaces'
 export * from './channel'
 export * from './thread'
 export * from './ctx'

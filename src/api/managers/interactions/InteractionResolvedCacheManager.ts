@@ -1,6 +1,6 @@
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
 import { Client } from '@src/core'
-import { InteractionResolvedCacheManagerData } from '@src/api/managers/interaction/InteractionResolvedCacheManagerData'
+import { InteractionResolvedCacheManagerData } from '@src/api/managers/interactions/InteractionResolvedCacheManagerData'
 import { is } from 'typescript-is'
 import { ValidationError } from '@src/utils'
 import { EntitiesCacheManager, GuildMember, Message, Role, User } from '@src/api'

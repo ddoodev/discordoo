@@ -1,0 +1,1 @@
+export { AppCommandData } from '@src/api/entities/interaction/interfaces/AppCommandData'

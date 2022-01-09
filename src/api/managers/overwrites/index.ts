@@ -1,0 +1,5 @@
+export { ChannelPermissionOverwritesManager } from '@src/api/managers/overwrites/ChannelPermissionOverwritesManager'
+export { ChannelPermissionOverwritesManagerData } from '@src/api/managers/overwrites/ChannelPermissionOverwritesManagerData'
+export { ClientPermissionOverwritesManager } from '@src/api/managers/overwrites/ClientPermissionOverwritesManager'
+export { PermissionOverwriteEditOptions } from '@src/api/managers/overwrites/PermissionOverwriteEditOptions'
+export { PermissionOverwriteUpsertOptions } from '@src/api/managers/overwrites/PermissionOverwriteUpsertOptions'
