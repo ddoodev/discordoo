@@ -183,3 +183,11 @@ SID - still in development
 ## Contributing
 Feel free to create a PR, but check if there is an existing one.
 See [Contributing Guide](https://github.com/Discordoo/discordoo/blob/develop/CONTRIBUTING.md).
+
+## About license
+We perfectly understand what the MIT license means. 
+We will NOT do with our library the things like that happened with popular library [colors](https://github.com/Marak/colors.js/commit/074a0f8ed0c31c35d13d28632bd8a049ff136fb6). 
+It is complete idiocy to hope for sufficient help by writing a couple of tweets, and not receiving it, 
+bringing tens of thousands of dollars in losses to both companies and ordinary people. 
+These people are not to blame for the fact that your library is licensed under MIT. 
+If you need help, contact the appropriate authorities, and do not spoil people's lives because they did not help you when everything was bad for you.
