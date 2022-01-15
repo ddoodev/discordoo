@@ -87,7 +87,7 @@ import {
 import { deserializeError } from 'serialize-error'
 import { is } from 'typescript-is'
 
-/** Entry point for all of Discordoo. */
+/** Entry point for **all** of Discordoo. */
 @Final(
   'start',
   'internals',
