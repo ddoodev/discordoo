@@ -71,7 +71,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
         if (!WebSocketUtils.pako) {
           throw new DiscordooError(
             'WebSocketShard ' + this.id,
-            'gateway compression requires pako module installed. npm i pako@1.0.11'
+            'gateway compression requires pako/zlib-sync module installed. npm i pako@1.0.11 / npm i zlib-sync'
           )
         } else {
           this.inflate = new WebSocketUtils.pako.Inflate({
