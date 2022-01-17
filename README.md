@@ -179,18 +179,21 @@ The library written in TypeScript, so we naturally support integration with Type
 Just a few examples:
 (the API may change, waifoo is under development)
 ```ts
-@waifoo
-class SomeHandler {
-  @inject('logger') logger: LoggerService
+@service(createDiscordooClient())
+@eventListener()
+class App {
+  constructor(@logger private _logger: Logger) {}
 
   @on('ready')
   ready(context: ReadyEventContext) {
-    this.logger.log(`Client logged in as ${context.client.user.tag}!`)
+    this._logger.log(`Client logged in as ${context.client.user.tag}!`)
   }
 }
+
+createApp(App).start()
 ```
 ```ts
-reactions({ message, /* author, */ time: 5_000 })
+reactions({ message, /* author, */ time: 5000 })
   .subscribe((reaction, observer) => {
     if (something) observer.skip()
     else if (another) observer.stop()
