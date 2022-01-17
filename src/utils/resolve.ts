@@ -229,7 +229,7 @@ export function resolveRoleId(resolvable: RoleResolvable): string | undefined  {
 }
 
 export function resolveEmojiId(resolvable: EmojiResolvable | MessageReactionResolvable): string | undefined {
-  if (typeof resolvable === 'string') return encodeURIComponent(resolvable)
+  if (typeof resolvable === 'string') return resolvable
 
   if ('emoji' in resolvable) {
     if ('emojiId' in resolvable) {
@@ -328,7 +328,7 @@ export function resolveDiscordooShards(client: Client, shards: ShardListResolvab
 
     case 'object':
       if (Array.isArray(shards)) {
-        if (shards.filter(v => typeof v !== 'number'! || isNaN(v)).length) {
+        if (shards.findIndex(v => typeof v !== 'number'! || isNaN(v)) !== -1) {
           throw new DiscordooError(source, 'array of shards contains non-number value. array:', shards)
         }
 

@@ -15,7 +15,7 @@ import {
   ReplaceType,
   resolveDiscordooShards,
   resolveDiscordShards,
-  ShardListResolvable,
+  ShardListResolvable, ValidationError,
   version
 } from '@src/utils'
 import { CompletedLocalIpcOptions } from '@src/constants/sharding/CompletedLocalIpcOptions'
@@ -53,7 +53,7 @@ import {
 import { UsersManager } from '@src/api/managers/UsersManager'
 import { ClientRolesManager } from '@src/api/managers/roles'
 import { GatewayManager } from '@src/gateway/GatewayManager'
-import { GatewayShardsInfo } from '@discordoo/providers'
+import { GatewaySendOptions, GatewaySendPayloadLike, GatewayShardsInfo } from '@discordoo/providers'
 import { LocalIpcServer } from '@src/sharding/ipc/LocalIpcServer'
 import { CacheManager } from '@src/cache/CacheManager'
 import { RestManager } from '@src/rest/RestManager'
@@ -86,6 +86,8 @@ import {
 } from '@src/sharding/interfaces/ipc/IpcPackets'
 import { deserializeError } from 'serialize-error'
 import { is } from 'typescript-is'
+import { ClientGatewayApplication } from '@src/core'
+import { GatewayAppSendOptions } from '@src/core/client/app/GatewayAppSendOptions'
 
 /** Entry point for **all** of Discordoo. */
 @Final(
@@ -363,6 +365,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
 
   get sharding(): ClientShardingApplication {
     return {
+      options: this.internals.ipc.ipc.config,
       client: this,
       active: this.internals.sharding.active,
       shards: this.internals.sharding.shards,
@@ -442,6 +445,37 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
         }
 
         return undefined
+      }
+    }
+  }
+
+  get gateway(): ClientGatewayApplication {
+    return {
+      options: this.internals.gateway.options,
+      client: this,
+      ping: this.internals.gateway.ping(),
+
+      latency(shards: ShardListResolvable): Array<[ number, number ]> {
+        return this.client.internals.gateway.ping(resolveDiscordShards(shards))
+      },
+
+      reconnect(shards?: ShardListResolvable): Promise<unknown> {
+        return this.client.internals.gateway.reconnect(shards ? resolveDiscordShards(shards) : undefined)
+      },
+
+      send(data: GatewaySendPayloadLike, options?: GatewayAppSendOptions): unknown {
+        if (!is<GatewaySendPayloadLike>(data)) {
+          throw new ValidationError('Client.gateway', 'Incorrect gateway send payload')._setInvalidOptions(data)
+        }
+
+        if (!is<GatewayAppSendOptions | undefined | null>(options)) {
+          throw new ValidationError('Client.gateway', 'Incorrect gateway send options')._setInvalidOptions(options)
+        }
+
+        return this.client.internals.gateway.send(data, {
+          ...options,
+          shards: options?.shards ? resolveDiscordShards(options.shards): undefined
+        })
       }
     }
   }

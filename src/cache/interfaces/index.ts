@@ -13,6 +13,6 @@ export { CacheManagerHasOptions } from '@src/cache/interfaces/CacheManagerHasOpt
 export { CacheManagerMapOptions } from '@src/cache/interfaces/CacheManagerMapOptions'
 export { CacheManagerSetOptions } from '@src/cache/interfaces/CacheManagerSetOptions'
 export { CompletedCacheOptions } from '@src/cache/interfaces/CompletedCacheOptions'
+export { CacheOptions, AnyEntity } from '@src/cache/interfaces/CacheOptions'
 export { CacheManagerData } from '@src/cache/interfaces/CacheManagerData'
-export { CacheOptions } from '@src/cache/interfaces/CacheOptions'
 export { CachePointer } from '@src/cache/interfaces/CachePointer'

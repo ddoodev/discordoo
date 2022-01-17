@@ -24,7 +24,9 @@ export class ClientReactionsManager extends EntitiesManager {
     })
   }
 
-  async add(channel: ChannelResolvable, message: MessageResolvable, emoji: EmojiResolvable | MessageReactionResolvable): Promise<boolean> {
+  async add(
+    channel: ChannelResolvable, message: MessageResolvable, emoji: EmojiResolvable | MessageReactionResolvable
+  ): Promise<boolean> {
     const channelId = resolveChannelId(channel),
       messageId = resolveMessageId(message),
       emojiId = resolveEmojiId(emoji)
@@ -49,6 +51,8 @@ export class ClientReactionsManager extends EntitiesManager {
         'Cannot add reaction without emoji identifier.'
       )
     }
+
+    console.log(channelId, messageId, emojiId)
 
     const response = await this.client.internals.actions.addReaction(channelId, messageId, emojiId)
 
@@ -113,7 +117,10 @@ export class ClientReactionsManager extends EntitiesManager {
   }
 
   async removeUser(
-    channel: ChannelResolvable, message: MessageResolvable, emoji: EmojiResolvable | MessageReactionResolvable, user: UserResolvable | '@me'
+    channel: ChannelResolvable,
+    message: MessageResolvable,
+    emoji: EmojiResolvable | MessageReactionResolvable,
+    user: UserResolvable | '@me'
   ): Promise<boolean> {
     const channelId = resolveChannelId(channel),
       messageId = resolveMessageId(message),

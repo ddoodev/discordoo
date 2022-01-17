@@ -21,7 +21,7 @@ import { PermissionOverwrite } from '@src/api/entities/overwrites/PermissionOver
 
 export const CACHE_OPTIONS_KEYS_LENGTH = 12 // all cache options expect 'global'
 
-type AnyEntity = AnyChannel
+export type AnyEntity = AnyChannel
   | AnyEmoji
   | any /* TODO: Guild */
   | GuildMember

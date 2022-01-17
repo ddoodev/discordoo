@@ -1,5 +1,5 @@
 import { Client, ClientOptions } from '@src/core'
-import { asyncSome, NonOptional } from '@src/utils'
+import { NonOptional } from '@src/utils'
 import {
   ChannelsCachingPolicy,
   EmojisCachingPolicy,
@@ -14,7 +14,9 @@ import {
   StickerFormatTypes,
   StickersCachingPolicy,
   StickerTypes,
-  UsersCachingPolicy
+  UsersCachingPolicy,
+  ThreadMembersCachingPolicy,
+  ReactionsCachingPolicy
 } from '@src/constants'
 import {
   ActivityEmoji,
@@ -22,13 +24,15 @@ import {
   GuildEmoji,
   GuildMember,
   Message,
+  MessageReaction,
   Presence,
   ReactionEmoji,
   Role,
   Sticker,
-  User
+  ThreadMember,
+  User,
+  PermissionOverwrite
 } from '@src/api'
-import { PermissionOverwrite } from '@src/api/entities/overwrites/PermissionOverwrite'
 
 export class CachingPoliciesProcessor {
   public client: Client
@@ -46,7 +50,7 @@ export class CachingPoliciesProcessor {
       results.push(await this.options.global.custom?.(entity) ?? undefined)
 
       results.push(
-        await asyncSome(this.options.global.policies, policy => {
+        this.options.global.policies.some(policy => {
           switch (policy) {
             case GlobalCachingPolicy.NONE:
               return false
@@ -71,7 +75,7 @@ export class CachingPoliciesProcessor {
       results.push(await this.options.channels.custom?.(channel) ?? undefined)
 
       results.push(
-        await asyncSome(this.options.channels.policies, policy => {
+        this.options.channels.policies.some(policy => {
           switch (policy) {
             case ChannelsCachingPolicy.CATEGORY:
               return channel.type === 'category'
@@ -117,7 +121,7 @@ export class CachingPoliciesProcessor {
       results.push(await this.options.emojis.custom?.(emoji) ?? undefined)
 
       results.push(
-        await asyncSome(this.options.emojis.policies, policy => {
+        this.options.emojis.policies.some(policy => {
           switch (policy) {
             case EmojisCachingPolicy.NONE:
               return false
@@ -152,7 +156,7 @@ export class CachingPoliciesProcessor {
       results.push(await this.options.stickers.custom?.(sticker) ?? undefined)
 
       results.push(
-        await asyncSome(this.options.stickers.policies, policy => {
+        this.options.stickers.policies.some(policy => {
           switch (policy) {
             case StickersCachingPolicy.NONE:
               return false
@@ -179,6 +183,60 @@ export class CachingPoliciesProcessor {
     return result
   }
 
+  async threadMembers(member: ThreadMember): Promise<boolean> {
+    let result = true
+
+    if (this.options.threadMembers) {
+      const results: any[] /* [ boolean | undefined, boolean ] */ = []
+
+      results.push(await this.options.threadMembers.custom?.(member) ?? undefined)
+
+      results.push(
+        this.options.threadMembers.policies.some(policy => {
+          switch (policy) {
+            case ThreadMembersCachingPolicy.NONE:
+              return false
+            case ThreadMembersCachingPolicy.ALL:
+            default:
+              return true
+          }
+        })
+      )
+
+      result = results[0] ?? results[1]
+    }
+
+    return result
+  }
+
+  async reactions(reaction: MessageReaction): Promise<boolean> {
+    let result = true
+
+    if (this.options.reactions) {
+      const results: any[] /* [ boolean | undefined, boolean ] */ = []
+
+      results.push(await this.options.reactions.custom?.(reaction) ?? undefined)
+
+      results.push(
+        this.options.reactions.policies.some(policy => {
+          switch (policy) {
+            case ReactionsCachingPolicy.NONE:
+              return false
+            case ReactionsCachingPolicy.OWN:
+              return reaction.me
+            case ReactionsCachingPolicy.ALL:
+            default:
+              return true
+          }
+        })
+      )
+
+      result = results[0] ?? results[1]
+    }
+
+    return result
+  }
+
   async guilds(guild: any): Promise<boolean> {
     let result = true
 
@@ -188,7 +246,7 @@ export class CachingPoliciesProcessor {
       results.push(await this.options.guilds.custom?.(guild) ?? undefined)
 
       results.push(
-        await asyncSome(this.options.guilds.policies, policy => {
+        this.options.guilds.policies.some(policy => {
           switch (policy) {
             case GuildsCachingPolicy.NONE:
               return false
@@ -215,7 +273,7 @@ export class CachingPoliciesProcessor {
       results.push(await this.options.members.custom?.(member) ?? undefined)
 
       results.push(
-        await asyncSome(this.options.members.policies, policy => {
+        this.options.members.policies.some(policy => {
           switch (policy) {
             case GuildMembersCachingPolicy.ONLINE:
               return presence?.status === 'online'
@@ -257,7 +315,7 @@ export class CachingPoliciesProcessor {
       results.push(await this.options.messages.custom?.(message) ?? undefined)
 
       results.push(
-        await asyncSome(this.options.messages.policies, async policy => {
+        this.options.messages.policies.some(async policy => {
           const author = await message.author()
           switch (policy) {
             case MessagesCachingPolicy.BOTS:
@@ -288,7 +346,7 @@ export class CachingPoliciesProcessor {
       results.push(await this.options.presences.custom?.(presence) ?? undefined)
 
       results.push(
-        await asyncSome(this.options.presences.policies, policy => {
+        this.options.presences.policies.some(policy => {
           switch (policy) {
             case PresencesCachingPolicy.NONE:
               return false
@@ -322,7 +380,7 @@ export class CachingPoliciesProcessor {
       results.push(await this.options.overwrites.custom?.(overwrite) ?? undefined)
 
       results.push(
-        await asyncSome(this.options.overwrites.policies, policy => {
+        this.options.overwrites.policies.some(policy => {
           switch (policy) {
             case OverwritesCachingPolicy.NONE:
               return false
@@ -352,7 +410,7 @@ export class CachingPoliciesProcessor {
       results.push(await this.options.roles.custom?.(role) ?? undefined)
 
       results.push(
-        await asyncSome(this.options.roles.policies, policy => {
+        this.options.roles.policies.some(policy => {
           switch (policy) {
             case RolesCachingPolicy.EVERYONE:
               return role.id === role.guildId
@@ -382,7 +440,7 @@ export class CachingPoliciesProcessor {
       results.push(await this.options.users.custom?.(user) ?? undefined)
 
       results.push(
-        await asyncSome(this.options.users.policies, policy => {
+        this.options.users.policies.some(policy => {
           switch (policy) {
             case UsersCachingPolicy.NONE:
               return false
