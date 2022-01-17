@@ -52,8 +52,6 @@ export class ClientReactionsManager extends EntitiesManager {
       )
     }
 
-    console.log(channelId, messageId, emojiId)
-
     const response = await this.client.internals.actions.addReaction(channelId, messageId, emojiId)
 
     return response.success
