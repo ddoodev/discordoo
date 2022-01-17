@@ -36,19 +36,171 @@
 **THIS LIBRARY IS UNDER DEVELOPMENT!** Parts of the stuff described here is not done yet, and we are just planning to implement it.
 
 ## About
-[Discordoo](https://discordoo.xyz/) is a [Discord API](https://discord.com/developers/docs/intro) library interface. 
+[Discordoo](https://ddoo.dev/) is a [Discord API](https://discord.com/developers/docs/intro) library interface. 
 It was built from ground-up to provide better and faster APIs, both internal and external, than existing [Node.js](https://nodejs.org/) libraries offer.
 
 ## Features
-* **Very scalable in any way** — inter-machines sharding (PLANNED IN 1.2), custom modules for events queue (someone should create an appropriate provider)
-* **Really fast** — this is not a promise, but real tests!
-* **Convenient to development** — we create predictable APIs and take care of the convenience of development
-* **Caching policies** — do not store a cache that your bot does not need (PLANNED IN 1.0)
-* **Flexible in everything** — you can replace parts of the library as you need using our providers (PLANNED IN 1.0)
-* **Safe for large bots** — global-rate-limit synchronization between shards on one machine (PLANNED IN 1.0), the ability to limit the number of events sent by gateway to your bot per second (PLANNED IN 1.3)
-* **Convenient to monitor** — any statistics, from v8 to events per second, are available for each sharding instance (PLANNED IN 1.2)
-* **Good TypeScript support** — the library written in TypeScript, so we naturally support integration with TypeScript well
-* **Tested** — critical components tested using various benchmarks, including testing using deep-monitoring systems like [N|Solid](https://nodesource.com/products/nsolid)
+### Scalable. Too much
+Using providers system, you can change the behavior of the library in ways you never imagined before.
+
+#### Let's imagine that you have Infinity guilds, and you need to save the resources of your hosting servers as much as possible, and also not have a minute of downtime.
+To do this, you need to distribute the bot to a bunch of hosting servers, 
+separate the gateway and the executable part of the bot, 
+and also somehow link the library cache to the executable part of the bot, while you need to comply with the GRL/IRL.
+
+#### How to do this? 
+It's simple, with Discordoo you can do it using less than 100 lines of code without even rewriting the existing codebase.
+1. **You need to connect a gateway provider** that sends events to some messages broker on servers that should receive messages from gateway, and also connect the same gateway provider on servers that should receive messages (executable part). (such a provider should be written by someone else, or you should write it by yourself)
+2. **Then you need to connect the cache provider**, which stores the cache in some scalable cache storage, such as redis. (such a provider should be written by someone else, or you should write it by yourself)
+3. **Then you need to configure the sharding** so that the machines or node.js instances that have the same IP address 
+were connected through our inter-machines sharding managers. (inter-machines sharding manager will be introduced in version 1.2, but you can ignore this point if you have one node.js instance each for one IP address.)
+4. **That is all.** Imagine, in order to expand infinitely and have almost zero downtime, you need to rewrite a hundred lines of code, 80 of which are just configs.
+
+#### Or if you just want to distribute the bot to multiple hosting servers:
+Just use inter-machines sharding manager:
+
+**THIS WILL BE INTRODUCED IN VERSION 1.2 AND THE API MAY CHANGE.**
+```ts
+import { MachinesShardingManager, ShardingModes } from 'discordoo'
+
+const manager = new MachinesShardingManager({
+  points: [
+    {
+      port: 8379,
+      host: '10.0.21.3',
+      options: {
+        shards: { from: 0, to: 127 },
+        mode: ShardingModes.PROCESSES,
+        shardsPerInstance: 4,
+      }
+    }
+  ]
+})
+
+manager.start()
+```
+```ts
+import { MachinesShardingManager } from 'discordoo'
+
+const manager = new MachinesShardingManager({
+  file: './dist/bot.js',
+  networkHost: '10.0.21.3',
+  networkPort: 8379,
+  tls: {
+    cert: './client.pub'
+  }
+})
+
+manager.start()
+```
+That's it. There is no need to rewrite anything other than changing sharding managers.
+
+### Fast
+Why write inefficient code? We don't do that. Tests are coming soon.
+
+### Flexible caching
+Optimize RAM consumption the way you need it.
+
+#### Caching policies
+For example, just disable the unnecessary cache.
+```ts
+import { createApp, ChannelsCachingPolicy } from 'discordoo'
+
+createApp()
+  .cache({
+    // cache only dm channels
+    channels: {
+      policies: [ ChannelsCachingPolicy.DM ]
+    }
+  })
+  .build()
+```
+
+#### Removing unnecessary properties
+You know that RAM is spent on storing properties, right? 
+Redefine the entities in which you want to delete some properties.
+Don't worry, you won't be able accidentally break the library this way. We took care of it.
+```ts
+import { EntitiesUtil, DirectMessagesChannel, createApp } from 'discordoo'
+
+// you can do it like this:
+class ExtendedDirectMessagesChannel extends DirectMessagesChannel {
+  init(data, options) { // must return Promise<this>
+    return super.init(data, {
+      ...options,
+      ignore: [
+        // do not store 'lastPinTimestamp' property
+        'lastPinTimestamp',
+        // will not work. library uses 'id' property, so you can't delete it
+        'id'
+      ] // or just [ IgnoreAllSymbol ] to not store anything (import it)
+    }) // super.init(data) always is mandatory
+  }
+}
+
+EntitiesUtil.extend('DirectMessagesChannel', ExtendedDirectMessagesChannel)
+
+// or you can do it like this:
+createApp()
+  .extenders([
+    { entity: 'DirectMessagesChannel', extender: ExtendedDirectMessagesChannel }
+  ])
+  .build()
+```
+
+### Safe
+for everyone. From bots with 100 servers, to bots with 10,000,000 servers.
+#### Global Rate Limit (GRL) sync
+When your bot gets big, it starts to run into global rate limits, so you have to carefully monitor them. Therefore, we made synchronization of this limit between shards.
+#### Invalid Request limit (IRL) sync
+Sometimes this happens, the bot starts making a lot of invalid requests. If not stop this, discord will block the bot entirely for 1 hour. Therefore, we monitor incorrect requests, and when the limit is almost exhausted, we stop all requests for the time remaining until the limit is reset (max 10 minutes), so that the bot is not blocked for an hour.
+#### Restriction of emitted events
+It happens that discord sends two or three times more events in a few seconds than usual. This may trigger blocking due to GRL or IRL. Therefore, we have made a progressive system to limit the emitted events. We count how many events have been received up to the current moment, and how many have already been emitted now. If the number of emitted events does not match the specified multiplier, the extra events are sent to the queue and will be emitted later. (PLANNED IN VERSION 1.3)
+
+### Know what's going on
+#### Average REST delay
+(PLANNED IN VERSION 1.0)
+We consider the average delay (TTFB) in executing REST requests. (the implementation may differ if you use a third-party provider)
+#### Average Gateway latency
+Like all other libraries, information about the WebSocket latency is available. (the implementation may differ if you use a third-party provider)
+#### Number of events received/emitted per second
+(PLANNED IN VERSION 1.3)
+You can track how many events have arrived and how many have been emitted. (the implementation does not depend on provider)
+#### Number of ipc messages per second
+(THIS IS NOT PLANNED, BUT MAY BE INTRODUCED IN VERSION 1.2)
+The number of messages sent received via IPC, per second
+#### These statistics are available from the sharing manager
+Why not.
+
+### Enterprise code level
+#### Good TypeScript support
+The library written in TypeScript, so we naturally support integration with TypeScript well
+#### Decorators, injections, observables, and more
+Just a few examples:
+(the API may change, waifoo is under development)
+```ts
+@waifoo
+class SomeHandler {
+  @inject('logger') logger: LoggerService
+
+  @on('ready')
+  ready(context: ReadyEventContext) {
+    this.logger.log(`Client logged in as ${context.client.user.tag}!`)
+  }
+}
+```
+```ts
+reactions({ message, /* author, */ time: 5_000 })
+  .subscribe((reaction, observer) => {
+    if (something) observer.skip()
+    else if (another) observer.stop()
+  })
+  .end(results => {
+    console.log(results) // some reactions received
+  })
+```
+### Tested
+Code tested with [N|Solid](https://nodesource.com/products/nsolid).
 
 ## Let's start
 Node.js v12.18 or newer required.
