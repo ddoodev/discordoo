@@ -3,13 +3,13 @@ import { IpcServerOptions } from '@src/sharding/interfaces/ipc/IpcServerOptions'
 import { IPC as RawIpc, server as RawIpcServer } from 'node-ipc'
 import { Collection } from '@discordoo/collection'
 import { IpcCacheOpCodes, IpcEvents, IpcOpCodes, RAW_IPC_EVENT } from '@src/constants'
-import { IpcPacket } from '@src/sharding'
+import { IpcDestroyingPacket, IpcDispatchRequestPackets, IpcMessagePacket, IpcPacket, IpcRestructuringResponsePacket } from '@src/sharding'
 import { DiscordooError, DiscordooSnowflake } from '@src/utils'
 import { IpcServerSendOptions } from '@src/sharding/interfaces/ipc/IpcServerSendOptions'
 import {
   IpcCacheRequestPacket,
   IpcCacheResponsePacket,
-  IpcDispatchPacket, IpcEmergencyPackets,
+  IpcEmergencyPackets,
   IpcGuildMembersRequestPacket,
   IpcGuildMembersResponsePacket,
   IpcHelloPacket,
@@ -105,7 +105,7 @@ export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
         return this.hello(packet as IpcHelloPacket, socket)
 
       case IpcOpCodes.DISPATCH:
-        return this.dispatch(packet as IpcDispatchPacket)
+        return this.dispatch(packet as any)
 
       case IpcOpCodes.CACHE_OPERATE: {
         // console.log('IPC SERVER', this.instance, 'ON CACHE OPERATE', process.hrtime.bigint())
@@ -154,12 +154,48 @@ export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
     }
   }
 
-  private async dispatch(packet: IpcDispatchPacket) { // TODO: IpcDispatchPackets
+  private async dispatch(packet: IpcDispatchRequestPackets | IpcDestroyingPacket | IpcMessagePacket) {
     switch (packet.t) {
-      case IpcEvents.DESTROYING:
+      case IpcEvents.DESTROYING: {
+        this.client.emit('exiting', {
+          eventId: packet.d.event_id
+        })
+
+        // Missing await for an async function call: you snooze, you lose
+        this.client.internals.gateway.disconnect()
+
+        await this.send(packet)
+          .catch(() => null)
+
         this.destroy()
         process.exit(0)
-        break
+      } break
+
+      case IpcEvents.RESTRUCTURING: {
+        const { shards, total_shards: totalShards } = packet.d
+
+        this.client.emit('restructuring', {
+          shards,
+          totalShards,
+        })
+
+        await this.client.internals.gateway.disconnect()
+        await this.client.internals.gateway.connect({
+          shards,
+          totalShards,
+        })
+
+        const response: IpcRestructuringResponsePacket = {
+          op: IpcOpCodes.DISPATCH,
+          t: IpcEvents.RESTRUCTURING,
+          d: {
+            event_id: packet.d.event_id
+          }
+        }
+
+        await this.send(response)
+      } break
+
       case IpcEvents.GUILD_MEMBERS_REQUEST: {
         const members = await this.guildMembersRequest(packet as IpcGuildMembersRequestPacket)
 
@@ -175,6 +211,7 @@ export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
 
         await this.send(response)
       } break
+
       case IpcEvents.BROADCAST_EVAL: {
         const context = packet.d.context ?? {},
           script = packet.d.script
@@ -210,6 +247,7 @@ export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
 
         await this.send(response)
       } break
+
       case IpcEvents.MESSAGE: {
         this.client.emit('ipcMessage', {
           message: packet.d.message,

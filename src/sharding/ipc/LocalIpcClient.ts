@@ -2,14 +2,15 @@ import { TypedEmitter } from 'tiny-typed-emitter'
 import { IPC as RawIpc } from 'node-ipc'
 import { IpcClientOptions, IpcClientSendOptions, IpcPacket, ShardingInstance } from '@src/sharding'
 import { Collection } from '@discordoo/collection'
-import { IpcEvents, IpcOpCodes, RAW_IPC_EVENT, SerializeModes } from '@src/constants'
+import { IpcConnectionState, IpcEvents, IpcOpCodes, RAW_IPC_EVENT, SerializeModes } from '@src/constants'
 import { DiscordooError, DiscordooSnowflake } from '@src/utils'
 import {
   IpcBroadcastEvalRequestPacket,
   IpcBroadcastEvalResponsePacket,
   IpcCacheRequestPacket,
   IpcCacheResponsePacket,
-  IpcDispatchPackets, IpcEmergencyGrlHitPacket,
+  IpcDispatchPackets,
+  IpcEmergencyGrlHitPacket,
   IpcEmergencyRestBlockPacket,
   IpcGuildMembersRequestPacket,
   IpcHeartbeatPacket,
@@ -31,6 +32,8 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
   public ipc: InstanceType<typeof RawIpc>
   public shards: number[]
   public totalShards: number
+
+  public state: IpcConnectionState = IpcConnectionState.DISCONNECTED
 
   constructor(instance: ShardingInstance, options: IpcClientOptions) {
     super()
@@ -54,6 +57,8 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
   public connect() {
     let promise
 
+    this.state = IpcConnectionState.CONNECTING
+
     return new Promise((resolve, reject) => {
       promise = { res: resolve, rej: reject }
 
@@ -67,6 +72,7 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
           'inter-process communication shard identifier:', this.INSTANCE_IPC + '.',
           'ipc shard id contains:', DiscordooSnowflake.deconstruct(this.INSTANCE_IPC)
         )
+        this.state = IpcConnectionState.DISCONNECTED
         promise.rej(err)
       }, this.shards.length * 30000)
 
@@ -80,6 +86,12 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
         }, 1000)
       })
     })
+  }
+
+  public disconnect() {
+    this.ipc.disconnect(this.INSTANCE_IPC)
+    this.bucket = new Collection()
+    this.state = IpcConnectionState.DISCONNECTED
   }
 
   private onPacket(packet: IpcPacket) {
@@ -98,6 +110,7 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
       case IpcOpCodes.IDENTIFY:
         this.shardSocket = this.ipc.of[packet.d.id]
         if (this.helloInterval) clearInterval(this.helloInterval)
+        this.state = IpcConnectionState.CONNECTED
         break
       case IpcOpCodes.CACHE_OPERATE:
         // console.log('IPC CLIENT', this.id, 'ON CACHE OPERATE', process.hrtime.bigint())

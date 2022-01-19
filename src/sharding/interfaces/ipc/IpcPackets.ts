@@ -83,7 +83,7 @@ export interface IpcGuildMembersResponsePacket extends IpcDispatchPacket {
   t: IpcEvents.GUILD_MEMBERS_REQUEST
   d: {
     event_id: string
-    shard_id: string
+    shard_id: number
     members: GuildMemberData[]
   }
 }
@@ -116,12 +116,51 @@ export interface IpcBroadcastMessagePacket extends IpcDispatchPacket {
   }
 }
 
-export type IpcDispatchPackets = IpcBroadcastMessagePacket
-  | IpcBroadcastEvalResponsePacket
-  | IpcBroadcastEvalRequestPacket
-  | IpcGuildMembersResponsePacket
+export interface IpcRestructuringRequestPacket extends IpcDispatchPacket {
+  t: IpcEvents.RESTRUCTURING
+  d: {
+    event_id: string
+    shards: number[]
+    total_shards: number
+  }
+}
+
+export interface IpcRestructuringResponsePacket extends IpcDispatchPacket {
+  t: IpcEvents.RESTRUCTURING
+  d: {
+    event_id: string
+  }
+}
+
+export interface IpcDestroyingPacket extends IpcDispatchPacket {
+  t: IpcEvents.DESTROYING
+  d: {
+    event_id: string
+  }
+}
+
+export interface IpcMessagePacket extends IpcDispatchPacket {
+  t: IpcEvents.MESSAGE
+  d: {
+    event_id: string
+    message: string
+    from: number
+  }
+}
+
+export type IpcDispatchRequestPackets = IpcBroadcastEvalRequestPacket
   | IpcGuildMembersRequestPacket
+  | IpcRestructuringRequestPacket
+
+export type IpcDispatchResponsePackets = IpcBroadcastEvalResponsePacket
+  | IpcGuildMembersResponsePacket
+  | IpcRestructuringResponsePacket
+
+export type IpcDispatchPackets = IpcBroadcastMessagePacket
   | IpcRestLimitsSyncPacket
+  | IpcDispatchRequestPackets
+  | IpcDispatchResponsePackets
+  | IpcDestroyingPacket
 
 export interface IpcCacheGetRequestPacket extends IpcPacket {
   op: IpcOpCodes.CACHE_OPERATE

@@ -302,19 +302,31 @@ export function resolveDiscordShards(shards: ShardListResolvable): number[] {
   return result
 }
 
-export function resolveDiscordooShards(client: Client, shards: ShardListResolvable | 'all' | 'current'): number[] {
+type ShardsInfo = {
+  shards: number[]
+  totalShards: number
+}
+
+export function resolveDiscordooShards(
+  client: Client | ShardsInfo, shards: ShardListResolvable | 'all' | 'current'
+): number[] {
   const source = 'DiscordooShardListResolver'
   let result: number[] = []
+
+  const info: ShardsInfo = client instanceof Client ? {
+    shards: client.internals.sharding.shards,
+    totalShards: client.internals.sharding.totalShards,
+  } : client
 
   switch (typeof shards) {
     case 'string': {
       switch (true) {
         case shards === 'all':
-          result = range(client.internals.sharding.totalShards)
+          result = range(info.totalShards)
           break
 
         case shards === 'current':
-          result = [ ...client.internals.sharding.shards ]
+          result = [ ...info.shards ]
           break
 
         case !isNaN(parseInt(shards)):

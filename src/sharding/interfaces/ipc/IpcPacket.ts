@@ -2,6 +2,6 @@ import { IpcEvents, IpcOpCodes } from '@src/constants'
 
 export interface IpcPacket {
   op: IpcOpCodes
-  d: any
+  d?: any
   t?: IpcEvents
 }

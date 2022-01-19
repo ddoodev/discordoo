@@ -4,7 +4,7 @@ export enum IpcEvents {
   MESSAGE = 'MESSAGE',
   /** Emitted when ShardingInstance connected to Discord */
   CONNECTED = 'CONNECTED',
-  /** Stop all shards */
+  /** Stop all shards and exit */
   DESTROYING = 'DESTROYING',
   /** Set new shards configuration & restart (across machines only) */
   RESTRUCTURING = 'RESTRUCTURING',

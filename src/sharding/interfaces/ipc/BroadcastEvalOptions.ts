@@ -1,6 +1,6 @@
 import { BroadcastOptions } from '@src/sharding/interfaces/ipc/BroadcastOptions'
 
-/** Options for {@link ClientShardingApplication#eval} */
+/** Options for IPC eval */
 export interface BroadcastEvalOptions extends BroadcastOptions {
   /**
    * Any JSON-serializable object to copy and send to eval function as argument.

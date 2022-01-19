@@ -1,6 +1,7 @@
 export { CLUSTERS_SHARDING_UNSUPPORTED_PLATFORMS } from '@src/constants/sharding/ClustersShardingUnsupportedPlatforms'
 export { PartialShardingModes } from '@src/constants/sharding/PartialShardingModes'
 export { IpcCacheOpCodes } from '@src/constants/sharding/IpcCacheOpCodes'
+export { IpcConnectionState } from '@src/constants/sharding/IpcConnectionState'
 export { SerializeModes } from '@src/constants/sharding/SerializeModes'
 export { ShardingModes } from '@src/constants/sharding/ShardingModes'
 export { RAW_IPC_EVENT } from '@src/constants/sharding/RawIpcEvent'

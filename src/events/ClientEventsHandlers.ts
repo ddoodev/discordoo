@@ -12,6 +12,8 @@ import { ThreadUpdateEventContext } from '@src/events/thread/ctx/ThreadUpdateEve
 import { ThreadDeleteEventContext } from '@src/events/thread/ctx/ThreadDeleteEventContext'
 import { ThreadListSyncEventContext } from '@src/events/thread/ctx/ThreadListSyncEventContext'
 import { IpcMessageEventContext } from '@src/events/ctx/IpcMessageEventContext'
+import { ExitingEventContext } from '@src/events/interfaces/ExitingEventContext'
+import { RestructuringEventContext } from '@src/events/interfaces/RestructuringEventContext'
 
 /** Client events */
 export interface ClientEventsHandlers {
@@ -21,6 +23,12 @@ export interface ClientEventsHandlers {
 
   /** Emitted when client receives message from another sharding instance through ipc */
   ipcMessage: (context: IpcMessageEventContext) => any
+
+  /** The client disconnects from the gateway and will destroy the process after a few milliseconds */
+  exiting: (context: ExitingEventContext) => any
+
+  /** The client disconnects from the gateway and connects again with new shards configuration */
+  restructuring: (context: RestructuringEventContext) => any
 
   /** Gateway shard connected and received expected guilds (or a guilds receiving timeout) */
   shardConnected: (context: ShardConnectedEventContext) => any
