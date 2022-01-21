@@ -38,6 +38,14 @@ export class ClientActions {
     this.client = client
   }
 
+  /**
+   * Adds guild discovery subcategory
+   * 
+   * @param guildId - guild id
+   * @param categoryId - category id
+   * @param reason - reason
+   * @returns result
+   */
   addGuildDiscoverySubcategory(guildId: string, categoryId: string, reason?: string) {
     return this.client.internals.rest.api()
       .url(Endpoints.GUILD_DISCOVERY_CATEGORY(guildId, categoryId))
