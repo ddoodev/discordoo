@@ -2,7 +2,7 @@ import { Json, ToJsonProperties } from '@src/api'
 import { PresenceActivityAssetsData } from '@src/api/entities/presence/interfaces/PresenceActivityAssetsData'
 import { RawPresenceActivityAssetsData } from '@src/api/entities/presence/interfaces/RawPresenceActivityAssetsData'
 import { attach, ImageUrlOptions } from '@src/utils'
-import { SPOTIFY_CDN_IMAGES, TWITCH_CDN_LIVE_USERS_IMAGES } from '@src/constants'
+import { SPOTIFY_CDN_IMAGES, TWITCH_CDN_LIVE_USERS_IMAGES, YOUTUBE_CDN } from '@src/constants'
 import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 
 export class PresenceActivityAssets extends AbstractEntity implements PresenceActivityAssetsData {
@@ -25,21 +25,38 @@ export class PresenceActivityAssets extends AbstractEntity implements PresenceAc
   }
 
   largeImageUrl(options?: ImageUrlOptions): string | undefined {
-    if (!this.largeImage || !this.applicationId) return undefined
+    if (!this.largeImage) return undefined
 
-    if (this.largeImage.startsWith('spotify:')) {
-      return SPOTIFY_CDN_IMAGES + `/${this.largeImage.slice(8)}`
+    if (this.largeImage.includes(':')) {
+      const [ platform, image ] = this.largeImage.split(':')
+
+      switch (platform) {
+        case 'spotify':
+          return SPOTIFY_CDN_IMAGES + `/${image}`
+        case 'twitch':
+          return TWITCH_CDN_LIVE_USERS_IMAGES + `${image}.png`
+        case 'youtube':
+          return YOUTUBE_CDN + `/${image}/hqdefault_live.jpg`
+        case 'mp':
+          return `https://media.discordapp.net/${image}` // TODO: add media/cdn to ClientOptions
+        default:
+          return undefined
+      }
     }
 
-    if (this.largeImage.startsWith('twitch:')) {
-      return TWITCH_CDN_LIVE_USERS_IMAGES + `${this.largeImage.slice(7)}.png`
-    }
+    if (!this.applicationId) return undefined
 
     return this.client.internals.rest.cdn().appAsset(this.applicationId, this.largeImage, options)
   }
 
   smallImageUrl(options?: ImageUrlOptions): string | undefined {
-    if (!this.smallImage || !this.applicationId) return undefined
+    if (!this.smallImage) return undefined
+
+    if (this.smallImage.startsWith('mp:')) {
+      return `https://media.discordapp.net/${this.smallImage.slice(3)}` // TODO: add media/cdn to ClientOptions
+    }
+
+    if (!this.applicationId) return undefined
 
     return this.client.internals.rest.cdn().appAsset(this.applicationId, this.smallImage, options)
   }

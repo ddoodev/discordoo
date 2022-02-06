@@ -1,0 +1,1 @@
+export const YOUTUBE_CDN = 'https://i.ytimg.com/vi'
