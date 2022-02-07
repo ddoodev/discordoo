@@ -35,7 +35,7 @@
   "devDependencies": {
     "@commitlint/cli": "^12.1.4",
     "@commitlint/config-conventional": "^12.0.1",
-    "@discordoo/tapok": "^2.0.17",
+    "@discordoo/tapok": "^2.0.18",
     "@types/jest": "^26.0.24",
     "@types/node": "^12.0.0",
     "@types/node-ipc": "^9.1.4",
