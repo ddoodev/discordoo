@@ -199,7 +199,7 @@ export class ShardingInstance extends TypedEmitter {
       case PartialShardingModes.CLUSTERS: {
         const platform = os.platform()
 
-        if (CLUSTERS_SHARDING_UNSUPPORTED_PLATFORMS.includes(platform)) {
+        if (CLUSTERS_SHARDING_UNSUPPORTED_PLATFORMS.includes(platform as any)) {
           throw new DiscordooError(
             'ShardingInstance#create',
             '[UNSUPPORTED PLATFORM]',
