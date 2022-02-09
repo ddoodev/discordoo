@@ -1,5 +1,5 @@
 import { ChannelTypes, VideoQualityModes } from '@src/constants'
-import { PermissionOverwriteResolvable } from '@src/api/entities/overwrites/interfaces/PermissionOverwriteResolvable'
+import { PermissionOverwriteResolvable } from '@src/api/entities/overwrite/interfaces/PermissionOverwriteResolvable'
 
 export interface GuildChannelEditData {
   name?: string

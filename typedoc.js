@@ -5,5 +5,6 @@ module.exports = {
   entryPoints: packages.map(e => `./src/${e}/index.ts`),
   json: './docs/docs.json',
   name: 'Discordoo',
-  excludeExternals: true
+  excludeExternals: true,
+  plugin: 'typedoc-plugin-missing-exports'
 }

@@ -19,7 +19,7 @@ import { FetchReactionUsersOptions } from '@src/api/managers/reactions/FetchReac
 import { RawGuildChannelEditData } from '@src/api/entities/channel/interfaces/RawGuildChannelEditData'
 import { RawAbstractGuildChannelData } from '@src/api/entities/channel/interfaces/RawAbstractGuildChannelData'
 import { RawThreadChannelEditData } from '@src/api/entities/channel/interfaces/RawThreadChannelEditData'
-import { RawPermissionOverwriteData } from '@src/api/entities/overwrites/interfaces/RawPermissionOverwriteData'
+import { RawPermissionOverwriteData } from '@src/api/entities/overwrite/interfaces/RawPermissionOverwriteData'
 import { RawGuildChannelCreateData } from '@src/api/entities/channel/interfaces/RawGuildChannelCreateData'
 import { RawThreadChannelWithMessageCreateData } from '@src/api/entities/channel/interfaces/RawThreadChannelWithMessageCreateData'
 import { RawThreadChannelCreateData } from '@src/api/entities/channel/interfaces/RawThreadChannelCreateData'

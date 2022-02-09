@@ -2,6 +2,7 @@ import { Client } from '@src/core'
 import { ToJsonProperties } from '@src/api/entities/interfaces/ToJsonProperties'
 import { Json, JsonProperties } from '@src/api/entities/interfaces/Json'
 import { ToJsonOverrideSymbol } from '@src/constants'
+import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export abstract class AbstractEntity {
   public client: Client
@@ -10,7 +11,7 @@ export abstract class AbstractEntity {
     this.client = client
   }
 
-  abstract init(data: any): Promise<this>
+  abstract init(data: any, options?: EntityInitOptions): Promise<this>
 
   async _clone(): Promise<this> {
     return await new (this.constructor as any)(this.client).init(this.toJson())
@@ -27,17 +28,17 @@ export abstract class AbstractEntity {
       const prop = properties[key], value = target[key]
 
       if (typeof prop === 'object') {
-        if (prop.override === ToJsonOverrideSymbol) json[key] = AbstractEntity._handle(prop.value)
-        else json[key] = AbstractEntity._handle(prop)
+        if (prop.override === ToJsonOverrideSymbol) json[key] = AbstractEntity._handleToJsonProp(prop.value)
+        else json[key] = AbstractEntity._handleToJsonProp(prop)
       } else if (prop) {
-        json[key] = AbstractEntity._handle(value)
+        json[key] = AbstractEntity._handleToJsonProp(value)
       }
     }
 
     return json
   }
 
-  private static _handle(data: any): JsonProperties {
+  private static _handleToJsonProp(data: any): JsonProperties {
     switch (typeof data) {
       case 'string':
       case 'boolean':

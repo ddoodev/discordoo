@@ -1,5 +1,5 @@
 import { ChannelTypes, VideoQualityModes } from '@src/constants'
-import { RawPermissionOverwriteData } from '@src/api/entities/overwrites/interfaces/RawPermissionOverwriteData'
+import { RawPermissionOverwriteData } from '@src/api/entities/overwrite/interfaces/RawPermissionOverwriteData'
 
 export interface RawGuildChannelEditData {
   name?: string

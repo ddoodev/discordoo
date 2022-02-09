@@ -1,5 +1,5 @@
 import { CacheManagerFilterOptions } from '@src/cache'
-import { PermissionOverwrite } from '@src/api/entities/overwrites/PermissionOverwrite'
+import { PermissionOverwrite } from '@src/api/entities/overwrite/PermissionOverwrite'
 
 export interface PermissionOverwriteEditOptions {
   /**

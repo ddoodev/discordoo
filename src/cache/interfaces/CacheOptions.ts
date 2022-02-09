@@ -17,7 +17,7 @@ import { ThreadMember } from '@src/api/entities/member/ThreadMember'
 import { AnyChannel } from '@src/api/entities/channel/interfaces/AnyChannel'
 import { AnyEmoji, GuildMember, Message, Presence, Role, Sticker, User } from '@src/api'
 import { MessageReaction } from '@src/api/entities/reaction/MessageReaction'
-import { PermissionOverwrite } from '@src/api/entities/overwrites/PermissionOverwrite'
+import { PermissionOverwrite } from '@src/api/entities/overwrite/PermissionOverwrite'
 
 export const CACHE_OPTIONS_KEYS_LENGTH = 12 // all cache options expect 'global'
 

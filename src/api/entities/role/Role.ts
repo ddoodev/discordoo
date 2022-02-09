@@ -5,7 +5,7 @@ import { RoleTagsData } from '@src/api/entities/role/interfaces/RoleTagsData'
 import { RawRoleData } from '@src/api/entities/role/interfaces/RawRoleData'
 import { idToDate, idToTimestamp, ImageUrlOptions, attach } from '@src/utils'
 import { resolveRoleTags } from '@src/utils/resolve'
-import { CacheManagerFilterOptions } from '@src/cache'
+import { CacheManagerFilterOptions, CacheManagerGetOptions } from '@src/cache'
 import { Keyspaces } from '@src/constants'
 import { RoleEditData } from '@src/api/entities/role/interfaces/RoleEditData'
 import { Base64Resolvable } from '@src/utils/interfaces/Base64Resolvable'
@@ -61,6 +61,10 @@ export class Role extends AbstractEntity { // TODO: positions...
       (member) => member.rolesList.includes(this.id), // TODO: context
       options
     )
+  }
+
+  guild(options?: CacheManagerGetOptions): Promise<any> { // TODO: Guild
+    return this.client.guilds.cache.get(this.guildId, options)
   }
 
   async delete(reason?: string): Promise<this | undefined> {

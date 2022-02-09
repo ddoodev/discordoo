@@ -1,5 +1,5 @@
 import { ChannelTypes } from '@src/constants'
-import { PermissionOverwriteResolvable } from '@src/api/entities/overwrites/interfaces/PermissionOverwriteResolvable'
+import { PermissionOverwriteResolvable } from '@src/api/entities/overwrite/interfaces/PermissionOverwriteResolvable'
 
 export interface RawGuildChannelCreateData {
   name: string
