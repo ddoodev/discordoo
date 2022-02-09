@@ -6,5 +6,4 @@ module.exports = {
   json: './docs/docs.json',
   name: 'Discordoo',
   excludeExternals: true,
-  plugin: 'typedoc-plugin-missing-exports'
 }
