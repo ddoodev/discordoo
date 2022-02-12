@@ -18,11 +18,13 @@ export class Presence extends AbstractEntity {
 
   async init(data: PresenceData | RawPresenceData): Promise<this> {
 
-    attach(this, data, [
-      [ 'guildId', 'guild_id' ],
-      [ 'clientStatus', 'client_status', {} ],
-      'status'
-    ])
+    attach(this, data, {
+      props: [
+        [ 'guildId', 'guild_id' ],
+        [ 'clientStatus', 'client_status', {} ],
+        'status'
+      ]
+    })
 
     if ('user' in data) {
       this.userId = data.user.id

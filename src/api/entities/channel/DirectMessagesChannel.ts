@@ -17,10 +17,12 @@ export class DirectMessagesChannel extends AbstractChannel implements WritableCh
   async init(data: AbstractChannelData): Promise<this> {
     await super.init(data)
 
-    attach(this, data, [
-      [ 'lastMessageId', 'last_message_id' ],
-      [ 'lastPinTimestamp', 'last_pin_timestamp' ]
-    ])
+    attach(this, data, {
+      props: [
+        [ 'lastMessageId', 'last_message_id' ],
+        [ 'lastPinTimestamp', 'last_pin_timestamp' ]
+      ]
+    })
 
     if (this.lastPinTimestamp) { // discord sends timestamp in string
       this.lastPinTimestamp = new Date(this.lastPinTimestamp).getTime()

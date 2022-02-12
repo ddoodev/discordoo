@@ -1,37 +1,56 @@
-import { WebSocketUtils } from '@src/utils/WebSocketUtils'
+import { AttachOptions } from '@src/utils/interfaces/AttachOptions'
 
 /**
  * Inserts properties from one object into another.
  * @param to - the object to which the properties are assigned
  * @param from - the object from which the properties are taken
- * @param props - array of properties to be processed.
- * if the element is an array, then the first two elements should be called object property names (like camelProperty & snake_property),
- * and the third one is the default value.
- * @example ```js
- * attach(this, data, [ 'property', [ 'someProperty', 'some_property', false ], [ 'anotherProp', '', false ] ])
- * ```
+ * @param options - options with properties to be processed
  * */
-export function attach(to: any, from: any, props: Array<string | [ string, string, any? ]>): void {
-  props.forEach(property => {
-    if (typeof property === 'string' && WebSocketUtils.exists(from[property])) {
-      to[property] = from[property]
-    } else if (Array.isArray(property)) {
+export function attach(to: any, from: any, options: AttachOptions): void {
 
-      if (from[property[0]] !== undefined) {
-        if (from[property[0]] === null) {
-          delete to[property[0]]
-        } else {
-          to[property[0]] = from[property[0]]
+  options.props.forEach(property => {
+    const type = typeof property === 'string' ? 'string' : Array.isArray(property) ? 'array' : 'unknown'
+
+    switch (type) {
+      case 'string': {
+        const isInvalid = options.enabled?.includes(property as string)
+          ? false
+          : options.disabled?.includes(property as string)
+
+        if (!isInvalid && from[property as string] !== undefined) {
+          if (from[property as string] === null) {
+            delete to[property as string]
+          } else {
+            to[property as string] = from[property as string]
+          }
         }
-      } else if (from[property[1]] !== undefined) {
-        if (from[property[1]] === null) {
-          delete to[property[0]]
-        } else {
-          to[property[0]] = from[property[1]]
-        }
-      } else if (property[2] !== undefined && to[property[0]] === undefined) {
-        to[property[0]] = property[2]
       }
+      break
+
+      case 'array': {
+        const isInvalid = options.enabled?.includes(property[0])
+          ? false
+          : options.disabled?.includes(property[0])
+
+        if (!isInvalid) {
+          if (from[property[0]] !== undefined) {
+            if (from[property[0]] === null) {
+              delete to[property[0]]
+            } else {
+              to[property[0]] = from[property[0]]
+            }
+          } else if (property[1] !== undefined && from[property[1]] !== undefined) {
+            if (from[property[1]] === null) {
+              delete to[property[0]]
+            } else {
+              to[property[0]] = from[property[1]]
+            }
+          } else if (property[2] !== undefined && to[property[0]] === undefined) {
+            to[property[0]] = property[2]
+          }
+        }
+      }
+      break
     }
   })
 }

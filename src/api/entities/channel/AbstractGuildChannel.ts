@@ -38,12 +38,14 @@ export abstract class AbstractGuildChannel extends AbstractChannel {
   async init(data: AbstractGuildChannelData | RawAbstractGuildChannelData): Promise<this> {
     await super.init(data)
 
-    attach(this, data, [
-      'name',
-      [ 'guildId', 'guild_id' ],
-      [ 'parentId', 'parent_id' ],
-      'position',
-    ])
+    attach(this, data, {
+      props: [
+        'name',
+        [ 'guildId', 'guild_id' ],
+        [ 'parentId', 'parent_id' ],
+        'position',
+      ]
+    })
 
     // @ts-ignore
     const overwrites: PermissionOverwriteResolvable[] = data.permissionOverwrites ?? data.permission_overwrites ?? []

@@ -15,12 +15,14 @@ export class ThreadMember extends AbstractEntity implements ThreadMemberData {
 
   async init(data: ThreadMemberData | RawThreadMemberData): Promise<this> {
 
-    attach(this, data, [
-      [ 'threadId', 'id' ],
-      [ 'userId', 'user_id' ],
-      [ 'joinTimestamp', 'join_timestamp' ],
-      [ 'guildId', 'guild_id' ]
-    ])
+    attach(this, data, {
+      props: [
+        [ 'threadId', 'id' ],
+        [ 'userId', 'user_id' ],
+        [ 'joinTimestamp', 'join_timestamp' ],
+        [ 'guildId', 'guild_id' ]
+      ]
+    })
 
     if ('flags' in data) {
       this.flags = new ReadonlyThreadMemberFlagsUtil(data.flags)

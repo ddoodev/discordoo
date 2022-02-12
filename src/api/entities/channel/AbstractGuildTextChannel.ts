@@ -16,12 +16,14 @@ export abstract class AbstractGuildTextChannel extends AbstractGuildChannel impl
   async init(data: AbstractGuildTextChannelData | RawAbstractGuildTextChannelData): Promise<this> {
     await super.init(data)
 
-    attach(this, data, [
-      'topic',
-      [ 'lastMessageId', 'last_message_id' ],
-      [ 'lastPinTimestamp', 'last_pin_timestamp' ],
-      [ 'defaultAutoArchiveDuration', 'default_auto_archive_duration' ]
-    ])
+    attach(this, data, {
+      props: [
+        'topic',
+        [ 'lastMessageId', 'last_message_id' ],
+        [ 'lastPinTimestamp', 'last_pin_timestamp' ],
+        [ 'defaultAutoArchiveDuration', 'default_auto_archive_duration' ]
+      ]
+    })
 
     this.nsfw = !!data.nsfw
 

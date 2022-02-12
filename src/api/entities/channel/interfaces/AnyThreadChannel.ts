@@ -1,3 +1,3 @@
-import { AbstractThreadChannel } from '@src/api/entities/channel/AbstractThreadChannel'
+import { GuildNewsThreadChannel, GuildThreadChannel } from '@src/api'
 
-export type AnyThreadChannel = AbstractThreadChannel
+export type AnyThreadChannel = GuildNewsThreadChannel | GuildThreadChannel

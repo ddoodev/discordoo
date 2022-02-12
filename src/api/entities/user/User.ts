@@ -28,19 +28,21 @@ export class User extends AbstractEntity implements UserData { // TODO: implemen
 
     this.id = data.id ?? this.id
 
-    attach(this, data, [
-      'avatar',
-      'username',
-      [ 'discriminator', '', '0000' ],
-      [ 'accentColor', 'accent_color' ],
-      'banner',
-      'email',
-      'locale',
-      [ 'mfaEnabled', 'mfa_enabled' ],
-      [ 'premiumType', 'premium_type' ],
-      [ 'flags', 'public_flags' ],
-      'verified'
-    ])
+    attach(this, data, {
+      props: [
+        'avatar',
+        'username',
+        [ 'discriminator', '', '0000' ],
+        [ 'accentColor', 'accent_color' ],
+        'banner',
+        'email',
+        'locale',
+        [ 'mfaEnabled', 'mfa_enabled' ],
+        [ 'premiumType', 'premium_type' ],
+        [ 'flags', 'public_flags' ],
+        'verified'
+      ]
+    })
 
     this.bot = typeof data.bot === 'boolean' ? data.bot : this.discriminator === '0000' ? true : this.bot ?? false
     this.system = typeof data.system === 'boolean' ? data.system : this.system ?? false

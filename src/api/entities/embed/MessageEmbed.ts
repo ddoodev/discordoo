@@ -37,17 +37,19 @@ export class MessageEmbed {
   private _create(data: MessageEmbedData  | MessageEmbed = {}): this {
     this.type = data.type ?? MessageEmbedTypes.RICH
 
-    attach(this, data, [
-      'title',
-      'description',
-      'url',
-      'author',
-      'thumbnail',
-      'image',
-      'video',
-      'footer',
-      'provider'
-    ])
+    attach(this, data, {
+      props: [
+        'title',
+        'description',
+        'url',
+        'author',
+        'thumbnail',
+        'image',
+        'video',
+        'footer',
+        'provider'
+      ]
+    })
 
     if (WebSocketUtils.exists<number | Date>(data.timestamp)) {
       this.timestamp = new Date(data.timestamp).getTime()

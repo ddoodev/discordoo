@@ -15,10 +15,12 @@ export class MessageReaction extends AbstractEntity {
   public users!: ReactionUsersManager
 
   async init(data: MessageReactionData): Promise<this> {
-    attach(this, data, [
-      'count',
-      'me'
-    ])
+    attach(this, data, {
+      props: [
+        'count',
+        'me'
+      ]
+    })
 
     if (data.message) {
       const id = resolveMessageId(data.message)

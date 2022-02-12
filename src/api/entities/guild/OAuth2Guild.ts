@@ -11,9 +11,11 @@ export class OAuth2Guild extends AbstractGuild implements OAuth2GuildData {
   async init(data: OAuth2GuildData | RawOAuth2GuildData): Promise<this> {
     await super.init(data)
 
-    attach(this, data, [
-      [ 'owner', '', false ],
-    ])
+    attach(this, data, {
+      props: [
+        [ 'owner', '', false ],
+      ]
+    })
 
     if ('permissions' in data) {
       this.permissions = new ReadonlyPermissions(data.permissions)

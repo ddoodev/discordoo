@@ -29,16 +29,18 @@ export class GuildMember extends AbstractEntity {
   private _muteUntilRaw?: string
 
   async init(data: GuildMemberData | RawGuildMemberData): Promise<this> {
-    attach(this, data, [
-      'avatar',
-      [ 'voiceDeaf', 'deaf', ],
-      [ 'voiceMute', 'mute' ],
-      'nick',
-      'pending',
-      [ 'guildId', 'guild_id' ],
-      [ 'guildOwner', 'guild_owner' ],
-      [ '_muteUntilRaw', 'communication_disabled_until' ],
-    ])
+    attach(this, data, {
+      props: [
+        'avatar',
+        [ 'voiceDeaf', 'deaf', ],
+        [ 'voiceMute', 'mute' ],
+        'nick',
+        'pending',
+        [ 'guildId', 'guild_id' ],
+        [ 'guildOwner', 'guild_owner' ],
+        [ '_muteUntilRaw', 'communication_disabled_until' ],
+      ]
+    })
 
     if ('joined_at' in data) {
       this.joinedDate = new Date(data.joined_at)

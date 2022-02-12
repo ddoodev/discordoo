@@ -10,11 +10,13 @@ export abstract class AbstractEmoji extends AbstractEntity implements AbstractEm
   public name?: string
 
   async init(data: AbstractEmojiData): Promise<this> {
-    attach(this, data, [
-      'animated',
-      'id',
-      'name'
-    ])
+    attach(this, data, {
+      props: [
+        'animated',
+        'id',
+        'name'
+      ]
+    })
 
     return this
   }

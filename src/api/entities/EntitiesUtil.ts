@@ -2,13 +2,7 @@ import { ExtendableEntities as DefaultExtendableEntities } from '@src/api/entiti
 import { Entities } from '@src/api/entities/Entities'
 import { DiscordooError } from '@src/utils/DiscordooError'
 import { EntityKeyFunctions } from '@src/api/entities/EntityKeyFunctions'
-
-const ExtendableEntities = Object.create(DefaultExtendableEntities ?? null) as typeof DefaultExtendableEntities
-
-type Ext = typeof ExtendableEntities
-type Def = typeof DefaultExtendableEntities
-type Ent = typeof Entities
-type Enf = typeof EntityKeyFunctions
+import { Def, Enf, Ent, Ext, ExtendableEntitiesUtil } from '@src/api/entities/EntitiesUtilTypings'
 
 const source = 'EntitiesUtil#'
 
@@ -19,7 +13,7 @@ export class EntitiesUtil {
     extender: T | ((base: Ext[K]) => T)
   ): T {
 
-    if (!ExtendableEntities[entity]) {
+    if (!ExtendableEntitiesUtil[entity]) {
       throw new DiscordooError(source + 'extend', `Cannot extend entity: ${entity}`)
     }
 

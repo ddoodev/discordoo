@@ -40,16 +40,18 @@ export abstract class AbstractThreadChannel extends AbstractChannel implements A
   async init(data: AbstractThreadChannelData | RawAbstractThreadChannelData): Promise<this> {
     await super.init(data)
 
-    attach(this, data, [
-      [ 'guildId', 'guild_id' ],
-      [ 'parentId', 'parent_id' ],
-      [ 'ownerId', 'owner_id' ],
-      [ 'lastMessageId', 'last_message_id' ],
-      [ 'lastPinTimestamp', 'last_pin_timestamp' ],
-      [ 'rateLimitPerUser', 'rate_limit_per_user' ],
-      [ 'messageCount', 'message_count' ],
-      [ 'memberCount', 'member_count' ],
-    ])
+    attach(this, data, {
+      props: [
+        [ 'guildId', 'guild_id' ],
+        [ 'parentId', 'parent_id' ],
+        [ 'ownerId', 'owner_id' ],
+        [ 'lastMessageId', 'last_message_id' ],
+        [ 'lastPinTimestamp', 'last_pin_timestamp' ],
+        [ 'rateLimitPerUser', 'rate_limit_per_user' ],
+        [ 'messageCount', 'message_count' ],
+        [ 'memberCount', 'member_count' ],
+      ]
+    })
 
     if (typeof this.lastPinTimestamp === 'string'!) { // discord sends timestamp in string
       this.lastPinTimestamp = new Date(this.lastPinTimestamp!).getTime()

@@ -1,5 +1,16 @@
-import { AbstractGuildTextChannel } from '@src/api/entities/channel/AbstractGuildTextChannel'
-import { GuildTextChannel } from '@src/api/entities/channel/GuildTextChannel'
-import { DirectMessagesChannel } from '@src/api/entities/channel/DirectMessagesChannel'
+import {
+  DirectMessagesChannel,
+  GuildNewsChannel,
+  GuildNewsThreadChannel,
+  GuildStoreChannel,
+  GuildTextChannel,
+  GuildThreadChannel
+} from '@src/api'
 
-export type AnyWritableChannel = AbstractGuildTextChannel | GuildTextChannel | DirectMessagesChannel
+export type AnyWritableChannel =
+  GuildTextChannel |
+  DirectMessagesChannel |
+  GuildNewsChannel |
+  GuildNewsThreadChannel |
+  GuildStoreChannel |
+  GuildThreadChannel

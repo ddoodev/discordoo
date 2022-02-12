@@ -26,19 +26,21 @@ export class Role extends AbstractEntity { // TODO: positions...
   public deleted = false
 
   async init(data: RawRoleData | RoleData): Promise<this> {
-    attach(this, data, [
-      'color',
-      'hoist',
-      'icon',
-      'id',
-      'managed',
-      'mentionable',
-      'name',
-      [ 'rawPosition', 'position', 0 ],
-      [ 'unicodeEmoji', 'unicode_emoji' ],
-      [ 'guildId', 'guild_id' ],
-      'deleted'
-    ])
+    attach(this, data, {
+      props: [
+        'color',
+        'hoist',
+        'icon',
+        'id',
+        'managed',
+        'mentionable',
+        'name',
+        [ 'rawPosition', 'position', 0 ],
+        [ 'unicodeEmoji', 'unicode_emoji' ],
+        [ 'guildId', 'guild_id' ],
+        'deleted'
+      ]
+    })
 
     if ('permissions' in data) {
       this.permissions = new ReadonlyPermissions(data.permissions)

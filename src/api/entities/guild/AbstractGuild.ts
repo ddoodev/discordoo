@@ -11,12 +11,14 @@ export class AbstractGuild extends AbstractEntity implements AbstractGuildData {
   public name!: string
 
   async init(data: AbstractGuildData): Promise<this> {
-    attach(this, data, [
-      'features',
-      'icon',
-      'id',
-      'name'
-    ])
+    attach(this, data, {
+      props: [
+        'features',
+        'icon',
+        'id',
+        'name'
+      ]
+    })
 
     return this
   }

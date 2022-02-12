@@ -1,9 +1,10 @@
 import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 import { ChannelTypes } from '@src/constants'
-import { idToDate, idToTimestamp, attach } from '@src/utils'
+import { attach, idToDate, idToTimestamp } from '@src/utils'
 import { AbstractChannelData } from '@src/api/entities/channel/interfaces/AbstractChannelData'
 import { ToJsonProperties } from '@src/api/entities/interfaces/ToJsonProperties'
 import { Json } from '@src/api/entities/interfaces/Json'
+import { AnyChannel } from '@src/api'
 
 export abstract class AbstractChannel extends AbstractEntity {
   public id!: string
@@ -11,7 +12,9 @@ export abstract class AbstractChannel extends AbstractEntity {
   public deleted!: boolean
 
   async init(data: AbstractChannelData): Promise<this> {
-    attach(this, data, [ 'id', 'type' ])
+    attach(this, data, {
+      props: [ 'id', 'type' ]
+    })
 
     this.deleted = !!data.deleted
 

@@ -44,20 +44,22 @@ export class Message extends AbstractEntity {
 
   async init(data: MessageData | RawMessageData): Promise<this> {
 
-    attach(this, data, [
-      [ 'channelId', 'channel_id' ],
-      [ 'guildId', 'guild_id' ],
-      'content',
-      'id',
-      'nonce',
-      'pinned',
-      'tts',
-      'type',
-      'deleted',
-      [ 'webhookId', 'webhook_id' ],
-      [ 'createdTimestamp', 'created_timestamp' ],
-      [ 'editedTimestamp', 'edited_timestamp' ],
-    ])
+    attach(this, data, {
+      props: [
+        [ 'channelId', 'channel_id' ],
+        [ 'guildId', 'guild_id' ],
+        'content',
+        'id',
+        'nonce',
+        'pinned',
+        'tts',
+        'type',
+        'deleted',
+        [ 'webhookId', 'webhook_id' ],
+        [ 'createdTimestamp', 'created_timestamp' ],
+        [ 'editedTimestamp', 'edited_timestamp' ],
+      ]
+    })
 
     if (data.embeds?.length) {
       this.embeds = data.embeds.map(v => new MessageEmbed(v))

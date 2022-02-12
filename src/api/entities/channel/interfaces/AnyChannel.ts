@@ -1,5 +1,22 @@
-import { AbstractChannel } from '@src/api'
-import { AbstractGuildChannel } from '@src/api/entities/channel/AbstractGuildChannel'
-import { AbstractThreadChannel } from '@src/api/entities/channel/AbstractThreadChannel'
+import {
+  AbstractGuildTextChannel,
+  DirectMessagesChannel,
+  GuildCategoryChannel,
+  GuildNewsChannel,
+  GuildNewsThreadChannel,
+  GuildStoreChannel,
+  GuildTextChannel,
+  GuildThreadChannel
+} from '@src/api'
 
-export type AnyChannel = AbstractChannel | AbstractGuildChannel | AbstractThreadChannel
+export type AnyChannel =
+  AbstractGuildTextChannel |
+  DirectMessagesChannel |
+  GuildCategoryChannel |
+  GuildNewsChannel |
+  GuildNewsThreadChannel |
+  // GuildStageVoiceChannel |
+  GuildStoreChannel |
+  GuildTextChannel |
+  GuildThreadChannel // |
+  // GuildVoiceChannel

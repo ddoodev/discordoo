@@ -2,12 +2,13 @@ import { AbstractGuildChannel } from '@src/api/entities/channel/AbstractGuildCha
 import { CategoryChannelChildrenManager } from '@src/api/managers/channels/CategoryChannelChildrenManager'
 import { AbstractGuildChannelData } from '@src/api/entities/channel/interfaces/AbstractGuildChannelData'
 import { RawAbstractGuildChannelData } from '@src/api/entities/channel/interfaces/RawAbstractGuildChannelData'
-import { Keyspaces } from '@src/constants'
+import { ChannelTypes, Keyspaces } from '@src/constants'
 import { AnyGuildChannel } from '@src/api/entities/channel/interfaces/AnyGuildChannel'
 import { makeCachePointer } from '@src/utils/cachePointer'
 
 export class GuildCategoryChannel extends AbstractGuildChannel {
   public children!: CategoryChannelChildrenManager
+  public type!: ChannelTypes.GUILD_CATEGORY
 
   async init(data: AbstractGuildChannelData | RawAbstractGuildChannelData): Promise<this> {
     await super.init(data)

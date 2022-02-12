@@ -17,14 +17,16 @@ export class Guild extends AbstractGuild implements ViewableGuild {
   async init(data: ViewableGuildData | RawViewableGuildData): Promise<this> {
     await super.init(data)
 
-    attach(this, data, [
-      'banner',
-      'description',
-      [ 'nsfwLevel', 'nsfw_level', GuildNsfwLevels.DEFAULT ],
-      'splash',
-      [ 'vanityUrlCode', 'vanity_url_code' ],
-      [ 'verificationLevel', 'verification_level', GuildVerificationLevels.NONE ]
-    ])
+    attach(this, data, {
+      props: [
+        'banner',
+        'description',
+        [ 'nsfwLevel', 'nsfw_level', GuildNsfwLevels.DEFAULT ],
+        'splash',
+        [ 'vanityUrlCode', 'vanity_url_code' ],
+        [ 'verificationLevel', 'verification_level', GuildVerificationLevels.NONE ]
+      ]
+    })
 
     return this
   }

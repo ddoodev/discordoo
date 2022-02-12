@@ -12,9 +12,11 @@ export class GuildTextChannel extends AbstractGuildTextChannel {
   async init(data: GuildTextChannelData | RawGuildTextChannelData): Promise<this> {
     await super.init(data)
 
-    attach(this, data, [
-      [ 'rateLimitPerUser', 'rate_limit_per_user' ]
-    ])
+    attach(this, data, {
+      props: [
+        [ 'rateLimitPerUser', 'rate_limit_per_user' ]
+      ]
+    })
 
     return this
   }

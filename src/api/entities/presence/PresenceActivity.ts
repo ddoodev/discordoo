@@ -28,20 +28,22 @@ export class PresenceActivity extends AbstractEntity {
   public url?: string
 
   async init(data: PresenceActivityData | RawPresenceActivityData): Promise<this> {
-    attach(this, data, [
-      [ 'applicationId', 'application_id' ],
-      'buttons',
-      'details',
-      'instance',
-      'name',
-      'party',
-      'secrets',
-      'state',
-      'timestamps',
-      'type',
-      'url',
-      [ 'createdTimestamp', 'created_at' ],
-    ])
+    attach(this, data, {
+      props: [
+        [ 'applicationId', 'application_id' ],
+        'buttons',
+        'details',
+        'instance',
+        'name',
+        'party',
+        'secrets',
+        'state',
+        'timestamps',
+        'type',
+        'url',
+        [ 'createdTimestamp', 'created_at' ],
+      ]
+    })
 
     if (data.assets) {
       this.assets = await new PresenceActivityAssets(this.client).init({ ...data.assets, applicationId: this.applicationId })

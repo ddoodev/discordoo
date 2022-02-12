@@ -24,18 +24,20 @@ export class MessageAttachment {
   constructor(data: MessageAttachmentData | RawMessageAttachmentData, options?: MessageAttachmentOptions) {
     this._options = options
 
-    attach(this, data, [
-      'id',
-      'size',
-      [ 'ephemeral', '', false ],
-      [ 'file', 'url' ],
-      'url',
-      [ 'contentType', 'content_type' ],
-      [ 'proxyUrl', 'proxy_url' ],
-      'height',
-      'width',
-      [ 'name', 'filename', `${randomString()}.png` ]
-    ])
+    attach(this, data, {
+      props: [
+        'id',
+        'size',
+        [ 'ephemeral', '', false ],
+        [ 'file', 'url' ],
+        'url',
+        [ 'contentType', 'content_type' ],
+        [ 'proxyUrl', 'proxy_url' ],
+        'height',
+        'width',
+        [ 'name', 'filename', `${randomString()}.png` ]
+      ]
+    })
 
     if ('spoiler' in data) {
       this.setSpoiler(!!data.spoiler)

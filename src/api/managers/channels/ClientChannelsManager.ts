@@ -63,16 +63,18 @@ export class ClientChannelsManager extends EntitiesManager {
       name: data.name
     }
 
-    attach(payload, data, [
-      'type',
-      'position',
-      'topic',
-      'nsfw',
-      [ 'rate_limit_per_user', 'rateLimitPerUser' ],
-      'bitrate',
-      [ 'parent_id', 'parentId' ],
-      [ 'rtc_region', 'rtcRegion' ],
-    ])
+    attach(payload, data, {
+      props: [
+        'type',
+        'position',
+        'topic',
+        'nsfw',
+        [ 'rate_limit_per_user', 'rateLimitPerUser' ],
+        'bitrate',
+        [ 'parent_id', 'parentId' ],
+        [ 'rtc_region', 'rtcRegion' ],
+      ]
+    })
 
     if ('permissionOverwrites' in data) {
       if (data.permissionOverwrites?.length) {
@@ -133,11 +135,13 @@ export class ClientChannelsManager extends EntitiesManager {
       if (id) payload.message_id = id
     }
 
-    attach(payload, data, [
-      [ 'auto_archive_duration', 'autoArchiveDuration' ],
-      'type',
-      'invitable'
-    ])
+    attach(payload, data, {
+      props: [
+        [ 'auto_archive_duration', 'autoArchiveDuration' ],
+        'type',
+        'invitable'
+      ]
+    })
 
     let response: RestFailedResponse | RestSuccessfulResponse
 
@@ -224,18 +228,20 @@ export class ClientChannelsManager extends EntitiesManager {
 
     const payload: RawGuildChannelEditData = {}
 
-    attach(payload, data, [
-      'name',
-      'type',
-      'position',
-      'topic',
-      'nsfw',
-      [ 'rate_limit_per_user', 'rateLimitPerUser' ],
-      'bitrate',
-      [ 'parent_id', 'parentId' ],
-      [ 'rtc_region', 'rtcRegion' ],
-      [ 'video_quality_mode', 'videoQualityMode' ],
-    ])
+    attach(payload, data, {
+      props: [
+        'name',
+        'type',
+        'position',
+        'topic',
+        'nsfw',
+        [ 'rate_limit_per_user', 'rateLimitPerUser' ],
+        'bitrate',
+        [ 'parent_id', 'parentId' ],
+        [ 'rtc_region', 'rtcRegion' ],
+        [ 'video_quality_mode', 'videoQualityMode' ],
+      ]
+    })
 
     if ('permissionOverwrites' in data) {
       if (data.permissionOverwrites?.length) {
@@ -283,14 +289,16 @@ export class ClientChannelsManager extends EntitiesManager {
 
     const payload: RawThreadChannelEditData = {}
 
-    attach(payload, data, [
-      'name',
-      'archived',
-      [ 'auto_archive_duration', 'autoArchiveDuration' ],
-      'locked',
-      'invitable',
-      [ 'rate_limit_per_user', 'rateLimitPerUser' ],
-    ])
+    attach(payload, data, {
+      props: [
+        'name',
+        'archived',
+        [ 'auto_archive_duration', 'autoArchiveDuration' ],
+        'locked',
+        'invitable',
+        [ 'rate_limit_per_user', 'rateLimitPerUser' ],
+      ]
+    })
 
     const response = await this.client.internals.actions.editThreadChannel(channelId, payload, options.reason)
 

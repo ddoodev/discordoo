@@ -30,18 +30,20 @@ export class Sticker extends AbstractEntity {
 
   async init(data: StickerData | RawStickerData): Promise<this> {
 
-    attach(this, data, [
-      'available',
-      'description',
-      [ 'formatType', 'format_type' ],
-      [ 'guildId', 'guild_id' ],
-      'id',
-      'name',
-      [ 'packId', 'pack_id' ],
-      [ 'sortValue', 'sort_value' ],
-      'type',
-      'deleted',
-    ])
+    attach(this, data, {
+      props: [
+        'available',
+        'description',
+        [ 'formatType', 'format_type' ],
+        [ 'guildId', 'guild_id' ],
+        'id',
+        'name',
+        [ 'packId', 'pack_id' ],
+        [ 'sortValue', 'sort_value' ],
+        'type',
+        'deleted',
+      ]
+    })
 
     if (data.user) {
       this.userId = resolveUserId(data.user)

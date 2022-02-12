@@ -1,3 +1,3 @@
-import { AbstractGuildChannel } from '@src/api/entities/channel/AbstractGuildChannel'
+import { AnyChannel, DirectMessagesChannel } from '@src/api'
 
-export type AnyGuildChannel = AbstractGuildChannel
+export type AnyGuildChannel = Exclude<AnyChannel, DirectMessagesChannel>

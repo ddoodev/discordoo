@@ -19,14 +19,16 @@ export class StickerPack extends AbstractEntity {
 
   async init(data: StickerPackData | RawStickerPackData): Promise<this> {
 
-    attach(this, data, [
-      [ 'bannerAssetId', 'banner_asset_id' ],
-      [ 'coverStickerId', 'cover_sticker_id' ],
-      'description',
-      'id',
-      'name',
-      [ 'skuId', 'sku_id' ],
-    ])
+    attach(this, data, {
+      props: [
+        [ 'bannerAssetId', 'banner_asset_id' ],
+        [ 'coverStickerId', 'cover_sticker_id' ],
+        'description',
+        'id',
+        'name',
+        [ 'skuId', 'sku_id' ],
+      ]
+    })
 
     if (data.stickers) {
       this.stickers = new Collection<string, Sticker>()

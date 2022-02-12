@@ -15,12 +15,14 @@ export class GuildPreviewEmoji extends AbstractEmoji implements AbstractGuildEmo
   async init(data: GuildPreviewEmojiData | RawGuildPreviewEmojiData): Promise<this> {
     await super.init(data)
 
-    attach(this, data, [
-      [ 'available', '', false ],
-      [ 'managed', '', false ],
-      [ 'requiresColons', 'requires_colons', false ],
-      [ 'guildId', 'guild_id' ],
-    ])
+    attach(this, data, {
+      props: [
+        [ 'available', '', false ],
+        [ 'managed', '', false ],
+        [ 'requiresColons', 'requires_colons', false ],
+        [ 'guildId', 'guild_id' ],
+      ]
+    })
 
     return this
   }

@@ -13,13 +13,15 @@ export class PresenceActivityAssets extends AbstractEntity implements PresenceAc
   public applicationId?: string
 
   async init(data: PresenceActivityAssetsData | RawPresenceActivityAssetsData): Promise<this> {
-    attach(this, data, [
-      [ 'largeImage', 'large_image' ],
-      [ 'largeText', 'large_text' ],
-      [ 'smallImage', 'small_image' ],
-      [ 'smallText', 'small_text' ],
-      [ 'applicationId', 'application_id' ],
-    ])
+    attach(this, data, {
+      props: [
+        [ 'largeImage', 'large_image' ],
+        [ 'largeText', 'large_text' ],
+        [ 'smallImage', 'small_image' ],
+        [ 'smallText', 'small_text' ],
+        [ 'applicationId', 'application_id' ],
+      ]
+    })
 
     return this
   }
