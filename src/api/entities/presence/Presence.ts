@@ -8,37 +8,42 @@ import { attach } from '@src/utils'
 import { PresenceActivity } from '@src/api/entities/presence/PresenceActivity'
 import { CacheManagerGetOptions } from '@src/cache'
 import { Keyspaces, ToJsonOverrideSymbol } from '@src/constants'
+import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class Presence extends AbstractEntity {
   public activities: PresenceActivity[] = []
-  public clientStatus!: PresenceClientStatusData
+  public clientStatus: PresenceClientStatusData = {}
   public guildId!: string
   public status!: PresenceStatus
   public userId!: string
 
-  async init(data: PresenceData | RawPresenceData): Promise<this> {
+  async init(data: PresenceData | RawPresenceData, options?: EntityInitOptions): Promise<this> {
+
+    if ('activities' in data) {
+      const activities: any[] = []
+
+      for await (const activity of data.activities) {
+        activities.push(await new PresenceActivity(this.client).init(activity))
+      }
+
+      data.activities = activities
+    }
+
+    if ('user' in data) {
+      (data as any).userId = data.user.id
+    }
 
     attach(this, data, {
       props: [
         [ 'guildId', 'guild_id' ],
-        [ 'clientStatus', 'client_status', {} ],
-        'status'
-      ]
+        [ 'clientStatus', 'client_status' ],
+        'status',
+        'userId',
+        'activities',
+      ],
+      disabled: options?.ignore,
+      enabled: [ 'guildId', 'userId', 'status' ]
     })
-
-    if ('user' in data) {
-      this.userId = data.user.id
-    } else if ('userId' in data) {
-      this.userId = data.userId
-    }
-
-    if ('activities' in data) {
-      this.activities = []
-
-      for await (const activity of data.activities) {
-        this.activities.push(await new PresenceActivity(this.client).init(activity))
-      }
-    }
 
     return this
   }

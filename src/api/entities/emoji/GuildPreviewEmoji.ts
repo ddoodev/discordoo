@@ -5,6 +5,7 @@ import { RawGuildPreviewEmojiData } from '@src/api/entities/emoji/interfaces/Raw
 import { attach } from '@src/utils'
 import { ToJsonProperties } from '@src/api/entities/interfaces/ToJsonProperties'
 import { Json } from '@src/api/entities/interfaces/Json'
+import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class GuildPreviewEmoji extends AbstractEmoji implements AbstractGuildEmoji {
   public available!: boolean
@@ -12,16 +13,17 @@ export class GuildPreviewEmoji extends AbstractEmoji implements AbstractGuildEmo
   public managed!: boolean
   public requiresColons!: boolean
 
-  async init(data: GuildPreviewEmojiData | RawGuildPreviewEmojiData): Promise<this> {
-    await super.init(data)
+  async init(data: GuildPreviewEmojiData | RawGuildPreviewEmojiData, options?: EntityInitOptions): Promise<this> {
+    await super.init(data, options)
 
     attach(this, data, {
       props: [
-        [ 'available', '', false ],
-        [ 'managed', '', false ],
+        [ 'available', undefined, false ],
+        [ 'managed', undefined, false ],
         [ 'requiresColons', 'requires_colons', false ],
         [ 'guildId', 'guild_id' ],
-      ]
+      ],
+      disabled: options?.ignore,
     })
 
     return this

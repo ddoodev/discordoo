@@ -10,12 +10,13 @@ import { Presence } from '@src/api/entities/presence/Presence'
 import { GuildMemberEditData } from '@src/api/entities/member/interfaces/GuildMemberEditData'
 import { MemberBanOptions } from '@src/api/managers/members/MemberBanOptions'
 import { makeCachePointer } from '@src/utils/cachePointer'
+import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class GuildMember extends AbstractEntity {
   public avatar?: string
-  public voiceDeaf!: boolean
+  public voiceDeaf?: boolean
   public joinedDate!: Date
-  public voiceMute!: boolean
+  public voiceMute?: boolean
   public nick?: string
   public pending?: boolean
   public permissions!: ReadonlyPermissions
@@ -28,18 +29,20 @@ export class GuildMember extends AbstractEntity {
 
   private _muteUntilRaw?: string
 
-  async init(data: GuildMemberData | RawGuildMemberData): Promise<this> {
+  async init(data: GuildMemberData | RawGuildMemberData, options?: EntityInitOptions): Promise<this> {
     attach(this, data, {
       props: [
         'avatar',
-        [ 'voiceDeaf', 'deaf', ],
+        [ 'voiceDeaf', 'deaf' ],
         [ 'voiceMute', 'mute' ],
         'nick',
         'pending',
         [ 'guildId', 'guild_id' ],
         [ 'guildOwner', 'guild_owner' ],
         [ '_muteUntilRaw', 'communication_disabled_until' ],
-      ]
+      ],
+      disabled: options?.ignore,
+      enabled: [ 'guildId', 'guildOwner', 'pending' ]
     })
 
     if ('joined_at' in data) {

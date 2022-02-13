@@ -3,15 +3,22 @@ import { ChannelTypes } from '@src/constants'
 import { GuildStoreChannelData } from '@src/api/entities/channel/interfaces/GuildStoreChannelData'
 import { RawGuildStoreChannelData } from '@src/api/entities/channel/interfaces/RawGuildStoreChannelData'
 import { Json, ToJsonProperties } from '@src/api'
+import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
+import { attach } from '@src/utils'
 
 export class GuildStoreChannel extends AbstractGuildChannel {
   public type!: ChannelTypes.GUILD_STORE
-  public nsfw!: boolean
+  public nsfw?: boolean
 
-  async init(data: GuildStoreChannelData | RawGuildStoreChannelData): Promise<this> {
-    await super.init(data)
+  async init(data: GuildStoreChannelData | RawGuildStoreChannelData, options?: EntityInitOptions): Promise<this> {
+    await super.init(data, options)
 
-    this.nsfw = data.nsfw ?? this.nsfw
+    attach(this, data, {
+      props: [
+        'nsfw'
+      ],
+      disabled: options?.ignore
+    })
 
     return this
   }

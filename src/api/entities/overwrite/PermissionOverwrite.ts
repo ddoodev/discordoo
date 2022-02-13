@@ -6,6 +6,7 @@ import { DiscordooError, resolveChannelId, resolvePermissionOverwriteToRaw } fro
 import { CacheManagerGetOptions } from '@src/cache'
 import { AnyGuildChannel } from '@src/api/entities/channel/interfaces/AnyGuildChannel'
 import { PermissionOverwriteEditOptions } from '@src/api/managers/overwrites/PermissionOverwriteEditOptions'
+import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class PermissionOverwrite extends AbstractEntity {
   public id!: string
@@ -14,7 +15,9 @@ export class PermissionOverwrite extends AbstractEntity {
   public deny!: ReadonlyPermissions
   public channelId!: string
 
-  async init(data: PermissionOverwriteResolvable & { channel: ChannelResolvable }): Promise<this> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async init(data: PermissionOverwriteResolvable & { channel: ChannelResolvable }, options?: EntityInitOptions): Promise<this> {
+    // options declared for the future
     const overwrite = resolvePermissionOverwriteToRaw(data, this.allow && this.deny ? this : undefined)
 
     this.id = overwrite.id
@@ -23,7 +26,9 @@ export class PermissionOverwrite extends AbstractEntity {
     this.allow = new ReadonlyPermissions(overwrite.allow)
     this.deny = new ReadonlyPermissions(overwrite.deny)
 
-    if (data.channel) {
+    if ('channelId' in data) {
+      this.channelId = data.channelId
+    } else if (data.channel) {
       const id = resolveChannelId(data.channel)
 
       if (!id && !this.channelId) {

@@ -5,6 +5,7 @@ import { MessageReactionData } from '@src/api/entities/reaction/interfaces/Messa
 import { ToJsonOverrideSymbol } from '@src/constants'
 import { CacheManagerGetOptions } from '@src/cache'
 import { ReactionUsersManager } from '@src/api/managers/reactions/ReactionUsersManager'
+import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class MessageReaction extends AbstractEntity {
   public count!: number
@@ -14,7 +15,9 @@ export class MessageReaction extends AbstractEntity {
   public emojiId!: string
   public users!: ReactionUsersManager
 
-  async init(data: MessageReactionData): Promise<this> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async init(data: MessageReactionData, options?: EntityInitOptions): Promise<this> {
+    // options declared for the future
     attach(this, data, {
       props: [
         'count',

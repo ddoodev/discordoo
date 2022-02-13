@@ -4,18 +4,20 @@ import { RawGuildTextChannelData } from '@src/api/entities/channel/interfaces/Ra
 import { attach } from '@src/utils'
 import { ChannelTypes } from '@src/constants'
 import { Json, ToJsonProperties } from '@src/api'
+import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class GuildTextChannel extends AbstractGuildTextChannel {
   public rateLimitPerUser?: number
   public type!: ChannelTypes.GUILD_TEXT
 
-  async init(data: GuildTextChannelData | RawGuildTextChannelData): Promise<this> {
-    await super.init(data)
+  async init(data: GuildTextChannelData | RawGuildTextChannelData, options?: EntityInitOptions): Promise<this> {
+    await super.init(data, options)
 
     attach(this, data, {
       props: [
         [ 'rateLimitPerUser', 'rate_limit_per_user' ]
-      ]
+      ],
+      disabled: options?.ignore
     })
 
     return this

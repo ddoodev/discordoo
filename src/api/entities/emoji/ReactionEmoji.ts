@@ -4,12 +4,13 @@ import { Json, ToJsonProperties } from '@src/api'
 import { MessageReaction } from '@src/api/entities/reaction/MessageReaction'
 import { Keyspaces } from '@src/constants'
 import { CacheManagerGetOptions } from '@src/cache'
+import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class ReactionEmoji extends AbstractEmoji {
   public reactionMessageId!: string
 
-  async init(data: ReactionEmojiData): Promise<this> {
-    await super.init(data)
+  async init(data: ReactionEmojiData, options?: EntityInitOptions): Promise<this> {
+    await super.init(data, options)
 
     if (data.reactionMessageId) this.reactionMessageId = data.reactionMessageId
 

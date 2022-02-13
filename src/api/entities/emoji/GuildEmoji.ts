@@ -12,6 +12,7 @@ import { Json } from '@src/api/entities/interfaces/Json'
 import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 import { CacheManagerGetOptions } from '@src/cache'
 import { filterAndMap } from '@src/utils/filterAndMap'
+import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class GuildEmoji extends AbstractEmoji implements AbstractGuildEmoji {
   public available!: boolean
@@ -20,20 +21,25 @@ export class GuildEmoji extends AbstractEmoji implements AbstractGuildEmoji {
   public requiresColons!: boolean
   public roles: string[] = []
   public userId?: string
-  public deleted = false
 
-  async init(data: GuildEmojiData | RawGuildEmojiData): Promise<this> {
-    await super.init(data)
+  async init(data: GuildEmojiData | RawGuildEmojiData, options?: EntityInitOptions): Promise<this> {
+    await super.init(data, options)
+
+    if (data.user) {
+      // @ts-ignore
+      data.user_id = resolveUserId(data.user)
+    }
 
     attach(this, data, {
       props: [
-        [ 'available', '', false ],
-        [ 'managed', '', false ],
+        [ 'available', undefined, false ],
+        [ 'managed', undefined, false ],
         [ 'requiresColons', 'requires_colons', false ],
         [ 'guildId', 'guild_id' ],
         [ 'userId', 'user_id' ],
-        [ 'deleted', '', false ],
-      ]
+      ],
+      disabled: options?.ignore,
+      enabled: [ 'managed', 'guildId' ]
     })
 
     if (data.roles) {
@@ -43,10 +49,6 @@ export class GuildEmoji extends AbstractEmoji implements AbstractGuildEmoji {
         const id = resolveRoleId(role)
         if (id) this.roles.push(id)
       }
-    }
-
-    if (data.user) {
-      this.userId = resolveUserId(data.user)
     }
 
     return this
@@ -112,17 +114,13 @@ export class GuildEmoji extends AbstractEmoji implements AbstractGuildEmoji {
     return this.edit({ roles }, reason)
   }
 
-  async delete(reason?: string): Promise<this> {
+  async delete(reason?: string): Promise<this | undefined> {
     if (!this.guildId) throw new DiscordooError('Emoji', 'Cannot delete emoji without guild id')
     if (!this.id) throw new DiscordooError('Emoji', 'Cannot delete emoji without id')
 
     const response = await this.client.internals.actions.deleteGuildEmoji(this.guildId, this.id, reason)
 
-    if (response.success) {
-      this.deleted = true
-    }
-
-    return this
+    return response.success ? this : undefined
   }
 
   toJson(properties: ToJsonProperties, obj?: any): Json {
@@ -134,7 +132,6 @@ export class GuildEmoji extends AbstractEmoji implements AbstractGuildEmoji {
       requiresColons: true,
       roles: true,
       userId: true,
-      deleted: true,
     }, obj)
   }
 

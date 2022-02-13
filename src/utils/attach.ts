@@ -1,4 +1,5 @@
 import { AttachOptions } from '@src/utils/interfaces/AttachOptions'
+import { IgnoreAllSymbol } from '@src/constants/entities/IgnoreAllSymbol'
 
 /**
  * Inserts properties from one object into another.
@@ -15,7 +16,7 @@ export function attach(to: any, from: any, options: AttachOptions): void {
       case 'string': {
         const isInvalid = options.enabled?.includes(property as string)
           ? false
-          : options.disabled?.includes(property as string)
+          : options.disabled?.includes(IgnoreAllSymbol as never) || options.disabled?.includes(property as never)
 
         if (!isInvalid && from[property as string] !== undefined) {
           if (from[property as string] === null) {
@@ -30,7 +31,7 @@ export function attach(to: any, from: any, options: AttachOptions): void {
       case 'array': {
         const isInvalid = options.enabled?.includes(property[0])
           ? false
-          : options.disabled?.includes(property[0])
+          : options.disabled?.includes(IgnoreAllSymbol as never) || options.disabled?.includes(property as never)
 
         if (!isInvalid) {
           if (from[property[0]] !== undefined) {

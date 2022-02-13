@@ -4,6 +4,7 @@ import { RawPresenceActivityAssetsData } from '@src/api/entities/presence/interf
 import { attach, ImageUrlOptions } from '@src/utils'
 import { SPOTIFY_CDN_IMAGES, TWITCH_CDN_LIVE_USERS_IMAGES, YOUTUBE_CDN } from '@src/constants'
 import { AbstractEntity } from '@src/api/entities/AbstractEntity'
+import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class PresenceActivityAssets extends AbstractEntity implements PresenceActivityAssetsData {
   public largeImage?: string
@@ -12,7 +13,7 @@ export class PresenceActivityAssets extends AbstractEntity implements PresenceAc
   public smallText?: string
   public applicationId?: string
 
-  async init(data: PresenceActivityAssetsData | RawPresenceActivityAssetsData): Promise<this> {
+  async init(data: PresenceActivityAssetsData | RawPresenceActivityAssetsData, options?: EntityInitOptions): Promise<this> {
     attach(this, data, {
       props: [
         [ 'largeImage', 'large_image' ],
@@ -20,7 +21,8 @@ export class PresenceActivityAssets extends AbstractEntity implements PresenceAc
         [ 'smallImage', 'small_image' ],
         [ 'smallText', 'small_text' ],
         [ 'applicationId', 'application_id' ],
-      ]
+      ],
+      disabled: options?.ignore
     })
 
     return this

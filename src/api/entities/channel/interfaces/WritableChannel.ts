@@ -8,4 +8,9 @@ export interface WritableChannel {
   messages: ChannelMessagesManager | DirectMessagesChannelMessagesManager
 
   send(content: MessageContent, options?: MessageCreateOptions): Promise<Message | undefined>
+
+  lastMessageId?: string
+  lastPinTimestamp?: number
+  set lastMsgId(id: string)
+  get lastPinDate(): Date | undefined
 }

@@ -16,15 +16,16 @@ import { attach, resolveMessageReaction } from '@src/utils'
 import { AnyWritableChannel } from '@src/api/entities/channel/interfaces/AnyWritableChannel'
 import { CacheManagerGetOptions } from '@src/cache'
 import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
+import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class Message extends AbstractEntity {
-  public attachments!: MessageAttachment[]
+  public attachments: MessageAttachment[] = []
   public authorId!: string
   public channelId!: string
   public content!: string
-  public deleted!: boolean
+  public deleted?: boolean
   public editedTimestamp?: number
-  public embeds!: MessageEmbed[]
+  public embeds: MessageEmbed[] = []
   public flags!: ReadonlyMessageFlagsUtil
   public guildId?: string
   public id!: string
@@ -42,10 +43,32 @@ export class Message extends AbstractEntity {
   public type!: MessageTypes
   public webhookId!: string
 
-  async init(data: MessageData | RawMessageData): Promise<this> {
+  async init(data: MessageData | RawMessageData, options?: EntityInitOptions): Promise<this> {
+
+    if (data.embeds?.length) {
+      data.embeds = data.embeds.map(v => new MessageEmbed(v))
+    }
+
+    if (!('authorId' in data)) {
+      (data as any).authorId = data.author.id
+    }
+
+    data.flags = new ReadonlyMessageFlagsUtil(data.flags)
+
+    if (data.attachments?.length) {
+      data.attachments = data.attachments.map(v => new MessageAttachment(v))
+    }
+
+    if ('referenced_message' in data && data.referenced_message) {
+      const Message = EntitiesUtil.get('Message')
+      const msg = await new Message(this.client).init(data.referenced_message)
+      await this.client.messages.cache.set(msg.id, msg, { storage: this.channelId });
+      (data as any).referencedMessageId = msg.id
+    }
 
     attach(this, data, {
       props: [
+        'embeds',
         [ 'channelId', 'channel_id' ],
         [ 'guildId', 'guild_id' ],
         'content',
@@ -55,15 +78,17 @@ export class Message extends AbstractEntity {
         'tts',
         'type',
         'deleted',
+        'authorId',
+        'flags',
+        'attachments',
+        'referencedMessageId',
         [ 'webhookId', 'webhook_id' ],
         [ 'createdTimestamp', 'created_timestamp' ],
         [ 'editedTimestamp', 'edited_timestamp' ],
-      ]
+      ],
+      disabled: options?.ignore,
+      enabled: [ 'id', 'type', 'guildId', 'channelId', 'createdTimestamp', 'deleted', 'authorId' ]
     })
-
-    if (data.embeds?.length) {
-      this.embeds = data.embeds.map(v => new MessageEmbed(v))
-    }
 
     if (this.createdTimestamp) { // discord sends timestamps in strings
       this.createdTimestamp = new Date(this.createdTimestamp).getTime()
@@ -71,22 +96,6 @@ export class Message extends AbstractEntity {
 
     if (this.editedTimestamp) { // discord sends timestamps in strings
       this.editedTimestamp = new Date(this.editedTimestamp).getTime()
-    }
-
-    if ('authorId' in data) {
-      this.authorId = data.authorId
-    } else {
-      this.authorId = data.author.id
-    }
-
-    if ('flags' in data) {
-      this.flags = new ReadonlyMessageFlagsUtil(data.flags)
-    } else if (!this.flags) {
-      this.flags = new ReadonlyMessageFlagsUtil()
-    }
-
-    if (data.attachments?.length) {
-      this.attachments = data.attachments.map(v => new MessageAttachment(v))
     }
 
     if (!this.reactions) {
@@ -103,17 +112,6 @@ export class Message extends AbstractEntity {
         const reaction = await resolveMessageReaction(this.client, reactionData)
         if (reaction) await this.reactions.cache.set(reaction.emojiId, reaction)
       }
-    }
-
-    if ('referenced_message' in data && data.referenced_message) {
-      const Message = EntitiesUtil.get('Message')
-      const msg = await new Message(this.client).init(data.referenced_message)
-      await this.client.messages.cache.set(msg.id, msg, { storage: this.channelId })
-      this.referencedMessageId = msg.id
-    }
-
-    if (typeof this.deleted !== 'boolean'!) {
-      this.deleted = false
     }
 
     return this

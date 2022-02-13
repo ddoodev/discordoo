@@ -4,11 +4,12 @@ import { PresenceActivityButtonData } from '@src/api/entities/presence/interface
 import { PresenceActivityPartyData } from '@src/api/entities/presence/interfaces/PresenceActivityPartyData'
 import { PresenceActivitySecretsData } from '@src/api/entities/presence/interfaces/PresenceActivitySecretsData'
 import { PresenceActivityTimestampsData } from '@src/api/entities/presence/interfaces/PresenceActivityTimestampsData'
-import { PresenceActivityTypes } from '@src/constants'
+import { IgnoreAllSymbol, PresenceActivityTypes } from '@src/constants'
 import { RawPresenceActivityData } from '@src/api/entities/presence/interfaces/RawPresenceActivityData'
 import { PresenceActivityAssets } from '@src/api/entities/presence/PresenceActivityAssets'
 import { attach, WebSocketUtils } from '@src/utils'
 import { AbstractEntity } from '@src/api/entities/AbstractEntity'
+import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class PresenceActivity extends AbstractEntity {
   public applicationId?: string
@@ -27,7 +28,16 @@ export class PresenceActivity extends AbstractEntity {
   public type!: PresenceActivityTypes
   public url?: string
 
-  async init(data: PresenceActivityData | RawPresenceActivityData): Promise<this> {
+  async init(data: PresenceActivityData | RawPresenceActivityData, options?: EntityInitOptions): Promise<this> {
+
+    if (data.emoji) {
+      data.emoji = await new ActivityEmoji(this.client).init(data.emoji)
+    }
+
+    if (WebSocketUtils.exists(data.flags)) {
+      data.flags = new ReadonlyActivityFlagsUtil(data.flags)
+    }
+
     attach(this, data, {
       props: [
         [ 'applicationId', 'application_id' ],
@@ -41,20 +51,18 @@ export class PresenceActivity extends AbstractEntity {
         'timestamps',
         'type',
         'url',
+        'emoji',
+        'flags',
         [ 'createdTimestamp', 'created_at' ],
-      ]
+      ],
+      disabled: options?.ignore
     })
 
     if (data.assets) {
-      this.assets = await new PresenceActivityAssets(this.client).init({ ...data.assets, applicationId: this.applicationId })
-    }
-
-    if (data.emoji) {
-      this.emoji = await new ActivityEmoji(this.client).init(data.emoji)
-    }
-
-    if (WebSocketUtils.exists(data.flags)) {
-      this.flags = new ReadonlyActivityFlagsUtil(data.flags)
+      // @ts-ignore
+      if (!options?.ignore?.includes('assets') && !options?.ignore?.includes(IgnoreAllSymbol)) {
+        this.assets = await new PresenceActivityAssets(this.client).init({ ...data.assets, applicationId: this.applicationId })
+      }
     }
 
     return this

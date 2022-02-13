@@ -5,6 +5,7 @@ import { RawThreadMemberData } from '@src/api/entities/member/interfaces/RawThre
 import { attach } from '@src/utils'
 import { CacheManagerGetOptions } from '@src/cache'
 import { Keyspaces } from '@src/constants'
+import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class ThreadMember extends AbstractEntity implements ThreadMemberData {
   public flags!: ReadonlyThreadMemberFlagsUtil
@@ -13,7 +14,7 @@ export class ThreadMember extends AbstractEntity implements ThreadMemberData {
   public userId!: string
   public guildId!: string
 
-  async init(data: ThreadMemberData | RawThreadMemberData): Promise<this> {
+  async init(data: ThreadMemberData | RawThreadMemberData, options?: EntityInitOptions): Promise<this> {
 
     attach(this, data, {
       props: [
@@ -21,14 +22,16 @@ export class ThreadMember extends AbstractEntity implements ThreadMemberData {
         [ 'userId', 'user_id' ],
         [ 'joinTimestamp', 'join_timestamp' ],
         [ 'guildId', 'guild_id' ]
-      ]
+      ],
+      disabled: options?.ignore,
+      enabled: [ 'userId', 'threadId', 'guildId' ]
     })
 
     if ('flags' in data) {
       this.flags = new ReadonlyThreadMemberFlagsUtil(data.flags)
     }
 
-    if (typeof this.joinTimestamp !== 'number'!) {
+    if (this.joinTimestamp && typeof this.joinTimestamp !== 'number'!) {
       this.joinTimestamp = new Date(this.joinTimestamp).getTime()
     }
 

@@ -4,28 +4,30 @@ import { ChannelMessagesManager, Json, ToJsonProperties } from '@src/api'
 import { AbstractGuildTextChannelData } from '@src/api/entities/channel/interfaces/AbstractGuildTextChannelData'
 import { RawAbstractGuildTextChannelData } from '@src/api/entities/channel/interfaces/RawAbstractGuildTextChannelData'
 import { attach } from '@src/utils'
+import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export abstract class AbstractGuildTextChannel extends AbstractGuildChannel implements WritableChannel {
   public messages!: ChannelMessagesManager
-  public nsfw!: boolean
+  public nsfw?: boolean
   public topic?: string
   public lastMessageId?: string
   public lastPinTimestamp?: number
   public defaultAutoArchiveDuration?: number
 
-  async init(data: AbstractGuildTextChannelData | RawAbstractGuildTextChannelData): Promise<this> {
-    await super.init(data)
+  async init(data: AbstractGuildTextChannelData | RawAbstractGuildTextChannelData, options?: EntityInitOptions): Promise<this> {
+    await super.init(data, options)
 
     attach(this, data, {
       props: [
         'topic',
         [ 'lastMessageId', 'last_message_id' ],
         [ 'lastPinTimestamp', 'last_pin_timestamp' ],
-        [ 'defaultAutoArchiveDuration', 'default_auto_archive_duration' ]
-      ]
+        [ 'defaultAutoArchiveDuration', 'default_auto_archive_duration' ],
+        'nsfw'
+      ],
+      disabled: options?.ignore,
+      enabled: [ 'lastMessageId' ]
     })
-
-    this.nsfw = !!data.nsfw
 
     if (typeof this.lastPinTimestamp === 'string'!) { // discord sends timestamp in string
       this.lastPinTimestamp = new Date(this.lastPinTimestamp!).getTime()
@@ -48,6 +50,10 @@ export abstract class AbstractGuildTextChannel extends AbstractGuildChannel impl
     }
 
     return this
+  }
+
+  get lastPinDate(): Date | undefined {
+    return this.lastPinTimestamp ? new Date(this.lastPinTimestamp) : undefined
   }
 
   set lastMsgId(id: string) {

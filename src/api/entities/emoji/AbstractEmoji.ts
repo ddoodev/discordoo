@@ -3,19 +3,22 @@ import { AbstractEmojiData } from '@src/api/entities/emoji/interfaces/AbstractEm
 import { idToDate, idToTimestamp, attach } from '@src/utils'
 import { ToJsonProperties } from '@src/api/entities/interfaces/ToJsonProperties'
 import { Json } from '@src/api/entities/interfaces/Json'
+import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export abstract class AbstractEmoji extends AbstractEntity implements AbstractEmojiData {
   public animated?: boolean
   public id?: string
   public name?: string
 
-  async init(data: AbstractEmojiData): Promise<this> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  async init(data: AbstractEmojiData, options?: EntityInitOptions): Promise<this> {
+    // options declared for the future
     attach(this, data, {
       props: [
         'animated',
         'id',
         'name'
-      ]
+      ],
     })
 
     return this

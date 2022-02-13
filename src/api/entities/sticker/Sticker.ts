@@ -13,6 +13,7 @@ import { StickerEditOptions } from '@src/api/entities/sticker/interfaces/Sticker
 import { Json } from '@src/api/entities/interfaces/Json'
 import { ToJsonProperties } from '@src/api/entities/interfaces/ToJsonProperties'
 import { StickerPack } from '@src/api/entities/sticker/StickerPack'
+import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class Sticker extends AbstractEntity {
   public available?: boolean
@@ -28,7 +29,15 @@ export class Sticker extends AbstractEntity {
   public userId?: string
   public deleted!: boolean
 
-  async init(data: StickerData | RawStickerData): Promise<this> {
+  async init(data: StickerData | RawStickerData, options?: EntityInitOptions): Promise<this> {
+
+    if (data.user) {
+      (data as any).userId = resolveUserId(data.user)
+    }
+
+    if (data.tags) {
+      data.tags = typeof data.tags === 'string' ? data.tags.split(', ') : data.tags
+    }
 
     attach(this, data, {
       props: [
@@ -42,18 +51,12 @@ export class Sticker extends AbstractEntity {
         [ 'sortValue', 'sort_value' ],
         'type',
         'deleted',
-      ]
+        'user',
+        'tags',
+      ],
+      disabled: options?.ignore,
+      enabled: [ 'id', 'name', 'deleted', 'packId', 'formatType', 'type' ]
     })
-
-    if (data.user) {
-      this.userId = resolveUserId(data.user)
-    } else if ('userId' in data) {
-      this.userId = data.userId
-    }
-
-    if (data.tags) {
-      this.tags = typeof data.tags === 'string' ? data.tags.split(', ') : data.tags
-    }
 
     return this
   }
@@ -107,7 +110,9 @@ export class Sticker extends AbstractEntity {
       await this.init(response.result)
 
       if (response.result.user) {
-        return new User(this.client).init(response.result.user)
+        const user = await new User(this.client).init(response.result.user)
+        await this.client.users.cache.set(user.id, user)
+        return user
       }
     }
 

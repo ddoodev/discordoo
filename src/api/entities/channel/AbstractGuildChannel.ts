@@ -21,6 +21,7 @@ import {
   ToJsonProperties, Json
 } from '@src/api'
 import { GuildMemberResolvable } from '@src/api/entities/member/interfaces/GuildMemberResolvable'
+import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export abstract class AbstractGuildChannel extends AbstractChannel {
   public type!: ChannelTypes.GUILD_CATEGORY
@@ -35,8 +36,8 @@ export abstract class AbstractGuildChannel extends AbstractChannel {
   public position!: number
   public overwrites!: ChannelPermissionOverwritesManager<this>
 
-  async init(data: AbstractGuildChannelData | RawAbstractGuildChannelData): Promise<this> {
-    await super.init(data)
+  async init(data: AbstractGuildChannelData | RawAbstractGuildChannelData, options?: EntityInitOptions): Promise<this> {
+    await super.init(data, options)
 
     attach(this, data, {
       props: [
@@ -44,7 +45,9 @@ export abstract class AbstractGuildChannel extends AbstractChannel {
         [ 'guildId', 'guild_id' ],
         [ 'parentId', 'parent_id' ],
         'position',
-      ]
+      ],
+      disabled: options?.ignore,
+      enabled: [ 'name', 'guildId', 'position' ]
     })
 
     // @ts-ignore

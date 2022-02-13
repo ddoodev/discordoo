@@ -23,6 +23,7 @@ import { AnyGuildChannel } from '@src/api/entities/channel/interfaces/AnyGuildCh
 import { GuildMemberResolvable } from '@src/api/entities/member/interfaces/GuildMemberResolvable'
 import { ThreadMembersManager } from '@src/api/managers/members/ThreadMembersManager'
 import { ThreadMember } from '@src/api/entities/member/ThreadMember'
+import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export abstract class AbstractThreadChannel extends AbstractChannel implements AbstractThreadChannelData, WritableChannel {
   public messages!: ChannelMessagesManager
@@ -37,8 +38,8 @@ export abstract class AbstractThreadChannel extends AbstractChannel implements A
   public rateLimitPerUser?: number
   public metadata?: ThreadMetadata
 
-  async init(data: AbstractThreadChannelData | RawAbstractThreadChannelData): Promise<this> {
-    await super.init(data)
+  async init(data: AbstractThreadChannelData | RawAbstractThreadChannelData, options?: EntityInitOptions): Promise<this> {
+    await super.init(data, options)
 
     attach(this, data, {
       props: [
@@ -50,7 +51,9 @@ export abstract class AbstractThreadChannel extends AbstractChannel implements A
         [ 'rateLimitPerUser', 'rate_limit_per_user' ],
         [ 'messageCount', 'message_count' ],
         [ 'memberCount', 'member_count' ],
-      ]
+      ],
+      disabled: options?.ignore,
+      enabled: [ 'guildId' ]
     })
 
     if (typeof this.lastPinTimestamp === 'string'!) { // discord sends timestamp in string
@@ -99,6 +102,10 @@ export abstract class AbstractThreadChannel extends AbstractChannel implements A
   set lastMsgId(id: string) {
     this.lastMessageId = id
     this.messages.lastMessageId = id
+  }
+
+  get lastPinDate(): Date | undefined {
+    return this.lastPinTimestamp ? new Date(this.lastPinTimestamp) : undefined
   }
 
   get archivedDate(): Date | undefined {

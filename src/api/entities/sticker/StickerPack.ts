@@ -7,6 +7,7 @@ import { idToDate, idToTimestamp, ImageUrlOptions, attach } from '@src/utils'
 import { RawStickerPackData } from '@src/api/entities/sticker/interfaces/RawStickerPackData'
 import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 import { Collection } from '@discordoo/collection'
+import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class StickerPack extends AbstractEntity {
   public bannerAssetId!: string
@@ -15,9 +16,21 @@ export class StickerPack extends AbstractEntity {
   public id!: string
   public name!: string
   public skuId!: string
-  public stickers!: Collection<string, Sticker>
+  public stickers: Collection<string, Sticker> = new Collection()
 
-  async init(data: StickerPackData | RawStickerPackData): Promise<this> {
+  async init(data: StickerPackData | RawStickerPackData, options?: EntityInitOptions): Promise<this> {
+
+    if (data.stickers) {
+      const stickers = new Collection<string, Sticker>()
+      const Sticker = EntitiesUtil.get('Sticker')
+
+      for await (const stickerData of data.stickers) {
+        const sticker = await new Sticker(this.client).init(stickerData)
+        stickers.set(sticker.id, sticker)
+      }
+
+      (data as any).stickers = stickers
+    }
 
     attach(this, data, {
       props: [
@@ -27,18 +40,11 @@ export class StickerPack extends AbstractEntity {
         'id',
         'name',
         [ 'skuId', 'sku_id' ],
-      ]
+        'stickers'
+      ],
+      disabled: options?.ignore,
+      enabled: [ 'id', 'bannerAssetId' ]
     })
-
-    if (data.stickers) {
-      this.stickers = new Collection<string, Sticker>()
-      const Sticker = EntitiesUtil.get('Sticker')
-
-      for await (const stickerData of data.stickers) {
-        const sticker = await new Sticker(this.client).init(stickerData)
-        this.stickers.set(sticker.id, sticker)
-      }
-    }
 
     return this
   }

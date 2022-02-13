@@ -7,6 +7,7 @@ import { ToJsonProperties } from '@src/api/entities/interfaces/ToJsonProperties'
 import { UserFlagsUtil } from '@src/api/entities/bitfield'
 import { GuildResolvable, Presence } from '@src/api'
 import { CacheManagerFilterOptions, CacheManagerGetOptions } from '@src/cache'
+import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class User extends AbstractEntity implements UserData { // TODO: implements WritableChannel
   public accentColor?: number
@@ -24,7 +25,7 @@ export class User extends AbstractEntity implements UserData { // TODO: implemen
   public username!: string
   public verified?: boolean
 
-  async init(data: UserData | RawUserData): Promise<this> {
+  async init(data: UserData | RawUserData, options?: EntityInitOptions): Promise<this> {
 
     this.id = data.id ?? this.id
 
@@ -32,7 +33,7 @@ export class User extends AbstractEntity implements UserData { // TODO: implemen
       props: [
         'avatar',
         'username',
-        [ 'discriminator', '', '0000' ],
+        [ 'discriminator', undefined, '0000' ],
         [ 'accentColor', 'accent_color' ],
         'banner',
         'email',
@@ -41,13 +42,17 @@ export class User extends AbstractEntity implements UserData { // TODO: implemen
         [ 'premiumType', 'premium_type' ],
         [ 'flags', 'public_flags' ],
         'verified'
-      ]
+      ],
+      disabled: options?.ignore,
+      enabled: [ 'discriminator' ]
     })
 
     this.bot = typeof data.bot === 'boolean' ? data.bot : this.discriminator === '0000' ? true : this.bot ?? false
     this.system = typeof data.system === 'boolean' ? data.system : this.system ?? false
 
-    this.flags = new UserFlagsUtil(this.flags)
+    if (this.flags) {
+      this.flags = new UserFlagsUtil(this.flags)
+    }
 
     return this
   }
@@ -85,7 +90,7 @@ export class User extends AbstractEntity implements UserData { // TODO: implemen
   }
 
   defaultAvatarUrl(): string {
-    return this.client.internals.rest.cdn().defaultAvatar(this.discriminator)
+    return this.client.internals.rest.cdn().defaultAvatar(this.discriminator ?? '0000')
   }
 
   displayAvatarUrl(options?: ImageUrlOptions): string {

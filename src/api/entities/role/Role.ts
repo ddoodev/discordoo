@@ -9,6 +9,7 @@ import { CacheManagerFilterOptions, CacheManagerGetOptions } from '@src/cache'
 import { Keyspaces } from '@src/constants'
 import { RoleEditData } from '@src/api/entities/role/interfaces/RoleEditData'
 import { Base64Resolvable } from '@src/utils/interfaces/Base64Resolvable'
+import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class Role extends AbstractEntity { // TODO: positions...
   public color!: number
@@ -25,7 +26,14 @@ export class Role extends AbstractEntity { // TODO: positions...
   public guildId!: string
   public deleted = false
 
-  async init(data: RawRoleData | RoleData): Promise<this> {
+  async init(data: RawRoleData | RoleData, options?: EntityInitOptions): Promise<this> {
+
+    data.permissions = new ReadonlyPermissions(data.permissions)
+
+    if (data.tags) {
+      data.tags = resolveRoleTags(data.tags)
+    }
+
     attach(this, data, {
       props: [
         'color',
@@ -38,19 +46,13 @@ export class Role extends AbstractEntity { // TODO: positions...
         [ 'rawPosition', 'position', 0 ],
         [ 'unicodeEmoji', 'unicode_emoji' ],
         [ 'guildId', 'guild_id' ],
-        'deleted'
-      ]
+        'deleted',
+        'permissions',
+        'tags'
+      ],
+      disabled: options?.ignore,
+      enabled: [ 'id', 'guildId', 'deleted', 'color', 'managed' ]
     })
-
-    if ('permissions' in data) {
-      this.permissions = new ReadonlyPermissions(data.permissions)
-    } else if (!this.permissions) {
-      this.permissions = new ReadonlyPermissions()
-    }
-
-    if (data.tags) {
-      this.tags = resolveRoleTags(data.tags)
-    }
 
     return this
   }
@@ -71,7 +73,13 @@ export class Role extends AbstractEntity { // TODO: positions...
 
   async delete(reason?: string): Promise<this | undefined> {
     const response = await this.client.roles.delete(this.guildId, this.id, reason)
-    return response ? this : undefined
+
+    if (response) {
+      this.deleted = true
+      return this
+    }
+
+    return undefined
   }
 
   edit(data: RoleEditData, reason?: string): Promise<this | undefined> {

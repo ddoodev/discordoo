@@ -34,7 +34,7 @@ export interface MessageData {
   // TODO applicationId: string
   // TODO messageReference: MessageReferenceData
   flags: BitFieldResolvable
-  referencedMessage?: MessageData
+  referencedMessageId?: string
   // TODO interaction: MessageInteractionData
   // TODO thread: ThreadChannelData
   // TODO components: MessageComponentData[]
