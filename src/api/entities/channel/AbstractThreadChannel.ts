@@ -96,6 +96,11 @@ export abstract class AbstractThreadChannel extends AbstractChannel implements A
     return this
   }
 
+  set lastMsgId(id: string) {
+    this.lastMessageId = id
+    this.messages.lastMessageId = id
+  }
+
   get archivedDate(): Date | undefined {
     return this.metadata ? new Date(this.metadata.archiveTimestamp) : undefined
   }

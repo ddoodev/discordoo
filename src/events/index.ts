@@ -4,6 +4,7 @@ export { PresenceUpdateEvent } from '@src/events/PresenceUpdateEvent'
 export { ShardConnectedEvent } from '@src/events/ShardConnectedEvent'
 export { MessageCreateEvent } from '@src/events/MessageCreateEvent'
 export { GuildCreateEvent } from '@src/events/GuildCreateEvent'
+export { AnyEventContext } from '@src/events/AnyEventContext'
 export { AbstractEvent } from '@src/events/AbstractEvent'
 export { ClientEvents } from '@src/events/ClientEvents'
 

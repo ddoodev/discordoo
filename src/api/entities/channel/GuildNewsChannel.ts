@@ -2,7 +2,7 @@ import { AbstractGuildChannel } from '@src/api/entities/channel/AbstractGuildCha
 import { ChannelTypes } from '@src/constants'
 import { ChannelResolvable } from '@src/api'
 
-export class GuildNewsChannel extends AbstractGuildChannel {
+export class GuildNewsChannel extends AbstractGuildChannel { // TODO: check if writable
   public type!: ChannelTypes.GUILD_NEWS
 
   async follow(follower: ChannelResolvable, reason?: string): Promise<this | undefined> {

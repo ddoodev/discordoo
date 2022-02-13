@@ -4,7 +4,6 @@ import { attach, idToDate, idToTimestamp } from '@src/utils'
 import { AbstractChannelData } from '@src/api/entities/channel/interfaces/AbstractChannelData'
 import { ToJsonProperties } from '@src/api/entities/interfaces/ToJsonProperties'
 import { Json } from '@src/api/entities/interfaces/Json'
-import { AnyChannel } from '@src/api'
 
 export abstract class AbstractChannel extends AbstractEntity {
   public id!: string
