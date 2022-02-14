@@ -119,10 +119,10 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     if (pointer) {
       // __ddcp option means that previous value are cache pointer. cache pointer cannot point to another cache pointer.
       if (options.__ddcp) {
-        console.log('recursive cache pointer', pointer)
+        // console.log('recursive cache pointer', pointer)
         return undefined
       }
-      console.log('get pointer', pointer)
+      // console.log('get pointer', pointer)
       return this.get(pointer[0], pointer[1], entityKey, pointer[2], { ...options, storage: pointer[1], __ddcp: true })
     }
 

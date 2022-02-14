@@ -1,4 +1,4 @@
-import { ActivityEmoji, Json, ReadonlyActivityFlagsUtil, ToJsonProperties } from '@src/api'
+import { ActivityEmoji, EntitiesUtil, Json, ReadonlyActivityFlagsUtil, ToJsonProperties } from '@src/api'
 import { PresenceActivityData } from '@src/api/entities/presence/interfaces/PresenceActivityData'
 import { PresenceActivityButtonData } from '@src/api/entities/presence/interfaces/PresenceActivityButtonData'
 import { PresenceActivityPartyData } from '@src/api/entities/presence/interfaces/PresenceActivityPartyData'
@@ -31,6 +31,7 @@ export class PresenceActivity extends AbstractEntity {
   async init(data: PresenceActivityData | RawPresenceActivityData, options?: EntityInitOptions): Promise<this> {
 
     if (data.emoji) {
+      const ActivityEmoji = EntitiesUtil.get('ActivityEmoji')
       data.emoji = await new ActivityEmoji(this.client).init(data.emoji)
     }
 
@@ -61,7 +62,8 @@ export class PresenceActivity extends AbstractEntity {
     if (data.assets) {
       // @ts-ignore
       if (!options?.ignore?.includes('assets') && !options?.ignore?.includes(IgnoreAllSymbol)) {
-        this.assets = await new PresenceActivityAssets(this.client).init({ ...data.assets, applicationId: this.applicationId })
+        const ActivityAssets = EntitiesUtil.get('PresenceActivityAssets')
+        this.assets = await new ActivityAssets(this.client).init({ ...data.assets, applicationId: this.applicationId })
       }
     }
 

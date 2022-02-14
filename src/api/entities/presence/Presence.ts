@@ -2,7 +2,7 @@ import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 import { PresenceData } from '@src/api/entities/presence/interfaces/PresenceData'
 import { PresenceStatus } from '@src/api/entities/presence/interfaces/PresenceStatus'
 import { PresenceClientStatusData } from '@src/api/entities/presence/interfaces/PresenceClientStatusData'
-import { GuildMember, Json, ToJsonProperties, User } from '@src/api'
+import { EntitiesUtil, GuildMember, Json, ToJsonProperties, User } from '@src/api'
 import { RawPresenceData } from '@src/api/entities/presence/interfaces/RawPresenceData'
 import { attach } from '@src/utils'
 import { PresenceActivity } from '@src/api/entities/presence/PresenceActivity'
@@ -19,11 +19,13 @@ export class Presence extends AbstractEntity {
 
   async init(data: PresenceData | RawPresenceData, options?: EntityInitOptions): Promise<this> {
 
+    const Activity = EntitiesUtil.get('PresenceActivity')
+
     if ('activities' in data) {
       const activities: any[] = []
 
       for await (const activity of data.activities) {
-        activities.push(await new PresenceActivity(this.client).init(activity))
+        activities.push(await new Activity(this.client).init(activity))
       }
 
       data.activities = activities
