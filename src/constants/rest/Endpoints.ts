@@ -142,8 +142,6 @@ export class Endpoints {
     =               (channelId, messageId) => [ 'channels', channelId, 'messages', messageId, 'threads' ]
   static readonly CHANNEL_THREADS
     =                          (channelId) => [ 'channels', channelId, 'threads' ]
-  static readonly CHANNEL_ACTIVE_THREADS
-    =                          (channelId) => [ 'channels', channelId, 'threads', 'active' ]
   static readonly CHANNEL_ARCHIVE_THREADS
     =                    (channelId, type) => [ 'channels', channelId, 'threads', 'archived', type ]
   static readonly CHANNEL_ARCHIVED_JOINED_THREADS

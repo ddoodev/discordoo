@@ -87,7 +87,7 @@ export class Message extends AbstractEntity {
         [ 'editedTimestamp', 'edited_timestamp' ],
       ],
       disabled: options?.ignore,
-      enabled: [ 'id', 'type', 'guildId', 'channelId', 'createdTimestamp', 'deleted', 'authorId' ]
+      enabled: [ 'id', 'type', 'guildId', 'channelId', 'createdTimestamp', 'deleted', 'authorId', 'attachments' ]
     })
 
     if (this.createdTimestamp) { // discord sends timestamps in strings

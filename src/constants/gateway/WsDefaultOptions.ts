@@ -11,7 +11,7 @@ export const WS_DEFAULT_OPTIONS: Required<Omit<GatewayOptions, 'token' | 'presen
   compress: false,
   intents: IntentsUtil.NON_PRIVILEGED.reduce((prev, curr) => prev | curr, 0),
   maxShards: Infinity,
-  version: 9,
+  version: 10,
   shards: 1,
   url: 'wss://gateway.discord.gg',
   spawnDelay: 5000,
