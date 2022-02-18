@@ -18,4 +18,6 @@ export enum IpcEvents {
   BROADCAST_EVAL = 'BROADCAST_EVAL',
   /** Rest rate limits synchronization request/response */
   REST_LIMITS_SYNC = 'REST_LIMITS_SYNC',
+  /** Update presence in specified shards */
+  PRESENCE_UPDATE = 'PRESENCE_UPDATE',
 }

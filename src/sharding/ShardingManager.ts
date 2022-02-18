@@ -13,6 +13,8 @@ import { Final } from '@src/utils/FinalDecorator'
 import { ShardingManagerInternals } from '@src/sharding/interfaces/manager/ShardingManagerInternals'
 import { CompletedLocalIpcOptions } from '@src/constants/sharding/CompletedLocalIpcOptions'
 import { LOCAL_IPC_DEFAULT_OPTIONS } from '@src/constants/sharding/IpcDefaultOptions'
+import { start } from 'repl'
+import { inspect } from 'util'
 
 const isMainProcess = process.send === undefined
 
@@ -94,24 +96,55 @@ export class ShardingManager extends TypedEmitter<ShardingManagerEvents> {
 
     let index = 0
     for await (const shards of chunks) {
-      const instance = new ShardingInstance(this, {
-        shards: shards,
-        file: this.options.file,
-        totalShards: this.internals.shards.length,
-        mode: this.mode as any,
-        internalEnv: {
-          SHARDING_MANAGER_IPC: this.internals.id,
-          SHARDING_INSTANCE_IPC: DiscordooSnowflake.generate(index, process.pid),
-          SHARDING_INSTANCE: index,
-        },
-        ipc: { config: this._makeLocalIpcOptions() }
-      })
+      let restartCount = 0
 
-      await instance.create()
-      this.instances.set(index, instance)
-      instance.shards.forEach(s => this.shards.set(s, instance))
-      await wait(1000)
+      const create = async () => {
+        const instance = new ShardingInstance(this, {
+          shards: shards,
+          file: this.options.file,
+          totalShards: this.internals.shards.length,
+          mode: this.mode as any,
+          internalEnv: {
+            SHARDING_MANAGER_IPC: this.internals.id,
+            SHARDING_INSTANCE_IPC: DiscordooSnowflake.generate(index, process.pid),
+            SHARDING_INSTANCE: index,
+          },
+          ipc: { config: this._makeLocalIpcOptions() }
+        })
 
+        try {
+          await instance.create()
+          this.instances.set(index, instance)
+          instance.shards.forEach(s => this.shards.set(s, instance))
+          await wait(1000)
+        } catch (e: any) {
+          if (restartCount === 2) {
+            throw e
+          }
+
+          // TODO: logger
+          const err = new DiscordooError(
+            'ShardingManager',
+            'Looks like sharding instance',
+            instance.id,
+            'isn\'t started correctly.',
+            '\nWe are getting error:',
+            `${e?.name ?? 'Unknown Error'}: ${e?.message ?? 'Unknown Error'}`,
+            (!e?.name && !e?.message) ? `Error body: ${inspect(e, { depth: 2 })}` : '',
+            `\nWe will try to start it again ${2 - restartCount} more time${2 - restartCount === 1 ? '' : 's'}, then you will get an error.`
+          )
+
+          restartCount++
+          console.error(err)
+
+          await instance.kill()
+            .catch(() => null)
+
+          await create()
+        }
+      }
+
+      await create()
       index++
     }
 

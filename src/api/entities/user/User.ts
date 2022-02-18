@@ -20,7 +20,7 @@ export class User extends AbstractEntity implements UserData { // TODO: implemen
   public locale?: string
   public mfaEnabled?: boolean
   public premiumType?: number
-  public flags!: UserFlagsUtil
+  public flags?: UserFlagsUtil
   public system!: boolean
   public username!: string
   public verified?: boolean
@@ -50,7 +50,7 @@ export class User extends AbstractEntity implements UserData { // TODO: implemen
     this.bot = typeof data.bot === 'boolean' ? data.bot : this.discriminator === '0000' ? true : this.bot ?? false
     this.system = typeof data.system === 'boolean' ? data.system : this.system ?? false
 
-    if (this.flags) {
+    if (this.flags !== undefined) {
       this.flags = new UserFlagsUtil(this.flags)
     }
 

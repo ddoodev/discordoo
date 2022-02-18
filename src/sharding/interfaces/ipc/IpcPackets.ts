@@ -4,7 +4,7 @@ import { CacheStorageKey } from '@discordoo/providers'
 import { EntityKey } from '@src/api/entities/interfaces'
 import { CacheOptions } from '@src/cache'
 import { RawGuildMembersFetchOptions } from '@src/api/managers/members/RawGuildMembersFetchOptions'
-import { GuildMemberData } from '@src/api'
+import { GuildMemberData, PresenceUpdateData } from '@src/api'
 import { IpcEmergencyOpCodes } from '@src/constants/sharding/IpcEmergencyOpCodes'
 
 export interface IpcHelloPacket extends IpcPacket {
@@ -148,6 +148,15 @@ export interface IpcMessagePacket extends IpcDispatchPacket {
   }
 }
 
+export interface IpcPresenceUpdatePacket extends IpcDispatchPacket {
+  t: IpcEvents.PRESENCE_UPDATE
+  d: {
+    event_id: string
+    presence: PresenceUpdateData
+    shards: number[]
+  }
+}
+
 export type IpcDispatchRequestPackets = IpcBroadcastEvalRequestPacket
   | IpcGuildMembersRequestPacket
   | IpcRestructuringRequestPacket
@@ -161,6 +170,7 @@ export type IpcDispatchPackets = IpcBroadcastMessagePacket
   | IpcDispatchRequestPackets
   | IpcDispatchResponsePackets
   | IpcDestroyingPacket
+  | IpcPresenceUpdatePacket
 
 export interface IpcCacheGetRequestPacket extends IpcPacket {
   op: IpcOpCodes.CACHE_OPERATE

@@ -3,8 +3,15 @@ import { IpcServerOptions } from '@src/sharding/interfaces/ipc/IpcServerOptions'
 import { IPC as RawIpc, server as RawIpcServer } from 'node-ipc'
 import { Collection } from '@discordoo/collection'
 import { IpcCacheOpCodes, IpcEvents, IpcOpCodes, RAW_IPC_EVENT } from '@src/constants'
-import { IpcDestroyingPacket, IpcDispatchRequestPackets, IpcMessagePacket, IpcPacket, IpcRestructuringResponsePacket } from '@src/sharding'
-import { DiscordooError, DiscordooSnowflake } from '@src/utils'
+import {
+  IpcDestroyingPacket,
+  IpcDispatchRequestPackets,
+  IpcMessagePacket,
+  IpcPacket,
+  IpcPresenceUpdatePacket,
+  IpcRestructuringResponsePacket
+} from '@src/sharding'
+import { DiscordooError, DiscordooSnowflake, makeCompletedPresence } from '@src/utils'
 import { IpcServerSendOptions } from '@src/sharding/interfaces/ipc/IpcServerSendOptions'
 import {
   IpcCacheRequestPacket,
@@ -23,6 +30,7 @@ import { fromJson, toJson } from '@src/utils/toJson'
 import { evalWithoutScopeChain } from '@src/utils/evalWithoutScopeChain'
 import { serializeError } from 'serialize-error'
 import { IpcEmergencyOpCodes } from '@src/constants/sharding/IpcEmergencyOpCodes'
+import { GatewayOpCodes } from '@discordoo/providers'
 
 export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
   private readonly bucket: Collection = new Collection()
@@ -154,7 +162,7 @@ export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
     }
   }
 
-  private async dispatch(packet: IpcDispatchRequestPackets | IpcDestroyingPacket | IpcMessagePacket) {
+  private async dispatch(packet: IpcDispatchRequestPackets | IpcDestroyingPacket | IpcMessagePacket | IpcPresenceUpdatePacket) {
     switch (packet.t) {
       case IpcEvents.DESTROYING: {
         this.client.emit('exiting', {
@@ -253,6 +261,19 @@ export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
           message: packet.d.message,
           from: packet.d.from,
         })
+      } break
+
+      case IpcEvents.PRESENCE_UPDATE: {
+        const presence = await makeCompletedPresence(packet.d.presence, this.client)
+
+        if (this.client.options.gateway?.presence) {
+          this.client.options.gateway.presence = presence
+          this.client.internals.gateway.options.presence = presence
+        }
+
+        this.client.internals.gateway.send({
+          op: GatewayOpCodes.STATUS_UPDATE, d: presence
+        }, { shards: packet.d.shards })
       } break
     }
   }

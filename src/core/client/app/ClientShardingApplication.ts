@@ -2,6 +2,7 @@ import { Client } from '@src/core'
 import { BroadcastEvalOptions } from '@src/sharding/interfaces/ipc/BroadcastEvalOptions'
 import { BroadcastOptions } from '@src/sharding/interfaces/ipc/BroadcastOptions'
 import { CompletedLocalIpcOptions } from '@src/constants/sharding/CompletedLocalIpcOptions'
+import { BroadcastEvalContext, ShardingManager } from '@src/sharding'
 
 /** Sharding application that contains useful info/methods */
 export interface ClientShardingApplication {
@@ -31,7 +32,7 @@ export interface ClientShardingApplication {
   send(message: string, options?: BroadcastOptions): unknown
 
   /**
-   * Eval script in specified/all sharding instances.
+   * Eval script in specified/all sharding instances or sharding manager.
    *
    * Make sure that you are not accessing the external environment inside the script.
    * You are forwarding code from one process to another,
@@ -102,8 +103,11 @@ export interface ClientShardingApplication {
    * `, { context: { targetShard: 32 } })
    * ```
    * */
-  eval<R = any, C = Record<any, any>>(
-    script: string | ((context: C & { client: Client }) => any),
+  eval<R = any, C extends Record<string, any> = Record<string, any>>(
+    script: string |
+      ((
+        context: BroadcastEvalContext<C>
+      ) => any),
     options?: BroadcastEvalOptions
   ): Promise<R[]>
 

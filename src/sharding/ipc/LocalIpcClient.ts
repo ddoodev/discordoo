@@ -1,8 +1,8 @@
 import { TypedEmitter } from 'tiny-typed-emitter'
 import { IPC as RawIpc } from 'node-ipc'
-import { IpcClientOptions, IpcClientSendOptions, IpcPacket, ShardingInstance } from '@src/sharding'
+import { IpcClientOptions, IpcClientSendOptions, IpcPacket, IpcPresenceUpdatePacket, ShardingInstance } from '@src/sharding'
 import { Collection } from '@discordoo/collection'
-import { IpcConnectionState, IpcEvents, IpcOpCodes, RAW_IPC_EVENT, SerializeModes } from '@src/constants'
+import { IpcConnectionState, IpcEvents, IpcOpCodes, RAW_IPC_EVENT, SerializeModes, SHARDING_MANAGER_ID } from '@src/constants'
 import { DiscordooError, DiscordooSnowflake } from '@src/utils'
 import {
   IpcBroadcastEvalRequestPacket,
@@ -19,6 +19,9 @@ import {
 import { IpcClientEvents } from '@src/sharding/interfaces/ipc/IpcClientEvents'
 import { filterAndMap } from '@src/utils/filterAndMap'
 import { IpcEmergencyOpCodes } from '@src/constants/sharding/IpcEmergencyOpCodes'
+import { deserializeError, serializeError } from 'serialize-error'
+import { evalWithoutScopeChain } from '@src/utils/evalWithoutScopeChain'
+import { fromJson, toJson } from '@src/utils/toJson'
 
 export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
   private bucket: Collection = new Collection()
@@ -67,10 +70,9 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
         this.bucket.delete(this.INSTANCE_IPC)
         const err = new DiscordooError(
           'LocalIpcClient#connect',
-          'the connection timed out.',
-          'the connection had to handle shards:', this.shards.join(', ') + '.',
-          'inter-process communication shard identifier:', this.INSTANCE_IPC + '.',
-          'ipc shard id contains:', DiscordooSnowflake.deconstruct(this.INSTANCE_IPC)
+          'Cannot connect to the sharding instance process. Response timed out.',
+          'The connection had to handle shards:', this.shards.join(', ') + '.',
+          'IPC shard id:', this.INSTANCE_IPC + '.'
         )
         this.state = IpcConnectionState.DISCONNECTED
         promise.rej(err)
@@ -102,6 +104,11 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
       if (promise) {
         this.bucket.delete(packet.d.event_id)
         clearTimeout(promise.timeout)
+
+        if (packet.op === IpcOpCodes.ERROR && packet.d.event_id === this.INSTANCE_IPC) {
+          return promise.rej(deserializeError(packet.d.error))
+        }
+
         return packet.op === IpcOpCodes.ERROR ? promise.rej(packet) : promise.res(packet)
       }
     }
@@ -160,11 +167,30 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
           id = packet.d.event_id
 
         const promises: Array<undefined | Promise<any>> = shards.map(s => {
-          const shard = this.instance.manager.instances.get(s)
+          if (s === SHARDING_MANAGER_ID) {
+            const context = {
+              ...fromJson((packet as IpcBroadcastEvalRequestPacket).d.context),
+              client: this.instance.manager
+            }
 
-          if (shard) packet.d.event_id = this.generate()
+            return evalWithoutScopeChain(context, (packet as IpcBroadcastEvalRequestPacket).d.script)
+              .then(r => {
+                return {
+                  op: IpcOpCodes.DISPATCH,
+                  t: IpcEvents.BROADCAST_EVAL,
+                  d: {
+                    event_id: id,
+                    result: toJson(r),
+                  }
+                }
+              })
+          } else {
+            const shard = this.instance.manager.instances.get(s)
 
-          return shard?.ipc.send(packet, { waitResponse: true })
+            if (shard) packet.d.event_id = this.generate()
+
+            return shard?.ipc.send(packet, { waitResponse: true })
+          }
         })
 
         await Promise.all(promises)
@@ -183,8 +209,25 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
             this.send(response)
           })
           .catch(e => {
-            e.d.event_id = id
-            this.send(e)
+
+            let response: any
+
+            if (e?.d?.event_id) {
+              response = e
+              console.log('RESP', response)
+            } else {
+              response = {
+                op: IpcOpCodes.ERROR,
+                t: IpcEvents.BROADCAST_EVAL,
+                d: {
+                  result: serializeError(e)
+                }
+              }
+            }
+
+            response.d.event_id = id
+
+            this.send(response)
           })
       } break
 
@@ -244,6 +287,41 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
             })
           }
         }
+      } break
+
+      case IpcEvents.PRESENCE_UPDATE: {
+        const instances: [ ShardingInstance, number[] ][] = []
+
+        packet.d.shards.forEach(s => {
+          const instance = this.instance.manager.shards.get(s)
+
+          if (instance) {
+            const index = instances.findIndex(g => g[0].id === instance?.id)
+            const group: [ ShardingInstance, number[] ] = index > -1 ? instances[index] : [ instance, [ s ] ]
+
+            if (index > -1) {
+              group[1].push(s)
+              instances[index] = group
+            } else {
+              instances.push(group)
+            }
+          }
+        })
+
+        instances.forEach(([ instance, shards ]) => {
+          const data: IpcPresenceUpdatePacket = {
+            op: IpcOpCodes.DISPATCH,
+            t: IpcEvents.PRESENCE_UPDATE,
+            d: {
+              event_id: this.generate(),
+              shards,
+              presence: packet.d.presence
+            }
+          }
+
+          instance.ipc.send(data)
+        })
+
       } break
     }
   }
@@ -336,7 +414,7 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
       }
     }
 
-    this.send(data, { connection: connection })
+    this.send(data, { connection })
   }
 
   private sendHeartbeat() {

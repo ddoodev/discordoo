@@ -11,5 +11,6 @@ export { IpcServerSendOptions } from '@src/sharding/interfaces/ipc/IpcServerSend
 export { IpcServerTlsOptions } from '@src/sharding/interfaces/ipc/IpcServerTlsOptions'
 export { IpcTlsOptions } from '@src/sharding/interfaces/ipc/IpcTlsOptions'
 export { RawIpcConfig } from '@src/sharding/interfaces/ipc/RawIpcConfig'
+export { BroadcastEvalContext } from '@src/sharding/interfaces/ipc/BroadcastEvalContext'
 
 export * from './IpcPackets'

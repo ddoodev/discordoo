@@ -16,7 +16,8 @@ export class ShardConnectedEvent extends AbstractEvent {
         client.internals.queues.ready.delete(shard)
         client.emit(EventNames.SHARD_CONNECTED, {
           id: shard,
-          unavailable: queue.guilds?.map(g => ({ id: g, unavailable: true })) ?? []
+          unavailable: queue.guilds?.map(g => ({ id: g, unavailable: true })) ?? [],
+          user: data.user
         })
         client._increaseConnected()
       }
@@ -38,7 +39,8 @@ export class ShardConnectedEvent extends AbstractEvent {
         client.internals.queues.ready.delete(context.shardId)
         client.emit(EventNames.SHARD_CONNECTED, {
           id: context.shardId,
-          unavailable: []
+          unavailable: [],
+          user: context.user,
         })
         client._increaseConnected()
       }
@@ -49,12 +51,14 @@ export class ShardConnectedEvent extends AbstractEvent {
         shardId,
         guilds: data.guilds.map(g => g.id),
         handler,
-        timeout
+        timeout,
+        user: data.user,
       })
     } else {
       this.client.emit(EventNames.SHARD_CONNECTED, {
         id: shardId,
-        unavailable: []
+        unavailable: [],
+        user: data.user
       })
       this.client._increaseConnected()
     }

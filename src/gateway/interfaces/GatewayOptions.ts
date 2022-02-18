@@ -1,4 +1,6 @@
 import { ShardListResolvable } from '@src/utils'
+import { GatewayIntentsResolvable } from '@src/gateway/interfaces/GatewayIntentsResolvable'
+import { PresenceUpdateData } from '@src/api'
 
 export interface GatewayOptions {
 
@@ -31,14 +33,14 @@ export interface GatewayOptions {
    *
    * @see https://discord.com/developers/docs/topics/gateway#update-status
    * */
-  presence?: any // TODO
+  presence?: PresenceUpdateData
   /**
    * The Gateway Intents you wish to receive
    *
    * @see https://discord.com/developers/docs/topics/gateway#gateway-intents
    * @default 32509, all intents expect privileged
    * */
-  intents: number
+  intents?: GatewayIntentsResolvable
 
   /**
    * If number is provided - WS will create X shards from 0 to X - 1 (3 = 0, 1, 2).

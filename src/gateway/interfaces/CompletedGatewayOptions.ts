@@ -1,3 +1,5 @@
+import { PresenceUpdateData } from '@src/api'
+
 export interface CompletedGatewayOptions {
   totalShards: number
   shards: number[]
@@ -10,5 +12,5 @@ export interface CompletedGatewayOptions {
   intents: number
   version: number
   properties: any // TODO
-  presence?: any // TODO
+  presence: Required<PresenceUpdateData>
 }

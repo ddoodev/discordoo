@@ -1,3 +1,4 @@
+export { makeCompletedPresence } from '@src/utils/makeCompletedPresence'
 export { DiscordooSnowflake } from '@src/utils/DiscordooSnowflake'
 export { DiscordSnowflake } from '@src/utils/DiscordSnowflake'
 export { ValidationError } from '@src/utils/ValidationError'

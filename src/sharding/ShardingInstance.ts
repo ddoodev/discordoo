@@ -4,16 +4,16 @@ import { CLUSTERS_SHARDING_UNSUPPORTED_PLATFORMS, IpcConnectionState, IpcEvents,
 import { ShardingManager } from '@src/sharding/ShardingManager'
 import { LocalIpcClient } from '@src/sharding/ipc/LocalIpcClient'
 import { TypedEmitter } from 'tiny-typed-emitter'
-import { DiscordooError, resolveDiscordooShards, resolveDiscordShards, ValidationError, wait } from '@src/utils'
+import { DiscordooError, DiscordooSnowflake, resolveDiscordooShards, resolveDiscordShards, ValidationError, wait } from '@src/utils'
 import Process, { ChildProcess } from 'child_process'
 import { Worker } from 'worker_threads'
 import Cluster from 'cluster'
 import os from 'os'
 import { deserializeError, serializeError } from 'serialize-error'
 import {
+  BroadcastEvalContext,
   BroadcastEvalOptions,
-  IpcBroadcastEvalRequestPacket,
-  IpcBroadcastEvalResponsePacket,
+  IpcBroadcastEvalRequestPacket, IpcMessagePacket,
   IpcRestructuringRequestPacket,
   ShardingInstanceRestructureOptions
 } from '@src/sharding/interfaces'
@@ -71,9 +71,8 @@ export class ShardingInstance extends TypedEmitter {
         event_id: this.ipc.generate()
       }
     }, { waitResponse: true, responseTimeout: 500 })
-      .catch(e => {
+      .catch(() => {
         this.ipc.disconnect()
-        if (e?.d?.result) throw deserializeError(e.d.result)
 
         switch (this.mode) {
           case PartialShardingModes.CLUSTERS:
@@ -96,12 +95,32 @@ export class ShardingInstance extends TypedEmitter {
     return this
   }
 
+  message(msg: string): this {
+    if (!is<string>(msg)) {
+      throw new ValidationError('ShardingInstance', 'Cannot send anything expect string as messages.')
+    }
+
+    const request: IpcMessagePacket = {
+      op: IpcOpCodes.DISPATCH,
+      t: IpcEvents.MESSAGE,
+      d: {
+        event_id: this.ipc.generate(),
+        message: msg,
+        from: DiscordooSnowflake.SHARDING_MANAGER_ID
+      }
+    }
+
+    void this.ipc.send(request)
+    return this
+  }
+
   async recreate(options?: ShardingInstanceCreateOptions): Promise<this> {
     if (this.#running) await this.kill()
 
     return this.create(options)
   }
-
+  /*
+  TODO: move to ShardingManager.restructure
   async restructure(options: ShardingInstanceRestructureOptions): Promise<this> {
     if (!is<ShardingInstanceRestructureOptions>(options)) {
       throw new ValidationError(
@@ -125,7 +144,7 @@ export class ShardingInstance extends TypedEmitter {
     // TODO: should be in LocalIpcClient
     await this.ipc.send(request, { responseTimeout: shards.length * 30000, waitResponse: true })
       .catch(e => {
-        throw e?.d?.result ? serializeError(e.d.result) : e
+        throw e?.d?.result ? deserializeError(e.d.result) : e
       })
 
     this.options.shards = shards
@@ -134,10 +153,13 @@ export class ShardingInstance extends TypedEmitter {
 
     return this
   }
+   */
 
-  async eval<R = any, C = Record<any, any>>(
-    // TODO: context cannot redefine 'client' property type
-    script: string | ((context: C & { client: Client }) => any),
+  /**
+   * Eval script inside this sharding instance.
+   * */
+  async eval<R = any, C extends Record<string, any> = Record<string, any>>(
+    script: string | ((context: BroadcastEvalContext<C>) => any),
     options?: BroadcastEvalOptions
   ): Promise<R[]> {
     const context = {
@@ -187,6 +209,7 @@ export class ShardingInstance extends TypedEmitter {
 
   async create(options: ShardingInstanceCreateOptions = {}): Promise<this> {
     if (this.#running) throw new DiscordooError('ShardingInstance#create', 'Sharding instance', this.id, 'already running.')
+    this.#running = true
     // TODO: timeout does not affect
     if (!options.timeout) options.timeout = this.options.shards.length * 30000
 
@@ -234,7 +257,6 @@ export class ShardingInstance extends TypedEmitter {
 
     await wait(3000) // wait before start sending IpcHello, because instance requires some time to start
     await this.ipc.connect()
-    this.#running = true
     return this
   }
 

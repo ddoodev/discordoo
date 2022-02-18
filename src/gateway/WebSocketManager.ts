@@ -1,9 +1,10 @@
 import { Collection } from '@discordoo/collection'
 import { WebSocketClient } from '@src/gateway/WebSocketClient'
-import { WebSocketClientEvents, WebSocketClientStates, WebSocketManagerStates } from '@src/constants'
+import { WebSocketClientEvents, WebSocketClientStates, WebSocketCloseCodes, WebSocketManagerStates } from '@src/constants'
 import { DiscordooError } from '@src/utils'
 import { GatewayProvider, GatewayShardsInfo } from '@discordoo/providers'
 import { CompletedGatewayOptions } from '@src/gateway/interfaces/CompletedGatewayOptions'
+import { inspect } from 'util'
 
 export class WebSocketManager {
   public readonly options: CompletedGatewayOptions
@@ -54,8 +55,6 @@ export class WebSocketManager {
       + this.options.version + '&encoding=' + this.options.encoding
       + (this.options.compress ? '&compress=zlib-stream' : '')
 
-    // console.log('URL', this.options.url)
-
     return this.createShards()
   }
 
@@ -100,14 +99,44 @@ export class WebSocketManager {
     }
 
     try {
-      // console.log('shard', shard.id, 'connecting')
       await shard.connect()
-        .catch(e => {
-          if (e && !(e instanceof DiscordooError)) shard.emit(WebSocketClientEvents.RECONNECT_ME)
-          // console.error(e)
-        })
-    } catch (e) {
-      // console.error(e)
+    } catch (e: any) {
+      if (e && e.code) {
+        switch (e.code) {
+          case WebSocketCloseCodes.DISALLOWED_INTENTS:
+          case WebSocketCloseCodes.INVALID_INTENTS:
+          case WebSocketCloseCodes.INVALID_API_VERSION:
+          case WebSocketCloseCodes.INVALID_SHARD:
+          case WebSocketCloseCodes.AUTHENTICATION_FAILED:
+          case WebSocketCloseCodes.SHARDING_REQUIRED:
+            throw new DiscordooError(
+              'WebSocketManager',
+              'Shard', shard.id,
+              'will not be connected because it received close code',
+              e.code, 'with reason',
+              e.reason ?? 'Unknown error'
+            )
+
+          case 1000:
+          case WebSocketCloseCodes.ALREADY_AUTHENTICATED:
+          case WebSocketCloseCodes.INVALID_SEQUENCE:
+            // TODO: debug...
+            shard.destroy({ reconnect: false })
+            shard.emit(WebSocketClientEvents.RECONNECT_ME, true)
+            break
+
+          default:
+            // TODO: debug...
+            shard.emit(WebSocketClientEvents.RECONNECT_ME)
+        }
+      } else {
+        throw new DiscordooError(
+          'WebSocketManager',
+          'Shard', shard.id, 'cannot connect to the gateway.',
+          `Error name: ${e?.name ?? 'Unknown'}; Error message: ${e?.message ?? 'Unknown Error'};`,
+          (!e?.name && !e?.message) ? `Error body: ${inspect(e, { depth: 2 })}` : ''
+        )
+      }
     }
 
     this.shards.set(shard.id, shard)

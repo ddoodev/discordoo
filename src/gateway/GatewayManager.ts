@@ -1,7 +1,7 @@
 import { GatewayBotInfo, GatewayProvider, GatewaySendOptions, GatewaySendPayloadLike, GatewayShardsInfo } from '@discordoo/providers'
 import { GatewayManagerData } from '@src/gateway/interfaces'
 import { Client, ProviderConstructor } from '@src/core'
-import { DiscordooError, wait } from '@src/utils'
+import { DiscordooError, ValidationError, wait } from '@src/utils'
 import { Endpoints } from '@src/constants'
 import { CompletedGatewayOptions } from '@src/gateway/interfaces/CompletedGatewayOptions'
 
@@ -15,8 +15,6 @@ export class GatewayManager<P extends GatewayProvider = GatewayProvider> {
     this.provider = new Provider(this.client, data.gatewayOptions, data.providerOptions)
     this.options = data.gatewayOptions
   }
-
-  // TODO: resolvable shards
 
   connect(shards?: GatewayShardsInfo) {
     return this.provider.connect(shards)
@@ -49,8 +47,15 @@ export class GatewayManager<P extends GatewayProvider = GatewayProvider> {
       .url(Endpoints.GATEWAY_BOT())
       .get<GatewayBotInfo>()
 
-    if (response.success) return response.result
-    else throw new DiscordooError('GatewayManager', 'Get gateway request ended with error:', response.result)
+    if (response.success) {
+      return response.result
+    } else {
+      if (response.statusCode === 401) {
+        throw new ValidationError('GatewayManager', 'Invalid token provided')
+      } else {
+        throw new DiscordooError('GatewayManager', 'Get gateway request ended with error:', response.result)
+      }
+    }
   }
 
   send(data: GatewaySendPayloadLike, options?: GatewaySendOptions): unknown {

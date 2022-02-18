@@ -52,7 +52,7 @@ export function packet(client: WebSocketClient, packet: WebSocketPacket) {
       client.emit(WebSocketClientEvents.INVALID_SESSION)
       // console.log('SHARD', client.id, 'INVALID SESSION')
 
-      client.destroy({ code: 1000, reconnect: true })
+      // client.destroy({ code: 1000, reconnect: true })
       // console.log('shard', client.id, 'INVALID SESSION')
 
       break

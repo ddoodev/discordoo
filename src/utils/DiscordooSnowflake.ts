@@ -3,6 +3,7 @@ import { DiscordooError } from '@src/utils/DiscordooError'
 import { DISCORDOO_EPOCH } from '@src/constants/common'
 import { is } from 'typescript-is'
 import { ValidationError } from '@src/utils/ValidationError'
+import { SHARDING_MANAGER_ID } from '@src/constants'
 
 const EPOCH = DISCORDOO_EPOCH
 let INCREMENT = 0
@@ -12,7 +13,7 @@ let INCREMENT = 0
  * */
 export class DiscordooSnowflake {
   // used to identify sharding managers in snowflakes
-  public static readonly SHARDING_MANAGER_ID = 1_111_111_111
+  public static readonly SHARDING_MANAGER_ID = SHARDING_MANAGER_ID
 
   /**
    * Custom twitter snowflake: DiscordooSnowflake.

@@ -3,6 +3,7 @@ export { WebSocketManagerStates } from '@src/constants/gateway/WebSocketManagerS
 export { WebSocketClientEvents } from '@src/constants/gateway/WebSocketClientEvents'
 export { WebSocketClientStates } from '@src/constants/gateway/WebSocketClientStates'
 export { WebSocketShardStatus } from '@src/constants/gateway/WebSocketShardStatus'
+export { WebSocketCloseCodes } from '@src/constants/gateway/WebSocketCloseCodes'
 export { WS_DEFAULT_OPTIONS } from '@src/constants/gateway/WsDefaultOptions'
 export { WebSocketEvents } from '@src/constants/gateway/WebSocketEvents'
 export { WebSocketStates } from '@src/constants/gateway/WebSocketStates'

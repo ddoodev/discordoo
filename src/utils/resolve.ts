@@ -2,7 +2,7 @@ import { MessageAttachmentResolvable } from '@src/api/entities/attachment/interf
 import { RawAttachment } from '@discordoo/providers'
 import { MessageAttachment } from '@src/api/entities/attachment/MessageAttachment'
 import { ColorResolvable } from '@src/api/entities/interfaces/ColorResolvable'
-import { EmptyBigBit, EmptyBit, PermissionFlags, RawColors } from '@src/constants'
+import { EmptyBigBit, EmptyBit, GatewayIntents, PermissionFlags, RawColors } from '@src/constants'
 import { DiscordooError } from '@src/utils/DiscordooError'
 import { is } from 'typescript-is'
 import { ValidationError } from '@src/utils/ValidationError'
@@ -33,6 +33,7 @@ import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 import { MessageReferenceResolvable } from '@src/api/entities/message/interfaces/MessageReferenceResolvable'
 import { RawMessageReferenceData } from '@src/api/entities/message/interfaces/RawMessageReferenceData'
 import { ThreadMemberResolvable } from '@src/api/entities/member/interfaces/ThreadMemberResolvable'
+import { GatewayIntentsResolvable } from '@src/gateway/interfaces/GatewayIntentsResolvable'
 
 export function resolveFiles(resolvable: MessageAttachmentResolvable[]): Promise<RawAttachment[]> {
   return Promise.all(resolvable.map(resolveFile))
@@ -192,6 +193,16 @@ export function resolveRoleTags(resolvable: RoleTagsResolvable): RoleTagsData {
     premiumSubscriber:
       'premium_subscriber' in resolvable ? true : 'premiumSubscriber' in resolvable ? resolvable.premiumSubscriber : false
   }
+}
+
+export function resolveGatewayIntents(resolvable: GatewayIntentsResolvable | undefined): number {
+  if (typeof resolvable === 'undefined') {
+    throw new ValidationError(undefined, 'Incorrect gateway intents specified:', resolvable)
+  }
+
+  return Array.isArray(resolvable)
+    ? resolvable.reduce((prev, curr) => prev | curr, 0)
+    : resolvable
 }
 
 function resolveAnythingToId(resolvable: any): string | undefined  {

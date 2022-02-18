@@ -19,7 +19,7 @@ export interface BroadcastEvalOptions extends BroadcastOptions {
    *
    * // This is incorrect
    * const targetShard = 32
-   * client.sharding.eval({ client } => {
+   * client.sharding.eval(({ client }) => {
    *   if (client.sharding.shards.includes(targetShard)) { // ReferenceError: targetShard is not defined
    *     return 'We found it!'
    *   } else {
@@ -43,5 +43,5 @@ export interface BroadcastEvalOptions extends BroadcastOptions {
    * `, { context: { targetShard: 32 } })
    * ```
    * */
-  context?: Record<any, any>
+  context?: Record<string, any>
 }

@@ -96,8 +96,8 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
 
       const ready   = () => { cleanup(); resolve() },
             resumed = () => { cleanup(); resolve() },
-            invalid = () => { cleanup(); reject() },
-            closed  = () => { cleanup(); reject() }
+            invalid = (e: WebSocket.CloseEvent) => { cleanup(); reject({ code: e.code, reason: 'Invalid session' }) },
+            closed  = (e: WebSocket.CloseEvent) => { cleanup(); reject({ code: e.code, reason: e.reason }) }
 
       /**
        * when we call WebSocketClient#connect, it returns a promise.
@@ -112,7 +112,6 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
         direction.call(client, WebSocketClientEvents.READY, ready)
         direction.call(client, WebSocketClientEvents.RESUMED, resumed)
         direction.call(client, WebSocketClientEvents.INVALID_SESSION, invalid)
-        direction.call(client, WebSocketClientEvents.DESTROYED, invalid)
       }
 
       cleanupOrListen(this, true)

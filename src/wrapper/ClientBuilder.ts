@@ -11,7 +11,7 @@ export class ClientBuilder<Stack extends DefaultClientStack = DefaultClientStack
   private readonly customClient: any
 
   constructor(token: string, options?: CreateAppOptions) {
-    if (!is<string>(token)) throw new ValidationError('ClientBuilder', 'invalid token provided:', token)
+    if (!is<string>(token)) throw new ValidationError('ClientBuilder', 'Invalid token provided:', token)
 
     this.token = token
 

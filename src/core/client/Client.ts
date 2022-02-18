@@ -2,6 +2,7 @@
 import {
   DiscordooProviders,
   EventNames,
+  GatewayIntents,
   GlobalCachingPolicy,
   IpcEvents,
   IpcOpCodes,
@@ -11,11 +12,13 @@ import {
 } from '@src/constants'
 import {
   DiscordooError,
-  DiscordooSnowflake,
+  DiscordooSnowflake, DiscordSnowflake,
   ReplaceType,
   resolveDiscordooShards,
   resolveDiscordShards,
-  ShardListResolvable, ValidationError,
+  resolveGatewayIntents,
+  ShardListResolvable,
+  ValidationError,
   version
 } from '@src/utils'
 import { CompletedLocalIpcOptions } from '@src/constants/sharding/CompletedLocalIpcOptions'
@@ -53,7 +56,7 @@ import {
 import { UsersManager } from '@src/api/managers/UsersManager'
 import { ClientRolesManager } from '@src/api/managers/roles'
 import { GatewayManager } from '@src/gateway/GatewayManager'
-import { GatewaySendOptions, GatewaySendPayloadLike, GatewayShardsInfo } from '@discordoo/providers'
+import { GatewaySendPayloadLike, GatewayShardsInfo } from '@discordoo/providers'
 import { LocalIpcServer } from '@src/sharding/ipc/LocalIpcServer'
 import { CacheManager } from '@src/cache/CacheManager'
 import { RestManager } from '@src/rest/RestManager'
@@ -84,10 +87,12 @@ import {
   IpcBroadcastEvalResponsePacket,
   IpcBroadcastMessagePacket
 } from '@src/sharding/interfaces/ipc/IpcPackets'
-import { deserializeError } from 'serialize-error'
+import { deserializeError, serializeError } from 'serialize-error'
 import { is } from 'typescript-is'
 import { ClientGatewayApplication } from '@src/core'
 import { GatewayAppSendOptions } from '@src/core/client/app/GatewayAppSendOptions'
+import { inspect } from 'util'
+import { ClientUser } from '@src/api/entities/user/ClientUser'
 
 /** Entry point for **all** of Discordoo. */
 @Final(
@@ -158,7 +163,15 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
   #running = false
   #shardsConnected = 0
 
+  /** When client fully connected to discord */
   public readyDate?: Date
+
+  /**
+   * This client as discord user.
+   *
+   * **DATA FOR THIS CLASS IS RECEIVED DURING EXECUTION OF client.start()**. UNTIL THEN, ALL PROPERTIES WILL BE DEFAULT.
+   * */
+  public user: ClientUser
 
   constructor(token: string, options: ClientOptions = {}) {
     super()
@@ -303,6 +316,12 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
     this.roles = new ClientRolesManager(this)
     this.guilds = new GuildsManager(this)
     this.users = new UsersManager(this)
+    this.user = new ClientUser(this)
+
+    void this.user.init({
+      id: DiscordSnowflake.generate(),
+      username: 'Unknown bot'
+    })
   }
 
   async start(): Promise<Client<ClientStack>> {
@@ -328,27 +347,31 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
     await this.internals.cache.init()
     await this.internals.rest.init()
 
-    await this.internals.gateway.connect(options)
-      .then(async () => {
-        if (this.internals.sharding.active) await this.internals.ipc.send({
-          op: IpcOpCodes.DISPATCH,
-          t: IpcEvents.CONNECTED,
-          d: {
-            event_id: this.internals.sharding.INSTANCE_IPC,
-          }
-        })
-      })
-      .catch(async e => {
-        if (this.internals.sharding.active) await this.internals.ipc.send({
-          op: IpcOpCodes.ERROR,
-          d: {
-            event_id: this.internals.sharding.INSTANCE_IPC,
-            error: e // TODO: serialize error
-          }
-        })
+    this.once('shardConnected', ctx => {
+      this.user.init(ctx.user)
+    })
 
-        throw e
+    try {
+      await this.internals.gateway.connect(options)
+    } catch (e) {
+      if (this.internals.sharding.active) await this.internals.ipc.send({
+        op: IpcOpCodes.ERROR,
+        d: {
+          event_id: this.internals.sharding.INSTANCE_IPC,
+          error: serializeError(e ?? new DiscordooError('GatewayManager', 'Unknown Error:', inspect(e)))
+        }
       })
+
+      throw e
+    }
+
+    if (this.internals.sharding.active) await this.internals.ipc.send({
+      op: IpcOpCodes.DISPATCH,
+      t: IpcEvents.CONNECTED,
+      d: {
+        event_id: this.internals.sharding.INSTANCE_IPC,
+      }
+    })
 
     return new Promise(resolve => {
       const interval: NodeJS.Timeout = setInterval(() => {
@@ -490,7 +513,8 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
         {},
         WS_DEFAULT_OPTIONS,
         { token: this.token },
-        this.options.gateway
+        this.options.gateway,
+        { intents: resolveGatewayIntents(this.options.gateway?.intents ?? WS_DEFAULT_OPTIONS.intents) }
       )
 
     const shards = resolveDiscordShards(options.shards)
