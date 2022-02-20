@@ -33,8 +33,8 @@ export class InteractionResolvedCacheManager extends EntitiesManager {
         if (allowed.includes(key)) {
           return predicate(value, key, prov)
         } else {
-          if (isMap) return false
-          else return ProxyFilterPointerSymbol
+          if (isMap) return ProxyFilterPointerSymbol
+          else return false
         }
       }
     }
@@ -45,6 +45,12 @@ export class InteractionResolvedCacheManager extends EntitiesManager {
         this[name] = new Proxy<EntitiesCacheManager<any>>(
           this.client[name].cache, makeProxyHandler([], storage, name)
         )
+      }
+    }
+
+    const allow = (key: string, name: string) => {
+      if (this._data[name]?.length) {
+        this._data[name].push(key)
       }
     }
 
@@ -77,10 +83,20 @@ export class InteractionResolvedCacheManager extends EntitiesManager {
                   return allowed.includes(args[0]) ? target.delete(args[0], { ...args[1], storage }) : undefined
                 case 'set':
                   return target.set(args[0], args[1], { ...args[2], storage })
+                    .then(() => {
+                      allow(args[0], name); return target
+                    })
                 case 'size':
                   return target.count(makePredicate(allowed, () => true), { ...args[0], storage })
                 case 'clear':
                   return clear(storage, name)
+                case 'keys':
+                  return allowed
+                case 'entries':
+                  return target.entries({ ...args[0], storage })
+                    .then(r => r.filter(k => allowed.includes(k[0])))
+                case 'values':
+                  return Promise.all(allowed.map(k => target.get(k, { ...args[0], storage })))
               }
             }
           } else {

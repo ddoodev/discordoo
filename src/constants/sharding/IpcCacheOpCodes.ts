@@ -12,4 +12,7 @@ export enum IpcCacheOpCodes {
   CLEAR,
   COUNT,
   COUNTS,
+  KEYS,
+  VALUES,
+  ENTRIES,
 }

@@ -15,6 +15,8 @@ import { filterAndMap } from '@src/utils/filterAndMap'
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class GuildEmoji extends AbstractEmoji implements AbstractGuildEmoji {
+  public id!: string
+  public name!: string
   public available!: boolean
   public guildId!: string
   public managed!: boolean
@@ -39,7 +41,7 @@ export class GuildEmoji extends AbstractEmoji implements AbstractGuildEmoji {
         [ 'userId', 'user_id' ],
       ],
       disabled: options?.ignore,
-      enabled: [ 'managed', 'guildId' ]
+      enabled: [ 'managed', 'guildId', 'available' ]
     })
 
     if (data.roles) {
@@ -121,6 +123,15 @@ export class GuildEmoji extends AbstractEmoji implements AbstractGuildEmoji {
     const response = await this.client.internals.actions.deleteGuildEmoji(this.guildId, this.id, reason)
 
     return response.success ? this : undefined
+  }
+
+  equals(
+    emoji: GuildEmoji | RawGuildEmojiData
+  ): boolean {
+    return !!(this.name === emoji.name
+      && this.available === emoji.available
+      && this.roles?.every(r => emoji.roles?.indexOf(r) || -1 > -1)
+      && emoji.roles?.every(r => this.roles?.indexOf(r) || -1 > -1))
   }
 
   toJson(properties: ToJsonProperties, obj?: any): Json {

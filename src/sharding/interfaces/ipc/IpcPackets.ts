@@ -177,7 +177,7 @@ export interface IpcCacheGetRequestPacket extends IpcPacket {
   d: {
     event_id: string
     op: IpcCacheOpCodes.GET
-    serialize?: SerializeModes.ANY
+    serialize: SerializeModes.ANY
     shards: number[]
     key: any
     keyspace: string
@@ -200,7 +200,7 @@ export interface IpcCacheSetRequestPacket extends IpcPacket {
   d: {
     event_id: string
     op: IpcCacheOpCodes.SET
-    serialize?: SerializeModes.BOOLEAN
+    serialize: SerializeModes.BOOLEAN
     shards: number[]
     key: any
     keyspace: string
@@ -225,7 +225,7 @@ export interface IpcCacheDeleteRequestPacket extends IpcPacket {
   d: {
     event_id: string
     op: IpcCacheOpCodes.DELETE
-    serialize?: SerializeModes.BOOLEAN
+    serialize: SerializeModes.BOOLEAN
     shards: number[]
     key: any
     keyspace: string
@@ -269,7 +269,7 @@ export interface IpcCacheSizeRequestPacket extends IpcPacket {
   d: {
     event_id: string
     op: IpcCacheOpCodes.SIZE
-    serialize?: SerializeModes.NUMBER
+    serialize: SerializeModes.NUMBER
     shards: number[]
     keyspace: string
     storage: CacheStorageKey
@@ -290,7 +290,7 @@ export interface IpcCacheHasRequestPacket extends IpcPacket {
   d: {
     event_id: string
     op: IpcCacheOpCodes.HAS
-    serialize?: SerializeModes.BOOLEAN
+    serialize: SerializeModes.BOOLEAN
     shards: number[]
     keyspace: string
     storage: CacheStorageKey
@@ -334,7 +334,7 @@ export interface IpcCacheFilterRequestPacket extends IpcPacket {
   d: {
     event_id: string
     op: IpcCacheOpCodes.FILTER
-    serialize?: SerializeModes.ARRAY
+    serialize: SerializeModes.ARRAY
     shards: number[]
     keyspace: string
     storage: CacheStorageKey
@@ -357,7 +357,7 @@ export interface IpcCacheMapRequestPacket extends IpcPacket {
   d: {
     event_id: string
     op: IpcCacheOpCodes.MAP
-    serialize?: SerializeModes.ARRAY
+    serialize: SerializeModes.ARRAY
     shards: number[]
     keyspace: string
     storage: CacheStorageKey
@@ -380,7 +380,7 @@ export interface IpcCacheFindRequestPacket extends IpcPacket {
   d: {
     event_id: string
     op: IpcCacheOpCodes.FIND
-    serialize?: SerializeModes.ANY
+    serialize: SerializeModes.ANY
     shards: number[]
     keyspace: string
     storage: CacheStorageKey
@@ -403,7 +403,7 @@ export interface IpcCacheClearRequestPacket extends IpcPacket {
   d: {
     event_id: string
     op: IpcCacheOpCodes.CLEAR
-    serialize?: SerializeModes.BOOLEAN
+    serialize: SerializeModes.BOOLEAN
     shards: number[]
     keyspace: string
     storage: CacheStorageKey
@@ -424,7 +424,7 @@ export interface IpcCacheCountRequestPacket extends IpcPacket {
   d: {
     event_id: string
     op: IpcCacheOpCodes.COUNT
-    serialize?: SerializeModes.NUMBER
+    serialize: SerializeModes.NUMBER
     shards: number[]
     keyspace: string
     storage: CacheStorageKey
@@ -447,7 +447,7 @@ export interface IpcCacheCountsRequestPacket extends IpcPacket {
   d: {
     event_id: string
     op: IpcCacheOpCodes.COUNTS
-    serialize?: SerializeModes.NUMBERS_ARRAY
+    serialize: SerializeModes.NUMBERS_ARRAY
     shards: number[]
     keyspace: string
     storage: CacheStorageKey
@@ -465,6 +465,72 @@ export interface IpcCacheCountsResponsePacket extends IpcPacket {
   }
 }
 
+export interface IpcCacheKeysRequestPacket extends IpcPacket {
+  op: IpcOpCodes.CACHE_OPERATE
+  d: {
+    event_id: string
+    op: IpcCacheOpCodes.KEYS
+    serialize: SerializeModes.ARRAY
+    shards: number[]
+    keyspace: string
+    storage: CacheStorageKey
+    entity_key: EntityKey
+  }
+}
+
+export interface IpcCacheKeysResponsePacket extends IpcPacket {
+  op: IpcOpCodes.CACHE_OPERATE
+  d: {
+    event_id: string
+    success: boolean
+    result: any[]
+  }
+}
+
+export interface IpcCacheValuesRequestPacket extends IpcPacket {
+  op: IpcOpCodes.CACHE_OPERATE
+  d: {
+    event_id: string
+    op: IpcCacheOpCodes.VALUES
+    serialize: SerializeModes.ARRAY
+    shards: number[]
+    keyspace: string
+    storage: CacheStorageKey
+    entity_key: EntityKey
+  }
+}
+
+export interface IpcCacheValuesResponsePacket extends IpcPacket {
+  op: IpcOpCodes.CACHE_OPERATE
+  d: {
+    event_id: string
+    success: boolean
+    result: any[]
+  }
+}
+
+export interface IpcCacheEntriesRequestPacket extends IpcPacket {
+  op: IpcOpCodes.CACHE_OPERATE
+  d: {
+    event_id: string
+    op: IpcCacheOpCodes.ENTRIES
+    serialize: SerializeModes.ARRAY
+    shards: number[]
+    keyspace: string
+    storage: CacheStorageKey
+    entity_key: EntityKey
+  }
+}
+
+export interface IpcCacheEntriesResponsePacket extends IpcPacket {
+  op: IpcOpCodes.CACHE_OPERATE
+  d: {
+    event_id: string
+    success: boolean
+    result: any[]
+  }
+}
+
 export type IpcCacheRequestPacket = IpcCacheGetRequestPacket
   | IpcCacheSetRequestPacket
   | IpcCacheDeleteRequestPacket
@@ -478,6 +544,9 @@ export type IpcCacheRequestPacket = IpcCacheGetRequestPacket
   | IpcCacheClearRequestPacket
   | IpcCacheCountRequestPacket
   | IpcCacheCountsRequestPacket
+  | IpcCacheKeysRequestPacket
+  | IpcCacheValuesRequestPacket
+  | IpcCacheEntriesRequestPacket
 
 export type IpcCacheResponsePacket = IpcCacheGetResponsePacket
   | IpcCacheSetResponsePacket
@@ -492,3 +561,6 @@ export type IpcCacheResponsePacket = IpcCacheGetResponsePacket
   | IpcCacheClearResponsePacket
   | IpcCacheCountResponsePacket
   | IpcCacheCountsResponsePacket
+  | IpcCacheKeysResponsePacket
+  | IpcCacheValuesResponsePacket
+  | IpcCacheEntriesResponsePacket

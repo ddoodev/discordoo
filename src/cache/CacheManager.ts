@@ -1,7 +1,7 @@
 import { CachingPoliciesProcessor } from '@src/cache/CachingPoliciesProcessor'
 import { IpcCacheOpCodes, IpcOpCodes, SerializeModes } from '@src/constants'
 import { CacheProvider, CacheStorageKey } from '@discordoo/providers'
-import { DiscordooError, resolveDiscordooShards } from '@src/utils'
+import { DiscordooError, resolveDiscordooShards, WebSocketUtils } from '@src/utils'
 import { Client, ProviderConstructor } from '@src/core'
 import { EntityKey } from '@src/api/entities'
 import {
@@ -12,7 +12,7 @@ import {
   IpcCacheCountsRequestPacket,
   IpcCacheCountsResponsePacket,
   IpcCacheDeleteRequestPacket,
-  IpcCacheDeleteResponsePacket,
+  IpcCacheDeleteResponsePacket, IpcCacheEntriesRequestPacket, IpcCacheEntriesResponsePacket,
   IpcCacheFilterRequestPacket,
   IpcCacheFilterResponsePacket,
   IpcCacheFindRequestPacket,
@@ -22,7 +22,7 @@ import {
   IpcCacheGetRequestPacket,
   IpcCacheGetResponsePacket,
   IpcCacheHasRequestPacket,
-  IpcCacheHasResponsePacket,
+  IpcCacheHasResponsePacket, IpcCacheKeysRequestPacket, IpcCacheKeysResponsePacket,
   IpcCacheMapRequestPacket,
   IpcCacheMapResponsePacket,
   IpcCacheSetRequestPacket,
@@ -30,9 +30,10 @@ import {
   IpcCacheSizeRequestPacket,
   IpcCacheSizeResponsePacket,
   IpcCacheSweepRequestPacket,
-  IpcCacheSweepResponsePacket
+  IpcCacheSweepResponsePacket, IpcCacheValuesRequestPacket, IpcCacheValuesResponsePacket
 } from '@src/sharding/interfaces/ipc/IpcPackets'
 import {
+  cacheProviderKeysPolyfill,
   cacheProviderClearPolyfill,
   cacheProviderCountPolyfill,
   cacheProviderCountsPolyfill,
@@ -41,23 +42,23 @@ import {
   cacheProviderHasPolyfill,
   cacheProviderMapPolyfill,
   cacheProviderSizePolyfill,
-  cacheProviderSweepPolyfill,
+  cacheProviderSweepPolyfill, cacheProviderValuesPolyfill, cacheProviderEntriesPolyfill,
 } from '@src/cache/polyfills'
 import {
   CacheManagerClearOptions,
   CacheManagerCountOptions,
   CacheManagerCountsOptions,
   CacheManagerData,
-  CacheManagerDeleteOptions,
+  CacheManagerDeleteOptions, CacheManagerEntriesOptions,
   CacheManagerFilterOptions,
   CacheManagerFindOptions,
   CacheManagerForEachOptions,
   CacheManagerGetOptions,
-  CacheManagerHasOptions,
+  CacheManagerHasOptions, CacheManagerKeysOptions,
   CacheManagerMapOptions,
   CacheManagerSetOptions,
   CacheManagerSizeOptions,
-  CacheManagerSweepOptions,
+  CacheManagerSweepOptions, CacheManagerValuesOptions,
   CacheOptions,
   CachePointer,
 } from '@src/cache/interfaces'
@@ -690,6 +691,120 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     }
 
     return results
+  }
+
+  async keys<K = string>(
+    keyspace: string,
+    storage: CacheStorageKey,
+    entityKey: EntityKey,
+    options: CacheManagerKeysOptions = {}
+  ): Promise<K[]> {
+    if (this.isShardedRequest(options)) {
+      const shards = resolveDiscordooShards(this.client, options.shard!)
+
+      const request: IpcCacheKeysRequestPacket = {
+        op: IpcOpCodes.CACHE_OPERATE,
+        d: {
+          op: IpcCacheOpCodes.KEYS,
+          event_id: this.client.internals.ipc.generate(),
+          keyspace,
+          storage: options?.storage ?? storage,
+          shards,
+          serialize: SerializeModes.ARRAY,
+          entity_key: entityKey,
+        }
+      }
+
+      const { d: response } =
+        await this.client.internals.ipc.send<IpcCacheKeysResponsePacket>(request, { waitResponse: true })
+
+      return response.result
+
+    } else {
+
+      if (this.provider.keys) {
+        return this.provider.keys(keyspace, options?.storage ?? storage)
+      } else {
+        return cacheProviderKeysPolyfill<K, P>(this.provider, keyspace, options?.storage ?? storage)
+      }
+
+    }
+  }
+
+  async values<V = any>(
+    keyspace: string,
+    storage: CacheStorageKey,
+    entityKey: EntityKey,
+    options: CacheManagerValuesOptions = {}
+  ): Promise<V[]> {
+    if (this.isShardedRequest(options)) {
+      const shards = resolveDiscordooShards(this.client, options.shard!)
+
+      const request: IpcCacheValuesRequestPacket = {
+        op: IpcOpCodes.CACHE_OPERATE,
+        d: {
+          op: IpcCacheOpCodes.VALUES,
+          event_id: this.client.internals.ipc.generate(),
+          keyspace,
+          storage: options?.storage ?? storage,
+          shards,
+          serialize: SerializeModes.ARRAY,
+          entity_key: entityKey,
+        }
+      }
+
+      const { d: response } =
+        await this.client.internals.ipc.send<IpcCacheValuesResponsePacket>(request, { waitResponse: true })
+
+      return response.result
+
+    } else {
+
+      if (this.provider.values) {
+        return this.provider.values(keyspace, options?.storage ?? storage)
+      } else {
+        return cacheProviderValuesPolyfill<V, P>(this.provider, keyspace, options?.storage ?? storage)
+      }
+
+    }
+  }
+
+  async entries<K = string, V = any>(
+    keyspace: string,
+    storage: CacheStorageKey,
+    entityKey: EntityKey,
+    options: CacheManagerEntriesOptions = {}
+  ): Promise<Array<[ K, V ]>> {
+    if (this.isShardedRequest(options)) {
+      const shards = resolveDiscordooShards(this.client, options.shard!)
+
+      const request: IpcCacheEntriesRequestPacket = {
+        op: IpcOpCodes.CACHE_OPERATE,
+        d: {
+          op: IpcCacheOpCodes.ENTRIES,
+          event_id: this.client.internals.ipc.generate(),
+          keyspace,
+          storage: options?.storage ?? storage,
+          shards,
+          serialize: SerializeModes.ARRAY,
+          entity_key: entityKey,
+        }
+      }
+
+      const { d: response } =
+        await this.client.internals.ipc.send<IpcCacheEntriesResponsePacket>(request, { waitResponse: true })
+
+      return response.result
+
+    } else {
+
+      if (this.provider.entries) {
+        return this.provider.entries(keyspace, options?.storage ?? storage)
+      } else {
+        return cacheProviderEntriesPolyfill<K, V, P>(this.provider, keyspace, options?.storage ?? storage)
+      }
+
+    }
   }
 
   get [Symbol.for('_ddooPoliciesProcessor')](): CachingPoliciesProcessor { // for internal use by a library outside of this class

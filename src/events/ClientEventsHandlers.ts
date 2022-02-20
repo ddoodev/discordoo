@@ -14,6 +14,8 @@ import { ThreadListSyncEventContext } from '@src/events/thread/ctx/ThreadListSyn
 import { IpcMessageEventContext } from '@src/events/ctx/IpcMessageEventContext'
 import { ExitingEventContext } from '@src/events/interfaces/ExitingEventContext'
 import { RestructuringEventContext } from '@src/events/interfaces/RestructuringEventContext'
+import { ThreadMembersUpdateEventContext, ThreadMemberUpdateEventContext } from '@src/events/thread'
+import { GuildEmojisUpdatedEventContext } from '@src/events/emoji/ctx/GuildEmojisUpdatedEventContext'
 
 /** Client events */
 export interface ClientEventsHandlers {
@@ -58,10 +60,10 @@ export interface ClientEventsHandlers {
   threadListSync: (context: ThreadListSyncEventContext) => any
 
   /** Thread member for the client was updated */
-  // threadMemberUpdate: (context: ChannelCreateEventContext) => any
+  threadMemberUpdate: (context: ThreadMemberUpdateEventContext) => any
 
   /** Some user(s) were added to or removed from a thread */
- //  threadMembersUpdate: (context: ChannelCreateEventContext) => any
+  threadMembersUpdate: (context: ThreadMembersUpdateEventContext) => any
 
   /** Client joined a new guild */
   // guildCreate: (context: ChannelCreateEventContext) => any
@@ -79,7 +81,7 @@ export interface ClientEventsHandlers {
   // guildBanRemove: (context: ChannelCreateEventContext) => any
 
   /** Guild emojis were updated */
-  // guildEmojisUpdate: (context: ChannelCreateEventContext) => any
+  guildEmojisUpdate: (context: GuildEmojisUpdatedEventContext) => any
 
   /** Guild stickers were updated */
   // guildStickersUpdate: (context: ChannelCreateEventContext) => any

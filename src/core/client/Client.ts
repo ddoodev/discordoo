@@ -50,7 +50,7 @@ import {
   MessageCreateEvent,
   ThreadCreateEvent,
   ThreadDeleteEvent,
-  ThreadListSyncEvent,
+  ThreadListSyncEvent, ThreadMembersUpdateEvent, ThreadMemberUpdateEvent,
   ThreadUpdateEvent
 } from '@src/events'
 import { UsersManager } from '@src/api/managers/UsersManager'
@@ -93,6 +93,7 @@ import { ClientGatewayApplication } from '@src/core'
 import { GatewayAppSendOptions } from '@src/core/client/app/GatewayAppSendOptions'
 import { inspect } from 'util'
 import { ClientUser } from '@src/api/entities/user/ClientUser'
+import { GuildEmojisUpdatedEvent } from '@src/events/emoji/GuildEmojisUpdatedEvent'
 
 /** Entry point for **all** of Discordoo. */
 @Final(
@@ -300,7 +301,8 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
       MessageCreateEvent, GuildCreateEvent, PresenceUpdateEvent, ShardConnectedEvent,
       ChannelCreateEvent, ChannelUpdateEvent, ChannelDeleteEvent, ChannelPinsUpdateEvent,
       ThreadCreateEvent, ThreadUpdateEvent, ThreadDeleteEvent, ThreadListSyncEvent,
-      GuildMembersChunkEvent,
+      GuildMembersChunkEvent, ThreadMemberUpdateEvent, ThreadMembersUpdateEvent,
+      GuildEmojisUpdatedEvent,
     ]) // TODO
 
     this.overwrites = new ClientPermissionOverwritesManager(this)

@@ -8,4 +8,7 @@ export { cacheProviderClearPolyfill } from '@src/cache/polyfills/cacheProviderCl
 export { cacheProviderCountsPolyfill } from '@src/cache/polyfills/cacheProviderCountsPolyfill'
 
 // breaks the pyramid
+export { cacheProviderEntriesPolyfill } from '@src/cache/polyfills/cacheProviderEntriesPolyfill'
+export { cacheProviderValuesPolyfill } from '@src/cache/polyfills/cacheProviderValuesPolyfill'
 export { cacheProviderCountPolyfill } from '@src/cache/polyfills/cacheProviderCountPolyfill'
+export { cacheProviderKeysPolyfill } from '@src/cache/polyfills/cacheProviderKeysPolyfill'

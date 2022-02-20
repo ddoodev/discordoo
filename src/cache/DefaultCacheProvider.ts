@@ -143,4 +143,61 @@ export class DefaultCacheProvider implements CacheProvider {
     }
   }
 
+  async keys<K = string>(keyspace: string, storage: CacheStorageKey): Promise<K[]> {
+    const space = this.keyspaces.get(keyspace)
+
+    if (!space) return []
+
+    if (storage === 'global') {
+      return space.reduce<any[]>((accumulator, value) => {
+        accumulator.push(...Array.from(value.keys()))
+        return accumulator
+      }, [])
+    } else {
+      const store = space.get(storage)
+
+      if (!store) return []
+
+      return Array.from(store.keys())
+    }
+  }
+
+  async values<V = any>(keyspace: string, storage: CacheStorageKey): Promise<V[]> {
+    const space = this.keyspaces.get(keyspace)
+
+    if (!space) return []
+
+    if (storage === 'global') {
+      return space.reduce<any[]>((accumulator, value) => {
+        accumulator.push(...Array.from(value.values()))
+        return accumulator
+      }, [])
+    } else {
+      const store = space.get(storage)
+
+      if (!store) return []
+
+      return Array.from(store.values())
+    }
+  }
+
+  async entries<K = string, V = any>(keyspace: string, storage: CacheStorageKey): Promise<Array<[ K, V ]>> {
+    const space = this.keyspaces.get(keyspace)
+
+    if (!space) return []
+
+    if (storage === 'global') {
+      return space.reduce<any[]>((accumulator, value) => {
+        accumulator.push(...Array.from(value.entries()))
+        return accumulator
+      }, [])
+    } else {
+      const store = space.get(storage)
+
+      if (!store) return []
+
+      return Array.from(store.entries())
+    }
+  }
+
 }

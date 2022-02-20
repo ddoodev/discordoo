@@ -1,3 +1,5 @@
+export { ThreadMembersUpdateEventContext } from '@src/events/thread/ctx/ThreadMembersUpdateEventContext'
+export { ThreadMemberUpdateEventContext } from '@src/events/thread/ctx/ThreadMemberUpdateEventContext'
 export { ThreadListSyncEventContext } from '@src/events/thread/ctx/ThreadListSyncEventContext'
 export { ThreadUpdateEventContext } from '@src/events/thread/ctx/ThreadUpdateEventContext'
 export { ThreadDeleteEventContext } from '@src/events/thread/ctx/ThreadDeleteEventContext'

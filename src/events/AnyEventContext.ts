@@ -20,8 +20,11 @@ import {
   ThreadCreateEventContext,
   ThreadDeleteEventContext,
   ThreadListSyncEventContext,
-  ThreadUpdateEventContext
+  ThreadUpdateEventContext,
+  ThreadMemberUpdateEventContext,
+  ThreadMembersUpdateEventContext
 } from '@src/events/thread'
+import { GuildEmojisUpdatedEventContext } from '@src/events/emoji'
 
 export type AnyEventContext = 
   ChannelCreateEventContext |
@@ -39,4 +42,7 @@ export type AnyEventContext =
   ThreadCreateEventContext |
   ThreadDeleteEventContext |
   ThreadListSyncEventContext |
-  ThreadUpdateEventContext
+  ThreadUpdateEventContext |
+  ThreadMemberUpdateEventContext |
+  ThreadMembersUpdateEventContext |
+  GuildEmojisUpdatedEventContext

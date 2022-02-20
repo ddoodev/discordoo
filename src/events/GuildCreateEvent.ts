@@ -2,6 +2,7 @@ import { AbstractEvent } from '@src/events/AbstractEvent'
 import { EventNames, Keyspaces, otherCacheSymbol } from '@src/constants'
 import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 import { channelEntityKey } from '@src/utils'
+import { GuildEmoji } from '@src/api'
 
 export class GuildCreateEvent extends AbstractEvent {
   public name = EventNames.GUILD_CREATE
@@ -47,6 +48,19 @@ export class GuildCreateEvent extends AbstractEvent {
       }
 
       await this.client.presences.cache.set(cache.userId, cache, { storage: guild.id })
+    }
+
+    for await (const emojiData of guild.emojis) {
+      let cache = await this.client.emojis.cache.get<GuildEmoji>(emojiData.id, { storage: guild.id })
+
+      if (cache) {
+        cache = await cache.init(emojiData)
+      } else {
+        const Emoji = EntitiesUtil.get('GuildEmoji')
+        cache = await new Emoji(this.client).init({ ...emojiData, guild_id: guild.id })
+      }
+
+      await this.client.emojis.cache.set(cache.id, cache, { storage: guild.id })
     }
 
     await this.client[otherCacheSymbol].set(guild.id, { id: guild.owner_id }, { storage: 'guild-owners' })
