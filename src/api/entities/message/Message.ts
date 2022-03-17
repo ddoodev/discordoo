@@ -90,11 +90,11 @@ export class Message extends AbstractEntity {
       enabled: [ 'id', 'type', 'guildId', 'channelId', 'createdTimestamp', 'deleted', 'authorId', 'attachments' ]
     })
 
-    if (this.createdTimestamp) { // discord sends timestamps in strings
+    if (typeof this.createdTimestamp === 'string'!) { // discord sends timestamps in strings
       this.createdTimestamp = new Date(this.createdTimestamp).getTime()
     }
 
-    if (this.editedTimestamp) { // discord sends timestamps in strings
+    if (this.editedTimestamp && typeof this.editedTimestamp === 'string'!) { // discord sends timestamps in strings
       this.editedTimestamp = new Date(this.editedTimestamp).getTime()
     }
 
