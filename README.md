@@ -34,6 +34,7 @@
 
 ## WARNING
 **THIS LIBRARY IS UNDER DEVELOPMENT!** Parts of the stuff described here is not done yet, and we are just planning to implement it.
+You can find out more information about the development in our [Discord](https://ddoo.dev/).
 
 ## About
 [Discordoo](https://ddoo.dev/) is a [Discord API](https://discord.com/developers/docs/intro) library interface. 
