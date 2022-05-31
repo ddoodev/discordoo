@@ -15,6 +15,9 @@ export interface ClientGatewayApplication {
   /** Average delay to Discord gateway, calculated from the delay of all the shards that are in this application. */
   ping: number
 
+  /** Gateway shard ids that served by this client */
+  shards: number[]
+
   /** If you want to know the gateway delay of shards individually, use this method. */
   latency(shards: ShardListResolvable): Array<[ number, number ]>
 
@@ -23,4 +26,6 @@ export interface ClientGatewayApplication {
 
   /** Send some packet to the gateway. Use the options to specify which shards to send this packet on. */
   send(data: GatewaySendPayloadLike, options?: GatewayAppSendOptions): unknown
+
+  FREE_VARIABLE: boolean
 }

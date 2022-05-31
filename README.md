@@ -9,19 +9,19 @@
     <span> · </span>
     <a href="https://ddoo.dev/">Docs & Guide</a>
     <span> · </span>
-    <a href="https://github.com/Discordoo/discordoo/blob/develop/CONTRIBUTING.md">Contribute</a>
+    <a href="https://github.com/ddoodev/discordoo/blob/develop/CONTRIBUTING.md">Contribute</a>
   </b>
 </p>
 
 <p align="center">
-  <a href="https://github.com/Discordoo/discordoo/actions">
-    <img src="https://github.com/Discordoo/discordoo/workflows/Tests/badge.svg" alt="Testing status" />
+  <a href="https://github.com/ddoodev/discordoo/actions">
+    <img src="https://github.com/ddoodev/discordoo/workflows/Tests/badge.svg" alt="Testing status" />
   </a>
-  <a href="https://github.com/Discordoo/discordoo/actions">
-    <img src="https://github.com/Discordoo/discordoo/workflows/Lint/badge.svg" alt="Linting status" />
+  <a href="https://github.com/ddoodev/discordoo/actions">
+    <img src="https://github.com/ddoodev/discordoo/workflows/Lint/badge.svg" alt="Linting status" />
   </a>
-  <a href="https://github.com/Discordoo/discordoo/actions">
-    <img src="https://github.com/Discordoo/discordoo/workflows/Build/badge.svg" alt="Build status" />
+  <a href="https://github.com/ddoodev/discordoo/actions">
+    <img src="https://github.com/ddoodev/discordoo/workflows/Build/badge.svg" alt="Build status" />
   </a>
   <a href="https://ddoo.dev/discord">
     <img 
@@ -54,42 +54,54 @@ It's simple, with Discordoo you can do it using less than 100 lines of code with
 1. **You need to connect a gateway provider** that sends events to some messages broker on servers that should receive messages from gateway, and also connect the same gateway provider on servers that should receive messages (executable part). (such a provider should be written by someone else, or you should write it by yourself)
 2. **Then you need to connect the cache provider**, which stores the cache in some scalable cache storage, such as redis. (such a provider should be written by someone else, or you should write it by yourself)
 3. **Then you need to configure the sharding** so that the machines or node.js instances that have the same IP address 
-were connected through our inter-machines sharding managers. (inter-machines sharding manager will be introduced in version 1.2, but you can ignore this point if you have one node.js instance each for one IP address.)
+were connected through our inter-machines sharding managers. (inter-machines sharding manager will be introduced in version 1.0, but you can ignore this point if you have one node.js instance each for one IP address.)
 4. **That is all.** Imagine, in order to expand infinitely and have almost zero downtime, you need to rewrite a hundred lines of code, 80 of which are just configs.
 
 #### Or if you just want to distribute the bot to multiple hosting servers:
 Just use inter-machines sharding manager:
 
-**THIS WILL BE INTRODUCED IN VERSION 1.2 AND THE API MAY CHANGE.**
+**THIS WILL BE INTRODUCED IN VERSION 1.0 AND THE API MAY CHANGE.**
 ```ts
-import { MachinesShardingManager, ShardingModes } from 'discordoo'
+// index.ts on 10.0.21.3 (this functional planned in 1.0)
+import { MachinesShardingManager, ShardingModes, MachinesShardingManagerTypes } from 'discordoo'
 
 const manager = new MachinesShardingManager({
-  points: [
-    {
-      port: 8379,
-      host: '10.0.21.3',
-      options: {
-        shards: { from: 0, to: 127 },
-        mode: ShardingModes.PROCESSES,
-        shardsPerInstance: 4,
-      }
-    }
-  ]
+  type: MachinesShardingManagerTypes.INFERIOR,
+  file: './dist/bot.js',
+  listen: {
+    host: '0.0.0.0',
+    port: 8379,
+    user: 'root',
+    password: 'hf4reg74c3g',
+    path: 'server'
+  },
+  tls: {
+    cert: './fullchain.pem',
+    key: './privkey.pem'
+  }
 })
 
 manager.start()
 ```
 ```ts
-import { MachinesShardingManager } from 'discordoo'
+// index.ts on 10.0.21.0
+import { MachinesShardingManager, ShardingModes } from 'discordoo'
 
 const manager = new MachinesShardingManager({
-  file: './dist/bot.js',
-  networkHost: '10.0.21.3',
-  networkPort: 8379,
-  tls: {
-    cert: './client.pub'
-  }
+  type: MachinesShardingManagerTypes.SUPERIOR,
+  points: [
+    {
+      destination: 'ddoo+quic://root:hf4reg74c3g@10.0.21.3:8379/server?o=235',
+      options: {
+        shards: { from: 0, to: 127 },
+        mode: ShardingModes.PROCESSES,
+        shardsPerInstance: 4,
+      },
+      tls: {
+        cert: './10.0.21.3-fullchain.pem',
+      }
+    }
+  ]
 })
 
 manager.start()
@@ -213,7 +225,7 @@ Node.js v12.18 or newer required.
 ## Benchmarks
 While the library is under development, only Discordoo Collection Benchmarks are available.
 ### Discord.js collection VS Discordoo collection
-You can find these benchmarks [here](https://github.com/Discordoo/collection#djs-collection-vs-ddoo-collection-speed-tests).
+You can find these benchmarks [here](https://github.com/ddoodev/collection#djs-collection-vs-ddoo-collection-speed-tests).
 
 ## Planned features
 * **Waifoo** — a framework for creating discord bots based on Discordoo (commands, other features).
@@ -337,4 +349,4 @@ SID - still in development
 
 ## Contributing
 Feel free to create a PR, but check if there is an existing one.
-See [Contributing Guide](https://github.com/Discordoo/discordoo/blob/develop/CONTRIBUTING.md).
+See [Contributing Guide](https://github.com/ddoodev/discordoo/blob/develop/CONTRIBUTING.md).

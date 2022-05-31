@@ -479,6 +479,8 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
       options: this.internals.gateway.options,
       client: this,
       ping: this.internals.gateway.ping(),
+      shards: this.internals.sharding.shards,
+      FREE_VARIABLE: Math.random() * 10 > 5,
 
       latency(shards: ShardListResolvable): Array<[ number, number ]> {
         return this.client.internals.gateway.ping(resolveDiscordShards(shards))

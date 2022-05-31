@@ -13,7 +13,6 @@ import {
   IpcEmergencyGrlHitPacket,
   IpcEmergencyRestBlockPacket,
   IpcGuildMembersRequestPacket,
-  IpcHeartbeatPacket,
   IpcHelloPacket
 } from '@src/sharding/interfaces/ipc/IpcPackets'
 import { IpcClientEvents } from '@src/sharding/interfaces/ipc/IpcClientEvents'
@@ -23,6 +22,8 @@ import { deserializeError, serializeError } from 'serialize-error'
 import { evalWithoutScopeChain } from '@src/utils/evalWithoutScopeChain'
 import { fromJson, toJson } from '@src/utils/toJson'
 
+
+// SHITCODE
 export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
   private bucket: Collection = new Collection()
   private shardSocket: any
@@ -417,17 +418,18 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
     this.send(data, { connection })
   }
 
-  private sendHeartbeat() {
-    const data: IpcHeartbeatPacket = {
-      op: IpcOpCodes.HEARTBEAT,
-      d: {
-        id: this.MANAGER_IPC,
-        event_id: this.generate()
-      }
-    }
-
-    this.send(data)
-  }
+  // won't be used until best times
+  // private sendHeartbeat() {
+  //   const data: IpcHeartbeatPacket = {
+  //     op: IpcOpCodes.HEARTBEAT,
+  //     d: {
+  //       id: this.MANAGER_IPC,
+  //       event_id: this.generate()
+  //     }
+  //   }
+  //
+  //   this.send(data)
+  // }
 
   public send(data: IpcPacket, options: IpcClientSendOptions = {}) {
     if (typeof options !== 'object') throw new DiscordooError('LocalIpcClient#send', 'options must be object type only')

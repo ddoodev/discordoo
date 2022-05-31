@@ -3,7 +3,7 @@ import { version } from '@src/utils/version'
 
 export const REST_DEFAULT_OPTIONS: Required<Omit<RestOptions, 'auth'>> = {
   version: 10,
-  userAgent: `DiscordBot (https://github.com/Discordoo/discordoo, ${version}) NodeJS/${process.version}`,
+  userAgent: `DiscordBot (https://github.com/ddoodev/discordoo, ${version}) NodeJS/${process.version}`,
   maxRetries: 1,
   requestTimeout: 30_000,
   latencyThreshold: 30_000,

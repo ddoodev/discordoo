@@ -24,6 +24,7 @@
     "isolatedModules": false,
     "skipLibCheck": true,
     "baseUrl": ".",
+    "allowSyntheticDefaultImports": true,
     "paths": {
       "@src/*": [ "src/*" ]
     },

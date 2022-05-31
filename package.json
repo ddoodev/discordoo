@@ -24,17 +24,18 @@
     "email": "dev@ddoo.dev"
   },
   "contributors": [
-    "All the amazing people from https://github.com/Discordoo/discordoo/graphs/contributors"
+    "All the amazing people from https://github.com/ddoodev/discordoo/graphs/contributors"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Discordoo/discordoo.git"
+    "url": "git+https://github.com/ddoodev/discordoo.git"
   },
   "homepage": "https://ddoo.dev/",
   "license": "MIT",
   "devDependencies": {
     "@commitlint/cli": "12.1.4",
     "@commitlint/config-conventional": "12.0.1",
+    "@discordoo/providers": "^0.10.0",
     "@discordoo/tapok": "2.0.24",
     "@types/jest": "26.0.24",
     "@types/node": "12.12.70",
@@ -55,7 +56,6 @@
   },
   "dependencies": {
     "@discordoo/collection": "^1.0.15",
-    "@discordoo/providers": "0.9.11",
     "node-ipc": "9.1.4",
     "reflect-metadata": "0.1.13",
     "serialize-error": "8.1.0",

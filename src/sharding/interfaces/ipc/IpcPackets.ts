@@ -26,14 +26,6 @@ export interface IpcIdentifyPacket extends IpcPacket {
   }
 }
 
-export interface IpcHeartbeatPacket extends IpcPacket {
-  op: IpcOpCodes.HEARTBEAT
-  d: {
-    id: string
-    event_id: string
-  }
-}
-
 export interface IpcEmergencyPacket extends IpcPacket {
   op: IpcOpCodes.EMERGENCY
   d: {
