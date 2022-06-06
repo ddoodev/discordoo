@@ -152,7 +152,7 @@ export class GuildMember extends AbstractEntity {
   }
 
   avatarUrl(options?: ImageUrlOptions): string | undefined {
-    return this.avatar ? this.client.internals.rest.cdn().guildMemberAvatar(this.guildId, this.userId, this.avatar, options) : undefined
+    return this.avatar ? this.client.internals.rest.cdn.guildMemberAvatar(this.guildId, this.userId, this.avatar, options) : undefined
   }
 
   edit(data: GuildMemberEditData, reason?: string): Promise<this | undefined> {

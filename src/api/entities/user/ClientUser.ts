@@ -1,5 +1,5 @@
 import { User } from '@src/api/entities/user/User'
-import { Presence, PresenceUpdateData, PresenceUpdateOptions } from '@src/api/entities/presence'
+import { PresenceUpdateData, PresenceUpdateOptions } from '@src/api/entities/presence'
 import { is } from 'typescript-is'
 import { makeCompletedPresence, resolveDiscordShards, ValidationError } from '@src/utils'
 import { GatewayOpCodes } from '@discordoo/providers'

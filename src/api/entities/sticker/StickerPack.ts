@@ -62,7 +62,7 @@ export class StickerPack extends AbstractEntity {
   }
 
   bannerUrl(options?: ImageUrlOptions): string {
-    return this.client.internals.rest.cdn().stickerPackBanner(this.bannerAssetId, options)
+    return this.client.internals.rest.cdn.stickerPackBanner(this.bannerAssetId, options)
   }
 
   toJson(properties: ToJsonProperties = {}, obj?: any): Json {

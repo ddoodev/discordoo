@@ -2,7 +2,6 @@
 import {
   DiscordooProviders,
   EventNames,
-  GatewayIntents,
   GlobalCachingPolicy,
   IpcEvents,
   IpcOpCodes,
@@ -12,7 +11,7 @@ import {
 } from '@src/constants'
 import {
   DiscordooError,
-  DiscordooSnowflake, DiscordSnowflake,
+  DiscordooSnowflake,
   ReplaceType,
   resolveDiscordooShards,
   resolveDiscordShards,
@@ -30,16 +29,16 @@ import { LOCAL_IPC_DEFAULT_OPTIONS } from '@src/constants/sharding/IpcDefaultOpt
 import { ClientGuildMembersManager } from '@src/api/managers/members/ClientGuildMembersManager'
 import { CompletedCacheOptions } from '@src/cache/interfaces/CompletedCacheOptions'
 import { ClientShardingMetadata } from '@src/core/client/ClientShardingMetadata'
-import { CompletedRestOptions } from '@src/rest/interfaces/CompletedRestOptions'
 import { CACHE_OPTIONS_KEYS_LENGTH } from '@src/cache/interfaces/CacheOptions'
 import { ProviderConstructor } from '@src/core/providers/ProviderConstructor'
 import { DefaultGatewayProvider } from '@src/gateway/DefaultGatewayProvider'
 import { DefaultClientStack } from '@src/core/client/DefaultClientStack'
+import { CompletedRestOptions } from '@src/rest/interfaces/RestOptions'
 import { DefaultCacheProvider } from '@src/cache/DefaultCacheProvider'
 import { DefaultRestProvider } from '@src/rest/DefaultRestProvider'
 import { ClientInternals } from '@src/core/client/ClientInternals'
 import { ClientMetadata } from '@src/core/client/ClientMetadata'
-import { ClientOptions } from '@src/core/client/ClientOptions'
+import { ClientOptions, CompletedClientOptions } from '@src/core/client/ClientOptions'
 import { ClientActions } from '@src/core/client/ClientActions'
 import {
   ChannelCreateEvent,
@@ -165,7 +164,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
   #shardsConnected = 0
 
   /** When client fully connected to discord */
-  public readyDate?: Date
+  public readyTimestamp?: number
 
   /**
    * This client as discord user.
@@ -177,8 +176,8 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
   constructor(token: string, options: ClientOptions = {}) {
     super()
 
-    options.extenders?.forEach(extender => {
-      EntitiesUtil.extend(extender.entity, extender.extender)
+    options.extenders?.forEach(e => {
+      EntitiesUtil.extend(e.entity, e.extender)
     })
 
     this.token = token
@@ -188,6 +187,13 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
     const restOptions: CompletedRestOptions = this._makeRestOptions()
     const cacheOptions: CompletedCacheOptions = this._makeCacheOptions()
     const ipcOptions: CompletedLocalIpcOptions = this._makeLocalIpcOptions()
+
+    const clientOptions: CompletedClientOptions = Client._makeClientOptions(
+      gatewayOptions,
+      restOptions,
+      cacheOptions,
+      ipcOptions
+    )
 
     let restProvider: ProviderConstructor<ClientStack['rest']> = DefaultRestProvider
     let cacheProvider: ProviderConstructor<ClientStack['cache']> = DefaultCacheProvider
@@ -234,26 +240,23 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
       restProvider,
       { restOptions, providerOptions: restProviderOptions }
     )
-
     const cache = new CacheManager<ClientStack['cache']>(
       this,
       cacheProvider,
       { cacheOptions, providerOptions: cacheProviderOptions }
     )
-
     const gateway = new GatewayManager<ClientStack['gateway']>(
       this,
       gatewayProvider,
       { gatewayOptions, providerOptions: gatewayProviderOptions }
     )
-
     const ipc = new LocalIpcServer(
       this,
       this._makeIpcServerOptions(ipcOptions, shardingMetadata)
     )
 
     const allCacheDisabled = (() => {
-      if (this.options.cache?.global?.policies.includes(GlobalCachingPolicy.NONE)) return true
+      if (clientOptions.cache.global?.policies.includes(GlobalCachingPolicy.NONE)) return true
 
       const options = Object.entries(this.options.cache ?? {})
       const total = options.length, defaultTotal = CACHE_OPTIONS_KEYS_LENGTH
@@ -271,8 +274,8 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
     const clientMetadata: ClientMetadata = {
       version,
       shardingUsed: shardingMetadata.active,
-      restRateLimitsDisabled: restOptions.rateLimits.disable === true,
-      restVersion: restOptions.version,
+      restRateLimitsDisabled: restOptions.limits.disable,
+      restVersion: restOptions.api.version,
       gatewayVersion: gatewayOptions.version,
       allCacheDisabled,
       machinesShardingUsed: false // not supported yet
@@ -295,6 +298,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
       events,
       metadata: clientMetadata,
       queues,
+      options: clientOptions,
     }
 
     this.internals.events.register([
@@ -321,13 +325,13 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
     this.user = new ClientUser(this)
 
     void this.user.init({
-      id: DiscordSnowflake.generate(),
-      username: 'Unknown bot'
+      id: '',
+      username: ''
     })
   }
 
   async start(): Promise<Client<ClientStack>> {
-    if (this.#running) throw new DiscordooError('Client#start', 'Client already running.')
+    if (this.#running) throw new DiscordooError('Client#start', 'Already running.')
     this.#running = true
 
     let options: GatewayShardsInfo | undefined
@@ -381,7 +385,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
           // @ts-ignore
           this.emit(EventNames.READY, { client: this })
           clearInterval(interval)
-          this.readyDate = new Date()
+          this.readyTimestamp = new Date().getTime()
           resolve(this)
         }
       }, 100) as any // HELLO JEST!! THIS IS FOR YOU.
@@ -390,7 +394,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
 
   get sharding(): ClientShardingApplication {
     return {
-      options: this.internals.ipc.ipc.config,
+      options: this.internals.options.ipc,
       client: this,
       active: this.internals.sharding.active,
       shards: this.internals.sharding.shards,
@@ -401,7 +405,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
         script: string | ((context: (C & { client: Client })) => any), options?: BroadcastEvalOptions
       ): Promise<R[]> {
         const context = {
-          ...options?.context ? toJson(options?.context) : {}
+          ...options?.context ? toJson(options.context) : {}
         }
 
         const type = typeof script
@@ -480,7 +484,6 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
       client: this,
       ping: this.internals.gateway.ping(),
       shards: this.internals.sharding.shards,
-      FREE_VARIABLE: Math.random() * 10 > 5,
 
       latency(shards: ShardListResolvable): Array<[ number, number ]> {
         return this.client.internals.gateway.ping(resolveDiscordShards(shards))
@@ -507,8 +510,19 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
     }
   }
 
-  get readyTimestamp(): number | undefined {
-    return this.readyDate?.getTime()
+  get readyDate(): Date | undefined {
+    return this.readyTimestamp ? new Date(this.readyTimestamp) : undefined
+  }
+
+  private static _makeClientOptions(
+    gateway: CompletedGatewayOptions, rest: CompletedRestOptions, cache: CompletedCacheOptions, ipc: CompletedLocalIpcOptions
+  ): CompletedClientOptions {
+    return {
+      gateway,
+      rest,
+      cache,
+      ipc
+    }
   }
 
   private _makeGatewayOptions(): CompletedGatewayOptions {
@@ -532,12 +546,14 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
   }
 
   private _makeRestOptions(): CompletedRestOptions {
-    return Object.assign(
-      {},
-      REST_DEFAULT_OPTIONS,
-      { auth: `Bot ${this.token}` },
-      this.options.rest
-    )
+    return {
+      requestTimeout: this.options.rest?.requestTimeout ?? REST_DEFAULT_OPTIONS.requestTimeout,
+      userAgent: this.options.rest?.userAgent ?? REST_DEFAULT_OPTIONS.userAgent,
+      retries: this.options.rest?.retries ?? REST_DEFAULT_OPTIONS.retries,
+      api: Object.assign({}, REST_DEFAULT_OPTIONS.api, { auth: `Bot ${this.token}` }, this.options.rest?.api),
+      cdn: Object.assign({}, REST_DEFAULT_OPTIONS.cdn, this.options.rest?.cdn),
+      limits: Object.assign({}, REST_DEFAULT_OPTIONS.limits, this.options.rest?.limits)
+    }
   }
 
   private _makeCacheOptions(): CompletedCacheOptions {

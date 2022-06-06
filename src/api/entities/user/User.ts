@@ -86,11 +86,11 @@ export class User extends AbstractEntity implements UserData { // TODO: implemen
   }
 
   avatarUrl(options?: ImageUrlOptions): string | undefined {
-    return this.avatar ? this.client.internals.rest.cdn().avatar(this.id, this.avatar, options) : undefined
+    return this.avatar ? this.client.internals.rest.cdn.avatar(this.id, this.avatar, options) : undefined
   }
 
   defaultAvatarUrl(): string {
-    return this.client.internals.rest.cdn().defaultAvatar(this.discriminator ?? '0000')
+    return this.client.internals.rest.cdn.defaultAvatar(this.discriminator ?? '0000')
   }
 
   displayAvatarUrl(options?: ImageUrlOptions): string {
@@ -98,7 +98,7 @@ export class User extends AbstractEntity implements UserData { // TODO: implemen
   }
 
   bannerUrl(options?: ImageUrlOptions): string | undefined {
-    return this.banner ? this.client.internals.rest.cdn().banner(this.id, this.banner, options) : undefined
+    return this.banner ? this.client.internals.rest.cdn.banner(this.id, this.banner, options) : undefined
   }
 
   toString(): string {

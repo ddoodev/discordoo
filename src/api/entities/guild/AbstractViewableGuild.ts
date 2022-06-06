@@ -31,11 +31,11 @@ export abstract class AbstractViewableGuild extends AbstractGuild implements Vie
   }
 
   bannerUrl(options?: ImageUrlOptions): string | undefined {
-    return this.banner ? this.client.internals.rest.cdn().banner(this.id, this.banner, options) : undefined
+    return this.banner ? this.client.internals.rest.cdn.banner(this.id, this.banner, options) : undefined
   }
 
   splashUrl(options?: ImageUrlOptions): string | undefined {
-    return this.splash ? this.client.internals.rest.cdn().splash(this.id, this.splash, options) : undefined
+    return this.splash ? this.client.internals.rest.cdn.splash(this.id, this.splash, options) : undefined
   }
 
 }

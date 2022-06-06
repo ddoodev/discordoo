@@ -56,7 +56,7 @@ export class AbstractGuild extends AbstractEntity implements AbstractGuildData {
   }
 
   iconUrl(options?: ImageUrlOptions): string | undefined {
-    return this.icon ? this.client.internals.rest.cdn().icon(this.id, this.icon, options) : undefined
+    return this.icon ? this.client.internals.rest.cdn.icon(this.id, this.icon, options) : undefined
   }
 
   toString() {

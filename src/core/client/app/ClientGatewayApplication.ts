@@ -26,6 +26,4 @@ export interface ClientGatewayApplication {
 
   /** Send some packet to the gateway. Use the options to specify which shards to send this packet on. */
   send(data: GatewaySendPayloadLike, options?: GatewayAppSendOptions): unknown
-
-  FREE_VARIABLE: boolean
 }

@@ -127,7 +127,7 @@ export class Role extends AbstractEntity { // TODO: positions...
   }
 
   iconUrl(options?: ImageUrlOptions): string | undefined {
-    return this.icon ? this.client.internals.rest.cdn().roleIcon(this.id, this.icon, options) : undefined
+    return this.icon ? this.client.internals.rest.cdn.roleIcon(this.id, this.icon, options) : undefined
   }
 
   toString(): string {

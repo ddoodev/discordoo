@@ -50,7 +50,7 @@ export class PresenceActivityAssets extends AbstractEntity implements PresenceAc
 
     if (!this.applicationId) return undefined
 
-    return this.client.internals.rest.cdn().appAsset(this.applicationId, this.largeImage, options)
+    return this.client.internals.rest.cdn.appAsset(this.applicationId, this.largeImage, options)
   }
 
   smallImageUrl(options?: ImageUrlOptions): string | undefined {
@@ -62,7 +62,7 @@ export class PresenceActivityAssets extends AbstractEntity implements PresenceAc
 
     if (!this.applicationId) return undefined
 
-    return this.client.internals.rest.cdn().appAsset(this.applicationId, this.smallImage, options)
+    return this.client.internals.rest.cdn.appAsset(this.applicationId, this.smallImage, options)
   }
 
   toJson(properties: ToJsonProperties, obj?: any): Json {

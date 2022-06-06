@@ -3,7 +3,7 @@ import { Client as Undici, request } from 'undici'
 import { DiscordooError } from '@src/utils'
 import { Client } from '@src/core'
 import { RestFinishedResponse, RestProvider, RestRequestData, RestRequestOptions } from '@discordoo/providers'
-import { CompletedRestOptions } from '@src/rest/interfaces/CompletedRestOptions'
+import { CompletedRestOptions } from '@src/rest'
 import * as process from 'process'
 
 export class DefaultRestProvider implements RestProvider {
@@ -14,7 +14,7 @@ export class DefaultRestProvider implements RestProvider {
   constructor(client: Client, options: CompletedRestOptions) {
     this.client = client
     this.options = options
-    this.undici = new Undici(`${this.options.scheme}://${this.options.domain}/`)
+    this.undici = new Undici(`${this.options.api.scheme}://${this.options.api.domain}/`)
   }
 
   async init(): Promise<unknown> {
@@ -23,9 +23,9 @@ export class DefaultRestProvider implements RestProvider {
 
   async request<T = any>(data: RestRequestData, options: RestRequestOptions = {}): RestFinishedResponse<T> {
 
-    let headers = this.options.headers
+    let headers = this.options.api.headers
 
-    headers['Authorization'] = options.auth ?? this.options.auth
+    headers['Authorization'] = options.auth ?? this.options.api.auth
 
     if (this.options.userAgent) {
       headers['User-Agent'] = this.options.userAgent
@@ -68,7 +68,9 @@ export class DefaultRestProvider implements RestProvider {
     // console.log('PROVIDER REQUEST:', data)
 
     const before = process.hrtime.bigint()
-    const response = await request(`${this.options.scheme}://${this.options.domain}/api/v${this.options.version}/${data.path}`, {
+    const response = await request(
+      `${this.options.api.scheme}://${this.options.api.domain}${this.options.api.path}${this.options.api.version}/${data.path}`,
+      {
       dispatcher: this.undici,
       method: data.method,
       body,

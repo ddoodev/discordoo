@@ -8,6 +8,7 @@ import { ClientMetadata } from '@src/core/client/ClientMetadata'
 import { ClientEvents } from '@src/events'
 import { LocalIpcServer } from '@src/sharding'
 import { ClientQueues } from '@src/core/client/ClientQueues'
+import { CompletedClientOptions } from '@src/core/client/ClientOptions'
 
 export interface ClientInternals<ClientStack extends DefaultClientStack = DefaultClientStack> {
   /** Inter-process communication server used by this client */
@@ -36,4 +37,7 @@ export interface ClientInternals<ClientStack extends DefaultClientStack = Defaul
 
   /** Various queues for this client (like guild members chunk queue) */
   queues: ClientQueues
+
+  /** All completed client options */
+  options: CompletedClientOptions
 }

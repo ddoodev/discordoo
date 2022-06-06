@@ -1,4 +1,4 @@
-import { CompletedRestOptions } from '@src/rest/interfaces/CompletedRestOptions'
+import { CompletedRestOptions } from '@src/rest'
 
 export interface RestManagerData {
   providerOptions?: any

@@ -6,7 +6,7 @@ import { RestFinishedResponse, RestRequestOptions } from '@discordoo/providers'
 import { wait } from '@src/utils'
 
 /**
- * It is used to comply with the rate limits of Discord.
+ * Used to comply with the Discord rate limits.
  *
  * How it works:
  *
@@ -115,7 +115,7 @@ export class RestLimitsManager {
     if (result.statusCode < 500 && result.statusCode !== -1) {
       return result
     } else {
-      if (retried >= (this.client.options.rest?.maxRetries ?? 2)) return result
+      if (retried >= this.client.internals.options.rest.retries) return result
       return wait(1000).then(() => this.perform(request, options, retried++))
     }
   }
@@ -149,7 +149,7 @@ export class RestLimitsManager {
       let remaining = 10 * 60 * 1000 // 10 minutes, in ms
 
       /**
-       * This interval will reset allowed requests/s every second
+       * This interval will reset allowed requests/s every second,
        * and also it will reset allowed invalid requests/10m every 10 minutes
        * */
       this.resetInterval = setInterval(() => {
