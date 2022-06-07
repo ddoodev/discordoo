@@ -5,10 +5,10 @@ import { GuildFeatures } from '@src/constants'
 import { attach, idToDate, idToTimestamp, ImageUrlOptions } from '@src/utils'
 
 export class AbstractGuild extends AbstractEntity implements AbstractGuildData {
-  public features!: GuildFeatures[]
+  public declare features: GuildFeatures[]
   public icon?: string
-  public id!: string
-  public name!: string
+  public declare id: string
+  public declare name: string
 
   async init(data: AbstractGuildData): Promise<this> {
     attach(this, data, {

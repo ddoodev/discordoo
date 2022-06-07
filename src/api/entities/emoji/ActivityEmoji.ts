@@ -3,7 +3,7 @@ import { ActivityEmojiData } from '@src/api/entities/emoji/interfaces/ActivityEm
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class ActivityEmoji extends AbstractEmoji {
-  public name!: string
+  public declare name: string
 
   init(data: ActivityEmojiData, options?: EntityInitOptions): Promise<this> {
     return super.init(data, options)

@@ -7,7 +7,7 @@ import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 import { attach } from '@src/utils'
 
 export class GuildStoreChannel extends AbstractGuildChannel {
-  public type!: ChannelTypes.GUILD_STORE
+  public declare type: ChannelTypes.GUILD_STORE
   public nsfw?: boolean
 
   async init(data: GuildStoreChannelData | RawGuildStoreChannelData, options?: EntityInitOptions): Promise<this> {

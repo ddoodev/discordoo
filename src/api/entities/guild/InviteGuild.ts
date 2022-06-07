@@ -9,10 +9,10 @@ import { Json, ToJsonProperties } from '@src/api'
 export class InviteGuild extends AbstractGuild implements ViewableGuild {
   public banner?: string
   public description?: string
-  public nsfwLevel!: GuildNsfwLevels
+  public declare nsfwLevel: GuildNsfwLevels
   public splash?: string
   public vanityUrlCode?: string
-  public verificationLevel!: GuildVerificationLevels
+  public declare verificationLevel: GuildVerificationLevels
 
   async init(data: ViewableGuildData | RawViewableGuildData): Promise<this> {
     await super.init(data)

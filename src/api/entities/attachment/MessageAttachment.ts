@@ -8,9 +8,9 @@ import { attach, randomString } from '@src/utils'
 import { SPOILER_PREFIX } from '@src/constants'
 
 export class MessageAttachment {
-  public file!: BufferResolvable
-  public name!: string
-  public ephemeral!: boolean
+  public declare file: BufferResolvable
+  public declare name: string
+  public declare ephemeral: boolean
   public id?: string
   public contentType?: string
   public size?: number

@@ -18,16 +18,16 @@ import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 export class Sticker extends AbstractEntity {
   public available?: boolean
   public description?: string
-  public formatType!: StickerFormatTypes
+  public declare formatType: StickerFormatTypes
   public guildId?: string
-  public id!: string
-  public name!: string
+  public declare id: string
+  public declare name: string
   public packId?: string
-  public sortValue!: number
+  public declare sortValue: number
   public tags: string[] = []
-  public type!: StickerTypes
+  public declare type: StickerTypes
   public userId?: string
-  public deleted!: boolean
+  public declare deleted: boolean
 
   async init(data: StickerData | RawStickerData, options?: EntityInitOptions): Promise<this> {
 

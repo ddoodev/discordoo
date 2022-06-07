@@ -20,28 +20,28 @@ import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class Message extends AbstractEntity {
   public attachments: MessageAttachment[] = []
-  public authorId!: string
-  public channelId!: string
-  public content!: string
+  public declare authorId: string
+  public declare channelId: string
+  public declare content: string
   public deleted?: boolean
   public editedTimestamp?: number
   public embeds: MessageEmbed[] = []
-  public flags!: ReadonlyMessageFlagsUtil
+  public declare flags: ReadonlyMessageFlagsUtil
   public guildId?: string
-  public id!: string
+  public declare id: string
   // MessageMentionsManager
   // mentionChannels: ChannelMentionData[]
   // mentionEveryone: boolean
   // mentionRoles: string[]
   // mentionUsers: string[]
-  public nonce!: string | number
-  public pinned!: boolean
-  public reactions!: MessageReactionsManager
+  public declare nonce: string | number
+  public declare pinned: boolean
+  public declare reactions: MessageReactionsManager
   public referencedMessageId?: string
-  public createdTimestamp!: number
-  public tts!: boolean
-  public type!: MessageTypes
-  public webhookId!: string
+  public declare createdTimestamp: number
+  public declare tts: boolean
+  public declare type: MessageTypes
+  public declare webhookId: string
 
   async init(data: MessageData | RawMessageData, options?: EntityInitOptions): Promise<this> {
 

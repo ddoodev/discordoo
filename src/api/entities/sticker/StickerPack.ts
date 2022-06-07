@@ -10,12 +10,12 @@ import { Collection } from '@discordoo/collection'
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class StickerPack extends AbstractEntity {
-  public bannerAssetId!: string
+  public declare bannerAssetId: string
   public coverStickerId?: string
-  public description!: string
-  public id!: string
-  public name!: string
-  public skuId!: string
+  public declare description: string
+  public declare id: string
+  public declare name: string
+  public declare skuId: string
   public stickers: Collection<string, Sticker> = new Collection()
 
   async init(data: StickerPackData | RawStickerPackData, options?: EntityInitOptions): Promise<this> {

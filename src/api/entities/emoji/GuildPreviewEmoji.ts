@@ -8,10 +8,10 @@ import { Json } from '@src/api/entities/interfaces/Json'
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class GuildPreviewEmoji extends AbstractEmoji implements AbstractGuildEmoji {
-  public available!: boolean
-  public guildId!: string
-  public managed!: boolean
-  public requiresColons!: boolean
+  public declare available: boolean
+  public declare guildId: string
+  public declare managed: boolean
+  public declare requiresColons: boolean
 
   async init(data: GuildPreviewEmojiData | RawGuildPreviewEmojiData, options?: EntityInitOptions): Promise<this> {
     await super.init(data, options)

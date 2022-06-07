@@ -8,11 +8,11 @@ import { Keyspaces } from '@src/constants'
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class ThreadMember extends AbstractEntity implements ThreadMemberData {
-  public flags!: ReadonlyThreadMemberFlagsUtil
-  public threadId!: string
-  public joinTimestamp!: number
-  public userId!: string
-  public guildId!: string
+  public declare flags: ReadonlyThreadMemberFlagsUtil
+  public declare threadId: string
+  public declare joinTimestamp: number
+  public declare userId: string
+  public declare guildId: string
 
   async init(data: ThreadMemberData | RawThreadMemberData, options?: EntityInitOptions): Promise<this> {
 

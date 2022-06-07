@@ -13,9 +13,9 @@ import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 export class Presence extends AbstractEntity {
   public activities: PresenceActivity[] = []
   public clientStatus: PresenceClientStatusData = {}
-  public guildId!: string
-  public status!: PresenceStatus
-  public userId!: string
+  public declare guildId: string
+  public declare status: PresenceStatus
+  public declare userId: string
 
   async init(data: PresenceData | RawPresenceData, options?: EntityInitOptions): Promise<this> {
 

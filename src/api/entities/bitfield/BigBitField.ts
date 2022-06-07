@@ -3,7 +3,7 @@ import { BigBitFieldResolvable } from '@src/api'
 import { resolveBigBitField } from '@src/utils/resolve'
 
 export abstract class BigBitField extends ReadonlyBigBitField {
-  public bitfield!: bigint
+  public declare bitfield: bigint
 
   add(bits: BigBitFieldResolvable): this {
     this.bitfield |= (this.emptyBit | resolveBigBitField(bits))

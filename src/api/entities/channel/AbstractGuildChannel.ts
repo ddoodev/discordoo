@@ -24,17 +24,17 @@ import { GuildMemberResolvable } from '@src/api/entities/member/interfaces/Guild
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export abstract class AbstractGuildChannel extends AbstractChannel {
-  public type!: ChannelTypes.GUILD_CATEGORY
+  public declare type: ChannelTypes.GUILD_CATEGORY
     | ChannelTypes.GUILD_TEXT
     | ChannelTypes.GUILD_NEWS
     | ChannelTypes.GUILD_STAGE_VOICE
     | ChannelTypes.GUILD_VOICE
     | ChannelTypes.GUILD_STORE
-  public guildId!: string
-  public name!: string
+  public declare guildId: string
+  public declare name: string
   public parentId?: string
-  public position!: number
-  public overwrites!: ChannelPermissionOverwritesManager<this>
+  public declare position: number
+  public declare overwrites: ChannelPermissionOverwritesManager<this>
 
   async init(data: AbstractGuildChannelData | RawAbstractGuildChannelData, options?: EntityInitOptions): Promise<this> {
     await super.init(data, options)

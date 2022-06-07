@@ -12,18 +12,18 @@ import { Base64Resolvable } from '@src/utils/interfaces/Base64Resolvable'
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class Role extends AbstractEntity { // TODO: positions...
-  public color!: number
-  public hoist!: boolean
+  public declare color: number
+  public declare hoist: boolean
   public icon?: string
-  public id!: string
-  public managed!: boolean
-  public mentionable!: boolean
-  public name!: string
-  public permissions!: ReadonlyPermissions
-  public rawPosition!: number
+  public declare id: string
+  public declare managed: boolean
+  public declare mentionable: boolean
+  public declare name: string
+  public declare permissions: ReadonlyPermissions
+  public declare rawPosition: number
   public tags?: RoleTagsData
   public unicodeEmoji?: string
-  public guildId!: string
+  public declare guildId: string
   public deleted = false
 
   async init(data: RawRoleData | RoleData, options?: EntityInitOptions): Promise<this> {

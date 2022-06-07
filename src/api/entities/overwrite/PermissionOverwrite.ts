@@ -9,11 +9,11 @@ import { PermissionOverwriteEditOptions } from '@src/api/managers/overwrites/Per
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class PermissionOverwrite extends AbstractEntity {
-  public id!: string
-  public type!: PermissionOverwriteTypes
-  public allow!: ReadonlyPermissions
-  public deny!: ReadonlyPermissions
-  public channelId!: string
+  public declare id: string
+  public declare type: PermissionOverwriteTypes
+  public declare allow: ReadonlyPermissions
+  public declare deny: ReadonlyPermissions
+  public declare channelId: string
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async init(data: PermissionOverwriteResolvable & { channel: ChannelResolvable }, options?: EntityInitOptions): Promise<this> {

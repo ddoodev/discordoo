@@ -8,8 +8,8 @@ import { makeCachePointer } from '@src/utils/cachePointer'
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class GuildCategoryChannel extends AbstractGuildChannel {
-  public children!: CategoryChannelChildrenManager
-  public type!: ChannelTypes.GUILD_CATEGORY
+  public declare children: CategoryChannelChildrenManager
+  public declare type: ChannelTypes.GUILD_CATEGORY
 
   async init(data: AbstractGuildChannelData | RawAbstractGuildChannelData, options?: EntityInitOptions): Promise<this> {
     await super.init(data, options)

@@ -8,10 +8,10 @@ import { RawViewableGuildData } from '@src/api/entities/guild/interfaces/RawView
 export abstract class AbstractViewableGuild extends AbstractGuild implements ViewableGuild {
   public banner?: string
   public description?: string
-  public nsfwLevel!: GuildNsfwLevels
+  public declare nsfwLevel: GuildNsfwLevels
   public splash?: string
   public vanityUrlCode?: string
-  public verificationLevel!: GuildVerificationLevels
+  public declare verificationLevel: GuildVerificationLevels
 
   async init(data: ViewableGuildData | RawViewableGuildData): Promise<this> {
     await super.init(data)

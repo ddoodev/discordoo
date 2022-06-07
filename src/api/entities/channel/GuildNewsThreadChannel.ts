@@ -2,5 +2,5 @@ import { AbstractThreadChannel } from '@src/api/entities/channel/AbstractThreadC
 import { ChannelTypes } from '@src/constants'
 
 export class GuildNewsThreadChannel extends AbstractThreadChannel {
-  public type!: ChannelTypes.GUILD_NEWS_THREAD
+  public declare type: ChannelTypes.GUILD_NEWS_THREAD
 }

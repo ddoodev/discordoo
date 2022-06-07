@@ -7,8 +7,8 @@ import { Json } from '@src/api/entities/interfaces/Json'
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export abstract class AbstractChannel extends AbstractEntity {
-  public id!: string
-  public type!: ChannelTypes
+  public declare id: string
+  public declare type: ChannelTypes
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async init(data: AbstractChannelData, options?: EntityInitOptions): Promise<this> {

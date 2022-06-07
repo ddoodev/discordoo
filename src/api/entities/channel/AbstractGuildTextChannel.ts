@@ -7,7 +7,7 @@ import { attach } from '@src/utils'
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export abstract class AbstractGuildTextChannel extends AbstractGuildChannel implements WritableChannel {
-  public messages!: ChannelMessagesManager
+  public declare messages: ChannelMessagesManager
   public nsfw?: boolean
   public topic?: string
   public lastMessageId?: string

@@ -26,9 +26,9 @@ import { ThreadMember } from '@src/api/entities/member/ThreadMember'
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export abstract class AbstractThreadChannel extends AbstractChannel implements AbstractThreadChannelData, WritableChannel {
-  public messages!: ChannelMessagesManager
-  public members!: ThreadMembersManager
-  public guildId!: string
+  public declare messages: ChannelMessagesManager
+  public declare members: ThreadMembersManager
+  public declare guildId: string
   public lastMessageId?: string
   public lastPinTimestamp?: number
   public memberCount?: number

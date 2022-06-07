@@ -13,16 +13,16 @@ export class User extends AbstractEntity implements UserData { // TODO: implemen
   public accentColor?: number
   public avatar?: string
   public banner?: string
-  public bot!: boolean
-  public discriminator!: string
+  public declare bot: boolean
+  public declare discriminator: string
   public email?: string
-  public id!: string
+  public declare id: string
   public locale?: string
   public mfaEnabled?: boolean
   public premiumType?: number
   public flags?: UserFlagsUtil
-  public system!: boolean
-  public username!: string
+  public declare system: boolean
+  public declare username: string
   public verified?: boolean
 
   async init(data: UserData | RawUserData, options?: EntityInitOptions): Promise<this> {

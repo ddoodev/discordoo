@@ -10,8 +10,8 @@ import { ChannelTypes } from '@src/constants'
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class DirectMessagesChannel extends AbstractChannel implements WritableChannel {
-  public messages!: DirectMessagesChannelMessagesManager
-  public type!: ChannelTypes.DM
+  public declare messages: DirectMessagesChannelMessagesManager
+  public declare type: ChannelTypes.DM
   public lastMessageId?: string
   public lastPinTimestamp?: number
 

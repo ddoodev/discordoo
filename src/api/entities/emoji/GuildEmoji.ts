@@ -15,12 +15,12 @@ import { filterAndMap } from '@src/utils/filterAndMap'
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class GuildEmoji extends AbstractEmoji implements AbstractGuildEmoji {
-  public id!: string
-  public name!: string
-  public available!: boolean
-  public guildId!: string
-  public managed!: boolean
-  public requiresColons!: boolean
+  public declare id: string
+  public declare name: string
+  public declare available: boolean
+  public declare guildId: string
+  public declare managed: boolean
+  public declare requiresColons: boolean
   public roles: string[] = []
   public userId?: string
 

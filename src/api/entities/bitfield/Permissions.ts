@@ -4,7 +4,7 @@ import { BigBitFieldResolvable } from '@src/api'
 import { resolveBigBitField } from '@src/utils/resolve'
 
 export class Permissions extends ReadonlyPermissions implements BigBitField {
-  public bitfield!: bigint
+  public declare bitfield: bigint
 
   add(bits: BigBitFieldResolvable): this {
     this.bitfield |= (this.emptyBit | resolveBigBitField(bits))

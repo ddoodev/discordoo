@@ -5,8 +5,8 @@ import { RawOAuth2GuildData } from '@src/api/entities/guild/interfaces/RawOAuth2
 import { attach } from '@src/utils'
 
 export class OAuth2Guild extends AbstractGuild implements OAuth2GuildData {
-  public owner!: boolean
-  public permissions!: ReadonlyPermissions
+  public declare owner: boolean
+  public declare permissions: ReadonlyPermissions
 
   async init(data: OAuth2GuildData | RawOAuth2GuildData): Promise<this> {
     await super.init(data)

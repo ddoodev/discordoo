@@ -15,17 +15,17 @@ import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 export class GuildMember extends AbstractEntity {
   public avatar?: string
   public voiceDeaf?: boolean
-  public joinedDate!: Date
+  public declare joinedDate: Date
   public voiceMute?: boolean
   public nick?: string
   public pending?: boolean
-  public permissions!: ReadonlyPermissions
+  public declare permissions: ReadonlyPermissions
   public premiumSinceDate?: Date
-  public roles!: GuildMemberRolesManager
+  public declare roles: GuildMemberRolesManager
   public rolesList: string[] = []
-  public userId!: string
-  public guildId!: string
-  public guildOwner!: boolean
+  public declare userId: string
+  public declare guildId: string
+  public declare guildOwner: boolean
 
   private _muteUntilRaw?: string
 

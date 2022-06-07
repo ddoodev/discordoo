@@ -8,12 +8,12 @@ import { ReactionUsersManager } from '@src/api/managers/reactions/ReactionUsersM
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class MessageReaction extends AbstractEntity {
-  public count!: number
-  public me!: boolean
-  public messageId!: string
-  public channelId!: string
-  public emojiId!: string
-  public users!: ReactionUsersManager
+  public declare count: number
+  public declare me: boolean
+  public declare messageId: string
+  public declare channelId: string
+  public declare emojiId: string
+  public declare users: ReactionUsersManager
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async init(data: MessageReactionData, options?: EntityInitOptions): Promise<this> {

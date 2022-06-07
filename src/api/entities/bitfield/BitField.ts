@@ -3,7 +3,7 @@ import { BitFieldResolvable } from '@src/api'
 import { resolveBitField } from '@src/utils/resolve'
 
 export abstract class BitField extends ReadonlyBitField {
-  public bitfield!: number
+  public declare bitfield: number
 
   add(bits: BitFieldResolvable): this {
     this.bitfield |= (this.emptyBit | resolveBitField(bits))

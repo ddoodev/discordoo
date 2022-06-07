@@ -7,7 +7,7 @@ import { CacheManagerGetOptions } from '@src/cache'
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class ReactionEmoji extends AbstractEmoji {
-  public reactionMessageId!: string
+  public declare reactionMessageId: string
 
   async init(data: ReactionEmojiData, options?: EntityInitOptions): Promise<this> {
     await super.init(data, options)

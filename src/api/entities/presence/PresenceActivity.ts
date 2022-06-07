@@ -20,12 +20,12 @@ export class PresenceActivity extends AbstractEntity {
   public emoji?: ActivityEmoji
   public flags?: ReadonlyActivityFlagsUtil
   public instance?: boolean
-  public name!: string
+  public declare name: string
   public party?: PresenceActivityPartyData
   public secrets?: PresenceActivitySecretsData
   public state?: string
   public timestamps?: PresenceActivityTimestampsData
-  public type!: PresenceActivityTypes
+  public declare type: PresenceActivityTypes
   public url?: string
 
   async init(data: PresenceActivityData | RawPresenceActivityData, options?: EntityInitOptions): Promise<this> {
