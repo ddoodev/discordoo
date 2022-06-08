@@ -5,9 +5,9 @@ import { TypedEmitter } from 'tiny-typed-emitter'
 
 import { WebSocketClientDestroyOptions } from '@src/gateway/interfaces/WebSocketClientDestroyOptions'
 import { WebSocketClientEventsHandlers } from '@src/gateway/interfaces/WebSocketClientEventsHandlers'
-import { CompletedGatewayOptions } from '@src/gateway/interfaces/CompletedGatewayOptions'
-import { WebSocketPacket } from '@src/gateway/interfaces/WebSocketPacket'
+import { CompletedGatewayOptions } from '@src/gateway/interfaces/GatewayOptions'
 import { GatewayOpCodes, GatewaySendPayloadLike } from '@discordoo/providers'
+import { WebSocketPacket } from '@src/gateway/interfaces/WebSocketPacket'
 import {
   WebSocketClientEvents,
   WebSocketClientStates,
@@ -55,11 +55,11 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
   }
 
   public connect() {
-    // console.log('SHARD', this.id, 'CONNECTING')
+    // console.log('SHARD', this.id, 'CONNECTING with intents', this.options.intents)
     return new Promise<void>((resolve, reject) => {
 
       // cannot connect without websocket url
-      if (!this.options?.url) return reject()
+      if (!this.options.connection.url) return reject()
 
       // WebSocketClient already connected and working
       if (this.socket?.readyState === WebSocketStates.OPEN && this.status === WebSocketClientStates.READY) {
@@ -67,7 +67,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
       }
 
       // create decompressing context if developer wants use compression between us and discord
-      if (this.options.compress) {
+      if (this.options.connection.compress) {
         if (!WebSocketUtils.pako) {
           throw new DiscordooError(
             'WebSocketShard ' + this.id,
@@ -83,7 +83,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
       // console.log('SHARD', this.id, 'ENCODING', this.options.encoding, 'REAL ENCODING', WebSocketUtils.encoding)
 
       // cannot use etf encoding without erlpack
-      if (this.options.encoding === 'etf' && WebSocketUtils.encoding !== 'etf') {
+      if (this.options.connection.encoding === 'etf' && WebSocketUtils.encoding !== 'etf') {
         throw new DiscordooError(
           'WebSocketShard ' + this.id,
           'cannot use etf encoding without erlpack installed.'
@@ -131,7 +131,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
 
       try {
         // console.log('shard', this.id, 'creating websocket', this.options.url)
-        this.socket = new WebSocket(this.options.url)
+        this.socket = new WebSocket(this.options.connection.url)
 
         this.handshakeTimeout()
         // console.log('shard', this.id, 'subscribe')
@@ -253,18 +253,9 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
       // console.log('shard', this.id, 'if this socket and dont ready')
       try {
         if (options.reconnect && this.sessionId) {
-          // console.log('shard', this.id, 'if options reconnect and sessionid')
-          if (this.options.useReconnectOnly) {
-            // console.log('shard', this.id, 'if useReconnectOnly')
-            this.sessionId = undefined
-            this.sequence = -1
-            this.socket.close(1000, 'ddoo: reconnect without resume')
-          } else {
-            // console.log('shard', this.id, '!useReconnectOnly')
-            this.closeSequence = this.sequence
-            this.sequence = -1
-            this.socket.close(4901, 'ddoo: reconnect with resume')
-          }
+          this.closeSequence = this.sequence
+          this.sequence = -1
+          this.socket.close(4901, 'ddoo: reconnect with resume')
         }
       } catch (e: any) {
         // console.log('shard', this.id, 'ws close error:', e)

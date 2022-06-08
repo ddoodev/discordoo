@@ -37,7 +37,7 @@ export class DefaultLocalIpcTransportProvider implements LocalIpcTransportProvid
   }
 
   init(): Promise<unknown> {
-    console.log('инит надо вызывать если что')
+    // console.log('инит надо вызывать если что')
     return Promise.resolve(undefined)
   }
 

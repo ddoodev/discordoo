@@ -12,7 +12,6 @@ import {
 import {
   DiscordooError,
   DiscordooSnowflake,
-  ReplaceType,
   resolveDiscordooShards,
   resolveDiscordShards,
   resolveGatewayIntents,
@@ -20,14 +19,15 @@ import {
   ValidationError,
   version
 } from '@src/utils'
+import { ClientGuildMembersManager } from '@src/api/managers/members/ClientGuildMembersManager'
 import { CompletedLocalIpcOptions } from '@src/constants/sharding/CompletedLocalIpcOptions'
-import { CompletedGatewayOptions } from '@src/gateway/interfaces/CompletedGatewayOptions'
 import { ClientMessagesManager } from '@src/api/managers/messages/ClientMessagesManager'
 import { ClientChannelsManager } from '@src/api/managers/channels/ClientChannelsManager'
 import { ClientStickersManager } from '@src/api/managers/stickers/ClientStickersManager'
+import { ClientOptions, CompletedClientOptions } from '@src/core/client/ClientOptions'
 import { LOCAL_IPC_DEFAULT_OPTIONS } from '@src/constants/sharding/IpcDefaultOptions'
-import { ClientGuildMembersManager } from '@src/api/managers/members/ClientGuildMembersManager'
 import { CompletedCacheOptions } from '@src/cache/interfaces/CompletedCacheOptions'
+import { CompletedGatewayOptions } from '@src/gateway/interfaces/GatewayOptions'
 import { ClientShardingMetadata } from '@src/core/client/ClientShardingMetadata'
 import { CACHE_OPTIONS_KEYS_LENGTH } from '@src/cache/interfaces/CacheOptions'
 import { ProviderConstructor } from '@src/core/providers/ProviderConstructor'
@@ -38,7 +38,6 @@ import { DefaultCacheProvider } from '@src/cache/DefaultCacheProvider'
 import { DefaultRestProvider } from '@src/rest/DefaultRestProvider'
 import { ClientInternals } from '@src/core/client/ClientInternals'
 import { ClientMetadata } from '@src/core/client/ClientMetadata'
-import { ClientOptions, CompletedClientOptions } from '@src/core/client/ClientOptions'
 import { ClientActions } from '@src/core/client/ClientActions'
 import {
   ChannelCreateEvent,
@@ -49,7 +48,9 @@ import {
   MessageCreateEvent,
   ThreadCreateEvent,
   ThreadDeleteEvent,
-  ThreadListSyncEvent, ThreadMembersUpdateEvent, ThreadMemberUpdateEvent,
+  ThreadListSyncEvent,
+  ThreadMembersUpdateEvent,
+  ThreadMemberUpdateEvent,
   ThreadUpdateEvent
 } from '@src/events'
 import { UsersManager } from '@src/api/managers/UsersManager'
@@ -230,8 +231,8 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
       MANAGER_IPC,
       INSTANCE_IPC,
       instance: parseInt(process.env.SHARDING_INSTANCE ?? '0'),
-      shards: gatewayOptions.shards,
-      totalShards: gatewayOptions.totalShards,
+      shards: gatewayOptions.sharding.shards,
+      totalShards: gatewayOptions.sharding.totalShards,
       active: DiscordooSnowflake.deconstruct(MANAGER_IPC).shardId === DiscordooSnowflake.SHARDING_MANAGER_ID,
     }
 
@@ -276,7 +277,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
       shardingUsed: shardingMetadata.active,
       restRateLimitsDisabled: restOptions.limits.disable,
       restVersion: restOptions.api.version,
-      gatewayVersion: gatewayOptions.version,
+      gatewayVersion: gatewayOptions.connection.version,
       allCacheDisabled,
       machinesShardingUsed: false // not supported yet
     }
@@ -526,23 +527,22 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
   }
 
   private _makeGatewayOptions(): CompletedGatewayOptions {
-    const options: ReplaceType<CompletedGatewayOptions, 'shards', ShardListResolvable> =
-      Object.assign(
-        {},
-        WS_DEFAULT_OPTIONS,
-        { token: this.token },
-        this.options.gateway,
-        { intents: resolveGatewayIntents(this.options.gateway?.intents ?? WS_DEFAULT_OPTIONS.intents) }
-      )
+    const options = {
+      token: this.token,
+      intents: resolveGatewayIntents(this.options.gateway?.intents ?? WS_DEFAULT_OPTIONS.intents),
+      presence: this.options.gateway?.presence ?? WS_DEFAULT_OPTIONS.presence,
+      sharding: Object.assign({}, this.options.gateway?.sharding ?? {}, WS_DEFAULT_OPTIONS.sharding),
+      connection: Object.assign({}, this.options.gateway?.connection ?? {}, WS_DEFAULT_OPTIONS.connection),
+      events: Object.assign({}, this.options.gateway?.events ?? {}, WS_DEFAULT_OPTIONS.events)
+    }
 
-    const shards = resolveDiscordShards(options.shards)
+    const shards = resolveDiscordShards(options.sharding.shards)
     const totalShards = shards.length
 
-    return {
-      ...options,
-      shards,
-      totalShards,
-    }
+    options.sharding.shards = shards
+    options.sharding.totalShards = totalShards
+
+    return options
   }
 
   private _makeRestOptions(): CompletedRestOptions {

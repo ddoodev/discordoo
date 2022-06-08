@@ -3,7 +3,7 @@ import { GatewayManagerData } from '@src/gateway/interfaces'
 import { Client, ProviderConstructor } from '@src/core'
 import { DiscordooError, ValidationError, wait } from '@src/utils'
 import { Endpoints } from '@src/constants'
-import { CompletedGatewayOptions } from '@src/gateway/interfaces/CompletedGatewayOptions'
+import { CompletedGatewayOptions } from '@src/gateway/interfaces/GatewayOptions'
 
 export class GatewayManager<P extends GatewayProvider = GatewayProvider> {
   public provider: P

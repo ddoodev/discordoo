@@ -1,18 +1,15 @@
 import { WebSocketClient } from '@src/gateway/WebSocketClient'
-import { IdentifyOptions } from '@src/gateway/interfaces/IdentifyOptions'
 import { WebSocketClientStates } from '@src/constants'
 import { GatewayOpCodes } from '@discordoo/providers'
+import { CompletedGatewayOptions } from '@src/gateway/interfaces/GatewayOptions'
 
 // creates discord api identify payload
 export function identify(
   client: WebSocketClient,
-  options: IdentifyOptions
+  options: CompletedGatewayOptions
 ): any { // TODO: return type
 
-  const mode =
-    (client.sessionId && client.closeSequence > 0) && (!options.useReconnectOnly || options.forceResume)
-    ? 'resume'
-    : 'identify'
+  const mode = (client.sessionId && client.closeSequence > 0) ? 'resume' : 'identify'
   const { token } = options
 
   // console.log('shard', client.id, mode)
@@ -22,7 +19,8 @@ export function identify(
 
   switch (mode) {
     case 'identify': {
-      const { intents, properties, presence, compress } = options
+      const { intents, presence } = options,
+        { properties, compress } = options.connection
 
       client.status = WebSocketClientStates.IDENTIFYING
       op = GatewayOpCodes.IDENTIFY
@@ -33,7 +31,7 @@ export function identify(
         properties,
         presence: presence || undefined,
         compress,
-        shard: [ client.id, client.manager.options.totalShards ]
+        shard: [ client.id, client.manager.options.sharding.totalShards ]
       }
     } break
 

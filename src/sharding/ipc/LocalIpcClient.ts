@@ -215,7 +215,7 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
 
             if (e?.d?.event_id) {
               response = e
-              console.log('RESP', response)
+              // console.log('RESP', response)
             } else {
               response = {
                 op: IpcOpCodes.ERROR,

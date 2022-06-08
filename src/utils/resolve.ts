@@ -201,7 +201,7 @@ export function resolveGatewayIntents(resolvable: GatewayIntentsResolvable | und
   }
 
   return Array.isArray(resolvable)
-    ? resolvable.reduce((prev, curr) => prev | curr, 0)
+    ? (resolvable as number[]).reduce((prev, curr) => prev | curr, 0)
     : resolvable
 }
 

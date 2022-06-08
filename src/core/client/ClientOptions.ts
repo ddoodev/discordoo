@@ -1,6 +1,5 @@
 import { ProviderOption } from '@src/core'
 import { CompletedGatewayOptions, GatewayOptions } from '@src/gateway'
-import { Optional } from '@src/utils'
 import { CacheOptions } from '@src/cache/interfaces/CacheOptions'
 import { RestOptions } from '@src/rest/interfaces/RestOptions'
 import { ExtendedEntityOption } from '@src/core/client/ExtendedEntityOption'
@@ -10,7 +9,7 @@ import { CompletedRestOptions } from '@src/rest'
 
 export interface ClientOptions<CustomOptions = any> {
   providers?: ProviderOption[]
-  gateway?: Optional<GatewayOptions, 'token' | 'intents' | 'properties'>
+  gateway?: GatewayOptions
   cache?: CacheOptions
   rest?: RestOptions
   ipc?: CompletedLocalIpcOptions

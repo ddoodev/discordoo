@@ -4,7 +4,7 @@ import { WebSocketClient } from '@src/gateway/WebSocketClient'
 import WebSocket from 'ws'
 import { WebSocketUtils } from '@src/utils/WebSocketUtils'
 import { WebSocketPacket } from '@src/gateway/interfaces/WebSocketPacket'
-import { CompletedGatewayOptions } from '@src/gateway/interfaces/CompletedGatewayOptions'
+import { CompletedGatewayOptions } from '@src/gateway/interfaces/GatewayOptions'
 
 // handles websocket raw messages, decompressing/decoding it to normal javascript objects
 export function message(
@@ -24,7 +24,7 @@ export function message(
   if (Array.isArray(data)) data = Buffer.concat(data)
 
   // data decompressing
-  if (options.compress && data instanceof Uint8Array && inflate) {
+  if (options.connection.compress && data instanceof Uint8Array && inflate) {
 
     const l = data.length
     const flush = l >= 4 // flush means that this chunk is last

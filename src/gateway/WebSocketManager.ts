@@ -3,7 +3,7 @@ import { WebSocketClient } from '@src/gateway/WebSocketClient'
 import { WebSocketClientEvents, WebSocketClientStates, WebSocketCloseCodes, WebSocketManagerStates } from '@src/constants'
 import { DiscordooError } from '@src/utils'
 import { GatewayProvider, GatewayShardsInfo } from '@discordoo/providers'
-import { CompletedGatewayOptions } from '@src/gateway/interfaces/CompletedGatewayOptions'
+import { CompletedGatewayOptions } from '@src/gateway/interfaces/GatewayOptions'
 import { inspect } from 'util'
 
 export class WebSocketManager {
@@ -28,8 +28,8 @@ export class WebSocketManager {
 
     if (options) {
       if (options.shards && options.totalShards) {
-        this.options.shards = options.shards
-        this.options.totalShards = options.totalShards
+        this.options.sharding.shards = options.shards
+        this.options.sharding.totalShards = options.totalShards
       }
     }
 
@@ -37,7 +37,7 @@ export class WebSocketManager {
     // console.log('shards:', this.options.shards)
     // console.log('totalShards:', this.options.totalShards)
 
-    this.shardQueue = new Set(this.options.shards.map(id => new WebSocketClient(this, id)))
+    this.shardQueue = new Set(this.options.sharding.shards.map(id => new WebSocketClient(this, id)))
     // console.log('queue:', this.shardQueue)
 
     if (!this.queueInterval) {
@@ -50,10 +50,10 @@ export class WebSocketManager {
 
     const gateway = await this.provider.getGateway()
 
-    this.options.url =
+    this.options.connection.url =
       gateway.url + '/?v='
-      + this.options.version + '&encoding=' + this.options.encoding
-      + (this.options.compress ? '&compress=zlib-stream' : '')
+      + this.options.connection.version + '&encoding=' + this.options.connection.encoding
+      + (this.options.connection.compress ? '&compress=zlib-stream' : '')
 
     return this.createShards()
   }
