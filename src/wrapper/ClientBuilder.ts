@@ -3,6 +3,8 @@ import { DiscordooProviders } from '@src/constants'
 import { CreateAppOptions } from '@src/wrapper/interfaces/CreateAppOptions'
 import { is } from 'typescript-is'
 import { ValidationError } from '@src/utils/ValidationError'
+import { GatewayOptions } from '@src/gateway'
+import { ReplaceType } from '@src/utils'
 
 export class ClientBuilder<Stack extends DefaultClientStack = DefaultClientStack> {
   public token: string
@@ -29,7 +31,9 @@ export class ClientBuilder<Stack extends DefaultClientStack = DefaultClientStack
   }
 
   gateway(options: ClientOptions['gateway']): ClientBuilder<Stack> {
-    if (!is<ClientOptions['gateway']>(options)) this.throwInvalidOptionsError('gateway', options)
+    if (!is<ReplaceType<GatewayOptions, 'intents', number | number[]> | undefined>(options)) {
+      this.throwInvalidOptionsError('gateway', options)
+    }
 
     this.options.gateway = options
     return this
