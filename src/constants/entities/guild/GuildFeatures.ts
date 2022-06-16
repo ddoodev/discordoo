@@ -1,6 +1,12 @@
 export enum GuildFeatures {
+  /** guild has access to set an animated guild banner image */
+  ANIMATED_BANNER = 'ANIMATED_BANNER',
+
   /** Guild has access to set an animated guild icon */
   ANIMATED_ICON = 'ANIMATED_ICON',
+
+  /** guild has set up auto moderation rules */
+  AUTO_MODERATION = 'AUTO_MODERATION',
 
   /** Guild has access to set a guild banner image */
   BANNER = 'BANNER',
@@ -64,4 +70,7 @@ export enum GuildFeatures {
 
   /** Guild has access to create private threads */
   PRIVATE_THREADS = 'PRIVATE_THREADS',
+
+  /** guild is able to set role icons */
+  ROLE_ICONS = 'ROLE_ICONS'
 }
