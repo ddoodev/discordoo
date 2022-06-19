@@ -51,7 +51,7 @@ import {
   ThreadListSyncEvent,
   ThreadMembersUpdateEvent,
   ThreadMemberUpdateEvent,
-  ThreadUpdateEvent
+  ThreadUpdateEvent, UserUpdateEvent
 } from '@src/events'
 import { UsersManager } from '@src/api/managers/UsersManager'
 import { ClientRolesManager } from '@src/api/managers/roles'
@@ -307,7 +307,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
       ChannelCreateEvent, ChannelUpdateEvent, ChannelDeleteEvent, ChannelPinsUpdateEvent,
       ThreadCreateEvent, ThreadUpdateEvent, ThreadDeleteEvent, ThreadListSyncEvent,
       GuildMembersChunkEvent, ThreadMemberUpdateEvent, ThreadMembersUpdateEvent,
-      GuildEmojisUpdatedEvent,
+      GuildEmojisUpdatedEvent// , UserUpdateEvent
     ]) // TODO
 
     this.overwrites = new ClientPermissionOverwritesManager(this)

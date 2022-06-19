@@ -23,17 +23,28 @@ export class GuildCreateEvent extends AbstractEvent {
     }
 
     for await (const memberData of guild.members) {
-      let cache = await this.client.internals.cache.get(Keyspaces.GUILD_MEMBERS, guild.id, 'GuildMember', memberData.user.id)
+      let memberCache = await this.client.internals.cache.get(Keyspaces.GUILD_MEMBERS, guild.id, 'GuildMember', memberData.user.id)
 
-      if (cache) {
-        cache = await cache.init(memberData)
-        await this.client.members.cache.set(cache.userId, cache, { storage: guild.id })
+      if (memberCache) {
+        memberCache = await memberCache.init(memberData)
+        await this.client.members.cache.set(memberCache.userId, memberCache, { storage: guild.id })
       } else {
         const GuildMember = EntitiesUtil.get('GuildMember')
         const member = await new GuildMember(this.client).init({
           ...memberData, guild_id: guild.id, guild_owner: memberData.user.id === guild.owner_id
         })
         await this.client.members.cache.set(member.userId, member, { storage: guild.id })
+      }
+
+      let userCache = await this.client.users.cache.get(memberData.user.id)
+
+      if (userCache) {
+        userCache = await userCache.init(memberData.user)
+        await this.client.users.cache.set(memberData.user.id, userCache)
+      } else {
+        const User = EntitiesUtil.get('User')
+        const user = await new User(this.client).init(memberData.user)
+        await this.client.users.cache.set(memberData.user.id, user)
       }
     }
 

@@ -1,0 +1,1 @@
+export { UserUpdateEventContext } from '@src/events/user/ctx/UserUpdateEventContext'

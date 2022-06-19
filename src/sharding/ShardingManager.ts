@@ -13,7 +13,6 @@ import { Final } from '@src/utils/FinalDecorator'
 import { ShardingManagerInternals } from '@src/sharding/interfaces/manager/ShardingManagerInternals'
 import { CompletedLocalIpcOptions } from '@src/constants/sharding/CompletedLocalIpcOptions'
 import { LOCAL_IPC_DEFAULT_OPTIONS } from '@src/constants/sharding/IpcDefaultOptions'
-import { start } from 'repl'
 import { inspect } from 'util'
 
 const isMainProcess = process.send === undefined

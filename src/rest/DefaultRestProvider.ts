@@ -7,8 +7,8 @@ import { CompletedRestOptions } from '@src/rest'
 import * as process from 'process'
 
 export class DefaultRestProvider implements RestProvider {
-  public client: Client
-  public options: CompletedRestOptions
+  public readonly client: Client
+  public readonly options: CompletedRestOptions
   private readonly undici: Undici
 
   constructor(client: Client, options: CompletedRestOptions) {

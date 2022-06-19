@@ -16,6 +16,7 @@ import { ExitingEventContext } from '@src/events/interfaces/ExitingEventContext'
 import { RestructuringEventContext } from '@src/events/interfaces/RestructuringEventContext'
 import { ThreadMembersUpdateEventContext, ThreadMemberUpdateEventContext } from '@src/events/thread'
 import { GuildEmojisUpdatedEventContext } from '@src/events/emoji/ctx/GuildEmojisUpdatedEventContext'
+import { UserUpdateEventContext } from '@src/events/user/ctx/UserUpdateEventContext'
 
 /** Client events */
 export interface ClientEventsHandlers {
@@ -168,7 +169,7 @@ export interface ClientEventsHandlers {
   // typingStart: (context: PresenceUpdateEventContext) => any
 
   /** Properties about the user changed */
-  // userUpdate: (context: PresenceUpdateEventContext) => any
+  userUpdate: (context: UserUpdateEventContext) => any
 
   /** Someone joined, left, or moved a voice channel */
   // voiceStateUpdate: (context: PresenceUpdateEventContext) => any
