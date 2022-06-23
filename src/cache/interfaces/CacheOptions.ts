@@ -15,7 +15,7 @@ import {
 } from '@src/constants'
 import { ThreadMember } from '@src/api/entities/member/ThreadMember'
 import { AnyChannel } from '@src/api/entities/channel/interfaces/AnyChannel'
-import { AnyEmoji, GuildMember, Message, Presence, Role, Sticker, User } from '@src/api'
+import { AnyEmoji, Guild, GuildMember, Message, Presence, Role, Sticker, User } from '@src/api'
 import { MessageReaction } from '@src/api/entities/reaction/MessageReaction'
 import { PermissionOverwrite } from '@src/api/entities/overwrite/PermissionOverwrite'
 
@@ -23,7 +23,7 @@ export const CACHE_OPTIONS_KEYS_LENGTH = 12 // all cache options expect 'global'
 
 export type AnyEntity = AnyChannel
   | AnyEmoji
-  | any /* TODO: Guild */
+  | Guild
   | GuildMember
   | Message
   | Presence

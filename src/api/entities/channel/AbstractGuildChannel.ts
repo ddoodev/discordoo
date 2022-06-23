@@ -126,7 +126,7 @@ export abstract class AbstractGuildChannel extends AbstractChannel {
         if (guildExists) {
           const guild = await this.client.guilds.cache.get(this.guildId)
 
-          if (guild.ownerId === id) return new ReadonlyPermissions(Permissions.ALL)
+          if (guild!.ownerId === id) return new ReadonlyPermissions(Permissions.ALL)
         }
       }
     }

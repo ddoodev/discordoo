@@ -68,7 +68,7 @@ import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 import { ClientPresencesManager } from '@src/api/managers/presences'
 import { ClientReactionsManager } from '@src/api/managers/reactions/ClientReactionsManager'
 import { ClientPermissionOverwritesManager } from '@src/api/managers/overwrites/ClientPermissionOverwritesManager'
-import { GuildCreateEvent } from '@src/events/GuildCreateEvent'
+import { GuildCreateEvent } from '@src/events/guild/GuildCreateEvent'
 import { PresenceUpdateEvent } from '@src/events/PresenceUpdateEvent'
 import { ClientQueues } from '@src/core/client/ClientQueues'
 import { Collection } from '@discordoo/collection'
@@ -94,6 +94,7 @@ import { GatewayAppSendOptions } from '@src/core/client/app/GatewayAppSendOption
 import { inspect } from 'util'
 import { ClientUser } from '@src/api/entities/user/ClientUser'
 import { GuildEmojisUpdatedEvent } from '@src/events/emoji/GuildEmojisUpdatedEvent'
+import { GuildDeleteEvent } from '@src/events/guild'
 
 /** Entry point for **all** of Discordoo. */
 @Final(
@@ -303,10 +304,10 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
     }
 
     this.internals.events.register([
-      MessageCreateEvent, GuildCreateEvent, PresenceUpdateEvent, ShardConnectedEvent,
-      ChannelCreateEvent, ChannelUpdateEvent, ChannelDeleteEvent, ChannelPinsUpdateEvent,
-      ThreadCreateEvent, ThreadUpdateEvent, ThreadDeleteEvent, ThreadListSyncEvent,
-      GuildMembersChunkEvent, ThreadMemberUpdateEvent, ThreadMembersUpdateEvent,
+      MessageCreateEvent, GuildCreateEvent, GuildDeleteEvent, PresenceUpdateEvent,
+      ShardConnectedEvent, ChannelCreateEvent, ChannelUpdateEvent, ChannelDeleteEvent,
+      ChannelPinsUpdateEvent, ThreadCreateEvent, ThreadUpdateEvent, ThreadDeleteEvent,
+      ThreadListSyncEvent, GuildMembersChunkEvent, ThreadMemberUpdateEvent, ThreadMembersUpdateEvent,
       GuildEmojisUpdatedEvent// , UserUpdateEvent
     ]) // TODO
 

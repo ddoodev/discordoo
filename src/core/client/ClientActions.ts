@@ -11,7 +11,7 @@ import { RawStickerEditData } from '@src/api/entities/sticker/interfaces/RawStic
 import { RawStickerCreateData } from '@src/api/entities/sticker/interfaces/RawStickerCreateData'
 import { RawStickerPackData } from '@src/api/entities/sticker'
 import { RawGuildMemberEditData } from '@src/api/entities/member/interfaces/RawGuildMemberEditData'
-import { GuildMember, RawGuildMemberData } from '@src/api'
+import { GuildEmojiData, GuildMember, RawGuildMemberData } from '@src/api'
 import { RawRoleEditData } from '@src/api/entities/role/interfaces/RawRoleEditData'
 import { RawRoleData } from '@src/api/entities/role/interfaces/RawRoleData'
 import { RawRoleCreateData } from '@src/api/entities/role/interfaces/RawRoleCreateData'
@@ -124,7 +124,7 @@ export class ClientActions {
       .post({ reason })
   }
 
-  createGuildEmoji(guildId: string, data: any /* TODO: GuildEmojiData */, reason?: string) {
+  createGuildEmoji(guildId: string, data: GuildEmojiData, reason?: string) {
     return this.client.internals.rest.api()
       .url(Endpoints.GUILD_EMOJIS(guildId))
       .body(data)

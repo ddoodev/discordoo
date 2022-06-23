@@ -115,7 +115,7 @@ export class ClientChannelsManager extends EntitiesManager {
   }
 
   async createThreadChannel<R = AnyThreadChannel>(
-    channel: GuildResolvable,
+    channel: ThreadChannelResolvable,
     data: ThreadChannelCreateData | RawThreadChannelCreateData | RawThreadChannelWithMessageCreateData,
     reason?: string
   ): Promise<R | undefined> {
@@ -171,7 +171,7 @@ export class ClientChannelsManager extends EntitiesManager {
   ): Promise<R | undefined> {
     if (type === 'thread') {
       return this.createThreadChannel(
-        channelOrGuild as ChannelResolvable,
+        channelOrGuild as ThreadChannelResolvable,
         data as ThreadChannelCreateData | RawThreadChannelCreateData | RawThreadChannelWithMessageCreateData,
         reason
       )

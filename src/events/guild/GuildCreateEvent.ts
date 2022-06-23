@@ -2,12 +2,25 @@ import { AbstractEvent } from '@src/events/AbstractEvent'
 import { EventNames, Keyspaces, otherCacheSymbol } from '@src/constants'
 import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 import { channelEntityKey } from '@src/utils'
-import { GuildEmoji } from '@src/api'
+import { GuildEmoji, RawViewableGuildData } from '@src/api'
 
 export class GuildCreateEvent extends AbstractEvent {
   public name = EventNames.GUILD_CREATE
 
-  async execute(shardId: number, guild: any /* RawGuildData */) {
+  async execute(shardId: number, guild: RawViewableGuildData) {
+
+    let guildCache = await this.client.guilds.cache.get(guild.id)
+
+    const isUnavailable = guildCache?.unavailable ?? false
+
+    if (guildCache) {
+      guildCache = await guildCache.init({ ...guild, unavailable: false })
+      await this.client.guilds.cache.set(guild.id, guildCache)
+    } else {
+      const Guild = EntitiesUtil.get('Guild')
+      guildCache = await new Guild(this.client).init(guild)
+      await this.client.guilds.cache.set(guild.id, guildCache)
+    }
 
     for await (const channelData of guild.channels) {
       let cache = await this.client.internals.cache.get(Keyspaces.CHANNELS, guild.id, 'channelEntityKey', channelData.id)
@@ -82,6 +95,12 @@ export class GuildCreateEvent extends AbstractEvent {
       queue.handler(this.client, { ...queue, guild: guild.id })
     } else {
       // emit guild create
+      this.client.emit('guildCreate', {
+        guild: guildCache,
+        shardId,
+        guildId: guild.id,
+        fromUnavailable: isUnavailable
+      })
     }
   }
 }

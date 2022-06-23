@@ -8,4 +8,7 @@ export interface ViewableGuildData extends AbstractGuildData {
   verificationLevel?: GuildVerificationLevels
   vanityUrlCode?: string
   nsfwLevel?: GuildNsfwLevels
+  ownerId: string
+  membersCount: number
+  unavailable?: boolean
 }

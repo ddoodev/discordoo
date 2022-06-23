@@ -2,7 +2,7 @@ import { AbstractChannel } from '@src/api/entities/channel/AbstractChannel'
 import { AbstractThreadChannelData } from '@src/api/entities/channel/interfaces/AbstractThreadChannelData'
 import { RawAbstractThreadChannelData } from '@src/api/entities/channel/interfaces/RawAbstractThreadChannelData'
 import {
-  ChannelMessagesManager,
+  ChannelMessagesManager, Guild,
   GuildMember,
   Json,
   PermissionsCheckOptions,
@@ -150,7 +150,7 @@ export abstract class AbstractThreadChannel extends AbstractChannel implements A
     return this.messages.create.bind(this.messages)
   }
 
-  guild(options?: CacheManagerGetOptions): Promise<any | undefined> { // TODO: Guild
+  guild(options?: CacheManagerGetOptions): Promise<Guild | undefined> {
     return this.client.guilds.cache.get(this.guildId, options)
   }
 

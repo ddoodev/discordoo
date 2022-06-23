@@ -17,6 +17,8 @@ import { RestructuringEventContext } from '@src/events/interfaces/RestructuringE
 import { ThreadMembersUpdateEventContext, ThreadMemberUpdateEventContext } from '@src/events/thread'
 import { GuildEmojisUpdatedEventContext } from '@src/events/emoji/ctx/GuildEmojisUpdatedEventContext'
 import { UserUpdateEventContext } from '@src/events/user/ctx/UserUpdateEventContext'
+import { GuildCreateEventContext } from '@src/events/guild/ctx'
+import { GuildDeleteEventContext } from '@src/events/guild/ctx/GuildDeleteEventContext'
 
 /** Client events */
 export interface ClientEventsHandlers {
@@ -66,14 +68,14 @@ export interface ClientEventsHandlers {
   /** Some user(s) were added to or removed from a thread */
   threadMembersUpdate: (context: ThreadMembersUpdateEventContext) => any
 
-  /** Client joined a new guild */
-  // guildCreate: (context: ChannelCreateEventContext) => any
+  /** Client joined a new guild or unavailable guild became available */
+  guildCreate: (context: GuildCreateEventContext) => any
 
   /** Guild was updated */
   // guildUpdate: (context: ChannelCreateEventContext) => any
 
-  /** Client left/was removed from a guild */
-  // guildDelete: (context: ChannelCreateEventContext) => any
+  /** Client left/was removed from a guild or guild became unavailable */
+  guildDelete: (context: GuildDeleteEventContext) => any
 
   /** User was banned from a guild */
   // guildBanAdd: (context: ChannelCreateEventContext) => any

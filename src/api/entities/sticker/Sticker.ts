@@ -132,7 +132,7 @@ export class Sticker extends AbstractEntity {
   }
 
   async edit(data: StickerEditData, options: StickerEditOptions = {}): Promise<this | undefined> {
-    const guildId = this.guildId ?? resolveGuildId(options.guild)
+    const guildId = this.guildId ?? resolveGuildId(options.guild || '')
 
     if (!guildId) throw new DiscordooError('Sticker#edit', 'Cannot edit sticker without guild id.')
 
@@ -140,7 +140,7 @@ export class Sticker extends AbstractEntity {
   }
 
   async delete(options: StickerDeleteOptions = {}): Promise<this | undefined> {
-    const guildId = this.guildId ?? resolveGuildId(options.guild)
+    const guildId = this.guildId ?? resolveGuildId(options.guild || '')
 
     if (!guildId) throw new DiscordooError('Sticker#delete', 'Cannot delete sticker without guild id.')
 

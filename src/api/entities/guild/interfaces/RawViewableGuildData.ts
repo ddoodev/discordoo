@@ -1,5 +1,6 @@
 import { AbstractGuildData } from '@src/api/entities/guild/interfaces/AbstractGuildData'
 import { GuildNsfwLevels, GuildVerificationLevels } from '@src/constants'
+import { AnyRawGuildChannelData, RawGuildEmojiData, RawGuildMemberData, RawPresenceData } from '@src/api'
 
 export interface RawViewableGuildData extends AbstractGuildData {
   banner?: string
@@ -8,4 +9,10 @@ export interface RawViewableGuildData extends AbstractGuildData {
   verification_level?: GuildVerificationLevels
   vanity_url_code?: string
   nsfw_level?: GuildNsfwLevels
+  owner_id: string
+  emojis: RawGuildEmojiData[]
+  members: RawGuildMemberData[]
+  presences: RawPresenceData[]
+  channels: AnyRawGuildChannelData[]
+  members_count: number
 }

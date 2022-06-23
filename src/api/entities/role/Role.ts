@@ -1,6 +1,6 @@
 import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 import { RoleData } from '@src/api/entities/role/interfaces/RoleData'
-import { ColorResolvable, GuildMember, Json, PermissionsResolvable, ReadonlyPermissions, ToJsonProperties } from '@src/api'
+import { ColorResolvable, Guild, GuildMember, Json, PermissionsResolvable, ReadonlyPermissions, ToJsonProperties } from '@src/api'
 import { RoleTagsData } from '@src/api/entities/role/interfaces/RoleTagsData'
 import { RawRoleData } from '@src/api/entities/role/interfaces/RawRoleData'
 import { idToDate, idToTimestamp, ImageUrlOptions, attach } from '@src/utils'
@@ -67,7 +67,7 @@ export class Role extends AbstractEntity { // TODO: positions...
     )
   }
 
-  guild(options?: CacheManagerGetOptions): Promise<any> { // TODO: Guild
+  guild(options?: CacheManagerGetOptions): Promise<Guild | undefined> {
     return this.client.guilds.cache.get(this.guildId, options)
   }
 

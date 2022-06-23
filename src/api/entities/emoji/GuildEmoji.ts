@@ -13,6 +13,7 @@ import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 import { CacheManagerGetOptions } from '@src/cache'
 import { filterAndMap } from '@src/utils/filterAndMap'
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
+import { Guild } from '@src/api'
 
 export class GuildEmoji extends AbstractEmoji implements AbstractGuildEmoji {
   public declare id: string
@@ -56,7 +57,7 @@ export class GuildEmoji extends AbstractEmoji implements AbstractGuildEmoji {
     return this
   }
 
-  guild(options?: CacheManagerGetOptions): Promise<any | undefined> { // TODO: Guild
+  guild(options?: CacheManagerGetOptions): Promise<Guild | undefined> {
     return this.client.guilds.cache.get(this.guildId, options)
   }
 

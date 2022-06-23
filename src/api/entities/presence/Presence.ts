@@ -2,7 +2,7 @@ import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 import { PresenceData } from '@src/api/entities/presence/interfaces/PresenceData'
 import { PresenceStatus } from '@src/api/entities/presence/interfaces/PresenceStatus'
 import { PresenceClientStatusData } from '@src/api/entities/presence/interfaces/PresenceClientStatusData'
-import { EntitiesUtil, GuildMember, Json, ToJsonProperties, User } from '@src/api'
+import { EntitiesUtil, Guild, GuildMember, Json, ToJsonProperties, User } from '@src/api'
 import { RawPresenceData } from '@src/api/entities/presence/interfaces/RawPresenceData'
 import { attach } from '@src/utils'
 import { PresenceActivity } from '@src/api/entities/presence/PresenceActivity'
@@ -60,7 +60,7 @@ export class Presence extends AbstractEntity {
     )
   }
 
-  async guild(options?: CacheManagerGetOptions): Promise<any | undefined> { // TODO: Guild
+  async guild(options?: CacheManagerGetOptions): Promise<Guild | undefined> {
     return this.client.guilds.cache.get(this.guildId, options)
   }
 

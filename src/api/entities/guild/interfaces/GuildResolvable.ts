@@ -1,3 +1,3 @@
-import { Resolvable } from '@src/api'
+import { Guild, Resolvable } from '@src/api'
 
-export type GuildResolvable = Resolvable<any> // TODO
+export type GuildResolvable = Resolvable<Guild>

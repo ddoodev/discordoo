@@ -1,6 +1,6 @@
 import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 import { ThreadMemberData } from '@src/api/entities/member/interfaces/ThreadMemberData'
-import { GuildMember, Json, ReadonlyThreadMemberFlagsUtil, ToJsonProperties, User } from '@src/api'
+import { Guild, GuildMember, Json, ReadonlyThreadMemberFlagsUtil, ToJsonProperties, User } from '@src/api'
 import { RawThreadMemberData } from '@src/api/entities/member/interfaces/RawThreadMemberData'
 import { attach } from '@src/utils'
 import { CacheManagerGetOptions } from '@src/cache'
@@ -46,7 +46,7 @@ export class ThreadMember extends AbstractEntity implements ThreadMemberData {
     return this.client.users.cache.get(this.userId, options)
   }
 
-  guild(options?: CacheManagerGetOptions): Promise<any | undefined> { // TODO: Guild
+  guild(options?: CacheManagerGetOptions): Promise<Guild | undefined> {
     return this.client.guilds.cache.get(this.guildId, options)
   }
 

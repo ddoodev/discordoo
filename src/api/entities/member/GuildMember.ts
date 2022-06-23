@@ -1,5 +1,5 @@
 import { AbstractEntity } from '@src/api/entities/AbstractEntity'
-import { GuildMemberData, Json, RawGuildMemberData, ReadonlyPermissions, ToJsonProperties, User } from '@src/api'
+import { Guild, GuildMemberData, Json, RawGuildMemberData, ReadonlyPermissions, ToJsonProperties, User } from '@src/api'
 import { Keyspaces, PermissionFlags, ToJsonOverrideSymbol } from '@src/constants'
 import { attach, DiscordooError, ImageUrlOptions, WebSocketUtils } from '@src/utils'
 import { filterAndMap } from '@src/utils/filterAndMap'
@@ -111,7 +111,7 @@ export class GuildMember extends AbstractEntity {
     return this.client.users.cache.get(this.userId, options)
   }
 
-  async guild(options?: CacheManagerGetOptions): Promise<any | undefined> { // TODO: Guild
+  async guild(options?: CacheManagerGetOptions): Promise<Guild | undefined> {
     return this.client.guilds.cache.get(this.guildId, options)
   }
 
