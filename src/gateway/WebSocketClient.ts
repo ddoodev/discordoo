@@ -256,6 +256,8 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
           this.closeSequence = this.sequence
           this.sequence = -1
           this.socket.close(4901, 'ddoo: reconnect with resume')
+        } else {
+          this.socket.close(options.code || 1000,'ddoo: shutdown')
         }
       } catch (e: any) {
         // console.log('shard', this.id, 'ws close error:', e)

@@ -394,6 +394,18 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
     })
   }
 
+  async destroy(): Promise<void> {
+    if (!this.#running) throw new DiscordooError('Client#destroy', 'Not running.')
+    this.#running = false
+
+    await this.internals.gateway.disconnect()
+    // TODO: clear all cache
+    // await this.internals.cache.clear()
+
+    // should we destroy ipc?
+    // await this.internals.ipc.destroy()
+  }
+
   get sharding(): ClientShardingApplication {
     return {
       options: this.internals.options.ipc,
@@ -493,6 +505,10 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
 
       reconnect(shards?: ShardListResolvable): Promise<unknown> {
         return this.client.internals.gateway.reconnect(shards ? resolveDiscordShards(shards) : undefined)
+      },
+
+      disconnect(shards?: ShardListResolvable): Promise<unknown> {
+        return this.client.internals.gateway.disconnect(shards ? resolveDiscordShards(shards) : undefined)
       },
 
       send(data: GatewaySendPayloadLike, options?: GatewayAppSendOptions): unknown {

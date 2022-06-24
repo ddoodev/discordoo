@@ -24,6 +24,9 @@ export interface ClientGatewayApplication {
   /** This will disconnect specified/all shards from gateway and then connect them. */
   reconnect(shards?: ShardListResolvable): Promise<unknown>
 
+  /** This will disconnect specified/all shards from gateway. */
+  disconnect(shards?: ShardListResolvable): Promise<unknown>
+
   /** Send some packet to the gateway. Use the options to specify which shards to send this packet on. */
   send(data: GatewaySendPayloadLike, options?: GatewayAppSendOptions): unknown
 }

@@ -60,7 +60,7 @@ export class WebSocketManager {
 
   destroy() {
     this.status = WebSocketManagerStates.DISCONNECTED
-    this.shards.forEach(shard => shard.destroy({ reconnect: false }))
+    this.shards.forEach(shard => shard.destroy({ reconnect: false, code: 1000 }))
     if (this.queueInterval) {
       clearInterval(this.queueInterval)
       this.queueInterval = undefined
@@ -70,13 +70,10 @@ export class WebSocketManager {
   }
 
   disconnect(shards?: number[]) {
-    switch (Array.isArray(shards)) {
-      case true:
-        shards!.forEach(id => this.shards.get(id)?.destroy({ reconnect: false }))
-        break
-      case false:
-        this.shards.forEach(shard => shard.destroy({ reconnect: false }))
-        break
+    if (Array.isArray(shards)) {
+      shards!.forEach(id => this.shards.get(id)?.destroy({ reconnect: false, code: 1000 }))
+    } else {
+      this.shards.forEach(shard => shard.destroy({ reconnect: false, code: 1000 }))
     }
 
     if (this.shards.every(shard => shard.status === WebSocketClientStates.DISCONNECTED)) {
