@@ -2,6 +2,7 @@ import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 import { ToJsonProperties } from '@src/api/entities/interfaces/ToJsonProperties'
 import { Json } from '@src/api/entities/interfaces/Json'
 import {
+  Guild,
   GuildMember,
   MessageAttachment, MessageContent, MessageCreateOptions,
   MessageData,
@@ -151,7 +152,7 @@ export class Message extends AbstractEntity {
     return this.client.users.cache.get(this.authorId, options)
   }
 
-  async guild(options?: CacheManagerGetOptions): Promise<any | undefined> { // TODO: guild
+  async guild(options?: CacheManagerGetOptions): Promise<Guild | undefined> {
     return this.guildId ? this.client.guilds.cache.get(this.guildId, options) : undefined
   }
 

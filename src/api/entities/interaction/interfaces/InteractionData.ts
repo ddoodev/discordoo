@@ -22,4 +22,8 @@ export interface InteractionData {
   /** for components, the message they were attached to */
   message?: MessageResolvable
   version: number
+  /** the selected language of the invoking user */
+  locale?: string
+  /** the guild's preferred locale, if invoked in a guild */
+  guildLocale?: string
 }

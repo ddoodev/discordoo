@@ -21,4 +21,8 @@ export interface RawInteractionData {
   /** for components, the message they were attached to */
   message?: RawMessageData
   version: number
+  /** the selected language of the invoking user */
+  locale?: string
+  /** the guild's preferred locale, if invoked in a guild */
+  guild_locale?: string
 }
