@@ -19,6 +19,7 @@ import { GuildEmojisUpdatedEventContext } from '@src/events/emoji/ctx/GuildEmoji
 import { UserUpdateEventContext } from '@src/events/user/ctx/UserUpdateEventContext'
 import { GuildCreateEventContext } from '@src/events/guild/ctx'
 import { GuildDeleteEventContext } from '@src/events/guild/ctx/GuildDeleteEventContext'
+import { GuildUpdateEventContext } from '@src/events/guild/ctx/GuildUpdateEventContext'
 
 /** Client events */
 export interface ClientEventsHandlers {
@@ -72,7 +73,7 @@ export interface ClientEventsHandlers {
   guildCreate: (context: GuildCreateEventContext) => any
 
   /** Guild was updated */
-  // guildUpdate: (context: ChannelCreateEventContext) => any
+  guildUpdate: (context: GuildUpdateEventContext) => any
 
   /** Client left/was removed from a guild or guild became unavailable */
   guildDelete: (context: GuildDeleteEventContext) => any

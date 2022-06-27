@@ -3,6 +3,7 @@ import { AbstractGuildData } from '@src/api/entities/guild/interfaces/AbstractGu
 import { Json, ToJsonProperties } from '@src/api'
 import { GuildFeatures } from '@src/constants'
 import { attach, idToDate, idToTimestamp, ImageUrlOptions } from '@src/utils'
+import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class AbstractGuild extends AbstractEntity implements AbstractGuildData {
   public declare features: GuildFeatures[]
@@ -10,14 +11,16 @@ export class AbstractGuild extends AbstractEntity implements AbstractGuildData {
   public declare id: string
   public declare name: string
 
-  async init(data: AbstractGuildData): Promise<this> {
+  async init(data: AbstractGuildData, options?: EntityInitOptions): Promise<this> {
     attach(this, data, {
       props: [
         'features',
         'icon',
         'id',
         'name'
-      ]
+      ],
+      disabled: options?.ignore,
+      enabled: [ 'id', 'name' ]
     })
 
     return this

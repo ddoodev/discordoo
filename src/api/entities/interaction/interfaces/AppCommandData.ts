@@ -8,7 +8,7 @@ export interface AppCommandData {
   name: string
   /** 1-100 character description for `CHAT_INPUT` commands, empty string for `USER` and `MESSAGE` commands */
   description: string
-  /** autoincrementing version identifier updated during substantial record changes */
+  /** autoincrement version identifier updated during substantial record changes */
   version: string
   /** unique id of the parent application */
   applicationId: string

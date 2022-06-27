@@ -84,7 +84,7 @@ export class ClientGuildMembersManager extends EntitiesManager {
     return undefined
   }
 
-  async fetchMany(guild: GuildResolvable, options: GuildMembersFetchOptions = {}): Promise<GuildMember[] | undefined> {
+  async fetchMany(guild: GuildResolvable, options: GuildMembersFetchOptions = {}): Promise<GuildMember[]> {
     const guildId = resolveGuildId(guild)
 
     if (!guildId) throw new DiscordooError('ClientGuildMembersManager#fetchMany', 'Cannot fetch members without guild id.')

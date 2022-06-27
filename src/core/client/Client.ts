@@ -94,7 +94,7 @@ import { GatewayAppSendOptions } from '@src/core/client/app/GatewayAppSendOption
 import { inspect } from 'util'
 import { ClientUser } from '@src/api/entities/user/ClientUser'
 import { GuildEmojisUpdatedEvent } from '@src/events/emoji/GuildEmojisUpdatedEvent'
-import { GuildDeleteEvent } from '@src/events/guild'
+import { GuildDeleteEvent, GuildUpdateEvent } from '@src/events/guild'
 
 /** Entry point for **all** of Discordoo. */
 @Final(
@@ -308,7 +308,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
       ShardConnectedEvent, ChannelCreateEvent, ChannelUpdateEvent, ChannelDeleteEvent,
       ChannelPinsUpdateEvent, ThreadCreateEvent, ThreadUpdateEvent, ThreadDeleteEvent,
       ThreadListSyncEvent, GuildMembersChunkEvent, ThreadMemberUpdateEvent, ThreadMembersUpdateEvent,
-      GuildEmojisUpdatedEvent// , UserUpdateEvent
+      GuildEmojisUpdatedEvent, GuildUpdateEvent// , UserUpdateEvent
     ]) // TODO
 
     this.overwrites = new ClientPermissionOverwritesManager(this)

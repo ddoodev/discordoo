@@ -5,6 +5,7 @@ import { GuildNsfwLevels, GuildVerificationLevels } from '@src/constants'
 import { ViewableGuildData } from '@src/api/entities/guild/interfaces/ViewableGuildData'
 import { RawViewableGuildData } from '@src/api/entities/guild/interfaces/RawViewableGuildData'
 import { Json, ToJsonProperties } from '@src/api/entities/interfaces'
+import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export abstract class AbstractViewableGuild extends AbstractGuild implements ViewableGuild {
   public banner?: string
@@ -16,7 +17,7 @@ export abstract class AbstractViewableGuild extends AbstractGuild implements Vie
   public declare ownerId: string
   public declare membersCount: number
 
-  async init(data: ViewableGuildData | RawViewableGuildData): Promise<this> {
+  async init(data: ViewableGuildData | RawViewableGuildData, options?: EntityInitOptions): Promise<this> {
     await super.init(data)
 
     attach(this, data, {
@@ -29,7 +30,9 @@ export abstract class AbstractViewableGuild extends AbstractGuild implements Vie
         [ 'verificationLevel', 'verification_level', GuildVerificationLevels.NONE ],
         [ 'ownerId', 'owner_id' ],
         [ 'membersCount', 'members_count' ],
-      ]
+      ],
+      disabled: options?.ignore,
+      enabled: [ 'ownerId' ]
     })
 
     return this
