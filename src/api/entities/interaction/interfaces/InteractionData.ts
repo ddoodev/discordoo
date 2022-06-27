@@ -2,7 +2,7 @@ import { InteractionTypes } from '@src/constants'
 import { ChannelResolvable, GuildResolvable, MessageResolvable, UserResolvable } from '@src/api'
 import { GuildMemberResolvable } from '@src/api/entities/member/interfaces/GuildMemberResolvable'
 
-export interface InteractionData {
+export interface InteractionData<DataType = any> {
   /** id of the interaction */
   id: string
   /** id of the application this interaction is for */
@@ -26,4 +26,6 @@ export interface InteractionData {
   locale?: string
   /** the guild's preferred locale, if invoked in a guild */
   guildLocale?: string
+  /** the data for the interaction */
+  data: DataType
 }

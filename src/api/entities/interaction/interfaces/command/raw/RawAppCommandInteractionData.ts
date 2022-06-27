@@ -1,8 +1,9 @@
 import { AppCommandTypes } from '@src/constants'
 import { RawInteractionResolvedData } from '@src/api/entities/interaction/interfaces/RawInteractionResolvedData'
-import { AppCommandInteractionOptionData } from '@src/api/entities/interaction/interfaces/AppCommandInteractionOptionData'
+import { AppCommandInteractionOptionPayload }
+  from '@src/api/entities/interaction/interfaces/command/AppCommandInteractionOptionPayload'
 
-export interface RawAppCommandPayloadData {
+export interface RawAppCommandInteractionData {
   /** the ID of the invoked command */
   id: string
   /** the name of the invoked command */
@@ -12,5 +13,5 @@ export interface RawAppCommandPayloadData {
   /** converted users + roles + channels */
   resolved?: RawInteractionResolvedData
   /** the params + values from the user */
-  options?: AppCommandInteractionOptionData[]
+  options?: AppCommandInteractionOptionPayload[]
 }

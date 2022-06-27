@@ -1,7 +1,7 @@
 import { InteractionTypes } from '@src/constants'
 import { RawGuildMemberData, RawMessageData, RawUserData } from '@src/api'
 
-export interface RawInteractionData {
+export interface RawInteractionData<RawDataType = any> {
   /** id of the interaction */
   id: string
   /** id of the application this interaction is for */
@@ -25,4 +25,6 @@ export interface RawInteractionData {
   locale?: string
   /** the guild's preferred locale, if invoked in a guild */
   guild_locale?: string
+  /** the data for the interaction */
+  data: RawDataType
 }

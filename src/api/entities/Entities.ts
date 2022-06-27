@@ -21,6 +21,8 @@ import { Message } from '@src/api/entities/message'
 import { User } from '@src/api/entities/user'
 import { Role } from '@src/api/entities/role'
 import { Guild } from '@src/api/entities/guild'
+import { AppCommandInteraction, AppCommandInteractionData } from '@src/api/entities/interaction/AppCommandInteraction'
+import { Interaction } from '@src/api/entities/interaction/Interaction'
 
 export const Entities = {
   Message,
@@ -52,4 +54,7 @@ export const Entities = {
   StickerPack,
   ThreadMember,
   Guild,
+  AppCommandInteractionData,
+  AppCommandInteraction,
+  Interaction,
 }
