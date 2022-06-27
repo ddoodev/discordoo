@@ -16,8 +16,8 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [ 12.18.0, 14.x, 16.x ]
-        os: [ ubuntu-latest, windows-latest, macOS-latest ]
+        node-version: [ 12.18.0 ]
+        os: [ ubuntu-latest ]
 
     steps:
       - name: Check out Git repository
