@@ -1,6 +1,5 @@
 import {
   EntitiesCacheManager,
-  EntitiesManager,
   GuildMember,
   GuildMemberAddData, GuildMemberResolvable,
   GuildMembersFetchOptions, MemberBanOptions,
@@ -8,8 +7,9 @@ import {
   UserResolvable
 } from '@src/api'
 import { Client } from '@src/core'
-import { Keyspaces } from '@src/constants'
+import { Keyspaces } from '@src/constants/cache/Keyspaces'
 import { GuildMembersManagerData } from '@src/api/managers/members/GuildMembersManagerData'
+import { EntitiesManager } from '@src/api/managers/EntitiesManager'
 
 export class GuildMembersManager extends EntitiesManager {
   public cache: EntitiesCacheManager<GuildMember>
