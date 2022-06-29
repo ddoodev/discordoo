@@ -1,8 +1,7 @@
 import { MessageAttachmentResolvable } from '@src/api/entities/attachment/interfaces/MessageAttachmentResolvable'
 import { RawAttachment } from '@discordoo/providers'
-import { MessageAttachment } from '@src/api/entities/attachment/MessageAttachment'
 import { ColorResolvable } from '@src/api/entities/interfaces/ColorResolvable'
-import { EmptyBigBit, EmptyBit, GatewayIntents, PermissionFlags, RawColors } from '@src/constants'
+import { EmptyBigBit, EmptyBit, PermissionFlags, RawColors } from '@src/constants'
 import { DiscordooError } from '@src/utils/DiscordooError'
 import { is } from 'typescript-is'
 import { ValidationError } from '@src/utils/ValidationError'
@@ -21,7 +20,7 @@ import { RoleTagsResolvable } from '@src/api/entities/role/interfaces/RoleTagsRe
 import { RoleTagsData } from '@src/api/entities/role/interfaces/RoleTagsData'
 import { ShardListResolvable } from '@src/utils/interfaces'
 import { range } from '@src/utils/range'
-import { EmojiResolvable } from '@src/api'
+import { EmojiResolvable, MessageAttachment, MessageAttachmentConstructor } from '@src/api'
 import { MessageReactionResolvable } from '@src/api/entities/reaction/interfaces/MessageReactionResolvable'
 import { PermissionOverwriteResolvable } from '@src/api/entities/overwrite/interfaces/PermissionOverwriteResolvable'
 import { RawPermissionOverwriteData } from '@src/api/entities/overwrite/interfaces/RawPermissionOverwriteData'
@@ -34,15 +33,16 @@ import { MessageReferenceResolvable } from '@src/api/entities/message/interfaces
 import { RawMessageReferenceData } from '@src/api/entities/message/interfaces/RawMessageReferenceData'
 import { ThreadMemberResolvable } from '@src/api/entities/member/interfaces/ThreadMemberResolvable'
 import { GatewayIntentsResolvable } from '@src/gateway/interfaces/GatewayIntentsResolvable'
+import { MessageEmbedConstructor } from '@src/api/entities/embed/MessageEmbedConstructor'
 
 export function resolveFiles(resolvable: MessageAttachmentResolvable[]): Promise<RawAttachment[]> {
   return Promise.all(resolvable.map(resolveFile))
 }
 
 export function resolveFile(resolvable: MessageAttachmentResolvable): Promise<RawAttachment> {
-  if (resolvable instanceof MessageAttachment) return resolvable.toRaw()
+  if (resolvable instanceof MessageAttachmentConstructor) return resolvable.toRaw()
 
-  return new MessageAttachment(resolvable).toRaw() // FIXME: low performance
+  return new MessageAttachmentConstructor(resolvable).toRaw() // FIXME: low performance
 }
 
 export function resolveColor(resolvable: ColorResolvable): number {
@@ -128,7 +128,7 @@ export function resolveBitField(resolvable: BitFieldResolvable, emptyBit: number
 export function resolveEmbedToRaw(resolvable: MessageEmbedResolvable): RawMessageEmbedData {
   if (resolvable instanceof MessageEmbed) return resolvable.toJson()
 
-  return new MessageEmbed(resolvable).toJson() // FIXME: low performance
+  return new MessageEmbedConstructor(resolvable).toJson() // FIXME: low performance
 }
 
 export function resolvePermissionOverwriteToRaw(

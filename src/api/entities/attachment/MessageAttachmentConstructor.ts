@@ -1,27 +1,31 @@
 import { SPOILER_PREFIX } from '@src/constants'
-import { attach, BufferResolvable, randomString, ValidationError } from '@src/utils'
-import { MessageAttachmentConstructorData, MessageAttachmentConstructorOptions } from '@src/api'
+import { attach, BufferResolvable, randomString } from '@src/utils'
+import {
+  MessageAttachment,
+  MessageAttachmentConstructorData,
+  MessageAttachmentConstructorOptions,
+  RawMessageAttachmentData
+} from '@src/api'
 import { RawAttachment } from '@discordoo/providers'
 import { DataResolver } from '@src/utils/DataResolver'
 
 export class MessageAttachmentConstructor {
   declare file: BufferResolvable
   declare name: string
-  public spoiler = false
   private _options?: MessageAttachmentConstructorOptions
 
-  constructor(data: MessageAttachmentConstructorData, options?: MessageAttachmentConstructorOptions) {
-    if (!data.file) throw new ValidationError('MessageAttachmentConstructor', 'file is required')
-
+  constructor(
+    data: MessageAttachmentConstructorData | MessageAttachment | RawMessageAttachmentData,
+    options?: MessageAttachmentConstructorOptions
+  ) {
     attach(this, data, {
       props: [
-        'name',
-        'spoiler',
-        'file',
+        [ 'name', 'filename' ],
+        [ 'file', 'url' ],
       ]
     })
 
-    if (!data.name) this.name = `${randomString()}.png`
+    if (!this.name) this.name = `${randomString()}.png`
 
     this._options = options
   }
@@ -41,6 +45,10 @@ export class MessageAttachmentConstructor {
     }
 
     return this
+  }
+
+  get spoiler() {
+    return this.name.startsWith(SPOILER_PREFIX)
   }
 
   setName(name: string): this {
