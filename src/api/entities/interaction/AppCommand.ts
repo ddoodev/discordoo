@@ -7,7 +7,7 @@ import {
 } from '@src/api'
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 import { attach } from '@src/utils'
-import { AppCommandOptionTypes, AppCommandTypes, ToJsonOverrideSymbol } from '@src/constants'
+import { AppCommandOptionTypes, AppCommandTypes } from '@src/constants'
 import { Locale } from '@src/constants/common/Locale'
 
 export class AppCommand extends AbstractEntity {
@@ -68,28 +68,16 @@ export class AppCommand extends AbstractEntity {
       ...properties,
       id: true,
       name: true,
-      name_localizations: {
-        override: ToJsonOverrideSymbol,
-        value: this.nameLocalizations
-      },
+      nameLocalizations: true,
       description: true,
-      description_localizations: {
-        override: ToJsonOverrideSymbol,
-        value: this.descriptionLocalizations
-      },
+      descriptionLocalizations: true,
       version: true,
       applicationId: true,
       type: true,
       guildId: true,
       options: true,
-      default_member_permissions: {
-        override: ToJsonOverrideSymbol,
-        value: this.defaultMemberPermissions
-      },
-      dm_permission: {
-        override: ToJsonOverrideSymbol,
-        value: this.dmPermission
-      },
+      defaultMemberPermissions: true,
+      dmPermission: true,
     }, obj)
   }
 }
@@ -134,15 +122,9 @@ export class AppCommandOption extends AbstractEntity {
     return super.toJson({
       ...properties,
       name: true,
-      name_localizations: {
-        override: ToJsonOverrideSymbol,
-        value: this.nameLocalizations
-      },
+      nameLocalizations: true,
       description: true,
-      description_localizations: {
-        override: ToJsonOverrideSymbol,
-        value: this.descriptionLocalizations
-      },
+      descriptionLocalizations: true,
       choices: true,
       required: true,
       value: true,

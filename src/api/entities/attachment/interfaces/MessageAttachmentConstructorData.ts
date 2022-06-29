@@ -1,8 +1,7 @@
 import { BufferResolvable } from '@src/utils/interfaces/BufferResolvable'
 
-export interface MessageAttachmentData {
+export interface MessageAttachmentConstructorData {
   file: BufferResolvable
   name?: string
   spoiler?: boolean
-  ephemeral?: boolean
 }

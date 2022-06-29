@@ -1,5 +1,4 @@
 import { AppCommandOptionTypes, ChannelTypes } from '@src/constants'
-import { AppCommandOptionChoiceData } from '@src/api/entities/interaction/interfaces/command/common/AppCommandOptionChoiceData'
 import { Locale } from '@src/constants/common/Locale'
 import { RawAppCommandOptionsChoiceData } from '@src/api/entities/interaction/interfaces/command/raw/RawAppCommandOptionsChoiceData'
 

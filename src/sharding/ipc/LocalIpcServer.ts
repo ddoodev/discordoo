@@ -1,6 +1,6 @@
 import { TypedEmitter } from 'tiny-typed-emitter'
 import { IpcServerOptions } from '@src/sharding/interfaces/ipc/IpcServerOptions'
-import { IPC as RawIpc, server as RawIpcServer } from 'node-ipc'
+import { IPC as RawIpc, server as RawIpcServer } from '@achrinza/node-ipc'
 import { Collection } from '@discordoo/collection'
 import { IpcCacheOpCodes, IpcEvents, IpcOpCodes, RAW_IPC_EVENT } from '@src/constants'
 import {

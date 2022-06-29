@@ -269,6 +269,7 @@ export class MessageEmbed {
       footer: footer ? { text: footer.text, icon_url: footer.iconUrl } : undefined,
       image: image ? { url: image.url } : undefined,
       thumbnail: thumbnail ? { url: thumbnail.url } : undefined,
+      fields: this.fields.map(field => ({ name: field.name, value: field.value, inline: field.inline }))
     }
 
     return JSON.parse(JSON.stringify(result))
