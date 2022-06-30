@@ -14,9 +14,9 @@ export const WS_DEFAULT_OPTIONS: CompletedGatewayOptions = {
   },
   connection: {
     properties: {
-      $browser: 'Discordoo',
-      $device: 'Discordoo',
-      $os: process.platform
+      browser: 'Discordoo',
+      device: 'Discordoo',
+      os: process.platform
     },
     handshakeTimeout: 30_000,
     compress: false,

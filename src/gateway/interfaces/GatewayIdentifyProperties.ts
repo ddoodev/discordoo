@@ -4,15 +4,15 @@ export interface GatewayIdentifyProperties {
    * Operating system
    * @default process.platform
    * */
-  $os: string
+  os: string
   /**
    * Discord library name
    * @default Discordoo
    * */
-  $browser: string
+  browser: string
   /**
    * Discord library name
    * @default Discordoo
    * */
-  $device: string
+  device: string
 }
