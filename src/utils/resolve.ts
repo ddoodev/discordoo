@@ -47,6 +47,7 @@ export function resolveFile(resolvable: MessageAttachmentResolvable): Promise<Ra
 
 export function resolveColor(resolvable: ColorResolvable): number {
   if (!is<ColorResolvable>(resolvable)) throw new ValidationError(undefined, 'Bad color:', resolvable)
+  if (typeof resolvable === 'number') return resolvable
 
   let result: any = RawColors.BLACK
 
@@ -57,7 +58,7 @@ export function resolveColor(resolvable: ColorResolvable): number {
       case 'RANDOM':
         return Math.floor(Math.random() * 16777215)
       default:
-        result = RawColors[resolvable] ?? parseInt(resolvable.replace('#', ''), 16)
+        result = RawColors[resolvable] ?? parseInt(resolvable.slice(1), 16)
     }
   } else if (Array.isArray(resolvable)) {
     result = (resolvable[0] << 16) + (resolvable[1] << 8) + resolvable[2]
