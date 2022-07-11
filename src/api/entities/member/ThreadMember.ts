@@ -1,6 +1,16 @@
 import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 import { ThreadMemberData } from '@src/api/entities/member/interfaces/ThreadMemberData'
-import { Guild, GuildMember, Json, ReadonlyThreadMemberFlagsUtil, ToJsonProperties, User } from '@src/api'
+import {
+  DirectMessagesChannel,
+  Guild,
+  GuildMember,
+  Json, Message,
+  MessageContent,
+  MessageCreateOptions,
+  ReadonlyThreadMemberFlagsUtil,
+  ToJsonProperties,
+  User
+} from '@src/api'
 import { RawThreadMemberData } from '@src/api/entities/member/interfaces/RawThreadMemberData'
 import { attach } from '@src/utils'
 import { CacheManagerGetOptions } from '@src/cache'
@@ -41,9 +51,22 @@ export class ThreadMember extends AbstractEntity implements ThreadMemberData {
   get joinDate(): Date {
     return new Date(this.joinTimestamp)
   }
+  async send(content: MessageContent, options?: MessageCreateOptions): Promise<Message | undefined> {
+    const dm = await this.dm()
+    if (!dm) return undefined
+    return dm.send(content, options)
+  }
 
   user(options?: CacheManagerGetOptions): Promise<User | undefined> {
     return this.client.users.cache.get(this.userId, options)
+  }
+
+  async dm(options?: CacheManagerGetOptions): Promise<DirectMessagesChannel | undefined> {
+    let channel = await this.client.dms.cache.get(this.userId, options)
+    if (!channel) {
+      channel = await this.client.dms.fetch(this.userId)
+    }
+    return channel
   }
 
   guild(options?: CacheManagerGetOptions): Promise<Guild | undefined> {

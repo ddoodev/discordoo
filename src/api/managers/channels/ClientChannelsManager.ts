@@ -9,9 +9,9 @@ import {
   resolveMessageId,
   resolvePermissionOverwriteToRaw
 } from '@src/utils'
-import { GuildChannelDeleteOptions } from '@src/api/entities/channel/interfaces/GuildChannelDeleteOptions'
+import { ChannelDeleteOptions } from '@src/api/entities/channel/interfaces/ChannelDeleteOptions'
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
-import { Keyspaces } from '@src/constants'
+import { ChannelTypes, Keyspaces } from '@src/constants'
 import { AnyChannel } from '@src/api/entities/channel/interfaces/AnyChannel'
 import { GuildChannelEditData } from '@src/api/entities/channel/interfaces/GuildChannelEditData'
 import { RawGuildChannelEditData } from '@src/api/entities/channel/interfaces/RawGuildChannelEditData'
@@ -191,7 +191,7 @@ export class ClientChannelsManager extends EntitiesManager {
     )
   }
 
-  async delete<R = AnyChannel>(channel: ChannelResolvable, options: GuildChannelDeleteOptions = {}): Promise<R | undefined> {
+  async delete<R = AnyChannel>(channel: ChannelResolvable, options: ChannelDeleteOptions = {}): Promise<R | undefined> {
     const channelId = resolveChannelId(channel)
 
     if (!channelId) {

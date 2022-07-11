@@ -274,8 +274,6 @@ export class ClientMessagesManager extends EntitiesManager {
       payload.stickers.push(...stickers)
     }
 
-    console.log('message payload', payload)
-
     const response = await this.client.internals.actions.createMessage(channelId, payload)
     const Message = EntitiesUtil.get('Message')
 

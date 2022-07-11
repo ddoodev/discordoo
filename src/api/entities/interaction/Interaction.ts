@@ -61,7 +61,7 @@ export class Interaction extends AbstractEntity {
   async channel(options?: CacheManagerGetOptions): Promise<AnyWritableChannel | undefined> {
     if (this.channelId) {
       return this.client.internals.cache.get(
-        Keyspaces.CHANNELS, this.guildId ?? this.userId!, 'channelEntityKey', this.channelId, options
+        Keyspaces.CHANNELS, this.guildId ?? 'dm', 'channelEntityKey', this.channelId, options
       )
     }
   }

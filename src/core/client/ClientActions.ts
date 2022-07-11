@@ -11,7 +11,7 @@ import { RawStickerEditData } from '@src/api/entities/sticker/interfaces/RawStic
 import { RawStickerCreateData } from '@src/api/entities/sticker/interfaces/RawStickerCreateData'
 import { RawStickerPackData } from '@src/api/entities/sticker'
 import { RawGuildMemberEditData } from '@src/api/entities/member/interfaces/RawGuildMemberEditData'
-import { GuildEmojiData, GuildMember, RawGuildMemberData } from '@src/api'
+import { AbstractChannelData, GuildEmojiData, GuildMember, RawGuildMemberData } from '@src/api'
 import { RawRoleEditData } from '@src/api/entities/role/interfaces/RawRoleEditData'
 import { RawRoleData } from '@src/api/entities/role/interfaces/RawRoleData'
 import { RawRoleCreateData } from '@src/api/entities/role/interfaces/RawRoleCreateData'
@@ -30,6 +30,7 @@ import { DiscordooError, DiscordSnowflake, ValidationError } from '@src/utils'
 import { GuildMembersChunkHandlerContext } from '@src/events/interfaces/GuildMembersChunkHandlerContext'
 import { is } from 'typescript-is'
 import { RawGuildMemberAddData } from '@src/api/managers/members/RawGuildMemberAddData'
+import { RawDirectMessagesChannelData } from '@src/api/entities/channel/interfaces/RawDirectMessagesChannelData'
 
 export class ClientActions {
   public client: Client
@@ -200,6 +201,13 @@ export class ClientActions {
       })
       .attach(data.file)
       .post<RawStickerData>({ reason })
+  }
+
+  createUserChannel(userId: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.USER_CHANNELS('@me'))
+      .body({ recipient_id: userId })
+      .post<RawDirectMessagesChannelData>()
   }
 
   deleteChannel(channelId: string, reason?: string) {

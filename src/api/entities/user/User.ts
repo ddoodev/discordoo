@@ -5,11 +5,11 @@ import { RawUserData } from '@src/api/entities/user/interfaces/RawUserData'
 import { Json } from '@src/api/entities/interfaces/Json'
 import { ToJsonProperties } from '@src/api/entities/interfaces/ToJsonProperties'
 import { UserFlagsUtil } from '@src/api/entities/bitfield'
-import { GuildResolvable, Presence } from '@src/api'
+import { DirectMessagesChannel, GuildResolvable, Message, MessageContent, MessageCreateOptions, Presence } from '@src/api'
 import { CacheManagerFilterOptions, CacheManagerGetOptions } from '@src/cache'
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
-export class User extends AbstractEntity implements UserData { // TODO: implements WritableChannel
+export class User extends AbstractEntity implements UserData {
   public accentColor?: number
   public avatar?: string
   public banner?: string
@@ -55,6 +55,20 @@ export class User extends AbstractEntity implements UserData { // TODO: implemen
     }
 
     return this
+  }
+
+  async send(content: MessageContent, options?: MessageCreateOptions): Promise<Message | undefined> {
+    const dm = await this.dm()
+    if (!dm) return undefined
+    return dm.send(content, options)
+  }
+
+  async dm(options?: CacheManagerGetOptions): Promise<DirectMessagesChannel | undefined> {
+    let channel = await this.client.dms.cache.get(this.id, options)
+    if (!channel) {
+      channel = await this.client.dms.fetch(this.id)
+    }
+    return channel
   }
 
   async presence(guild: GuildResolvable, options?: CacheManagerGetOptions): Promise<Presence | undefined> {

@@ -26,14 +26,19 @@ export class MessageCreateEvent extends AbstractEvent {
     await this.client.users.cache.set(author.id, author)
 
     const channel = await this.client.channels.cache.get<AnyWritableChannel>(message.channelId, {
-      storage: message.guildId ?? message.authorId
+      storage: message.guildId ?? 'dm'
     })
 
     if (channel) {
       channel.lastMsgId = message.id
       await this.client.channels.cache.set(message.channelId, channel, {
-        storage: message.guildId ?? message.authorId
+        storage: message.guildId ?? 'dm'
       })
+      if (!message.guildId) {
+        await this.client.channels.cache.set(message.authorId, channel, {
+          storage: 'dm'
+        })
+      }
     }
 
     const context: MessageCreateEventContext = {

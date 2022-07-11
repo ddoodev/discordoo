@@ -1,9 +1,9 @@
 import { AbstractEventContext } from '@src/events/interfaces/AbstractEventContext'
-import { AnyGuildChannel } from '@src/api/entities/channel/interfaces/AnyGuildChannel'
+import { AnyChannel } from '@src/api'
 
 export interface ChannelUpdateEventContext extends AbstractEventContext {
-  stored?: AnyGuildChannel
-  updated: AnyGuildChannel
+  stored?: AnyChannel
+  updated: AnyChannel
   channelId: string
-  guildId: string
+  guildId?: string
 }

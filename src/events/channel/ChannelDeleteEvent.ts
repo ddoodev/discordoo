@@ -1,14 +1,16 @@
 import { AbstractEvent } from '@src/events'
-import { EventNames, Keyspaces } from '@src/constants'
-import { AnyRawGuildChannelData } from '@src/api/entities/channel/interfaces/AnyRawGuildChannelData'
+import { ChannelTypes, EventNames, Keyspaces } from '@src/constants'
+import { AnyRawChannelData } from '@src/api/entities/channel/interfaces/AnyRawGuildChannelData'
 import { channelEntityKey } from '@src/utils'
 import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 import { ChannelDeleteEventContext } from '@src/events/channel/ctx/ChannelDeleteEventContext'
+import { RawDirectMessagesChannelData } from '@src/api/entities/channel/interfaces/RawDirectMessagesChannelData'
+import { AnyChannel } from '@src/api'
 
 export class ChannelDeleteEvent extends AbstractEvent {
   public name = EventNames.CHANNEL_DELETE
 
-  async execute(shardId: number, data: AnyRawGuildChannelData) {
+  async execute(shardId: number, data: AnyRawChannelData) {
 
     const entityKey = channelEntityKey(data)
     if (entityKey === 'AbstractChannel') {
@@ -18,30 +20,27 @@ export class ChannelDeleteEvent extends AbstractEvent {
 
     const Channel: any = EntitiesUtil.get(entityKey)
 
-    let channel = await this.client.internals.cache.get(
-      Keyspaces.CHANNELS,
-      data.guild_id,
-      'channelEntityKey',
-      data.id,
-    )
+    let channel = await this.client.channels.cache.get(data.id, { storage: data.guild_id ?? 'dm' })
 
     if (channel) {
-      channel = await channel.init({ ...data, deleted: true })
+      channel = await channel.init({ ...data, deleted: true } as any)
     } else {
-      channel = await new Channel(this.client).init({ ...data, deleted: true })
+      channel = await new Channel(this.client).init({ ...data, deleted: true }) as AnyChannel
     }
 
-    await this.client.internals.cache.delete(
-      Keyspaces.CHANNELS,
-      data.guild_id,
-      data.id
-    )
+    await this.client.channels.cache.delete(channel.id, { storage: data.guild_id ?? 'dm' })
+
+    if (data.type === ChannelTypes.DM || data.type === ChannelTypes.GROUP_DM) {
+      for await (const user of (data as RawDirectMessagesChannelData).recipients) {
+        await this.client.dms.cache.delete(user.id)
+      }
+    }
 
     const context: ChannelDeleteEventContext = {
       channel,
       shardId,
       channelId: channel.id,
-      guildId: channel.guildId,
+      guildId: 'guildId' in channel ? channel.guildId : undefined,
     }
 
     this.client.emit(EventNames.CHANNEL_DELETE, context)

@@ -5,7 +5,7 @@ export { AbstractGuildTextChannelData } from '@src/api/entities/channel/interfac
 export { RawAbstractGuildChannelData } from '@src/api/entities/channel/interfaces/RawAbstractGuildChannelData'
 export { RawThreadChannelCreateData } from '@src/api/entities/channel/interfaces/RawThreadChannelCreateData'
 export { RawGuildChannelCreateData } from '@src/api/entities/channel/interfaces/RawGuildChannelCreateData'
-export { GuildChannelDeleteOptions } from '@src/api/entities/channel/interfaces/GuildChannelDeleteOptions'
+export { ChannelDeleteOptions } from '@src/api/entities/channel/interfaces/ChannelDeleteOptions'
 export { AbstractThreadChannelData } from '@src/api/entities/channel/interfaces/AbstractThreadChannelData'
 export { ThreadChannelEditOptions } from '@src/api/entities/channel/interfaces/ThreadChannelEditOptions'
 export { AbstractGuildChannelData } from '@src/api/entities/channel/interfaces/AbstractGuildChannelData'

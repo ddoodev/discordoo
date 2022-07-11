@@ -1,8 +1,8 @@
 import { AbstractEventContext } from '@src/events/interfaces/AbstractEventContext'
-import { AnyGuildChannel } from '@src/api/entities/channel/interfaces/AnyGuildChannel'
+import { AnyChannel } from '@src/api'
 
 export interface ChannelDeleteEventContext extends AbstractEventContext {
-  channel: AnyGuildChannel
+  channel: AnyChannel
   channelId: string
-  guildId: string
+  guildId?: string
 }

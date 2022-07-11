@@ -3,7 +3,7 @@ export enum Keyspaces {
   GUILDS = 'guilds',
   // users => global => user id
   USERS = 'users',
-  // channels => user id or guild id => channel id
+  // channels => guild id or 'dm' => channel id
   CHANNELS = 'channels',
   // messages => channel id => message id
   MESSAGES = 'messages',
@@ -23,6 +23,8 @@ export enum Keyspaces {
   CHANNEL_PERMISSIONS_OVERWRITES = 'channel-permissions-overwrites',
   // category-channel-children => channel id (pointer) => guild-channels => guild id => channel id
   CATEGORY_CHANNEL_CHILDREN = 'category-channel-children',
+  // dm-channels => user id => channel id (pointer) => channels => channel id
+  DM_CHANNELS = 'dm-channels',
   // guild-members => guild id => member user id
   GUILD_MEMBERS = 'guild-members',
   // guild-member-roles => guild id + member user id => role id (pointer) => guild-roles => guild id => role id

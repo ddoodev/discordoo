@@ -167,9 +167,10 @@ export class Message extends AbstractEntity {
   }
 
   async channel(options?: CacheManagerGetOptions): Promise<AnyWritableChannel | undefined> {
-    return this.client.internals.cache.get(
-      Keyspaces.CHANNELS, this.guildId ?? this.authorId, 'channelEntityKey', this.channelId, options
-    )
+    return this.client.channels.cache.get(this.channelId, {
+      ...options,
+      storage: this.guildId ?? 'dm'
+    })
   }
 
   async member(options?: CacheManagerGetOptions): Promise<GuildMember | undefined> {

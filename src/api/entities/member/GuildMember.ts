@@ -1,5 +1,16 @@
 import { AbstractEntity } from '@src/api/entities/AbstractEntity'
-import { Guild, GuildMemberData, Json, RawGuildMemberData, ReadonlyPermissions, ToJsonProperties, User } from '@src/api'
+import {
+  DirectMessagesChannel,
+  Guild,
+  GuildMemberData,
+  Json, Message,
+  MessageContent,
+  MessageCreateOptions,
+  RawGuildMemberData,
+  ReadonlyPermissions,
+  ToJsonProperties,
+  User
+} from '@src/api'
 import { Keyspaces, PermissionFlags, ToJsonOverrideSymbol } from '@src/constants'
 import { attach, DiscordooError, ImageUrlOptions, WebSocketUtils } from '@src/utils'
 import { filterAndMap } from '@src/utils/filterAndMap'
@@ -107,8 +118,22 @@ export class GuildMember extends AbstractEntity {
     return this
   }
 
-  async user(options?: CacheManagerGetOptions): Promise<User | undefined> {
+  async send(content: MessageContent, options?: MessageCreateOptions): Promise<Message | undefined> {
+    const dm = await this.dm()
+    if (!dm) return undefined
+    return dm.send(content, options)
+  }
+
+  user(options?: CacheManagerGetOptions): Promise<User | undefined> {
     return this.client.users.cache.get(this.userId, options)
+  }
+
+  async dm(options?: CacheManagerGetOptions): Promise<DirectMessagesChannel | undefined> {
+    let channel = await this.client.dms.cache.get(this.userId, options)
+    if (!channel) {
+      channel = await this.client.dms.fetch(this.userId)
+    }
+    return channel
   }
 
   async guild(options?: CacheManagerGetOptions): Promise<Guild | undefined> {

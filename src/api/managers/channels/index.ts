@@ -1,3 +1,4 @@
+export { ClientDirectMessagesChannelsManager } from '@src/api/managers/channels/ClientDirectMessagesChannelsManager'
 export { CategoryChannelChildrenManagerData } from '@src/api/managers/channels/CategoryChannelChildrenManagerData'
 export { CategoryChannelChildrenManager } from '@src/api/managers/channels/CategoryChannelChildrenManager'
 export { GuildChannelsManagerData } from '@src/api/managers/channels/GuildChannelsManagerData'

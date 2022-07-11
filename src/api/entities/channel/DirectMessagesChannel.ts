@@ -4,27 +4,30 @@ import { MessageContent } from '@src/api/entities/message/interfaces/MessageCont
 import { MessageCreateOptions } from '@src/api/entities/message/interfaces/MessageCreateOptions'
 import { Json, Message, ToJsonProperties } from '@src/api'
 import { DirectMessagesChannelMessagesManager } from '@src/api/managers/messages/DirectMessagesChannelMessagesManager'
-import { AbstractChannelData } from '@src/api/entities/channel/interfaces/AbstractChannelData'
 import { attach } from '@src/utils'
 import { ChannelTypes } from '@src/constants'
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
+import { RawDirectMessagesChannelData } from '@src/api/entities/channel/interfaces/RawDirectMessagesChannelData'
+import { DirectMessagesChannelData } from '@src/api/entities/channel/interfaces/DirectMessagesChannelData'
 
 export class DirectMessagesChannel extends AbstractChannel implements WritableChannel {
   public declare messages: DirectMessagesChannelMessagesManager
   public declare type: ChannelTypes.DM
   public lastMessageId?: string
   public lastPinTimestamp?: number
+  public recipients: string[] = []
 
-  async init(data: AbstractChannelData, options?: EntityInitOptions): Promise<this> {
+  async init(data: RawDirectMessagesChannelData | DirectMessagesChannelData, options?: EntityInitOptions): Promise<this> {
     await super.init(data, options)
 
     attach(this, data, {
       props: [
         [ 'lastMessageId', 'last_message_id' ],
-        [ 'lastPinTimestamp', 'last_pin_timestamp' ]
+        [ 'lastPinTimestamp', 'last_pin_timestamp' ],
+        'recipients'
       ],
       disabled: options?.ignore,
-      enabled: [ 'lastMessageId' ]
+      enabled: [ 'lastMessageId' ],
     })
 
     if (this.lastPinTimestamp) { // discord sends timestamp in string

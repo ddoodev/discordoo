@@ -1,13 +1,12 @@
 import { AbstractChannelData } from '@src/api/entities/channel/interfaces/AbstractChannelData'
 import { ThreadMemberData } from '@src/api/entities/member/interfaces/ThreadMemberData'
 import { ThreadMetadata } from '@src/api/entities/channel/interfaces/ThreadMetadata'
+import { WritableChannelData } from '@src/api/entities/channel/interfaces/WritableChannelData'
 
-export interface AbstractThreadChannelData extends AbstractChannelData {
+export interface AbstractThreadChannelData extends AbstractChannelData, WritableChannelData {
   guildId: string
   parentId?: string
   ownerId?: string
-  lastMessageId?: string
-  lastPinTimestamp?: number
   rateLimitPerUser?: number
   messageCount?: number
   memberCount?: number

@@ -1,6 +1,7 @@
 import { AbstractEvent } from '@src/events'
-import { EventNames, Keyspaces } from '@src/constants'
+import { EventNames } from '@src/constants'
 import { RawChannelPinsUpdateEventData } from '@src/events/channel/RawChannelPinsUpdateEventData'
+import { AnyWritableChannel } from '@src/api'
 
 export class ChannelPinsUpdateEvent extends AbstractEvent {
   public name = EventNames.CHANNEL_PINS_UPDATE
@@ -8,12 +9,13 @@ export class ChannelPinsUpdateEvent extends AbstractEvent {
   async execute(shardId: number, data: RawChannelPinsUpdateEventData) {
     const timestamp = data.last_pin_timestamp ? new Date(data.last_pin_timestamp) : undefined
 
-    const channel = await this.client.internals.cache.get(
-      Keyspaces.CHANNELS,
-      data.guild_id ?? 'global',
-      'channelEntityKey',
-      data.channel_id
-    ) // TODO: reset last pin timestamp
+    const channel = await this.client.channels.cache.get<AnyWritableChannel>(data.channel_id, {
+      storage: data.guild_id ?? 'dm',
+    })
+
+    if (channel) {
+      channel.lastPinTimestamp = timestamp?.getTime() ?? channel.lastPinTimestamp
+    }
 
     this.client.emit(EventNames.CHANNEL_PINS_UPDATE, {
       shardId,

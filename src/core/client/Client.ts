@@ -61,7 +61,7 @@ import { LocalIpcServer } from '@src/sharding/ipc/LocalIpcServer'
 import { CacheManager } from '@src/cache/CacheManager'
 import { RestManager } from '@src/rest/RestManager'
 import { TypedEmitter } from 'tiny-typed-emitter'
-import { GuildsManager } from '@src/api/managers'
+import { ClientDirectMessagesChannelsManager, GuildsManager } from '@src/api/managers'
 import { Final } from '@src/utils/FinalDecorator'
 import { IpcServerOptions } from '@src/sharding'
 import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
@@ -136,6 +136,9 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
 
   /** Channels manager for this client */
   public readonly channels: ClientChannelsManager
+
+  /** Direct messages channels manager for this client */
+  public readonly dms: ClientDirectMessagesChannelsManager
 
   /** Stickers manager for this client */
   public readonly stickers: ClientStickersManager
@@ -314,6 +317,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
 
     this.overwrites = new ClientPermissionOverwritesManager(this)
     this.threadMembers = new ClientThreadMembersManager(this)
+    this.dms = new ClientDirectMessagesChannelsManager(this)
     this[otherCacheSymbol] = new OtherCacheManager(this)
     this.members = new ClientGuildMembersManager(this)
     this.presences = new ClientPresencesManager(this)

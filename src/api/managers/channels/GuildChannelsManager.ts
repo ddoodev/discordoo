@@ -1,5 +1,5 @@
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
-import { ChannelResolvable, EntitiesCacheManager, GuildChannelDeleteOptions } from '@src/api'
+import { ChannelResolvable, EntitiesCacheManager, ChannelDeleteOptions } from '@src/api'
 import { AnyGuildChannel } from '@src/api/entities/channel/interfaces/AnyGuildChannel'
 import { Client } from '@src/core'
 import { GuildChannelsManagerData } from '@src/api/managers/channels/GuildChannelsManagerData'
@@ -34,7 +34,7 @@ export class GuildChannelsManager extends EntitiesManager {
     })
   }
 
-  async delete<R = AnyGuildChannel>(channel: ChannelResolvable, options: GuildChannelDeleteOptions = {}): Promise<R | undefined> {
+  async delete<R = AnyGuildChannel>(channel: ChannelResolvable, options: ChannelDeleteOptions = {}): Promise<R | undefined> {
     return this.client.channels.delete<R>(channel, options)
   }
 
