@@ -20,6 +20,9 @@ import { UserUpdateEventContext } from '@src/events/user/ctx/UserUpdateEventCont
 import { GuildCreateEventContext } from '@src/events/guild/ctx'
 import { GuildDeleteEventContext } from '@src/events/guild/ctx/GuildDeleteEventContext'
 import { GuildUpdateEventContext } from '@src/events/guild/ctx/GuildUpdateEventContext'
+import { GuildMemberAddEventContext } from '@src/events/member/ctx/GuildMemberAddEventContext'
+import { GuildMemberRemoveEventContext } from '@src/events/member/ctx/GuildMemberRemoveEventContext'
+import { GuildMemberUpdateEventContext } from '@src/events/member/ctx/GuildMemberUpdateEventContext'
 
 /** Client events */
 export interface ClientEventsHandlers {
@@ -94,13 +97,13 @@ export interface ClientEventsHandlers {
   // guildIntegrationsUpdate: (context: ChannelCreateEventContext) => any
 
   /** New user joined a guild */
-  // guildMemberAdd: (context: ChannelCreateEventContext) => any
+  guildMemberAdd: (context: GuildMemberAddEventContext) => any
 
   /** User was removed from a guild */
-  // guildMemberRemove: (context: ChannelCreateEventContext) => any
+  guildMemberRemove: (context: GuildMemberRemoveEventContext) => any
 
   /** Guild member was updated */
-  // guildMemberUpdate: (context: ChannelCreateEventContext) => any
+  guildMemberUpdate: (context: GuildMemberUpdateEventContext) => any
 
   /** Response to [Request Guild Members](https://discord.com/developers/docs/topics/gateway#request-guild-members) */
   guildMembersChunk: (context: GuildMembersChunkEventContext) => any

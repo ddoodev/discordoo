@@ -6,8 +6,8 @@ import {
   GuildMember,
   MessageAttachment, MessageContent, MessageCreateOptions,
   MessageData,
-  MessageEmbed,
-  RawMessageData,
+  MessageEmbed, RawMessageAttachmentData,
+  RawMessageData, RawMessageEmbedData,
   ReadonlyMessageFlagsUtil,
   User
 } from '@src/api'
@@ -47,7 +47,12 @@ export class Message extends AbstractEntity {
   async init(data: MessageData | RawMessageData, options?: EntityInitOptions): Promise<this> {
 
     if (data.embeds?.length) {
-      data.embeds = data.embeds.map(v => new MessageEmbed(v))
+      const Embed = EntitiesUtil.get('MessageEmbed')
+      const embeds: MessageEmbed[] = []
+      for await (const emb of data.embeds) {
+        embeds.push(await new Embed(this.client).init(emb as RawMessageEmbedData))
+      }
+      data.embeds = embeds
     }
 
     if (!('authorId' in data)) {
@@ -57,7 +62,12 @@ export class Message extends AbstractEntity {
     data.flags = new ReadonlyMessageFlagsUtil(data.flags)
 
     if (data.attachments?.length) {
-      data.attachments = data.attachments.map(v => new MessageAttachment(v))
+      const Attachment = EntitiesUtil.get('MessageAttachment')
+      const attachments: MessageAttachment[] = []
+      for await (const at of data.attachments) {
+        attachments.push(await new Attachment(this.client).init(at as RawMessageAttachmentData))
+      }
+      data.attachments = attachments
     }
 
     if ('referenced_message' in data && data.referenced_message) {

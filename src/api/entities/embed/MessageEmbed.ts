@@ -1,18 +1,22 @@
 import {
-  AbstractEntity,
   MessageEmbedAuthorData,
   MessageEmbedData,
-  MessageEmbedFieldData, MessageEmbedFooterData,
-  MessageEmbedImageData, MessageEmbedProviderData,
-  MessageEmbedThumbnailData, MessageEmbedVideoData, RawMessageEmbedData
+  MessageEmbedFieldData,
+  MessageEmbedFooterData,
+  MessageEmbedImageData,
+  MessageEmbedProviderData,
+  MessageEmbedThumbnailData,
+  MessageEmbedVideoData,
+  RawMessageEmbedData
 } from '@src/api'
 import { attach } from '@src/utils'
 import { is } from 'typescript-is'
 import { MessageEmbedTypes } from '@src/constants'
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
+import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 
 export class MessageEmbed extends AbstractEntity implements MessageEmbedData {
-  public type?: MessageEmbedTypes
+  public type = MessageEmbedTypes.RICH
   public title?: string
   public description?: string
   public url?: string
@@ -41,7 +45,8 @@ export class MessageEmbed extends AbstractEntity implements MessageEmbedData {
         'provider',
         'color',
         'fields',
-        'timestamp'
+        'timestamp',
+        [ 'type', 'type', MessageEmbedTypes.RICH ],
       ],
       disabled: options?.ignore,
     })

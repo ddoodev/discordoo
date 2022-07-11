@@ -125,10 +125,6 @@ export class DataResolver {
       if (resolvable.url?.startsWith('https://')) return true
     }
 
-    if ('id' in resolvable) {
-      return typeof resolvable.id === 'string'!
-    }
-
     return false
   }
 }

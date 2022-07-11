@@ -1,5 +1,5 @@
 import { AbstractEvent } from '@src/events'
-import { EventNames, Keyspaces } from '@src/constants'
+import { EventNames, Keyspaces, otherCacheSymbol } from '@src/constants'
 import { UnavailableGuildData } from '@src/api'
 
 export class GuildDeleteEvent extends AbstractEvent {
@@ -12,16 +12,19 @@ export class GuildDeleteEvent extends AbstractEvent {
       guild = await guild.init({ ...guild, unavailable: true })
       await this.client.guilds.cache.set(data.id, guild)
     } else if (guild) {
+      // remove guild from cache if it exists and available
       await this.client.guilds.cache.delete(data.id)
     }
 
     if (!data.unavailable) {
+      // remove all data that belongs to this guild
       // TODO: remove guild from cache fully
 
       await this.client.internals.cache.clear(Keyspaces.CHANNELS, data.id)
       await this.client.internals.cache.clear(Keyspaces.GUILD_PRESENCES, data.id)
       await this.client.internals.cache.clear(Keyspaces.GUILD_ROLES, data.id)
       await this.client.internals.cache.clear(Keyspaces.GUILD_EMOJIS, data.id)
+      await this.client[otherCacheSymbol].delete(data.id, { storage: 'guild-owners' })
       // TODO: await this.client.internals.cache.clear(Keyspaces.GUILD_BANS, data.id)
 
       for await (const member of await this.client.members.cache.keys({ storage: data.id })) {

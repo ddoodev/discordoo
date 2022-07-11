@@ -44,7 +44,7 @@ import {
   ChannelDeleteEvent,
   ChannelPinsUpdateEvent,
   ChannelUpdateEvent,
-  ClientEvents,
+  ClientEvents, GuildMemberAddEvent, GuildMemberRemoveEvent, GuildMemberUpdateEvent,
   MessageCreateEvent,
   ThreadCreateEvent,
   ThreadDeleteEvent,
@@ -308,7 +308,8 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
       ShardConnectedEvent, ChannelCreateEvent, ChannelUpdateEvent, ChannelDeleteEvent,
       ChannelPinsUpdateEvent, ThreadCreateEvent, ThreadUpdateEvent, ThreadDeleteEvent,
       ThreadListSyncEvent, GuildMembersChunkEvent, ThreadMemberUpdateEvent, ThreadMembersUpdateEvent,
-      GuildEmojisUpdatedEvent, GuildUpdateEvent// , UserUpdateEvent
+      GuildEmojisUpdatedEvent, GuildUpdateEvent, // UserUpdateEvent,
+      GuildMemberUpdateEvent, GuildMemberAddEvent, GuildMemberRemoveEvent,
     ]) // TODO
 
     this.overwrites = new ClientPermissionOverwritesManager(this)

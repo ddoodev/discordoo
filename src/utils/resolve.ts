@@ -40,7 +40,7 @@ export function resolveFiles(resolvable: MessageAttachmentResolvable[]): Promise
 }
 
 export function resolveFile(resolvable: MessageAttachmentResolvable): Promise<RawAttachment> {
-  if (resolvable instanceof MessageAttachmentConstructor) return resolvable.toRaw()
+  if (resolvable instanceof MessageAttachmentConstructor || resolvable instanceof MessageAttachment) return resolvable.toRaw()
 
   return new MessageAttachmentConstructor(resolvable).toRaw() // FIXME: low performance
 }
@@ -127,7 +127,7 @@ export function resolveBitField(resolvable: BitFieldResolvable, emptyBit: number
 }
 
 export function resolveEmbedToRaw(resolvable: MessageEmbedResolvable): RawMessageEmbedData {
-  if (resolvable instanceof MessageEmbed) return resolvable.toJson()
+  if (resolvable instanceof MessageEmbedConstructor) return resolvable.toJson()
 
   return new MessageEmbedConstructor(resolvable).toJson() // FIXME: low performance
 }

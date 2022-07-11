@@ -1,4 +1,4 @@
-import { EntitiesCacheManager, Message, MessageResolvable } from '@src/api'
+import { EntitiesCacheManager, Message, MessageEmbedConstructor, MessageResolvable } from '@src/api'
 import { Client } from '@src/core'
 import { ChannelResolvable } from '@src/api/entities/channel/interfaces/ChannelResolvable'
 import { MessageContent } from '@src/api/entities/message/interfaces/MessageContent'
@@ -197,7 +197,7 @@ export class ClientMessagesManager extends EntitiesManager {
     if (Array.isArray(data)) {
       const target: /* MessageEmbedResolvable | StickerResolvable | MessageAttachmentResolvable */ any = content[0]
 
-      if (embedTypes.includes(target.type)) { // content = embeds
+      if (embedTypes.includes(target.type) || target instanceof MessageEmbedConstructor) { // content = embeds
         payload.embeds.push(...data.map(resolveEmbedToRaw))
 
       } else if (stickerFormatTypes.includes(target.formatType ?? target.format_type)) { // content = stickers
@@ -228,7 +228,7 @@ export class ClientMessagesManager extends EntitiesManager {
     }
 
     if (!contentResolved) {
-      if (embedTypes.includes(data.type)) {
+      if (embedTypes.includes(data.type) || data instanceof MessageEmbedConstructor) { // content = embed
         payload.embeds.push(resolveEmbedToRaw(data))
 
       } else if (stickerFormatTypes.includes(data.formatType ?? data.format_type)) {
@@ -273,6 +273,8 @@ export class ClientMessagesManager extends EntitiesManager {
 
       payload.stickers.push(...stickers)
     }
+
+    console.log('message payload', payload)
 
     const response = await this.client.internals.actions.createMessage(channelId, payload)
     const Message = EntitiesUtil.get('Message')

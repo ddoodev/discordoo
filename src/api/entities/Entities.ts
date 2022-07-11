@@ -23,6 +23,8 @@ import { Role } from '@src/api/entities/role'
 import { Guild } from '@src/api/entities/guild'
 import { AppCommandInteraction, AppCommandInteractionData } from '@src/api/entities/interaction/AppCommandInteraction'
 import { Interaction } from '@src/api/entities/interaction/Interaction'
+import { MessageAttachment } from '@src/api/entities/attachment/MessageAttachment'
+import { MessageEmbed } from '@src/api/entities/embed/MessageEmbed'
 
 export const Entities = {
   Message,
@@ -57,4 +59,6 @@ export const Entities = {
   AppCommandInteractionData,
   AppCommandInteraction,
   Interaction,
+  MessageEmbed,
+  MessageAttachment,
 }
