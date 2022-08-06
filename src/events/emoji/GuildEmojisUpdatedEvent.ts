@@ -5,7 +5,7 @@ import { EntitiesUtil, GuildEmoji } from '@src/api'
 import { Collection } from '@discordoo/collection'
 import { GuildEmojisUpdatedEventContext, GuildEmojiUpdatedContext } from '@src/events/emoji/ctx/GuildEmojisUpdatedEventContext'
 
-export class GuildEmojisUpdatedEvent extends AbstractEvent {
+export class GuildEmojisUpdatedEvent extends AbstractEvent<GuildEmojisUpdatedEventContext> {
   public name = EventNames.GUILD_EMOJIS_UPDATE
 
   async execute(shardId: number, data: RawGuildEmojisUpdatedEventData) {
@@ -64,5 +64,6 @@ export class GuildEmojisUpdatedEvent extends AbstractEvent {
     }
 
     this.client.emit(EventNames.GUILD_EMOJIS_UPDATE, context)
+    return context
   }
 }

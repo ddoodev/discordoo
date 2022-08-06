@@ -5,7 +5,7 @@ import { GuildMember, Presence } from '@src/api'
 import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 import { GuildMembersChunkEventContext } from '@src/events/ctx'
 
-export class GuildMembersChunkEvent extends AbstractEvent {
+export class GuildMembersChunkEvent extends AbstractEvent<GuildMembersChunkEventContext> {
   public name = EventNames.GUILD_MEMBERS_CHUNK
 
   async execute(shardId: number, data: RawGuildMembersChunkData) {
@@ -85,6 +85,7 @@ export class GuildMembersChunkEvent extends AbstractEvent {
     }
 
     this.client.emit(EventNames.GUILD_MEMBERS_CHUNK, context)
+    return context
   }
 
 }

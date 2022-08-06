@@ -3,8 +3,9 @@ import { EventNames } from '@src/constants'
 import { RawShardConnectedEventData } from '@src/events/interfaces/RawShardConnectedEventData'
 import { Client } from '@src/core'
 import { ShardConnectedHandlerContext } from '@src/events/interfaces/ShardConnectedHandlerContext'
+import { AbstractEventContext } from '@src/events/interfaces'
 
-export class ShardConnectedEvent extends AbstractEvent {
+export class ShardConnectedEvent extends AbstractEvent<AbstractEventContext> {
   public name = EventNames.SHARD_CONNECTED
 
   execute(shardId: number, data: RawShardConnectedEventData) {
@@ -63,5 +64,8 @@ export class ShardConnectedEvent extends AbstractEvent {
       this.client._increaseConnected()
     }
 
+    return {
+      shardId
+    }
   }
 }

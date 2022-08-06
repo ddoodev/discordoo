@@ -1,4 +1,4 @@
-import { AbstractEvent } from '@src/events'
+import { AbstractEvent, AbstractEventContext } from '@src/events'
 import { ChannelTypes, EventNames } from '@src/constants'
 import { channelEntityKey } from '@src/utils'
 import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
@@ -6,7 +6,7 @@ import { ChannelCreateEventContext } from '@src/events/channel/ctx/ChannelCreate
 import { AnyRawChannelData } from '@src/api/entities/channel/interfaces/AnyRawGuildChannelData'
 import { AnyChannel } from '@src/api'
 
-export class ChannelCreateEvent extends AbstractEvent {
+export class ChannelCreateEvent extends AbstractEvent<ChannelCreateEventContext | AbstractEventContext> {
   public name = EventNames.CHANNEL_CREATE
 
   async execute(shardId: number, data: AnyRawChannelData) {
@@ -14,7 +14,9 @@ export class ChannelCreateEvent extends AbstractEvent {
     const entityKey = channelEntityKey(data)
     if (entityKey === 'AbstractChannel') {
       // TODO: log about unknown channel
-      return
+      return {
+        shardId,
+      }
     }
 
     const Channel: any = EntitiesUtil.get(entityKey)
@@ -25,7 +27,7 @@ export class ChannelCreateEvent extends AbstractEvent {
       storage:
         'guildId' in channel
           ? channel.guildId
-          : channel.type === ChannelTypes.DM || channel.type === ChannelTypes.GROUP_DM
+          : channel.type === ChannelTypes.DM // TODO: || channel.type === ChannelTypes.GROUP_DM
             ? 'dm'
             : 'unknown',
     })
@@ -38,5 +40,6 @@ export class ChannelCreateEvent extends AbstractEvent {
     }
 
     this.client.emit(EventNames.CHANNEL_CREATE, context)
+    return context
   }
 }

@@ -4,7 +4,7 @@ import { RawThreadMembersUpdateEventData } from '@src/events/thread/RawThreadMem
 import { AnyThreadChannel, EntitiesUtil, GuildMember, ThreadMember } from '@src/api'
 import { Collection } from '@discordoo/collection'
 
-export class ThreadMembersUpdateEvent extends AbstractEvent {
+export class ThreadMembersUpdateEvent extends AbstractEvent<ThreadMembersUpdateEventContext> {
   public name = EventNames.THREAD_MEMBERS_UPDATE
 
   async execute(shardId: number, data: RawThreadMembersUpdateEventData) {
@@ -68,5 +68,6 @@ export class ThreadMembersUpdateEvent extends AbstractEvent {
     }
 
     this.client.emit(EventNames.THREAD_MEMBERS_UPDATE, context)
+    return context
   }
 }

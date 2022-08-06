@@ -1,8 +1,8 @@
-import { AbstractEvent } from '@src/events'
+import { AbstractEvent, GuildMemberRemoveEventContext } from '@src/events'
 import { EventNames } from '@src/constants'
 import { GuildMemberRemoveEventData } from '@src/events/member/GuildMemberRemoveEventData'
 
-export class GuildMemberRemoveEvent extends AbstractEvent {
+export class GuildMemberRemoveEvent extends AbstractEvent<GuildMemberRemoveEventContext> {
   public readonly name = EventNames.GUILD_MEMBER_REMOVE
 
   async execute(shardId: number, data: GuildMemberRemoveEventData) {
@@ -12,11 +12,14 @@ export class GuildMemberRemoveEvent extends AbstractEvent {
       await this.client.members.cache.delete(data.user.id, { storage: data.guild_id })
     }
 
-    this.client.emit(EventNames.GUILD_MEMBER_REMOVE, {
+    const context: GuildMemberRemoveEventContext = {
       shardId,
       guildId: data.guild_id,
       userId: data.user.id,
       member
-    })
+    }
+
+    this.client.emit(EventNames.GUILD_MEMBER_REMOVE, context)
+    return context
   }
 }

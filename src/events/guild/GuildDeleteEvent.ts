@@ -1,8 +1,9 @@
 import { AbstractEvent } from '@src/events'
 import { EventNames, Keyspaces, otherCacheSymbol } from '@src/constants'
 import { UnavailableGuildData } from '@src/api'
+import { GuildDeleteEventContext } from '@src/events/guild/ctx'
 
-export class GuildDeleteEvent extends AbstractEvent {
+export class GuildDeleteEvent extends AbstractEvent<GuildDeleteEventContext> {
   public name = EventNames.GUILD_DELETE
 
   async execute(shardId: number, data: UnavailableGuildData) {
@@ -34,11 +35,14 @@ export class GuildDeleteEvent extends AbstractEvent {
       await this.client.internals.cache.clear(Keyspaces.GUILD_MEMBERS, data.id)
     }
 
-    this.client.emit(EventNames.GUILD_DELETE, {
+    const context: GuildDeleteEventContext = {
       shardId,
       guildId: data.id,
       guild,
       toUnavailable: !!data.unavailable
-    })
+    }
+
+    this.client.emit(EventNames.GUILD_DELETE, context)
+    return context
   }
 }

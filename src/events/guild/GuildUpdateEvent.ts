@@ -1,8 +1,9 @@
 import { AbstractEvent } from '@src/events'
 import { EventNames, otherCacheSymbol } from '@src/constants'
 import { EntitiesUtil, Guild, RawViewableGuildData } from '@src/api'
+import { GuildUpdateEventContext } from '@src/events/guild/ctx'
 
-export class GuildUpdateEvent extends AbstractEvent {
+export class GuildUpdateEvent extends AbstractEvent<GuildUpdateEventContext> {
   public readonly name = EventNames.GUILD_UPDATE
 
   async execute(shardId: number, data: RawViewableGuildData) {
@@ -23,11 +24,14 @@ export class GuildUpdateEvent extends AbstractEvent {
       }
     }
 
-    this.client.emit(EventNames.GUILD_UPDATE, {
+    const context: GuildUpdateEventContext = {
       shardId,
       guildId: data.id,
       stored,
       updated
-    })
+    }
+
+    this.client.emit(EventNames.GUILD_UPDATE, context)
+    return context
   }
 }

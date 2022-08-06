@@ -1,9 +1,10 @@
 import { AbstractEvent } from '@src/events/AbstractEvent'
 import { EventNames, Keyspaces } from '@src/constants'
 import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
-import { Presence, RawPresenceData } from '@src/api'
+import { Presence, RawPresenceData, User } from '@src/api'
+import { PresenceUpdateEventContext } from '@src/events/ctx'
 
-export class PresenceUpdateEvent extends AbstractEvent {
+export class PresenceUpdateEvent extends AbstractEvent<PresenceUpdateEventContext> {
   public name = EventNames.PRESENCE_UPDATE
 
   async execute(shardId: number, data: RawPresenceData) {
@@ -23,24 +24,26 @@ export class PresenceUpdateEvent extends AbstractEvent {
 
     await this.client.presences.cache.set(presence.userId, presence, { storage: presence.guildId })
 
-    let user = await this.client.users.cache.get(presence.userId)
-
-    if (user) {
-      user = await user.init(data.user)
-    } else {
+    let storedUser, updatedUser
+    if (data.user.username) { // user can be partial
+      storedUser = await this.client.users.cache.get(presence.userId)
       const User = EntitiesUtil.get('User')
-      user = await new User(this.client).init(data.user)
+      updatedUser = storedUser ? await (await storedUser?._clone()).init(data.user) : await new User(this.client).init(data.user)
+
+      await this.client.users.cache.set(updatedUser.id, updatedUser)
     }
 
-    await this.client.users.cache.set(user.id, user)
-
-    this.client.emit(EventNames.PRESENCE_UPDATE, {
+    const context: PresenceUpdateEventContext = {
       updated: presence,
       stored,
-      user,
+      storedUser,
+      updatedUser,
       userId: presence.userId,
       guildId: presence.guildId,
-    })
+      shardId,
+    }
 
+    this.client.emit(EventNames.PRESENCE_UPDATE, context)
+    return context
   }
 }

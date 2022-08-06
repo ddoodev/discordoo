@@ -311,7 +311,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
       ShardConnectedEvent, ChannelCreateEvent, ChannelUpdateEvent, ChannelDeleteEvent,
       ChannelPinsUpdateEvent, ThreadCreateEvent, ThreadUpdateEvent, ThreadDeleteEvent,
       ThreadListSyncEvent, GuildMembersChunkEvent, ThreadMemberUpdateEvent, ThreadMembersUpdateEvent,
-      GuildEmojisUpdatedEvent, GuildUpdateEvent, // UserUpdateEvent,
+      GuildEmojisUpdatedEvent, GuildUpdateEvent, UserUpdateEvent,
       GuildMemberUpdateEvent, GuildMemberAddEvent, GuildMemberRemoveEvent,
     ]) // TODO
 

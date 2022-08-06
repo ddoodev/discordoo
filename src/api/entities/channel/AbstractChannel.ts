@@ -5,6 +5,7 @@ import { AbstractChannelData } from '@src/api/entities/channel/interfaces/Abstra
 import { ToJsonProperties } from '@src/api/entities/interfaces/ToJsonProperties'
 import { Json } from '@src/api/entities/interfaces/Json'
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
+import { AnyChannel } from '@src/api'
 
 export abstract class AbstractChannel extends AbstractEntity {
   public declare id: string
@@ -22,7 +23,7 @@ export abstract class AbstractChannel extends AbstractEntity {
   }
 
   delete(reason): Promise<this | undefined> {
-    return this.client.channels.delete(this.id, { reason, patchEntity: this })
+    return this.client.channels.delete(this.id, { reason, patchEntity: this as unknown as AnyChannel })
   }
 
   get createdTimestamp(): number {

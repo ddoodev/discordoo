@@ -3,7 +3,7 @@ import { EventNames } from '@src/constants'
 import { EntitiesUtil, RawThreadMemberData } from '@src/api'
 import { ThreadMemberUpdateEventContext } from '@src/events/thread/ctx/ThreadMemberUpdateEventContext'
 
-export class ThreadMemberUpdateEvent extends AbstractEvent {
+export class ThreadMemberUpdateEvent extends AbstractEvent<ThreadMemberUpdateEventContext> {
   public name = EventNames.THREAD_MEMBER_UPDATE
 
   async execute(shardId: number, data: RawThreadMemberData) {
@@ -24,5 +24,6 @@ export class ThreadMemberUpdateEvent extends AbstractEvent {
     }
 
     this.client.emit(EventNames.THREAD_MEMBER_UPDATE, context)
+    return context
   }
 }

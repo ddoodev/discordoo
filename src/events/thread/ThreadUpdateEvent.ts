@@ -1,4 +1,4 @@
-import { AbstractEvent } from '@src/events'
+import { AbstractEvent, AbstractEventContext } from '@src/events'
 import { EventNames, Keyspaces } from '@src/constants'
 import { RawAbstractThreadChannelData } from '@src/api/entities/channel/interfaces/RawAbstractThreadChannelData'
 import { channelEntityKey } from '@src/utils'
@@ -7,7 +7,7 @@ import { AnyThreadChannel } from '@src/api/entities/channel/interfaces/AnyThread
 import { ThreadUpdateEventContext } from '@src/events/thread/ctx/ThreadUpdateEventContext'
 import { ThreadMember } from '@src/api/entities/member/ThreadMember'
 
-export class ThreadUpdateEvent extends AbstractEvent {
+export class ThreadUpdateEvent extends AbstractEvent<ThreadUpdateEventContext | AbstractEventContext> {
   public name = EventNames.THREAD_UPDATE
 
   async execute(shardId: number, data: RawAbstractThreadChannelData) {
@@ -15,7 +15,9 @@ export class ThreadUpdateEvent extends AbstractEvent {
     const entityKey = channelEntityKey(data)
     if (entityKey === 'AbstractChannel') {
       // TODO: log about unknown channel
-      return
+      return {
+        shardId,
+      }
     }
 
     const Channel: any = EntitiesUtil.get(entityKey)
@@ -58,5 +60,6 @@ export class ThreadUpdateEvent extends AbstractEvent {
     }
 
     this.client.emit(EventNames.THREAD_UPDATE, context)
+    return context
   }
 }

@@ -13,6 +13,7 @@ import {
   ShardConnectedEventContext
 } from '@src/events/ctx'
 import {
+  AbstractEventContext,
   ExitingEventContext,
   RestructuringEventContext
 } from '@src/events/interfaces'
@@ -25,8 +26,10 @@ import {
   ThreadMembersUpdateEventContext
 } from '@src/events/thread'
 import { GuildEmojisUpdatedEventContext } from '@src/events/emoji'
+import { UserUpdateEventContext } from '@src/events/user'
 
-export type AnyEventContext = 
+export type AnyEventContext =
+  AbstractEventContext |
   ChannelCreateEventContext |
   ChannelDeleteEventContext |
   ChannelPinsUpdateEventContext |
@@ -45,4 +48,5 @@ export type AnyEventContext =
   ThreadUpdateEventContext |
   ThreadMemberUpdateEventContext |
   ThreadMembersUpdateEventContext |
-  GuildEmojisUpdatedEventContext
+  GuildEmojisUpdatedEventContext |
+  UserUpdateEventContext

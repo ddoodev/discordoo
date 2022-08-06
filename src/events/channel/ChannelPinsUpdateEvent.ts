@@ -1,9 +1,9 @@
-import { AbstractEvent } from '@src/events'
+import { AbstractEvent, ChannelPinsUpdateEventContext } from '@src/events'
 import { EventNames } from '@src/constants'
 import { RawChannelPinsUpdateEventData } from '@src/events/channel/RawChannelPinsUpdateEventData'
 import { AnyWritableChannel } from '@src/api'
 
-export class ChannelPinsUpdateEvent extends AbstractEvent {
+export class ChannelPinsUpdateEvent extends AbstractEvent<ChannelPinsUpdateEventContext> {
   public name = EventNames.CHANNEL_PINS_UPDATE
 
   async execute(shardId: number, data: RawChannelPinsUpdateEventData) {
@@ -17,13 +17,16 @@ export class ChannelPinsUpdateEvent extends AbstractEvent {
       channel.lastPinTimestamp = timestamp?.getTime() ?? channel.lastPinTimestamp
     }
 
-    this.client.emit(EventNames.CHANNEL_PINS_UPDATE, {
+    const context: ChannelPinsUpdateEventContext = {
       shardId,
       channel,
       channelId: data.channel_id,
       guildId: data.guild_id,
       lastPinDate: timestamp,
       lastPinTimestamp: timestamp?.getTime()
-    })
+    }
+
+    this.client.emit(EventNames.CHANNEL_PINS_UPDATE, context)
+    return context
   }
 }

@@ -1,6 +1,4 @@
 import {
-  AbstractChannel,
-  AbstractGuildTextChannel,
   DirectMessagesChannel,
   GuildCategoryChannel,
   GuildNewsChannel,
@@ -10,9 +8,7 @@ import {
   GuildThreadChannel
 } from '@src/api'
 
-export type AnyChannel = AbstractChannel |
-  AbstractGuildTextChannel |
-  DirectMessagesChannel |
+export type AnyChannel = DirectMessagesChannel |
   GuildCategoryChannel |
   GuildNewsChannel |
   GuildNewsThreadChannel |

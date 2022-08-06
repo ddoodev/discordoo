@@ -1,11 +1,11 @@
-import { AbstractEvent } from '@src/events'
+import { AbstractEvent, AbstractEventContext } from '@src/events'
 import { EventNames, Keyspaces } from '@src/constants'
 import { RawAbstractThreadChannelData } from '@src/api/entities/channel/interfaces/RawAbstractThreadChannelData'
 import { channelEntityKey } from '@src/utils'
 import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 import { ThreadDeleteEventContext } from '@src/events/thread/ctx/ThreadDeleteEventContext'
 
-export class ThreadDeleteEvent extends AbstractEvent {
+export class ThreadDeleteEvent extends AbstractEvent<ThreadDeleteEventContext | AbstractEventContext> {
   public name = EventNames.THREAD_DELETE
 
   async execute(shardId: number, data: RawAbstractThreadChannelData) {
@@ -13,7 +13,9 @@ export class ThreadDeleteEvent extends AbstractEvent {
     const entityKey = channelEntityKey(data)
     if (entityKey === 'AbstractChannel') {
       // TODO: log about unknown channel
-      return
+      return {
+        shardId,
+      }
     }
 
     const Channel: any = EntitiesUtil.get(entityKey)
@@ -53,6 +55,6 @@ export class ThreadDeleteEvent extends AbstractEvent {
     }
 
     this.client.emit(EventNames.THREAD_DELETE, context)
-
+    return context
   }
 }

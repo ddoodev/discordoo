@@ -1,4 +1,4 @@
-import { AbstractEvent } from '@src/events'
+import { AbstractEvent, ThreadListSyncEventContext } from '@src/events'
 import { ChannelTypes, EventNames, Keyspaces } from '@src/constants'
 import { RawThreadListSyncEventData } from '@src/events/thread/RawThreadListSyncEventData'
 import { AnyThreadChannel } from '@src/api/entities/channel/interfaces/AnyThreadChannel'
@@ -7,7 +7,7 @@ import { ThreadMember } from '@src/api/entities/member/ThreadMember'
 import { Collection } from '@discordoo/collection'
 import { AnyGuildChannel } from '@src/api/entities/channel/interfaces/AnyGuildChannel'
 
-export class ThreadListSyncEvent extends AbstractEvent {
+export class ThreadListSyncEvent extends AbstractEvent<ThreadListSyncEventContext> {
   public name = EventNames.THREAD_LIST_SYNC
 
   async execute(shardId: number, data: RawThreadListSyncEventData) {
@@ -73,12 +73,15 @@ export class ThreadListSyncEvent extends AbstractEvent {
       members.set(memberData.user_id, member)
     }
 
-    this.client.emit(EventNames.THREAD_LIST_SYNC, {
+    const context: ThreadListSyncEventContext = {
       shardId,
       threads,
       members,
       parents: data.channel_ids,
       guildId: data.guild_id,
-    })
+    }
+
+    this.client.emit(EventNames.THREAD_LIST_SYNC, context)
+    return context
   }
 }

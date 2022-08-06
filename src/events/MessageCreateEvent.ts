@@ -5,7 +5,7 @@ import { MessageCreateEventContext } from '@src/events/ctx/MessageCreateEventCon
 import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 import { AnyWritableChannel } from '@src/api/entities/channel/interfaces/AnyWritableChannel'
 
-export class MessageCreateEvent extends AbstractEvent {
+export class MessageCreateEvent extends AbstractEvent<MessageCreateEventContext> {
   public name = EventNames.MESSAGE_CREATE
 
   async execute(shardId: number, data: RawMessageData) {
@@ -51,5 +51,6 @@ export class MessageCreateEvent extends AbstractEvent {
     }
 
     this.client.emit(EventNames.MESSAGE_CREATE, context)
+    return context
   }
 }

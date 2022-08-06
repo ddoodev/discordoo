@@ -3,8 +3,10 @@ import { EventNames, Keyspaces, otherCacheSymbol } from '@src/constants'
 import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 import { channelEntityKey } from '@src/utils'
 import { GuildEmoji, RawViewableGuildData } from '@src/api'
+import { GuildCreateEventContext } from '@src/events/guild/ctx'
+import { AbstractEventContext } from '@src/events'
 
-export class GuildCreateEvent extends AbstractEvent {
+export class GuildCreateEvent extends AbstractEvent<GuildCreateEventContext | AbstractEventContext> {
   public name = EventNames.GUILD_CREATE
 
   async execute(shardId: number, guild: RawViewableGuildData) {
@@ -93,14 +95,20 @@ export class GuildCreateEvent extends AbstractEvent {
 
     if (queue) {
       queue.handler(this.client, { ...queue, guild: guild.id })
+      return {
+        shardId,
+      }
     } else {
       // emit guild create
-      this.client.emit('guildCreate', {
+      const context: GuildCreateEventContext = {
         guild: guildCache,
         shardId,
         guildId: guild.id,
         fromUnavailable: isUnavailable
-      })
+      }
+
+      this.client.emit('guildCreate', context)
+      return context
     }
   }
 }

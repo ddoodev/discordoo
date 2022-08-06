@@ -1,5 +1,5 @@
-import { AbstractEvent } from '@src/events'
-import { ChannelTypes, EventNames, Keyspaces } from '@src/constants'
+import { AbstractEvent, AbstractEventContext } from '@src/events'
+import { ChannelTypes, EventNames } from '@src/constants'
 import { AnyRawChannelData } from '@src/api/entities/channel/interfaces/AnyRawGuildChannelData'
 import { channelEntityKey } from '@src/utils'
 import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
@@ -7,7 +7,7 @@ import { ChannelDeleteEventContext } from '@src/events/channel/ctx/ChannelDelete
 import { RawDirectMessagesChannelData } from '@src/api/entities/channel/interfaces/RawDirectMessagesChannelData'
 import { AnyChannel } from '@src/api'
 
-export class ChannelDeleteEvent extends AbstractEvent {
+export class ChannelDeleteEvent extends AbstractEvent<ChannelDeleteEventContext | AbstractEventContext> {
   public name = EventNames.CHANNEL_DELETE
 
   async execute(shardId: number, data: AnyRawChannelData) {
@@ -15,7 +15,9 @@ export class ChannelDeleteEvent extends AbstractEvent {
     const entityKey = channelEntityKey(data)
     if (entityKey === 'AbstractChannel') {
       // TODO: log about unknown channel
-      return
+      return {
+        shardId,
+      }
     }
 
     const Channel: any = EntitiesUtil.get(entityKey)
@@ -44,5 +46,6 @@ export class ChannelDeleteEvent extends AbstractEvent {
     }
 
     this.client.emit(EventNames.CHANNEL_DELETE, context)
+    return context
   }
 }

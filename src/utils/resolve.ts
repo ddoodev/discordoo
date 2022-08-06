@@ -20,7 +20,7 @@ import { RoleTagsResolvable } from '@src/api/entities/role/interfaces/RoleTagsRe
 import { RoleTagsData } from '@src/api/entities/role/interfaces/RoleTagsData'
 import { ShardListResolvable } from '@src/utils/interfaces'
 import { range } from '@src/utils/range'
-import { EmojiResolvable, MessageAttachment, MessageAttachmentConstructor } from '@src/api'
+import { EmojiResolvable, GuildChannelResolvable, MessageAttachment, MessageAttachmentConstructor, ThreadChannelResolvable } from '@src/api'
 import { MessageReactionResolvable } from '@src/api/entities/reaction/interfaces/MessageReactionResolvable'
 import { PermissionOverwriteResolvable } from '@src/api/entities/overwrite/interfaces/PermissionOverwriteResolvable'
 import { RawPermissionOverwriteData } from '@src/api/entities/overwrite/interfaces/RawPermissionOverwriteData'
@@ -216,7 +216,7 @@ export function resolveMessageId(resolvable: MessageResolvable): string | undefi
   return resolveAnythingToId(resolvable)
 }
 
-export function resolveChannelId(resolvable: ChannelResolvable): string | undefined  {
+export function resolveChannelId(resolvable: ChannelResolvable | ThreadChannelResolvable | GuildChannelResolvable): string | undefined  {
   return resolveAnythingToId(resolvable)
 }
 
