@@ -16,7 +16,7 @@ import { MessageReaction } from '@src/api/entities/reaction'
 import { Message } from '@src/api/entities/message'
 import { User } from '@src/api/entities/user'
 import { Role } from '@src/api/entities/role'
-import { Guild } from '@src/api'
+import { Guild } from '@src/api/entities/guild'
 
 export const ExtendableEntities = {
   Message,

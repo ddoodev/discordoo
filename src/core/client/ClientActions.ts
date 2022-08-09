@@ -11,7 +11,7 @@ import { RawStickerEditData } from '@src/api/entities/sticker/interfaces/RawStic
 import { RawStickerCreateData } from '@src/api/entities/sticker/interfaces/RawStickerCreateData'
 import { RawStickerPackData } from '@src/api/entities/sticker'
 import { RawGuildMemberEditData } from '@src/api/entities/member/interfaces/RawGuildMemberEditData'
-import { AbstractChannelData, GuildEmojiData, GuildMember, RawGuildMemberData } from '@src/api'
+import { AbstractChannelData, AnyRawGuildChannelData, GuildEmojiData, GuildMember, RawGuildMemberData } from '@src/api'
 import { RawRoleEditData } from '@src/api/entities/role/interfaces/RawRoleEditData'
 import { RawRoleData } from '@src/api/entities/role/interfaces/RawRoleData'
 import { RawRoleCreateData } from '@src/api/entities/role/interfaces/RawRoleCreateData'
@@ -302,7 +302,7 @@ export class ClientActions {
     return this.client.internals.rest.api()
       .url(Endpoints.CHANNEL(channelId))
       .body(data)
-      .patch<RawAbstractGuildChannelData>({ reason })
+      .patch<AnyRawGuildChannelData>({ reason })
   }
 
   editGuildChannelPermissions(channelId: string, data: RawPermissionOverwriteData, reason?: string) {

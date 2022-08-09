@@ -1,3 +1,5 @@
+import { GuildResolvable } from '@src/api'
+
 export interface GuildMembersManagerData {
-  guildId: string
+  guild: GuildResolvable
 }

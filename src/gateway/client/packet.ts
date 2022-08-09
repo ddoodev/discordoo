@@ -24,6 +24,7 @@ export function packet(client: WebSocketClient, packet: WebSocketPacket) {
       client.sessionId = packet.d.session_id
       client.status = WebSocketClientStates.READY
       client.expectedGuilds = new Set<any>(packet.d.guilds.map(g => g.id))
+      client.resumeUrl = packet.d.resume_gateway_url
 
       client.heartbeat()
 

@@ -43,6 +43,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
   public missedHeartbeats = 0
   public ping = -1
   public lastPingTimestamp = Date.now()
+  public resumeUrl: string | undefined
 
   constructor(manager: WebSocketManager, id: number) {
     super()
@@ -59,7 +60,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
     return new Promise<void>((resolve, reject) => {
 
       // cannot connect without websocket url
-      if (!this.options.connection.url) return reject()
+      if (!this.options.connection.url && !this.resumeUrl) return reject()
 
       // WebSocketClient already connected and working
       if (this.socket?.readyState === WebSocketStates.OPEN && this.status === WebSocketClientStates.READY) {
@@ -131,7 +132,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
 
       try {
         // console.log('shard', this.id, 'creating websocket', this.options.url)
-        this.socket = new WebSocket(this.options.connection.url)
+        this.socket = new WebSocket(this.resumeUrl ?? this.options.connection.url)
 
         this.handshakeTimeout()
         // console.log('shard', this.id, 'subscribe')
@@ -258,6 +259,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
           this.socket.close(4901, 'ddoo: reconnect with resume')
         } else {
           this.socket.close(options.code || 1000,'ddoo: shutdown')
+          this.resumeUrl = undefined
         }
       } catch (e: any) {
         // console.log('shard', this.id, 'ws close error:', e)
@@ -268,6 +270,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
       if (options.code !== 1000 && this.sequence > 0) {
         this.closeSequence = this.sequence
         this.sequence = -1
+        this.resumeUrl = undefined
       }
       this.socket?.terminate()
     }

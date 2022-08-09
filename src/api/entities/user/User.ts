@@ -57,6 +57,10 @@ export class User extends AbstractEntity implements UserData {
     return this
   }
 
+  fetch() {
+    return this.client.users.fetch(this.id)
+  }
+
   async send(content: MessageContent, options?: MessageCreateOptions): Promise<Message | undefined> {
     const dm = await this.dm()
     if (!dm) return undefined

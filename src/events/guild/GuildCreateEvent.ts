@@ -2,14 +2,15 @@ import { AbstractEvent } from '@src/events/AbstractEvent'
 import { EventNames, Keyspaces, otherCacheSymbol } from '@src/constants'
 import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 import { channelEntityKey } from '@src/utils'
-import { GuildEmoji, RawViewableGuildData } from '@src/api'
+import { GuildEmoji } from '@src/api'
 import { GuildCreateEventContext } from '@src/events/guild/ctx'
 import { AbstractEventContext } from '@src/events'
+import { RawGuildData } from '@src/api/entities/guild/interfaces/RawGuildData'
 
 export class GuildCreateEvent extends AbstractEvent<GuildCreateEventContext | AbstractEventContext> {
   public name = EventNames.GUILD_CREATE
 
-  async execute(shardId: number, guild: RawViewableGuildData) {
+  async execute(shardId: number, guild: RawGuildData) {
 
     let guildCache = await this.client.guilds.cache.get(guild.id)
 

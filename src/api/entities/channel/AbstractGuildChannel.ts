@@ -12,16 +12,15 @@ import { ChannelTypes, Keyspaces, PermissionFlags } from '@src/constants'
 import { CacheManagerGetOptions } from '@src/cache'
 import {
   PermissionsCheckOptions,
-  ReadonlyPermissions,
-  Permissions,
-  Role,
-  GuildMember,
   RoleResolvable,
   ChannelResolvable,
-  ToJsonProperties, Json
+  ToJsonProperties, Json, AnyGuildChannel
 } from '@src/api'
 import { GuildMemberResolvable } from '@src/api/entities/member/interfaces/GuildMemberResolvable'
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
+import { Permissions, ReadonlyPermissions } from '@src/api/entities/bitfield'
+import { GuildMember } from '@src/api/entities/member/GuildMember'
+import { Role } from '@src/api/entities/role/Role'
 
 export abstract class AbstractGuildChannel extends AbstractChannel {
   public declare type: ChannelTypes.GUILD_CATEGORY
@@ -34,7 +33,7 @@ export abstract class AbstractGuildChannel extends AbstractChannel {
   public declare name: string
   public parentId?: string
   public declare position: number
-  public declare overwrites: ChannelPermissionOverwritesManager<this>
+  public declare overwrites: ChannelPermissionOverwritesManager<AnyGuildChannel>
 
   async init(data: AbstractGuildChannelData | RawAbstractGuildChannelData, options?: EntityInitOptions): Promise<this> {
     await super.init(data, options)
@@ -54,8 +53,8 @@ export abstract class AbstractGuildChannel extends AbstractChannel {
     const overwrites: PermissionOverwriteResolvable[] = data.permissionOverwrites ?? data.permission_overwrites ?? []
 
     if (!this.overwrites) {
-      this.overwrites = new ChannelPermissionOverwritesManager<this>(this.client, {
-        channel: this
+      this.overwrites = new ChannelPermissionOverwritesManager<AnyGuildChannel>(this.client, {
+        channel: this as AnyGuildChannel
       })
     }
 
@@ -84,7 +83,7 @@ export abstract class AbstractGuildChannel extends AbstractChannel {
   }
 
   async edit(data: RawGuildChannelEditData | GuildChannelEditData, reason?: string): Promise<this | undefined> {
-    return this.client.channels.editGuildChannel(this.id, data, { reason, patchEntity: this })
+    return this.client.channels.editGuildChannel(this.id, data, { reason, patchEntity: this as AnyGuildChannel })
   }
 
   setName(name: string, reason?: string) {

@@ -8,14 +8,14 @@ import {
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 import { attach } from '@src/utils'
 import { AppCommandOptionTypes, AppCommandTypes } from '@src/constants'
-import { Locale } from '@src/constants/common/Locale'
+import { DiscordLocale } from '@src/constants/common/DiscordLocale'
 
 export class AppCommand extends AbstractEntity {
   declare id: string
   declare name: string
-  declare nameLocalizations?: Record<Locale, string>
+  declare nameLocalizations?: Record<DiscordLocale, string>
   declare description: string
-  declare descriptionLocalizations?: Record<Locale, string>
+  declare descriptionLocalizations?: Record<DiscordLocale, string>
   declare version: string
   declare applicationId: string
   declare type: AppCommandTypes
@@ -84,9 +84,9 @@ export class AppCommand extends AbstractEntity {
 
 export class AppCommandOption extends AbstractEntity {
   declare name: string
-  declare nameLocalizations?: Record<Locale, string>
+  declare nameLocalizations?: Record<DiscordLocale, string>
   declare description: string
-  declare descriptionLocalizations?: Record<Locale, string>
+  declare descriptionLocalizations?: Record<DiscordLocale, string>
   declare choices?: AppCommandOptionChoiceData[]
   declare required: boolean
   declare value: string

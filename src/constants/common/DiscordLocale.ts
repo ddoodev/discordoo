@@ -1,7 +1,7 @@
 // based on https://github.com/discordjs/discord-api-types/blob/85802f1703c0a34a260b1800095dc272b40dfb49/rest/common.ts#L233 (MIT license)
 
 // https://discord.com/developers/docs/reference#locales
-export enum Locale {
+export enum DiscordLocale {
   EnglishUS = 'en-US',
   EnglishGB = 'en-GB',
   Bulgarian = 'bg',

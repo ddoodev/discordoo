@@ -1,5 +1,5 @@
 import { AppCommandOptionTypes, ChannelTypes } from '@src/constants'
-import { Locale } from '@src/constants/common/Locale'
+import { DiscordLocale } from '@src/constants/common/DiscordLocale'
 import { RawAppCommandOptionsChoiceData } from '@src/api/entities/interaction/interfaces/command/raw/RawAppCommandOptionsChoiceData'
 
 export interface RawAppCommandOptionData {
@@ -8,11 +8,11 @@ export interface RawAppCommandOptionData {
   /** 1-32 character name */
   name: string
   /** localization dictionary for `name` field. values follow the same restrictions as name */
-  name_localizations?: Record<Locale, string>
+  name_localizations?: Record<DiscordLocale, string>
   /** 1-100 character description */
   description: string
   /** localization dictionary for `description` field. values follow the same restrictions as description */
-  description_localizations?: Record<Locale, string>
+  description_localizations?: Record<DiscordLocale, string>
   /**
    * if the parameter is required or optional
    * @default false

@@ -10,6 +10,7 @@ import { Client } from '@src/core'
 import { Keyspaces } from '@src/constants/cache/Keyspaces'
 import { GuildMembersManagerData } from '@src/api/managers/members/GuildMembersManagerData'
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
+import { DiscordooError, resolveGuildId } from '@src/utils'
 
 export class GuildMembersManager extends EntitiesManager {
   public cache: EntitiesCacheManager<GuildMember>
@@ -18,11 +19,13 @@ export class GuildMembersManager extends EntitiesManager {
   constructor(client: Client, data: GuildMembersManagerData) {
     super(client)
 
-    this.guildId = data.guildId
+    const guildId = resolveGuildId(data.guild)
+    if (!guildId) throw new DiscordooError('GuildMembersManager', 'Cannot operate without guild id.')
+    this.guildId = guildId
 
     this.cache = new EntitiesCacheManager<GuildMember>(this.client, {
       keyspace: Keyspaces.GUILD_MEMBERS,
-      storage: data.guildId,
+      storage: this.guildId,
       entity: 'GuildMember',
       policy: 'members'
     })

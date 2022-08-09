@@ -1,3 +1,13 @@
-import { AbstractGuildChannel, AnyChannel, DirectMessagesChannel } from '@src/api'
+import {
+  DirectMessagesChannel, GuildCategoryChannel,
+  GuildNewsChannel,
+  GuildNewsThreadChannel, GuildStoreChannel,
+  GuildTextChannel, GuildThreadChannel
+} from '@src/api'
 
-export type AnyGuildChannel = AbstractGuildChannel
+export type AnyGuildChannel = GuildTextChannel |
+  GuildNewsChannel |
+  GuildNewsThreadChannel |
+  GuildStoreChannel |
+  GuildThreadChannel |
+  GuildCategoryChannel
