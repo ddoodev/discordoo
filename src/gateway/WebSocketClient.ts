@@ -56,7 +56,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
   }
 
   public connect() {
-    // console.log('SHARD', this.id, 'CONNECTING with intents', this.options.intents)
+    console.log('SHARD', this.id, 'CONNECTING with intents', this.options.intents)
     return new Promise<void>((resolve, reject) => {
 
       // cannot connect without websocket url
@@ -81,7 +81,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
         }
       }
 
-      // console.log('SHARD', this.id, 'ENCODING', this.options.encoding, 'REAL ENCODING', WebSocketUtils.encoding)
+      console.log('SHARD', this.id, 'ENCODING', this.options.connection.encoding, 'REAL ENCODING', WebSocketUtils.encoding)
 
       // cannot use etf encoding without erlpack
       if (this.options.connection.encoding === 'etf' && WebSocketUtils.encoding !== 'etf') {
@@ -97,8 +97,8 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
 
       const ready   = () => { cleanup(); resolve() },
             resumed = () => { cleanup(); resolve() },
-            invalid = (e: WebSocket.CloseEvent) => { cleanup(); reject({ code: e.code, reason: 'Invalid session' }) },
-            closed  = (e: WebSocket.CloseEvent) => { cleanup(); reject({ code: e.code, reason: e.reason }) }
+            invalid = (e: WebSocket.CloseEvent) => { cleanup(); reject({ code: e?.code, reason: 'Invalid session' }) },
+            closed  = (e: WebSocket.CloseEvent) => { cleanup(); reject({ code: e?.code, reason: e?.reason }) }
 
       /**
        * when we call WebSocketClient#connect, it returns a promise.
@@ -119,7 +119,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
 
       // in case if websocket already running
       if (this.socket?.readyState === WebSocketStates.OPEN) {
-        // console.log('shard', this.id, 'identify open websocket')
+        console.log('shard', this.id, 'identify open websocket')
         return this.identify()
       } else if (this.socket) { // remove websocket object because it is no longer needed
         this.socket = undefined
@@ -131,17 +131,17 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
         : WebSocketClientStates.CONNECTING
 
       try {
-        // console.log('shard', this.id, 'creating websocket', this.options.url)
+        console.log('shard', this.id, 'creating websocket', this.options.connection.url)
         this.socket = new WebSocket(this.resumeUrl ?? this.options.connection.url)
 
         this.handshakeTimeout()
-        // console.log('shard', this.id, 'subscribe')
+        console.log('shard', this.id, 'subscribe')
         this.socket.onopen = this.onOpen.bind(this)
         this.socket.onclose = this.onClose.bind(this)
         this.socket.onerror = this.onError.bind(this)
         this.socket.onmessage = this.onMessage.bind(this)
       } catch (e) {
-        // console.error('shard', this.id, 'error', e)
+        console.error('shard', this.id, 'error', e)
         this.status = WebSocketClientStates.DISCONNECTED
         reject()
       }
@@ -191,7 +191,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
 
     // handle zombie connections
     if (this.missedHeartbeats > 1) {
-      // console.log('shard', this.id, 'is a zombie connection! arrr!')
+      console.log('shard', this.id, 'is a zombie connection! arrr!')
       this.destroy({ reconnect: true })
     }
 
@@ -229,7 +229,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
   }
 
   private onClose(event: WebSocket.CloseEvent) {
-    // console.log('shard', this.id, 'closed', event)
+    console.log('shard', this.id, 'closed', event)
     close(this, event)
   }
 
@@ -239,19 +239,19 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
   }
 
   private onError(event: WebSocket.ErrorEvent) {
-    // console.log('shard', this.id, 'error', event)
+    console.log('shard', this.id, 'error', event)
     error(this, event)
   }
 
   public destroy(options: WebSocketClientDestroyOptions = {}) {
 
-    // console.log('shard', this.id, 'destroying, options', options)
+    console.log('shard', this.id, 'destroying, options', options)
     if (
       this.socket
       && this.socket.readyState !== WebSocketStates.CLOSED
       && this.socket.readyState !== WebSocketStates.CLOSING
     ) {
-      // console.log('shard', this.id, 'if this socket and dont ready')
+      console.log('shard', this.id, 'if this socket and dont ready')
       try {
         if (options.reconnect && this.sessionId) {
           this.closeSequence = this.sequence
@@ -262,11 +262,11 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
           this.resumeUrl = undefined
         }
       } catch (e: any) {
-        // console.log('shard', this.id, 'ws close error:', e)
+        console.log('shard', this.id, 'ws close error:', e)
         this.emit(WebSocketClientEvents.WS_CLOSE_ERROR, e)
       }
     } else {
-      // console.log('shard', this.id, 'socket terminate')
+      console.log('shard', this.id, 'socket terminate')
       if (options.code !== 1000 && this.sequence > 0) {
         this.closeSequence = this.sequence
         this.sequence = -1
@@ -275,10 +275,10 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
       this.socket?.terminate()
     }
 
-    // console.log('shard', this.id, 'socket cleanup')
+    console.log('shard', this.id, 'socket cleanup')
     this.cleanup()
 
-    // console.log('shard', this.id, 'emitting reconnect')
+    console.log('shard', this.id, 'emitting reconnect:', !!options.reconnect)
     if (options.reconnect) this.emit(WebSocketClientEvents.RECONNECT_ME, true)
   }
 
