@@ -131,7 +131,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
         : WebSocketClientStates.CONNECTING
 
       try {
-        console.log('shard', this.id, 'creating websocket', this.options.connection.url)
+        console.log('shard', this.id, 'creating websocket', this.resumeUrl ?? this.options.connection.url)
         this.socket = new WebSocket(this.resumeUrl ?? this.options.connection.url)
 
         this.handshakeTimeout()
