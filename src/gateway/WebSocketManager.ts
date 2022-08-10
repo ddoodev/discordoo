@@ -5,6 +5,7 @@ import { DiscordooError } from '@src/utils'
 import { GatewayProvider, GatewayShardsInfo } from '@discordoo/providers'
 import { CompletedGatewayOptions } from '@src/gateway/interfaces/GatewayOptions'
 import { inspect } from 'util'
+import { makeConnectionUrl } from '@src/gateway/makeConnectionUrl'
 
 export class WebSocketManager {
   public readonly options: CompletedGatewayOptions
@@ -50,10 +51,9 @@ export class WebSocketManager {
 
     const gateway = await this.provider.getGateway()
 
-    this.options.connection.url =
-      gateway.url + '/?v='
-      + this.options.connection.version + '&encoding=' + this.options.connection.encoding
-      + (this.options.connection.compress ? '&compress=zlib-stream' : '')
+    const { compress, encoding, version } = this.options.connection
+
+    this.options.connection.url = makeConnectionUrl({ url: gateway.url, encoding, compress, version })
 
     return this.createShards()
   }

@@ -3,6 +3,7 @@ import { WebSocketClient } from '@src/gateway/WebSocketClient'
 import { WebSocketClientEvents, WebSocketClientStates } from '@src/constants'
 import { GatewayOpCodes } from '@discordoo/providers'
 import { WebSocketPacket } from '@src/gateway/interfaces/WebSocketPacket'
+import { makeConnectionUrl } from '@src/gateway/makeConnectionUrl'
 
 export function packet(client: WebSocketClient, packet: WebSocketPacket) {
 
@@ -24,18 +25,18 @@ export function packet(client: WebSocketClient, packet: WebSocketPacket) {
       client.sessionId = packet.d.session_id
       client.status = WebSocketClientStates.READY
       client.expectedGuilds = new Set<any>(packet.d.guilds.map(g => g.id))
-      client.resumeUrl = packet.d.resume_gateway_url
+      client.resumeUrl = makeConnectionUrl(client.options.connection, packet.d.resume_gateway_url)
 
       client.heartbeat()
 
       client.emit(WebSocketClientEvents.READY)
       client.manager.provider.emit(client.id, WebSocketClientEvents.CONNECTED, packet.d)
-      // console.log('shard', client.id, 'READY')
+      console.log('shard', client.id, 'READY')
       break
     case 'RESUMED':
       client.status = WebSocketClientStates.READY
       client.emit(WebSocketClientEvents.RESUMED)
-      // console.log('shard', client.id, 'RESUMED and replayed', client.sequence - client.closeSequence, 'events')
+      console.log('shard', client.id, 'RESUMED and replayed', client.sequence - client.closeSequence, 'events')
       break
   }
 
@@ -45,15 +46,15 @@ export function packet(client: WebSocketClient, packet: WebSocketPacket) {
       client.heartbeatInterval(packet.d.heartbeat_interval)
       client.handshakeTimeout()
       client.identify()
-      // console.log('shard', client.id, 'HELLO')
+      console.log('shard', client.id, 'HELLO')
 
       break
 
     case GatewayOpCodes.INVALID_SESSION:
       client.emit(WebSocketClientEvents.INVALID_SESSION)
-      // console.log('SHARD', client.id, 'INVALID SESSION')
+      console.log('SHARD', client.id, 'INVALID SESSION')
 
-      // client.destroy({ code: 1000, reconnect: true })
+      // invalid session handled automatically: client.destroy({ code: 1000, reconnect: true })
       // console.log('shard', client.id, 'INVALID SESSION')
 
       break

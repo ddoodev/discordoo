@@ -108,8 +108,9 @@ export interface GatewayConnectionOptions {
    * */
   version?: number
   /**
-   * Gateway URL.
+   * Gateway URL. This property will be overwritten by sharding manager.
    * @default wss://gateway.discord.gg/
+   * @private
    * */
   url?: string
   /**

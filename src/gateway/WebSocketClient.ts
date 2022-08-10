@@ -27,7 +27,7 @@ import { open } from '@src/gateway/client/open'
 
 export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers> {
   private socket?: WebSocket
-  private readonly options: CompletedGatewayOptions
+  public readonly options: CompletedGatewayOptions
   private inflate?: PakoTypes.Inflate
   private _heartbeatInterval?: ReturnType<typeof setInterval>
   private _handshakeTimeout?: ReturnType<typeof setTimeout>
