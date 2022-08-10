@@ -172,7 +172,7 @@ export class ClientMessagesManager extends EntitiesManager {
         throw new DiscordooError(
           'MessagesManager#create',
           'Incorrect content:', inspect(content) + '.',
-          'If content not specified, options must be provided: at least one of options.embeds/embed/files/file/stickers/sticker/content.')
+          'If content not specified, options must be provided: at least one of options.embed(s)/file(s)/sticker(s)/content.')
       } else {
         contentResolved = true
       }

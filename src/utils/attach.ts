@@ -8,6 +8,7 @@ import { IgnoreAllSymbol } from '@src/constants/entities/IgnoreAllSymbol'
  * @param options - options with properties to be processed
  * */
 export function attach(to: any, from: any, options: AttachOptions): void {
+  if (!to || !from) return
 
   options.props.forEach(property => {
     const type = typeof property === 'string' ? 'string' : Array.isArray(property) ? 'array' : 'unknown'

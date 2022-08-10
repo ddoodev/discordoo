@@ -1,5 +1,4 @@
 import {
-  DirectMessagesChannel,
   GuildNewsChannel,
   GuildNewsThreadChannel,
   GuildStoreChannel,
@@ -8,7 +7,6 @@ import {
 } from '@src/api'
 
 export type AnyGuildWritableChannel = GuildTextChannel |
-  DirectMessagesChannel |
   GuildNewsChannel |
   GuildNewsThreadChannel |
   GuildStoreChannel |
