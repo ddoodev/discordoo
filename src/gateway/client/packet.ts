@@ -53,6 +53,7 @@ export function packet(client: WebSocketClient, packet: WebSocketPacket) {
     case GatewayOpCodes.INVALID_SESSION:
       client.emit(WebSocketClientEvents.INVALID_SESSION)
       console.log('SHARD', client.id, 'INVALID SESSION')
+      client.sessionId = undefined
 
       // invalid session handled automatically: client.destroy({ code: 1000, reconnect: true })
       // console.log('shard', client.id, 'INVALID SESSION')

@@ -10,7 +10,7 @@ import { GatewayOpCodes, GatewaySendPayloadLike } from '@discordoo/providers'
 import { WebSocketPacket } from '@src/gateway/interfaces/WebSocketPacket'
 import {
   WebSocketClientEvents,
-  WebSocketClientStates,
+  WebSocketClientStates, WebSocketCloseCodes,
   WebSocketStates
 } from '@src/constants'
 
@@ -97,7 +97,8 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
 
       const ready   = () => { cleanup(); resolve() },
             resumed = () => { cleanup(); resolve() },
-            invalid = (e: WebSocket.CloseEvent) => { cleanup(); reject({ code: e?.code, reason: 'Invalid session' }) },
+            invalid = () => { cleanup(); reject({ code: 1000, reason: 'Invalid session' })
+            },
             closed  = (e: WebSocket.CloseEvent) => { cleanup(); reject({ code: e?.code, reason: e?.reason }) }
 
       /**
@@ -260,6 +261,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
         } else {
           this.socket.close(options.code || 1000,'ddoo: shutdown')
           this.resumeUrl = undefined
+          this.sessionId = undefined
         }
       } catch (e: any) {
         console.log('shard', this.id, 'ws close error:', e)
