@@ -24,7 +24,7 @@ export class WebSocketManager {
   }
 
   async connect(options?: GatewayShardsInfo) {
-    console.log('connecting')
+    // console.log('connecting')
     this.status = WebSocketManagerStates.CONNECTING
 
     if (options) {
@@ -34,9 +34,9 @@ export class WebSocketManager {
       }
     }
 
-    console.log('ws manager options:', options)
-    console.log('shards:', this.options.sharding.shards)
-    console.log('totalShards:', this.options.sharding.totalShards)
+    // console.log('ws manager options:', options)
+    // console.log('shards:', this.options.sharding.shards)
+    // console.log('totalShards:', this.options.sharding.totalShards)
 
     this.shardQueue = new Set(this.options.sharding.shards.map(id => new WebSocketClient(this, id)))
     // console.log('queue:', this.shardQueue)
@@ -98,7 +98,7 @@ export class WebSocketManager {
     try {
       await shard.connect()
     } catch (e: any) {
-      if (e && e.code) {
+      if (e?.code) {
         switch (e.code) {
           case WebSocketCloseCodes.DISALLOWED_INTENTS:
           case WebSocketCloseCodes.INVALID_INTENTS:
