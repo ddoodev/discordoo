@@ -1,7 +1,7 @@
 import { CachingPoliciesProcessor } from '@src/cache/CachingPoliciesProcessor'
 import { IpcCacheOpCodes, IpcOpCodes, SerializeModes } from '@src/constants'
 import { CacheProvider, CacheStorageKey } from '@discordoo/providers'
-import { DiscordooError, resolveDiscordooShards, WebSocketUtils } from '@src/utils'
+import { DiscordooError, resolveDiscordooShards } from '@src/utils'
 import { Client, ProviderConstructor } from '@src/core'
 import { EntityKey } from '@src/api/entities'
 import {

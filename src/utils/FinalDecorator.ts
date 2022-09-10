@@ -4,7 +4,7 @@
  * When someone extends the class that decorated with @Final('method') and tries to override protected method,
  * and then executes overridden method, the code from the source class will be executed.
  *
- * Also this decorator hides the method code when method.toString() called.
+ * Also, this decorator hides the method code when method.toString() called.
  *
  * @example ```ts
  * @Final('hello')

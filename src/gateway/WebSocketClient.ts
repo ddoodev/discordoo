@@ -67,7 +67,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
         resolve()
       }
 
-      // create decompressing context if developer wants use compression between us and discord
+      // create decompressing context if developer wants to use compression between us and discord
       if (this.options.connection.compress) {
         if (!WebSocketUtils.pako) {
           throw new DiscordooError(

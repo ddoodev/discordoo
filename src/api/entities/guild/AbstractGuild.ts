@@ -5,7 +5,7 @@ import { GuildFeatures } from '@src/constants'
 import { attach, idToDate, idToTimestamp, ImageUrlOptions } from '@src/utils'
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
-export class AbstractGuild extends AbstractEntity implements AbstractGuildData {
+export abstract class AbstractGuild extends AbstractEntity implements AbstractGuildData {
   public declare features: GuildFeatures[]
   public icon?: string
   public declare id: string

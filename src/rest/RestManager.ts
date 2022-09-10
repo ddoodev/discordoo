@@ -1,8 +1,6 @@
 import { Client, ProviderConstructor } from '@src/core'
 import { RestRequest, RestManagerData, RestManagerRequestData, RestLimitsManager, makeRequest } from '@src/rest'
 import { RestProvider, RestRequestOptions, RestFinishedResponse } from '@discordoo/providers'
-import { ImageUrlOptions, makeImageUrl } from '@src/utils'
-import { StickerFormatTypes } from '@src/constants'
 import { CompletedRestOptions } from '@src/rest'
 import { DiscordCdnLinker } from '@src/rest/DiscordCdnLinker'
 

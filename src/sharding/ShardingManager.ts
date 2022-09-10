@@ -63,7 +63,7 @@ export class ShardingManager extends TypedEmitter<ShardingManagerEvents> {
     let remaining = 10 * 60 * 1000 // 10 minutes, in ms
 
     /**
-     * This interval will reset allowed requests/s every second
+     * This interval will reset allowed requests/s every second,
      * and also it will reset allowed invalid requests/10m every 10 minutes
      * */
     setInterval(() => {

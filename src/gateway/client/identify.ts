@@ -49,5 +49,5 @@ export function identify(
 
   return {
     d, op
-  } as unknown as any // TODO
+  } as any // TODO
 }
