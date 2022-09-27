@@ -9,3 +9,5 @@ export { MessageResolvable } from '@src/api/entities/message/interfaces/MessageR
 export { RawChannelMentionData } from '@src/api/entities/message/interfaces/RawChannelMentionData'
 export { RawMessageData } from '@src/api/entities/message/interfaces/RawMessageData'
 export { RawMessageReferenceData } from '@src/api/entities/message/interfaces/RawMessageReferenceData'
+export { WebhookMessageCreateOptions } from '@src/api/entities/message/interfaces/MessageCreateOptions'
+export { WebhookMessageCreateData } from '@src/api/entities/message/interfaces/MessageCreateData'

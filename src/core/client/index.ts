@@ -9,3 +9,4 @@ export { ClientQueues } from '@src/core/client/ClientQueues'
 export { Client } from '@src/core/client/Client'
 
 export * from './app'
+export * from './webhook'

@@ -7,3 +7,5 @@ export { DirectMessagesChannelMessagesManager } from '@src/api/managers/messages
 export { FetchManyMessagesQuery } from '@src/api/managers/messages/FetchManyMessagesQuery'
 export { FetchOneMessageOptions } from '@src/api/managers/messages/FetchOneMessageOptions'
 export { MessagesManagerData } from '@src/api/managers/messages/MessagesManagerData'
+export { DeleteWebhookMessageOptions } from '@src/api/managers/messages/DeleteWebhookMessageOptions'
+export { WebhookClientMessagesManager } from '@src/api/managers/messages/WebhookClientMessagesManager'

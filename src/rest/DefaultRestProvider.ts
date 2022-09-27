@@ -25,7 +25,7 @@ export class DefaultRestProvider implements RestProvider {
 
     let headers = this.options.api.headers
 
-    headers['Authorization'] = options.auth ?? this.options.api.auth
+    if (options.useAuth !== false) headers['Authorization'] = options.auth ?? this.options.api.auth
 
     if (this.options.userAgent) {
       headers['User-Agent'] = this.options.userAgent
@@ -83,7 +83,7 @@ export class DefaultRestProvider implements RestProvider {
     let result: any = await response.body.text(),
       success = response.statusCode > 199 && response.statusCode < 400
 
-    // console.log('PROVIDER REQUEST EXECUTED, SUCCESS:', success, 'DATA:', response)
+    // console.log('PROVIDER REQUEST EXECUTED, SUCCESS:', success, 'DATA:', response, 'BODY:', result)
 
     try {
       if (response.statusCode !== 204) result = JSON.parse(result)

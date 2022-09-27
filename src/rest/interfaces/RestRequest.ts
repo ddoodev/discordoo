@@ -5,6 +5,7 @@ import {
   RestRequestMethods
 } from '@discordoo/providers'
 import { RestManager } from '@src/rest/RestManager'
+import { WebhookRestManager } from '@src/rest/WebhookRestManager'
 
 /** Constructor used to build and perform requests to discord rest api */
 export interface RestRequest {
@@ -99,3 +100,5 @@ export interface RestRequest {
    */
   delete<T = any>(options?: RestRequestOptions): RestFinishedResponse<T>
 }
+
+export type WebhookRestRequest = Omit<RestRequest, 'rest'> & { rest: WebhookRestManager }

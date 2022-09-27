@@ -6,6 +6,8 @@ import {
   RestRequestMethods
 } from '@discordoo/providers'
 import { randomString } from '@src/utils'
+import { WebhookRestManager } from '@src/rest/WebhookRestManager'
+import { WebhookRestRequest } from '@src/rest/interfaces/RestRequest'
 
 /**
  * Creates a new rest request. We do not use classes here, because function+object is about 9x faster than new Class()
@@ -40,7 +42,7 @@ export function makeRequest(rest: RestManager<any>): RestRequest {
       const path = `${this.requestStack.join('/')}`
 
       if (Object.keys(this.requestQuery).length > 0) {
-        return path + '&' + new URLSearchParams(this.requestQuery).toString()
+        return path + '?' + new URLSearchParams(this.requestQuery).toString()
       }
 
       return path
@@ -50,7 +52,7 @@ export function makeRequest(rest: RestManager<any>): RestRequest {
       const entries = Object.entries(data)
 
       entries.forEach(([ key, value ]) => {
-        this.requestQuery[encodeURIComponent(key)] = encodeURIComponent(value)
+        if (value) this.requestQuery[encodeURIComponent(key)] = encodeURIComponent(value)
       })
 
       return this
@@ -122,4 +124,8 @@ export function makeRequest(rest: RestManager<any>): RestRequest {
     },
   }
 
+}
+
+export function makeWebhookRequest(rest: WebhookRestManager<any>): WebhookRestRequest {
+  return makeRequest(rest as any) as any
 }
