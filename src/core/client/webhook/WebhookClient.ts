@@ -15,7 +15,7 @@ export class WebhookClient<ClientStack extends DefaultWebhookClientStack = Defau
   public readonly internals: WebhookClientInternals
   public readonly options: WebhookClientOptions
 
-  public readonly messages = new WebhookClientMessagesManager(this)
+  public readonly messages: WebhookClientMessagesManager = new WebhookClientMessagesManager(this)
 
   constructor(options: WebhookClientOptions) {
     this.id = options.id
