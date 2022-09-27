@@ -31,12 +31,12 @@ export function packet(client: WebSocketClient, packet: WebSocketPacket) {
 
       client.emit(WebSocketClientEvents.READY)
       client.manager.provider.emit(client.id, WebSocketClientEvents.CONNECTED, packet.d)
-      console.log('shard', client.id, 'READY')
+      // console.log('shard', client.id, 'READY')
       break
     case 'RESUMED':
       client.status = WebSocketClientStates.READY
       client.emit(WebSocketClientEvents.RESUMED)
-      console.log('shard', client.id, 'RESUMED and replayed', client.sequence - client.closeSequence, 'events')
+      // console.log('shard', client.id, 'RESUMED and replayed', client.sequence - client.closeSequence, 'events')
       break
   }
 
@@ -46,13 +46,13 @@ export function packet(client: WebSocketClient, packet: WebSocketPacket) {
       client.heartbeatInterval(packet.d.heartbeat_interval)
       client.handshakeTimeout()
       client.identify()
-      console.log('shard', client.id, 'HELLO')
+      // console.log('shard', client.id, 'HELLO')
 
       break
 
     case GatewayOpCodes.INVALID_SESSION:
       client.emit(WebSocketClientEvents.INVALID_SESSION)
-      console.log('SHARD', client.id, 'INVALID SESSION')
+      // console.log('SHARD', client.id, 'INVALID SESSION')
       client.sessionId = undefined
 
       // invalid session handled automatically: client.destroy({ code: 1000, reconnect: true })
