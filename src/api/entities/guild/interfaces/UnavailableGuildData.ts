@@ -1,4 +1,4 @@
 export interface UnavailableGuildData {
   id: string
-  unavailable?: true
+  unavailable: true
 }

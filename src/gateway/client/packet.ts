@@ -30,7 +30,7 @@ export function packet(client: WebSocketClient, packet: WebSocketPacket) {
       client.heartbeat()
 
       client.emit(WebSocketClientEvents.READY)
-      client.manager.provider.emit(client.id, WebSocketClientEvents.CONNECTED, packet.d)
+      client.manager.provider.emit(client.id, { op: GatewayOpCodes.DISPATCH, t: WebSocketClientEvents.CONNECTED, d: packet.d })
       // console.log('shard', client.id, 'READY')
       break
     case 'RESUMED':
@@ -75,7 +75,7 @@ export function packet(client: WebSocketClient, packet: WebSocketPacket) {
       break
 
     case GatewayOpCodes.DISPATCH:
-      client.manager.provider.emit(client.id, packet.t, packet.d)
+      client.manager.provider.emit(client.id, packet)
       break
   }
 }

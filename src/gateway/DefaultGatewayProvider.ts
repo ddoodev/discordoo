@@ -1,4 +1,4 @@
-import { GatewayBotInfo, GatewayProvider, GatewaySendOptions, GatewayShardsInfo } from '@discordoo/providers'
+import { GatewayBotInfo, GatewayProvider, GatewayReceivePayloadLike, GatewaySendOptions, GatewayShardsInfo } from '@discordoo/providers'
 import { Client } from '@src/core'
 import { WebSocketManager } from '@src/gateway/WebSocketManager'
 import { rawToDiscordoo } from '@src/utils/rawToDiscordoo'
@@ -26,13 +26,12 @@ export class DefaultGatewayProvider implements GatewayProvider {
     return this.manager.disconnect(shards)
   }
 
-  emit(shardId: number, event: string, ...data: any[]): unknown {
+  emit(shardId: number, packet: GatewayReceivePayloadLike): unknown {
     // if (event !== 'PRESENCE_UPDATE') console.log('shard', shardId, 'event', event)
     // else if (data[0]?.user?.id === '164417009977786368') console.log('ceo update', event, data)
     return this.client.internals.gateway.emit(
       shardId,
-      event === WebSocketClientEvents.CONNECTED ? 'shardConnected' : rawToDiscordoo(event),
-      ...data
+      packet
     )
   }
 

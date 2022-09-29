@@ -1,6 +1,6 @@
 import { MessageCreateEventContext } from '@src/events/ctx/MessageCreateEventContext'
 import { PresenceUpdateEventContext } from '@src/events/ctx/PresenceUpdateEventContext'
-import { GuildMembersChunkEventContext } from '@src/events/ctx'
+import { GuildMembersChunkEventContext } from '@src/events/ctx/GuildMembersChunkEventContext'
 import { ShardConnectedEventContext } from '@src/events/ctx/ShardConnectedEventContext'
 import { ReadyEventContext } from '@src/events/ctx/ReadyEventContext'
 import { ChannelCreateEventContext } from '@src/events/channel/ctx/ChannelCreateEventContext'
@@ -17,15 +17,19 @@ import { RestructuringEventContext } from '@src/events/interfaces/RestructuringE
 import { ThreadMembersUpdateEventContext, ThreadMemberUpdateEventContext } from '@src/events/thread'
 import { GuildEmojisUpdatedEventContext } from '@src/events/emoji/ctx/GuildEmojisUpdatedEventContext'
 import { UserUpdateEventContext } from '@src/events/user/ctx/UserUpdateEventContext'
-import { GuildCreateEventContext } from '@src/events/guild/ctx'
+import { GuildCreateEventContext } from '@src/events/guild/ctx/GuildCreateEventContext'
 import { GuildDeleteEventContext } from '@src/events/guild/ctx/GuildDeleteEventContext'
 import { GuildUpdateEventContext } from '@src/events/guild/ctx/GuildUpdateEventContext'
 import { GuildMemberAddEventContext } from '@src/events/member/ctx/GuildMemberAddEventContext'
 import { GuildMemberRemoveEventContext } from '@src/events/member/ctx/GuildMemberRemoveEventContext'
 import { GuildMemberUpdateEventContext } from '@src/events/member/ctx/GuildMemberUpdateEventContext'
+import { GatewayReceivePayloadLike } from '@discordoo/providers'
 
 /** Client events */
 export interface ClientEventsHandlers {
+
+  /** All raw WebSocket events */
+  raw: (packet: GatewayReceivePayloadLike) => void
 
   /** Emitted once when the client is ready */
   ready: (context: ReadyEventContext) => any

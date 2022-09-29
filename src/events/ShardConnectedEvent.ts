@@ -17,7 +17,7 @@ export class ShardConnectedEvent extends AbstractEvent<AbstractEventContext> {
         client.internals.queues.ready.delete(shard)
         client.emit(EventNames.SHARD_CONNECTED, {
           id: shard,
-          unavailable: queue.guilds?.map(g => ({ id: g, unavailable: true })) ?? [],
+          unavailable: queue.guilds?.map(g => ({ id: g, unavailable: true as const })) ?? [],
           user: data.user
         })
         client._increaseConnected()

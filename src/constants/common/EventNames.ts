@@ -49,4 +49,5 @@ export enum EventNames {
   VOICE_STATE_UPDATE = 'voiceStateUpdate',
   VOICE_SERVER_UPDATE = 'voiceServerUpdate',
   WEBHOOKS_UPDATE = 'webhooksUpdate',
+  RAW = 'raw',
 }

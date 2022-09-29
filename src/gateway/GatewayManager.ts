@@ -1,9 +1,17 @@
-import { GatewayBotInfo, GatewayProvider, GatewaySendOptions, GatewaySendPayloadLike, GatewayShardsInfo } from '@discordoo/providers'
+import {
+  GatewayBotInfo,
+  GatewayProvider,
+  GatewayReceivePayloadLike,
+  GatewaySendOptions,
+  GatewaySendPayloadLike,
+  GatewayShardsInfo
+} from '@discordoo/providers'
 import { GatewayManagerData } from '@src/gateway/interfaces'
 import { Client, ProviderConstructor } from '@src/core'
 import { DiscordooError, ValidationError, wait } from '@src/utils'
-import { Endpoints } from '@src/constants'
+import { Endpoints, WebSocketClientEvents } from '@src/constants'
 import { CompletedGatewayOptions } from '@src/gateway/interfaces/GatewayOptions'
+import { rawToDiscordoo } from '@src/utils/rawToDiscordoo'
 
 export class GatewayManager<P extends GatewayProvider = GatewayProvider> {
   public provider: P
@@ -30,8 +38,13 @@ export class GatewayManager<P extends GatewayProvider = GatewayProvider> {
     return this.provider.ping(shards)
   }
 
-  emit(shardId: number, event: string, ...data: any[]) { // TODO: events overload protection
-    return this.client.internals.events.handlers.get(event)?.execute(shardId, ...data)
+  emit(shardId: number, packet: GatewayReceivePayloadLike) { // TODO: events overload protection
+    this.client.emit('raw', packet)
+
+    if (!packet.t) return
+    const event = packet.t === WebSocketClientEvents.CONNECTED ? 'shardConnected' : rawToDiscordoo(packet.t)
+
+    return this.client.internals.events.handlers.get(event)?.execute(shardId, packet.d)
   }
 
   reorganizeShards(shards: GatewayShardsInfo): Promise<unknown> {
