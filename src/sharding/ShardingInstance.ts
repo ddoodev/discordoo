@@ -4,21 +4,18 @@ import { CLUSTERS_SHARDING_UNSUPPORTED_PLATFORMS, IpcConnectionState, IpcEvents,
 import { ShardingManager } from '@src/sharding/ShardingManager'
 import { LocalIpcClient } from '@src/sharding/ipc/LocalIpcClient'
 import { TypedEmitter } from 'tiny-typed-emitter'
-import { DiscordooError, DiscordooSnowflake, resolveDiscordooShards, resolveDiscordShards, ValidationError, wait } from '@src/utils'
+import { DiscordooError, DiscordooSnowflake, resolveDiscordooShards, ValidationError, wait } from '@src/utils'
 import Process, { ChildProcess } from 'child_process'
 import { Worker } from 'worker_threads'
 import Cluster from 'cluster'
 import os from 'os'
-import { deserializeError, serializeError } from 'serialize-error'
+import { deserializeError } from 'serialize-error'
 import {
   BroadcastEvalContext,
   BroadcastEvalOptions,
   IpcBroadcastEvalRequestPacket, IpcMessagePacket,
-  IpcRestructuringRequestPacket,
-  ShardingInstanceRestructureOptions
 } from '@src/sharding/interfaces'
 import { is } from 'typescript-is'
-import { Client } from '@src/core'
 import { fromJson, toJson } from '@src/utils/toJson'
 
 export class ShardingInstance extends TypedEmitter {

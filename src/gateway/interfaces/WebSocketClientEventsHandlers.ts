@@ -10,7 +10,7 @@ export interface WebSocketClientEventsHandlers {
   WS_OPEN: (event: WebSocket.OpenEvent) => unknown
   WS_CLOSED: (code: WebSocket.CloseEvent) => unknown
 
-  __RECONNECT_ME__: (destroyed?: boolean) => unknown
+  __DDOO_RECONNECT_ME__: (destroyed?: boolean) => unknown
 
   ready: () => unknown
   resumed: () => unknown
