@@ -20,7 +20,7 @@ export function makeRequest(rest: RestManager<any>): RestRequest {
     requestQuery: {},
     requestStack: [],
     requestHeaders: {},
-    requestBody: {},
+    requestBody: undefined,
     requestPayload: [],
 
     get majorParameter() {
