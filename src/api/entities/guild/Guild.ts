@@ -74,6 +74,12 @@ export class Guild extends AbstractViewableGuild {
     return this.systemChannelId ? this.channels.cache.get<AnyGuildWritableChannel>(this.systemChannelId, options) : undefined
   }
 
+  async leave(): Promise<this | undefined> {
+    const success = await this.client.guilds.leave(this.id)
+
+    return success ? this : undefined
+  }
+
   toJson(properties: ToJsonProperties = {}, obj?: any): Json {
     return super.toJson({
       ...properties,
