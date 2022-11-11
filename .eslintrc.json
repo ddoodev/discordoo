@@ -35,6 +35,10 @@
       "error",
       "always"
     ],
+    "object-curly-spacing": [
+      "error",
+      "always"
+    ],
     "@typescript-eslint/member-delimiter-style": [
       "error",
       {
