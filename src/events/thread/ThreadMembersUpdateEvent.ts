@@ -44,7 +44,7 @@ export class ThreadMembersUpdateEvent extends AbstractEvent<ThreadMembersUpdateE
 
     for await (const member of data.added_members ?? []) {
       const threadMember = await new TMember(this.client).init({ ...member, guild_id: data.guild_id })
-      const guildMember = await new GMember(this.client).init(member.member)
+      const guildMember = await new GMember(this.client).init({ ...member.member, guild_id: data.guild_id })
       const presence = member.presence ? await new Presence(this.client).init(member.presence) : undefined
 
       await this.client.members.cache.set(member.user_id, guildMember, { storage: data.guild_id })
