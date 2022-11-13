@@ -43,7 +43,7 @@ export class ThreadMembersUpdateEvent extends AbstractEvent<ThreadMembersUpdateE
       Presence = EntitiesUtil.get('Presence')
 
     for await (const member of data.added_members ?? []) {
-      const threadMember = await new TMember(this.client).init(member)
+      const threadMember = await new TMember(this.client).init({ ...member, guild_id: data.guild_id })
       const guildMember = await new GMember(this.client).init(member.member)
       const presence = member.presence ? await new Presence(this.client).init(member.presence) : undefined
 
