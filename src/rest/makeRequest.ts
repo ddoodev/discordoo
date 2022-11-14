@@ -95,7 +95,7 @@ export function makeRequest(rest: RestManager<any>): RestRequest {
         method,
         path: this.path,
         attachments: this.requestPayload,
-        body: (typeof this.requestBody === 'object' && Object.keys(this.requestBody).length || Array.isArray(this.requestBody))
+        body: typeof this.requestBody === 'object'
           ? this.requestBody
           : undefined,
         headers: Object.keys(this.requestHeaders).length ? this.requestHeaders : undefined,
