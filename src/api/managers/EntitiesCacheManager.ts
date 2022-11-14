@@ -41,7 +41,7 @@ export class EntitiesCacheManager<DefaultEntity> extends EntitiesManager {
     return this.client.internals.cache.delete<string>(this.keyspace, this.storage, key, options)
   }
 
-  async filter<Entity = DefaultEntity>(
+  async filter<Entity extends DefaultEntity>(
     predicate: (value: Entity, key: string, provider: CacheProvider) => (boolean | Promise<boolean>),
     options?: CacheManagerFilterOptions
   ): Promise<Array<[ string, Entity ]>> {
@@ -54,7 +54,7 @@ export class EntitiesCacheManager<DefaultEntity> extends EntitiesManager {
     )
   }
 
-  async find<Entity = DefaultEntity>(
+  async find<Entity extends DefaultEntity>(
     predicate: (value: Entity, key: string, provider: CacheProvider) => (boolean | Promise<boolean>),
     options?: CacheManagerFindOptions
   ): Promise<Entity | undefined> {
@@ -67,7 +67,7 @@ export class EntitiesCacheManager<DefaultEntity> extends EntitiesManager {
     )
   }
 
-  async forEach<Entity = DefaultEntity>(
+  async forEach<Entity extends DefaultEntity>(
     predicate: (value: Entity, key: string, provider: CacheProvider) => (unknown | Promise<unknown>),
     options?: CacheManagerForEachOptions
   ): Promise<void> {
@@ -80,7 +80,7 @@ export class EntitiesCacheManager<DefaultEntity> extends EntitiesManager {
     )
   }
 
-  async get<T = DefaultEntity>(key: string, options?: CacheManagerGetOptions): Promise<T | undefined> {
+  async get<T extends DefaultEntity>(key: string, options?: CacheManagerGetOptions): Promise<T | undefined> {
     return this.client.internals.cache.get<string, T>(
       this.keyspace,
       this.storage,
@@ -99,7 +99,7 @@ export class EntitiesCacheManager<DefaultEntity> extends EntitiesManager {
     )
   }
 
-  async map<R, Entity = DefaultEntity>(
+  async map<R, Entity extends DefaultEntity>(
     predicate: (value: Entity, key: string, provider: CacheProvider) => (R | Promise<R>),
     options?: CacheManagerMapOptions
   ): Promise<R[]> {
@@ -112,7 +112,7 @@ export class EntitiesCacheManager<DefaultEntity> extends EntitiesManager {
     )
   }
 
-  async set<Entity = DefaultEntity>(
+  async set<Entity extends DefaultEntity>(
     key: string, value: Entity | CachePointer, options?: CacheManagerSetOptions
   ): Promise<EntitiesCacheManager<Entity>> {
     await this.client.internals.cache.set<string, Entity>(
@@ -132,7 +132,7 @@ export class EntitiesCacheManager<DefaultEntity> extends EntitiesManager {
     return this.client.internals.cache.size(this.keyspace, this.storage, options)
   }
 
-  async sweep<Entity = DefaultEntity>(
+  async sweep<Entity extends DefaultEntity>(
     predicate: (value: Entity, key: string, provider: CacheProvider) => (boolean | Promise<boolean>),
     options?: CacheManagerSweepOptions
   ): Promise<void> {
@@ -149,14 +149,14 @@ export class EntitiesCacheManager<DefaultEntity> extends EntitiesManager {
     return this.client.internals.cache.clear(this.keyspace, this.storage, options)
   }
 
-  async count<Entity = DefaultEntity>(
+  async count<Entity extends DefaultEntity>(
     predicate: (value: Entity, key: string, provider: CacheProvider) => (boolean | Promise<boolean>),
     options?: CacheManagerCountOptions
   ): Promise<number> {
     return this.client.internals.cache.count<string, Entity>(this.keyspace, this.storage, this.entityKey, predicate, options)
   }
 
-  async counts<Entity = DefaultEntity>(
+  async counts<Entity extends DefaultEntity>(
     predicates: ((value: Entity, key: string, provider: CacheProvider) => (boolean | Promise<boolean>))[],
     options?: CacheManagerCountsOptions
   ): Promise<number[]> {
@@ -167,11 +167,11 @@ export class EntitiesCacheManager<DefaultEntity> extends EntitiesManager {
     return this.client.internals.cache.keys<string>(this.keyspace, this.storage, this.entityKey, options)
   }
 
-  async values<Entity = DefaultEntity>(options?: CacheManagerValuesOptions): Promise<Entity[]> {
+  async values<Entity extends DefaultEntity>(options?: CacheManagerValuesOptions): Promise<Entity[]> {
     return this.client.internals.cache.values<Entity>(this.keyspace, this.storage, this.entityKey, options)
   }
 
-  async entries<Entity = DefaultEntity>(options?: CacheManagerEntriesOptions): Promise<Array<[ string, Entity ]>> {
+  async entries<Entity extends DefaultEntity>(options?: CacheManagerEntriesOptions): Promise<Array<[ string, Entity ]>> {
     return this.client.internals.cache.entries<string, Entity>(this.keyspace, this.storage, this.entityKey, options)
   }
 }
