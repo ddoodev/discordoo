@@ -26,12 +26,12 @@ import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 export class GuildMember extends AbstractEntity {
   public avatar?: string
   public voiceDeaf?: boolean
-  public declare joinedDate: Date
+  public declare joinedTimestamp: number
   public voiceMute?: boolean
   public nick?: string
   public pending?: boolean
   public declare permissions: ReadonlyPermissions
-  public premiumSinceDate?: Date
+  public premiumSinceTimestamp?: number
   public declare roles: GuildMemberRolesManager
   public rolesList: string[] = []
   public declare userId: string
@@ -57,15 +57,15 @@ export class GuildMember extends AbstractEntity {
     })
 
     if ('joined_at' in data) {
-      this.joinedDate = new Date(data.joined_at)
+      this.joinedTimestamp = new Date(data.joined_at).getTime()
     } else if ('joinedDate' in data) {
-      this.joinedDate = new Date(data.joinedDate)
+      this.joinedTimestamp = new Date(data.joinedDate).getTime()
     }
 
     if ('premium_since' in data && data.premium_since) {
-      this.premiumSinceDate = new Date(data.premium_since)
+      this.premiumSinceTimestamp = new Date(data.premium_since).getTime()
     } else if ('premiumSinceDate' in data && data.premiumSinceDate) {
-      this.premiumSinceDate = new Date(data.premiumSinceDate)
+      this.premiumSinceTimestamp = new Date(data.premiumSinceDate).getTime()
     }
 
     if ('userId' in data && (data.userId || data.user)) {
@@ -144,12 +144,12 @@ export class GuildMember extends AbstractEntity {
     return this.client.internals.cache.get('presences', this.guildId, 'Presence', this.userId, options)
   }
 
-  get joinedTimestamp(): number {
-    return this.joinedDate.getTime()
+  get joinedTimeDate(): Date {
+    return new Date(this.joinedTimestamp)
   }
 
-  get premiumSinceTimestamp(): number | undefined {
-    return this.premiumSinceDate?.getTime()
+  get premiumSinceDate(): Date | undefined {
+    return this.premiumSinceTimestamp ? new Date(this.premiumSinceTimestamp) : undefined
   }
 
   get muteUntilTimestamp(): number | undefined {

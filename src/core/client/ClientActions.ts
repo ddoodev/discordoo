@@ -11,7 +11,15 @@ import { RawStickerEditData } from '@src/api/entities/sticker/interfaces/RawStic
 import { RawStickerCreateData } from '@src/api/entities/sticker/interfaces/RawStickerCreateData'
 import { RawStickerPackData } from '@src/api/entities/sticker'
 import { RawGuildMemberEditData } from '@src/api/entities/member/interfaces/RawGuildMemberEditData'
-import { AnyRawGuildChannelData, GuildEmojiData, GuildMember, RawGuildMemberData } from '@src/api'
+import {
+  AnyRawGuildChannelData,
+  GuildEmojiData,
+  GuildMember,
+  FetchInviteQuery,
+  RawGuildMemberData,
+  RawInviteCreateData,
+  RawInviteData
+} from '@src/api'
 import { RawRoleEditData } from '@src/api/entities/role/interfaces/RawRoleEditData'
 import { RawRoleData } from '@src/api/entities/role/interfaces/RawRoleData'
 import { RawRoleCreateData } from '@src/api/entities/role/interfaces/RawRoleCreateData'
@@ -202,6 +210,13 @@ export class ClientActions {
       .post<RawStickerData>({ reason })
   }
 
+  createInvite(channelId: string, data?: RawInviteCreateData, reason?: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.CHANNEL_INVITES(channelId))
+      .body(data ? data : { })
+      .post<RawInviteData>({ reason })
+  }
+
   createUserChannel(userId: string) {
     return this.client.internals.rest.api()
       .url(Endpoints.USER_CHANNELS('@me'))
@@ -268,6 +283,12 @@ export class ClientActions {
     return this.client.internals.rest.api()
       .url(Endpoints.GUILD_STICKER(guildId, stickerId))
       .delete({ reason })
+  }
+
+  deleteInvite(inviteCode: string, reason?: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.INVITE(inviteCode))
+      .delete<RawInviteData>({ reason })
   }
 
   editGuild(guildId: string, data: any /* TODO: GuildData */, reason?: string) {
@@ -475,6 +496,12 @@ export class ClientActions {
       .get()
   }
 
+  getChannelInvites(channelId: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.CHANNEL_INVITES(channelId))
+      .get<RawInviteData[]>()
+  }
+
   getGuildBan(guildId: string, memberId: string) {
     return this.client.internals.rest.api()
       .url(Endpoints.GUILD_BAN(guildId, memberId))
@@ -573,7 +600,7 @@ export class ClientActions {
           ...options,
           nonce
         }
-      }, { shards: [ shardId ]})
+      }, { shards: [ shardId ] })
     })
   }
 
@@ -629,6 +656,14 @@ export class ClientActions {
     return this.client.internals.rest.api()
       .url(Endpoints.GUILD_STICKERS(guildId))
       .get<RawStickerData[]>()
+  }
+
+  getInvite(inviteCode: string, query?: FetchInviteQuery) {
+    const request = this.client.internals.rest.api().url(Endpoints.INVITE(inviteCode))
+
+    if (query) request.query(query)
+
+    return request.get<RawInviteData>()
   }
 
   getSticker(stickerId: string) {

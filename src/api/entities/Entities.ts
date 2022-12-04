@@ -20,11 +20,12 @@ import { MessageReaction } from '@src/api/entities/reaction'
 import { Message } from '@src/api/entities/message'
 import { User } from '@src/api/entities/user'
 import { Role } from '@src/api/entities/role'
-import { Guild } from '@src/api/entities/guild'
+import { Guild, InviteGuild } from '@src/api/entities/guild'
 import { AppCommandInteraction, AppCommandInteractionData } from '@src/api/entities/interaction/AppCommandInteraction'
 import { Interaction } from '@src/api/entities/interaction/Interaction'
 import { MessageAttachment } from '@src/api/entities/attachment/MessageAttachment'
 import { MessageEmbed } from '@src/api/entities/embed/MessageEmbed'
+import { Invite } from '@src/api/entities/invite/Invite'
 
 export const Entities = {
   Message,
@@ -61,4 +62,6 @@ export const Entities = {
   Interaction,
   MessageEmbed,
   MessageAttachment,
+  Invite,
+  InviteGuild
 }

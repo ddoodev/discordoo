@@ -6,4 +6,6 @@ export interface RawGuildData extends RawViewableGuildData {
   rules_channel_id: string | null
   public_updates_channel_id: string | null
   system_channel_id: string | null
+  owner_id: string
+  members_count: number
 }

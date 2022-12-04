@@ -10,6 +10,7 @@ export { GuildStoreChannel } from '@src/api/entities/channel/GuildStoreChannel'
 export { GuildTextChannel } from '@src/api/entities/channel/GuildTextChannel'
 export { GuildNewsChannel } from '@src/api/entities/channel/GuildNewsChannel'
 export { AbstractChannel } from '@src/api/entities/channel/AbstractChannel'
+export { InviteChannel } from '@src/api/entities/channel/InviteChannel'
 // export { GuildVoiceChannel }
 
 export * from './interfaces'

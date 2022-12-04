@@ -8,8 +8,6 @@ export interface ViewableGuild {
   verificationLevel: GuildVerificationLevels
   vanityUrlCode?: string
   nsfwLevel: GuildNsfwLevels
-  ownerId: string
-  membersCount: number
 
   bannerUrl(options?: ImageUrlOptions): string | undefined
 

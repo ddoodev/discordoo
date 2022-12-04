@@ -1,6 +1,6 @@
-import { AnyThreadChannel } from '@src/api/entities/channel/interfaces/AnyThreadChannel'
+import { AbstractThreadChannel, AnyThreadChannel } from '@src/api'
 
 export interface ThreadChannelEditOptions {
   reason?: string
-  patchEntity?: AnyThreadChannel
+  patchEntity?: AnyThreadChannel | AbstractThreadChannel
 }

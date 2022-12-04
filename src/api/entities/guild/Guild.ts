@@ -21,6 +21,8 @@ export class Guild extends AbstractViewableGuild {
   public declare rulesChannelId?: string
   public declare publicUpdatesChannelId?: string
   public declare systemChannelId?: string
+  public declare ownerId: string
+  public declare membersCount: number
 
   async init(data: GuildData | RawGuildData, options?: EntityInitOptions): Promise<this> {
     await super.init(data)
@@ -32,9 +34,11 @@ export class Guild extends AbstractViewableGuild {
         [ 'rulesChannelId', 'rules_channel_id' ],
         [ 'publicUpdatesChannelId', 'public_updates_channel_id' ],
         [ 'systemChannelId', 'system_channel_id' ],
+        [ 'ownerId', 'owner_id' ],
+        [ 'membersCount', 'members_count' ]
       ],
       disabled: options?.ignore,
-      enabled: [ 'unavailable' ]
+      enabled: [ 'unavailable', 'ownerId' ]
     })
 
     if (!this.members) {

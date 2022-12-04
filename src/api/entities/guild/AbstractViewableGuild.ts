@@ -14,8 +14,6 @@ export abstract class AbstractViewableGuild extends AbstractGuild implements Vie
   public splash?: string
   public vanityUrlCode?: string
   public declare verificationLevel: GuildVerificationLevels
-  public declare ownerId: string
-  public declare membersCount: number
 
   async init(data: ViewableGuildData | RawViewableGuildData, options?: EntityInitOptions): Promise<this> {
     await super.init(data)
@@ -28,11 +26,8 @@ export abstract class AbstractViewableGuild extends AbstractGuild implements Vie
         'splash',
         [ 'vanityUrlCode', 'vanity_url_code' ],
         [ 'verificationLevel', 'verification_level', GuildVerificationLevels.NONE ],
-        [ 'ownerId', 'owner_id' ],
-        [ 'membersCount', 'members_count' ],
       ],
       disabled: options?.ignore,
-      enabled: [ 'ownerId' ]
     })
 
     return this

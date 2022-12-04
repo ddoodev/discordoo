@@ -11,11 +11,11 @@ import {
   RolesCachingPolicy,
   StickersCachingPolicy,
   ThreadMembersCachingPolicy,
-  UsersCachingPolicy
+  UsersCachingPolicy, InvitesCachingPolicy
 } from '@src/constants'
 import { ThreadMember } from '@src/api/entities/member/ThreadMember'
 import { AnyChannel } from '@src/api/entities/channel/interfaces/AnyChannel'
-import { AnyEmoji, Guild, GuildMember, Message, Presence, Role, Sticker, User } from '@src/api'
+import { AnyEmoji, Guild, GuildMember, Invite, InviteGuild, Message, Presence, Role, Sticker, User } from '@src/api'
 import { MessageReaction } from '@src/api/entities/reaction/MessageReaction'
 import { PermissionOverwrite } from '@src/api/entities/overwrite/PermissionOverwrite'
 
@@ -25,6 +25,7 @@ export type AnyEntity = AnyChannel
   | AnyEmoji
   | Guild
   | GuildMember
+  | Invite
   | Message
   | Presence
   | Role
@@ -48,6 +49,16 @@ export interface CacheOptions {
   global?: {
     custom?: (entity: AnyEntity) => boolean | Promise<boolean>
     policies: GlobalCachingPolicy[]
+  }
+
+  invites?: {
+    custom?: (invite: Invite) => boolean | Promise<boolean>
+    policies: InvitesCachingPolicy[]
+  }
+
+  inviteGuilds?: {
+    custom?: (inviteGuild: InviteGuild) => boolean | Promise<boolean>
+    policies: InvitesCachingPolicy[]
   }
 
   guilds?: {

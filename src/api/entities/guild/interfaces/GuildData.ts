@@ -6,4 +6,6 @@ export interface GuildData extends ViewableGuildData {
   rulesChannelId?: string
   publicUpdatesChannelId?: string
   systemChannelId?: string
+  ownerId: string
+  membersCount: number
 }

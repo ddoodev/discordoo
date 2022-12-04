@@ -6,7 +6,7 @@ import { AbstractViewableGuild } from '@src/api/entities/guild/AbstractViewableG
 export class InviteGuild extends AbstractViewableGuild {
 
   async init(data: ViewableGuildData | RawViewableGuildData): Promise<this> {
-    return  super.init(data)
+    return super.init(data)
   }
 
   toJson(properties: ToJsonProperties = {}, obj?: any): Json {

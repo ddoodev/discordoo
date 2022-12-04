@@ -16,7 +16,7 @@ import {
   StickerTypes,
   UsersCachingPolicy,
   ThreadMembersCachingPolicy,
-  ReactionsCachingPolicy
+  ReactionsCachingPolicy, InvitesCachingPolicy
 } from '@src/constants'
 import {
   ActivityEmoji,
@@ -31,7 +31,7 @@ import {
   Sticker,
   ThreadMember,
   User,
-  PermissionOverwrite
+  PermissionOverwrite, Invite, InviteGuild
 } from '@src/api'
 
 export class CachingPoliciesProcessor {
@@ -135,6 +135,58 @@ export class CachingPoliciesProcessor {
             case EmojisCachingPolicy.ANIMATED:
               return !!emoji.animated
             case EmojisCachingPolicy.ALL:
+            default:
+              return true
+          }
+        })
+      )
+
+      result = results[0] ?? results[1]
+    }
+
+    return result
+  }
+
+  async inviteGuilds(inviteGuild: InviteGuild): Promise<boolean> {
+    let result = true
+
+    if (this.options.inviteGuilds) {
+      const results: any[] /* [ boolean | undefined, boolean ] */ = []
+
+      results.push(await this.options.inviteGuilds.custom?.(inviteGuild) ?? undefined)
+
+      results.push(
+        this.options.inviteGuilds.policies.some(policy => {
+          switch (policy) {
+            case InvitesCachingPolicy.NONE:
+              return false
+            case InvitesCachingPolicy.ALL:
+            default:
+              return true
+          }
+        })
+      )
+
+      result = results[0] ?? results[1]
+    }
+
+    return result
+  }
+
+  async invites(invite: Invite): Promise<boolean> {
+    let result = true
+
+    if (this.options.invites) {
+      const results: any[] /* [ boolean | undefined, boolean ] */ = []
+
+      results.push(await this.options.invites.custom?.(invite) ?? undefined)
+
+      results.push(
+        this.options.invites.policies.some(policy => {
+          switch (policy) {
+            case InvitesCachingPolicy.NONE:
+              return false
+            case InvitesCachingPolicy.ALL:
             default:
               return true
           }

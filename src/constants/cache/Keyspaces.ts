@@ -37,6 +37,10 @@ export enum Keyspaces {
   GUILD_EMOJIS = 'guild-emojis',
   // thread-members => thread id => member id
   THREAD_MEMBERS = 'thread-members',
+  // invites => global => invite code
+  INVITES = 'invites',
+  // invite-guilds => global => guild id
+  INVITE_GUILDS = 'invite-guilds',
   // other => any id (pointer) => any other cache
   OTHER = 'other',
 }

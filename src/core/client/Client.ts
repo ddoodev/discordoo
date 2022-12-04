@@ -44,7 +44,7 @@ import {
   ChannelDeleteEvent,
   ChannelPinsUpdateEvent,
   ChannelUpdateEvent,
-  ClientEvents, GuildMemberAddEvent, GuildMemberRemoveEvent, GuildMemberUpdateEvent,
+  ClientEvents, GuildMemberAddEvent, GuildMemberRemoveEvent, GuildMemberUpdateEvent, InviteCreateEvent, InviteDeleteEvent,
   MessageCreateEvent,
   ThreadCreateEvent,
   ThreadDeleteEvent,
@@ -61,7 +61,7 @@ import { LocalIpcServer } from '@src/sharding/ipc/LocalIpcServer'
 import { CacheManager } from '@src/cache/CacheManager'
 import { RestManager } from '@src/rest/RestManager'
 import { TypedEmitter } from 'tiny-typed-emitter'
-import { ClientDirectMessagesChannelsManager, GuildsManager } from '@src/api/managers'
+import { ClientDirectMessagesChannelsManager, ClientInvitesManager, GuildsManager } from '@src/api/managers'
 import { Final } from '@src/utils/FinalDecorator'
 import { IpcServerOptions } from '@src/sharding'
 import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
@@ -163,6 +163,9 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
 
   /** Emojis manager for this client */
   public readonly emojis: ClientEmojisManager
+
+  /** Invites manager for this client */
+  public readonly invites: ClientInvitesManager
 
   public readonly [otherCacheSymbol]: OtherCacheManager
   #running = false
@@ -312,7 +315,8 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
       ChannelPinsUpdateEvent, ThreadCreateEvent, ThreadUpdateEvent, ThreadDeleteEvent,
       ThreadListSyncEvent, GuildMembersChunkEvent, ThreadMemberUpdateEvent, ThreadMembersUpdateEvent,
       GuildEmojisUpdatedEvent, GuildUpdateEvent, UserUpdateEvent,
-      GuildMemberUpdateEvent, GuildMemberAddEvent, GuildMemberRemoveEvent,
+      GuildMemberUpdateEvent, GuildMemberAddEvent, GuildMemberRemoveEvent, InviteCreateEvent,
+      InviteDeleteEvent
     ]) // TODO
 
     this.overwrites = new ClientPermissionOverwritesManager(this)
@@ -325,6 +329,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
     this.messages = new ClientMessagesManager(this)
     this.channels = new ClientChannelsManager(this)
     this.stickers = new ClientStickersManager(this)
+    this.invites = new ClientInvitesManager(this)
     this.emojis = new ClientEmojisManager(this)
     this.roles = new ClientRolesManager(this)
     this.guilds = new GuildsManager(this)

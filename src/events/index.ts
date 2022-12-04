@@ -10,6 +10,7 @@ export { ClientEvents } from '@src/events/ClientEvents'
 
 export * from './interfaces'
 export * from './channel'
+export * from './invite'
 export * from './thread'
 export * from './member'
 export * from './emoji'

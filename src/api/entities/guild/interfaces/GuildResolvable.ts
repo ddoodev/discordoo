@@ -1,3 +1,3 @@
-import { Guild, Resolvable } from '@src/api'
+import { Guild, RawViewableGuildData, Resolvable } from '@src/api'
 
-export type GuildResolvable = Resolvable<Guild>
+export type GuildResolvable = Resolvable<Guild | RawViewableGuildData>

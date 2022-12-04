@@ -24,6 +24,7 @@ import { GuildMemberAddEventContext } from '@src/events/member/ctx/GuildMemberAd
 import { GuildMemberRemoveEventContext } from '@src/events/member/ctx/GuildMemberRemoveEventContext'
 import { GuildMemberUpdateEventContext } from '@src/events/member/ctx/GuildMemberUpdateEventContext'
 import { GatewayReceivePayloadLike } from '@discordoo/providers'
+import { InviteCreateEventContext, InviteDeleteEventContext } from '@src/events/invite'
 
 /** Client events */
 export interface ClientEventsHandlers {
@@ -134,10 +135,10 @@ export interface ClientEventsHandlers {
   // interactionCreate: (context: ChannelCreateEventContext) => any
 
   /** Invite to a channel was created */
-  // inviteCreate: (context: ChannelCreateEventContext) => any
+  inviteCreate: (context: InviteCreateEventContext) => any
 
   /** Invite to a channel was deleted  */
-  // inviteDelete: (context: ChannelCreateEventContext) => any
+  inviteDelete: (context: InviteDeleteEventContext) => any
 
   /** Message was created */
   messageCreate: (context: MessageCreateEventContext) => any
