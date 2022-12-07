@@ -220,4 +220,16 @@ export class Endpoints {
     =                   (teamId, teamIcon) => [ 'team-icons', teamId, teamIcon ]
   static readonly USER_AVATAR
     =                 (userId, userAvatar) => [ 'avatars', userId, userAvatar ]
+  static readonly APPLICATION_COMMAND
+    = (applicationId, commandId) => [ 'applications', applicationId, 'commands', commandId ]
+  static readonly APPLICATION_COMMANDS
+    = (applicationId) => [ 'applications', applicationId, 'commands' ]
+  static readonly APPLICATION_COMMAND_PERMISSIONS
+    = (applicationId, guildId, commandId) => [ 'applications', applicationId, 'guilds', guildId, 'commands', commandId, 'permissions' ]
+  static readonly GUILD_COMMAND
+    = (applicationId, guildId, commandId) => [ 'applications', applicationId, 'guilds', guildId, 'commands', commandId ]
+  static readonly GUILD_COMMANDS
+    = (applicationId, guildId) => [ 'applications', applicationId, 'guilds', guildId, 'commands' ]
+  static readonly GUILD_COMMAND_PERMISSIONS
+    = (applicationId, guildId) => [ 'applications', applicationId, 'guilds', guildId, 'commands', 'permissions' ]
 }

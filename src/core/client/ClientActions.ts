@@ -18,7 +18,8 @@ import {
   FetchInviteQuery,
   RawGuildMemberData,
   RawInviteCreateData,
-  RawInviteData
+  RawInviteData,
+  RawAppCommandData
 } from '@src/api'
 import { RawRoleEditData } from '@src/api/entities/role/interfaces/RawRoleEditData'
 import { RawRoleData } from '@src/api/entities/role/interfaces/RawRoleData'
@@ -38,6 +39,7 @@ import { GuildMembersChunkHandlerContext } from '@src/events/interfaces/GuildMem
 import { is } from 'typescript-is'
 import { RawGuildMemberAddData } from '@src/api/managers/members/RawGuildMemberAddData'
 import { RawDirectMessagesChannelData } from '@src/api/entities/channel/interfaces/RawDirectMessagesChannelData'
+import { RawAppCommandEditData } from '@src/api/entities/interaction/interfaces/command/raw/RawAppCommandEditData'
 
 export class ClientActions {
   public client: Client
@@ -776,5 +778,39 @@ export class ClientActions {
       .url(Endpoints.CHANNEL_PIN(channelId, messageId))
       .delete({ reason })
   }
+  createGlobalCommand(data: RawAppCommandEditData) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.APPLICATION_COMMANDS(this.client.user.id))
+      .body(data)
+      .post<RawAppCommandData>()
+  }
+  getGlobalCommands() {
+    return this.client.internals.rest.api()
+      .url(Endpoints.APPLICATION_COMMANDS(this.client.user.id))
+      .get<RawAppCommandData[]>()
+  }
+  getGlobalCommand(commandId: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.APPLICATION_COMMAND(this.client.user.id, commandId))
+      .get<RawAppCommandData>()
+  }
 
+  createGuildCommand(guildId: string, data: RawAppCommandEditData) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_COMMANDS(this.client.user.id, guildId))
+      .body(data)
+      .post<RawAppCommandData>()
+  }
+
+  getGuildCommands(guildId: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_COMMANDS(this.client.user.id, guildId))
+      .get<RawAppCommandData[]>()
+  }
+
+  getGuildCommand(guildId: string, commandId: string) {
+    return this.client.internals.rest.api()
+      .url(Endpoints.GUILD_COMMAND(this.client.user.id, guildId, commandId))
+      .get<RawAppCommandData>()
+  }
 }

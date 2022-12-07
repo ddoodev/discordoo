@@ -35,3 +35,99 @@ export interface RawAppCommandOptionData {
    * */
   autocomplete?: boolean
 }
+
+export interface RawAppCommandOptionStringData {
+  type: AppCommandOptionTypes.STRING
+  name: string
+  name_localizations?: Record<DiscordLocale, string>
+  description: string
+  description_localizations?: Record<DiscordLocale, string>
+  required?: boolean
+  choices?: RawAppCommandOptionsChoiceData[]
+  autocomplete?: boolean
+  max_length?: number
+  min_length?: number
+}
+
+export interface RawAppCommandOptionIntegerData {
+  type: AppCommandOptionTypes.INTEGER
+  name: string
+  name_localizations?: Record<DiscordLocale, string>
+  description: string
+  description_localizations?: Record<DiscordLocale, string>
+  required?: boolean
+  choices?: RawAppCommandOptionsChoiceData[]
+  autocomplete?: boolean
+  min_value?: number
+  max_value?: number
+}
+
+export interface RawAppCommandOptionNumberData {
+  type: AppCommandOptionTypes.NUMBER
+  name: string
+  name_localizations?: Record<DiscordLocale, string>
+  description: string
+  description_localizations?: Record<DiscordLocale, string>
+  required?: boolean
+  choices?: RawAppCommandOptionsChoiceData[]
+  autocomplete?: boolean
+  min_value?: number
+  max_value?: number
+}
+
+export interface RawAppCommandOptionBooleanData {
+  type: AppCommandOptionTypes.BOOLEAN
+  name: string
+  name_localizations?: Record<DiscordLocale, string>
+  description: string
+  description_localizations?: Record<DiscordLocale, string>
+  required?: boolean
+}
+
+export interface RawAppCommandOptionUserData {
+  type: AppCommandOptionTypes.USER
+  name: string
+  name_localizations?: Record<DiscordLocale, string>
+  description: string
+  description_localizations?: Record<DiscordLocale, string>
+  required?: boolean
+}
+
+export interface RawAppCommandOptionChannelData {
+  type: AppCommandOptionTypes.CHANNEL
+  name: string
+  name_localizations?: Record<DiscordLocale, string>
+  description: string
+  description_localizations?: Record<DiscordLocale, string>
+  required?: boolean
+  channel_types?: ChannelTypes[]
+}
+
+export interface RawAppCommandOptionRoleData {
+  type: AppCommandOptionTypes.ROLE
+  name: string
+  name_localizations?: Record<DiscordLocale, string>
+  description: string
+  description_localizations?: Record<DiscordLocale, string>
+  required?: boolean
+}
+
+export interface RawAppCommandOptionMentionableData {
+  type: AppCommandOptionTypes.MENTIONABLE
+  name: string
+  name_localizations?: Record<DiscordLocale, string>
+  description: string
+  description_localizations?: Record<DiscordLocale, string>
+  required?: boolean
+}
+
+export interface RawAppCommandOptionAttachmentData {
+  width?: number
+  height?: number
+  size?: number
+  url?: string
+  proxy_url?: string
+  filename?: string
+  id?: string
+  content_type?: string
+}

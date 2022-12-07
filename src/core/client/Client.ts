@@ -77,6 +77,7 @@ import { ClientThreadMembersManager } from '@src/api/managers/members/ClientThre
 import { ShardConnectedEvent } from '@src/events/ShardConnectedEvent'
 import { GuildMembersChunkEvent } from '@src/events/GuildMembersChunkEvent'
 import { ClientEmojisManager } from '@src/api/managers/emojis/ClientEmojisManager'
+import { ClientInteractionSlashCommandManager } from '@src/api/managers/interactions/ClientInteractionSlashCommandManager'
 import { ClientShardingApplication } from '@src/core/client/app/ClientShardingApplication'
 import { BroadcastEvalOptions } from '@src/sharding/interfaces/ipc/BroadcastEvalOptions'
 import { BroadcastOptions } from '@src/sharding/interfaces/ipc/BroadcastOptions'
@@ -95,6 +96,8 @@ import { inspect } from 'util'
 import { ClientUser } from '@src/api/entities/user/ClientUser'
 import { GuildEmojisUpdatedEvent } from '@src/events/emoji/GuildEmojisUpdatedEvent'
 import { GuildDeleteEvent, GuildUpdateEvent } from '@src/events/guild'
+import { InteractionCreateEvent } from '@src/events/interaction/InteractionCreateEvent'
+import { ClientApplicationManager } from '@src/core/client/ClientApplicationManager'
 
 /** Entry point for **all** of Discordoo. */
 @Final(
@@ -166,6 +169,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
 
   /** Invites manager for this client */
   public readonly invites: ClientInvitesManager
+  public app: ClientApplicationManager
 
   public readonly [otherCacheSymbol]: OtherCacheManager
   #running = false
@@ -316,7 +320,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
       ThreadListSyncEvent, GuildMembersChunkEvent, ThreadMemberUpdateEvent, ThreadMembersUpdateEvent,
       GuildEmojisUpdatedEvent, GuildUpdateEvent, UserUpdateEvent,
       GuildMemberUpdateEvent, GuildMemberAddEvent, GuildMemberRemoveEvent, InviteCreateEvent,
-      InviteDeleteEvent
+      InviteDeleteEvent, InteractionCreateEvent
     ]) // TODO
 
     this.overwrites = new ClientPermissionOverwritesManager(this)
@@ -335,6 +339,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
     this.guilds = new GuildsManager(this)
     this.users = new UsersManager(this)
     this.user = new ClientUser(this)
+    this.app = new ClientApplicationManager(this)
 
     void this.user.init({
       id: '',
