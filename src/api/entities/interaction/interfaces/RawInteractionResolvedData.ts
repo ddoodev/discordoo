@@ -4,4 +4,5 @@ export interface RawInteractionResolvedData {
   roles?: string[]
   channels?: string[]
   messages?: string[]
+  attachments?: string[]
 }

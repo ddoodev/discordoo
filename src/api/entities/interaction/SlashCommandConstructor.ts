@@ -1,10 +1,11 @@
-import { DiscordLocale } from "@src/constants/common/DiscordLocale";
-import { AppCommandOptionTypes, AppCommandTypes } from "@src/constants";
-import { AppCommandOptionData, BigBitFieldResolvable, RawAppCommandOptionData } from "@src/api";
-import { RawAppCommandEditData } from "@src/api/entities/interaction/interfaces/command/raw/RawAppCommandEditData";
-import { attach, resolveBigBitField } from "@src/utils";
-import { mix } from "ts-mixer";
-import { MixinNameDescription } from "./mixins/MixinNameDescription";
+import { DiscordLocale } from '@src/constants/common/DiscordLocale'
+import { AppCommandOptionTypes, AppCommandTypes } from '@src/constants'
+import { AppCommandOptionData, BigBitFieldResolvable, RawAppCommandOptionData } from '@src/api'
+import { RawAppCommandEditData } from '@src/api/entities/interaction/interfaces/command/raw/RawAppCommandEditData'
+import { attach, resolveBigBitField } from '@src/utils'
+import { mix } from 'ts-mixer'
+import { MixinNameDescription } from './mixins/MixinNameDescription'
+import { AppCommandEditData } from '@src/api/entities/interaction/interfaces/command/common/AppCommandEditData'
 
 @mix(MixinNameDescription)
 export class SlashCommandConstructor {
@@ -28,6 +29,12 @@ export class SlashCommandConstructor {
    */
   public dmPermission?: boolean;
 
+  constructor(data: SlashCommandConstructor | RawAppCommandEditData | AppCommandEditData) {
+    attach(this, data, {
+      props: [ 'name', 'description', 'type', 'options', 'dmPermission', 'defaultMemberPermissions' ]
+    })
+  }
+
   public toJSON(): RawAppCommandEditData {
     return {
       name: this.name,
@@ -36,35 +43,35 @@ export class SlashCommandConstructor {
       options: this.options,
       dm_permission: this.dmPermission,
       default_member_permissions: this.defaultMemberPermissions?.toString(),
-    };
+    }
   }
   public setDefaultPermissions(permissions: BigBitFieldResolvable): this {
-    this.defaultMemberPermissions = resolveBigBitField(permissions);
-    return this;
+    this.defaultMemberPermissions = resolveBigBitField(permissions)
+    return this
   }
   public addSubcommandGroup(input: SlashCommandSubcommandGroupConstructor | AppCommandOptionData | RawAppCommandOptionData): this {
-    const result = new SlashCommandSubcommandGroupConstructor(input);
-    this.options.push(result.toJSON());
+    const result = new SlashCommandSubcommandGroupConstructor(input)
+    this.options.push(result.toJSON())
 
-    return this;
+    return this
   }
   setType(type: AppCommandTypes): this {
-    this.type = type;
-    return this;
+    this.type = type
+    return this
   }
   setDmPermission(dmPermission: boolean): this {
-    this.dmPermission = dmPermission;
-    return this;
+    this.dmPermission = dmPermission
+    return this
   }
   addOption(option: AppCommandOptionData): this {
-    this.options.push(option);
-    return this;
+    this.options.push(option)
+    return this
   }
   addSubcommand(input: SlashCommandSubcommandConstructor | AppCommandOptionData | RawAppCommandOptionData): this {
-    const result = new SlashCommandSubcommandConstructor(input);
-    this.options.push(result.toJSON());
+    const result = new SlashCommandSubcommandConstructor(input)
+    this.options.push(result.toJSON())
 
-    return this;
+    return this
   }
 }
 
@@ -76,8 +83,8 @@ export class SlashCommandSubcommandGroupConstructor implements AppCommandOptionD
   public options?: AppCommandOptionData[];
   constructor(data: SlashCommandSubcommandGroupConstructor | AppCommandOptionData | RawAppCommandOptionData) {
     attach(this, data, {
-      props: ["name", "description", "options"],
-    });
+      props: [ 'name', 'description', 'options' ],
+    })
   }
   public toJSON(): AppCommandOptionData {
     return {
@@ -85,17 +92,17 @@ export class SlashCommandSubcommandGroupConstructor implements AppCommandOptionD
       description: this.description,
       type: this.type,
       options: this.options,
-    };
+    }
   }
 
   setType(type: AppCommandOptionTypes): this {
-    this.type = type;
-    return this;
+    this.type = type
+    return this
   }
   addOption(option: AppCommandOptionData): this {
-    this.options ??= [];
-    this.options.push(option);
-    return this;
+    this.options ??= []
+    this.options.push(option)
+    return this
   }
 }
 
@@ -107,8 +114,8 @@ export class SlashCommandSubcommandConstructor implements AppCommandOptionData {
   public options?: AppCommandOptionData[];
   constructor(data: SlashCommandSubcommandConstructor | AppCommandOptionData | RawAppCommandOptionData) {
     attach(this, data, {
-      props: ["name", "description", "options"],
-    });
+      props: [ 'name', 'description', 'options' ],
+    })
   }
   public toJSON(): AppCommandOptionData {
     return {
@@ -116,16 +123,16 @@ export class SlashCommandSubcommandConstructor implements AppCommandOptionData {
       description: this.description,
       type: this.type,
       options: this.options,
-    };
+    }
   }
 
   setType(type: AppCommandOptionTypes): this {
-    this.type = type;
-    return this;
+    this.type = type
+    return this
   }
   addOption(option: AppCommandOptionData): this {
-    this.options ??= [];
-    this.options.push(option);
-    return this;
+    this.options ??= []
+    this.options.push(option)
+    return this
   }
 }
