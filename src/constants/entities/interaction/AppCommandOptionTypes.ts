@@ -13,4 +13,6 @@ export enum AppCommandOptionTypes {
   MENTIONABLE,
   /** Any double between MIN_SAFE_INTEGER and MAX_SAFE_INTEGER */
   NUMBER,
+  /** Any attachment */
+  ATTACHMENT,
 }
