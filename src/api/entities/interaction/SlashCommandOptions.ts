@@ -1,3 +1,4 @@
+/*
 import { MixinChoicesAutocomplete } from '@src/api/entities/interaction/mixins/MixinChoicesAutocomplete'
 import { mix } from 'ts-mixer'
 import { AppCommandOptionTypes, DiscordLocale } from '@src/constants'
@@ -266,4 +267,4 @@ export class SlashCommandAttachmentOptionConstructor {
       ...this,
     }
   }
-}
+}*/
