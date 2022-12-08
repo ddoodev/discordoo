@@ -1,8 +1,8 @@
 import { AppCommandOptionChoiceData } from '@src/api'
 
 export class MixinChoicesAutocomplete {
-  public choices?: AppCommandOptionChoiceData[];
-  public autocomplete?: boolean;
+  public choices?: AppCommandOptionChoiceData[]
+  public autocomplete?: boolean
 
   public setChoices(choices: AppCommandOptionChoiceData[]): this {
     this.choices = choices

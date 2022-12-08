@@ -10,24 +10,24 @@ import { AppCommandEditData } from '@src/api/entities/interaction/interfaces/com
 @mix(MixinNameDescription)
 export class SlashCommandConstructor {
   /** 1-32 character name */
-  declare name: string;
+  declare name: string
   /** localization dictionary for `name` field. Values follow the same restrictions as name */
-  public nameLocalizations?: Record<DiscordLocale, string>;
+  public nameLocalizations?: Record<DiscordLocale, string>
   /** 1-100 character description for `CHAT_INPUT` commands, empty string for `USER` and `MESSAGE` commands */
-  declare description: string;
+  declare description: string
   /** localization dictionary for `description` field. Values follow the same restrictions as description */
-  public descriptionLocalizations?: Record<DiscordLocale, string>;
+  public descriptionLocalizations?: Record<DiscordLocale, string>
   /** the type of command, defaults `1` (`CHAT_INPUT`) if not set */
-  public type?: AppCommandTypes;
+  public type?: AppCommandTypes
   /** parameters for the command, max of 25 */
-  public options: AppCommandOptionData[] = [];
+  public options: AppCommandOptionData[] = []
   /** set of permissions represented as a bit set */
-  public defaultMemberPermissions?: bigint;
+  public defaultMemberPermissions?: bigint
   /**
    * indicates whether the command is available in DMs with the app, only for globally-scoped commands.
    * by default, commands are visible.
    */
-  public dmPermission?: boolean;
+  public dmPermission?: boolean
 
   constructor(data: SlashCommandConstructor | RawAppCommandEditData | AppCommandEditData) {
     attach(this, data, {
@@ -77,10 +77,10 @@ export class SlashCommandConstructor {
 
 @mix(MixinNameDescription)
 export class SlashCommandSubcommandGroupConstructor implements AppCommandOptionData {
-  public name!: string;
-  public description!: string;
-  public type = AppCommandOptionTypes.SUB_COMMAND_GROUP;
-  public options?: AppCommandOptionData[];
+  public name!: string
+  public description!: string
+  public type = AppCommandOptionTypes.SUB_COMMAND_GROUP
+  public options?: AppCommandOptionData[]
   constructor(data: SlashCommandSubcommandGroupConstructor | AppCommandOptionData | RawAppCommandOptionData) {
     attach(this, data, {
       props: [ 'name', 'description', 'options' ],
@@ -108,10 +108,10 @@ export class SlashCommandSubcommandGroupConstructor implements AppCommandOptionD
 
 @mix(MixinNameDescription)
 export class SlashCommandSubcommandConstructor implements AppCommandOptionData {
-  public name!: string;
-  public description!: string;
-  public type = AppCommandOptionTypes.SUB_COMMAND;
-  public options?: AppCommandOptionData[];
+  public name!: string
+  public description!: string
+  public type = AppCommandOptionTypes.SUB_COMMAND
+  public options?: AppCommandOptionData[]
   constructor(data: SlashCommandSubcommandConstructor | AppCommandOptionData | RawAppCommandOptionData) {
     attach(this, data, {
       props: [ 'name', 'description', 'options' ],

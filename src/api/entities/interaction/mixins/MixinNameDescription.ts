@@ -4,10 +4,10 @@ import { MixinNameDescriptionData } from '@src/api/entities/interaction/mixins/i
 import { RawMixinNameDescriptionData } from '@src/api/entities/interaction/mixins/interfaces/RawMixinNameDescriptionData'
 
 export class MixinNameDescription {
-  name!: string;
-  nameLocalizations?: Record<DiscordLocale, string>;
-  description!: string;
-  descriptionLocalizations?: Record<DiscordLocale, string>;
+  name!: string
+  nameLocalizations?: Record<DiscordLocale, string>
+  description!: string
+  descriptionLocalizations?: Record<DiscordLocale, string>
 
   constructor(data: MixinNameDescription | RawMixinNameDescriptionData | MixinNameDescriptionData) {
     attach(this, data, {

@@ -23,10 +23,7 @@
       "error",
       "single"
     ],
-    "semi": [
-      "warn",
-      "never"
-    ],
+    "semi": [ "error", "never" ],
     "block-spacing": [
       "error",
       "always"

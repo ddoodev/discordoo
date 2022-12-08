@@ -2,11 +2,11 @@ import { RawMixinNameDescriptionData } from '@src/api/entities/interaction/mixin
 import { DiscordLocale } from '@src/constants'
 
 export class MixinSlashCommandOptionBase {
-  public name!: string;
-  public nameLocalizations?: Record<DiscordLocale, string>;
-  public description!: string;
-  public descriptionLocalizations?: Record<DiscordLocale, string>;
-  public required?: boolean;
+  public name!: string
+  public nameLocalizations?: Record<DiscordLocale, string>
+  public description!: string
+  public descriptionLocalizations?: Record<DiscordLocale, string>
+  public required?: boolean
 
   public setName(name: string): this {
     this.name = name

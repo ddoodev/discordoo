@@ -28,7 +28,7 @@ export class PresenceUpdateEvent extends AbstractEvent<PresenceUpdateEventContex
     if (data.user.username) { // user can be partial
       storedUser = await this.client.users.cache.get(presence.userId)
       const User = EntitiesUtil.get('User')
-      updatedUser = storedUser ? await (await storedUser?._clone()).init(data.user) : await new User(this.client).init(data.user)
+      updatedUser = storedUser ? await (await storedUser?._clone())?.init(data.user) : await new User(this.client).init(data.user)
 
       await this.client.users.cache.set(updatedUser.id, updatedUser)
     }
