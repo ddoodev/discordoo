@@ -15,7 +15,7 @@ export class ClientThreadMembersManager extends EntitiesManager {
     super(client)
 
     this.cache = new EntitiesCacheManager<ThreadMember>(this.client, {
-      keyspace: Keyspaces.THREAD_MEMBERS,
+      keyspace: Keyspaces.ThreadMembers,
       storage: 'global',
       entity: 'ThreadMember',
       policy: 'threadMembers'

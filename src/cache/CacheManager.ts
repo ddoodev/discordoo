@@ -93,14 +93,14 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       const request: IpcCacheGetRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
         d: {
-          op: IpcCacheOpCodes.GET,
+          op: IpcCacheOpCodes.Get,
           event_id: this.client.internals.ipc.generate(),
           key,
           keyspace,
           storage: options?.storage ?? storage,
           entity_key: entityKey,
           shards,
-          serialize: SerializeModes.ANY
+          serialize: SerializeModes.Any
         }
       }
 
@@ -187,7 +187,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       const request: IpcCacheSetRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
         d: {
-          op: IpcCacheOpCodes.SET,
+          op: IpcCacheOpCodes.Set,
           event_id: this.client.internals.ipc.generate(),
           key,
           keyspace,
@@ -196,7 +196,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
           shards,
           policy,
           value: data,
-          serialize: SerializeModes.BOOLEAN
+          serialize: SerializeModes.Boolean
         }
       }
 
@@ -226,13 +226,13 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       const request: IpcCacheDeleteRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
         d: {
-          op: IpcCacheOpCodes.DELETE,
+          op: IpcCacheOpCodes.Delete,
           event_id: this.client.internals.ipc.generate(),
           key,
           keyspace,
           storage: options?.storage ?? storage,
           shards,
-          serialize: SerializeModes.BOOLEAN
+          serialize: SerializeModes.Boolean
         }
       }
 
@@ -259,7 +259,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       const request: IpcCacheForEachRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
         d: {
-          op: IpcCacheOpCodes.FOREACH,
+          op: IpcCacheOpCodes.Foreach,
           event_id: this.client.internals.ipc.generate(),
           keyspace,
           storage: options?.storage ?? storage,
@@ -291,12 +291,12 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       const request: IpcCacheSizeRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
         d: {
-          op: IpcCacheOpCodes.SIZE,
+          op: IpcCacheOpCodes.Size,
           event_id: this.client.internals.ipc.generate(),
           keyspace,
           storage: options?.storage ?? storage,
           shards,
-          serialize: SerializeModes.NUMBER
+          serialize: SerializeModes.Number
         }
       }
 
@@ -334,13 +334,13 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       const request: IpcCacheHasRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
         d: {
-          op: IpcCacheOpCodes.HAS,
+          op: IpcCacheOpCodes.Has,
           event_id: this.client.internals.ipc.generate(),
           keyspace,
           storage: options?.storage ?? storage,
           key,
           shards,
-          serialize: SerializeModes.BOOLEAN
+          serialize: SerializeModes.Boolean
         }
       }
 
@@ -378,7 +378,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       const request: IpcCacheSweepRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
         d: {
-          op: IpcCacheOpCodes.SWEEP,
+          op: IpcCacheOpCodes.Sweep,
           event_id: this.client.internals.ipc.generate(),
           keyspace,
           storage: options?.storage ?? storage,
@@ -420,14 +420,14 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       const request: IpcCacheFilterRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
         d: {
-          op: IpcCacheOpCodes.FILTER,
+          op: IpcCacheOpCodes.Filter,
           event_id: this.client.internals.ipc.generate(),
           keyspace,
           storage: options?.storage ?? storage,
           entity_key: entityKey,
           shards,
           script: `(${predicate})`,
-          serialize: SerializeModes.ARRAY
+          serialize: SerializeModes.Array
         }
       }
 
@@ -470,14 +470,14 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       const request: IpcCacheMapRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
         d: {
-          op: IpcCacheOpCodes.MAP,
+          op: IpcCacheOpCodes.Map,
           event_id: this.client.internals.ipc.generate(),
           keyspace,
           storage: options?.storage ?? storage,
           entity_key: entityKey,
           shards,
           script: `(${predicate})`,
-          serialize: SerializeModes.ARRAY
+          serialize: SerializeModes.Array
         }
       }
 
@@ -520,14 +520,14 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       const request: IpcCacheFindRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
         d: {
-          op: IpcCacheOpCodes.FIND,
+          op: IpcCacheOpCodes.Find,
           event_id: this.client.internals.ipc.generate(),
           keyspace,
           storage: options?.storage ?? storage,
           entity_key: entityKey,
           shards,
           script: `(${predicate})`,
-          serialize: SerializeModes.ANY
+          serialize: SerializeModes.Any
         }
       }
 
@@ -568,12 +568,12 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       const request: IpcCacheClearRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
         d: {
-          op: IpcCacheOpCodes.CLEAR,
+          op: IpcCacheOpCodes.Clear,
           event_id: this.client.internals.ipc.generate(),
           keyspace,
           storage: options?.storage ?? storage,
           shards,
-          serialize: SerializeModes.BOOLEAN
+          serialize: SerializeModes.Boolean
         }
       }
 
@@ -608,14 +608,14 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       const request: IpcCacheCountRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
         d: {
-          op: IpcCacheOpCodes.COUNT,
+          op: IpcCacheOpCodes.Count,
           event_id: this.client.internals.ipc.generate(),
           keyspace,
           storage: options?.storage ?? storage,
           entity_key: entityKey,
           shards,
           script: `(${predicate})`,
-          serialize: SerializeModes.NUMBER
+          serialize: SerializeModes.Number
         }
       }
 
@@ -658,14 +658,14 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       const request: IpcCacheCountsRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
         d: {
-          op: IpcCacheOpCodes.COUNTS,
+          op: IpcCacheOpCodes.Counts,
           event_id: this.client.internals.ipc.generate(),
           keyspace,
           storage: options?.storage ?? storage,
           entity_key: entityKey,
           shards,
           scripts: predicates.map(p => (`(${p})`)),
-          serialize: SerializeModes.NUMBERS_ARRAY
+          serialize: SerializeModes.NumbersArray
         }
       }
 
@@ -705,12 +705,12 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       const request: IpcCacheKeysRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
         d: {
-          op: IpcCacheOpCodes.KEYS,
+          op: IpcCacheOpCodes.Keys,
           event_id: this.client.internals.ipc.generate(),
           keyspace,
           storage: options?.storage ?? storage,
           shards,
-          serialize: SerializeModes.ARRAY,
+          serialize: SerializeModes.Array,
           entity_key: entityKey,
         }
       }
@@ -743,12 +743,12 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       const request: IpcCacheValuesRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
         d: {
-          op: IpcCacheOpCodes.VALUES,
+          op: IpcCacheOpCodes.Values,
           event_id: this.client.internals.ipc.generate(),
           keyspace,
           storage: options?.storage ?? storage,
           shards,
-          serialize: SerializeModes.ARRAY,
+          serialize: SerializeModes.Array,
           entity_key: entityKey,
         }
       }
@@ -781,12 +781,12 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       const request: IpcCacheEntriesRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
         d: {
-          op: IpcCacheOpCodes.ENTRIES,
+          op: IpcCacheOpCodes.Entries,
           event_id: this.client.internals.ipc.generate(),
           keyspace,
           storage: options?.storage ?? storage,
           shards,
-          serialize: SerializeModes.ARRAY,
+          serialize: SerializeModes.Array,
           entity_key: entityKey,
         }
       }

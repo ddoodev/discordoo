@@ -3,7 +3,7 @@ import { PermissionOverwriteResolvable } from '@src/api/entities/overwrite/inter
 
 export interface GuildChannelEditData {
   name?: string
-  type?: ChannelTypes.GUILD_NEWS | ChannelTypes.GUILD_TEXT
+  type?: ChannelTypes.GuildNews | ChannelTypes.GuildText
   position?: number | null
   topic?: string | null
   nsfw?: boolean | null

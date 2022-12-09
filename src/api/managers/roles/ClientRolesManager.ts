@@ -19,7 +19,7 @@ export class ClientRolesManager extends EntitiesManager {
     super(client)
 
     this.cache = new EntitiesCacheManager<Role>(this.client, {
-      keyspace: Keyspaces.GUILD_ROLES,
+      keyspace: Keyspaces.GuildRoles,
       storage: 'global',
       entity: 'Role',
       policy: 'roles'

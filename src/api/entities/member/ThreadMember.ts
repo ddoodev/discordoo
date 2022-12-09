@@ -75,7 +75,7 @@ export class ThreadMember extends AbstractEntity implements ThreadMemberData {
 
   member(options?: CacheManagerGetOptions): Promise<GuildMember | undefined> {
     return this.client.internals.cache.get(
-      Keyspaces.GUILD_MEMBERS,
+      Keyspaces.GuildMembers,
       this.guildId,
       'GuildMember',
       this.userId,

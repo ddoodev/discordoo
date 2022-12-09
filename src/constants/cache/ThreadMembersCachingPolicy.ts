@@ -1,7 +1,7 @@
 /** Thread members caching policy */
 export enum ThreadMembersCachingPolicy {
   /** Cache all thread members */
-  ALL = 'all',
+  All = 'all',
   /** Don't cache thread members */
-  NONE = 'none',
+  None = 'none',
 }

@@ -21,18 +21,18 @@ export class GuildDeleteEvent extends AbstractEvent<GuildDeleteEventContext> {
       // remove all data that belongs to this guild
       // TODO: remove guild from cache fully
 
-      await this.client.internals.cache.clear(Keyspaces.CHANNELS, data.id)
-      await this.client.internals.cache.clear(Keyspaces.GUILD_PRESENCES, data.id)
-      await this.client.internals.cache.clear(Keyspaces.GUILD_ROLES, data.id)
-      await this.client.internals.cache.clear(Keyspaces.GUILD_EMOJIS, data.id)
+      await this.client.internals.cache.clear(Keyspaces.Channels, data.id)
+      await this.client.internals.cache.clear(Keyspaces.GuildPresences, data.id)
+      await this.client.internals.cache.clear(Keyspaces.GuildRoles, data.id)
+      await this.client.internals.cache.clear(Keyspaces.GuildEmojis, data.id)
       await this.client[otherCacheSymbol].delete(data.id, { storage: 'guild-owners' })
       // TODO: await this.client.internals.cache.clear(Keyspaces.GUILD_BANS, data.id)
 
       for await (const member of await this.client.members.cache.keys({ storage: data.id })) {
-        await this.client.internals.cache.clear(Keyspaces.GUILD_MEMBER_ROLES, data.id + member)
+        await this.client.internals.cache.clear(Keyspaces.GuildMemberRoles, data.id + member)
       }
 
-      await this.client.internals.cache.clear(Keyspaces.GUILD_MEMBERS, data.id)
+      await this.client.internals.cache.clear(Keyspaces.GuildMembers, data.id)
     }
 
     const context: GuildDeleteEventContext = {

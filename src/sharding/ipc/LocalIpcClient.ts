@@ -37,7 +37,7 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
   public shards: number[]
   public totalShards: number
 
-  public state: IpcConnectionState = IpcConnectionState.DISCONNECTED
+  public state: IpcConnectionState = IpcConnectionState.Disconnected
 
   constructor(instance: ShardingInstance, options: IpcClientOptions) {
     super()
@@ -61,7 +61,7 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
   public connect() {
     let promise
 
-    this.state = IpcConnectionState.CONNECTING
+    this.state = IpcConnectionState.Connecting
 
     return new Promise((resolve, reject) => {
       promise = { res: resolve, rej: reject }
@@ -75,7 +75,7 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
           'The connection had to handle shards:', this.shards.join(', ') + '.',
           'IPC shard id:', this.INSTANCE_IPC + '.'
         )
-        this.state = IpcConnectionState.DISCONNECTED
+        this.state = IpcConnectionState.Disconnected
         promise.rej(err)
       }, this.shards.length * 30000)
 
@@ -94,7 +94,7 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
   public disconnect() {
     this.ipc.disconnect(this.INSTANCE_IPC)
     this.bucket = new Collection()
-    this.state = IpcConnectionState.DISCONNECTED
+    this.state = IpcConnectionState.Disconnected
   }
 
   private onPacket(packet: IpcPacket) {
@@ -118,10 +118,10 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
       case IpcOpCodes.IDENTIFY:
         this.shardSocket = this.ipc.of[packet.d.id]
         if (this.helloInterval) clearInterval(this.helloInterval)
-        this.state = IpcConnectionState.CONNECTED
+        this.state = IpcConnectionState.Connected
         break
       case IpcOpCodes.CACHE_OPERATE:
-        // console.log('IPC CLIENT', this.id, 'ON CACHE OPERATE', process.hrtime.bigint())
+        // console.log('IPC CLIENT', this.id, 'ON Cache OPERATE', process.hrtime.bigint())
         this.cacheOperate(packet as IpcCacheRequestPacket)
         break
       case IpcOpCodes.DISPATCH:
@@ -146,7 +146,7 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
       const request: IpcEmergencyRestBlockPacket = {
         op: IpcOpCodes.EMERGENCY,
         d: {
-          op: IpcEmergencyOpCodes.GLOBAL_RATE_LIMIT_HIT,
+          op: IpcEmergencyOpCodes.GlobalRateLimitHit,
           block_until: packet.d.block_until
         }
       }
@@ -259,7 +259,7 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
             const request: IpcEmergencyRestBlockPacket = {
               op: IpcOpCodes.EMERGENCY,
               d: {
-                op: IpcEmergencyOpCodes.INVALID_REQUEST_LIMIT_ALMOST_REACHED,
+                op: IpcEmergencyOpCodes.InvalidRequestLimitAlmostReached,
                 block_until: this.instance.manager.internals.rest.invalidResetAt
               }
             }
@@ -278,7 +278,7 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
             const request: IpcEmergencyRestBlockPacket = {
               op: IpcOpCodes.EMERGENCY,
               d: {
-                op: IpcEmergencyOpCodes.GLOBAL_RATE_LIMIT_ALMOST_REACHED,
+                op: IpcEmergencyOpCodes.GlobalRateLimitAlmostReached,
                 block_until: this.instance.manager.internals.rest.allowedResetAt
               }
             }
@@ -371,7 +371,7 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
       result = responses.map(r => r?.d.result)
     }
 
-    // console.log('IPC CLIENT', this.instance.id, 'ON CACHE OPERATE REPLY', process.hrtime.bigint())
+    // console.log('IPC CLIENT', this.instance.id, 'ON Cache OPERATE REPLY', process.hrtime.bigint())
     return this.send({
       op: IpcOpCodes.CACHE_OPERATE,
       d: {
@@ -384,19 +384,19 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
 
   private serializeResponses(replies: any[], type: SerializeModes) {
     switch (type) {
-      case SerializeModes.ANY:
+      case SerializeModes.Any:
         return replies.find(r => r !== undefined && r !== null)
-      case SerializeModes.ARRAY:
+      case SerializeModes.Array:
         return replies.flat()
-      case SerializeModes.NUMBERS_ARRAY: {
+      case SerializeModes.NumbersArray: {
         return replies.reduce((prev, curr) => {
           if (!prev.length) return curr
           else return prev.map((x, i) => x + (curr[i] ?? 0))
         }, [])
       }
-      case SerializeModes.BOOLEAN:
+      case SerializeModes.Boolean:
         return replies.find(r => r === true) ?? false
-      case SerializeModes.NUMBER:
+      case SerializeModes.Number:
         return replies.reduce((prev, curr) => prev + curr, 0)
       default:
         return replies

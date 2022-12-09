@@ -8,7 +8,7 @@ export class IntentsUtil {
   }
 
   static get PRIVILEGED(): GatewayIntents[] {
-    return [ GatewayIntents.GUILD_MEMBERS, GatewayIntents.GUILD_PRESENCES, GatewayIntents.MESSAGE_CONTENT ]
+    return [ GatewayIntents.GuildMembers, GatewayIntents.GuildPresences, GatewayIntents.MessageContent ]
   }
 
   static get NON_PRIVILEGED(): GatewayIntents[] {

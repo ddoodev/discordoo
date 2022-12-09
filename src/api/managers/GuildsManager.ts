@@ -12,7 +12,7 @@ export class GuildsManager extends EntitiesManager {
     super(client)
 
     this.cache = new EntitiesCacheManager<Guild>(this.client, {
-      keyspace: Keyspaces.GUILDS,
+      keyspace: Keyspaces.Guilds,
       storage: 'global',
       entity: 'Guild',
       policy: 'guilds'

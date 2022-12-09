@@ -1,18 +1,18 @@
 export enum AppCommandOptionTypes {
-  SUB_COMMAND = 1,
-  SUB_COMMAND_GROUP,
-  STRING,
+  SubCommand = 1,
+  SubCommandGroup,
+  String,
   /** Any integer between MIN_SAFE_INTEGER and MAX_SAFE_INTEGER */
-  INTEGER,
-  BOOLEAN,
-  USER,
+  Integer,
+  Boolean,
+  User,
   /** Includes all channel types + categories */
-  CHANNEL,
-  ROLE,
+  Channel,
+  Role,
   /** Includes users and roles */
-  MENTIONABLE,
+  Mentionable,
   /** Any double between MIN_SAFE_INTEGER and MAX_SAFE_INTEGER */
-  NUMBER,
+  Number,
   /** Any attachment */
-  ATTACHMENT,
+  Attachment,
 }

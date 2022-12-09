@@ -1,8 +1,8 @@
 export const ApplicationFlags = {
-  GATEWAY_PRESENCE: 1 << 12,
-  GATEWAY_PRESENCE_LIMITED: 1 << 13,
-  GATEWAY_GUILD_MEMBERS: 1 << 14,
-  GATEWAY_GUILD_MEMBERS_LIMITED: 1 << 15,
-  VERIFICATION_PENDING_GUILD_LIMIT: 1 << 16,
-  EMBEDDED: 1 << 17,
+  GatewayPresence: 1 << 12,
+  GatewayPresenceLimited: 1 << 13,
+  GatewayGuildMembers: 1 << 14,
+  GatewayGuildMembersLimited: 1 << 15,
+  VerificationPendingGuildLimit: 1 << 16,
+  Embedded: 1 << 17,
 } as const

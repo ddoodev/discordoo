@@ -26,7 +26,7 @@ export class GuildCreateEvent extends AbstractEvent<GuildCreateEventContext | Ab
     }
 
     for await (const channelData of guild.channels) {
-      let cache = await this.client.internals.cache.get(Keyspaces.CHANNELS, guild.id, 'channelEntityKey', channelData.id)
+      let cache = await this.client.internals.cache.get(Keyspaces.Channels, guild.id, 'channelEntityKey', channelData.id)
 
       if (cache) {
         cache = await cache.init(channelData)
@@ -39,7 +39,7 @@ export class GuildCreateEvent extends AbstractEvent<GuildCreateEventContext | Ab
     }
 
     for await (const memberData of guild.members) {
-      let memberCache = await this.client.internals.cache.get(Keyspaces.GUILD_MEMBERS, guild.id, 'GuildMember', memberData.user.id)
+      let memberCache = await this.client.internals.cache.get(Keyspaces.GuildMembers, guild.id, 'GuildMember', memberData.user.id)
 
       if (memberCache) {
         memberCache = await memberCache.init(memberData)
@@ -65,7 +65,7 @@ export class GuildCreateEvent extends AbstractEvent<GuildCreateEventContext | Ab
     }
 
     for await (const presenceData of guild.presences) {
-      let cache = await this.client.internals.cache.get(Keyspaces.GUILD_PRESENCES, guild.id, 'Presence', presenceData.user.id)
+      let cache = await this.client.internals.cache.get(Keyspaces.GuildPresences, guild.id, 'Presence', presenceData.user.id)
 
       if (cache) {
         cache = await cache.init(presenceData)

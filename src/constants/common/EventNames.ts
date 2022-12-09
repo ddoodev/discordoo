@@ -1,3 +1,8 @@
+/*
+* Discord's event names.
+*
+* Keys should be in screaming snake case, because that's how Discord sends it.
+* */
 export enum EventNames {
   SHARD_CONNECTED = 'shardConnected',
   READY = 'ready',

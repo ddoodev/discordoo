@@ -1,27 +1,27 @@
 /** Channels caching policy */
 export enum ChannelsCachingPolicy {
   /** Cache all channels */
-  ALL = 'all',
+  All = 'all',
   /** Don't cache channels */
-  NONE = 'none',
+  None = 'none',
   /** Cache text channels */
-  TEXT = 'text',
+  Text = 'text',
   /** Cache voice channels (does not includes stages) */
-  VOICE = 'voice',
+  Voice = 'voice',
   /** Cache dm channels */
-  DM = 'dm',
+  Dm = 'dm',
   /** Cache categories */
-  CATEGORY = 'category',
+  Category = 'category',
   /** Cache news channels (does not includes threads) */
-  NEWS = 'news',
+  News = 'news',
   /** Cache 'store' channels */
-  STORE = 'store',
+  Store = 'store',
   /** Cache news threads */
-  NEWS_THREAD = 'newsThread',
+  NewsThread = 'newsThread',
   /** Cache public threads */
-  PUBLIC_THREAD = 'publicThread',
+  PublicThread = 'publicThread',
   /** Cache private threads */
-  PRIVATE_THREAD = 'privateThread',
+  PrivateThread = 'privateThread',
   /** Cache stage voices */
-  STAGE_VOICE = 'stageVoice',
+  StageVoice = 'stageVoice',
 }

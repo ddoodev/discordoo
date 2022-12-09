@@ -23,7 +23,7 @@ export class ThreadUpdateEvent extends AbstractEvent<ThreadUpdateEventContext | 
     const Channel: any = EntitiesUtil.get(entityKey)
 
     const stored = await this.client.internals.cache.get<string, AnyThreadChannel>(
-      Keyspaces.CHANNELS,
+      Keyspaces.Channels,
       data.guild_id,
       'channelEntityKey',
       data.id
@@ -35,7 +35,7 @@ export class ThreadUpdateEvent extends AbstractEvent<ThreadUpdateEventContext | 
 
     if (data.member) {
       let member = await this.client.internals.cache.get<string, ThreadMember>(
-        Keyspaces.THREAD_MEMBERS,
+        Keyspaces.ThreadMembers,
         data.id,
         'ThreadMember',
         data.member.user_id

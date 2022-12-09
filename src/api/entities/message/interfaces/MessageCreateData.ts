@@ -19,5 +19,5 @@ export interface WebhookMessageCreateData extends MessageCreateData {
   avatar_url?: string
   /** Name of thread to create (requires the webhook channel to be a forum channel) */
   thread_name?: string
-  flags?: 4 // only MessageFlags.SUPPRESS_EMBEDS can be set
+  flags?: 4 // only MessageFlags.SuppressEmbeds can be set
 }

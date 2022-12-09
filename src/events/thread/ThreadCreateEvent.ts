@@ -27,7 +27,7 @@ export class ThreadCreateEvent extends AbstractEvent<ThreadCreateEventContext | 
 
     if (data.member) {
       let member = await this.client.internals.cache.get<string, ThreadMember>(
-        Keyspaces.THREAD_MEMBERS,
+        Keyspaces.ThreadMembers,
         channel.id,
         'ThreadMember',
         data.member.user_id

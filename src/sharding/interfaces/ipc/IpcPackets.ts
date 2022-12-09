@@ -35,17 +35,17 @@ export interface IpcEmergencyPacket extends IpcPacket {
 
 export interface IpcEmergencyRestBlockPacket extends IpcEmergencyPacket {
   d: {
-    op: IpcEmergencyOpCodes.GLOBAL_RATE_LIMIT_ALMOST_REACHED
-      | IpcEmergencyOpCodes.GLOBAL_RATE_LIMIT_HIT
-      | IpcEmergencyOpCodes.INVALID_REQUEST_LIMIT_ALMOST_REACHED
-      | IpcEmergencyOpCodes.INVALID_REQUEST_LIMIT_HIT
+    op: IpcEmergencyOpCodes.GlobalRateLimitAlmostReached
+      | IpcEmergencyOpCodes.GlobalRateLimitHit
+      | IpcEmergencyOpCodes.InvalidRequestLimitAlmostReached
+      | IpcEmergencyOpCodes.InvalidRequestLimitHit
     block_until: number
   }
 }
 
 export interface IpcEmergencyGrlHitPacket extends IpcEmergencyPacket {
   d: {
-    op: IpcEmergencyOpCodes.GLOBAL_RATE_LIMIT_HIT
+    op: IpcEmergencyOpCodes.GlobalRateLimitHit
     block_until: number
   }
 }
@@ -168,8 +168,8 @@ export interface IpcCacheGetRequestPacket extends IpcPacket {
   op: IpcOpCodes.CACHE_OPERATE
   d: {
     event_id: string
-    op: IpcCacheOpCodes.GET
-    serialize: SerializeModes.ANY
+    op: IpcCacheOpCodes.Get
+    serialize: SerializeModes.Any
     shards: number[]
     key: any
     keyspace: string
@@ -191,8 +191,8 @@ export interface IpcCacheSetRequestPacket extends IpcPacket {
   op: IpcOpCodes.CACHE_OPERATE
   d: {
     event_id: string
-    op: IpcCacheOpCodes.SET
-    serialize: SerializeModes.BOOLEAN
+    op: IpcCacheOpCodes.Set
+    serialize: SerializeModes.Boolean
     shards: number[]
     key: any
     keyspace: string
@@ -216,8 +216,8 @@ export interface IpcCacheDeleteRequestPacket extends IpcPacket {
   op: IpcOpCodes.CACHE_OPERATE
   d: {
     event_id: string
-    op: IpcCacheOpCodes.DELETE
-    serialize: SerializeModes.BOOLEAN
+    op: IpcCacheOpCodes.Delete
+    serialize: SerializeModes.Boolean
     shards: number[]
     key: any
     keyspace: string
@@ -238,7 +238,7 @@ export interface IpcCacheForEachRequestPacket extends IpcPacket {
   op: IpcOpCodes.CACHE_OPERATE
   d: {
     event_id: string
-    op: IpcCacheOpCodes.FOREACH
+    op: IpcCacheOpCodes.Foreach
     shards: number[]
     keyspace: string
     storage: CacheStorageKey
@@ -260,8 +260,8 @@ export interface IpcCacheSizeRequestPacket extends IpcPacket {
   op: IpcOpCodes.CACHE_OPERATE
   d: {
     event_id: string
-    op: IpcCacheOpCodes.SIZE
-    serialize: SerializeModes.NUMBER
+    op: IpcCacheOpCodes.Size
+    serialize: SerializeModes.Number
     shards: number[]
     keyspace: string
     storage: CacheStorageKey
@@ -281,8 +281,8 @@ export interface IpcCacheHasRequestPacket extends IpcPacket {
   op: IpcOpCodes.CACHE_OPERATE
   d: {
     event_id: string
-    op: IpcCacheOpCodes.HAS
-    serialize: SerializeModes.BOOLEAN
+    op: IpcCacheOpCodes.Has
+    serialize: SerializeModes.Boolean
     shards: number[]
     keyspace: string
     storage: CacheStorageKey
@@ -303,7 +303,7 @@ export interface IpcCacheSweepRequestPacket extends IpcPacket {
   op: IpcOpCodes.CACHE_OPERATE
   d: {
     event_id: string
-    op: IpcCacheOpCodes.SWEEP
+    op: IpcCacheOpCodes.Sweep
     shards: number[]
     keyspace: string
     storage: CacheStorageKey
@@ -325,8 +325,8 @@ export interface IpcCacheFilterRequestPacket extends IpcPacket {
   op: IpcOpCodes.CACHE_OPERATE
   d: {
     event_id: string
-    op: IpcCacheOpCodes.FILTER
-    serialize: SerializeModes.ARRAY
+    op: IpcCacheOpCodes.Filter
+    serialize: SerializeModes.Array
     shards: number[]
     keyspace: string
     storage: CacheStorageKey
@@ -348,8 +348,8 @@ export interface IpcCacheMapRequestPacket extends IpcPacket {
   op: IpcOpCodes.CACHE_OPERATE
   d: {
     event_id: string
-    op: IpcCacheOpCodes.MAP
-    serialize: SerializeModes.ARRAY
+    op: IpcCacheOpCodes.Map
+    serialize: SerializeModes.Array
     shards: number[]
     keyspace: string
     storage: CacheStorageKey
@@ -371,8 +371,8 @@ export interface IpcCacheFindRequestPacket extends IpcPacket {
   op: IpcOpCodes.CACHE_OPERATE
   d: {
     event_id: string
-    op: IpcCacheOpCodes.FIND
-    serialize: SerializeModes.ANY
+    op: IpcCacheOpCodes.Find
+    serialize: SerializeModes.Any
     shards: number[]
     keyspace: string
     storage: CacheStorageKey
@@ -394,8 +394,8 @@ export interface IpcCacheClearRequestPacket extends IpcPacket {
   op: IpcOpCodes.CACHE_OPERATE
   d: {
     event_id: string
-    op: IpcCacheOpCodes.CLEAR
-    serialize: SerializeModes.BOOLEAN
+    op: IpcCacheOpCodes.Clear
+    serialize: SerializeModes.Boolean
     shards: number[]
     keyspace: string
     storage: CacheStorageKey
@@ -415,8 +415,8 @@ export interface IpcCacheCountRequestPacket extends IpcPacket {
   op: IpcOpCodes.CACHE_OPERATE
   d: {
     event_id: string
-    op: IpcCacheOpCodes.COUNT
-    serialize: SerializeModes.NUMBER
+    op: IpcCacheOpCodes.Count
+    serialize: SerializeModes.Number
     shards: number[]
     keyspace: string
     storage: CacheStorageKey
@@ -438,8 +438,8 @@ export interface IpcCacheCountsRequestPacket extends IpcPacket {
   op: IpcOpCodes.CACHE_OPERATE
   d: {
     event_id: string
-    op: IpcCacheOpCodes.COUNTS
-    serialize: SerializeModes.NUMBERS_ARRAY
+    op: IpcCacheOpCodes.Counts
+    serialize: SerializeModes.NumbersArray
     shards: number[]
     keyspace: string
     storage: CacheStorageKey
@@ -461,8 +461,8 @@ export interface IpcCacheKeysRequestPacket extends IpcPacket {
   op: IpcOpCodes.CACHE_OPERATE
   d: {
     event_id: string
-    op: IpcCacheOpCodes.KEYS
-    serialize: SerializeModes.ARRAY
+    op: IpcCacheOpCodes.Keys
+    serialize: SerializeModes.Array
     shards: number[]
     keyspace: string
     storage: CacheStorageKey
@@ -483,8 +483,8 @@ export interface IpcCacheValuesRequestPacket extends IpcPacket {
   op: IpcOpCodes.CACHE_OPERATE
   d: {
     event_id: string
-    op: IpcCacheOpCodes.VALUES
-    serialize: SerializeModes.ARRAY
+    op: IpcCacheOpCodes.Values
+    serialize: SerializeModes.Array
     shards: number[]
     keyspace: string
     storage: CacheStorageKey
@@ -505,8 +505,8 @@ export interface IpcCacheEntriesRequestPacket extends IpcPacket {
   op: IpcOpCodes.CACHE_OPERATE
   d: {
     event_id: string
-    op: IpcCacheOpCodes.ENTRIES
-    serialize: SerializeModes.ARRAY
+    op: IpcCacheOpCodes.Entries
+    serialize: SerializeModes.Array
     shards: number[]
     keyspace: string
     storage: CacheStorageKey

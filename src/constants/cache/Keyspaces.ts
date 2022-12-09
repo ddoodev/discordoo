@@ -1,46 +1,46 @@
 export enum Keyspaces {
   // guilds => global => guild id
-  GUILDS = 'guilds',
+  Guilds = 'guilds',
   // users => global => user id
-  USERS = 'users',
+  Users = 'users',
   // channels => guild id or 'dm' => channel id
-  CHANNELS = 'channels',
+  Channels = 'channels',
   // messages => channel id => message id
-  MESSAGES = 'messages',
+  Messages = 'messages',
   // pinned-messages => channel id => message id
-  PINNED_MESSAGES = 'pinned-messages',
+  PinnedMessages = 'pinned-messages',
   // stickers => default or guild id => sticker id
-  STICKERS = 'stickers',
+  Stickers = 'stickers',
   /**
    * message-reactions => message id => reaction identifier
    * OR
    * message-reactions => message id => reaction identifier (pointer) => guild-emojis => guild id => emoji id
    * */
-  MESSAGE_REACTIONS = 'message-reactions',
+  MessageReactions = 'message-reactions',
   // message-reaction-users => message id => reaction identifier (pointer) => users => global => user id
-  MESSAGE_REACTION_USERS = 'message-reaction-users',
+  MessageReactionUsers = 'message-reaction-users',
   // channel-permissions-overwrites => channel id => user or role id
-  CHANNEL_PERMISSIONS_OVERWRITES = 'channel-permissions-overwrites',
+  ChannelPermissionsOverwrites = 'channel-permissions-overwrites',
   // category-channel-children => channel id (pointer) => guild-channels => guild id => channel id
-  CATEGORY_CHANNEL_CHILDREN = 'category-channel-children',
+  CategoryChannelChildren = 'category-channel-children',
   // dm-channels => user id => channel id (pointer) => channels => channel id
-  DM_CHANNELS = 'dm-channels',
+  DmChannels = 'dm-channels',
   // guild-members => guild id => member user id
-  GUILD_MEMBERS = 'guild-members',
+  GuildMembers = 'guild-members',
   // guild-member-roles => guild id + member user id => role id (pointer) => guild-roles => guild id => role id
-  GUILD_MEMBER_ROLES = 'guild-member-roles',
+  GuildMemberRoles = 'guild-member-roles',
   // guild-presences => guild id => user id
-  GUILD_PRESENCES = 'guild-presences',
+  GuildPresences = 'guild-presences',
   // guild-roles => guild id => role id
-  GUILD_ROLES = 'guild-roles',
+  GuildRoles = 'guild-roles',
   // guild-emojis => guild id => emoji id
-  GUILD_EMOJIS = 'guild-emojis',
+  GuildEmojis = 'guild-emojis',
   // thread-members => thread id => member id
-  THREAD_MEMBERS = 'thread-members',
+  ThreadMembers = 'thread-members',
   // invites => global => invite code
-  INVITES = 'invites',
+  Invites = 'invites',
   // invite-guilds => global => guild id
-  INVITE_GUILDS = 'invite-guilds',
+  InviteGuilds = 'invite-guilds',
   // other => any id (pointer) => any other cache
-  OTHER = 'other',
+  Other = 'other',
 }

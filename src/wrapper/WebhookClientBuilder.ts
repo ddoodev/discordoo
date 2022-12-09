@@ -44,7 +44,7 @@ export class WebhookClientBuilder<Stack extends DefaultWebhookClientStack = Defa
   }
 
   restProvider(provider: ProviderConstructor<Stack['rest']>, ...options: any[]): WebhookClientBuilder<Stack> {
-    return this.useProvider(DiscordooProviders.REST, provider, ...options)
+    return this.useProvider(DiscordooProviders.Rest, provider, ...options)
   }
 
   private useProvider(providerSignature: DiscordooProviders, provider: any, ...options: any[]): WebhookClientBuilder<Stack> {

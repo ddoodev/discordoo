@@ -1,15 +1,15 @@
 /** Presences caching policy */
 export enum PresencesCachingPolicy {
   /** Cache all presences */
-  ALL = 'all',
+  All = 'all',
   /** Don't cache presences */
-  NONE = 'none',
+  None = 'none',
   /** Cache presences with online status */
-  ONLINE = 'online',
+  Online = 'online',
   /** Cache presences with dnd status */
-  DND = 'dnd',
+  Dnd = 'dnd',
   /** Cache presences with idle status */
-  IDLE = 'idle',
+  Idle = 'idle',
   /** Cache presences with offline status */
-  OFFLINE = 'offline',
+  Offline = 'offline',
 }

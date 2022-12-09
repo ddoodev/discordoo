@@ -1,4 +1,4 @@
 export enum PermissionOverwriteTypes {
-  ROLE,
-  MEMBER,
+  Role,
+  Member,
 }

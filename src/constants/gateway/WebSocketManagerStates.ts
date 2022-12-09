@@ -1,6 +1,6 @@
 export enum WebSocketManagerStates {
-  CREATED,
-  CONNECTING,
-  READY,
-  DISCONNECTED,
+  Created,
+  Connecting,
+  Ready,
+  Disconnected,
 }

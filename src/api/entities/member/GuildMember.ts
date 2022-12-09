@@ -101,12 +101,12 @@ export class GuildMember extends AbstractEntity {
       )
 
       for await (const role of this.rolesList) {
-        await this.roles.cache.set(role, makeCachePointer(Keyspaces.GUILD_ROLES, this.guildId, role))
+        await this.roles.cache.set(role, makeCachePointer(Keyspaces.GuildRoles, this.guildId, role))
       }
     }
 
     if (WebSocketUtils.exists(data.permissions)) {
-      this.permissions = new ReadonlyPermissions(this.guildOwner ? PermissionFlags.ADMINISTRATOR : data.permissions)
+      this.permissions = new ReadonlyPermissions(this.guildOwner ? PermissionFlags.Administrator : data.permissions)
     }
 
     if (typeof this._muteUntilRaw === 'string') {

@@ -33,6 +33,6 @@ export interface WebhookMessageCreateOptions extends Omit<MessageCreateOptions, 
   threadName?: string
   /** Send a message to the specified thread within a webhook's channel. The thread will automatically be unarchived. */
   threadId?: string
-  /** Suppress embeds for this message or not (use MessageFlags.SUPPRESS_EMBEDS if you want to do this) */
-  flags?: 4 // only MessageFlags.SUPPRESS_EMBEDS can be set
+  /** Suppress embeds for this message or not (use MessageFlags.SuppressEmbeds if you want to do this) */
+  flags?: 4 // only MessageFlags.SuppressEmbeds can be set
 }

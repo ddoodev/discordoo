@@ -52,9 +52,9 @@ export class CachingPoliciesProcessor {
       results.push(
         this.options.global.policies.some(policy => {
           switch (policy) {
-            case GlobalCachingPolicy.NONE:
+            case GlobalCachingPolicy.None:
               return false
-            case GlobalCachingPolicy.ALL:
+            case GlobalCachingPolicy.All:
             default:
               return true
           }
@@ -77,29 +77,29 @@ export class CachingPoliciesProcessor {
       results.push(
         this.options.channels.policies.some(policy => {
           switch (policy) {
-            case ChannelsCachingPolicy.CATEGORY:
+            case ChannelsCachingPolicy.Category:
               return channel.type === 'category'
-            case ChannelsCachingPolicy.DM:
+            case ChannelsCachingPolicy.Dm:
               return channel.type === 'dm'
-            case ChannelsCachingPolicy.NEWS:
+            case ChannelsCachingPolicy.News:
               return channel.type === 'news'
-            case ChannelsCachingPolicy.NEWS_THREAD:
+            case ChannelsCachingPolicy.NewsThread:
               return channel.type === 'newsThread'
-            case ChannelsCachingPolicy.TEXT:
+            case ChannelsCachingPolicy.Text:
               return channel.type === 'text'
-            case ChannelsCachingPolicy.STORE:
+            case ChannelsCachingPolicy.Store:
               return channel.type === 'store'
-            case ChannelsCachingPolicy.VOICE:
+            case ChannelsCachingPolicy.Voice:
               return channel.type === 'voice'
-            case ChannelsCachingPolicy.STAGE_VOICE:
+            case ChannelsCachingPolicy.StageVoice:
               return channel.type === 'stageVoice'
-            case ChannelsCachingPolicy.PUBLIC_THREAD:
+            case ChannelsCachingPolicy.PublicThread:
               return channel.type === 'publicThread'
-            case ChannelsCachingPolicy.PRIVATE_THREAD:
+            case ChannelsCachingPolicy.PrivateThread:
               return channel.type === 'privateThread'
-            case ChannelsCachingPolicy.NONE:
+            case ChannelsCachingPolicy.None:
               return false
-            case ChannelsCachingPolicy.ALL:
+            case ChannelsCachingPolicy.All:
             default:
               return true
           }
@@ -123,18 +123,18 @@ export class CachingPoliciesProcessor {
       results.push(
         this.options.emojis.policies.some(policy => {
           switch (policy) {
-            case EmojisCachingPolicy.NONE:
+            case EmojisCachingPolicy.None:
               return false
-            case EmojisCachingPolicy.GUILD:
+            case EmojisCachingPolicy.Guild:
               return emoji instanceof GuildEmoji
-            case EmojisCachingPolicy.ACTIVITY:
+            case EmojisCachingPolicy.Activity:
               return emoji instanceof ActivityEmoji
-            case EmojisCachingPolicy.REACTION:
+            case EmojisCachingPolicy.Reaction:
               return emoji instanceof ReactionEmoji
-            case EmojisCachingPolicy.STATIC:
-            case EmojisCachingPolicy.ANIMATED:
+            case EmojisCachingPolicy.Static:
+            case EmojisCachingPolicy.Animated:
               return !!emoji.animated
-            case EmojisCachingPolicy.ALL:
+            case EmojisCachingPolicy.All:
             default:
               return true
           }
@@ -158,9 +158,9 @@ export class CachingPoliciesProcessor {
       results.push(
         this.options.inviteGuilds.policies.some(policy => {
           switch (policy) {
-            case InvitesCachingPolicy.NONE:
+            case InvitesCachingPolicy.None:
               return false
-            case InvitesCachingPolicy.ALL:
+            case InvitesCachingPolicy.All:
             default:
               return true
           }
@@ -184,9 +184,9 @@ export class CachingPoliciesProcessor {
       results.push(
         this.options.invites.policies.some(policy => {
           switch (policy) {
-            case InvitesCachingPolicy.NONE:
+            case InvitesCachingPolicy.None:
               return false
-            case InvitesCachingPolicy.ALL:
+            case InvitesCachingPolicy.All:
             default:
               return true
           }
@@ -210,19 +210,19 @@ export class CachingPoliciesProcessor {
       results.push(
         this.options.stickers.policies.some(policy => {
           switch (policy) {
-            case StickersCachingPolicy.NONE:
+            case StickersCachingPolicy.None:
               return false
-            case StickersCachingPolicy.STANDARD:
-              return sticker.type === StickerTypes.STANDARD
-            case StickersCachingPolicy.GUILD:
-              return sticker.type === StickerTypes.GUILD
-            case StickersCachingPolicy.PNG:
-              return sticker.formatType === StickerFormatTypes.PNG
-            case StickersCachingPolicy.APNG:
-              return sticker.formatType === StickerFormatTypes.APNG
-            case StickersCachingPolicy.LOTTIE:
-              return sticker.formatType === StickerFormatTypes.LOTTIE
-            case StickersCachingPolicy.ALL:
+            case StickersCachingPolicy.Standard:
+              return sticker.type === StickerTypes.Standard
+            case StickersCachingPolicy.Guild:
+              return sticker.type === StickerTypes.Guild
+            case StickersCachingPolicy.Png:
+              return sticker.formatType === StickerFormatTypes.Png
+            case StickersCachingPolicy.Apng:
+              return sticker.formatType === StickerFormatTypes.Apng
+            case StickersCachingPolicy.Lottie:
+              return sticker.formatType === StickerFormatTypes.Lottie
+            case StickersCachingPolicy.All:
             default:
               return true
           }
@@ -246,9 +246,9 @@ export class CachingPoliciesProcessor {
       results.push(
         this.options.threadMembers.policies.some(policy => {
           switch (policy) {
-            case ThreadMembersCachingPolicy.NONE:
+            case ThreadMembersCachingPolicy.None:
               return false
-            case ThreadMembersCachingPolicy.ALL:
+            case ThreadMembersCachingPolicy.All:
             default:
               return true
           }
@@ -272,11 +272,11 @@ export class CachingPoliciesProcessor {
       results.push(
         this.options.reactions.policies.some(policy => {
           switch (policy) {
-            case ReactionsCachingPolicy.NONE:
+            case ReactionsCachingPolicy.None:
               return false
-            case ReactionsCachingPolicy.OWN:
+            case ReactionsCachingPolicy.Own:
               return reaction.me
-            case ReactionsCachingPolicy.ALL:
+            case ReactionsCachingPolicy.All:
             default:
               return true
           }
@@ -300,9 +300,9 @@ export class CachingPoliciesProcessor {
       results.push(
         this.options.guilds.policies.some(policy => {
           switch (policy) {
-            case GuildsCachingPolicy.NONE:
+            case GuildsCachingPolicy.None:
               return false
-            case GuildsCachingPolicy.ALL:
+            case GuildsCachingPolicy.All:
             default:
               return true
           }
@@ -327,25 +327,25 @@ export class CachingPoliciesProcessor {
       results.push(
         this.options.members.policies.some(policy => {
           switch (policy) {
-            case GuildMembersCachingPolicy.ONLINE:
+            case GuildMembersCachingPolicy.Online:
               return presence?.status === 'online'
-            case GuildMembersCachingPolicy.DND:
+            case GuildMembersCachingPolicy.Dnd:
               return presence?.status === 'dnd'
-            case GuildMembersCachingPolicy.IDLE:
+            case GuildMembersCachingPolicy.Idle:
               return presence?.status === 'idle'
-            case GuildMembersCachingPolicy.OFFLINE:
+            case GuildMembersCachingPolicy.Offline:
               return presence?.status === 'offline'
-            case GuildMembersCachingPolicy.OWNER:
+            case GuildMembersCachingPolicy.Owner:
               return member.guildOwner
-            case GuildMembersCachingPolicy.PENDING:
+            case GuildMembersCachingPolicy.Pending:
               return !!member.pending
-            case GuildMembersCachingPolicy.VOICE: // TODO
+            case GuildMembersCachingPolicy.Voice: // TODO
               return false
-            case GuildMembersCachingPolicy.RECENT_MESSAGE: // TODO
+            case GuildMembersCachingPolicy.RecentMessage: // TODO
               return false
-            case GuildMembersCachingPolicy.NONE:
+            case GuildMembersCachingPolicy.None:
               return false
-            case GuildMembersCachingPolicy.ALL:
+            case GuildMembersCachingPolicy.All:
             default:
               return true
           }
@@ -370,13 +370,13 @@ export class CachingPoliciesProcessor {
         this.options.messages.policies.some(async policy => {
           const author = await message.author()
           switch (policy) {
-            case MessagesCachingPolicy.BOTS:
+            case MessagesCachingPolicy.Bots:
               return !!author?.bot
-            case MessagesCachingPolicy.USERS:
+            case MessagesCachingPolicy.Users:
               return !author?.bot
-            case MessagesCachingPolicy.NONE:
+            case MessagesCachingPolicy.None:
               return false
-            case MessagesCachingPolicy.ALL:
+            case MessagesCachingPolicy.All:
             default:
               return true
           }
@@ -400,17 +400,17 @@ export class CachingPoliciesProcessor {
       results.push(
         this.options.presences.policies.some(policy => {
           switch (policy) {
-            case PresencesCachingPolicy.NONE:
+            case PresencesCachingPolicy.None:
               return false
-            case PresencesCachingPolicy.ONLINE:
+            case PresencesCachingPolicy.Online:
               return presence.status === 'online'
-            case PresencesCachingPolicy.IDLE:
+            case PresencesCachingPolicy.Idle:
               return presence.status === 'idle'
-            case PresencesCachingPolicy.DND:
+            case PresencesCachingPolicy.Dnd:
               return presence.status === 'dnd'
-            case PresencesCachingPolicy.OFFLINE:
+            case PresencesCachingPolicy.Offline:
               return presence.status === 'offline'
-            case PresencesCachingPolicy.ALL:
+            case PresencesCachingPolicy.All:
             default:
               return true
           }
@@ -434,13 +434,13 @@ export class CachingPoliciesProcessor {
       results.push(
         this.options.overwrites.policies.some(policy => {
           switch (policy) {
-            case OverwritesCachingPolicy.NONE:
+            case OverwritesCachingPolicy.None:
               return false
-            case OverwritesCachingPolicy.MEMBERS:
-              return overwrite.type === PermissionOverwriteTypes.MEMBER
-            case OverwritesCachingPolicy.ROLES:
-              return overwrite.type === PermissionOverwriteTypes.ROLE
-            case OverwritesCachingPolicy.ALL:
+            case OverwritesCachingPolicy.Members:
+              return overwrite.type === PermissionOverwriteTypes.Member
+            case OverwritesCachingPolicy.Roles:
+              return overwrite.type === PermissionOverwriteTypes.Role
+            case OverwritesCachingPolicy.All:
             default:
               return true
           }
@@ -464,13 +464,13 @@ export class CachingPoliciesProcessor {
       results.push(
         this.options.roles.policies.some(policy => {
           switch (policy) {
-            case RolesCachingPolicy.EVERYONE:
+            case RolesCachingPolicy.Everyone:
               return role.id === role.guildId
-            case RolesCachingPolicy.MANAGED:
+            case RolesCachingPolicy.Managed:
               return role.managed
-            case RolesCachingPolicy.NONE:
+            case RolesCachingPolicy.None:
               return false
-            case RolesCachingPolicy.ALL:
+            case RolesCachingPolicy.All:
             default:
               return true
           }
@@ -494,9 +494,9 @@ export class CachingPoliciesProcessor {
       results.push(
         this.options.users.policies.some(policy => {
           switch (policy) {
-            case UsersCachingPolicy.NONE:
+            case UsersCachingPolicy.None:
               return false
-            case UsersCachingPolicy.ALL:
+            case UsersCachingPolicy.All:
             default:
               return true
           }

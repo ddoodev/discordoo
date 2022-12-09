@@ -11,7 +11,7 @@ export class ClientEmojisManager extends EntitiesManager {
 
     this.cache = new EntitiesCacheManager<AnyEmoji>(this.client, {
       entity: 'emojiEntityKey',
-      keyspace: Keyspaces.GUILD_EMOJIS,
+      keyspace: Keyspaces.GuildEmojis,
       storage: 'global',
       policy: 'emojis'
     })

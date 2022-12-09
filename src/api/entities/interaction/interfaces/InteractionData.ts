@@ -15,7 +15,7 @@ export interface InteractionData<DataType = any> {
   channel?: ChannelResolvable
   /** guild member data for the invoking user */
   member?: GuildMemberResolvable
-  /**	user object for the invoking user, if invoked in a DM */
+  /**	user object for the invoking user, if invoked in a Dm */
   user?: UserResolvable
   /** a continuation token for responding to the interaction */
   token: string

@@ -1,7 +1,7 @@
 export enum GuildVerificationLevels {
-  NONE,
-  LOW,
-  MEDIUM,
-  HIGH,
-  VERY_HIGH,
+  None,
+  Low,
+  Medium,
+  High,
+  VeryHigh,
 }

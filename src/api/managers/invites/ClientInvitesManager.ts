@@ -18,7 +18,7 @@ export class ClientInvitesManager extends EntitiesManager {
     super(client)
 
     this.cache = new EntitiesCacheManager<Invite>(this.client, {
-      keyspace: Keyspaces.INVITES,
+      keyspace: Keyspaces.Invites,
       storage: 'global',
       entity: 'Invite',
       policy: 'invites'

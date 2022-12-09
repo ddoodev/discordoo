@@ -19,13 +19,13 @@ export class WebSocketManager {
 
   constructor(provider: GatewayProvider, options: CompletedGatewayOptions) {
     this.options = options
-    this.status = WebSocketManagerStates.CREATED
+    this.status = WebSocketManagerStates.Created
     this.provider = provider
   }
 
   async connect(options?: GatewayShardsInfo) {
     // console.log('connecting')
-    this.status = WebSocketManagerStates.CONNECTING
+    this.status = WebSocketManagerStates.Connecting
 
     if (options) {
       if (options.shards && options.totalShards) {
@@ -43,7 +43,7 @@ export class WebSocketManager {
 
     if (!this.queueInterval) {
       this.queueInterval = setInterval(() => {
-        if (this.shardQueue.size && this.status !== WebSocketManagerStates.CONNECTING) {
+        if (this.shardQueue.size && this.status !== WebSocketManagerStates.Connecting) {
           this.createShards()
         }
       }, 1000)
@@ -59,7 +59,7 @@ export class WebSocketManager {
   }
 
   destroy() {
-    this.status = WebSocketManagerStates.DISCONNECTED
+    this.status = WebSocketManagerStates.Disconnected
     this.shards.forEach(shard => shard.destroy({ reconnect: false, code: 1000 }))
     if (this.queueInterval) {
       clearInterval(this.queueInterval)
@@ -76,21 +76,21 @@ export class WebSocketManager {
       this.shards.forEach(shard => shard.destroy({ reconnect: false, code: 1000 }))
     }
 
-    if (this.shards.every(shard => shard.status === WebSocketClientStates.DISCONNECTED)) {
-      this.status = WebSocketManagerStates.DISCONNECTED
+    if (this.shards.every(shard => shard.status === WebSocketClientStates.Disconnected)) {
+      this.status = WebSocketManagerStates.Disconnected
     }
   }
 
   private async createShards() {
     if (!this.shardQueue.size) return false
-    this.status = WebSocketManagerStates.CONNECTING
+    this.status = WebSocketManagerStates.Connecting
 
     const [ shard ] = this.shardQueue
 
     this.shardQueue.delete(shard)
 
-    if (!shard.listeners(WebSocketClientEvents.RECONNECT_ME).length) {
-      shard.on(WebSocketClientEvents.RECONNECT_ME, () => {
+    if (!shard.listeners(WebSocketClientEvents.ReconnectMe).length) {
+      shard.on(WebSocketClientEvents.ReconnectMe, () => {
         this.shardQueue.add(shard)
       })
     }
@@ -100,31 +100,31 @@ export class WebSocketManager {
     } catch (e: any) {
       if (e?.code) {
         switch (e.code) {
-          case WebSocketCloseCodes.DISALLOWED_INTENTS:
-          case WebSocketCloseCodes.INVALID_INTENTS:
-          case WebSocketCloseCodes.INVALID_API_VERSION:
-          case WebSocketCloseCodes.INVALID_SHARD:
-          case WebSocketCloseCodes.AUTHENTICATION_FAILED:
-          case WebSocketCloseCodes.SHARDING_REQUIRED:
+          case WebSocketCloseCodes.DisallowedIntents:
+          case WebSocketCloseCodes.InvalidIntents:
+          case WebSocketCloseCodes.InvalidApiVersion:
+          case WebSocketCloseCodes.InvalidShard:
+          case WebSocketCloseCodes.AuthenticationFailed:
+          case WebSocketCloseCodes.ShardingRequired:
             throw new DiscordooError(
               'WebSocketManager',
               'Shard', shard.id,
-              'will not be connected because it received close code',
+              'can not be connected because it received close code',
               e.code, 'with reason',
               e.reason ?? 'Unknown error'
             )
 
           case 1000:
-          case WebSocketCloseCodes.ALREADY_AUTHENTICATED:
-          case WebSocketCloseCodes.INVALID_SEQUENCE:
+          case WebSocketCloseCodes.AlreadyAuthenticated:
+          case WebSocketCloseCodes.InvalidSequence:
             // TODO: debug...
             shard.destroy({ reconnect: false })
-            shard.emit(WebSocketClientEvents.RECONNECT_ME, true)
+            shard.emit(WebSocketClientEvents.ReconnectMe, true)
             break
 
           default:
             // TODO: debug...
-            shard.emit(WebSocketClientEvents.RECONNECT_ME)
+            shard.emit(WebSocketClientEvents.ReconnectMe)
         }
       } else {
         throw new DiscordooError(
@@ -144,7 +144,7 @@ export class WebSocketManager {
 
       return this.createShards()
     } else {
-      this.status = WebSocketManagerStates.READY
+      this.status = WebSocketManagerStates.Ready
     }
 
     return true

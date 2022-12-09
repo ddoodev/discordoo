@@ -12,7 +12,7 @@ import { DirectMessagesChannelData } from '@src/api/entities/channel/interfaces/
 
 export class DirectMessagesChannel extends AbstractChannel implements WritableChannel {
   public declare messages: DirectMessagesChannelMessagesManager
-  public declare type: ChannelTypes.DM
+  public declare type: ChannelTypes.Dm
   public lastMessageId?: string
   public lastPinTimestamp?: number
   public recipients: string[] = []

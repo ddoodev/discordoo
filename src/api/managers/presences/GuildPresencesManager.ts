@@ -17,7 +17,7 @@ export class GuildPresencesManager extends EntitiesManager {
     this.guildId = guildId
 
     this.cache = new EntitiesCacheManager<Presence>(this.client, {
-      keyspace: Keyspaces.GUILD_PRESENCES,
+      keyspace: Keyspaces.GuildPresences,
       storage: this.guildId,
       entity: 'Presence',
       policy: 'presences'

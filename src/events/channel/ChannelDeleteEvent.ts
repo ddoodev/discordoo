@@ -32,7 +32,7 @@ export class ChannelDeleteEvent extends AbstractEvent<ChannelDeleteEventContext 
 
     await this.client.channels.cache.delete(channel.id, { storage: data.guild_id ?? 'dm' })
 
-    if (data.type === ChannelTypes.DM || data.type === ChannelTypes.GROUP_DM) {
+    if (data.type === ChannelTypes.Dm || data.type === ChannelTypes.GroupDm) {
       for await (const user of (data as RawDirectMessagesChannelData).recipients) {
         await this.client.dms.cache.delete(user.id)
       }

@@ -24,7 +24,7 @@ export class GuildMemberRolesManager extends EntitiesManager {
     this.guildId = guildId
 
     this.cache = new EntitiesCacheManager<Role>(this.client, {
-      keyspace: Keyspaces.GUILD_MEMBER_ROLES,
+      keyspace: Keyspaces.GuildMemberRoles,
       storage: this.userId,
       entity: 'Role',
       policy: 'roles'

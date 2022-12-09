@@ -6,13 +6,13 @@ import {
   AppCommandOptionMentionableData,
   AppCommandOptionNumberData,
   AppCommandOptionRoleData,
-  AppCommandOptionStringData,
+  AppCommandStringOptionData,
   AppCommandOptionUserData,
 } from '@src/api/entities/interaction/interfaces/command/common/AppCommandOptionData'
 
 export class MixinSlashCommandOptions {
   public options: AppCommandOptionData[] = []
-  public addStringOption(option: AppCommandOptionStringData): this {
+  public addStringOption(option: AppCommandStringOptionData): this {
     this.options.push(option)
     return this
   }

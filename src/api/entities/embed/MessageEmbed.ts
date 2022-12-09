@@ -16,7 +16,7 @@ import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 
 export class MessageEmbed extends AbstractEntity implements MessageEmbedData {
-  public type = MessageEmbedTypes.RICH
+  public type = MessageEmbedTypes.Rich
   public title?: string
   public description?: string
   public url?: string
@@ -46,7 +46,7 @@ export class MessageEmbed extends AbstractEntity implements MessageEmbedData {
         'color',
         'fields',
         'timestamp',
-        [ 'type', 'type', MessageEmbedTypes.RICH ],
+        [ 'type', 'type', MessageEmbedTypes.Rich ],
       ],
       disabled: options?.ignore,
     })
@@ -83,7 +83,7 @@ export class MessageEmbed extends AbstractEntity implements MessageEmbedData {
     const { title, description, url, color, timestamp, author, footer, image, video, thumbnail: thumb, provider } = data
 
     return {
-      type: MessageEmbedTypes.RICH, title, description, url, color, provider,
+      type: MessageEmbedTypes.Rich, title, description, url, color, provider,
       timestamp: timestamp ? new Date(timestamp).getTime() : undefined,
       author: author ? { name: author.name, url: author.url, iconUrl: author.icon_url } : undefined,
       footer: footer ? { text: footer.text, iconUrl: footer.icon_url } : undefined,

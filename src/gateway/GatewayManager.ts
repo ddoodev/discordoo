@@ -42,7 +42,7 @@ export class GatewayManager<P extends GatewayProvider = GatewayProvider> {
     this.client.emit('raw', packet)
 
     if (!packet.t) return
-    const event = packet.t === WebSocketClientEvents.CONNECTED ? 'shardConnected' : rawToDiscordoo(packet.t)
+    const event = packet.t === WebSocketClientEvents.Connected ? 'shardConnected' : rawToDiscordoo(packet.t)
 
     return this.client.internals.events.handlers.get(event)?.execute(shardId, packet.d)
   }

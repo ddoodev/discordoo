@@ -4,7 +4,7 @@ import { AppCommandOptionData } from '@src/api/entities/interaction/interfaces/c
 
 export interface SlashCommandData extends AppCommandData {
   /** the type of command */
-  type: AppCommandTypes.CHAT_INPUT
+  type: AppCommandTypes.ChatInput
   /** the parameters for the command, max 25 */
   options?: AppCommandOptionData[]
 }

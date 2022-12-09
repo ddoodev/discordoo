@@ -22,10 +22,10 @@ export abstract class AbstractViewableGuild extends AbstractGuild implements Vie
       props: [
         'banner',
         'description',
-        [ 'nsfwLevel', 'nsfw_level', GuildNsfwLevels.DEFAULT ],
+        [ 'nsfwLevel', 'nsfw_level', GuildNsfwLevels.Default ],
         'splash',
         [ 'vanityUrlCode', 'vanity_url_code' ],
-        [ 'verificationLevel', 'verification_level', GuildVerificationLevels.NONE ],
+        [ 'verificationLevel', 'verification_level', GuildVerificationLevels.None ],
       ],
       disabled: options?.ignore,
     })

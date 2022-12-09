@@ -1,11 +1,11 @@
 /** Messages caching policy */
 export enum MessagesCachingPolicy { // TODO: message types
   /** Cache all messages */
-  ALL = 'all',
+  All = 'all',
   /** Don't cache messages */
-  NONE = 'none',
+  None = 'none',
   /** Cache messages from users */
-  USERS = 'users',
+  Users = 'users',
   /** Cache messages from bots */
-  BOTS = 'bots',
+  Bots = 'bots',
 }

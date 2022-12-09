@@ -64,15 +64,15 @@ export class ClientBuilder<Stack extends DefaultClientStack = DefaultClientStack
   }
 
   restProvider(provider: ProviderConstructor<Stack['rest']>, ...options: any[]): ClientBuilder<Stack> {
-    return this.useProvider(DiscordooProviders.REST, provider, ...options)
+    return this.useProvider(DiscordooProviders.Rest, provider, ...options)
   }
 
   cacheProvider(provider: ProviderConstructor<Stack['cache']>, ...options: any[]): ClientBuilder<Stack> {
-    return this.useProvider(DiscordooProviders.CACHE, provider, ...options)
+    return this.useProvider(DiscordooProviders.Cache, provider, ...options)
   }
 
   gatewayProvider(provider: ProviderConstructor<Stack['gateway']>, ...options: any[]): ClientBuilder<Stack> {
-    return this.useProvider(DiscordooProviders.GATEWAY, provider, ...options)
+    return this.useProvider(DiscordooProviders.Gateway, provider, ...options)
   }
 
   private useProvider(providerSignature: DiscordooProviders, provider: any, ...options: any[]): ClientBuilder<Stack> {

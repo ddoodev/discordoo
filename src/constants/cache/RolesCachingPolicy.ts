@@ -1,11 +1,11 @@
 /** Roles caching policy */
 export enum RolesCachingPolicy {
   /** Cache all roles */
-  ALL = 'all',
+  All = 'all',
   /** Don't cache roles */
-  NONE = 'none',
+  None = 'none',
   /** Cache @everyone roles */
-  EVERYONE = 'everyone',
+  Everyone = 'everyone',
   /** Cache roles that managed by integrations */
-  MANAGED = 'managed',
+  Managed = 'managed',
 }

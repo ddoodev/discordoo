@@ -25,7 +25,7 @@ export class WebhookClientMessagesManager {
       avatar_url: options.avatarUrl,
       username: options.username,
       thread_name: options.threadName,
-      flags: options.flags !== MessageFlags.SUPPRESS_EMBEDS ? undefined : options.flags,
+      flags: options.flags !== MessageFlags.SuppressEmbeds ? undefined : options.flags,
     }, { wait: true, thread_id: options.threadId })
 
     return response.success ? response.result : undefined

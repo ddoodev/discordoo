@@ -36,21 +36,34 @@ export interface AppCommandOptionData {
   autocomplete?: boolean
 }
 
-export interface AppCommandOptionStringData {
-  type: AppCommandOptionTypes.STRING
+export interface AppCommandAbstractOptionData {
+  /** 1-32 character name */
   name: string
+  /** localization dictionary for `name` field. values follow the same restrictions as name */
   nameLocalizations?: Record<DiscordLocale, string>
+  /** 1-100 character description */
   description: string
+  /** localization dictionary for `description` field. values follow the same restrictions as description */
   descriptionLocalizations?: Record<DiscordLocale, string>
+  /** if the parameter is required or optional */
   required?: boolean
+}
+
+export interface AppCommandStringOptionData extends AppCommandAbstractOptionData {
+  /** the type of option: string */
+  type: AppCommandOptionTypes.String
+  /** choices for `STRING`, `INTEGER`, and `NUMBER` types for the user to pick from, max 25 */
   choices?: AppCommandOptionChoiceData[]
+  /** enable autocomplete interactions for this option. */
   autocomplete?: boolean
+  /** maximum string length */
   maxLength?: number
+  /** minimum string length */
   minLength?: number
 }
 
 export interface AppCommandOptionIntegerData {
-  type: AppCommandOptionTypes.INTEGER
+  type: AppCommandOptionTypes.Integer
   name: string
   nameLocalizations?: Record<DiscordLocale, string>
   description: string
@@ -63,7 +76,7 @@ export interface AppCommandOptionIntegerData {
 }
 
 export interface AppCommandOptionNumberData {
-  type: AppCommandOptionTypes.NUMBER
+  type: AppCommandOptionTypes.Number
   name: string
   nameLocalizations?: Record<DiscordLocale, string>
   description: string
@@ -76,7 +89,7 @@ export interface AppCommandOptionNumberData {
 }
 
 export interface AppCommandOptionBooleanData {
-  type: AppCommandOptionTypes.BOOLEAN
+  type: AppCommandOptionTypes.Boolean
   name: string
   nameLocalizations?: Record<DiscordLocale, string>
   description: string
@@ -85,7 +98,7 @@ export interface AppCommandOptionBooleanData {
 }
 
 export interface AppCommandOptionUserData {
-  type: AppCommandOptionTypes.USER
+  type: AppCommandOptionTypes.User
   name: string
   nameLocalizations?: Record<DiscordLocale, string>
   description: string
@@ -94,7 +107,7 @@ export interface AppCommandOptionUserData {
 }
 
 export interface AppCommandOptionChannelData {
-  type: AppCommandOptionTypes.CHANNEL
+  type: AppCommandOptionTypes.Channel
   name: string
   nameLocalizations?: Record<DiscordLocale, string>
   description: string
@@ -104,7 +117,7 @@ export interface AppCommandOptionChannelData {
 }
 
 export interface AppCommandOptionRoleData {
-  type: AppCommandOptionTypes.ROLE
+  type: AppCommandOptionTypes.Role
   name: string
   nameLocalizations?: Record<DiscordLocale, string>
   description: string
@@ -113,7 +126,7 @@ export interface AppCommandOptionRoleData {
 }
 
 export interface AppCommandOptionMentionableData {
-  type: AppCommandOptionTypes.MENTIONABLE
+  type: AppCommandOptionTypes.Mentionable
   name: string
   nameLocalizations?: Record<DiscordLocale, string>
   description: string

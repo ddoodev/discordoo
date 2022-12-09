@@ -1,9 +1,9 @@
 /** Reactions caching policy */
 export enum ReactionsCachingPolicy {
   /** Cache all reactions */
-  ALL = 'all',
+  All = 'all',
   /** Don't cache reactions */
-  NONE = 'none',
+  None = 'none',
   /** Cache only client own reactions */
-  OWN = 'own',
+  Own = 'own',
 }

@@ -1,76 +1,75 @@
 export enum GuildFeatures {
   /** guild has access to set an animated guild banner image */
-  ANIMATED_BANNER = 'ANIMATED_BANNER',
+  AnimatedBanner = 'ANIMATED_BANNER',
 
   /** Guild has access to set an animated guild icon */
-  ANIMATED_ICON = 'ANIMATED_ICON',
+  AnimatedIcon = 'ANIMATED_ICON',
 
   /** guild has set up auto moderation rules */
-  AUTO_MODERATION = 'AUTO_MODERATION',
+  AutoModeration = 'AUTO_MODERATION',
 
   /** Guild has access to set a guild banner image */
-  BANNER = 'BANNER',
+  Banner = 'BANNER',
 
   /** Guild has access to use commerce features (i.e. create store channels) */
-  COMMERCE = 'COMMERCE',
+  Commerce = 'COMMERCE',
 
   /** Guild can enable welcome screen, Membership Screening, stage channels and discovery, and receives community updates */
-  COMMUNITY = 'COMMUNITY',
+  Community = 'COMMUNITY',
 
   /** Guild is able to be discovered in the directory */
-  DISCOVERABLE = 'DISCOVERABLE',
+  Discoverable = 'DISCOVERABLE',
 
   /** Guild is able to be featured in the directory */
-  FEATURABLE = 'FEATURABLE',
+  Featureable = 'FEATURABLE',
 
-  /** Guild has access to set an invite splash background */
-  INVITE_SPLASH = 'INVITE_SPLASH',
+  /** Guild has access to set an invitation splash background */
+  InviteSplash = 'INVITE_SPLASH',
 
   /** Guild has enabled [Membership Screening](https://discord.com/developers/docs/resources/guild#membership-screening-object) */
-  MEMBER_VERIFICATION_GATE_ENABLED = 'MEMBER_VERIFICATION_GATE_ENABLED',
+  MemberVerificationGateEnabled = 'MEMBER_VERIFICATION_GATE_ENABLED',
 
   /** Guild has access to create news channels */
-  NEWS = 'NEWS',
+  News = 'NEWS',
 
   /** Guild is partnered */
-  PARTNERED = 'PARTNERED',
+  Partnered = 'PARTNERED',
 
   /**
    * Guild can be previewed before joining via
    * [Membership Screening](https://discord.com/developers/docs/resources/guild#membership-screening-object)
    * or the directory */
-  PREVIEW_ENABLED = 'PREVIEW_ENABLED',
+  PreviewEnabled = 'PREVIEW_ENABLED',
 
   /** Guild has access to set a vanity URL */
-  VANITY_URL = 'VANITY_URL',
+  VanityUrl = 'VANITY_URL',
 
   /** Guild is verified */
-  VERIFIED = 'VERIFIED',
+  Verified = 'VERIFIED',
 
   /** Guild has access to set 384kbps bitrate in voice (previously VIP voice servers) */
-  VIP_REGIONS = 'VIP_REGIONS',
+  VipRegions = 'VIP_REGIONS',
 
   /** Guild has enabled the welcome screen */
-  WELCOME_SCREEN_ENABLED = 'WELCOME_SCREEN_ENABLED',
+  WelcomeScreenEnabled = 'WELCOME_SCREEN_ENABLED',
 
   /** Guild has enabled ticketed events */
-  TICKETED_EVENTS_ENABLED = 'TICKETED_EVENTS_ENABLED',
+  TicketedEventsEnabled = 'TICKETED_EVENTS_ENABLED',
 
   /** Guild has enabled monetization */
-  MONETIZATION_ENABLED = 'MONETIZATION_ENABLED',
+  MonetizationEnabled = 'MONETIZATION_ENABLED',
 
   /** Guild has increased custom sticker slots */
-  MORE_STICKERS = 'MORE_STICKERS',
+  MoreStickers = 'MORE_STICKERS',
 
-  /** Guild has access to the three day archive time for threads */
-  THREE_DAY_THREAD_ARCHIVE = 'THREE_DAY_THREAD_ARCHIVE',
+  /** Guild has access to the three-day archive time for threads */
+  ThreeDayThreadArchive = 'THREE_DAY_THREAD_ARCHIVE',
 
-  /** Guild has access to the seven day archive time for threads */
-  SEVEN_DAY_THREAD_ARCHIVE = 'SEVEN_DAY_THREAD_ARCHIVE',
+  /** Guild has access to the seven-day archive time for threads */
+  SevenDayThreadArchive = 'SEVEN_DAY_THREAD_ARCHIVE',
 
   /** Guild has access to create private threads */
-  PRIVATE_THREADS = 'PRIVATE_THREADS',
-
+  PrivateThreads = 'PRIVATE_THREADS',
   /** guild is able to set role icons */
-  ROLE_ICONS = 'ROLE_ICONS'
+  RoleIcons = 'ROLE_ICONS'
 }

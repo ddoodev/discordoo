@@ -10,7 +10,7 @@ export class ClientPresencesManager extends EntitiesManager {
     super(client)
 
     this.cache = new EntitiesCacheManager<Presence>(this.client, {
-      keyspace: Keyspaces.GUILD_PRESENCES,
+      keyspace: Keyspaces.GuildPresences,
       storage: 'global',
       entity: 'Presence',
       policy: 'presences'

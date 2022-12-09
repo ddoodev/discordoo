@@ -5,24 +5,24 @@ type EntityKeys = keyof typeof Entities
 
 export function channelEntityKey(data: any): EntityKeys {
   switch (data?.type as ChannelTypes) {
-    case ChannelTypes.DM:
-    case ChannelTypes.GROUP_DM:
+    case ChannelTypes.Dm:
+    case ChannelTypes.GroupDm:
       return 'DirectMessagesChannel'
-    case ChannelTypes.GUILD_CATEGORY:
+    case ChannelTypes.GuildCategory:
       return 'GuildCategoryChannel'
-    case ChannelTypes.GUILD_NEWS:
+    case ChannelTypes.GuildNews:
       return 'GuildNewsChannel'
-    case ChannelTypes.GUILD_NEWS_THREAD:
+    case ChannelTypes.GuildNewsThread:
       return 'GuildNewsThreadChannel'
-    case ChannelTypes.GUILD_PRIVATE_THREAD:
-    case ChannelTypes.GUILD_PUBLIC_THREAD:
+    case ChannelTypes.GuildPrivateThread:
+    case ChannelTypes.GuildPublicThread:
       return 'GuildThreadChannel'
-    case ChannelTypes.GUILD_STAGE_VOICE: // GuildStageVoiceChannel
-    case ChannelTypes.GUILD_STORE: // GuildStoreChannel
+    case ChannelTypes.GuildStageVoice: // GuildStageVoiceChannel
+    case ChannelTypes.GuildStore: // GuildStoreChannel
       return 'AbstractChannel'
-    case ChannelTypes.GUILD_TEXT:
+    case ChannelTypes.GuildText:
       return 'GuildTextChannel'
-    case ChannelTypes.GUILD_VOICE: // GuildVoiceChannel
+    case ChannelTypes.GuildVoice: // GuildVoiceChannel
     default: // AbstractChannel
       return 'AbstractChannel'
   }

@@ -6,7 +6,7 @@ export class OtherCacheManager extends EntitiesCacheManager<any> {
 
   constructor(client: Client) {
     super(client, {
-      keyspace: Keyspaces.OTHER,
+      keyspace: Keyspaces.Other,
       storage: 'global',
       entity: 'any'
     })

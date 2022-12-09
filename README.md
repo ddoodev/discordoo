@@ -123,7 +123,7 @@ createApp()
   .cache({
     // cache only dm channels
     channels: {
-      policies: [ ChannelsCachingPolicy.DM ]
+      policies: [ ChannelsCachingPolicy.Dm ]
     }
   })
   .build()
@@ -171,9 +171,9 @@ Sometimes this happens, the bot starts making a lot of invalid requests. If not 
 It happens that discord sends two or three times more events in a few seconds than usual. This may trigger blocking due to GRL or IRL. Therefore, we have made a progressive system to limit the emitted events. We count how many events have been received up to the current moment, and how many have already been emitted now. If the number of emitted events does not match the specified multiplier, the extra events are sent to the queue and will be emitted later. (PLANNED IN VERSION 1.3)
 
 ### Know what's going on
-#### Average REST delay
+#### Average Rest delay
 (PLANNED IN VERSION 1.0)
-We consider the average delay (TTFB) in executing REST requests. (the implementation may differ if you use a third-party provider)
+We consider the average delay (TTFB) in executing Rest requests. (the implementation may differ if you use a third-party provider)
 #### Average Gateway latency
 Like all other libraries, information about the WebSocket latency is available. (the implementation may differ if you use a third-party provider)
 #### Number of events received/emitted per second
@@ -229,7 +229,7 @@ You can find these benchmarks [here](https://github.com/ddoodev/collection#djs-c
 
 ## Planned features
 * **Waifoo** — a framework for creating discord bots based on Discordoo (commands, other features).
-* **Kawaioo** — a library / nestjs microservice that will allow you to interact with the Discordoo ShardingManager over TCP and UDP, to create your own scalable REST API for the bot.
+* **Kawaioo** — a library / nestjs microservice that will allow you to interact with the Discordoo ShardingManager over TCP and UDP, to create your own scalable Rest API for the bot.
 * **Voice support** — at this moment, the library does not support voice.
 * **Microservices** — injection of microservices into the Client that can communicate with each other.
 

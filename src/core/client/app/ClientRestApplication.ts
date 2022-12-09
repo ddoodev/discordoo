@@ -1,4 +1,4 @@
-/** Delay in execution of REST requests (TTFB) (the implementation may vary depending on the provider) */
+/** Delay in execution of Rest requests (TTFB) (the implementation may vary depending on the provider) */
 export interface ClientRestApplicationLatency {
   /** average delay in 5 minutes */
   fiveMinAvg: number
@@ -12,7 +12,7 @@ export interface ClientRestApplicationLatency {
   latest: number
 }
 
-/** REST load */
+/** Rest load */
 export interface ClientRestApplicationLoad {
   /** requests completed in the last 5 minutes */
   fiveMin: number
@@ -26,7 +26,7 @@ export interface ClientRestApplicationLoad {
   now: number
 }
 
-/** Information about REST limits */
+/** Information about Rest limits */
 export interface ClientRestApplicationLimits {
   /** how many requests is left before reaching the invalid request limit */
   irl: number
@@ -34,14 +34,14 @@ export interface ClientRestApplicationLimits {
   grl: number
 }
 
-/** REST application that contains useful info/methods */
+/** Rest application that contains useful info/methods */
 export interface ClientRestApplication {
-  /** Whether REST is blocked for sending requests */
+  /** Whether Rest is blocked for sending requests */
   locked: boolean
-  /** Delay in execution of REST requests (TTFB) (the implementation may vary depending on the provider) */
+  /** Delay in execution of Rest requests (TTFB) (the implementation may vary depending on the provider) */
   latency: ClientRestApplicationLatency
-  /** REST load */
+  /** Rest load */
   load: ClientRestApplicationLoad
-  /** Information about REST limits */
+  /** Information about Rest limits */
   limits: ClientRestApplicationLimits
 }

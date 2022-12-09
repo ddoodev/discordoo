@@ -17,7 +17,7 @@ export class ClientReactionsManager extends EntitiesManager {
     super(client)
 
     this.cache = new EntitiesCacheManager<MessageReaction>(this.client, {
-      keyspace: Keyspaces.MESSAGE_REACTIONS,
+      keyspace: Keyspaces.MessageReactions,
       storage: 'global',
       entity: 'MessageReaction',
       policy: 'reactions'
@@ -98,12 +98,12 @@ export class ClientReactionsManager extends EntitiesManager {
         const user = await new User(this.client).init(data)
         await this.client.users.cache.set(user.id, user)
         await this.client.internals.cache.set(
-          Keyspaces.MESSAGE_REACTION_USERS,
+          Keyspaces.MessageReactionUsers,
           emojiId,
           'User',
           'users',
           user.id,
-          makeCachePointer(Keyspaces.USERS, 'global', user.id)
+          makeCachePointer(Keyspaces.Users, 'global', user.id)
         )
         result.set(user.id, user)
       }

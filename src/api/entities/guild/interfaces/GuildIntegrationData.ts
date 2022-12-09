@@ -1,4 +1,4 @@
-import { GuildIntergrationExpireBehavior } from '@src/constants/entities/guild/GuildIntegrationExpireBehavior'
+import { GuildIntegrationExpireBehavior } from '@src/constants/entities/guild/GuildIntegrationExpireBehavior'
 import { GuildIntegrationType } from '@src/constants/entities/guild/GuildIntegrationType'
 import { UserData } from '@src/api/entities/user/interfaces/UserData'
 import { GuildIntegrationAccountData } from '@src/api/entities/guild/interfaces/GuildIntegrationAccountData'
@@ -12,7 +12,7 @@ export interface GuildIntegrationData {
   syncing?: boolean
   roleId?: string
   enableEmoticons?: boolean
-  expireBehavior?: GuildIntergrationExpireBehavior
+  expireBehavior?: GuildIntegrationExpireBehavior
   expireGracePeriod?: number
   user?: UserData
   account: GuildIntegrationAccountData

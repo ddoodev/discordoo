@@ -9,7 +9,7 @@ export interface RawAppCommandData {
   name: string
   /** localization dictionary for `name` field. Values follow the same restrictions as name */
   name_localizations?: Record<DiscordLocale, string>
-  /** 1-100 character description for `CHAT_INPUT` commands, empty string for `USER` and `MESSAGE` commands */
+  /** 1-100 character description for `ChatInput` commands, empty string for `User` and `MESSAGE` commands */
   description: string
   /** localization dictionary for `description` field. Values follow the same restrictions as description */
   description_localizations?: Record<DiscordLocale, string>
@@ -17,7 +17,7 @@ export interface RawAppCommandData {
   version: string
   /** unique id of the parent application */
   application_id: string
-  /** the type of command, defaults `1` (`CHAT_INPUT`) if not set */
+  /** the type of command, defaults `1` (`ChatInput`) if not set */
   type?: AppCommandTypes
   /** guild id of the command, if not global */
   guild_id?: string

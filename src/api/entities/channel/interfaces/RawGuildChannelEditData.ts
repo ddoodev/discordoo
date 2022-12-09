@@ -3,7 +3,7 @@ import { RawPermissionOverwriteData } from '@src/api/entities/overwrite/interfac
 
 export interface RawGuildChannelEditData {
   name?: string
-  type?: ChannelTypes.GUILD_NEWS | ChannelTypes.GUILD_TEXT
+  type?: ChannelTypes.GuildNews | ChannelTypes.GuildText
   position?: number | null
   topic?: string | null
   nsfw?: boolean | null

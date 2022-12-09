@@ -49,12 +49,12 @@ export function resolveColor(resolvable: ColorResolvable): number {
   if (!is<ColorResolvable>(resolvable)) throw new ValidationError(undefined, 'Bad color:', resolvable)
   if (typeof resolvable === 'number') return resolvable
 
-  let result: any = RawColors.BLACK
+  let result: any = RawColors.Black
 
   if (typeof resolvable === 'string') {
     switch (resolvable) {
       case 'DEFAULT':
-        return RawColors.BLACK
+        return RawColors.Black
       case 'RANDOM':
         return Math.floor(Math.random() * 16777215)
       default:

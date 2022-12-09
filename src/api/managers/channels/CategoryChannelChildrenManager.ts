@@ -25,7 +25,7 @@ export class CategoryChannelChildrenManager extends EntitiesManager {
     this.guildId = guildId
 
     this.cache = new EntitiesCacheManager<AnyGuildChannel>(this.client, {
-      keyspace: Keyspaces.CATEGORY_CHANNEL_CHILDREN,
+      keyspace: Keyspaces.CategoryChannelChildren,
       storage: this.categoryId,
       entity: 'channelEntityKey',
       policy: 'channels'

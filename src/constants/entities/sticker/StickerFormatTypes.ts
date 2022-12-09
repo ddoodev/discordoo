@@ -1,5 +1,5 @@
 export enum StickerFormatTypes {
-  PNG = 1,
-  APNG,
-  LOTTIE
+  Png = 1,
+  Apng,
+  Lottie
 }

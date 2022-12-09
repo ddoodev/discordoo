@@ -20,7 +20,7 @@ export class ReactionUsersManager extends EntitiesManager {
     this.messageId = data.messageId
 
     this.cache = new EntitiesCacheManager<User>(this.client, {
-      keyspace: Keyspaces.MESSAGE_REACTION_USERS,
+      keyspace: Keyspaces.MessageReactionUsers,
       storage: this.emojiId,
       entity: 'User',
       policy: 'users'

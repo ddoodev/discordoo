@@ -33,7 +33,7 @@ export class ClientMessagesManager extends EntitiesManager {
     super(client)
 
     this.cache = new EntitiesCacheManager<Message>(this.client, {
-      keyspace: Keyspaces.MESSAGES,
+      keyspace: Keyspaces.Messages,
       storage: 'global',
       entity: 'Message',
       policy: 'messages'
@@ -77,18 +77,18 @@ export class ClientMessagesManager extends EntitiesManager {
     if (response.success) {
       const result: Message[] = []
 
-      await this.client.internals.cache.clear(Keyspaces.PINNED_MESSAGES, channelId)
+      await this.client.internals.cache.clear(Keyspaces.PinnedMessages, channelId)
 
       for await (const messageData of response.result) {
         const message = await new Message(this.client).init(messageData)
         await this.cache.set(message.id, message, { storage: channelId })
         await this.client.internals.cache.set(
-          Keyspaces.PINNED_MESSAGES,
+          Keyspaces.PinnedMessages,
           channelId,
           'Message',
           'messages',
           message.id,
-          makeCachePointer(Keyspaces.MESSAGES, channelId, message.id)
+          makeCachePointer(Keyspaces.Messages, channelId, message.id)
         )
         result.push(message)
       }

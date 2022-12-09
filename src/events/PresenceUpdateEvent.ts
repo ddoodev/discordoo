@@ -10,7 +10,7 @@ export class PresenceUpdateEvent extends AbstractEvent<PresenceUpdateEventContex
   async execute(shardId: number, data: RawPresenceData) {
 
     let presence = await this.client.internals.cache.get<string, Presence>(
-      Keyspaces.GUILD_PRESENCES, data.guild_id, 'Presence', data.user.id
+      Keyspaces.GuildPresences, data.guild_id, 'Presence', data.user.id
     )
 
     const stored: Presence | undefined = presence ? await presence._clone() : undefined

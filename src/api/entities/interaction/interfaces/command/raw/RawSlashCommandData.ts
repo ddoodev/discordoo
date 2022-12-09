@@ -4,7 +4,7 @@ import { RawAppCommandOptionData } from '@src/api/entities/interaction/interface
 
 export interface RawSlashCommandData extends RawAppCommandData {
   /** the type of command */
-  type: AppCommandTypes.CHAT_INPUT
+  type: AppCommandTypes.ChatInput
   /** the parameters for the command, max 25 */
   options?: RawAppCommandOptionData[]
 }

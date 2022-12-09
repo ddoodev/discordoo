@@ -24,7 +24,7 @@ export class ClientGuildMembersManager extends EntitiesManager {
     super(client)
 
     this.cache = new EntitiesCacheManager<GuildMember>(this.client, {
-      keyspace: Keyspaces.GUILD_MEMBERS,
+      keyspace: Keyspaces.GuildMembers,
       storage: 'global',
       entity: 'GuildMember',
       policy: 'members'

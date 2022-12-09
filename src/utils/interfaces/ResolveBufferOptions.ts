@@ -2,7 +2,7 @@ import { Dispatcher } from 'undici'
 
 export interface ResolveBufferOptions {
   /**
-   * DANGEROUS: AUTOMATICALLY DOWNLOADS THE FILE FROM THE SPECIFIED LINK.
+   * DANGEROUS: AUTOMATICALLY DOWNLOADS THE FILE FROM THE SPECIFIED Link.
    * If you enable this, I sure hope you know what you are doing.
    * */
   fetch?: boolean

@@ -19,7 +19,7 @@ export class ChannelPermissionOverwritesManager<T extends AnyGuildChannel> exten
     this.channel = data.channel
 
     this.cache = new EntitiesCacheManager<PermissionOverwrite>(this.client, {
-      keyspace: Keyspaces.CHANNEL_PERMISSIONS_OVERWRITES,
+      keyspace: Keyspaces.ChannelPermissionsOverwrites,
       storage: this.channel.id,
       entity: 'PermissionOverwrite',
       policy: 'overwrites'

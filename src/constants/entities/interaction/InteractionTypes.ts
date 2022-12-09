@@ -1,6 +1,6 @@
 export enum InteractionTypes {
-  PING = 1,
-  APPLICATION_COMMAND,
-  MESSAGE_COMPONENT,
-  APPLICATION_COMMAND_AUTOCOMPLETE,
+  Ping = 1,
+  ApplicationCommand,
+  MessageComponent,
+  ApplicationCommandAutocomplete,
 }

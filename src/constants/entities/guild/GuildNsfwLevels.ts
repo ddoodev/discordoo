@@ -1,6 +1,6 @@
 export enum GuildNsfwLevels {
-  DEFAULT,
-  EXPLICIT,
-  SAFE,
-  AGE_RESTRICTED,
+  Default,
+  Explicit,
+  Safe,
+  AgeRestricted,
 }

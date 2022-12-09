@@ -37,7 +37,7 @@ export interface RawAppCommandOptionData {
 }
 
 export interface RawAppCommandOptionStringData {
-  type: AppCommandOptionTypes.STRING
+  type: AppCommandOptionTypes.String
   name: string
   name_localizations?: Record<DiscordLocale, string>
   description: string
@@ -50,7 +50,7 @@ export interface RawAppCommandOptionStringData {
 }
 
 export interface RawAppCommandOptionIntegerData {
-  type: AppCommandOptionTypes.INTEGER
+  type: AppCommandOptionTypes.Integer
   name: string
   name_localizations?: Record<DiscordLocale, string>
   description: string
@@ -63,7 +63,7 @@ export interface RawAppCommandOptionIntegerData {
 }
 
 export interface RawAppCommandOptionNumberData {
-  type: AppCommandOptionTypes.NUMBER
+  type: AppCommandOptionTypes.Number
   name: string
   name_localizations?: Record<DiscordLocale, string>
   description: string
@@ -76,7 +76,7 @@ export interface RawAppCommandOptionNumberData {
 }
 
 export interface RawAppCommandOptionBooleanData {
-  type: AppCommandOptionTypes.BOOLEAN
+  type: AppCommandOptionTypes.Boolean
   name: string
   name_localizations?: Record<DiscordLocale, string>
   description: string
@@ -85,7 +85,7 @@ export interface RawAppCommandOptionBooleanData {
 }
 
 export interface RawAppCommandOptionUserData {
-  type: AppCommandOptionTypes.USER
+  type: AppCommandOptionTypes.User
   name: string
   name_localizations?: Record<DiscordLocale, string>
   description: string
@@ -94,7 +94,7 @@ export interface RawAppCommandOptionUserData {
 }
 
 export interface RawAppCommandOptionChannelData {
-  type: AppCommandOptionTypes.CHANNEL
+  type: AppCommandOptionTypes.Channel
   name: string
   name_localizations?: Record<DiscordLocale, string>
   description: string
@@ -104,7 +104,7 @@ export interface RawAppCommandOptionChannelData {
 }
 
 export interface RawAppCommandOptionRoleData {
-  type: AppCommandOptionTypes.ROLE
+  type: AppCommandOptionTypes.Role
   name: string
   name_localizations?: Record<DiscordLocale, string>
   description: string
@@ -113,7 +113,7 @@ export interface RawAppCommandOptionRoleData {
 }
 
 export interface RawAppCommandOptionMentionableData {
-  type: AppCommandOptionTypes.MENTIONABLE
+  type: AppCommandOptionTypes.Mentionable
   name: string
   name_localizations?: Record<DiscordLocale, string>
   description: string

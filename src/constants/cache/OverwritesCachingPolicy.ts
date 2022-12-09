@@ -1,11 +1,11 @@
 /** Permissions Overwrites caching policy */
 export enum OverwritesCachingPolicy {
   /** Cache all overwrites */
-  ALL = 'all',
+  All = 'all',
   /** Don't cache overwrites */
-  NONE = 'none',
+  None = 'none',
   /** Cache overwrites with type 'member' */
-  MEMBERS = 'members',
+  Members = 'members',
   /** Cache overwrites with type 'role' */
-  ROLES = 'roles',
+  Roles = 'roles',
 }

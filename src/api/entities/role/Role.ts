@@ -59,7 +59,7 @@ export class Role extends AbstractEntity { // TODO: positions...
 
   async members(options?: CacheManagerFilterOptions): Promise<Array<[ string, GuildMember ]>> {
     return this.client.internals.cache.filter<string, GuildMember>(
-      Keyspaces.GUILD_MEMBERS,
+      Keyspaces.GuildMembers,
       this.guildId,
       'GuildMember',
       (member) => member.rolesList.includes(this.id), // TODO: context

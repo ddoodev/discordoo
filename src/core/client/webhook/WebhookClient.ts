@@ -29,7 +29,7 @@ export class WebhookClient<ClientStack extends DefaultWebhookClientStack = Defau
     this.options.providers?.forEach(provider => {
       try {
         switch (provider.provide) {
-          case DiscordooProviders.REST:
+          case DiscordooProviders.Rest:
             restProvider = provider.useClass
             restProviderOptions = provider.useOptions
             break

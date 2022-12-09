@@ -162,7 +162,7 @@ export abstract class AbstractThreadChannel extends AbstractChannel implements A
     if (!this.ownerId) return undefined
 
     return this.client.internals.cache.get(
-      Keyspaces.GUILD_MEMBERS,
+      Keyspaces.GuildMembers,
       this.guildId,
       'GuildMember',
       this.ownerId,
@@ -179,7 +179,7 @@ export abstract class AbstractThreadChannel extends AbstractChannel implements A
     if (!this.parentId) return undefined
 
     return this.client.internals.cache.get(
-      Keyspaces.CHANNELS,
+      Keyspaces.Channels,
       this.guildId,
       'channelEntityKey',
       this.parentId,

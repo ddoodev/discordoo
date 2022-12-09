@@ -27,7 +27,7 @@ export abstract class AbstractMessagesManager extends EntitiesManager {
     this.lastMessageId = data.lastMessageId
 
     this.cache = new EntitiesCacheManager<Message>(this.client, {
-      keyspace: Keyspaces.MESSAGES,
+      keyspace: Keyspaces.Messages,
       storage: this.channelId,
       entity: 'Message',
       policy: 'messages'

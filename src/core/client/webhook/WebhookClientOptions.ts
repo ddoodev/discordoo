@@ -6,7 +6,7 @@ export interface WebhookClientOptions {
   id: string
   /** Webhook token */
   token: string
-  /** Webhook REST options */
+  /** Webhook Rest options */
   rest?: RestOptions
   /** Allowed mentions options */
   allowedMentions?: any // TODO: AllowedMentionsResolvable

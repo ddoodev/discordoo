@@ -4,6 +4,6 @@ import { WebSocketClientEvents, WebSocketClientStates } from '@src/constants'
 
 // handles websocket open event
 export function open(client: WebSocketClient, event: WebSocket.OpenEvent) {
-  client.status = WebSocketClientStates.CONNECTED
-  client.emit(WebSocketClientEvents.WS_OPEN, event)
+  client.status = WebSocketClientStates.Connected
+  client.emit(WebSocketClientEvents.WsOpen, event)
 }

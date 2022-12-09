@@ -27,7 +27,7 @@ export class GuildChannelsManager extends EntitiesManager {
     this.guildId = id
 
     this.cache = new EntitiesCacheManager<AnyGuildChannel>(this.client, {
-      keyspace: Keyspaces.CHANNELS,
+      keyspace: Keyspaces.Channels,
       storage: this.guildId,
       entity: 'channelEntityKey',
       policy: 'channels'

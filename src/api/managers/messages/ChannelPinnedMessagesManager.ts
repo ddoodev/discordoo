@@ -19,7 +19,7 @@ export class ChannelPinnedMessagesManager extends EntitiesManager {
     this.lastPinTimestamp = data.lastPinTimestamp
 
     this.cache = new EntitiesCacheManager<Message>(this.client, {
-      keyspace: Keyspaces.PINNED_MESSAGES,
+      keyspace: Keyspaces.PinnedMessages,
       storage: this.channelId,
       entity: 'Message',
       policy: 'messages'

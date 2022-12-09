@@ -2,13 +2,13 @@ import WebSocket from 'ws'
 import { GatewaySendPayloadLike } from '@discordoo/providers'
 
 export interface WebSocketClientEventsHandlers {
-  WS_SEND_ERROR: (error: Error, data: GatewaySendPayloadLike) => unknown
-  WS_OPEN_ERROR: (error: Error) => unknown
-  WS_CLOSE_ERROR: (error: Error) => unknown
+  WsSendError: (error: Error, data: GatewaySendPayloadLike) => unknown
+  WsOpenError: (error: Error) => unknown
+  WsCloseError: (error: Error) => unknown
 
-  WS_ERROR: (error: WebSocket.ErrorEvent) => unknown
-  WS_OPEN: (event: WebSocket.OpenEvent) => unknown
-  WS_CLOSED: (code: WebSocket.CloseEvent) => unknown
+  WsError: (error: WebSocket.ErrorEvent) => unknown
+  WsOpen: (event: WebSocket.OpenEvent) => unknown
+  WsClosed: (code: WebSocket.CloseEvent) => unknown
 
   __DDOO_RECONNECT_ME__: (destroyed?: boolean) => unknown
 

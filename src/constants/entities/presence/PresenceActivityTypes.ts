@@ -1,14 +1,14 @@
 export enum PresenceActivityTypes {
   // Playing {name}
-  GAME,
+  Game,
   // Streaming {details}
-  STREAMING,
+  Streaming,
   // Listening to {name}
-  LISTENING,
+  Listening,
   // Watching {name}
-  WATCHING,
+  Watching,
   // {emoji?} {name}
-  CUSTOM,
+  Custom,
   // Competing in {name}
-  COMPETING,
+  Competing,
 }

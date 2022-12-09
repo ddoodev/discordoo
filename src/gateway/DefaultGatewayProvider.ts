@@ -27,7 +27,7 @@ export class DefaultGatewayProvider implements GatewayProvider {
   }
 
   emit(shardId: number, packet: GatewayReceivePayloadLike): unknown {
-    // if (event !== 'PRESENCE_UPDATE') console.log('shard', shardId, 'event', event)
+    // if (event !== 'PresenceUpdate') console.log('shard', shardId, 'event', event)
     // else if (data[0]?.user?.id === '164417009977786368') console.log('ceo update', event, data)
     return this.client.internals.gateway.emit(
       shardId,

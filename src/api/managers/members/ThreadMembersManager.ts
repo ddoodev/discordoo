@@ -25,7 +25,7 @@ export class ThreadMembersManager extends EntitiesManager {
     this.guildId = guildId
 
     this.cache = new EntitiesCacheManager<ThreadMember>(this.client, {
-      keyspace: Keyspaces.THREAD_MEMBERS,
+      keyspace: Keyspaces.ThreadMembers,
       storage: threadId,
       entity: 'ThreadMember',
       policy: 'members'

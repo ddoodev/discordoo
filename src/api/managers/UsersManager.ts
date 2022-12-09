@@ -13,7 +13,7 @@ export class UsersManager extends EntitiesManager {
     super(client)
 
     this.cache = new EntitiesCacheManager<User>(this.client, {
-      keyspace: Keyspaces.USERS,
+      keyspace: Keyspaces.Users,
       storage: 'global',
       entity: 'User',
       policy: 'users'

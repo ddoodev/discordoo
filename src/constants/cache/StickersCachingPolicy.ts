@@ -1,17 +1,17 @@
 /** Stickers caching policy */
 export enum StickersCachingPolicy {
   /** Cache all stickers */
-  ALL = 'all',
+  All = 'all',
   /** Don't cache stickers */
-  NONE = 'none',
+  None = 'none',
   /** Cache standard (global) stickers */
-  STANDARD = 'standard',
+  Standard = 'standard',
   /** Cache guild stickers */
-  GUILD = 'guild',
+  Guild = 'guild',
   /** Cache stickers with 'png' format type */
-  PNG = 'png',
+  Png = 'png',
   /** Cache stickers with 'apng' format type */
-  APNG = 'apng',
+  Apng = 'apng',
   /** Cache stickers with 'lottie' format type */
-  LOTTIE = 'lottie',
+  Lottie = 'lottie',
 }

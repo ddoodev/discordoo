@@ -35,15 +35,15 @@ export abstract class AbstractGuild extends AbstractEntity implements AbstractGu
   }
 
   get partnered(): boolean {
-    return !!this.features?.includes(GuildFeatures.PARTNERED)
+    return !!this.features?.includes(GuildFeatures.Partnered)
   }
 
   get verified(): boolean {
-    return !!this.features?.includes(GuildFeatures.VERIFIED)
+    return !!this.features?.includes(GuildFeatures.Verified)
   }
 
   get discoverable(): boolean {
-    return !!this.features?.includes(GuildFeatures.DISCOVERABLE)
+    return !!this.features?.includes(GuildFeatures.Discoverable)
   }
 
   get nameAcronym(): string {

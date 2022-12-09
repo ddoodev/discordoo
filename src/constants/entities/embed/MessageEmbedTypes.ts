@@ -1,8 +1,8 @@
 export enum MessageEmbedTypes {
-  RICH = 'rich',
-  IMAGE = 'image',
-  VIDEO = 'video',
-  GIFV = 'gifv',
-  ARTICLE = 'article',
-  LINK = 'link',
+  Rich = 'rich',
+  Image = 'image',
+  Video = 'video',
+  Gifv = 'gifv',
+  Article = 'article',
+  Link = 'link',
 }

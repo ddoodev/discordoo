@@ -23,7 +23,7 @@ export class ClientStickersManager extends EntitiesManager {
     super(client)
 
     this.cache = new EntitiesCacheManager<Sticker>(this.client, {
-      keyspace: Keyspaces.STICKERS,
+      keyspace: Keyspaces.Stickers,
       storage: 'global',
       entity: 'Sticker',
       policy: 'stickers'

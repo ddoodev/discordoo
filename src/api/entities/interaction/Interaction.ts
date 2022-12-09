@@ -51,7 +51,7 @@ export class Interaction extends AbstractEntity {
   }
 
   get canReply(): boolean {
-    return this.type !== InteractionTypes.PING && this.type !== InteractionTypes.APPLICATION_COMMAND_AUTOCOMPLETE
+    return this.type !== InteractionTypes.Ping && this.type !== InteractionTypes.ApplicationCommandAutocomplete
   }
 
   async guild(options?: CacheManagerGetOptions): Promise<Guild | undefined> {
@@ -61,7 +61,7 @@ export class Interaction extends AbstractEntity {
   async channel(options?: CacheManagerGetOptions): Promise<AnyWritableChannel | undefined> {
     if (this.channelId) {
       return this.client.internals.cache.get(
-        Keyspaces.CHANNELS, this.guildId ?? 'dm', 'channelEntityKey', this.channelId, options
+        Keyspaces.Channels, this.guildId ?? 'dm', 'channelEntityKey', this.channelId, options
       )
     }
   }

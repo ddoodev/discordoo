@@ -12,7 +12,7 @@ export class ClientDirectMessagesChannelsManager extends EntitiesManager {
     super(client)
 
     this.cache = new EntitiesCacheManager<DirectMessagesChannel>(this.client, {
-      keyspace: Keyspaces.DM_CHANNELS,
+      keyspace: Keyspaces.DmChannels,
       storage: 'global',
       entity: 'DirectMessagesChannel',
       policy: 'channels'
@@ -22,7 +22,7 @@ export class ClientDirectMessagesChannelsManager extends EntitiesManager {
   async fetch(user: UserResolvable): Promise<DirectMessagesChannel | undefined> {
     const userId = resolveUserId(user)
 
-    if (!userId) throw new DiscordooError('UsersManager#createDM', 'Cannot create/fetch DM without user id.')
+    if (!userId) throw new DiscordooError('UsersManager#createDM', 'Cannot create/fetch Dm without user id.')
 
     const response = await this.client.internals.actions.createUserChannel(userId)
     const DirectMessageChannel = EntitiesUtil.get('DirectMessagesChannel')
@@ -30,7 +30,7 @@ export class ClientDirectMessagesChannelsManager extends EntitiesManager {
     if (response.success) {
       const channel = await new DirectMessageChannel(this.client).init(response.result)
       await this.client.channels.cache.set(channel.id, channel, { storage: 'dm' })
-      await this.cache.set(userId, makeCachePointer(Keyspaces.CHANNELS, 'dm', channel.id))
+      await this.cache.set(userId, makeCachePointer(Keyspaces.Channels, 'dm', channel.id))
       return channel
     }
 
@@ -38,14 +38,14 @@ export class ClientDirectMessagesChannelsManager extends EntitiesManager {
   }
 
   /**
-   * Deletes DM channel attached to the user.
+   * Deletes Dm channel attached to the user.
    * You can delete it only if it cached.
    * If you want to delete uncached channel, use client.channels.delete(channelId *not userId*) instead.
    * */
   async delete(user: UserResolvable): Promise<boolean> {
     const userId = resolveUserId(user)
 
-    if (!userId) throw new DiscordooError('UsersManager#deleteDM', 'Cannot delete DM without user id.')
+    if (!userId) throw new DiscordooError('UsersManager#deleteDM', 'Cannot delete Dm without user id.')
 
     const channel = await this.cache.get(userId)
     if (channel) {

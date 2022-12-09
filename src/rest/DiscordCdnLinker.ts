@@ -74,7 +74,7 @@ export class DiscordCdnLinker {
   }
 
   sticker(stickerId: string, stickerFormat: StickerFormatTypes) {
-    return `${this.cdn}/stickers/${stickerId}.${stickerFormat === StickerFormatTypes.LOTTIE ? 'json' : 'png'}`
+    return `${this.cdn}/stickers/${stickerId}.${stickerFormat === StickerFormatTypes.Lottie ? 'json' : 'png'}`
   }
 
   roleIcon(roleId: string, hash: string, options: ImageUrlOptions = { size: this.imageSize }) {

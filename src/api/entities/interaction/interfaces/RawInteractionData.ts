@@ -14,7 +14,7 @@ export interface RawInteractionData<RawDataType = any> {
   channel_id?: string
   /** guild member data for the invoking user */
   member?: RawGuildMemberData
-  /**	user object for the invoking user, if invoked in a DM */
+  /**	user object for the invoking user, if invoked in a Dm */
   user?: RawUserData
   /** a continuation token for responding to the interaction */
   token: string

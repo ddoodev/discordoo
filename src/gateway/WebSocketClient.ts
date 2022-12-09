@@ -51,7 +51,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
     this.options = manager.options
 
     this.manager = manager
-    this.status = WebSocketClientStates.CREATED
+    this.status = WebSocketClientStates.Created
     this.id = id
   }
 
@@ -63,7 +63,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
       if (!this.options.connection.url && !this.resumeUrl) return reject()
 
       // WebSocketClient already connected and working
-      if (this.socket?.readyState === WebSocketStates.OPEN && this.status === WebSocketClientStates.READY) {
+      if (this.socket?.readyState === WebSocketStates.Open && this.status === WebSocketClientStates.Ready) {
         resolve()
       }
 
@@ -110,16 +110,16 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
       function cleanupOrListen(client: WebSocketClient, listen = false) {
         const direction = listen ? client.once : client.removeListener
 
-        direction.call(client, WebSocketClientEvents.WS_CLOSED, closed)
-        direction.call(client, WebSocketClientEvents.READY, ready)
-        direction.call(client, WebSocketClientEvents.RESUMED, resumed)
-        direction.call(client, WebSocketClientEvents.INVALID_SESSION, invalid)
+        direction.call(client, WebSocketClientEvents.WsClosed, closed)
+        direction.call(client, WebSocketClientEvents.Ready, ready)
+        direction.call(client, WebSocketClientEvents.Resumed, resumed)
+        direction.call(client, WebSocketClientEvents.InvalidSession, invalid)
       }
 
       cleanupOrListen(this, true)
 
       // in case if websocket already running
-      if (this.socket?.readyState === WebSocketStates.OPEN) {
+      if (this.socket?.readyState === WebSocketStates.Open) {
         // console.log('shard', this.id, 'identify open websocket')
         return this.identify()
       } else if (this.socket) { // remove websocket object because it is no longer needed
@@ -127,9 +127,9 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
       }
 
       this.status =
-        this.status === WebSocketClientStates.DISCONNECTED
-        ? WebSocketClientStates.RECONNECTING
-        : WebSocketClientStates.CONNECTING
+        this.status === WebSocketClientStates.Disconnected
+        ? WebSocketClientStates.Reconnecting
+        : WebSocketClientStates.Connecting
 
       try {
         // console.log('shard', this.id, 'creating websocket', this.resumeUrl ?? this.options.connection.url)
@@ -143,7 +143,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
         this.socket.onmessage = this.onMessage.bind(this)
       } catch (e) {
         // console.error('shard', this.id, 'error', e)
-        this.status = WebSocketClientStates.DISCONNECTED
+        this.status = WebSocketClientStates.Disconnected
         reject()
       }
     })
@@ -184,9 +184,9 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
 
   public heartbeat(
     shouldIgnoreAck = [
-      WebSocketClientStates.RESUMING,
-      WebSocketClientStates.IDENTIFYING,
-      WebSocketClientStates.WAITING_FOR_GUILDS
+      WebSocketClientStates.Resuming,
+      WebSocketClientStates.Identifying,
+      WebSocketClientStates.WaitingForGuilds
     ].includes(this.status)
   ) {
 
@@ -197,7 +197,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
     }
 
     // cannot heartbeat when resuming
-    if (this.status === WebSocketClientStates.RESUMING) return
+    if (this.status === WebSocketClientStates.Resuming) return
 
     // increase missed heartbeats count to detect zombie connections
     if (!shouldIgnoreAck) this.missedHeartbeats += 1
@@ -208,14 +208,14 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
 
   public socketSend(data: GatewaySendPayloadLike) {
     if (!this.socket) {
-      this.emit(WebSocketClientEvents.WS_SEND_ERROR, new Error('Tried to send packet, but no WebSocket was found'), data)
+      this.emit(WebSocketClientEvents.WsSendError, new Error('Tried to send packet, but no WebSocket was found'), data)
       return
     }
 
     // //console.log('shard', this.id, 'send:', data)
 
     this.socket.send(WebSocketUtils.pack(data), err => {
-      if (err) this.emit(WebSocketClientEvents.WS_SEND_ERROR, err, data)
+      if (err) this.emit(WebSocketClientEvents.WsSendError, err, data)
     })
   }
 
@@ -249,8 +249,8 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
     // console.log('shard', this.id, 'destroying, options', options)
     if (
       this.socket
-      && this.socket.readyState !== WebSocketStates.CLOSED
-      && this.socket.readyState !== WebSocketStates.CLOSING
+      && this.socket.readyState !== WebSocketStates.Closed
+      && this.socket.readyState !== WebSocketStates.Closing
     ) {
       // console.log('shard', this.id, 'if this socket and dont ready')
       try {
@@ -265,7 +265,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
         }
       } catch (e: any) {
         // console.log('shard', this.id, 'ws close error:', e)
-        this.emit(WebSocketClientEvents.WS_CLOSE_ERROR, e)
+        this.emit(WebSocketClientEvents.WsCloseError, e)
       }
     } else {
       // console.log('shard', this.id, 'socket terminate')
@@ -281,11 +281,11 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
     this.cleanup()
 
     // console.log('shard', this.id, 'emitting reconnect:', !!options.reconnect)
-    if (options.reconnect) this.emit(WebSocketClientEvents.RECONNECT_ME, true)
+    if (options.reconnect) this.emit(WebSocketClientEvents.ReconnectMe, true)
   }
 
   public get ready() {
-    return this.status === WebSocketClientStates.READY
+    return this.status === WebSocketClientStates.Ready
   }
 
   private cleanup() {

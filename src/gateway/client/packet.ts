@@ -23,19 +23,19 @@ export function packet(client: WebSocketClient, packet: WebSocketPacket) {
     case 'READY':
 
       client.sessionId = packet.d.session_id
-      client.status = WebSocketClientStates.READY
+      client.status = WebSocketClientStates.Ready
       client.expectedGuilds = new Set<any>(packet.d.guilds.map(g => g.id))
       client.resumeUrl = makeConnectionUrl(client.options.connection, packet.d.resume_gateway_url)
 
       client.heartbeat()
 
-      client.emit(WebSocketClientEvents.READY)
-      client.manager.provider.emit(client.id, { op: GatewayOpCodes.DISPATCH, t: WebSocketClientEvents.CONNECTED, d: packet.d })
-      // console.log('shard', client.id, 'READY')
+      client.emit(WebSocketClientEvents.Ready)
+      client.manager.provider.emit(client.id, { op: GatewayOpCodes.DISPATCH, t: WebSocketClientEvents.Connected, d: packet.d })
+      // console.log('shard', client.id, 'Ready')
       break
     case 'RESUMED':
-      client.status = WebSocketClientStates.READY
-      client.emit(WebSocketClientEvents.RESUMED)
+      client.status = WebSocketClientStates.Ready
+      client.emit(WebSocketClientEvents.Resumed)
       // console.log('shard', client.id, 'RESUMED and replayed', client.sequence - client.closeSequence, 'events')
       break
   }
@@ -51,7 +51,7 @@ export function packet(client: WebSocketClient, packet: WebSocketPacket) {
       break
 
     case GatewayOpCodes.INVALID_SESSION:
-      client.emit(WebSocketClientEvents.INVALID_SESSION)
+      client.emit(WebSocketClientEvents.InvalidSession)
       // console.log('SHARD', client.id, 'INVALID SESSION')
       client.sessionId = undefined
 

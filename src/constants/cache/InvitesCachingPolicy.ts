@@ -1,7 +1,7 @@
 /** Invites caching policy */
 export enum InvitesCachingPolicy {
   /** Cache all invites */
-  ALL = 'all',
+  All = 'all',
   /** Don't cache invites */
-  NONE = 'none'
+  None = 'none'
 }

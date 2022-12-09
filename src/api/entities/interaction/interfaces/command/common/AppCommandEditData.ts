@@ -7,11 +7,11 @@ export interface AppCommandEditData {
   name: string
   /** localization dictionary for `name` field. Values follow the same restrictions as name */
   nameLocalizations?: Record<DiscordLocale, string>
-  /** 1-100 character description for `CHAT_INPUT` commands, empty string for `USER` and `MESSAGE` commands */
+  /** 1-100 character description for `ChatInput` commands, empty string for `User` and `MESSAGE` commands */
   description: string
   /** localization dictionary for `description` field. Values follow the same restrictions as description */
   descriptionLocalizations?: Record<DiscordLocale, string>
-  /** the type of command, defaults `1` (`CHAT_INPUT`) if not set */
+  /** the type of command, defaults `1` (`ChatInput`) if not set */
   type?: AppCommandTypes
   /** parameters for the command, max of 25 */
   options?: AppCommandOptionData[]

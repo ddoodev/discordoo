@@ -72,13 +72,13 @@ export class ShardingInstance extends TypedEmitter {
         this.ipc.disconnect()
 
         switch (this.mode) {
-          case PartialShardingModes.CLUSTERS:
+          case PartialShardingModes.Clusters:
             (this.rawShard as Cluster.Worker).kill()
             break
-          case PartialShardingModes.PROCESSES:
+          case PartialShardingModes.Processes:
             (this.rawShard as ChildProcess).kill()
             break
-          case PartialShardingModes.WORKERS:
+          case PartialShardingModes.Workers:
             (this.rawShard as Worker).terminate()
             break
         }
@@ -216,7 +216,7 @@ export class ShardingInstance extends TypedEmitter {
     }
 
     switch (this.mode) {
-      case PartialShardingModes.CLUSTERS: {
+      case PartialShardingModes.Clusters: {
         const platform = os.platform()
 
         if (CLUSTERS_SHARDING_UNSUPPORTED_PLATFORMS.includes(platform as any)) {
@@ -231,7 +231,7 @@ export class ShardingInstance extends TypedEmitter {
         this.rawShard = Cluster.fork(env)
       } break
 
-      case PartialShardingModes.PROCESSES:
+      case PartialShardingModes.Processes:
         this.rawShard = Process.fork(
           this.options.file,
           undefined,
@@ -239,7 +239,7 @@ export class ShardingInstance extends TypedEmitter {
         )
         break
 
-      case PartialShardingModes.WORKERS:
+      case PartialShardingModes.Workers:
         this.rawShard = new Worker(
           this.options.file,
           { env, ...this.options.spawnOptions }
@@ -260,7 +260,7 @@ export class ShardingInstance extends TypedEmitter {
   private _onExit() {
     this.#running = false
 
-    if (this.ipc.state !== IpcConnectionState.DISCONNECTED) {
+    if (this.ipc.state !== IpcConnectionState.Disconnected) {
       this.ipc.disconnect()
     }
 

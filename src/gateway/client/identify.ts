@@ -22,7 +22,7 @@ export function identify(
       const { intents, presence } = options,
         { properties, compress } = options.connection
 
-      client.status = WebSocketClientStates.IDENTIFYING
+      client.status = WebSocketClientStates.Identifying
       op = GatewayOpCodes.IDENTIFY
 
       d = {
@@ -36,7 +36,7 @@ export function identify(
     } break
 
     case 'resume': {
-      client.status = WebSocketClientStates.RESUMING
+      client.status = WebSocketClientStates.Resuming
       op = GatewayOpCodes.RESUME
 
       d = {

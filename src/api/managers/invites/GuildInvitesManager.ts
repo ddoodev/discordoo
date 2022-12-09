@@ -10,7 +10,7 @@ export class GuildInvitesManager extends EntitiesManager {
     super(client)
 
     this.cache = new EntitiesCacheManager<InviteGuild>(this.client, {
-      keyspace: Keyspaces.INVITE_GUILDS,
+      keyspace: Keyspaces.InviteGuilds,
       storage: 'global',
       entity: 'InviteGuild',
       policy: 'inviteGuilds'

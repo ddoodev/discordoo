@@ -11,7 +11,7 @@ import { attach } from '@src/utils'
 import { AppCommandTypes, InteractionTypes, ToJsonOverrideSymbol } from '@src/constants'
 
 export class AppCommandInteraction extends Interaction {
-  declare type: InteractionTypes.APPLICATION_COMMAND
+  declare type: InteractionTypes.ApplicationCommand
   declare data: AppCommandInteractionData
 
   async init(

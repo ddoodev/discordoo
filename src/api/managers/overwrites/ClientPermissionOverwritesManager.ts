@@ -20,7 +20,7 @@ export class ClientPermissionOverwritesManager extends EntitiesManager {
     super(client)
 
     this.cache = new EntitiesCacheManager<PermissionOverwrite>(this.client, {
-      keyspace: Keyspaces.CHANNEL_PERMISSIONS_OVERWRITES,
+      keyspace: Keyspaces.ChannelPermissionsOverwrites,
       storage: 'global',
       entity: 'PermissionOverwrite',
       policy: 'overwrites'
@@ -109,7 +109,7 @@ export class ClientPermissionOverwritesManager extends EntitiesManager {
     if (!options.existing) {
       let overwrites: Array<PermissionOverwrite | RawPermissionOverwriteData> = (
         await this.client.internals.cache.filter<string, PermissionOverwrite>(
-          Keyspaces.CHANNEL_PERMISSIONS_OVERWRITES,
+          Keyspaces.ChannelPermissionsOverwrites,
           channelId,
           'PermissionOverwrite',
           () => true,

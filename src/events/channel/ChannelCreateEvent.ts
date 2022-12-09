@@ -27,7 +27,7 @@ export class ChannelCreateEvent extends AbstractEvent<ChannelCreateEventContext 
       storage:
         'guildId' in channel
           ? channel.guildId
-          : channel.type === ChannelTypes.DM // TODO: || channel.type === ChannelTypes.GROUP_DM
+          : channel.type === ChannelTypes.Dm // TODO: || channel.type === ChannelTypes.GroupDm
             ? 'dm'
             : 'unknown',
     })

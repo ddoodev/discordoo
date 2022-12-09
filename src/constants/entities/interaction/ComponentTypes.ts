@@ -1,5 +1,5 @@
 export enum ComponentTypes {
-  ACTION_ROW = 1,
-  BUTTON,
-  SELECT_MENU,
+  ActionRow = 1,
+  Button,
+  SelectMenu,
 }

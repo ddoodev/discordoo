@@ -18,7 +18,7 @@ export class MessageReactionsManager extends EntitiesManager {
     this.messageId = data.messageId
 
     this.cache = new EntitiesCacheManager<MessageReaction>(this.client, {
-      keyspace: Keyspaces.MESSAGE_REACTIONS,
+      keyspace: Keyspaces.MessageReactions,
       storage: this.messageId,
       entity: 'MessageReaction',
       policy: 'reactions'

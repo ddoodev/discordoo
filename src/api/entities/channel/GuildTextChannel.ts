@@ -8,7 +8,7 @@ import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class GuildTextChannel extends AbstractGuildTextChannel {
   public rateLimitPerUser?: number
-  public declare type: ChannelTypes.GUILD_TEXT
+  public declare type: ChannelTypes.GuildText
 
   async init(data: GuildTextChannelData | RawGuildTextChannelData, options?: EntityInitOptions): Promise<this> {
     await super.init(data, options)

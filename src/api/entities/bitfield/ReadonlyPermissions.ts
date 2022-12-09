@@ -12,23 +12,23 @@ export class ReadonlyPermissions extends ReadonlyBigBitField {
   }
 
   static get STAGE_MODERATOR(): bigint {
-    return PermissionFlags.MANAGE_CHANNELS | PermissionFlags.MUTE_MEMBERS | PermissionFlags.MOVE_MEMBERS
+    return PermissionFlags.ManageChannels | PermissionFlags.MuteMembers | PermissionFlags.MoveMembers
   }
 
   static get MANAGE_CHANNELS_PERMISSION(): bigint {
-    return PermissionFlags.MANAGE_ROLES
+    return PermissionFlags.ManageRoles
   }
 
   hasAny(bits: BigBitFieldResolvable, options?: PermissionsCheckOptions): boolean {
-    return (options?.checkAdmin && super.has(PermissionFlags.ADMINISTRATOR)) ? true : super.hasAny(bits)
+    return (options?.checkAdmin && super.has(PermissionFlags.Administrator)) ? true : super.hasAny(bits)
   }
 
   has(bits: BigBitFieldResolvable, options?: PermissionsCheckOptions): boolean {
-    return (options?.checkAdmin && super.has(PermissionFlags.ADMINISTRATOR)) ? true : super.has(bits)
+    return (options?.checkAdmin && super.has(PermissionFlags.Administrator)) ? true : super.has(bits)
   }
 
   missing(bits: BigBitFieldResolvable, options?: PermissionsCheckOptions): this {
-    return (options?.checkAdmin && super.has(PermissionFlags.ADMINISTRATOR)) ? super.missing(this.emptyBit) : super.missing(bits)
+    return (options?.checkAdmin && super.has(PermissionFlags.Administrator)) ? super.missing(this.emptyBit) : super.missing(bits)
   }
 
   serialize(options?: PermissionsCheckOptions): Record<string, boolean> {

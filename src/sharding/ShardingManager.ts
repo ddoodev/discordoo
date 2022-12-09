@@ -82,7 +82,7 @@ export class ShardingManager extends TypedEmitter<ShardingManagerEvents> {
   async start(): Promise<ShardingManager> {
     if (this.#died) throw spawningLoopError
     if (this.#running) throw new DiscordooError('ShardingManager#start', 'Sharding manager already running.')
-    if (this.mode === ShardingModes.MACHINES) {
+    if (this.mode === ShardingModes.Machines) {
       throw new DiscordooError(
         'ShardingManager#start', 'Inter-machines sharding does not supported yet. Will be introduced in version 1.2'
       )

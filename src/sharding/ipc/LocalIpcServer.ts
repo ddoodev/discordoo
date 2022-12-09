@@ -116,7 +116,7 @@ export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
         return this.dispatch(packet as any)
 
       case IpcOpCodes.CACHE_OPERATE: {
-        // console.log('IPC SERVER', this.instance, 'ON CACHE OPERATE', process.hrtime.bigint())
+        // console.log('IPC SERVER', this.instance, 'ON Cache OPERATE', process.hrtime.bigint())
         let success = true
 
         // console.log('IPC SERVER', this.instance, 'ON RESULT', packet)
@@ -136,7 +136,7 @@ export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
           }
         }
 
-        // console.log('IPC SERVER', this.instance, 'ON CACHE OPERATE REPLY', process.hrtime.bigint())
+        // console.log('IPC SERVER', this.instance, 'ON Cache OPERATE REPLY', process.hrtime.bigint())
         return this.send(response)
       }
     }
@@ -144,17 +144,17 @@ export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
 
   private emergency(packet: IpcEmergencyPackets) {
     switch (packet.d.op) {
-      case IpcEmergencyOpCodes.GLOBAL_RATE_LIMIT_ALMOST_REACHED:
-      case IpcEmergencyOpCodes.GLOBAL_RATE_LIMIT_HIT:
-      case IpcEmergencyOpCodes.INVALID_REQUEST_LIMIT_ALMOST_REACHED:
-      case IpcEmergencyOpCodes.INVALID_REQUEST_LIMIT_HIT: {
+      case IpcEmergencyOpCodes.GlobalRateLimitAlmostReached:
+      case IpcEmergencyOpCodes.GlobalRateLimitHit:
+      case IpcEmergencyOpCodes.InvalidRequestLimitAlmostReached:
+      case IpcEmergencyOpCodes.InvalidRequestLimitHit: {
         const now = Date.now()
 
         if (now < packet.d.block_until) {
           console.error(
             `[DISCORDOO]: SHARDING INSTANCE NUMBER ${this.instance} RECEIVED EMERGENCY COMMAND.`,
             'IF YOU SEE THIS MESSAGE,',
-            'IT MEANS THAT YOUR CLIENT VIOLATES OR ALMOST VIOLATES DISCORD\'S GLOBAL RATE LIMIT OR CLOUDFLARE\'S INVALID REQUEST LIMIT.',
+            'IT MEANS THAT YOUR CLIENT VIOLATES OR ALMOST VIOLATES Discord\'S GLOBAL RATE LIMIT OR CLOUDFLARE\'S INVALID REQUEST LIMIT.',
             `WE STOP ANY API REQUESTS FOR ${packet.d.block_until - now} MILLISECONDS.`,
           )
         }
@@ -302,19 +302,19 @@ export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
     const keyspace = request.d.keyspace, storage = request.d.storage
 
     switch (request.d.op) {
-      case IpcCacheOpCodes.GET:
+      case IpcCacheOpCodes.Get:
         return this.client.internals.cache.get(keyspace, storage, request.d.entity_key, request.d.key)
-      case IpcCacheOpCodes.SET:
+      case IpcCacheOpCodes.Set:
         return this.client.internals.cache.set(keyspace, storage, request.d.entity_key, request.d.policy, request.d.key, request.d.value)
-      case IpcCacheOpCodes.DELETE:
+      case IpcCacheOpCodes.Delete:
         return this.client.internals.cache.delete(keyspace, storage, request.d.key)
-      case IpcCacheOpCodes.SIZE:
+      case IpcCacheOpCodes.Size:
         return this.client.internals.cache.size(keyspace, storage)
-      case IpcCacheOpCodes.HAS:
+      case IpcCacheOpCodes.Has:
         return this.client.internals.cache.has(keyspace, storage, request.d.key)
-      case IpcCacheOpCodes.CLEAR:
+      case IpcCacheOpCodes.Clear:
         return this.client.internals.cache.clear(keyspace, storage)
-      case IpcCacheOpCodes.COUNTS: {
+      case IpcCacheOpCodes.Counts: {
         const scripts = request.d.scripts
 
         const predicates = scripts.map(script => {
@@ -326,26 +326,26 @@ export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
 
         return this.client.internals.cache.counts(keyspace, storage, request.d.entity_key, predicates)
       }
-      case IpcCacheOpCodes.COUNT:
-      case IpcCacheOpCodes.FILTER:
-      case IpcCacheOpCodes.SWEEP:
-      case IpcCacheOpCodes.MAP:
-      case IpcCacheOpCodes.FIND:
-      case IpcCacheOpCodes.FOREACH: {
+      case IpcCacheOpCodes.Count:
+      case IpcCacheOpCodes.Filter:
+      case IpcCacheOpCodes.Sweep:
+      case IpcCacheOpCodes.Map:
+      case IpcCacheOpCodes.Find:
+      case IpcCacheOpCodes.Foreach: {
         const script = request.d.script
         let method = 'forEach'
 
         switch (request.d.op) {
-          case IpcCacheOpCodes.SWEEP:
+          case IpcCacheOpCodes.Sweep:
             method = 'sweep'
             break
-          case IpcCacheOpCodes.MAP:
+          case IpcCacheOpCodes.Map:
             method = 'map'
             break
-          case IpcCacheOpCodes.FIND:
+          case IpcCacheOpCodes.Find:
             method = 'find'
             break
-          case IpcCacheOpCodes.FILTER:
+          case IpcCacheOpCodes.Filter:
             method = 'filter'
             break
         }

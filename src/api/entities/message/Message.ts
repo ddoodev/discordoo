@@ -175,13 +175,13 @@ export class Message extends AbstractEntity {
 
   async member(options?: CacheManagerGetOptions): Promise<GuildMember | undefined> {
     return this.guildId
-      ? this.client.internals.cache.get(Keyspaces.GUILD_MEMBERS, this.guildId, 'GuildMember', this.authorId, options)
+      ? this.client.internals.cache.get(Keyspaces.GuildMembers, this.guildId, 'GuildMember', this.authorId, options)
       : undefined
   }
 
   async reference(options?: CacheManagerGetOptions): Promise<Message | undefined> {
     return this.referencedMessageId
-      ? this.client.internals.cache.get(Keyspaces.MESSAGES, this.channelId, 'Message', this.referencedMessageId, options)
+      ? this.client.internals.cache.get(Keyspaces.Messages, this.channelId, 'Message', this.referencedMessageId, options)
       : undefined
   }
 

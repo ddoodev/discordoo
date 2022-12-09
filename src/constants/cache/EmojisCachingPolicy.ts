@@ -1,17 +1,17 @@
 /** Emojis caching policy */
 export enum EmojisCachingPolicy {
   /** Cache all emojis */
-  ALL = 'all',
+  All = 'all',
   /** Don't cache emojis */
-  NONE = 'none',
+  None = 'none',
   /** Cache animated emojis */
-  ANIMATED = 'animated',
+  Animated = 'animated',
   /** Cache static emojis (common) */
-  STATIC = 'static',
+  Static = 'static',
   /** Cache guild emojis */
-  GUILD = 'guild',
+  Guild = 'guild',
   /** Cache reaction emojis */
-  REACTION = 'reaction',
+  Reaction = 'reaction',
   /** Cache activity emojis */
-  ACTIVITY = 'activity'
+  Activity = 'activity'
 }

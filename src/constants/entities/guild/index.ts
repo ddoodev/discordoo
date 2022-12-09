@@ -1,7 +1,7 @@
 export { GuildDefaultMessageNotificationLevel } from '@src/constants/entities/guild/GuildDefaultMessageNotificationLevel'
 export { GuildExplicitContentFilterLevels } from '@src/constants/entities/guild/GuildExplicitContentFilterLevels'
 export { GuildVerificationLevels } from '@src/constants/entities/guild/GuildVerificationLevels'
-export { GuildIntergrationExpireBehavior } from '@src/constants/entities/guild/GuildIntegrationExpireBehavior'
+export { GuildIntegrationExpireBehavior } from '@src/constants/entities/guild/GuildIntegrationExpireBehavior'
 export { GuildIntegrationType } from '@src/constants/entities/guild/GuildIntegrationType'
 export { GuildNsfwLevels } from '@src/constants/entities/guild/GuildNsfwLevels'
 export { GuildFeatures } from '@src/constants/entities/guild/GuildFeatures'

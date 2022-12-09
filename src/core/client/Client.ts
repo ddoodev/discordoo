@@ -181,7 +181,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
   /**
    * This client as discord user.
    *
-   * **DATA FOR THIS CLASS IS RECEIVED DURING EXECUTION OF client.start()**. UNTIL THEN, ALL PROPERTIES WILL BE DEFAULT.
+   * **DATA FOR THIS CLASS IS RECEIVED DURING EXECUTION OF client.start()**. UNTIL THEN, All PROPERTIES WILL BE Default.
    * */
   public user: ClientUser
 
@@ -218,17 +218,17 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
     this.options.providers?.forEach(provider => {
       try {
         switch (provider.provide) {
-          case DiscordooProviders.CACHE:
+          case DiscordooProviders.Cache:
             cacheProvider = provider.useClass
             cacheProviderOptions = provider.useOptions
             break
 
-          case DiscordooProviders.GATEWAY:
+          case DiscordooProviders.Gateway:
             gatewayProvider = provider.useClass
             gatewayProviderOptions = provider.useOptions
             break
 
-          case DiscordooProviders.REST:
+          case DiscordooProviders.Rest:
             restProvider = provider.useClass
             restProviderOptions = provider.useOptions
             break
@@ -268,7 +268,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
     )
 
     const allCacheDisabled = (() => {
-      if (clientOptions.cache.global?.policies.includes(GlobalCachingPolicy.NONE)) return true
+      if (clientOptions.cache.global?.policies.includes(GlobalCachingPolicy.None)) return true
 
       const options = Object.entries(this.options.cache ?? {})
       const total = options.length, defaultTotal = CACHE_OPTIONS_KEYS_LENGTH

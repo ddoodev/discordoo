@@ -181,7 +181,7 @@ export class SlashCommandUserOptionConstructor {
   public description!: string;
   public descriptionLocalizations?: Record<DiscordLocale, string>;
   public required?: boolean;
-  public type: AppCommandOptionTypes = AppCommandOptionTypes.USER;
+  public type: AppCommandOptionTypes = AppCommandOptionTypes.User;
   constructor(data: SlashCommandUserOption | AppCommandOptionData) {
     Object.assign(this, data)
   }

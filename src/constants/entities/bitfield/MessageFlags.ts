@@ -1,10 +1,10 @@
 export const MessageFlags = {
-  CROSSPOSTED: 1 << 0,
-  IS_CROSSPOST: 1 << 1,
-  SUPPRESS_EMBEDS: 1 << 2,
-  SOURCE_MESSAGE_DELETED: 1 << 3,
-  URGENT: 1 << 4,
-  HAS_THREAD: 1 << 5,
-  EPHEMERAL: 1 << 6,
-  LOADING: 1 << 7,
+  Crossposted: 1 << 0,
+  IsCrosspost: 1 << 1,
+  SuppressEmbeds: 1 << 2,
+  SourceMessageDeleted: 1 << 3,
+  Urgent: 1 << 4,
+  HasThread: 1 << 5,
+  Ephemeral: 1 << 6,
+  Loading: 1 << 7,
 }

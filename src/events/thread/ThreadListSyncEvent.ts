@@ -17,9 +17,9 @@ export class ThreadListSyncEvent extends AbstractEvent<ThreadListSyncEventContex
 
     const predicate = (channel: AnyGuildChannel | AnyThreadChannel) => {
       if (
-        (channel.type === ChannelTypes.GUILD_NEWS_THREAD
-        || channel.type === ChannelTypes.GUILD_PRIVATE_THREAD
-        || channel.type === ChannelTypes.GUILD_PUBLIC_THREAD)
+        (channel.type === ChannelTypes.GuildNewsThread
+        || channel.type === ChannelTypes.GuildPrivateThread
+        || channel.type === ChannelTypes.GuildPublicThread)
         && (data.channel_ids?.includes(channel.id) ?? true)
       ) {
         return !channel.metadata?.archived
@@ -29,7 +29,7 @@ export class ThreadListSyncEvent extends AbstractEvent<ThreadListSyncEventContex
     }
 
     await this.client.internals.cache.sweep<string, AnyGuildChannel | AnyThreadChannel>(
-      Keyspaces.CHANNELS,
+      Keyspaces.Channels,
       data.guild_id,
       'channelEntityKey',
       predicate
@@ -37,7 +37,7 @@ export class ThreadListSyncEvent extends AbstractEvent<ThreadListSyncEventContex
 
     for await (const threadData of data.threads) {
       let thread = await this.client.internals.cache.get(
-        Keyspaces.CHANNELS,
+        Keyspaces.Channels,
         data.guild_id,
         'channelEntityKey',
         threadData.id,
@@ -56,7 +56,7 @@ export class ThreadListSyncEvent extends AbstractEvent<ThreadListSyncEventContex
 
     for await (const memberData of data.members) {
       let member = await this.client.internals.cache.get(
-        Keyspaces.THREAD_MEMBERS,
+        Keyspaces.ThreadMembers,
         memberData.id,
         'ThreadMember',
         memberData.user_id,

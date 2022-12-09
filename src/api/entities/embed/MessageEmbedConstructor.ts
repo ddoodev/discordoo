@@ -254,7 +254,7 @@ export class MessageEmbedConstructor {
     const { title, description, url, color, timestamp, author, footer, image, thumbnail } = this
 
     const result = {
-      type: MessageEmbedTypes.RICH, title, description, url, color,
+      type: MessageEmbedTypes.Rich, title, description, url, color,
       timestamp: timestamp ? new Date(timestamp).toISOString() : undefined,
       author: author ? { name: author.name, url: author.url, icon_url: author.iconUrl } : undefined,
       footer: footer ? { text: footer.text, icon_url: footer.iconUrl } : undefined,

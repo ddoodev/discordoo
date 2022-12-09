@@ -11,7 +11,7 @@ export class GuildMembersChunkEvent extends AbstractEvent<GuildMembersChunkEvent
   async execute(shardId: number, data: RawGuildMembersChunkData) {
 
     const owner = await this.client.internals.cache.get(
-      Keyspaces.OTHER,
+      Keyspaces.Other,
       'guild-owners',
       'any',
       data.guild_id
@@ -21,7 +21,7 @@ export class GuildMembersChunkEvent extends AbstractEvent<GuildMembersChunkEvent
 
     const members: Promise<GuildMember>[] = data.members.map(async memberData => {
       let member = await this.client.internals.cache.get<string, GuildMember>(
-        Keyspaces.GUILD_MEMBERS,
+        Keyspaces.GuildMembers,
         data.guild_id,
         'GuildMember',
         memberData.user.id
@@ -43,7 +43,7 @@ export class GuildMembersChunkEvent extends AbstractEvent<GuildMembersChunkEvent
 
     const presences: Promise<Presence>[] | undefined = data.presences?.map(async presenceData => {
       let presence = await this.client.internals.cache.get<string, Presence>(
-        Keyspaces.GUILD_PRESENCES,
+        Keyspaces.GuildPresences,
         data.guild_id,
         'Presence',
         presenceData.user.id

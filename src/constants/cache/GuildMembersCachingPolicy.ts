@@ -1,23 +1,23 @@
 /** Members caching policy */
 export enum GuildMembersCachingPolicy {
   /** Cache all members */
-  ALL = 'all',
+  All = 'all',
   /** Don't cache members */
-  NONE = 'none',
+  None = 'none',
   /** Cache online members */
-  ONLINE = 'online',
+  Online = 'online',
   /** Cache members with dnd status */
-  DND = 'dnd',
+  Dnd = 'dnd',
   /** Cache members with idle status */
-  IDLE = 'idle',
+  Idle = 'idle',
   /** Cache offline members */
-  OFFLINE = 'offline',
+  Offline = 'offline',
   /** Cache guilds owners */
-  OWNER = 'owner',
+  Owner = 'owner',
   /** Cache members which are pending due to discord's welcome screen */
-  PENDING = 'pending',
+  Pending = 'pending',
   /** Cache connected to voice channels members */
-  VOICE = 'voice',
+  Voice = 'voice',
   /** Cache members who recently send a message */
-  RECENT_MESSAGE = 'recentMessage',
+  RecentMessage = 'recentMessage',
 }

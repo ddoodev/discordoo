@@ -9,7 +9,7 @@ import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class GuildCategoryChannel extends AbstractGuildChannel {
   public declare children: CategoryChannelChildrenManager
-  public declare type: ChannelTypes.GUILD_CATEGORY
+  public declare type: ChannelTypes.GuildCategory
 
   async init(data: AbstractGuildChannelData | RawAbstractGuildChannelData, options?: EntityInitOptions): Promise<this> {
     await super.init(data, options)
@@ -25,12 +25,12 @@ export class GuildCategoryChannel extends AbstractGuildChannel {
 
     const predicate = async (channel: AnyGuildChannel) => {
       if (channel.parentId === this.id) {
-        await this.children.cache.set(channel.id, makeCachePointer(Keyspaces.CHANNELS, 'global', channel.id))
+        await this.children.cache.set(channel.id, makeCachePointer(Keyspaces.Channels, 'global', channel.id))
       }
     }
 
     await this.client.internals.cache.forEach(
-      Keyspaces.CHANNELS,
+      Keyspaces.Channels,
       this.guildId,
       'channelEntityKey',
       predicate
