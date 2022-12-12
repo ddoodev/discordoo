@@ -97,7 +97,7 @@ import { ClientUser } from '@src/api/entities/user/ClientUser'
 import { GuildEmojisUpdatedEvent } from '@src/events/emoji/GuildEmojisUpdatedEvent'
 import { GuildDeleteEvent, GuildUpdateEvent } from '@src/events/guild'
 import { InteractionCreateEvent } from '@src/events/interaction/InteractionCreateEvent'
-import { ClientApplicationManager } from '@src/core/client/ClientApplicationManager'
+import { ClientInteractionsManager } from '@src/core/client/ClientInteractionsManager'
 
 /** Entry point for **all** of Discordoo. */
 @Final(
@@ -113,6 +113,10 @@ import { ClientApplicationManager } from '@src/core/client/ClientApplicationMana
   'presences',
   'reactions',
   'overwrites',
+  'threadMembers',
+  'emojis',
+  'invites',
+  'interactions',
   otherCacheSymbol,
   'token',
 )
@@ -169,19 +173,20 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
 
   /** Invites manager for this client */
   public readonly invites: ClientInvitesManager
-  public app: ClientApplicationManager
+  /** Interactions manager for this client */
+  public readonly interactions: ClientInteractionsManager
 
   public readonly [otherCacheSymbol]: OtherCacheManager
   #running = false
   #shardsConnected = 0
 
-  /** When client fully connected to discord */
+  /** When client was connected to discord */
   public readyTimestamp?: number
 
   /**
    * This client as discord user.
    *
-   * **DATA FOR THIS CLASS IS RECEIVED DURING EXECUTION OF client.start()**. UNTIL THEN, All PROPERTIES WILL BE Default.
+   * **DATA FOR THIS CLASS IS RECEIVED DURING client.start() EXECUTION**. UNTIL THEN, All PROPERTIES WILL BE DEFAULT.
    * */
   public user: ClientUser
 
@@ -326,6 +331,7 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
     this.overwrites = new ClientPermissionOverwritesManager(this)
     this.threadMembers = new ClientThreadMembersManager(this)
     this.dms = new ClientDirectMessagesChannelsManager(this)
+    this.interactions = new ClientInteractionsManager(this)
     this[otherCacheSymbol] = new OtherCacheManager(this)
     this.members = new ClientGuildMembersManager(this)
     this.presences = new ClientPresencesManager(this)
@@ -339,7 +345,6 @@ export class Client<ClientStack extends DefaultClientStack = DefaultClientStack>
     this.guilds = new GuildsManager(this)
     this.users = new UsersManager(this)
     this.user = new ClientUser(this)
-    this.app = new ClientApplicationManager(this)
 
     void this.user.init({
       id: '',

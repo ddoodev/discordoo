@@ -2,6 +2,7 @@ export { KNOWN_CACHE_OPERATE_METHODS } from '@src/constants/cache/KnownCacheOper
 export { ThreadMembersCachingPolicy } from '@src/constants/cache/ThreadMembersCachingPolicy'
 export { GuildMembersCachingPolicy } from '@src/constants/cache/GuildMembersCachingPolicy'
 export { InviteGuildsCachingPolicy } from '@src/constants/cache/InviteGuildsCachingPolicy'
+export { AppCommandsCachingPolicy } from '@src/constants/cache/AppCommandsCachingPolicy'
 export { OverwritesCachingPolicy } from '@src/constants/cache/OverwritesCachingPolicy'
 export { ReactionsCachingPolicy } from '@src/constants/cache/ReactionsCachingPolicy'
 export { PresencesCachingPolicy } from '@src/constants/cache/PresencesCachingPolicy'

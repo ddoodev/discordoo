@@ -11,16 +11,20 @@ import { MessageContent, MessageCreateData, MessageCreateOptions, MessageEmbedCo
 import { MessageEmbedTypes, StickerFormatTypes } from '@src/constants'
 import { filterAndMap } from '@src/utils/filterAndMap'
 import { DataResolver } from '@src/utils/DataResolver'
+import { InteractionMessageContent } from '@src/api/entities/message/interfaces/MessageContent'
+import { InteractionMessageCreateOptions } from '@src/api/entities/message/interfaces/MessageCreateOptions'
+import { InteractionMessageCreateData } from '@src/api/entities/message/interfaces/MessageCreateData'
 
-export async function createMessagePayload(
-  content: MessageContent = '', options: MessageCreateOptions = {}
-): Promise<MessageCreateData> {
+export async function createMessagePayload<Interaction extends boolean = false>(
+  content: Interaction extends true ? InteractionMessageContent : MessageContent = '',
+  options: Interaction extends true ? InteractionMessageCreateOptions : MessageCreateOptions = {}
+): Promise<Interaction extends true ? InteractionMessageCreateData : MessageCreateData> {
   let contentResolved = false
 
   if (!content) {
     if (
-      !options.file && !options.embed && !options.sticker && !options.content &&
-      !options.files?.length && !options.embeds?.length && !options.stickers?.length
+      !options.file && !options.embed && !('sticker' in options) && !options.content &&
+      !options.files?.length && !options.embeds?.length && !('stickers' in options && options.stickers?.length)
     ) {
       throw new DiscordooError(
         'MessagesManager#create',
@@ -100,7 +104,7 @@ export async function createMessagePayload(
 
   if (options.content) payload.content = options.content
 
-  if (options.messageReference) {
+  if ('messageReference' in options && options.messageReference) {
     payload.message_reference = resolveMessageReferenceToRaw(options.messageReference)
   }
 
@@ -113,11 +117,11 @@ export async function createMessagePayload(
   if (options.file) payload.files.push(await resolveFile(options.file))
   if (options.files?.length) payload.files.push(...await resolveFiles(options.files))
 
-  if (options.sticker) {
-    const id = resolveStickerId(data.stickers)
+  if ('sticker' in options) {
+    const id = resolveStickerId(data.sticker)
     if (id) payload.stickers.push(id)
   }
-  if (options.stickers?.length) {
+  if ('stickers' in options && options.stickers?.length) {
     const stickers = filterAndMap<StickerResolvable, string>(
       options.stickers,
       (s) => resolveStickerId(s) !== undefined,

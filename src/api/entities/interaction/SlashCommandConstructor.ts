@@ -1,13 +1,16 @@
 import { DiscordLocale } from '@src/constants/common/DiscordLocale'
-import { AppCommandOptionTypes, AppCommandTypes } from '@src/constants'
-import { AppCommandOptionData, BigBitFieldResolvable, RawAppCommandOptionData } from '@src/api'
+import { AppCommandTypes } from '@src/constants'
+import { BigBitFieldResolvable, GuildResolvable, RawAppCommandOptionData } from '@src/api'
 import { RawAppCommandEditData } from '@src/api/entities/interaction/interfaces/command/raw/RawAppCommandEditData'
-import { attach, resolveBigBitField } from '@src/utils'
+import { attach, resolveBigBitField, resolveGuildId } from '@src/utils'
 import { mix } from 'ts-mixer'
-import { MixinNameDescription } from './mixins/MixinNameDescription'
+import { MixinNameDescriptionRequired } from '@src/api/entities/interaction/mixins/MixinNameDescriptionRequired'
 import { AppCommandEditData } from '@src/api/entities/interaction/interfaces/command/common/AppCommandEditData'
+import { optionToRaw } from '@src/utils/optionToRaw'
+import { AppCommandOptionWithSubcommandsData } from '@src/api/entities/interaction/interfaces/command/common/AppCommandOptionData'
+import { GuildAppCommandEditData, RawGuildAppCommandEditData } from '@src/api/managers/interactions/InteractionSlashCommandGuildData'
 
-@mix(MixinNameDescription)
+@mix(MixinNameDescriptionRequired)
 export class SlashCommandConstructor {
   /** 1-32 character name */
   declare name: string
@@ -20,7 +23,7 @@ export class SlashCommandConstructor {
   /** the type of command, defaults `1` (`ChatInput`) if not set */
   public type?: AppCommandTypes
   /** parameters for the command, max of 25 */
-  public options: AppCommandOptionData[] = []
+  public options: RawAppCommandOptionData[] = []
   /** set of permissions represented as a bit set */
   public defaultMemberPermissions?: bigint
   /**
@@ -28,8 +31,18 @@ export class SlashCommandConstructor {
    * by default, commands are visible.
    */
   public dmPermission?: boolean
+  /**
+   * if you wish to create a guild command, this will contain the guild id
+   * */
+  public guild?: string
 
-  constructor(data: SlashCommandConstructor | RawAppCommandEditData | AppCommandEditData) {
+  constructor(
+    data: SlashCommandConstructor |
+      RawAppCommandEditData |
+      AppCommandEditData |
+      GuildAppCommandEditData |
+      RawGuildAppCommandEditData
+  ) {
     attach(this, data, {
       props: [
         'name',
@@ -42,20 +55,17 @@ export class SlashCommandConstructor {
       ]
     })
 
-    // if (data.options) {
-    //   this.options = data.options.map(option => new SlashCommandOptionConstructor(option))
-    // }
+    if (data.options) {
+      this.options = data.options.map(optionToRaw)
+    }
+
+    if ('guild' in data && data.guild) {
+      this.guild = resolveGuildId(data.guild)
+    }
   }
 
-  public setDefaultPermissions(permissions: BigBitFieldResolvable): this {
+  setDefaultPermissions(permissions: BigBitFieldResolvable): this {
     this.defaultMemberPermissions = resolveBigBitField(permissions)
-    return this
-  }
-
-  public addSubcommandGroup(input: SlashCommandSubcommandGroupConstructor | AppCommandOptionData | RawAppCommandOptionData): this {
-    const result = new SlashCommandSubcommandGroupConstructor(input)
-    this.options.push(result.toJSON())
-
     return this
   }
 
@@ -69,19 +79,29 @@ export class SlashCommandConstructor {
     return this
   }
 
-  addOption(option: AppCommandOptionData): this {
-    this.options.push(option)
+  addOption(option: AppCommandOptionWithSubcommandsData | RawAppCommandOptionData): this {
+    const raw = optionToRaw(option)
+
+    if (this.options.length >= 25) {
+      throw new Error('Cannot add more than 25 options to a slash command')
+    }
+
+    this.options.push(raw)
+
     return this
   }
 
-  addSubcommand(input: SlashCommandSubcommandConstructor | AppCommandOptionData | RawAppCommandOptionData): this {
-    const result = new SlashCommandSubcommandConstructor(input)
-    this.options.push(result.toJSON())
-
+  addOptions(options: (AppCommandOptionWithSubcommandsData | RawAppCommandOptionData)[]): this {
+    options.forEach(option => this.addOption(option))
     return this
   }
 
-  public toJSON(): RawAppCommandEditData {
+  setGuild(guild: GuildResolvable): this {
+    this.guild = resolveGuildId(guild)
+    return this
+  }
+
+  public toJSON(): RawAppCommandEditData | RawGuildAppCommandEditData {
     return {
       name: this.name,
       description: this.description,
@@ -89,77 +109,9 @@ export class SlashCommandConstructor {
       options: this.options,
       dm_permission: this.dmPermission,
       default_member_permissions: this.defaultMemberPermissions?.toString(),
+      name_localizations: this.nameLocalizations,
+      description_localizations: this.descriptionLocalizations,
+      guild: this.guild,
     }
   }
-}
-
-@mix(MixinNameDescription)
-export class SlashCommandSubcommandGroupConstructor implements AppCommandOptionData {
-  public name!: string
-  public description!: string
-  public type = AppCommandOptionTypes.SubCommandGroup
-  public options?: AppCommandOptionData[]
-
-  constructor(data: SlashCommandSubcommandGroupConstructor | AppCommandOptionData | RawAppCommandOptionData) {
-    attach(this, data, {
-      props: [ 'name', 'description' ],
-    })
-
-    // if (data.options) {
-    //   this.options = data.options.map(option => new SlashCommandOptionConstructor(option))
-    // }
-  }
-  public toJSON(): AppCommandOptionData {
-    return {
-      name: this.name,
-      description: this.description,
-      type: this.type,
-      options: this.options,
-    }
-  }
-
-  setType(type: AppCommandOptionTypes): this {
-    this.type = type
-    return this
-  }
-  addOption(option: AppCommandOptionData): this {
-    this.options ??= []
-    this.options.push(option)
-    return this
-  }
-}
-
-@mix(MixinNameDescription)
-export class SlashCommandSubcommandConstructor implements AppCommandOptionData {
-  declare name: string
-  declare description: string
-  public type = AppCommandOptionTypes.SubCommand
-  public options?: AppCommandOptionData[]
-
-  constructor(data: SlashCommandSubcommandConstructor | AppCommandOptionData | RawAppCommandOptionData) {
-    attach(this, data, {
-      props: [ 'name', 'description', 'options' ],
-    })
-  }
-
-  setType(type: AppCommandOptionTypes): this {
-    this.type = type
-    return this
-  }
-
-  addOption(option: AppCommandOptionData): this {
-    this.options ??= []
-    this.options.push(option)
-    return this
-  }
-
-  public toJSON(): AppCommandOptionData {
-    return {
-      name: this.name,
-      description: this.description,
-      type: this.type,
-      options: this.options,
-    }
-  }
-
 }

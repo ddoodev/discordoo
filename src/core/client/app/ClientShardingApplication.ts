@@ -2,7 +2,7 @@ import { Client } from '@src/core'
 import { BroadcastEvalOptions } from '@src/sharding/interfaces/ipc/BroadcastEvalOptions'
 import { BroadcastOptions } from '@src/sharding/interfaces/ipc/BroadcastOptions'
 import { CompletedLocalIpcOptions } from '@src/constants/sharding/CompletedLocalIpcOptions'
-import { BroadcastEvalContext, ShardingManager } from '@src/sharding'
+import { BroadcastEvalContext } from '@src/sharding'
 
 /** Sharding application that contains useful info/methods */
 export interface ClientShardingApplication {

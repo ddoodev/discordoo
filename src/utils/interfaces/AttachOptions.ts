@@ -13,7 +13,7 @@ export interface AttachOptions {
   /**
    * these properties will be ignored
    * */
-  disabled?: Array<string> | readonly [ typeof IgnoreAllSymbol ]
+  disabled?: Array<string | typeof IgnoreAllSymbol>
   /**
    * these properties will be added anyway, even if it is specified to ignore them
    * */

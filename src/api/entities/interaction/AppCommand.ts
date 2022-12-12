@@ -1,7 +1,6 @@
 import {
   AbstractEntity,
-  AppCommandData, AppCommandOptionChoiceData,
-  AppCommandOptionData, BigBitFieldResolvable,
+  AppCommandData, AppCommandOptionChoiceData, BigBitFieldResolvable,
   Json, RawAppCommandData, RawAppCommandOptionData,
   ReadonlyPermissions, ToJsonProperties
 } from '@src/api'
@@ -9,6 +8,8 @@ import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 import { attach } from '@src/utils'
 import { AppCommandOptionTypes, AppCommandTypes } from '@src/constants'
 import { DiscordLocale } from '@src/constants/common/DiscordLocale'
+import { AppCommandOptionWithSubcommandsData } from '@src/api/entities/interaction/interfaces/command/common/AppCommandOptionData'
+import { AppCommandEntityInitOptions } from '@src/api/entities/interaction/interfaces/command/AppCommandEntityInitOptions'
 
 export class AppCommand extends AbstractEntity {
   declare id: string
@@ -24,7 +25,7 @@ export class AppCommand extends AbstractEntity {
   declare defaultMemberPermissions?: ReadonlyPermissions
   declare dmPermission?: boolean
 
-  async init(data: AppCommandData | RawAppCommandData, options?: EntityInitOptions): Promise<this> {
+  async init(data: AppCommandData | RawAppCommandData, options?: AppCommandEntityInitOptions): Promise<this> {
     attach(this, data, {
       props: [
         'id',
@@ -42,10 +43,10 @@ export class AppCommand extends AbstractEntity {
       enabled: [ 'id', 'applicationId', 'type', 'guildId' ]
     })
 
-    if (data.options) {
+    if (data.options && !options?.ignore?.includes('options')) {
       const ops: AppCommandOption[] = []
       for await (const option of data.options) {
-        ops.push(await new AppCommandOption(this.client).init(option))
+        ops.push(new AppCommandOption(option, options?.optionsInit))
       }
       this.options = ops
     }
@@ -56,7 +57,7 @@ export class AppCommand extends AbstractEntity {
     } else if ('defaultMemberPermissions' in data) {
       perms = data.defaultMemberPermissions
     }
-    if (perms) {
+    if (perms && !options?.ignore?.includes('defaultMemberPermissions')) {
       this.defaultMemberPermissions = new ReadonlyPermissions(perms)
     }
 
@@ -82,17 +83,20 @@ export class AppCommand extends AbstractEntity {
   }
 }
 
-export class AppCommandOption extends AbstractEntity {
+export class AppCommandOption {
   declare name: string
   declare nameLocalizations?: Record<DiscordLocale, string>
   declare description: string
   declare descriptionLocalizations?: Record<DiscordLocale, string>
   declare choices?: AppCommandOptionChoiceData[]
+  declare options?: AppCommandOption[]
   declare required: boolean
-  declare value: string
+  declare value:
+      (this['type'] extends AppCommandOptionTypes.String ? string : number)
+    | (this['required'] extends true ? never : undefined)
   declare type: AppCommandOptionTypes
 
-  async init(data: AppCommandOptionData | RawAppCommandOptionData, options?: EntityInitOptions): Promise<this> {
+  constructor(data: AppCommandOptionWithSubcommandsData | RawAppCommandOptionData, options?: EntityInitOptions) {
     attach(this, data, {
       props: [
         'name',
@@ -107,7 +111,7 @@ export class AppCommandOption extends AbstractEntity {
       enabled: [ 'name', 'type' ]
     })
 
-    if (data.choices) {
+    if ('choices' in data && data.choices) {
       this.choices = data.choices.map(choice => ({
         name: choice.name,
         value: choice.value,
@@ -115,20 +119,15 @@ export class AppCommandOption extends AbstractEntity {
       }))
     }
 
+    if ('options' in data && data.options) {
+      this.options = data.options.map(option => new AppCommandOption(option, options))
+    }
+
     return this
   }
 
-  toJson(properties: ToJsonProperties = {}, obj?: any): Json {
-    return super.toJson({
-      ...properties,
-      name: true,
-      nameLocalizations: true,
-      description: true,
-      descriptionLocalizations: true,
-      choices: true,
-      required: true,
-      value: true,
-      type: true,
-    }, obj)
+  toJson(): AppCommandOptionWithSubcommandsData {
+    // @ts-ignore
+    return { ...this }
   }
 }

@@ -1,9 +1,11 @@
 import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 import { AnyWritableChannel, Guild, GuildMember, InteractionData, Message, RawInteractionData, User } from '@src/api'
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
-import { attach, idToDate, idToTimestamp } from '@src/utils'
+import { attach, createMessagePayload, idToDate, idToTimestamp } from '@src/utils'
 import { InteractionTypes, Keyspaces } from '@src/constants'
 import { CacheManagerGetOptions } from '@src/cache'
+import { InteractionMessageContent } from '@src/api/entities/message/interfaces/MessageContent'
+import { InteractionMessageCreateOptions } from '@src/api/entities/message/interfaces/MessageCreateOptions'
 
 export class Interaction extends AbstractEntity {
   declare id: string
@@ -82,4 +84,13 @@ export class Interaction extends AbstractEntity {
     return this.messageId ? this.client.messages.cache.get(this.messageId, { ...options, storage: this.channelId }) : undefined
   }
 
+  async reply(content: InteractionMessageContent, options?: InteractionMessageCreateOptions): Promise<void> {
+    if (!this.canReply) {
+      throw new Error('Cannot reply to this interaction')
+    }
+
+    const message = await createMessagePayload<true>(content, options)
+
+
+  }
 }

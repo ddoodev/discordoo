@@ -1,4 +1,4 @@
-import { ReadonlyBitField } from '@src/api/entities/bitfield/ReadonlyBitField'
+import { ReadonlyBitField } from '@src/utils/bitfield/ReadonlyBitField'
 
 export type BitFieldResolvableCell<BitFieldClass extends ReadonlyBitField = ReadonlyBitField>
   = number | { bits: number } | BitFieldClass

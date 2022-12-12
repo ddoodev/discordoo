@@ -1,6 +1,6 @@
 export enum AppCommandOptionTypes {
-  SubCommand = 1,
-  SubCommandGroup,
+  Subcommand = 1,
+  SubcommandGroup,
   String,
   /** Any integer between MIN_SAFE_INTEGER and MAX_SAFE_INTEGER */
   Integer,

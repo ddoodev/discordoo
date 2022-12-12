@@ -2,19 +2,21 @@ import { DiscordLocale } from '@src/constants'
 import { attach } from '@src/utils'
 import { MixinNameDescriptionData } from '@src/api/entities/interaction/mixins/interfaces/MixinNameDescriptionData'
 import { RawMixinNameDescriptionData } from '@src/api/entities/interaction/mixins/interfaces/RawMixinNameDescriptionData'
-export class MixinNameDescription {
+export class MixinNameDescriptionRequired {
   declare name: string
   public nameLocalizations?: Record<DiscordLocale, string>
   declare description: string
   public descriptionLocalizations?: Record<DiscordLocale, string>
+  public required?: boolean
 
-  constructor(data: MixinNameDescription | RawMixinNameDescriptionData | MixinNameDescriptionData) {
+  constructor(data: MixinNameDescriptionRequired | RawMixinNameDescriptionData | MixinNameDescriptionData) {
     attach(this, data, {
       props: [
         'name',
         'description',
         [ 'nameLocalizations', 'name_localizations' ],
-        [ 'descriptionLocalizations', 'description_localizations' ]
+        [ 'descriptionLocalizations', 'description_localizations' ],
+        'required',
       ],
     })
   }
@@ -36,6 +38,11 @@ export class MixinNameDescription {
 
   setDescriptionLocalization(data: Record<DiscordLocale, string>): this {
     this.descriptionLocalizations = data
+    return this
+  }
+
+  setRequired(required: boolean): this {
+    this.required = required
     return this
   }
 }

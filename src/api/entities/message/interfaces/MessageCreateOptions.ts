@@ -22,6 +22,8 @@ export interface MessageCreateOptions {
   content?: string
   tts?: boolean
   nonce?: string
+  /** Suppress embeds for this message or not (use MessageFlags.SuppressEmbeds if you want to do this) */
+  flags?: 4 // only MessageFlags.SuppressEmbeds can be set
 }
 
 export interface WebhookMessageCreateOptions extends Omit<MessageCreateOptions, 'messageReference' | 'stickers' | 'sticker' | 'nonce'> {
@@ -33,6 +35,10 @@ export interface WebhookMessageCreateOptions extends Omit<MessageCreateOptions, 
   threadName?: string
   /** Send a message to the specified thread within a webhook's channel. The thread will automatically be unarchived. */
   threadId?: string
-  /** Suppress embeds for this message or not (use MessageFlags.SuppressEmbeds if you want to do this) */
-  flags?: 4 // only MessageFlags.SuppressEmbeds can be set
+}
+
+export interface InteractionMessageCreateOptions
+  extends Omit<MessageCreateOptions, 'messageReference' | 'stickers' | 'sticker' | 'nonce' | 'flags'> {
+  /** Flag to send the message as ephemeral or suppress embeds in it or both (use MessageFlags if you want to do this) */
+  flags?: 4 | 64 | 68 // only MessageFlags.SuppressEmbeds and MessageFlags.Ephemeral can be set
 }

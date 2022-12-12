@@ -11,29 +11,33 @@ import {
   RolesCachingPolicy,
   StickersCachingPolicy,
   ThreadMembersCachingPolicy,
-  UsersCachingPolicy, InvitesCachingPolicy
+  UsersCachingPolicy,
+  InvitesCachingPolicy,
+  AppCommandsCachingPolicy
 } from '@src/constants'
-import { ThreadMember } from '@src/api/entities/member/ThreadMember'
-import { AnyChannel } from '@src/api/entities/channel/interfaces/AnyChannel'
-import { AnyEmoji, Guild, GuildMember, Invite, InviteGuild, Message, Presence, Role, Sticker, User } from '@src/api'
-import { MessageReaction } from '@src/api/entities/reaction/MessageReaction'
-import { PermissionOverwrite } from '@src/api/entities/overwrite/PermissionOverwrite'
+import {
+  AnyEmoji,
+  AnyChannel,
+  Guild,
+  GuildMember,
+  Invite,
+  InviteGuild,
+  Message,
+  Presence,
+  Role,
+  Sticker,
+  User,
+  ThreadMember,
+  MessageReaction,
+  PermissionOverwrite,
+  AppCommand,
+  AppCommandOption,
+} from '@src/api'
+import { Entities } from '@src/api/entities/Entities'
 
-export const CACHE_OPTIONS_KEYS_LENGTH = 12 // all cache options expect 'global'
+export const CACHE_OPTIONS_KEYS_LENGTH = 15 // all cache options expect 'global'
 
-export type AnyEntity = AnyChannel
-  | AnyEmoji
-  | Guild
-  | GuildMember
-  | Invite
-  | Message
-  | Presence
-  | Role
-  | User
-  | Sticker
-  | MessageReaction
-  | PermissionOverwrite
-  | ThreadMember
+export type AnyEntity = typeof Entities[keyof typeof Entities]
 
 export interface CacheOptions {
   channels?: {
@@ -62,7 +66,7 @@ export interface CacheOptions {
   }
 
   guilds?: {
-    custom?: (guild: any) => boolean | Promise<boolean>
+    custom?: (guild: Guild) => boolean | Promise<boolean>
     policies: GuildsCachingPolicy[]
   }
 
@@ -110,5 +114,10 @@ export interface CacheOptions {
   threadMembers?: {
     custom?: (threadMember: ThreadMember) => boolean | Promise<boolean>
     policies: ThreadMembersCachingPolicy[]
+  }
+
+  commands?: {
+    custom?: (command: AppCommand) => boolean | Promise<boolean>
+    policies: AppCommandsCachingPolicy[]
   }
 }

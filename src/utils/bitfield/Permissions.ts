@@ -1,5 +1,5 @@
-import { ReadonlyPermissions } from '@src/api/entities/bitfield/ReadonlyPermissions'
-import { BigBitField } from '@src/api/entities/bitfield/BigBitField'
+import { ReadonlyPermissions } from '@src/utils/bitfield/ReadonlyPermissions'
+import { BigBitField } from '@src/utils/bitfield/BigBitField'
 import { BigBitFieldResolvable } from '@src/api'
 import { resolveBigBitField } from '@src/utils/resolve'
 

@@ -26,6 +26,7 @@ import { Interaction } from '@src/api/entities/interaction/Interaction'
 import { MessageAttachment } from '@src/api/entities/attachment/MessageAttachment'
 import { MessageEmbed } from '@src/api/entities/embed/MessageEmbed'
 import { Invite } from '@src/api/entities/invite/Invite'
+import { AppCommand } from '@src/api/entities/interaction/AppCommand'
 
 export const Entities = {
   Message,
@@ -63,5 +64,6 @@ export const Entities = {
   MessageEmbed,
   MessageAttachment,
   Invite,
-  InviteGuild
+  InviteGuild,
+  AppCommand,
 }

@@ -1,10 +1,8 @@
 import { GatewayBotInfo, GatewayProvider, GatewayReceivePayloadLike, GatewaySendOptions, GatewayShardsInfo } from '@discordoo/providers'
 import { Client } from '@src/core'
 import { WebSocketManager } from '@src/gateway/WebSocketManager'
-import { rawToDiscordoo } from '@src/utils/rawToDiscordoo'
 import { CompletedGatewayOptions } from '@src/gateway/interfaces/GatewayOptions'
 import { GatewaySendPayloadLike } from '@discordoo/providers'
-import { WebSocketClientEvents } from '@src/constants'
 
 export class DefaultGatewayProvider implements GatewayProvider {
   public client: Client

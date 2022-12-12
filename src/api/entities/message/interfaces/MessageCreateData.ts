@@ -10,6 +10,7 @@ export interface MessageCreateData {
   message_reference: any // TODO: RawMessageReferenceData
   components: any[] // TODO: RawMessageComponentData[]
   stickers: string[]
+  flags?: 4 // only MessageFlags.SuppressEmbeds can be set
 }
 
 export interface WebhookMessageCreateData extends MessageCreateData {
@@ -19,5 +20,8 @@ export interface WebhookMessageCreateData extends MessageCreateData {
   avatar_url?: string
   /** Name of thread to create (requires the webhook channel to be a forum channel) */
   thread_name?: string
-  flags?: 4 // only MessageFlags.SuppressEmbeds can be set
+}
+
+export interface InteractionMessageCreateData extends Omit<MessageCreateData, 'message_reference' | 'stickers' | 'flags'> {
+  flags?: 4 | 64 | 68 // only MessageFlags.SuppressEmbeds and MessageFlags.Ephemeral can be set
 }

@@ -1,7 +1,7 @@
 import { EmptyBigBit, PermissionFlags } from '@src/constants'
-import { BigBitFieldResolvable } from '@src/api/entities/bitfield/interfaces'
-import { PermissionsCheckOptions } from '@src/api/entities/bitfield/interfaces/PermissionsCheckOptions'
-import { ReadonlyBigBitField } from '@src/api/entities/bitfield/ReadonlyBigBitField'
+import { BigBitFieldResolvable } from '@src/utils/bitfield/interfaces'
+import { PermissionsCheckOptions } from '@src/utils/bitfield/interfaces/PermissionsCheckOptions'
+import { ReadonlyBigBitField } from '@src/utils/bitfield/ReadonlyBigBitField'
 
 export class ReadonlyPermissions extends ReadonlyBigBitField {
   public static FLAGS: Readonly<typeof PermissionFlags> = PermissionFlags

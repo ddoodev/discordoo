@@ -18,7 +18,7 @@ import {
 } from '@src/api'
 import { GuildMemberResolvable } from '@src/api/entities/member/interfaces/GuildMemberResolvable'
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
-import { Permissions, ReadonlyPermissions } from '@src/api/entities/bitfield'
+import { Permissions, ReadonlyPermissions } from '@src/utils/bitfield'
 import { GuildMember } from '@src/api/entities/member/GuildMember'
 import { Role } from '@src/api/entities/role/Role'
 

@@ -6,7 +6,7 @@ import { EntitiesManager } from '@src/api/managers/EntitiesManager'
 import { ThreadChannelResolvable } from '@src/api/entities/channel/interfaces/ThreadChannelResolvable'
 import { GuildMemberResolvable } from '@src/api/entities/member/interfaces/GuildMemberResolvable'
 import { ThreadMemberResolvable } from '@src/api/entities/member/interfaces/ThreadMemberResolvable'
-import { DiscordooError, resolveChannelId, resolveGuildId, resolveUserOrMemberId } from '@src/utils'
+import { DiscordooError, resolveChannelId, resolveUserOrMemberId } from '@src/utils'
 
 export class ClientThreadMembersManager extends EntitiesManager {
   public cache: EntitiesCacheManager<ThreadMember>

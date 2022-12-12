@@ -4,7 +4,7 @@ import { idToDate, idToTimestamp, ImageUrlOptions, attach, resolveGuildId, Disco
 import { RawUserData } from '@src/api/entities/user/interfaces/RawUserData'
 import { Json } from '@src/api/entities/interfaces/Json'
 import { ToJsonProperties } from '@src/api/entities/interfaces/ToJsonProperties'
-import { UserFlagsUtil } from '@src/api/entities/bitfield'
+import { UserFlagsUtil } from '@src/utils/bitfield'
 import { DirectMessagesChannel, GuildResolvable, Message, MessageContent, MessageCreateOptions, Presence } from '@src/api'
 import { CacheManagerFilterOptions, CacheManagerGetOptions } from '@src/cache'
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'

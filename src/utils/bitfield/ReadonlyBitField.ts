@@ -1,4 +1,4 @@
-import { BitFieldResolvable } from '@src/api/entities/bitfield/interfaces'
+import { BitFieldResolvable } from '@src/utils/bitfield/interfaces'
 import { resolveBitField } from '@src/utils/resolve'
 import { EmptyBit } from '@src/constants'
 import { Json } from '@src/api/entities/interfaces/Json'

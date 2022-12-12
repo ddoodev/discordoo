@@ -41,6 +41,8 @@ export enum Keyspaces {
   Invites = 'invites',
   // invite-guilds => global => guild id
   InviteGuilds = 'invite-guilds',
+  // application-commands => global => command name
+  ApplicationCommands = 'application-commands',
   // other => any id (pointer) => any other cache
   Other = 'other',
 }

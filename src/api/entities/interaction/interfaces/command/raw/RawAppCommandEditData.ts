@@ -1,5 +1,4 @@
-import { DiscordLocale } from '@src/constants/common/DiscordLocale'
-import { AppCommandTypes } from '@src/constants'
+import { AppCommandTypes, DiscordLocale } from '@src/constants'
 import { RawAppCommandOptionData } from '@src/api'
 
 export interface RawAppCommandEditData {

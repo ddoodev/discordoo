@@ -1,10 +1,16 @@
-import { AppCommandOptionTypes, ChannelTypes } from '@src/constants'
-import { DiscordLocale } from '@src/constants/common/DiscordLocale'
+import { AppCommandOptionTypes, ChannelTypes, DiscordLocale } from '@src/constants'
 import { RawAppCommandOptionsChoiceData } from '@src/api/entities/interaction/interfaces/command/raw/RawAppCommandOptionsChoiceData'
 
-export interface RawAppCommandOptionData {
-  /** the type of option */
-  type: AppCommandOptionTypes
+export type RawAppCommandOptionData = RawAppCommandStringOptionData
+  | RawAppCommandIntegerOptionData
+  | RawAppCommandNumberOptionData
+  | RawAppCommandBooleanOptionData
+  | RawAppCommandUserOptionData
+  | RawAppCommandChannelOptionData
+  | RawAppCommandRoleOptionData
+  | RawAppCommandMentionableOptionData
+
+export interface RawAppCommandAbstractOptionData {
   /** 1-32 character name */
   name: string
   /** localization dictionary for `name` field. values follow the same restrictions as name */
@@ -18,116 +24,74 @@ export interface RawAppCommandOptionData {
    * @default false
    * */
   required?: boolean
-  /** choices for `STRING`, `INTEGER`, and `NUMBER` types for the user to pick from, max 25 */
+}
+
+export interface RawAppCommandStringOptionData extends RawAppCommandAbstractOptionData {
+  /** the type of option: string */
+  type: AppCommandOptionTypes.String
+  /** choices for `String` type for the user to pick from, max 25 */
   choices?: RawAppCommandOptionsChoiceData[]
-  /** if the option is a subcommand or subcommand group type, these nested options will be the parameters */
-  options?: RawAppCommandOptionData[]
-  /** if the option is a channel type, the channels shown will be restricted to these types */
-  channel_types?: ChannelTypes[]
-  /** if the option is an `INTEGER` or `NUMBER` type, the minimum value permitted */
-  min_value?: number
-  /** if the option is an `INTEGER` or `NUMBER` type, the maximum value permitted */
-  max_value?: number
   /**
    * enable autocomplete interactions for this option.
    * autocomplete may not be set to true if choices are present.
    * options using autocomplete are not confined to only use choices given by the application.
    * */
   autocomplete?: boolean
-}
-
-export interface RawAppCommandOptionStringData {
-  type: AppCommandOptionTypes.String
-  name: string
-  name_localizations?: Record<DiscordLocale, string>
-  description: string
-  description_localizations?: Record<DiscordLocale, string>
-  required?: boolean
-  choices?: RawAppCommandOptionsChoiceData[]
-  autocomplete?: boolean
-  max_length?: number
+  /** for option type `String`, the minimum allowed length (minimum of 0, maximum of 6000) */
   min_length?: number
+  /** for option type `String`, the maximum allowed length (minimum of 1, maximum of 6000) */
+  max_length?: number
 }
 
-export interface RawAppCommandOptionIntegerData {
+export interface RawAppCommandIntegerOptionData extends RawAppCommandAbstractOptionData {
   type: AppCommandOptionTypes.Integer
-  name: string
-  name_localizations?: Record<DiscordLocale, string>
-  description: string
-  description_localizations?: Record<DiscordLocale, string>
-  required?: boolean
+  /** choices for `Integer` type for the user to pick from, max 25 */
   choices?: RawAppCommandOptionsChoiceData[]
+  /**
+   * enable autocomplete interactions for this option.
+   * autocomplete may not be set to true if choices are present.
+   * options using autocomplete are not confined to only use choices given by the application.
+   * */
   autocomplete?: boolean
+  /** minimum value user can write */
   min_value?: number
+  /** maximum value user can write */
   max_value?: number
 }
 
-export interface RawAppCommandOptionNumberData {
+export interface RawAppCommandNumberOptionData extends RawAppCommandAbstractOptionData {
   type: AppCommandOptionTypes.Number
-  name: string
-  name_localizations?: Record<DiscordLocale, string>
-  description: string
-  description_localizations?: Record<DiscordLocale, string>
-  required?: boolean
+  /** choices for `Number` type for the user to pick from, max 25 */
   choices?: RawAppCommandOptionsChoiceData[]
+  /**
+   * enable autocomplete interactions for this option.
+   * autocomplete may not be set to true if choices are present.
+   * options using autocomplete are not confined to only use choices given by the application.
+   * */
   autocomplete?: boolean
+  /** minimum value user can write */
   min_value?: number
+  /** maximum value user can write */
   max_value?: number
 }
 
-export interface RawAppCommandOptionBooleanData {
+export interface RawAppCommandBooleanOptionData extends RawAppCommandAbstractOptionData {
   type: AppCommandOptionTypes.Boolean
-  name: string
-  name_localizations?: Record<DiscordLocale, string>
-  description: string
-  description_localizations?: Record<DiscordLocale, string>
-  required?: boolean
 }
 
-export interface RawAppCommandOptionUserData {
+export interface RawAppCommandUserOptionData extends RawAppCommandAbstractOptionData {
   type: AppCommandOptionTypes.User
-  name: string
-  name_localizations?: Record<DiscordLocale, string>
-  description: string
-  description_localizations?: Record<DiscordLocale, string>
-  required?: boolean
 }
 
-export interface RawAppCommandOptionChannelData {
+export interface RawAppCommandChannelOptionData extends RawAppCommandAbstractOptionData {
   type: AppCommandOptionTypes.Channel
-  name: string
-  name_localizations?: Record<DiscordLocale, string>
-  description: string
-  description_localizations?: Record<DiscordLocale, string>
-  required?: boolean
   channel_types?: ChannelTypes[]
 }
 
-export interface RawAppCommandOptionRoleData {
+export interface RawAppCommandRoleOptionData extends RawAppCommandAbstractOptionData {
   type: AppCommandOptionTypes.Role
-  name: string
-  name_localizations?: Record<DiscordLocale, string>
-  description: string
-  description_localizations?: Record<DiscordLocale, string>
-  required?: boolean
 }
 
-export interface RawAppCommandOptionMentionableData {
+export interface RawAppCommandMentionableOptionData extends RawAppCommandAbstractOptionData {
   type: AppCommandOptionTypes.Mentionable
-  name: string
-  name_localizations?: Record<DiscordLocale, string>
-  description: string
-  description_localizations?: Record<DiscordLocale, string>
-  required?: boolean
-}
-
-export interface RawAppCommandOptionAttachmentData {
-  width?: number
-  height?: number
-  size?: number
-  url?: string
-  proxy_url?: string
-  filename?: string
-  id?: string
-  content_type?: string
 }

@@ -1,13 +1,13 @@
 import { AppCommandOptionData } from '@src/api'
 import {
-  AppCommandOptionBooleanData,
-  AppCommandOptionChannelData,
-  AppCommandOptionIntegerData,
-  AppCommandOptionMentionableData,
-  AppCommandOptionNumberData,
-  AppCommandOptionRoleData,
+  AppCommandBooleanOptionData,
+  AppCommandChannelOptionData,
+  AppCommandIntegerOptionData,
+  AppCommandMentionableOptionData,
+  AppCommandNumberOptionData,
+  AppCommandRoleOptionData,
   AppCommandStringOptionData,
-  AppCommandOptionUserData,
+  AppCommandUserOptionData,
 } from '@src/api/entities/interaction/interfaces/command/common/AppCommandOptionData'
 
 export class MixinSlashCommandOptions {
@@ -16,31 +16,31 @@ export class MixinSlashCommandOptions {
     this.options.push(option)
     return this
   }
-  public addNumberOption(option: AppCommandOptionNumberData): this {
+  public addNumberOption(option: AppCommandNumberOptionData): this {
     this.options.push(option)
     return this
   }
-  public addIntegerOption(option: AppCommandOptionIntegerData): this {
+  public addIntegerOption(option: AppCommandIntegerOptionData): this {
     this.options.push(option)
     return this
   }
-  public addChannelOption(option: AppCommandOptionChannelData): this {
+  public addChannelOption(option: AppCommandChannelOptionData): this {
     this.options.push(option)
     return this
   }
-  public addRoleOption(option: AppCommandOptionRoleData): this {
+  public addRoleOption(option: AppCommandRoleOptionData): this {
     this.options.push(option)
     return this
   }
-  public addUserOption(option: AppCommandOptionUserData): this {
+  public addUserOption(option: AppCommandUserOptionData): this {
     this.options.push(option)
     return this
   }
-  public addMentionableOption(option: AppCommandOptionMentionableData): this {
+  public addMentionableOption(option: AppCommandMentionableOptionData): this {
     this.options.push(option)
     return this
   }
-  public addBooleanOption(option: AppCommandOptionBooleanData): this {
+  public addBooleanOption(option: AppCommandBooleanOptionData): this {
     this.options.push(option)
     return this
   }

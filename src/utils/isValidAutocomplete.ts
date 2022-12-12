@@ -14,13 +14,13 @@ export function isValidAutocomplete(data: any): data is AppCommandInteractionOpt
   if (
     data?.options?.some(option => {
       if (
-        option?.type !== AppCommandOptionTypes.SubCommandGroup &&
-        option?.type !== AppCommandOptionTypes.SubCommand &&
+        option?.type !== AppCommandOptionTypes.SubcommandGroup &&
+        option?.type !== AppCommandOptionTypes.Subcommand &&
         Array.isArray(option?.options)
       ) return true
 
       if (
-        option?.some(o => o?.type !== AppCommandOptionTypes.SubCommand && Array.isArray(o?.options))
+        option?.some(o => o?.type !== AppCommandOptionTypes.Subcommand && Array.isArray(o?.options))
       ) return true
     })
   ) return false
