@@ -1,4 +1,4 @@
-import { WebhookClient } from '@src/core/client/webhook/WebhookClient'
+import { WebhookClient } from '@src/core/apps/webhook/WebhookClient'
 import { CompletedRestOptions, RestManagerData, RestManagerRequestData } from '@src/rest/interfaces'
 import { RestFinishedResponse, RestProvider, RestRequestOptions } from '@discordoo/providers'
 import { RestProviderConstructor } from '@src/core/providers/ProviderConstructor'
@@ -6,14 +6,14 @@ import { WebhookRestRequest } from '@src/rest/interfaces/RestRequest'
 import { makeWebhookRequest } from '@src/rest/makeRequest'
 
 export class WebhookRestManager<P extends RestProvider = RestProvider> {
-  public client: WebhookClient
+  public app: WebhookClient
   public provider: P
   public options: CompletedRestOptions
 
-  constructor(client: WebhookClient, Provider: RestProviderConstructor<P>, data: RestManagerData) {
-    this.client = client
+  constructor(app: WebhookClient, Provider: RestProviderConstructor<P>, data: RestManagerData) {
+    this.app = app
     this.options = data.restOptions
-    this.provider = new Provider(this.client, data.restOptions, data.providerOptions)
+    this.provider = new Provider(this.app, data.restOptions, data.providerOptions)
   }
 
   api(): WebhookRestRequest {

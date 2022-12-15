@@ -1,5 +1,5 @@
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
-import { Client } from '@src/core'
+import { DiscordApplication } from '@src/core'
 import { EntitiesCacheManager, UserResolvable } from '@src/api'
 import { ThreadMember } from '@src/api/entities/member/ThreadMember'
 import { DiscordooError, resolveChannelId, resolveGuildId } from '@src/utils'
@@ -13,8 +13,8 @@ export class ThreadMembersManager extends EntitiesManager {
   public threadId: string
   public guildId: string
 
-  constructor(client: Client, data: ThreadMembersManagerData) {
-    super(client)
+  constructor(app: DiscordApplication, data: ThreadMembersManagerData) {
+    super(app)
 
     const threadId = resolveChannelId(data.thread)
     if (!threadId) throw new DiscordooError('ThreadMembersManager', 'Cannot operate without thread id.')
@@ -24,7 +24,7 @@ export class ThreadMembersManager extends EntitiesManager {
     if (!guildId) throw new DiscordooError('ThreadMembersManager', 'Cannot operate without guild id.')
     this.guildId = guildId
 
-    this.cache = new EntitiesCacheManager<ThreadMember>(this.client, {
+    this.cache = new EntitiesCacheManager<ThreadMember>(this.app, {
       keyspace: Keyspaces.ThreadMembers,
       storage: threadId,
       entity: 'ThreadMember',
@@ -33,11 +33,11 @@ export class ThreadMembersManager extends EntitiesManager {
   }
 
   remove(user: UserResolvable | GuildMemberResolvable | ThreadMemberResolvable | '@me'): Promise<boolean> {
-    return this.client.threadMembers.remove(this.threadId, user)
+    return this.app.threadMembers.remove(this.threadId, user)
   }
 
   add(user: UserResolvable | GuildMemberResolvable | ThreadMemberResolvable | '@me'): Promise<boolean> {
-    return this.client.threadMembers.add(this.threadId, user)
+    return this.app.threadMembers.add(this.threadId, user)
   }
 
 }

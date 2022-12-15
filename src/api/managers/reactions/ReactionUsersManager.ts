@@ -1,6 +1,6 @@
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
 import { EntitiesCacheManager, User, UserResolvable } from '@src/api'
-import { Client } from '@src/core'
+import { DiscordApplication } from '@src/core'
 import { ReactionUsersManagerData } from '@src/api/managers/reactions/ReactionUsersManagerData'
 import { Keyspaces } from '@src/constants'
 import { Collection } from '@discordoo/collection'
@@ -12,14 +12,14 @@ export class ReactionUsersManager extends EntitiesManager {
   public channelId: string
   public messageId: string
 
-  constructor(client: Client, data: ReactionUsersManagerData) {
-    super(client)
+  constructor(app: DiscordApplication, data: ReactionUsersManagerData) {
+    super(app)
 
     this.emojiId = data.emojiId
     this.channelId = data.channelId
     this.messageId = data.messageId
 
-    this.cache = new EntitiesCacheManager<User>(this.client, {
+    this.cache = new EntitiesCacheManager<User>(this.app, {
       keyspace: Keyspaces.MessageReactionUsers,
       storage: this.emojiId,
       entity: 'User',
@@ -28,11 +28,11 @@ export class ReactionUsersManager extends EntitiesManager {
   }
 
   fetch(options?: FetchReactionUsersOptions): Promise<Collection<string, User> | undefined> {
-    return this.client.reactions.fetchUsers(this.channelId, this.messageId, this.emojiId, options)
+    return this.app.reactions.fetchUsers(this.channelId, this.messageId, this.emojiId, options)
   }
 
   remove(user: UserResolvable | '@me'): Promise<boolean> {
-    return this.client.reactions.removeUser(this.channelId, this.messageId, this.emojiId, user)
+    return this.app.reactions.removeUser(this.channelId, this.messageId, this.emojiId, user)
   }
 
   removeMe(): Promise<boolean> {
@@ -40,7 +40,7 @@ export class ReactionUsersManager extends EntitiesManager {
   }
 
   removeAll(): Promise<boolean> {
-    return this.client.reactions.delete(this.channelId, this.messageId, this.emojiId)
+    return this.app.reactions.delete(this.channelId, this.messageId, this.emojiId)
   }
 
 }

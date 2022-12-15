@@ -9,6 +9,8 @@ import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 import { attach } from '@src/utils'
 import { AppCommandTypes, InteractionTypes, ToJsonOverrideSymbol } from '@src/constants'
+import { InteractionMessageContent } from '@src/api/entities/message/interfaces/MessageContent'
+import { InteractionMessageCreateOptions } from '@src/api/entities/message/interfaces/MessageCreateOptions'
 
 export class AppCommandInteraction extends Interaction {
   declare type: InteractionTypes.ApplicationCommand
@@ -21,12 +23,22 @@ export class AppCommandInteraction extends Interaction {
 
     const AppCmdIntData = EntitiesUtil.get('AppCommandInteractionData')
 
-    this.data = await new AppCmdIntData(this.client).init(
+    this.data = await new AppCmdIntData(this.app).init(
       { ...data.data, channelId: this.channelId, guildId: this.guildId },
       options
     )
 
     return this
+  }
+
+  async reply(content: InteractionMessageContent, options?: InteractionMessageCreateOptions): Promise<this | undefined> {
+    const result = await this.app.interactions.replyCommand(this.id, this.token, content, options)
+    return result ? this : undefined
+  }
+
+  async defer(): Promise<this | undefined> {
+    const result = await this.app.interactions.deferCommand(this.id, this.token)
+    return result ? this : undefined
   }
 
   toJson(properties: ToJsonProperties = {}, obj?: any): Json {
@@ -59,7 +71,7 @@ export class AppCommandInteractionData extends AbstractEntity {
 
     if (data.resolved) {
       this._resolved = data.resolved
-      this.resolved = new InteractionResolvedCacheManager(this.client, {
+      this.resolved = new InteractionResolvedCacheManager(this.app, {
         ...data.resolved,
         guildId: data.guildId,
         channelId: data.channelId

@@ -25,7 +25,7 @@ export class StickerPack extends AbstractEntity {
       const Sticker = EntitiesUtil.get('Sticker')
 
       for await (const stickerData of data.stickers) {
-        const sticker = await new Sticker(this.client).init(stickerData)
+        const sticker = await new Sticker(this.app).init(stickerData)
         stickers.set(sticker.id, sticker)
       }
 
@@ -62,7 +62,7 @@ export class StickerPack extends AbstractEntity {
   }
 
   bannerUrl(options?: ImageUrlOptions): string {
-    return this.client.internals.rest.cdn.stickerPackBanner(this.bannerAssetId, options)
+    return this.app.internals.rest.cdn.stickerPackBanner(this.bannerAssetId, options)
   }
 
   toJson(properties: ToJsonProperties = {}, obj?: any): Json {

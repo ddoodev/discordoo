@@ -58,23 +58,23 @@ export class ThreadMember extends AbstractEntity implements ThreadMemberData {
   }
 
   user(options?: CacheManagerGetOptions): Promise<User | undefined> {
-    return this.client.users.cache.get(this.userId, options)
+    return this.app.users.cache.get(this.userId, options)
   }
 
   async dm(options?: CacheManagerGetOptions): Promise<DirectMessagesChannel | undefined> {
-    let channel = await this.client.dms.cache.get(this.userId, options)
+    let channel = await this.app.dms.cache.get(this.userId, options)
     if (!channel) {
-      channel = await this.client.dms.fetch(this.userId)
+      channel = await this.app.dms.fetch(this.userId)
     }
     return channel
   }
 
   guild(options?: CacheManagerGetOptions): Promise<Guild | undefined> {
-    return this.client.guilds.cache.get(this.guildId, options)
+    return this.app.guilds.cache.get(this.guildId, options)
   }
 
   member(options?: CacheManagerGetOptions): Promise<GuildMember | undefined> {
-    return this.client.internals.cache.get(
+    return this.app.internals.cache.get(
       Keyspaces.GuildMembers,
       this.guildId,
       'GuildMember',
@@ -84,12 +84,12 @@ export class ThreadMember extends AbstractEntity implements ThreadMemberData {
   }
 
   async remove(): Promise<this | undefined> {
-    const result = await this.client.threadMembers.remove(this.threadId, this.userId)
+    const result = await this.app.threadMembers.remove(this.threadId, this.userId)
     return result ? this : undefined
   }
 
   async add(): Promise<this | undefined> {
-    const result = await this.client.threadMembers.add(this.threadId, this.userId)
+    const result = await this.app.threadMembers.add(this.threadId, this.userId)
     return result ? this : undefined
   }
 

@@ -4,7 +4,7 @@ import { MessageResolvable } from '@src/api'
 export class DirectMessagesChannelMessagesManager extends AbstractMessagesManager {
 
   delete(message: MessageResolvable, reason?: string): Promise<boolean> {
-    return this.client.messages.deleteOne(this.channelId, message, reason)
+    return this.app.messages.deleteOne(this.channelId, message, reason)
   }
 
 }

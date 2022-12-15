@@ -13,6 +13,7 @@ const read = promisify(fs.readFile)
 export class DataResolver {
   static async resolveBuffer(buffer: BufferResolvable, options?: ResolveBufferOptions): Promise<Buffer | ArrayBuffer> {
     if (Buffer.isBuffer(buffer) || buffer instanceof ArrayBuffer) return buffer
+    if (ArrayBuffer.isView(buffer)) return buffer.buffer
 
     if (typeof buffer === 'object' && typeof buffer.pipe === 'function') {
       return new Promise<Buffer>((resolve, reject) => {

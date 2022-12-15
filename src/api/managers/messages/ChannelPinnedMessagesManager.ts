@@ -1,6 +1,6 @@
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
 import { EntitiesCacheManager, Message, MessageResolvable, MessagesManagerData } from '@src/api'
-import { Client } from '@src/core'
+import { DiscordApplication } from '@src/core'
 import { DiscordooError, resolveChannelId } from '@src/utils'
 import { Keyspaces } from '@src/constants'
 
@@ -9,8 +9,8 @@ export class ChannelPinnedMessagesManager extends EntitiesManager {
   public channelId: string
   public lastPinTimestamp?: number
 
-  constructor(client: Client, data: MessagesManagerData) {
-    super(client)
+  constructor(app: DiscordApplication, data: MessagesManagerData) {
+    super(app)
 
     const id = resolveChannelId(data.channel)
     if (!id) throw new DiscordooError('ChannelPinnedMessagesManager', 'Cannot operate without channel id.')
@@ -18,7 +18,7 @@ export class ChannelPinnedMessagesManager extends EntitiesManager {
 
     this.lastPinTimestamp = data.lastPinTimestamp
 
-    this.cache = new EntitiesCacheManager<Message>(this.client, {
+    this.cache = new EntitiesCacheManager<Message>(this.app, {
       keyspace: Keyspaces.PinnedMessages,
       storage: this.channelId,
       entity: 'Message',
@@ -31,15 +31,15 @@ export class ChannelPinnedMessagesManager extends EntitiesManager {
   }
 
   add(message: MessageResolvable, reason?: string) {
-    return this.client.messages.pin(this.channelId, message, reason)
+    return this.app.messages.pin(this.channelId, message, reason)
   }
 
   remove(message: MessageResolvable, reason?: string) {
-    return this.client.messages.unpin(this.channelId, message, reason)
+    return this.app.messages.unpin(this.channelId, message, reason)
   }
 
   fetch() {
-    return this.client.messages.fetchPinned(this.channelId)
+    return this.app.messages.fetchPinned(this.channelId)
   }
 
 }

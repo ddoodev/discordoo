@@ -7,10 +7,10 @@ export class UserUpdateEvent extends AbstractEvent<UserUpdateEventContext> {
   public name = EventNames.USER_UPDATE
 
   async execute(shardId: number, data: RawUserData) {
-    const stored = this.client.user
+    const stored = this.app.user
     const updated = await (await stored._clone()).init(data)
 
-    await this.client.users.cache.set(data.id, updated)
+    await this.app.users.cache.set(data.id, updated)
 
     const context: UserUpdateEventContext = {
       userId: data.id,
@@ -19,7 +19,7 @@ export class UserUpdateEvent extends AbstractEvent<UserUpdateEventContext> {
       shardId,
     }
 
-    this.client.emit(EventNames.USER_UPDATE, context)
+    this.app.emit(EventNames.USER_UPDATE, context)
     return context
   }
 }

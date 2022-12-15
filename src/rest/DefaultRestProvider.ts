@@ -1,18 +1,18 @@
 import { MultipartData } from '@src/utils/MultipartData'
 import { Client as Undici, request } from 'undici'
 import { DiscordooError } from '@src/utils'
-import { Client } from '@src/core'
+import { DiscordApplication } from '@src/core'
 import { RestFinishedResponse, RestProvider, RestRequestData, RestRequestOptions } from '@discordoo/providers'
 import { CompletedRestOptions } from '@src/rest'
 import * as process from 'process'
 
 export class DefaultRestProvider implements RestProvider {
-  public readonly client: Client
+  public readonly app: DiscordApplication
   public readonly options: CompletedRestOptions
   private readonly undici: Undici
 
-  constructor(client: Client, options: CompletedRestOptions) {
-    this.client = client
+  constructor(app: DiscordApplication, options: CompletedRestOptions) {
+    this.app = app
     this.options = options
     this.undici = new Undici(`${this.options.api.scheme}://${this.options.api.domain}/`)
   }

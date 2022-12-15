@@ -1,11 +1,9 @@
 import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 import { AnyWritableChannel, Guild, GuildMember, InteractionData, Message, RawInteractionData, User } from '@src/api'
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
-import { attach, createMessagePayload, idToDate, idToTimestamp } from '@src/utils'
+import { attach, idToDate, idToTimestamp } from '@src/utils'
 import { InteractionTypes, Keyspaces } from '@src/constants'
 import { CacheManagerGetOptions } from '@src/cache'
-import { InteractionMessageContent } from '@src/api/entities/message/interfaces/MessageContent'
-import { InteractionMessageCreateOptions } from '@src/api/entities/message/interfaces/MessageCreateOptions'
 
 export class Interaction extends AbstractEntity {
   declare id: string
@@ -57,23 +55,23 @@ export class Interaction extends AbstractEntity {
   }
 
   async guild(options?: CacheManagerGetOptions): Promise<Guild | undefined> {
-    return this.guildId ? this.client.guilds.cache.get(this.guildId, options) : undefined
+    return this.guildId ? this.app.guilds.cache.get(this.guildId, options) : undefined
   }
 
   async channel(options?: CacheManagerGetOptions): Promise<AnyWritableChannel | undefined> {
     if (this.channelId) {
-      return this.client.internals.cache.get(
+      return this.app.internals.cache.get(
         Keyspaces.Channels, this.guildId ?? 'dm', 'channelEntityKey', this.channelId, options
       )
     }
   }
 
   async member(options?: CacheManagerGetOptions): Promise<GuildMember | undefined> {
-    return this.memberId ? this.client.members.cache.get(this.memberId, { ...options, storage: this.guildId }) : undefined
+    return this.memberId ? this.app.members.cache.get(this.memberId, { ...options, storage: this.guildId }) : undefined
   }
 
   async user(options?: CacheManagerGetOptions): Promise<User | undefined> {
-    return this.userId ? this.client.users.cache.get(this.userId, options) : undefined
+    return this.userId ? this.app.users.cache.get(this.userId, options) : undefined
   }
 
   async author(options?: CacheManagerGetOptions): Promise<User | GuildMember | undefined> {
@@ -81,16 +79,6 @@ export class Interaction extends AbstractEntity {
   }
 
   async message(options?: CacheManagerGetOptions): Promise<Message | undefined> {
-    return this.messageId ? this.client.messages.cache.get(this.messageId, { ...options, storage: this.channelId }) : undefined
-  }
-
-  async reply(content: InteractionMessageContent, options?: InteractionMessageCreateOptions): Promise<void> {
-    if (!this.canReply) {
-      throw new Error('Cannot reply to this interaction')
-    }
-
-    const message = await createMessagePayload<true>(content, options)
-
-
+    return this.messageId ? this.app.messages.cache.get(this.messageId, { ...options, storage: this.channelId }) : undefined
   }
 }

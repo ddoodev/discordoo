@@ -8,8 +8,8 @@ export class GuildMemberAddEvent extends AbstractEvent<GuildMemberAddEventContex
   async execute(shardId: number, data: RawGuildMemberData & { guild_id: string }) {
     const GuildMember = EntitiesUtil.get('GuildMember')
 
-    const member = await new GuildMember(this.client).init({ ...data, guild_owner: false })
-    await this.client.members.cache.set(member.userId, member, { storage: member.guildId })
+    const member = await new GuildMember(this.app).init({ ...data, guild_owner: false })
+    await this.app.members.cache.set(member.userId, member, { storage: member.guildId })
 
     // TODO: should we do something with data.user?
 
@@ -20,7 +20,7 @@ export class GuildMemberAddEvent extends AbstractEvent<GuildMemberAddEventContex
       member
     }
 
-    this.client.emit(EventNames.GUILD_MEMBER_ADD, context)
+    this.app.emit(EventNames.GUILD_MEMBER_ADD, context)
     return context
   }
 }

@@ -18,7 +18,7 @@ export class InviteChannel extends AbstractChannel  {
   }
 
   iconUrl(options?: ImageUrlOptions): string | undefined {
-    return this.icon ? this.client.internals.rest.cdn.channelIcon(this.id, this.icon, options) : undefined
+    return this.icon ? this.app.internals.rest.cdn.channelIcon(this.id, this.icon, options) : undefined
   }
 
   toJson(properties: ToJsonProperties = {}, obj?: any): Json {

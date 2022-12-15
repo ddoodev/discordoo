@@ -7,7 +7,7 @@ import {
   GatewayShardsInfo
 } from '@discordoo/providers'
 import { GatewayManagerData } from '@src/gateway/interfaces'
-import { Client, ProviderConstructor } from '@src/core'
+import { DiscordApplication, ProviderConstructor } from '@src/core'
 import { DiscordooError, ValidationError, wait } from '@src/utils'
 import { Endpoints, WebSocketClientEvents } from '@src/constants'
 import { CompletedGatewayOptions } from '@src/gateway/interfaces/GatewayOptions'
@@ -15,12 +15,12 @@ import { rawToDiscordoo } from '@src/utils/rawToDiscordoo'
 
 export class GatewayManager<P extends GatewayProvider = GatewayProvider> {
   public provider: P
-  public client: Client
+  public app: DiscordApplication
   public options: CompletedGatewayOptions
 
-  constructor(client: Client, Provider: ProviderConstructor<P>, data: GatewayManagerData) {
-    this.client = client
-    this.provider = new Provider(this.client, data.gatewayOptions, data.providerOptions)
+  constructor(app: DiscordApplication, Provider: ProviderConstructor<P>, data: GatewayManagerData) {
+    this.app = app
+    this.provider = new Provider(this.app, data.gatewayOptions, data.providerOptions)
     this.options = data.gatewayOptions
   }
 
@@ -39,12 +39,12 @@ export class GatewayManager<P extends GatewayProvider = GatewayProvider> {
   }
 
   emit(shardId: number, packet: GatewayReceivePayloadLike) { // TODO: events overload protection
-    this.client.emit('raw', packet)
+    this.app.emit('raw', packet)
 
     if (!packet.t) return
     const event = packet.t === WebSocketClientEvents.Connected ? 'shardConnected' : rawToDiscordoo(packet.t)
 
-    return this.client.internals.events.handlers.get(event)?.execute(shardId, packet.d)
+    return this.app.internals.events.handlers.get(event)?.execute(shardId, packet.d)
   }
 
   reorganizeShards(shards: GatewayShardsInfo): Promise<unknown> {
@@ -56,7 +56,7 @@ export class GatewayManager<P extends GatewayProvider = GatewayProvider> {
   }
 
   async getGateway(): Promise<GatewayBotInfo> {
-    const response = await this.client.internals.rest.api()
+    const response = await this.app.internals.rest.api()
       .url(Endpoints.GATEWAY_BOT())
       .get<GatewayBotInfo>()
 

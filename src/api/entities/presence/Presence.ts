@@ -12,7 +12,7 @@ import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class Presence extends AbstractEntity {
   public activities: PresenceActivity[] = []
-  public clientStatus: PresenceClientStatusData = {}
+  public appStatus: PresenceClientStatusData = {}
   public declare guildId: string
   public declare status: PresenceStatus
   public declare userId: string
@@ -25,7 +25,7 @@ export class Presence extends AbstractEntity {
       const activities: any[] = []
 
       for await (const activity of data.activities) {
-        activities.push(await new Activity(this.client).init(activity))
+        activities.push(await new Activity(this.app).init(activity))
       }
 
       data.activities = activities
@@ -38,7 +38,7 @@ export class Presence extends AbstractEntity {
     attach(this, data, {
       props: [
         [ 'guildId', 'guild_id' ],
-        [ 'clientStatus', 'client_status' ],
+        [ 'appStatus', 'app_status' ],
         'status',
         'userId',
         'activities',
@@ -51,7 +51,7 @@ export class Presence extends AbstractEntity {
   }
 
   async member(options?: CacheManagerGetOptions): Promise<GuildMember | undefined> {
-    return this.client.internals.cache.get(
+    return this.app.internals.cache.get(
       Keyspaces.GuildMembers,
       this.guildId,
       'GuildMember',
@@ -61,11 +61,11 @@ export class Presence extends AbstractEntity {
   }
 
   async guild(options?: CacheManagerGetOptions): Promise<Guild | undefined> {
-    return this.client.guilds.cache.get(this.guildId, options)
+    return this.app.guilds.cache.get(this.guildId, options)
   }
 
   async user(options?: CacheManagerGetOptions): Promise<User | undefined> {
-    return this.client.users.cache.get(this.userId, options)
+    return this.app.users.cache.get(this.userId, options)
   }
 
   toJson(properties: ToJsonProperties = {}, obj?: any): Json {
@@ -75,7 +75,7 @@ export class Presence extends AbstractEntity {
         override: ToJsonOverrideSymbol,
         value: this.activities.map(a => a.toJson())
       },
-      clientStatus: true,
+      appStatus: true,
       guildId: true,
       status: true,
       userId: true,

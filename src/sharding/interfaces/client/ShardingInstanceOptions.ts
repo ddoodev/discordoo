@@ -1,4 +1,4 @@
-import { ShardingInstanceEnvironment } from '@src/sharding/interfaces/client/ShardingInstanceEnvironment'
+import { ShardingInstanceEnvironment } from '@src/sharding/interfaces/app/ShardingInstanceEnvironment'
 import { PartialShardingModes } from '@src/constants'
 import { IpcClientTlsOptions } from '@src/sharding/interfaces/ipc/IpcClientTlsOptions'
 import { RawIpcConfig } from '@src/sharding/interfaces/ipc/RawIpcConfig'

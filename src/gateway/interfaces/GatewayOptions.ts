@@ -3,7 +3,7 @@ import { GatewayIntentsResolvable } from '@src/gateway/interfaces/GatewayIntents
 import { PresenceUpdateData } from '@src/api'
 import { GatewayIdentifyProperties } from '@src/gateway/interfaces/GatewayIdentifyProperties'
 
-/** Options for client's gateway connection */
+/** Options for app's gateway connection */
 export interface GatewayOptions {
   /** Authentication token */
   token?: string
@@ -69,10 +69,10 @@ export interface GatewayShardingOptions {
    * */
   shards?: ShardListResolvable
   /**
-   * The number of shards that this client has. Includes all processes, all hosting servers, etc.
+   * The number of shards that this app has. Includes all processes, all hosting servers, etc.
    *
    * Used by the library internals for correct interprocess sharding.
-   * Can be used for client clustering.
+   * Can be used for app clustering.
    * @default calculated automatically or provided by sharding manager
    * */
   totalShards?: number

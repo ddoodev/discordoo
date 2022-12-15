@@ -1,17 +1,18 @@
-import { Client } from '@src/core'
+import { DiscordApplication } from '@src/core'
 import { Collection } from '@discordoo/collection'
 import { CacheStorageKey, CacheProvider } from '@discordoo/providers'
+import { AnyDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
 
 export class DefaultCacheProvider implements CacheProvider {
   private keyspaces: Collection<string, Collection<string, Collection>>
 
-  public client: Client
+  public app: AnyDiscordApplication
   public compatible: 'classes' | 'json' | 'text' | 'buffer' = 'classes'
   public sharedCache = false
 
-  constructor(client: Client) {
+  constructor(app: AnyDiscordApplication) {
     this.keyspaces = new Collection<string, Collection<string, Collection>>()
-    this.client = client
+    this.app = app
   }
 
   async init(): Promise<void> {

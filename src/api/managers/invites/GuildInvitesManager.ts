@@ -1,15 +1,15 @@
 import { EntitiesCacheManager, InviteGuild } from '@src/api'
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
-import { Client } from '@src/core'
+import { DiscordApplication } from '@src/core'
 import { Keyspaces } from '@src/constants'
 
 export class GuildInvitesManager extends EntitiesManager {
   cache: EntitiesCacheManager<InviteGuild>
 
-  constructor(client: Client) {
-    super(client)
+  constructor(app: DiscordApplication) {
+    super(app)
 
-    this.cache = new EntitiesCacheManager<InviteGuild>(this.client, {
+    this.cache = new EntitiesCacheManager<InviteGuild>(this.app, {
       keyspace: Keyspaces.InviteGuilds,
       storage: 'global',
       entity: 'InviteGuild',

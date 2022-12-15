@@ -1,7 +1,7 @@
 export { AbstractMessagesManager } from '@src/api/managers/messages/AbstractMessagesManager'
 export { ChannelMessagesManager } from '@src/api/managers/messages/ChannelMessagesManager'
 export { ChannelPinnedMessagesManager } from '@src/api/managers/messages/ChannelPinnedMessagesManager'
-export { ClientMessagesManager } from '@src/api/managers/messages/ClientMessagesManager'
+export { ApplicationMessagesManager } from '@src/api/managers/messages/ApplicationMessagesManager'
 export { DeleteManyMessagesOptions } from '@src/api/managers/messages/DeleteManyMessagesOptions'
 export { DirectMessagesChannelMessagesManager } from '@src/api/managers/messages/DirectMessagesChannelMessagesManager'
 export { FetchManyMessagesQuery } from '@src/api/managers/messages/FetchManyMessagesQuery'

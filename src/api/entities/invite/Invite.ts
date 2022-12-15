@@ -48,7 +48,7 @@ export class Invite extends AbstractEntity {
     })
 
     if (data.channel) {
-      this._channel = await new InviteChannel(this.client).init(data.channel)
+      this._channel = await new InviteChannel(this.app).init(data.channel)
       this.channelId = this._channel.id
     }
 
@@ -98,19 +98,19 @@ export class Invite extends AbstractEntity {
   }
 
   async inviter(options?: CacheManagerGetOptions): Promise<User | undefined> {
-    return this.inviterId ? await this.client.users.cache.get(this.inviterId, options) : undefined
+    return this.inviterId ? await this.app.users.cache.get(this.inviterId, options) : undefined
   }
 
   async targetUser(options?: CacheManagerGetOptions): Promise<User | undefined> {
-    return this.targetUserId ? await this.client.users.cache.get(this.targetUserId, options) : undefined
+    return this.targetUserId ? await this.app.users.cache.get(this.targetUserId, options) : undefined
   }
 
   async guild(options?: CacheManagerGetOptions): Promise<InviteGuild | undefined> {
-    return this.guildId ? await this.client.invites.guilds.cache.get(this.guildId, options) : undefined
+    return this.guildId ? await this.app.invites.guilds.cache.get(this.guildId, options) : undefined
   }
 
   async channel(): Promise<AnyInvitableChannel | InviteChannel | undefined> {
-    return this._channel ? this._channel : this.channelId ? this.client.channels.cache.get<AnyInvitableChannel>(this.channelId) : undefined
+    return this._channel ? this._channel : this.channelId ? this.app.channels.cache.get<AnyInvitableChannel>(this.channelId) : undefined
   }
 
   toJson(properties: ToJsonProperties = {}, obj?: any): Json {

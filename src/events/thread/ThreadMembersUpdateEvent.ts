@@ -9,7 +9,7 @@ export class ThreadMembersUpdateEvent extends AbstractEvent<ThreadMembersUpdateE
 
   async execute(shardId: number, data: RawThreadMembersUpdateEventData) {
 
-    const thread: AnyThreadChannel | undefined = await this.client.channels.cache.get(data.id, { storage: data.guild_id })
+    const thread: AnyThreadChannel | undefined = await this.app.channels.cache.get(data.id, { storage: data.guild_id })
     if (thread) {
       await thread.init({
         member_count: data.member_count,
@@ -18,7 +18,7 @@ export class ThreadMembersUpdateEvent extends AbstractEvent<ThreadMembersUpdateE
         type: thread.type
       })
 
-      await thread.client.channels.cache.set(thread.id, thread, { storage: thread.guildId })
+      await thread.app.channels.cache.set(thread.id, thread, { storage: thread.guildId })
     }
 
     /*
@@ -28,12 +28,12 @@ export class ThreadMembersUpdateEvent extends AbstractEvent<ThreadMembersUpdateE
     const removed: Collection<string, ThreadMember> = new Collection()
 
     for await (const id of data.removed_member_ids ?? []) {
-      const member = await this.client.threadMembers.cache.get(id, { storage: data.id })
+      const member = await this.app.threadMembers.cache.get(id, { storage: data.id })
       if (member) removed.set(id, member)
     }
 
     if (data.removed_member_ids?.length) {
-      await this.client.threadMembers.cache.delete(data.removed_member_ids, { storage: data.id })
+      await this.app.threadMembers.cache.delete(data.removed_member_ids, { storage: data.id })
     }
 
     const added: Collection<string, ThreadMember> = new Collection(),
@@ -43,13 +43,13 @@ export class ThreadMembersUpdateEvent extends AbstractEvent<ThreadMembersUpdateE
       Presence = EntitiesUtil.get('Presence')
 
     for await (const member of data.added_members ?? []) {
-      const threadMember = await new TMember(this.client).init({ ...member, guild_id: data.guild_id })
-      const guildMember = await new GMember(this.client).init({ ...member.member, guild_id: data.guild_id })
-      const presence = member.presence ? await new Presence(this.client).init(member.presence) : undefined
+      const threadMember = await new TMember(this.app).init({ ...member, guild_id: data.guild_id })
+      const guildMember = await new GMember(this.app).init({ ...member.member, guild_id: data.guild_id })
+      const presence = member.presence ? await new Presence(this.app).init(member.presence) : undefined
 
-      await this.client.members.cache.set(member.user_id, guildMember, { storage: data.guild_id })
-      await this.client.threadMembers.cache.set(member.user_id, threadMember, { storage: data.id })
-      if (presence) await this.client.presences.cache.set(member.user_id, presence, { storage: data.guild_id })
+      await this.app.members.cache.set(member.user_id, guildMember, { storage: data.guild_id })
+      await this.app.threadMembers.cache.set(member.user_id, threadMember, { storage: data.id })
+      if (presence) await this.app.presences.cache.set(member.user_id, presence, { storage: data.guild_id })
 
       added.set(member.user_id, threadMember)
       addedGuildMembers.set(member.user_id, guildMember)
@@ -67,7 +67,7 @@ export class ThreadMembersUpdateEvent extends AbstractEvent<ThreadMembersUpdateE
       removedIds: data.removed_member_ids ?? [],
     }
 
-    this.client.emit(EventNames.THREAD_MEMBERS_UPDATE, context)
+    this.app.emit(EventNames.THREAD_MEMBERS_UPDATE, context)
     return context
   }
 }

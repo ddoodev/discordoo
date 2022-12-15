@@ -1,4 +1,4 @@
-import { Client } from '@src/core'
+import { DiscordApplication } from '@src/core'
 import { Collection } from '@discordoo/collection'
 import { RestManagerRequestData } from '@src/rest/interfaces'
 import { RestRateLimitBucket } from '@src/rest/interfaces/RestRateLimitBucket'
@@ -12,7 +12,7 @@ import { wait } from '@src/utils'
  *
  * */
 export class RestLimitsManager {
-  public client: Client
+  public app: DiscordApplication
 
   private allowedRequests = 50
   private allowedResetAt = Date.now() + 1000
@@ -42,8 +42,8 @@ export class RestLimitsManager {
 
   public locked = false
 
-  constructor(client: Client) {
-    this.client = client
+  constructor(app: DiscordApplication) {
+    this.app = app
   }
 
   public execute(request: RestManagerRequestData, options?: RestRequestOptions) {
@@ -104,7 +104,7 @@ export class RestLimitsManager {
   private async perform(
     request: RestManagerRequestData, options?: RestRequestOptions, retried = 0
   ): RestFinishedResponse<any> {
-    const result = await this.client.internals.rest.provider.request({
+    const result = await this.app.internals.rest.provider.request({
       method: request.method,
       path: request.path,
       attachments: request.attachments ?? [],
@@ -115,7 +115,7 @@ export class RestLimitsManager {
     if (result.statusCode < 500 && result.statusCode !== -1) {
       return result
     } else {
-      if (retried >= this.client.internals.options.rest.retries) return result
+      if (retried >= this.app.internals.options.rest.retries) return result
       return wait(1000).then(() => this.perform(request, options, retried++))
     }
   }
@@ -145,7 +145,7 @@ export class RestLimitsManager {
   }
 
   async init() {
-    if (!this.client.internals.sharding.active) {
+    if (!this.app.internals.sharding.active) {
       let remaining = 10 * 60 * 1000 // 10 minutes, in ms
 
       /**

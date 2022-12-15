@@ -10,7 +10,7 @@ export class GuildMembersChunkEvent extends AbstractEvent<GuildMembersChunkEvent
 
   async execute(shardId: number, data: RawGuildMembersChunkData) {
 
-    const owner = await this.client.internals.cache.get(
+    const owner = await this.app.internals.cache.get(
       Keyspaces.Other,
       'guild-owners',
       'any',
@@ -20,7 +20,7 @@ export class GuildMembersChunkEvent extends AbstractEvent<GuildMembersChunkEvent
     const ownerId = owner ? owner.id : undefined
 
     const members: Promise<GuildMember>[] = data.members.map(async memberData => {
-      let member = await this.client.internals.cache.get<string, GuildMember>(
+      let member = await this.app.internals.cache.get<string, GuildMember>(
         Keyspaces.GuildMembers,
         data.guild_id,
         'GuildMember',
@@ -31,18 +31,18 @@ export class GuildMembersChunkEvent extends AbstractEvent<GuildMembersChunkEvent
         await member.init(memberData)
       } else {
         const Member = EntitiesUtil.get('GuildMember')
-        member = await new Member(this.client).init({
+        member = await new Member(this.app).init({
           ...memberData, guild_id: data.guild_id, guild_owner: ownerId === memberData.user.id
         })
       }
 
-      await this.client.members.cache.set(member.userId, member, { storage: memberData.guild_id })
+      await this.app.members.cache.set(member.userId, member, { storage: memberData.guild_id })
 
       return member
     })
 
     const presences: Promise<Presence>[] | undefined = data.presences?.map(async presenceData => {
-      let presence = await this.client.internals.cache.get<string, Presence>(
+      let presence = await this.app.internals.cache.get<string, Presence>(
         Keyspaces.GuildPresences,
         data.guild_id,
         'Presence',
@@ -53,10 +53,10 @@ export class GuildMembersChunkEvent extends AbstractEvent<GuildMembersChunkEvent
         await presence.init(presenceData)
       } else {
         const Presence = EntitiesUtil.get('Presence')
-        presence = await new Presence(this.client).init(presenceData)
+        presence = await new Presence(this.app).init(presenceData)
       }
 
-      await this.client.presences.cache.set(presence.userId, presence, { storage: presenceData.guild_id })
+      await this.app.presences.cache.set(presence.userId, presence, { storage: presenceData.guild_id })
 
       return presence
     })
@@ -74,17 +74,17 @@ export class GuildMembersChunkEvent extends AbstractEvent<GuildMembersChunkEvent
 
     // console.log(context)
 
-    const queue = data.nonce ? this.client.internals.queues.members.get(data.nonce) : undefined
+    const queue = data.nonce ? this.app.internals.queues.members.get(data.nonce) : undefined
 
     if (queue) {
       const result = queue.handler(context, queue)
 
       if (result !== true) {
-        this.client.internals.queues.members.set(result.nonce, result)
+        this.app.internals.queues.members.set(result.nonce, result)
       }
     }
 
-    this.client.emit(EventNames.GUILD_MEMBERS_CHUNK, context)
+    this.app.emit(EventNames.GUILD_MEMBERS_CHUNK, context)
     return context
   }
 

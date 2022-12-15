@@ -171,7 +171,7 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
           if (s === SHARDING_MANAGER_ID) {
             const context = {
               ...fromJson((packet as IpcBroadcastEvalRequestPacket).d.context),
-              client: this.instance.manager
+              app: this.instance.manager
             }
 
             return evalWithoutScopeChain(context, (packet as IpcBroadcastEvalRequestPacket).d.script)

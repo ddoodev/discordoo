@@ -120,6 +120,8 @@ export class Endpoints {
     =                      (guildId, user) => [ 'guilds', guildId, 'voice-states', user ]
   static readonly GUILDS
     =                                   () => [ 'guilds' ]
+  static readonly INTERACTION_RESPONSE
+    =                   (interactionId, token) => [ 'interactions', interactionId, token, 'callback' ]
   static readonly INVITE
     =                           (inviteId) => [ 'invites', inviteId ]
   static readonly OAUTH2_APPLICATION

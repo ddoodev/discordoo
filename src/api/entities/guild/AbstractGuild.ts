@@ -59,7 +59,7 @@ export abstract class AbstractGuild extends AbstractEntity implements AbstractGu
   }
 
   iconUrl(options?: ImageUrlOptions): string | undefined {
-    return this.icon ? this.client.internals.rest.cdn.icon(this.id, this.icon, options) : undefined
+    return this.icon ? this.app.internals.rest.cdn.icon(this.id, this.icon, options) : undefined
   }
 
   toString() {

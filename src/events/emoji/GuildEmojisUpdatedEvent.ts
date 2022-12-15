@@ -10,7 +10,7 @@ export class GuildEmojisUpdatedEvent extends AbstractEvent<GuildEmojisUpdatedEve
 
   async execute(shardId: number, data: RawGuildEmojisUpdatedEventData) {
 
-    const cache = await this.client.emojis.cache.entries<GuildEmoji>({ storage: data.guild_id }),
+    const cache = await this.app.emojis.cache.entries<GuildEmoji>({ storage: data.guild_id }),
       added: Collection<string, GuildEmoji> = new Collection(),
       updated: Collection<string, GuildEmojiUpdatedContext> = new Collection(),
       removed: Collection<string, GuildEmoji> = new Collection(),
@@ -35,12 +35,12 @@ export class GuildEmojisUpdatedEvent extends AbstractEvent<GuildEmojisUpdatedEve
             updated: clone,
             stored: cachedEmoji
           })
-          await this.client.emojis.cache.set(emojiData.id, clone, { storage: data.guild_id })
+          await this.app.emojis.cache.set(emojiData.id, clone, { storage: data.guild_id })
         }
 
       } else {
-        const emoji = await new Emoji(this.client).init(emojiData)
-        await this.client.emojis.cache.set(emojiData.id, emoji, { storage: data.guild_id })
+        const emoji = await new Emoji(this.app).init(emojiData)
+        await this.app.emojis.cache.set(emojiData.id, emoji, { storage: data.guild_id })
         added.set(emojiData.id, emoji)
       }
     }
@@ -53,7 +53,7 @@ export class GuildEmojisUpdatedEvent extends AbstractEvent<GuildEmojisUpdatedEve
       }
     }
 
-    await this.client.emojis.cache.delete(snapshot, { storage: data.guild_id })
+    await this.app.emojis.cache.delete(snapshot, { storage: data.guild_id })
 
     const context: GuildEmojisUpdatedEventContext = {
       updated,
@@ -63,7 +63,7 @@ export class GuildEmojisUpdatedEvent extends AbstractEvent<GuildEmojisUpdatedEve
       guildId: data.guild_id
     }
 
-    this.client.emit(EventNames.GUILD_EMOJIS_UPDATE, context)
+    this.app.emit(EventNames.GUILD_EMOJIS_UPDATE, context)
     return context
   }
 }

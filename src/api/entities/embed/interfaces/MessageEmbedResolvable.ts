@@ -1,4 +1,4 @@
 import { MessageEmbed, MessageEmbedData, RawMessageEmbedData } from '@src/api/entities/embed'
-import { MessageEmbedConstructor } from '@src/api/entities/embed/MessageEmbedConstructor'
+import { MessageEmbedBuilder } from '@src/api/entities/embed/MessageEmbedBuilder'
 
-export type MessageEmbedResolvable = MessageEmbed | MessageEmbedConstructor | MessageEmbedData | RawMessageEmbedData
+export type MessageEmbedResolvable = MessageEmbed | MessageEmbedBuilder | MessageEmbedData | RawMessageEmbedData

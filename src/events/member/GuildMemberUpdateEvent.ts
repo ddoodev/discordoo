@@ -8,19 +8,19 @@ export class GuildMemberUpdateEvent extends AbstractEvent<GuildMemberUpdateEvent
   async execute(shardId: number, data: RawGuildMemberData & { guild_id: string }) {
     const GMember = EntitiesUtil.get('GuildMember')
 
-    const stored = await this.client.members.cache.get(data.user.id, { storage: data.guild_id })
+    const stored = await this.app.members.cache.get(data.user.id, { storage: data.guild_id })
 
     let updated: GuildMember
     if (stored) {
       updated = await stored._clone().then((member) => member.init(data))
     } else {
-      const guildOwner = await this.client[otherCacheSymbol].get(data.guild_id, { storage: 'guild-owners' })
+      const guildOwner = await this.app[otherCacheSymbol].get(data.guild_id, { storage: 'guild-owners' })
       const isOwner = guildOwner?.id === data.user.id
 
-      updated = await new GMember(this.client).init({ ...data, guild_owner: isOwner })
+      updated = await new GMember(this.app).init({ ...data, guild_owner: isOwner })
     }
 
-    await this.client.members.cache.set(data.user.id, updated, { storage: data.guild_id })
+    await this.app.members.cache.set(data.user.id, updated, { storage: data.guild_id })
 
     const context: GuildMemberUpdateEventContext = {
       shardId,
@@ -30,7 +30,7 @@ export class GuildMemberUpdateEvent extends AbstractEvent<GuildMemberUpdateEvent
       updated
     }
 
-    this.client.emit(EventNames.GUILD_MEMBER_UPDATE, context)
+    this.app.emit(EventNames.GUILD_MEMBER_UPDATE, context)
     return context
   }
 }

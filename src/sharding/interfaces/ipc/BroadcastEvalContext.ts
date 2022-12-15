@@ -1,5 +1,5 @@
-import { Client } from '@src/core'
+import { DiscordApplication } from '@src/core'
 import { ShardingManager } from '@src/sharding'
 
 export type BroadcastEvalContext<C extends Record<string, any> = Record<string, any>> =
-  C & { client: C['client'] extends Client ? C['client'] : C['client'] extends ShardingManager ? C['client'] : Client }
+  C & { app: C['app'] extends DiscordApplication ? C['app'] : C['app'] extends ShardingManager ? C['app'] : DiscordApplication }

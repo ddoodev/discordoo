@@ -56,7 +56,7 @@ export class MessageReaction extends AbstractEntity {
     }
 
     if (!this.users) {
-      this.users = new ReactionUsersManager(this.client, {
+      this.users = new ReactionUsersManager(this.app, {
         emojiId: this.emojiId,
         channelId: this.channelId,
         messageId: this.messageId,
@@ -67,17 +67,17 @@ export class MessageReaction extends AbstractEntity {
   }
 
   async delete(): Promise<this | undefined> {
-    const result = await this.client.reactions.delete(this.channelId, this.messageId, this.emojiId)
+    const result = await this.app.reactions.delete(this.channelId, this.messageId, this.emojiId)
 
     return result ? this : undefined
   }
 
   async emoji(options?: CacheManagerGetOptions): Promise<ReactionEmoji | GuildEmoji | undefined> {
-    return this.client.emojis.cache.get(this.emojiId, { ...options, storage: this.messageId })
+    return this.app.emojis.cache.get(this.emojiId, { ...options, storage: this.messageId })
   }
 
   async message(options?: CacheManagerGetOptions): Promise<Message | undefined> {
-    return this.client.messages.cache.get(this.messageId, { ...options, storage: this.channelId })
+    return this.app.messages.cache.get(this.messageId, { ...options, storage: this.channelId })
   }
 
   toJson(properties: ToJsonProperties = {}, obj?: any): Json {

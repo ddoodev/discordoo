@@ -2,5 +2,5 @@ export { MessageReactionsManagerData } from '@src/api/managers/reactions/Message
 export { FetchReactionUsersOptions } from '@src/api/managers/reactions/FetchReactionUsersOptions'
 export { ReactionUsersManagerData } from '@src/api/managers/reactions/ReactionUsersManagerData'
 export { MessageReactionsManager } from '@src/api/managers/reactions/MessageReactionsManager'
-export { ClientReactionsManager } from '@src/api/managers/reactions/ClientReactionsManager'
+export { ApplicationReactionsManager } from '@src/api/managers/reactions/ApplicationReactionsManager'
 export { ReactionUsersManager } from '@src/api/managers/reactions/ReactionUsersManager'

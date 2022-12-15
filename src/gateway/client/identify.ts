@@ -5,14 +5,14 @@ import { CompletedGatewayOptions } from '@src/gateway/interfaces/GatewayOptions'
 
 // creates discord api identify payload
 export function identify(
-  client: WebSocketClient,
+  app: WebSocketClient,
   options: CompletedGatewayOptions
 ): any { // TODO: return type
 
-  const mode = (client.sessionId && client.closeSequence > 0) ? 'resume' : 'identify'
+  const mode = (app.sessionId && app.closeSequence > 0) ? 'resume' : 'identify'
   const { token } = options
 
-  // console.log('shard', client.id, mode)
+  // console.log('shard', app.id, mode)
 
   let d: any, // TODO: return type
     op: GatewayOpCodes.IDENTIFY | GatewayOpCodes.RESUME
@@ -22,7 +22,7 @@ export function identify(
       const { intents, presence } = options,
         { properties, compress } = options.connection
 
-      client.status = WebSocketClientStates.Identifying
+      app.status = WebSocketClientStates.Identifying
       op = GatewayOpCodes.IDENTIFY
 
       d = {
@@ -31,18 +31,18 @@ export function identify(
         properties,
         presence: presence || undefined,
         compress,
-        shard: [ client.id, client.manager.options.sharding.totalShards ]
+        shard: [ app.id, app.manager.options.sharding.totalShards ]
       }
     } break
 
     case 'resume': {
-      client.status = WebSocketClientStates.Resuming
+      app.status = WebSocketClientStates.Resuming
       op = GatewayOpCodes.RESUME
 
       d = {
         token,
-        session_id: client.sessionId!,
-        seq: client.closeSequence
+        session_id: app.sessionId!,
+        seq: app.closeSequence
       }
     } break
   }

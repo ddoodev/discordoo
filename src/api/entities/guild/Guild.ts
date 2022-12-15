@@ -42,19 +42,19 @@ export class Guild extends AbstractViewableGuild {
     })
 
     if (!this.members) {
-      this.members = new GuildMembersManager(this.client, {
+      this.members = new GuildMembersManager(this.app, {
         guild: this.id,
       })
     }
 
     if (!this.channels) {
-      this.channels = new GuildChannelsManager(this.client, {
+      this.channels = new GuildChannelsManager(this.app, {
         guild: this.id,
       })
     }
 
     if (!this.presences) {
-      this.presences = new GuildPresencesManager(this.client, {
+      this.presences = new GuildPresencesManager(this.app, {
         guild: this.id,
       })
     }
@@ -63,7 +63,7 @@ export class Guild extends AbstractViewableGuild {
   }
 
   me(options?: CacheManagerGetOptions): Promise<GuildMember | undefined> {
-    return this.members.cache.get(this.client.user.id, options)
+    return this.members.cache.get(this.app.user.id, options)
   }
 
   async rulesChannel(options?: CacheManagerGetOptions): Promise<AnyGuildWritableChannel | undefined> {
@@ -79,7 +79,7 @@ export class Guild extends AbstractViewableGuild {
   }
 
   async leave(): Promise<this | undefined> {
-    const success = await this.client.guilds.leave(this.id)
+    const success = await this.app.guilds.leave(this.id)
 
     return success ? this : undefined
   }

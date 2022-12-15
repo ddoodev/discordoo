@@ -42,7 +42,7 @@ export class PresenceActivityAssets extends AbstractEntity implements PresenceAc
         case 'youtube':
           return YOUTUBE_CDN + `/${image}/hqdefault_live.jpg`
         case 'mp':
-          return `https://media.discordapp.net/${image}` // TODO: add media/cdn to ClientOptions
+          return `https://media.discordapp.net/${image}` // TODO: add media/cdn to ApplicationOptions
         default:
           return undefined
       }
@@ -50,19 +50,19 @@ export class PresenceActivityAssets extends AbstractEntity implements PresenceAc
 
     if (!this.applicationId) return undefined
 
-    return this.client.internals.rest.cdn.appAsset(this.applicationId, this.largeImage, options)
+    return this.app.internals.rest.cdn.appAsset(this.applicationId, this.largeImage, options)
   }
 
   smallImageUrl(options?: ImageUrlOptions): string | undefined {
     if (!this.smallImage) return undefined
 
     if (this.smallImage.startsWith('mp:')) {
-      return `https://media.discordapp.net/${this.smallImage.slice(3)}` // TODO: add media/cdn to ClientOptions
+      return `https://media.discordapp.net/${this.smallImage.slice(3)}` // TODO: add media/cdn to ApplicationOptions
     }
 
     if (!this.applicationId) return undefined
 
-    return this.client.internals.rest.cdn.appAsset(this.applicationId, this.smallImage, options)
+    return this.app.internals.rest.cdn.appAsset(this.applicationId, this.smallImage, options)
   }
 
   toJson(properties: ToJsonProperties, obj?: any): Json {

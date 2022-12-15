@@ -199,7 +199,7 @@ class App {
 
   @On('ready')
   ready(context: ReadyEventContext) {
-    this._logger.log(`Client logged in as ${context.client.user.tag}!`)
+    this._logger.log(`DiscordApplication logged in as ${context.app.user.tag}!`)
   }
 }
 
@@ -231,7 +231,7 @@ You can find these benchmarks [here](https://github.com/ddoodev/collection#djs-c
 * **Waifoo** — a framework for creating discord bots based on Discordoo (commands, other features).
 * **Kawaioo** — a library / nestjs microservice that will allow you to interact with the Discordoo ShardingManager over TCP and UDP, to create your own scalable Rest API for the bot.
 * **Voice support** — at this moment, the library does not support voice.
-* **Microservices** — injection of microservices into the Client that can communicate with each other.
+* **Microservices** — injection of microservices into the DiscordApplication that can communicate with each other.
 
 ## Release milestone
 A complete description of everything that must be in Discordoo to be released
@@ -336,15 +336,15 @@ SID - still in development
 * [x] Entities managers
   * [x] EntitiesManager
   * [x] EntitiesCacheManager
-  * [x] GuildsManager (SID)
-  * [x] ChannelMessagesManager/ClientMessagesManager (SID)
-  * [x] GuildChannelsManager/ClientChannelsManager (SID)
-  * [x] GuildEmojisManager/ClientEmojisManager (SID)
-  * [x] GuildRolesManager/ClientRolesManager (SID)
-  * [x] GuildPresencesManager/ClientPresencesManager
-  * [x] GuildMembersManager/ClientGuildMembersManager (SID)
-  * [x] ThreadMembersManager/ClientThreadMembersManager (SID)
-  * [x] MessageReactionsManager/ClientReactionsManager
+  * [x] ApplicationGuildsManager (SID)
+  * [x] ChannelMessagesManager/ApplicationMessagesManager (SID)
+  * [x] GuildChannelsManager/ApplicationChannelsManager (SID)
+  * [x] GuildEmojisManager/ApplicationEmojisManager (SID)
+  * [x] GuildRolesManager/ApplicationRolesManager (SID)
+  * [x] GuildPresencesManager/ApplicationPresencesManager
+  * [x] GuildMembersManager/ApplicationGuildMembersManager (SID)
+  * [x] ThreadMembersManager/ApplicationThreadMembersManager (SID)
+  * [x] MessageReactionsManager/ApplicationReactionsManager
   * [x] UsersManager (SID)
 
 ## Contributing

@@ -58,24 +58,24 @@ export class GuildEmoji extends AbstractEmoji implements AbstractGuildEmoji {
   }
 
   guild(options?: CacheManagerGetOptions): Promise<Guild | undefined> {
-    return this.client.guilds.cache.get(this.guildId, options)
+    return this.app.guilds.cache.get(this.guildId, options)
   }
 
   async user(options?: CacheManagerGetOptions): Promise<User | undefined> {
-    return this.userId !== undefined ? this.client.users.cache.get(this.userId, options) : undefined
+    return this.userId !== undefined ? this.app.users.cache.get(this.userId, options) : undefined
   }
 
   async fetchUser(): Promise<User | undefined> {
     if (this.managed) return undefined
     if (!this.id) return undefined
 
-    const response = await this.client.internals.actions.getGuildEmoji(this.guildId, this.id)
+    const response = await this.app.internals.actions.getGuildEmoji(this.guildId, this.id)
 
     const User = EntitiesUtil.get('User')
 
     if (response.success) {
       await this.init(response.result)
-      return new User(this.client).init(response.result.user)
+      return new User(this.app).init(response.result.user)
     }
 
     return undefined
@@ -92,7 +92,7 @@ export class GuildEmoji extends AbstractEmoji implements AbstractGuildEmoji {
       (r) => resolveRoleId(r)
     )
 
-    const response = await this.client.internals.actions.editGuildEmoji(
+    const response = await this.app.internals.actions.editGuildEmoji(
       (this.guildId ?? data.guildId)!,
       (this.id ?? data.id)!,
       {
@@ -121,7 +121,7 @@ export class GuildEmoji extends AbstractEmoji implements AbstractGuildEmoji {
     if (!this.guildId) throw new DiscordooError('Emoji', 'Cannot delete emoji without guild id')
     if (!this.id) throw new DiscordooError('Emoji', 'Cannot delete emoji without id')
 
-    const response = await this.client.internals.actions.deleteGuildEmoji(this.guildId, this.id, reason)
+    const response = await this.app.internals.actions.deleteGuildEmoji(this.guildId, this.id, reason)
 
     return response.success ? this : undefined
   }

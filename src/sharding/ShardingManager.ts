@@ -11,7 +11,7 @@ import { resolveDiscordShards } from '@src/utils/resolve'
 import { intoChunks } from '@src/utils/intoChunks'
 import { Final } from '@src/utils/FinalDecorator'
 import { ShardingManagerInternals } from '@src/sharding/interfaces/manager/ShardingManagerInternals'
-import { CompletedLocalIpcOptions } from '@src/constants/sharding/CompletedLocalIpcOptions'
+import { CompletedLocalIpcOptions } from '@src/sharding/CompletedLocalIpcOptions'
 import { LOCAL_IPC_DEFAULT_OPTIONS } from '@src/constants/sharding/IpcDefaultOptions'
 import { inspect } from 'util'
 

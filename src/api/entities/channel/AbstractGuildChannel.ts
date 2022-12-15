@@ -53,7 +53,7 @@ export abstract class AbstractGuildChannel extends AbstractChannel {
     const overwrites: PermissionOverwriteResolvable[] = data.permissionOverwrites ?? data.permission_overwrites ?? []
 
     if (!this.overwrites) {
-      this.overwrites = new ChannelPermissionOverwritesManager<AnyGuildChannel>(this.client, {
+      this.overwrites = new ChannelPermissionOverwritesManager<AnyGuildChannel>(this.app, {
         channel: this as AnyGuildChannel
       })
     }
@@ -62,7 +62,7 @@ export abstract class AbstractGuildChannel extends AbstractChannel {
       await this.overwrites?.cache.clear()
 
       for await (const data of overwrites) {
-        const overwrite = await new PermissionOverwrite(this.client).init({ ...data, channel: this.id })
+        const overwrite = await new PermissionOverwrite(this.app).init({ ...data, channel: this.id })
         await this.overwrites.cache.set(overwrite.id, overwrite)
       }
     }
@@ -73,7 +73,7 @@ export abstract class AbstractGuildChannel extends AbstractChannel {
   async parent(options?: CacheManagerGetOptions): Promise<GuildCategoryChannel | undefined> {
     if (!this.parentId) return undefined
 
-    return this.client.internals.cache.get(
+    return this.app.internals.cache.get(
       Keyspaces.Channels,
       this.guildId,
       'GuildCategoryChannel',
@@ -83,7 +83,7 @@ export abstract class AbstractGuildChannel extends AbstractChannel {
   }
 
   async edit(data: RawGuildChannelEditData | GuildChannelEditData, reason?: string): Promise<this | undefined> {
-    return this.client.channels.editGuildChannel(this.id, data, { reason, patchEntity: this as AnyGuildChannel })
+    return this.app.channels.editGuildChannel(this.id, data, { reason, patchEntity: this as AnyGuildChannel })
   }
 
   setName(name: string, reason?: string) {
@@ -108,10 +108,10 @@ export abstract class AbstractGuildChannel extends AbstractChannel {
     if (!id) throw new DiscordooError('Channel#memberPermissions', 'Cannot check member permissions without member')
 
     if (options?.checkAdmin) {
-      const memberExists = await this.client.internals.cache.has(Keyspaces.GuildMembers, this.guildId, id)
+      const memberExists = await this.app.internals.cache.has(Keyspaces.GuildMembers, this.guildId, id)
 
       if (memberExists) {
-        const member = await this.client.internals.cache.get<string, GuildMember>(
+        const member = await this.app.internals.cache.get<string, GuildMember>(
           Keyspaces.GuildMembers,
           this.guildId,
           'GuildMember',
@@ -120,10 +120,10 @@ export abstract class AbstractGuildChannel extends AbstractChannel {
 
         if (member?.guildOwner) return new ReadonlyPermissions(Permissions.ALL)
       } else {
-        const guildExists = await this.client.guilds.cache.has(this.guildId)
+        const guildExists = await this.app.guilds.cache.has(this.guildId)
 
         if (guildExists) {
-          const guild = await this.client.guilds.cache.get(this.guildId)
+          const guild = await this.app.guilds.cache.get(this.guildId)
 
           if (guild!.ownerId === id) return new ReadonlyPermissions(Permissions.ALL)
         }
@@ -133,7 +133,7 @@ export abstract class AbstractGuildChannel extends AbstractChannel {
     const roleOverwrites: PermissionOverwrite[] = [], permissions = new Permissions(), rolesIds: string[] = []
     let memberOverwrite: PermissionOverwrite | undefined, everyoneOverwrite: PermissionOverwrite | undefined
 
-    await this.client.internals.cache.forEach(
+    await this.app.internals.cache.forEach(
       Keyspaces.GuildMemberRoles,
       id,
       'Role',
@@ -197,7 +197,7 @@ export abstract class AbstractGuildChannel extends AbstractChannel {
 
     if (!id) throw new DiscordooError('Channel#rolePermissions', 'Cannot check role permissions without role')
 
-    const roleCache = await this.client.internals.cache.get<string, Role>(Keyspaces.GuildRoles, this.guildId, 'Role', id)
+    const roleCache = await this.app.internals.cache.get<string, Role>(Keyspaces.GuildRoles, this.guildId, 'Role', id)
 
     if (options?.checkAdmin) {
       if (roleCache?.permissions.has(PermissionFlags.Administrator)) return new ReadonlyPermissions(Permissions.ALL)
@@ -235,7 +235,7 @@ export abstract class AbstractGuildChannel extends AbstractChannel {
       return (await this.memberPermissions(member.userId, { checkAdmin: true })).has(PermissionFlags.ViewChannel)
     }
 
-    return this.client.internals.cache.filter('members', this.id, 'GuildMember', predicate)
+    return this.app.internals.cache.filter('members', this.id, 'GuildMember', predicate)
       .then(results => results.map(r => r[1])) // FIXME: low performance
   }
 

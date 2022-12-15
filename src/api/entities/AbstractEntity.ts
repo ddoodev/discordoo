@@ -1,20 +1,20 @@
-import { Client } from '@src/core'
+import { DiscordApplication } from '@src/core'
 import { ToJsonProperties } from '@src/api/entities/interfaces/ToJsonProperties'
 import { Json, JsonProperties } from '@src/api/entities/interfaces/Json'
 import { ToJsonOverrideSymbol } from '@src/constants'
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export abstract class AbstractEntity {
-  public client: Client
+  public app: DiscordApplication
 
-  constructor(client: Client) {
-    this.client = client
+  constructor(app: DiscordApplication) {
+    this.app = app
   }
 
   abstract init(data: any, options?: EntityInitOptions): Promise<this>
 
   async _clone(): Promise<this> {
-    return await new (this.constructor as any)(this.client).init(this.toJson())
+    return await new (this.constructor as any)(this.app).init(this.toJson())
   }
 
   toJson(properties: ToJsonProperties = {}, obj?: any): Json {

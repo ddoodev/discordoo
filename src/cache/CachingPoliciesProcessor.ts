@@ -1,4 +1,4 @@
-import { Client, ClientOptions } from '@src/core'
+import { DiscordApplication, ApplicationOptions } from '@src/core'
 import { NonOptional } from '@src/utils'
 import {
   ChannelsCachingPolicy,
@@ -16,7 +16,7 @@ import {
   StickerTypes,
   UsersCachingPolicy,
   ThreadMembersCachingPolicy,
-  ReactionsCachingPolicy, InvitesCachingPolicy
+  ReactionsCachingPolicy, InvitesCachingPolicy, AppCommandsCachingPolicy
 } from '@src/constants'
 import {
   ActivityEmoji,
@@ -31,16 +31,17 @@ import {
   Sticker,
   ThreadMember,
   User,
-  PermissionOverwrite, Invite, InviteGuild
+  PermissionOverwrite, Invite, InviteGuild, AppCommand
 } from '@src/api'
+import { AnyDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
 
 export class CachingPoliciesProcessor {
-  public client: Client
-  private options: NonOptional<ClientOptions, 'cache'>['cache'] // client cache options
+  public app: AnyDiscordApplication
+  private options: NonOptional<ApplicationOptions, 'cache'>['cache'] // app cache options
 
-  constructor(client: Client) {
-    this.client = client
-    this.options = this.client.options?.cache ?? {}
+  constructor(app: AnyDiscordApplication) {
+    this.app = app
+    this.options = this.app.options?.cache ?? {}
   }
 
   async global(entity: any): Promise<boolean | undefined> {
@@ -161,6 +162,32 @@ export class CachingPoliciesProcessor {
             case InvitesCachingPolicy.None:
               return false
             case InvitesCachingPolicy.All:
+            default:
+              return true
+          }
+        })
+      )
+
+      result = results[0] ?? results[1]
+    }
+
+    return result
+  }
+
+  async commands(command: AppCommand): Promise<boolean> {
+    let result = true
+
+    if (this.options.commands) {
+      const results: any[] /* [ boolean | undefined, boolean ] */ = []
+
+      results.push(await this.options.commands.custom?.(command) ?? undefined)
+
+      results.push(
+        this.options.commands.policies.some(policy => {
+          switch (policy) {
+            case AppCommandsCachingPolicy.None:
+              return false
+            case AppCommandsCachingPolicy.All:
             default:
               return true
           }
@@ -508,4 +535,6 @@ export class CachingPoliciesProcessor {
 
     return result
   }
+
+
 }

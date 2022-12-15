@@ -14,13 +14,13 @@ import { BigBitFieldResolvable, BitFieldResolvable } from '@src/utils/bitfield/i
 import { ReadonlyBigBitField } from '@src/utils/bitfield/ReadonlyBigBitField'
 import { ReadonlyBitField } from '@src/utils/bitfield/ReadonlyBitField'
 import { UserResolvable } from '@src/api/entities/user/interfaces/UserResolvable'
-import { Client } from '@src/core'
+import { DiscordApplication } from '@src/core'
 import { RoleResolvable } from '@src/api/entities/role'
 import { RoleTagsResolvable } from '@src/api/entities/role/interfaces/RoleTagsResolvable'
 import { RoleTagsData } from '@src/api/entities/role/interfaces/RoleTagsData'
 import { ShardListResolvable } from '@src/utils/interfaces'
 import { range } from '@src/utils/range'
-import { EmojiResolvable, GuildChannelResolvable, MessageAttachment, MessageAttachmentConstructor, ThreadChannelResolvable } from '@src/api'
+import { EmojiResolvable, GuildChannelResolvable, MessageAttachment, MessageAttachmentBuilder, ThreadChannelResolvable } from '@src/api'
 import { MessageReactionResolvable } from '@src/api/entities/reaction/interfaces/MessageReactionResolvable'
 import { PermissionOverwriteResolvable } from '@src/api/entities/overwrite/interfaces/PermissionOverwriteResolvable'
 import { RawPermissionOverwriteData } from '@src/api/entities/overwrite/interfaces/RawPermissionOverwriteData'
@@ -33,16 +33,18 @@ import { MessageReferenceResolvable } from '@src/api/entities/message/interfaces
 import { RawMessageReferenceData } from '@src/api/entities/message/interfaces/RawMessageReferenceData'
 import { ThreadMemberResolvable } from '@src/api/entities/member/interfaces/ThreadMemberResolvable'
 import { GatewayIntentsResolvable } from '@src/gateway/interfaces/GatewayIntentsResolvable'
-import { MessageEmbedConstructor } from '@src/api/entities/embed/MessageEmbedConstructor'
+import { MessageEmbedBuilder } from '@src/api/entities/embed/MessageEmbedBuilder'
+import { AnyDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
+import { AbstractDiscordApplication } from '@src/core/apps/abstract/AbstractDiscordApplication'
 
 export function resolveFiles(resolvable: MessageAttachmentResolvable[]): Promise<RawAttachment[]> {
   return Promise.all(resolvable.map(resolveFile))
 }
 
 export function resolveFile(resolvable: MessageAttachmentResolvable): Promise<RawAttachment> {
-  if (resolvable instanceof MessageAttachmentConstructor || resolvable instanceof MessageAttachment) return resolvable.toRaw()
+  if (resolvable instanceof MessageAttachmentBuilder || resolvable instanceof MessageAttachment) return resolvable.toRaw()
 
-  return new MessageAttachmentConstructor(resolvable).toRaw() // FIXME: low performance
+  return new MessageAttachmentBuilder(resolvable).toRaw() // FIXME: low performance
 }
 
 export function resolveColor(resolvable: ColorResolvable): number {
@@ -127,9 +129,9 @@ export function resolveBitField(resolvable: BitFieldResolvable, emptyBit: number
 }
 
 export function resolveEmbedToRaw(resolvable: MessageEmbedResolvable): RawMessageEmbedData {
-  if (resolvable instanceof MessageEmbedConstructor) return resolvable.toJson()
+  if (resolvable instanceof MessageEmbedBuilder) return resolvable.toJson()
 
-  return new MessageEmbedConstructor(resolvable).toJson() // FIXME: low performance
+  return new MessageEmbedBuilder(resolvable).toJson() // FIXME: low performance
 }
 
 export function resolvePermissionOverwriteToRaw(
@@ -175,14 +177,14 @@ export function resolvePermissionOverwriteToRaw(
   return { ...result, deny: result.deny.toString(), allow: result.allow.toString() }
 }
 
-export async function resolveMessageReaction(client: Client, resolvable: MessageReactionResolvable): Promise<MessageReaction | undefined> {
+export async function resolveMessageReaction(app: DiscordApplication, resolvable: MessageReactionResolvable): Promise<MessageReaction | undefined> {
   if (!resolvable) return undefined
 
   const MessageReaction = EntitiesUtil.get('MessageReaction')
 
   if (resolvable instanceof MessageReaction) return resolvable
 
-  return resolvable.message && resolvable.emoji && resolvable.channel ? new MessageReaction(client).init(resolvable) : undefined
+  return resolvable.message && resolvable.emoji && resolvable.channel ? new MessageReaction(app).init(resolvable) : undefined
 }
 
 export function resolveRoleTags(resolvable: RoleTagsResolvable): RoleTagsData {
@@ -320,15 +322,15 @@ type ShardsInfo = {
 }
 
 export function resolveDiscordooShards(
-  client: Client | ShardsInfo, shards: ShardListResolvable | 'all' | 'current'
+  app: AnyDiscordApplication | ShardsInfo, shards: ShardListResolvable | 'all' | 'current'
 ): number[] {
   const source = 'DiscordooShardListResolver'
   let result: number[] = []
 
-  const info: ShardsInfo = client instanceof Client ? {
-    shards: client.internals.sharding.shards,
-    totalShards: client.internals.sharding.totalShards,
-  } : client
+  const info: ShardsInfo = app instanceof AbstractDiscordApplication ? {
+    shards: app.internals.sharding.shards,
+    totalShards: app.internals.sharding.totalShards,
+  } : app as ShardsInfo
 
   switch (typeof shards) {
     case 'string': {

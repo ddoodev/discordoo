@@ -1,5 +1,4 @@
 import {
-  AbstractEntity,
   AppCommandData, AppCommandOptionChoiceData, BigBitFieldResolvable,
   Json, RawAppCommandData, RawAppCommandOptionData,
   ReadonlyPermissions, ToJsonProperties
@@ -10,6 +9,7 @@ import { AppCommandOptionTypes, AppCommandTypes } from '@src/constants'
 import { DiscordLocale } from '@src/constants/common/DiscordLocale'
 import { AppCommandOptionWithSubcommandsData } from '@src/api/entities/interaction/interfaces/command/common/AppCommandOptionData'
 import { AppCommandEntityInitOptions } from '@src/api/entities/interaction/interfaces/command/AppCommandEntityInitOptions'
+import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 
 export class AppCommand extends AbstractEntity {
   declare id: string

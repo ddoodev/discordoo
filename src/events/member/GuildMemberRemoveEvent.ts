@@ -6,10 +6,10 @@ export class GuildMemberRemoveEvent extends AbstractEvent<GuildMemberRemoveEvent
   public readonly name = EventNames.GUILD_MEMBER_REMOVE
 
   async execute(shardId: number, data: GuildMemberRemoveEventData) {
-    const member = await this.client.members.cache.get(data.user.id, { storage: data.guild_id })
+    const member = await this.app.members.cache.get(data.user.id, { storage: data.guild_id })
 
     if (member) {
-      await this.client.members.cache.delete(data.user.id, { storage: data.guild_id })
+      await this.app.members.cache.delete(data.user.id, { storage: data.guild_id })
     }
 
     const context: GuildMemberRemoveEventContext = {
@@ -19,7 +19,7 @@ export class GuildMemberRemoveEvent extends AbstractEvent<GuildMemberRemoveEvent
       member
     }
 
-    this.client.emit(EventNames.GUILD_MEMBER_REMOVE, context)
+    this.app.emit(EventNames.GUILD_MEMBER_REMOVE, context)
     return context
   }
 }

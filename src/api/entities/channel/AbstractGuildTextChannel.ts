@@ -38,7 +38,7 @@ export abstract class AbstractGuildTextChannel extends AbstractGuildChannel impl
     }
 
     if (!this.messages) {
-      this.messages = new ChannelMessagesManager(this.client, {
+      this.messages = new ChannelMessagesManager(this.app, {
         channel: this.id,
         lastMessageId: this.lastMessageId,
         lastPinTimestamp: this.lastPinTimestamp,

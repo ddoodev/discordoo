@@ -5,14 +5,14 @@ import { GatewayOpCodes } from '@discordoo/providers'
 import { WebSocketPacket } from '@src/gateway/interfaces/WebSocketPacket'
 import { makeConnectionUrl } from '@src/gateway/makeConnectionUrl'
 
-export function packet(client: WebSocketClient, packet: WebSocketPacket) {
+export function packet(app: WebSocketClient, packet: WebSocketPacket) {
 
-  // console.log('shard', client.id, 'packet', packet)
+  // console.log('shard', app.id, 'packet', packet)
 
   // process sequence increase
-  if (WebSocketUtils.exists<number>(packet.s) && packet.s > client.sequence) client.sequence = packet.s
+  if (WebSocketUtils.exists<number>(packet.s) && packet.s > app.sequence) app.sequence = packet.s
 
-  // console.log('shard', client.id, 'SEQUENCE', client.sequence)
+  // console.log('shard', app.id, 'SEQUENCE', app.sequence)
 
   /**
    * ready and resumed events handling
@@ -22,60 +22,60 @@ export function packet(client: WebSocketClient, packet: WebSocketPacket) {
   switch (packet.t) {
     case 'READY':
 
-      client.sessionId = packet.d.session_id
-      client.status = WebSocketClientStates.Ready
-      client.expectedGuilds = new Set<any>(packet.d.guilds.map(g => g.id))
-      client.resumeUrl = makeConnectionUrl(client.options.connection, packet.d.resume_gateway_url)
+      app.sessionId = packet.d.session_id
+      app.status = WebSocketClientStates.Ready
+      app.expectedGuilds = new Set<any>(packet.d.guilds.map(g => g.id))
+      app.resumeUrl = makeConnectionUrl(app.options.connection, packet.d.resume_gateway_url)
 
-      client.heartbeat()
+      app.heartbeat()
 
-      client.emit(WebSocketClientEvents.Ready)
-      client.manager.provider.emit(client.id, { op: GatewayOpCodes.DISPATCH, t: WebSocketClientEvents.Connected, d: packet.d })
-      // console.log('shard', client.id, 'Ready')
+      app.emit(WebSocketClientEvents.Ready)
+      app.manager.provider.emit(app.id, { op: GatewayOpCodes.DISPATCH, t: WebSocketClientEvents.Connected, d: packet.d })
+      // console.log('shard', app.id, 'Ready')
       break
     case 'RESUMED':
-      client.status = WebSocketClientStates.Ready
-      client.emit(WebSocketClientEvents.Resumed)
-      // console.log('shard', client.id, 'RESUMED and replayed', client.sequence - client.closeSequence, 'events')
+      app.status = WebSocketClientStates.Ready
+      app.emit(WebSocketClientEvents.Resumed)
+      // console.log('shard', app.id, 'RESUMED and replayed', app.sequence - app.closeSequence, 'events')
       break
   }
 
   switch (packet.op) {
     case GatewayOpCodes.HELLO:
 
-      client.heartbeatInterval(packet.d.heartbeat_interval)
-      client.handshakeTimeout()
-      client.identify()
-      // console.log('shard', client.id, 'HELLO')
+      app.heartbeatInterval(packet.d.heartbeat_interval)
+      app.handshakeTimeout()
+      app.identify()
+      // console.log('shard', app.id, 'HELLO')
 
       break
 
     case GatewayOpCodes.INVALID_SESSION:
-      client.emit(WebSocketClientEvents.InvalidSession)
-      // console.log('SHARD', client.id, 'INVALID SESSION')
-      client.sessionId = undefined
+      app.emit(WebSocketClientEvents.InvalidSession)
+      // console.log('SHARD', app.id, 'INVALID SESSION')
+      app.sessionId = undefined
 
-      // invalid session handled automatically: client.destroy({ code: 1000, reconnect: true })
-      // console.log('shard', client.id, 'INVALID SESSION')
+      // invalid session handled automatically: app.destroy({ code: 1000, reconnect: true })
+      // console.log('shard', app.id, 'INVALID SESSION')
 
       break
 
     case GatewayOpCodes.HEARTBEAT:
-      client.heartbeat()
+      app.heartbeat()
       break
 
     case GatewayOpCodes.HEARTBEAT_ACK:
-      // console.log('shard', client.id, 'HEARTBEAT_ACK')
-      client.missedHeartbeats = 0
-      client.ping = Date.now() - client.lastPingTimestamp
+      // console.log('shard', app.id, 'HEARTBEAT_ACK')
+      app.missedHeartbeats = 0
+      app.ping = Date.now() - app.lastPingTimestamp
       break
 
     case GatewayOpCodes.RECONNECT:
-      client.destroy({ reconnect: true })
+      app.destroy({ reconnect: true })
       break
 
     case GatewayOpCodes.DISPATCH:
-      client.manager.provider.emit(client.id, packet)
+      app.manager.provider.emit(app.id, packet)
       break
   }
 }

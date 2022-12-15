@@ -21,12 +21,12 @@ export class ThreadCreateEvent extends AbstractEvent<ThreadCreateEventContext | 
 
     const Channel: any = EntitiesUtil.get(entityKey)
 
-    const channel: AnyThreadChannel = await new Channel(this.client).init(data)
+    const channel: AnyThreadChannel = await new Channel(this.app).init(data)
 
-    await this.client.channels.cache.set(channel.id, channel, { storage: channel.guildId })
+    await this.app.channels.cache.set(channel.id, channel, { storage: channel.guildId })
 
     if (data.member) {
-      let member = await this.client.internals.cache.get<string, ThreadMember>(
+      let member = await this.app.internals.cache.get<string, ThreadMember>(
         Keyspaces.ThreadMembers,
         channel.id,
         'ThreadMember',
@@ -37,10 +37,10 @@ export class ThreadCreateEvent extends AbstractEvent<ThreadCreateEventContext | 
         member = await member.init(data.member)
       } else {
         const ThreadMember = EntitiesUtil.get('ThreadMember')
-        member = await new ThreadMember(this.client).init(data.member)
+        member = await new ThreadMember(this.app).init(data.member)
       }
 
-      await this.client.threadMembers.cache.set(member.userId, member, { storage: channel.id })
+      await this.app.threadMembers.cache.set(member.userId, member, { storage: channel.id })
     }
 
     const context: ThreadCreateEventContext = {
@@ -50,7 +50,7 @@ export class ThreadCreateEvent extends AbstractEvent<ThreadCreateEventContext | 
       guildId: channel.guildId,
     }
 
-    this.client.emit(EventNames.THREAD_CREATE, context)
+    this.app.emit(EventNames.THREAD_CREATE, context)
     return context
   }
 }

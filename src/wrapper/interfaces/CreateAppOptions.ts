@@ -1,3 +1,3 @@
 export interface CreateAppOptions {
-  useClient?: any
+  useApp?: any
 }

@@ -1,20 +1,20 @@
-import { Client, ProviderConstructor } from '@src/core'
+import { DiscordApplication, ProviderConstructor } from '@src/core'
 import { RestRequest, RestManagerData, RestManagerRequestData, RestLimitsManager, makeRequest } from '@src/rest'
 import { RestProvider, RestRequestOptions, RestFinishedResponse } from '@discordoo/providers'
 import { CompletedRestOptions } from '@src/rest'
 import { DiscordCdnLinker } from '@src/rest/DiscordCdnLinker'
 
 export class RestManager<P extends RestProvider = RestProvider> {
-  public client: Client
+  public app: DiscordApplication
   public provider: P
   public limiter: RestLimitsManager
   public options: CompletedRestOptions
   public cdn: DiscordCdnLinker
 
-  constructor(client: Client, Provider: ProviderConstructor<P>, data: RestManagerData) {
-    this.client = client
-    this.provider = new Provider(this.client, data.restOptions, data.providerOptions)
-    this.limiter = new RestLimitsManager(this.client)
+  constructor(app: DiscordApplication, Provider: ProviderConstructor<P>, data: RestManagerData) {
+    this.app = app
+    this.provider = new Provider(this.app, data.restOptions, data.providerOptions)
+    this.limiter = new RestLimitsManager(this.app)
     this.options = data.restOptions
 
     this.cdn = new DiscordCdnLinker(
@@ -30,7 +30,7 @@ export class RestManager<P extends RestProvider = RestProvider> {
 
   async request<T = any>(data: RestManagerRequestData, options: RestRequestOptions = {}): RestFinishedResponse<T> {
 
-    // if (!this.client.options.rest?.rateLimits?.disable) {
+    // if (!this.app.options.rest?.rateLimits?.disable) {
       // TODO: rate limits
     // }
 

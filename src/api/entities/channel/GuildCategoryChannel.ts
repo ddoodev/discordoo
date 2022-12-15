@@ -15,7 +15,7 @@ export class GuildCategoryChannel extends AbstractGuildChannel {
     await super.init(data, options)
 
     if (!this.children) {
-      this.children = new CategoryChannelChildrenManager(this.client, {
+      this.children = new CategoryChannelChildrenManager(this.app, {
         category: this.id,
         guild: this.guildId
       })
@@ -29,7 +29,7 @@ export class GuildCategoryChannel extends AbstractGuildChannel {
       }
     }
 
-    await this.client.internals.cache.forEach(
+    await this.app.internals.cache.forEach(
       Keyspaces.Channels,
       this.guildId,
       'channelEntityKey',

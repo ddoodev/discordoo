@@ -23,7 +23,7 @@ import {
   IpcIdentifyPacket
 } from '@src/sharding/interfaces/ipc/IpcPackets'
 import { IpcServerEvents } from '@src/sharding/interfaces/ipc/IpcServerEvents'
-import { Client } from '@src/core'
+import { DiscordApplication } from '@src/core'
 import { GuildMemberData } from '@src/api'
 import { RawGuildMembersFetchOptions } from '@src/api/managers/members/RawGuildMembersFetchOptions'
 import { fromJson, toJson } from '@src/utils/toJson'
@@ -31,6 +31,7 @@ import { evalWithoutScopeChain } from '@src/utils/evalWithoutScopeChain'
 import { serializeError } from 'serialize-error'
 import { IpcEmergencyOpCodes } from '@src/constants/sharding/IpcEmergencyOpCodes'
 import { GatewayOpCodes } from '@discordoo/providers'
+import { AnyDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
 
 export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
   private readonly bucket: Collection = new Collection()
@@ -43,12 +44,12 @@ export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
   public readonly INSTANCE_IPC: string
   public readonly instance: number
 
-  public readonly client: Client
+  public readonly app: AnyDiscordApplication
 
-  constructor(client: Client, options: IpcServerOptions) {
+  constructor(app: AnyDiscordApplication, options: IpcServerOptions) {
     super()
 
-    this.client = client
+    this.app = app
     this.ipc = new RawIpc()
 
     this.INSTANCE_IPC = this.ipc.config.id = options.INSTANCE_IPC
@@ -165,12 +166,12 @@ export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
   private async dispatch(packet: IpcDispatchRequestPackets | IpcDestroyingPacket | IpcMessagePacket | IpcPresenceUpdatePacket) {
     switch (packet.t) {
       case IpcEvents.DESTROYING: {
-        this.client.emit('exiting', {
+        this.app.emit('exiting', {
           eventId: packet.d.event_id
         })
 
         // Missing await for an async function call: you snooze, you lose
-        this.client.internals.gateway.disconnect()
+        this.app.internals.gateway.disconnect()
 
         await this.send(packet)
           .catch(() => null)
@@ -182,13 +183,13 @@ export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
       case IpcEvents.RESTRUCTURING: {
         const { shards, total_shards: totalShards } = packet.d
 
-        this.client.emit('restructuring', {
+        this.app.emit('restructuring', {
           shards,
           totalShards,
         })
 
-        await this.client.internals.gateway.disconnect()
-        await this.client.internals.gateway.connect({
+        await this.app.internals.gateway.disconnect()
+        await this.app.internals.gateway.connect({
           shards,
           totalShards,
         })
@@ -226,7 +227,7 @@ export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
 
         let isError = false
         // console.log('context', context)
-        const result = await evalWithoutScopeChain({ ...fromJson(context), client: this.client }, script)
+        const result = await evalWithoutScopeChain({ ...fromJson(context), app: this.app }, script)
           .catch(e => { isError = true; return e })
 
         let response
@@ -257,21 +258,21 @@ export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
       } break
 
       case IpcEvents.MESSAGE: {
-        this.client.emit('ipcMessage', {
+        this.app.emit('ipcMessage', {
           message: packet.d.message,
           from: packet.d.from,
         })
       } break
 
       case IpcEvents.PRESENCE_UPDATE: {
-        const presence = await makeCompletedPresence(packet.d.presence, this.client)
+        const presence = await makeCompletedPresence(packet.d.presence, this.app)
 
-        if (this.client.options.gateway?.presence) {
-          this.client.options.gateway.presence = presence
-          this.client.internals.gateway.options.presence = presence
+        if (this.app.options.gateway?.presence) {
+          this.app.options.gateway.presence = presence
+          this.app.internals.gateway.options.presence = presence
         }
 
-        this.client.internals.gateway.send({
+        this.app.internals.gateway.send({
           op: GatewayOpCodes.STATUS_UPDATE, d: presence
         }, { shards: packet.d.shards })
       } break
@@ -293,7 +294,7 @@ export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
       options.user_ids = data.user_ids
     }
 
-    const members = await this.client.internals.actions.fetchWsGuildMembers(data.shard_id, options)
+    const members = await this.app.internals.actions.fetchWsGuildMembers(data.shard_id, options)
 
     return members.map(m => m.toJson()) as any
   }
@@ -303,17 +304,17 @@ export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
 
     switch (request.d.op) {
       case IpcCacheOpCodes.Get:
-        return this.client.internals.cache.get(keyspace, storage, request.d.entity_key, request.d.key)
+        return this.app.internals.cache.get(keyspace, storage, request.d.entity_key, request.d.key)
       case IpcCacheOpCodes.Set:
-        return this.client.internals.cache.set(keyspace, storage, request.d.entity_key, request.d.policy, request.d.key, request.d.value)
+        return this.app.internals.cache.set(keyspace, storage, request.d.entity_key, request.d.policy, request.d.key, request.d.value)
       case IpcCacheOpCodes.Delete:
-        return this.client.internals.cache.delete(keyspace, storage, request.d.key)
+        return this.app.internals.cache.delete(keyspace, storage, request.d.key)
       case IpcCacheOpCodes.Size:
-        return this.client.internals.cache.size(keyspace, storage)
+        return this.app.internals.cache.size(keyspace, storage)
       case IpcCacheOpCodes.Has:
-        return this.client.internals.cache.has(keyspace, storage, request.d.key)
+        return this.app.internals.cache.has(keyspace, storage, request.d.key)
       case IpcCacheOpCodes.Clear:
-        return this.client.internals.cache.clear(keyspace, storage)
+        return this.app.internals.cache.clear(keyspace, storage)
       case IpcCacheOpCodes.Counts: {
         const scripts = request.d.scripts
 
@@ -324,7 +325,7 @@ export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
           }
         })
 
-        return this.client.internals.cache.counts(keyspace, storage, request.d.entity_key, predicates)
+        return this.app.internals.cache.counts(keyspace, storage, request.d.entity_key, predicates)
       }
       case IpcCacheOpCodes.Count:
       case IpcCacheOpCodes.Filter:
@@ -355,7 +356,7 @@ export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
           return eval(script + '.bind(provider)(value, key, provider)')
         }
 
-        return this.client.internals.cache[method](keyspace, storage, request.d.entity_key, predicate)
+        return this.app.internals.cache[method](keyspace, storage, request.d.entity_key, predicate)
       }
     }
   }

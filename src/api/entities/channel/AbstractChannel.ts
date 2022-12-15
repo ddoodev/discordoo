@@ -23,7 +23,7 @@ export abstract class AbstractChannel extends AbstractEntity {
   }
 
   delete(reason): Promise<this | undefined> {
-    return this.client.channels.delete(this.id, { reason, patchEntity: this as unknown as AnyChannel })
+    return this.app.channels.delete(this.id, { reason, patchEntity: this as unknown as AnyChannel })
   }
 
   get createdTimestamp(): number {

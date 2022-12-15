@@ -21,9 +21,9 @@ export class ChannelCreateEvent extends AbstractEvent<ChannelCreateEventContext 
 
     const Channel: any = EntitiesUtil.get(entityKey)
 
-    const channel: AnyChannel = await new Channel(this.client).init(data)
+    const channel: AnyChannel = await new Channel(this.app).init(data)
 
-    await this.client.channels.cache.set(channel.id, channel, {
+    await this.app.channels.cache.set(channel.id, channel, {
       storage:
         'guildId' in channel
           ? channel.guildId
@@ -39,7 +39,7 @@ export class ChannelCreateEvent extends AbstractEvent<ChannelCreateEventContext 
       guildId: 'guildId' in channel ? channel.guildId : undefined,
     }
 
-    this.client.emit(EventNames.CHANNEL_CREATE, context)
+    this.app.emit(EventNames.CHANNEL_CREATE, context)
     return context
   }
 }

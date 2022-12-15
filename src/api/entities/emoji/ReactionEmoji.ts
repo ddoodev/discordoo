@@ -18,7 +18,7 @@ export class ReactionEmoji extends AbstractEmoji {
   }
 
   async reaction(options?: CacheManagerGetOptions): Promise<MessageReaction | undefined> {
-    return this.client.internals.cache.get(
+    return this.app.internals.cache.get(
       Keyspaces.MessageReactions,
       this.identifier,
       'MessageReaction',

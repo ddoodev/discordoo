@@ -7,7 +7,7 @@ import {
 } from '@src/utils/resolve'
 import { DiscordooError } from '@src/utils/DiscordooError'
 import { inspect } from 'util'
-import { MessageContent, MessageCreateData, MessageCreateOptions, MessageEmbedConstructor, StickerResolvable } from '@src/api'
+import { MessageContent, MessageCreateData, MessageCreateOptions, MessageEmbedBuilder, StickerResolvable } from '@src/api'
 import { MessageEmbedTypes, StickerFormatTypes } from '@src/constants'
 import { filterAndMap } from '@src/utils/filterAndMap'
 import { DataResolver } from '@src/utils/DataResolver'
@@ -46,6 +46,7 @@ export async function createMessagePayload<Interaction extends boolean = false>(
     files: [],
     stickers: [],
     components: [],
+    flags: undefined,
   }
 
   const embedTypes = Object.values<any>(MessageEmbedTypes).filter(v => typeof v === 'string'),
@@ -54,7 +55,7 @@ export async function createMessagePayload<Interaction extends boolean = false>(
   if (Array.isArray(data)) {
     const target: /* MessageEmbedResolvable | StickerResolvable | MessageAttachmentResolvable */ any = content[0]
 
-    if (embedTypes.includes(target.type) || target instanceof MessageEmbedConstructor) { // content = embeds
+    if (embedTypes.includes(target.type) || target instanceof MessageEmbedBuilder) { // content = embeds
       payload.embeds.push(...data.map(resolveEmbedToRaw))
 
     } else if (stickerFormatTypes.includes(target.formatType ?? target.format_type)) { // content = stickers
@@ -85,7 +86,7 @@ export async function createMessagePayload<Interaction extends boolean = false>(
   }
 
   if (!contentResolved) {
-    if (embedTypes.includes(data.type) || data instanceof MessageEmbedConstructor) { // content = embed
+    if (embedTypes.includes(data.type) || data instanceof MessageEmbedBuilder) { // content = embed
       payload.embeds.push(resolveEmbedToRaw(data))
 
     } else if (stickerFormatTypes.includes(data.formatType ?? data.format_type)) {
@@ -130,6 +131,8 @@ export async function createMessagePayload<Interaction extends boolean = false>(
 
     payload.stickers.push(...stickers)
   }
+
+  if (options.flags) payload.flags = options.flags as any
 
   return payload
 }

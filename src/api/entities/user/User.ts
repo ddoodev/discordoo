@@ -58,7 +58,7 @@ export class User extends AbstractEntity implements UserData {
   }
 
   fetch() {
-    return this.client.users.fetch(this.id)
+    return this.app.users.fetch(this.id)
   }
 
   async send(content: MessageContent, options?: MessageCreateOptions): Promise<Message | undefined> {
@@ -68,9 +68,9 @@ export class User extends AbstractEntity implements UserData {
   }
 
   async dm(options?: CacheManagerGetOptions): Promise<DirectMessagesChannel | undefined> {
-    let channel = await this.client.dms.cache.get(this.id, options)
+    let channel = await this.app.dms.cache.get(this.id, options)
     if (!channel) {
-      channel = await this.client.dms.fetch(this.id)
+      channel = await this.app.dms.fetch(this.id)
     }
     return channel
   }
@@ -78,11 +78,11 @@ export class User extends AbstractEntity implements UserData {
   async presence(guild: GuildResolvable, options?: CacheManagerGetOptions): Promise<Presence | undefined> {
     const guildId = resolveGuildId(guild)
     if (!guildId) throw new DiscordooError('User#presence', 'Cannot get presence without guild id.')
-    return this.client.presences.cache.get(this.id, { ...options, storage: guildId })
+    return this.app.presences.cache.get(this.id, { ...options, storage: guildId })
   }
 
   async presences(options?: CacheManagerFilterOptions): Promise<Presence[]> {
-    return this.client.presences.cache.filter(p => p.userId === this.id, options) // TODO: context
+    return this.app.presences.cache.filter(p => p.userId === this.id, options) // TODO: context
       .then(results => results.map(result => result[1])) // FIXME: low performance
   }
 
@@ -104,11 +104,11 @@ export class User extends AbstractEntity implements UserData {
   }
 
   avatarUrl(options?: ImageUrlOptions): string | undefined {
-    return this.avatar ? this.client.internals.rest.cdn.avatar(this.id, this.avatar, options) : undefined
+    return this.avatar ? this.app.internals.rest.cdn.avatar(this.id, this.avatar, options) : undefined
   }
 
   defaultAvatarUrl(): string {
-    return this.client.internals.rest.cdn.defaultAvatar(this.discriminator ?? '0000')
+    return this.app.internals.rest.cdn.defaultAvatar(this.discriminator ?? '0000')
   }
 
   displayAvatarUrl(options?: ImageUrlOptions): string {
@@ -116,7 +116,7 @@ export class User extends AbstractEntity implements UserData {
   }
 
   bannerUrl(options?: ImageUrlOptions): string | undefined {
-    return this.banner ? this.client.internals.rest.cdn.banner(this.id, this.banner, options) : undefined
+    return this.banner ? this.app.internals.rest.cdn.banner(this.id, this.banner, options) : undefined
   }
 
   toString(): string {

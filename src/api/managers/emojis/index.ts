@@ -1,1 +1,1 @@
-export { ClientEmojisManager } from '@src/api/managers/emojis/ClientEmojisManager'
+export { ApplicationEmojisManager } from '@src/api/managers/emojis/ApplicationEmojisManager'

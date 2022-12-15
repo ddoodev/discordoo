@@ -19,10 +19,10 @@ export class ChannelUpdateEvent extends AbstractEvent<ChannelUpdateEventContext 
 
     const Channel: any = EntitiesUtil.get(entityKey)
 
-    const stored = await this.client.channels.cache.get(data.id, { storage: data.guild_id ?? 'dm' })
-    const updated = stored ? await (await stored._clone() as any).init(data) : await new Channel(this.client).init(data)
+    const stored = await this.app.channels.cache.get(data.id, { storage: data.guild_id ?? 'dm' })
+    const updated = stored ? await (await stored._clone() as any).init(data) : await new Channel(this.app).init(data)
 
-    await this.client.channels.cache.set(updated.id, updated, { storage: data.guild_id ?? 'dm' })
+    await this.app.channels.cache.set(updated.id, updated, { storage: data.guild_id ?? 'dm' })
 
     const context: ChannelUpdateEventContext = {
       shardId,
@@ -32,7 +32,7 @@ export class ChannelUpdateEvent extends AbstractEvent<ChannelUpdateEventContext 
       guildId: data.guild_id
     }
 
-    this.client.emit(EventNames.CHANNEL_UPDATE, context)
+    this.app.emit(EventNames.CHANNEL_UPDATE, context)
     return context
   }
 }

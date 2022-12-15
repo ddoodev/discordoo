@@ -10,10 +10,10 @@ export class ThreadMemberUpdateEvent extends AbstractEvent<ThreadMemberUpdateEve
 
     const Member = EntitiesUtil.get('ThreadMember')
 
-    const stored = await this.client.threadMembers.cache.get(data.user_id, { storage: data.id })
-    const updated = stored ? await (await stored._clone()).init(data) : await new Member(this.client).init(data)
+    const stored = await this.app.threadMembers.cache.get(data.user_id, { storage: data.id })
+    const updated = stored ? await (await stored._clone()).init(data) : await new Member(this.app).init(data)
 
-    await this.client.threadMembers.cache.set(updated.userId, updated, { storage: updated.threadId })
+    await this.app.threadMembers.cache.set(updated.userId, updated, { storage: updated.threadId })
 
     const context: ThreadMemberUpdateEventContext = {
       shardId,
@@ -23,7 +23,7 @@ export class ThreadMemberUpdateEvent extends AbstractEvent<ThreadMemberUpdateEve
       threadId: data.id,
     }
 
-    this.client.emit(EventNames.THREAD_MEMBER_UPDATE, context)
+    this.app.emit(EventNames.THREAD_MEMBER_UPDATE, context)
     return context
   }
 }

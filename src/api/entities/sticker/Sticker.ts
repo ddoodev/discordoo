@@ -62,7 +62,7 @@ export class Sticker extends AbstractEntity {
   }
 
   async user(options?: CacheManagerGetOptions): Promise<User | undefined> {
-    return this.userId ? this.client.users.cache.get(this.userId, options) : undefined
+    return this.userId ? this.app.users.cache.get(this.userId, options) : undefined
   }
 
   get createdTimestamp(): number {
@@ -74,11 +74,11 @@ export class Sticker extends AbstractEntity {
   }
 
   get url(): string {
-    return this.client.internals.rest.cdn.sticker(this.id, this.formatType)
+    return this.app.internals.rest.cdn.sticker(this.id, this.formatType)
   }
 
   async fetch(): Promise<this> {
-    const response = await this.client.internals.actions.getSticker(this.id)
+    const response = await this.app.internals.actions.getSticker(this.id)
 
     if (response.success) {
       await this.init(response.result)
@@ -92,10 +92,10 @@ export class Sticker extends AbstractEntity {
 
     if (!this.guildId) {
       if (this.userId) {
-        const response = await this.client.internals.actions.getUser(this.userId)
+        const response = await this.app.internals.actions.getUser(this.userId)
 
         if (response.success) {
-          return await new User(this.client).init(response.result)
+          return await new User(this.app).init(response.result)
         }
 
         return undefined
@@ -104,14 +104,14 @@ export class Sticker extends AbstractEntity {
       }
     }
 
-    const response = await this.client.internals.actions.getGuildSticker(this.guildId, this.id)
+    const response = await this.app.internals.actions.getGuildSticker(this.guildId, this.id)
 
     if (response.success) {
       await this.init(response.result)
 
       if (response.result.user) {
-        const user = await new User(this.client).init(response.result.user)
-        await this.client.users.cache.set(user.id, user)
+        const user = await new User(this.app).init(response.result.user)
+        await this.app.users.cache.set(user.id, user)
         return user
       }
     }
@@ -122,7 +122,7 @@ export class Sticker extends AbstractEntity {
   async fetchPack(): Promise<StickerPack | undefined> {
     if (!this.packId) return undefined
 
-    const packs = await this.client.stickers.fetchPacks()
+    const packs = await this.app.stickers.fetchPacks()
 
     if (packs) {
       return packs.get(this.packId)
@@ -136,7 +136,7 @@ export class Sticker extends AbstractEntity {
 
     if (!guildId) throw new DiscordooError('Sticker#edit', 'Cannot edit sticker without guild id.')
 
-    return this.client.stickers.edit(guildId, this, data, { reason: options.reason, patchEntity: this })
+    return this.app.stickers.edit(guildId, this, data, { reason: options.reason, patchEntity: this })
   }
 
   async delete(options: StickerDeleteOptions = {}): Promise<this | undefined> {
@@ -144,7 +144,7 @@ export class Sticker extends AbstractEntity {
 
     if (!guildId) throw new DiscordooError('Sticker#delete', 'Cannot delete sticker without guild id.')
 
-    const result = await this.client.stickers.delete(guildId, this, options.reason)
+    const result = await this.app.stickers.delete(guildId, this, options.reason)
 
     if (result) {
       this.deleted = true

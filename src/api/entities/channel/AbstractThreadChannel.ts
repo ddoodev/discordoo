@@ -78,7 +78,7 @@ export abstract class AbstractThreadChannel extends AbstractChannel implements A
     }
 
     if (!this.messages) {
-      this.messages = new ChannelMessagesManager(this.client, {
+      this.messages = new ChannelMessagesManager(this.app, {
         channel: this.id,
         lastMessageId: this.lastMessageId,
         lastPinTimestamp: this.lastPinTimestamp,
@@ -90,7 +90,7 @@ export abstract class AbstractThreadChannel extends AbstractChannel implements A
     }
 
     if (!this.members) {
-      this.members = new ThreadMembersManager(this.client, {
+      this.members = new ThreadMembersManager(this.app, {
         thread: this.id,
         guild: this.guildId,
       })
@@ -123,7 +123,7 @@ export abstract class AbstractThreadChannel extends AbstractChannel implements A
   }
 
   edit(data: ThreadChannelEditData | RawThreadChannelEditData, reason?: string): Promise<this | undefined> {
-    return this.client.channels.editThreadChannel(this.id, data, { reason, patchEntity: this })
+    return this.app.channels.editThreadChannel(this.id, data, { reason, patchEntity: this })
   }
 
   setArchived(archived: boolean, reason?: string) {
@@ -151,17 +151,17 @@ export abstract class AbstractThreadChannel extends AbstractChannel implements A
   }
 
   guild(options?: CacheManagerGetOptions): Promise<Guild | undefined> {
-    return this.client.guilds.cache.get(this.guildId, options)
+    return this.app.guilds.cache.get(this.guildId, options)
   }
 
   async owner(options?: CacheManagerGetOptions): Promise<User | undefined> {
-    return this.ownerId ? this.client.users.cache.get(this.ownerId, options) : undefined
+    return this.ownerId ? this.app.users.cache.get(this.ownerId, options) : undefined
   }
 
   async ownerGuildMember(options?: CacheManagerGetOptions): Promise<GuildMember | undefined> {
     if (!this.ownerId) return undefined
 
-    return this.client.internals.cache.get(
+    return this.app.internals.cache.get(
       Keyspaces.GuildMembers,
       this.guildId,
       'GuildMember',
@@ -178,7 +178,7 @@ export abstract class AbstractThreadChannel extends AbstractChannel implements A
   async parent(options?: CacheManagerGetOptions): Promise<AnyGuildChannel | undefined> {
     if (!this.parentId) return undefined
 
-    return this.client.internals.cache.get(
+    return this.app.internals.cache.get(
       Keyspaces.Channels,
       this.guildId,
       'channelEntityKey',

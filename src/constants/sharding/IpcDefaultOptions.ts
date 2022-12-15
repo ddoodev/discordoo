@@ -1,4 +1,4 @@
-import { CompletedLocalIpcOptions } from '@src/constants/sharding/CompletedLocalIpcOptions'
+import { CompletedLocalIpcOptions } from '@src/sharding/CompletedLocalIpcOptions'
 import os from 'os'
 
 export const LOCAL_IPC_DEFAULT_OPTIONS: CompletedLocalIpcOptions = {

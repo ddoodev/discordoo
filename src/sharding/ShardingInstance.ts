@@ -1,5 +1,5 @@
-import { ShardingInstanceCreateOptions } from '@src/sharding/interfaces/client/ShardingInstanceCreateOptions'
-import { ShardingInstanceOptions } from '@src/sharding/interfaces/client/ShardingInstanceOptions'
+import { ShardingInstanceCreateOptions } from '@src/sharding/interfaces/app/ShardingInstanceCreateOptions'
+import { ShardingInstanceOptions } from '@src/sharding/interfaces/app/ShardingInstanceOptions'
 import { CLUSTERS_SHARDING_UNSUPPORTED_PLATFORMS, IpcConnectionState, IpcEvents, IpcOpCodes, PartialShardingModes } from '@src/constants'
 import { ShardingManager } from '@src/sharding/ShardingManager'
 import { LocalIpcClient } from '@src/sharding/ipc/LocalIpcClient'
@@ -166,7 +166,7 @@ export class ShardingInstance extends TypedEmitter {
     const type = typeof script
 
     if (type !== 'string' && type !== 'function') {
-      throw new DiscordooError('ClientShardingApplication#eval', 'Script to eval must be function or string.')
+      throw new DiscordooError('ApplicationSharding#eval', 'Script to eval must be function or string.')
     }
 
     const func = type === 'string'

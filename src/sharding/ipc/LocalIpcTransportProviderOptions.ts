@@ -4,7 +4,7 @@ export interface LocalIpcTransportProviderOptions {
   responseTimeout: number
 
   /**
-   * Maximum auth retrying attempts. When initial connection to the client failed, provider should try to connect again.
+   * Maximum auth retrying attempts. When initial connection to the app failed, provider should try to connect again.
    * When number of retrying is more than specified here, provider should throw an error.
    * */
   maxAuthRetrying: number

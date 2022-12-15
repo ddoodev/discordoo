@@ -1,3 +1,3 @@
 export { GuildPresencesManagerData } from '@src/api/managers/presences/GuildPresencesManagerData'
-export { ClientPresencesManager } from '@src/api/managers/presences/ClientPresencesManager'
+export { ApplicationPresencesManager } from '@src/api/managers/presences/ApplicationPresencesManager'
 export { GuildPresencesManager } from '@src/api/managers/presences/GuildPresencesManager'

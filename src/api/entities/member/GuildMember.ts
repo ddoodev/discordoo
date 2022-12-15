@@ -85,7 +85,7 @@ export class GuildMember extends AbstractEntity {
     }
 
     if (!this.roles) {
-      this.roles = new GuildMemberRolesManager(this.client, {
+      this.roles = new GuildMemberRolesManager(this.app, {
         user: this.userId,
         guild: this.guildId,
       })
@@ -125,23 +125,23 @@ export class GuildMember extends AbstractEntity {
   }
 
   user(options?: CacheManagerGetOptions): Promise<User | undefined> {
-    return this.client.users.cache.get(this.userId, options)
+    return this.app.users.cache.get(this.userId, options)
   }
 
   async dm(options?: CacheManagerGetOptions): Promise<DirectMessagesChannel | undefined> {
-    let channel = await this.client.dms.cache.get(this.userId, options)
+    let channel = await this.app.dms.cache.get(this.userId, options)
     if (!channel) {
-      channel = await this.client.dms.fetch(this.userId)
+      channel = await this.app.dms.fetch(this.userId)
     }
     return channel
   }
 
   async guild(options?: CacheManagerGetOptions): Promise<Guild | undefined> {
-    return this.client.guilds.cache.get(this.guildId, options)
+    return this.app.guilds.cache.get(this.guildId, options)
   }
 
   async presence(options?: CacheManagerGetOptions): Promise<Presence | undefined> {
-    return this.client.internals.cache.get('presences', this.guildId, 'Presence', this.userId, options)
+    return this.app.internals.cache.get('presences', this.guildId, 'Presence', this.userId, options)
   }
 
   get joinedTimeDate(): Date {
@@ -177,11 +177,11 @@ export class GuildMember extends AbstractEntity {
   }
 
   avatarUrl(options?: ImageUrlOptions): string | undefined {
-    return this.avatar ? this.client.internals.rest.cdn.guildMemberAvatar(this.guildId, this.userId, this.avatar, options) : undefined
+    return this.avatar ? this.app.internals.rest.cdn.guildMemberAvatar(this.guildId, this.userId, this.avatar, options) : undefined
   }
 
   edit(data: GuildMemberEditData, reason?: string): Promise<this | undefined> {
-    return this.client.members.edit(this.guildId, this.userId, data, { reason, patchEntity: this })
+    return this.app.members.edit(this.guildId, this.userId, data, { reason, patchEntity: this })
   }
 
   setNick(nick: string, reason?: string) {
@@ -201,17 +201,17 @@ export class GuildMember extends AbstractEntity {
   }
 
   async ban(options?: MemberBanOptions): Promise<this | undefined> {
-    const result = await this.client.members.ban(this.guildId, this.userId, options)
+    const result = await this.app.members.ban(this.guildId, this.userId, options)
     return result ? this : undefined
   }
 
   async kick(reason?: string): Promise<this | undefined> {
-    const result = await this.client.members.kick(this.guildId, this.userId, reason)
+    const result = await this.app.members.kick(this.guildId, this.userId, reason)
     return result ? this : undefined
   }
 
   async unban(reason?: string): Promise<this | undefined> {
-    const result = await this.client.members.unban(this.guildId, this.userId, reason)
+    const result = await this.app.members.unban(this.guildId, this.userId, reason)
     return result ? this : undefined
   }
 

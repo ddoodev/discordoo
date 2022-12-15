@@ -1,16 +1,16 @@
 import { GatewayBotInfo, GatewayProvider, GatewayReceivePayloadLike, GatewaySendOptions, GatewayShardsInfo } from '@discordoo/providers'
-import { Client } from '@src/core'
+import { DiscordApplication } from '@src/core'
 import { WebSocketManager } from '@src/gateway/WebSocketManager'
 import { CompletedGatewayOptions } from '@src/gateway/interfaces/GatewayOptions'
 import { GatewaySendPayloadLike } from '@discordoo/providers'
 
 export class DefaultGatewayProvider implements GatewayProvider {
-  public client: Client
+  public app: DiscordApplication
   private manager: WebSocketManager
   private options: CompletedGatewayOptions
 
-  constructor(client: Client, options: CompletedGatewayOptions) {
-    this.client = client
+  constructor(app: DiscordApplication, options: CompletedGatewayOptions) {
+    this.app = app
     this.options = options
 
     this.manager = new WebSocketManager(this, options)
@@ -27,14 +27,14 @@ export class DefaultGatewayProvider implements GatewayProvider {
   emit(shardId: number, packet: GatewayReceivePayloadLike): unknown {
     // if (event !== 'PresenceUpdate') console.log('shard', shardId, 'event', event)
     // else if (data[0]?.user?.id === '164417009977786368') console.log('ceo update', event, data)
-    return this.client.internals.gateway.emit(
+    return this.app.internals.gateway.emit(
       shardId,
       packet
     )
   }
 
   getGateway(): Promise<GatewayBotInfo> {
-    return this.client.internals.gateway.getGateway()
+    return this.app.internals.gateway.getGateway()
   }
 
   ping(): number
@@ -75,7 +75,7 @@ export class DefaultGatewayProvider implements GatewayProvider {
   }
 
   waitShardSpawnTurn(shardId: number): Promise<unknown> {
-    return this.client.internals.gateway.waitShardSpawnTurn(shardId)
+    return this.app.internals.gateway.waitShardSpawnTurn(shardId)
   }
 
   async init(): Promise<unknown> {

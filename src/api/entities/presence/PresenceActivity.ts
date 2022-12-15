@@ -32,7 +32,7 @@ export class PresenceActivity extends AbstractEntity {
 
     if (data.emoji) {
       const ActivityEmoji = EntitiesUtil.get('ActivityEmoji')
-      data.emoji = await new ActivityEmoji(this.client).init(data.emoji)
+      data.emoji = await new ActivityEmoji(this.app).init(data.emoji)
     }
 
     if (WebSocketUtils.exists(data.flags)) {
@@ -63,7 +63,7 @@ export class PresenceActivity extends AbstractEntity {
       // @ts-ignore
       if (!options?.ignore?.includes('assets') && !options?.ignore?.includes(IgnoreAllSymbol)) {
         const ActivityAssets = EntitiesUtil.get('PresenceActivityAssets')
-        this.assets = await new ActivityAssets(this.client).init({ ...data.assets, applicationId: this.applicationId })
+        this.assets = await new ActivityAssets(this.app).init({ ...data.assets, applicationId: this.applicationId })
       }
     }
 

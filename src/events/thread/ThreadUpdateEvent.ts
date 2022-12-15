@@ -22,19 +22,19 @@ export class ThreadUpdateEvent extends AbstractEvent<ThreadUpdateEventContext | 
 
     const Channel: any = EntitiesUtil.get(entityKey)
 
-    const stored = await this.client.internals.cache.get<string, AnyThreadChannel>(
+    const stored = await this.app.internals.cache.get<string, AnyThreadChannel>(
       Keyspaces.Channels,
       data.guild_id,
       'channelEntityKey',
       data.id
     )
 
-    const updated = stored ? await (await stored._clone()).init(data) : await new Channel(this.client).init(data)
+    const updated = stored ? await (await stored._clone()).init(data) : await new Channel(this.app).init(data)
 
-    await this.client.channels.cache.set(updated.id, updated, { storage: data.guild_id })
+    await this.app.channels.cache.set(updated.id, updated, { storage: data.guild_id })
 
     if (data.member) {
-      let member = await this.client.internals.cache.get<string, ThreadMember>(
+      let member = await this.app.internals.cache.get<string, ThreadMember>(
         Keyspaces.ThreadMembers,
         data.id,
         'ThreadMember',
@@ -45,10 +45,10 @@ export class ThreadUpdateEvent extends AbstractEvent<ThreadUpdateEventContext | 
         member = await member.init(data.member)
       } else {
         const ThreadMember = EntitiesUtil.get('ThreadMember')
-        member = await new ThreadMember(this.client).init(data.member)
+        member = await new ThreadMember(this.app).init(data.member)
       }
 
-      await this.client.threadMembers.cache.set(member.userId, member, { storage: data.id })
+      await this.app.threadMembers.cache.set(member.userId, member, { storage: data.id })
     }
 
     const context: ThreadUpdateEventContext = {
@@ -59,7 +59,7 @@ export class ThreadUpdateEvent extends AbstractEvent<ThreadUpdateEventContext | 
       guildId: data.guild_id
     }
 
-    this.client.emit(EventNames.THREAD_UPDATE, context)
+    this.app.emit(EventNames.THREAD_UPDATE, context)
     return context
   }
 }

@@ -39,7 +39,7 @@ export class DirectMessagesChannel extends AbstractChannel implements WritableCh
     }
 
     if (!this.messages) {
-      this.messages = new DirectMessagesChannelMessagesManager(this.client, {
+      this.messages = new DirectMessagesChannelMessagesManager(this.app, {
         channel: this.id,
         lastMessageId: this.lastMessageId,
         lastPinTimestamp: this.lastPinTimestamp,
@@ -54,7 +54,7 @@ export class DirectMessagesChannel extends AbstractChannel implements WritableCh
   }
 
   send(content: MessageContent, options?: MessageCreateOptions): Promise<Message | undefined> {
-    return this.client.messages.create(this.id, content, options)
+    return this.app.messages.create(this.id, content, options)
   }
 
   set lastMsgId(id: string) {

@@ -1,9 +1,9 @@
-import { Client } from '@src/core'
+import { DiscordApplication } from '@src/core'
 
 export abstract class EntitiesManager {
-  public client: Client
+  public app: DiscordApplication
 
-  protected constructor(client: Client) {
-    this.client = client
+  protected constructor(app: DiscordApplication) {
+    this.app = app
   }
 }

@@ -3,5 +3,5 @@ export { WebSocketManager } from '@src/gateway/WebSocketManager'
 export { WebSocketClient } from '@src/gateway/WebSocketClient'
 export { GatewayManager } from '@src/gateway/GatewayManager'
 
-export * from './client'
+export * from './app'
 export * from './interfaces'

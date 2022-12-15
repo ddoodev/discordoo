@@ -18,12 +18,12 @@ import { WebSocketManager } from '@src/gateway/WebSocketManager'
 import { WebSocketUtils } from '@src/utils/WebSocketUtils'
 import { DiscordooError } from '@src/utils/DiscordooError'
 
-import { identify } from '@src/gateway/client/identify'
-import { message } from '@src/gateway/client/message'
-import { packet } from '@src/gateway/client/packet'
-import { error } from '@src/gateway/client/error'
-import { close } from '@src/gateway/client/close'
-import { open } from '@src/gateway/client/open'
+import { identify } from '@src/gateway/app/identify'
+import { message } from '@src/gateway/app/message'
+import { packet } from '@src/gateway/app/packet'
+import { error } from '@src/gateway/app/error'
+import { close } from '@src/gateway/app/close'
+import { open } from '@src/gateway/app/open'
 
 export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers> {
   private socket?: WebSocket
@@ -107,13 +107,13 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
        * and rejects promise when shard failed to connect for some reason.
        * when promise resolved/rejected, it removes the used before listeners.
        * */
-      function cleanupOrListen(client: WebSocketClient, listen = false) {
-        const direction = listen ? client.once : client.removeListener
+      function cleanupOrListen(app: WebSocketClient, listen = false) {
+        const direction = listen ? app.once : app.removeListener
 
-        direction.call(client, WebSocketClientEvents.WsClosed, closed)
-        direction.call(client, WebSocketClientEvents.Ready, ready)
-        direction.call(client, WebSocketClientEvents.Resumed, resumed)
-        direction.call(client, WebSocketClientEvents.InvalidSession, invalid)
+        direction.call(app, WebSocketClientEvents.WsClosed, closed)
+        direction.call(app, WebSocketClientEvents.Ready, ready)
+        direction.call(app, WebSocketClientEvents.Resumed, resumed)
+        direction.call(app, WebSocketClientEvents.InvalidSession, invalid)
       }
 
       cleanupOrListen(this, true)
@@ -158,7 +158,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
   /**
    * this method operates with handshake timeout:
    * when handshake did not occur at the specified time,
-   * it reconnects the client
+   * it reconnects the app
    * */
   public handshakeTimeout(create = true) {
     if (this._handshakeTimeout) {

@@ -1,5 +1,5 @@
 import { EntitiesCacheManager, GuildMember, Role, RoleResolvable } from '@src/api'
-import { Client } from '@src/core'
+import { DiscordApplication } from '@src/core'
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
 import { GuildMemberRolesManagerData } from '@src/api/managers/members/GuildMemberRolesManagerData'
 import { resolveGuildId, resolveRoleId, resolveUserId } from '@src/utils/resolve'
@@ -12,8 +12,8 @@ export class GuildMemberRolesManager extends EntitiesManager {
   public userId: string
   public guildId: string
 
-  constructor(client: Client, data: GuildMemberRolesManagerData) {
-    super(client)
+  constructor(app: DiscordApplication, data: GuildMemberRolesManagerData) {
+    super(app)
 
     const userId = resolveUserId(data.user)
     if (!userId) throw new DiscordooError('GuildMemberRolesManager', 'Cannot operate without user id.')
@@ -23,7 +23,7 @@ export class GuildMemberRolesManager extends EntitiesManager {
     if (!guildId) throw new DiscordooError('GuildMemberRolesManager', 'Cannot operate without guild id.')
     this.guildId = guildId
 
-    this.cache = new EntitiesCacheManager<Role>(this.client, {
+    this.cache = new EntitiesCacheManager<Role>(this.app, {
       keyspace: Keyspaces.GuildMemberRoles,
       storage: this.userId,
       entity: 'Role',
@@ -32,15 +32,15 @@ export class GuildMemberRolesManager extends EntitiesManager {
   }
 
   addOne(role: RoleResolvable, reason?: string): Promise<boolean> {
-    return this.client.members.addRole(this.guildId, this.userId, role, reason)
+    return this.app.members.addRole(this.guildId, this.userId, role, reason)
   }
 
   async addMany(roles: RoleResolvable[], reason?: string): Promise<GuildMember | undefined> {
-    const member = await this.client.members.fetchOne(this.guildId, this.userId)
+    const member = await this.app.members.fetchOne(this.guildId, this.userId)
 
     if (!member) return undefined
 
-    return this.client.members.edit(
+    return this.app.members.edit(
       this.guildId, this.userId, { roles: [ ...member.rolesList, ...roles ] }, { reason }
     )
   }
@@ -50,11 +50,11 @@ export class GuildMemberRolesManager extends EntitiesManager {
   }
 
   removeOne(role: RoleResolvable, reason?: string): Promise<boolean> {
-    return this.client.members.removeRole(this.guildId, this.userId, role, reason)
+    return this.app.members.removeRole(this.guildId, this.userId, role, reason)
   }
 
   async removeMany(roles: RoleResolvable[], reason?: string): Promise<GuildMember | undefined> {
-    const member = await this.client.members.fetchOne(this.guildId, this.userId)
+    const member = await this.app.members.fetchOne(this.guildId, this.userId)
 
     if (!member) return undefined
 
@@ -65,7 +65,7 @@ export class GuildMemberRolesManager extends EntitiesManager {
       (r) => resolveRoleId(r)
     )
 
-    return this.client.members.edit(
+    return this.app.members.edit(
       this.guildId, this.userId, { roles: member.rolesList.filter(id => !resolved.includes(id)) }, { reason }
     )
   }

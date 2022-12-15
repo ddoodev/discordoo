@@ -12,90 +12,90 @@ export class GuildCreateEvent extends AbstractEvent<GuildCreateEventContext | Ab
 
   async execute(shardId: number, guild: RawGuildData) {
 
-    let guildCache = await this.client.guilds.cache.get(guild.id)
+    let guildCache = await this.app.guilds.cache.get(guild.id)
 
     const isUnavailable = guildCache?.unavailable ?? false
 
     if (guildCache) {
       guildCache = await guildCache.init({ ...guild, unavailable: false })
-      await this.client.guilds.cache.set(guild.id, guildCache)
+      await this.app.guilds.cache.set(guild.id, guildCache)
     } else {
       const Guild = EntitiesUtil.get('Guild')
-      guildCache = await new Guild(this.client).init(guild)
-      await this.client.guilds.cache.set(guild.id, guildCache)
+      guildCache = await new Guild(this.app).init(guild)
+      await this.app.guilds.cache.set(guild.id, guildCache)
     }
 
     for await (const channelData of guild.channels) {
-      let cache = await this.client.internals.cache.get(Keyspaces.Channels, guild.id, 'channelEntityKey', channelData.id)
+      let cache = await this.app.internals.cache.get(Keyspaces.Channels, guild.id, 'channelEntityKey', channelData.id)
 
       if (cache) {
         cache = await cache.init(channelData)
-        await this.client.channels.cache.set(cache.id, cache, { storage: guild.id })
+        await this.app.channels.cache.set(cache.id, cache, { storage: guild.id })
       } else {
         const Channel: any = EntitiesUtil.get(channelEntityKey(channelData))
-        const channel = await new Channel(this.client).init(channelData)
-        await this.client.channels.cache.set(channel.id, channel, { storage: guild.id })
+        const channel = await new Channel(this.app).init(channelData)
+        await this.app.channels.cache.set(channel.id, channel, { storage: guild.id })
       }
     }
 
     for await (const memberData of guild.members) {
-      let memberCache = await this.client.internals.cache.get(Keyspaces.GuildMembers, guild.id, 'GuildMember', memberData.user.id)
+      let memberCache = await this.app.internals.cache.get(Keyspaces.GuildMembers, guild.id, 'GuildMember', memberData.user.id)
 
       if (memberCache) {
         memberCache = await memberCache.init(memberData)
-        await this.client.members.cache.set(memberCache.userId, memberCache, { storage: guild.id })
+        await this.app.members.cache.set(memberCache.userId, memberCache, { storage: guild.id })
       } else {
         const GuildMember = EntitiesUtil.get('GuildMember')
-        const member = await new GuildMember(this.client).init({
+        const member = await new GuildMember(this.app).init({
           ...memberData, guild_id: guild.id, guild_owner: memberData.user.id === guild.owner_id
         })
-        await this.client.members.cache.set(member.userId, member, { storage: guild.id })
+        await this.app.members.cache.set(member.userId, member, { storage: guild.id })
       }
 
-      let userCache = await this.client.users.cache.get(memberData.user.id)
+      let userCache = await this.app.users.cache.get(memberData.user.id)
 
       if (userCache) {
         userCache = await userCache.init(memberData.user)
-        await this.client.users.cache.set(memberData.user.id, userCache)
+        await this.app.users.cache.set(memberData.user.id, userCache)
       } else {
         const User = EntitiesUtil.get('User')
-        const user = await new User(this.client).init(memberData.user)
-        await this.client.users.cache.set(memberData.user.id, user)
+        const user = await new User(this.app).init(memberData.user)
+        await this.app.users.cache.set(memberData.user.id, user)
       }
     }
 
     for await (const presenceData of guild.presences) {
-      let cache = await this.client.internals.cache.get(Keyspaces.GuildPresences, guild.id, 'Presence', presenceData.user.id)
+      let cache = await this.app.internals.cache.get(Keyspaces.GuildPresences, guild.id, 'Presence', presenceData.user.id)
 
       if (cache) {
         cache = await cache.init(presenceData)
       } else {
         const Presence = EntitiesUtil.get('Presence')
-        cache = await new Presence(this.client).init({ ...presenceData, guild_id: guild.id })
+        cache = await new Presence(this.app).init({ ...presenceData, guild_id: guild.id })
       }
 
-      await this.client.presences.cache.set(cache.userId, cache, { storage: guild.id })
+      await this.app.presences.cache.set(cache.userId, cache, { storage: guild.id })
     }
 
     for await (const emojiData of guild.emojis) {
-      let cache = await this.client.emojis.cache.get<GuildEmoji>(emojiData.id, { storage: guild.id })
+      let cache = await this.app.emojis.cache.get<GuildEmoji>(emojiData.id, { storage: guild.id })
 
       if (cache) {
         cache = await cache.init(emojiData)
       } else {
         const Emoji = EntitiesUtil.get('GuildEmoji')
-        cache = await new Emoji(this.client).init({ ...emojiData, guild_id: guild.id })
+        cache = await new Emoji(this.app).init({ ...emojiData, guild_id: guild.id })
       }
 
-      await this.client.emojis.cache.set(cache.id, cache, { storage: guild.id })
+      await this.app.emojis.cache.set(cache.id, cache, { storage: guild.id })
     }
 
-    await this.client[otherCacheSymbol].set(guild.id, { id: guild.owner_id }, { storage: 'guild-owners' })
+    await this.app[otherCacheSymbol].set(guild.id, { id: guild.owner_id }, { storage: 'guild-owners' })
 
-    const queue = this.client.internals.queues.ready.get(shardId)
+    const queue = this.app.internals.queues.ready.get(shardId)
 
     if (queue) {
-      queue.handler(this.client, { ...queue, guild: guild.id })
+      queue.handler(this.app, { ...queue, guild: guild.id })
       return {
         shardId,
       }
@@ -108,7 +108,7 @@ export class GuildCreateEvent extends AbstractEvent<GuildCreateEventContext | Ab
         fromUnavailable: isUnavailable
       }
 
-      this.client.emit('guildCreate', context)
+      this.app.emit('guildCreate', context)
       return context
     }
   }

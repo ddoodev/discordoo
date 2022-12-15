@@ -20,7 +20,7 @@ export class ThreadDeleteEvent extends AbstractEvent<ThreadDeleteEventContext | 
 
     const Channel: any = EntitiesUtil.get(entityKey)
 
-    let thread = await this.client.internals.cache.get(
+    let thread = await this.app.internals.cache.get(
       Keyspaces.Channels,
       data.guild_id,
       'channelEntityKey',
@@ -30,18 +30,18 @@ export class ThreadDeleteEvent extends AbstractEvent<ThreadDeleteEventContext | 
     if (thread) {
       thread = await thread.init(data)
     } else {
-      thread = await new Channel(this.client).init(data)
+      thread = await new Channel(this.app).init(data)
     }
 
     // remove thread from cache
-    await this.client.internals.cache.delete(
+    await this.app.internals.cache.delete(
       Keyspaces.Channels,
       data.guild_id,
       data.id
     )
 
     // clear thread members from cache
-    await this.client.internals.cache.clear(
+    await this.app.internals.cache.clear(
       Keyspaces.ThreadMembers,
       data.id
     )
@@ -54,7 +54,7 @@ export class ThreadDeleteEvent extends AbstractEvent<ThreadDeleteEventContext | 
       guildId: data.guild_id,
     }
 
-    this.client.emit(EventNames.THREAD_DELETE, context)
+    this.app.emit(EventNames.THREAD_DELETE, context)
     return context
   }
 }

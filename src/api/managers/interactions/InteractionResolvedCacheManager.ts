@@ -1,5 +1,5 @@
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
-import { Client } from '@src/core'
+import { DiscordApplication } from '@src/core'
 import { InteractionResolvedCacheManagerData } from '@src/api/managers/interactions/InteractionResolvedCacheManagerData'
 import { is } from 'typescript-is'
 import { ValidationError } from '@src/utils'
@@ -16,8 +16,8 @@ export class InteractionResolvedCacheManager extends EntitiesManager {
   public roles: EntitiesCacheManager<Role>
   public users: EntitiesCacheManager<User>
 
-  constructor(client: Client, data: InteractionResolvedCacheManagerData) {
-    super(client)
+  constructor(app: DiscordApplication, data: InteractionResolvedCacheManagerData) {
+    super(app)
 
     if (!is<InteractionResolvedCacheManagerData>(data)) {
       throw new ValidationError(
@@ -43,7 +43,7 @@ export class InteractionResolvedCacheManager extends EntitiesManager {
       if (this._data[name]?.length) {
         this._data[name] = []
         this[name] = new Proxy<EntitiesCacheManager<any>>(
-          this.client[name].cache, makeProxyHandler([], storage, name)
+          this.app[name].cache, makeProxyHandler([], storage, name)
         )
       }
     }
@@ -110,23 +110,23 @@ export class InteractionResolvedCacheManager extends EntitiesManager {
       channelId = data.channelId
 
     this.channels = new Proxy<EntitiesCacheManager<any>>(
-      this.client.channels.cache, makeProxyHandler(this._data.channels ?? [], guildId ?? 'global', 'channels')
+      this.app.channels.cache, makeProxyHandler(Object.keys(this._data.channels ?? {}), guildId ?? 'global', 'channels')
     )
 
     this.roles = new Proxy<EntitiesCacheManager<any>>(
-      this.client.roles.cache, makeProxyHandler(this._data.roles ?? [], guildId ?? 'global', 'roles')
+      this.app.roles.cache, makeProxyHandler(Object.keys(this._data.roles ?? {}), guildId ?? 'global', 'roles')
     )
 
     this.members = new Proxy<EntitiesCacheManager<any>>(
-      this.client.members.cache, makeProxyHandler(this._data.members ?? [], guildId ?? 'global', 'members')
+      this.app.members.cache, makeProxyHandler(Object.keys(this._data.members ?? {}), guildId ?? 'global', 'members')
     )
 
     this.messages = new Proxy<EntitiesCacheManager<any>>(
-      this.client.messages.cache, makeProxyHandler(this._data.members ?? [], channelId ?? 'global', 'channels')
+      this.app.messages.cache, makeProxyHandler(Object.keys(this._data.messages ?? {}), channelId ?? 'global', 'channels')
     )
 
     this.users = new Proxy<EntitiesCacheManager<any>>(
-      this.client.users.cache, makeProxyHandler(this._data.members ?? [], 'global', 'users')
+      this.app.users.cache, makeProxyHandler(Object.keys(this._data.users ?? {}), 'global', 'users')
     )
   }
 

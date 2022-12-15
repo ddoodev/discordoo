@@ -9,7 +9,7 @@ export class PresenceUpdateEvent extends AbstractEvent<PresenceUpdateEventContex
 
   async execute(shardId: number, data: RawPresenceData) {
 
-    let presence = await this.client.internals.cache.get<string, Presence>(
+    let presence = await this.app.internals.cache.get<string, Presence>(
       Keyspaces.GuildPresences, data.guild_id, 'Presence', data.user.id
     )
 
@@ -19,18 +19,18 @@ export class PresenceUpdateEvent extends AbstractEvent<PresenceUpdateEventContex
       await presence.init(data)
     } else {
       const Presence = EntitiesUtil.get('Presence')
-      presence = await new Presence(this.client).init(data)
+      presence = await new Presence(this.app).init(data)
     }
 
-    await this.client.presences.cache.set(presence.userId, presence, { storage: presence.guildId })
+    await this.app.presences.cache.set(presence.userId, presence, { storage: presence.guildId })
 
     let storedUser, updatedUser
     if (data.user.username) { // user can be partial
-      storedUser = await this.client.users.cache.get(presence.userId)
+      storedUser = await this.app.users.cache.get(presence.userId)
       const User = EntitiesUtil.get('User')
-      updatedUser = storedUser ? await (await storedUser?._clone())?.init(data.user) : await new User(this.client).init(data.user)
+      updatedUser = storedUser ? await (await storedUser?._clone())?.init(data.user) : await new User(this.app).init(data.user)
 
-      await this.client.users.cache.set(updatedUser.id, updatedUser)
+      await this.app.users.cache.set(updatedUser.id, updatedUser)
     }
 
     const context: PresenceUpdateEventContext = {
@@ -43,7 +43,7 @@ export class PresenceUpdateEvent extends AbstractEvent<PresenceUpdateEventContex
       shardId,
     }
 
-    this.client.emit(EventNames.PRESENCE_UPDATE, context)
+    this.app.emit(EventNames.PRESENCE_UPDATE, context)
     return context
   }
 }

@@ -3,6 +3,6 @@ import WebSocket from 'ws'
 import { WebSocketClientEvents } from '@src/constants'
 
 // handles websocket error event
-export function error(client: WebSocketClient, event: WebSocket.ErrorEvent) {
-  client.emit(WebSocketClientEvents.WsError, event)
+export function error(app: WebSocketClient, event: WebSocket.ErrorEvent) {
+  app.emit(WebSocketClientEvents.WsError, event)
 }

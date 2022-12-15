@@ -11,31 +11,31 @@ export class MessageCreateEvent extends AbstractEvent<MessageCreateEventContext>
   async execute(shardId: number, data: RawMessageData) {
     const Message = EntitiesUtil.get('Message')
 
-    const message = await new Message(this.client).init(data)
-    await this.client.messages.cache.set(message.id, message, { storage: message.channelId })
+    const message = await new Message(this.app).init(data)
+    await this.app.messages.cache.set(message.id, message, { storage: message.channelId })
 
-    let author = await this.client.users.cache.get(data.author.id)
+    let author = await this.app.users.cache.get(data.author.id)
 
     if (author) {
       author = await author.init(data.author)
     } else {
       const User = EntitiesUtil.get('User')
-      author = await new User(this.client).init(data.author)
+      author = await new User(this.app).init(data.author)
     }
 
-    await this.client.users.cache.set(author.id, author)
+    await this.app.users.cache.set(author.id, author)
 
-    const channel = await this.client.channels.cache.get<AnyWritableChannel>(message.channelId, {
+    const channel = await this.app.channels.cache.get<AnyWritableChannel>(message.channelId, {
       storage: message.guildId ?? 'dm'
     })
 
     if (channel) {
       channel.lastMsgId = message.id
-      await this.client.channels.cache.set(message.channelId, channel, {
+      await this.app.channels.cache.set(message.channelId, channel, {
         storage: message.guildId ?? 'dm'
       })
       if (!message.guildId) {
-        await this.client.channels.cache.set(message.authorId, channel, {
+        await this.app.channels.cache.set(message.authorId, channel, {
           storage: 'dm'
         })
       }
@@ -50,7 +50,7 @@ export class MessageCreateEvent extends AbstractEvent<MessageCreateEventContext>
       messageId: message.id,
     }
 
-    this.client.emit(EventNames.MESSAGE_CREATE, context)
+    this.app.emit(EventNames.MESSAGE_CREATE, context)
     return context
   }
 }

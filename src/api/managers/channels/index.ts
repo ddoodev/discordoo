@@ -1,6 +1,6 @@
-export { ClientDirectMessagesChannelsManager } from '@src/api/managers/channels/ClientDirectMessagesChannelsManager'
+export { ApplicationDirectMessagesChannelsManager } from '@src/api/managers/channels/ApplicationDirectMessagesChannelsManager'
 export { CategoryChannelChildrenManagerData } from '@src/api/managers/channels/CategoryChannelChildrenManagerData'
 export { CategoryChannelChildrenManager } from '@src/api/managers/channels/CategoryChannelChildrenManager'
 export { GuildChannelsManagerData } from '@src/api/managers/channels/GuildChannelsManagerData'
-export { ClientChannelsManager } from '@src/api/managers/channels/ClientChannelsManager'
+export { ApplicationChannelsManager } from '@src/api/managers/channels/ApplicationChannelsManager'
 export { GuildChannelsManager } from '@src/api/managers/channels/GuildChannelsManager'

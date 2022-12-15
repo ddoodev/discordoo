@@ -42,17 +42,17 @@ export class PermissionOverwrite extends AbstractEntity {
   }
 
   channel(options?: CacheManagerGetOptions): Promise<AnyGuildChannel | undefined> {
-    return this.client.channels.cache.get(this.channelId, options) as Promise<AnyGuildChannel | undefined>
+    return this.app.channels.cache.get(this.channelId, options) as Promise<AnyGuildChannel | undefined>
   }
 
   async edit(overwrite: PermissionOverwriteResolvable, options?: PermissionOverwriteEditOptions): Promise<this | undefined> {
-    const result = await this.client.overwrites.upsert(this.channelId, overwrite, { ...options, existing: this })
+    const result = await this.app.overwrites.upsert(this.channelId, overwrite, { ...options, existing: this })
 
     return result ? this : undefined
   }
 
   async delete(reason?: string): Promise<this | undefined> {
-    const result = await this.client.overwrites.delete(this.channelId, this.id, reason)
+    const result = await this.app.overwrites.delete(this.channelId, this.id, reason)
 
     return result ? this : undefined
   }

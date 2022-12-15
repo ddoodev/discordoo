@@ -40,7 +40,7 @@ export abstract class AbstractEmoji extends AbstractEntity implements AbstractEm
   }
 
   get url(): string | undefined {
-    if (this.id) return this.client.internals.rest.cdn.emoji(this.id, { format: this.animated ? 'gif' : 'png' })
+    if (this.id) return this.app.internals.rest.cdn.emoji(this.id, { format: this.animated ? 'gif' : 'png' })
     return undefined
   }
 

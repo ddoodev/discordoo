@@ -1,4 +1,4 @@
-import { WebhookClient } from '@src/core/client/webhook/WebhookClient'
+import { WebhookClient } from '@src/core/apps/webhook/WebhookClient'
 import {
   MessageContent,
   MessageResolvable,
@@ -11,16 +11,16 @@ import { MessageFlags } from '@src/constants'
 import { DeleteWebhookMessageOptions } from '@src/api/managers/messages/DeleteWebhookMessageOptions'
 
 export class WebhookClientMessagesManager {
-  public client: WebhookClient
+  public app: WebhookClient
 
-  constructor(client: WebhookClient) {
-    this.client = client
+  constructor(app: WebhookClient) {
+    this.app = app
   }
 
   async create(content: MessageContent, options: WebhookMessageCreateOptions = {}): Promise<RawMessageData | undefined> {
     const payload = await createMessagePayload(content, options)
 
-    const response = await this.client.internals.actions.createMessage({
+    const response = await this.app.internals.actions.createMessage({
       ...payload,
       avatar_url: options.avatarUrl,
       username: options.username,
@@ -40,7 +40,7 @@ export class WebhookClientMessagesManager {
 
     const threadId = thread ? resolveChannelId(thread) : undefined
 
-    const response = await this.client.internals.actions.getMessage(messageId, threadId)
+    const response = await this.app.internals.actions.getMessage(messageId, threadId)
 
     return response.success ? response.result : undefined
   }
@@ -54,7 +54,7 @@ export class WebhookClientMessagesManager {
 
     const threadId = options.thread ? resolveChannelId(options.thread) : undefined
 
-    const response = await this.client.internals.actions.deleteMessage(messageId, threadId, options.reason)
+    const response = await this.app.internals.actions.deleteMessage(messageId, threadId, options.reason)
 
     return response.success
   }

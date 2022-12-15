@@ -8,7 +8,7 @@ import { CompletedGatewayOptions } from '@src/gateway/interfaces/GatewayOptions'
 
 // handles websocket raw messages, decompressing/decoding it to normal javascript objects
 export function message(
-  client: WebSocketClient,
+  app: WebSocketClient,
   event: WebSocket.MessageEvent,
   options: CompletedGatewayOptions,
   inflate?: PakoTypes.Inflate
@@ -16,7 +16,7 @@ export function message(
 
   let { data } = event, packet: Record<any, any> | undefined
 
-  // console.log('shard', client.id, 'message', data)
+  // console.log('shard', app.id, 'message', data)
 
   if (data instanceof ArrayBuffer) data = new Uint8Array(data)
 
@@ -55,7 +55,7 @@ export function message(
     packet = WebSocketUtils.unpack(data)
   } catch (e) {
     // packet is broken (invalid json, for example)
-    // console.error('shard', client.id, 'error', e)
+    // console.error('shard', app.id, 'error', e)
   }
 
   // data is fully ready, return it (or return nothing in error case)

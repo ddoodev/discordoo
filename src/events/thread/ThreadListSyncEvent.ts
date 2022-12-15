@@ -28,7 +28,7 @@ export class ThreadListSyncEvent extends AbstractEvent<ThreadListSyncEventContex
       return false
     }
 
-    await this.client.internals.cache.sweep<string, AnyGuildChannel | AnyThreadChannel>(
+    await this.app.internals.cache.sweep<string, AnyGuildChannel | AnyThreadChannel>(
       Keyspaces.Channels,
       data.guild_id,
       'channelEntityKey',
@@ -36,7 +36,7 @@ export class ThreadListSyncEvent extends AbstractEvent<ThreadListSyncEventContex
     )
 
     for await (const threadData of data.threads) {
-      let thread = await this.client.internals.cache.get(
+      let thread = await this.app.internals.cache.get(
         Keyspaces.Channels,
         data.guild_id,
         'channelEntityKey',
@@ -47,15 +47,15 @@ export class ThreadListSyncEvent extends AbstractEvent<ThreadListSyncEventContex
         thread = await thread.init(threadData)
       } else {
         const Thread: any = EntitiesUtil.get('channelEntityKey', threadData)
-        thread = await new Thread(this.client).init(threadData)
+        thread = await new Thread(this.app).init(threadData)
       }
 
-      await this.client.channels.cache.set(thread.id, thread, { storage: data.guild_id })
+      await this.app.channels.cache.set(thread.id, thread, { storage: data.guild_id })
       threads.set(threadData.id, thread)
     }
 
     for await (const memberData of data.members) {
-      let member = await this.client.internals.cache.get(
+      let member = await this.app.internals.cache.get(
         Keyspaces.ThreadMembers,
         memberData.id,
         'ThreadMember',
@@ -66,10 +66,10 @@ export class ThreadListSyncEvent extends AbstractEvent<ThreadListSyncEventContex
         member = await member.init(memberData)
       } else {
         const Member: any = EntitiesUtil.get('ThreadMember')
-        member = await new Member(this.client).init(memberData)
+        member = await new Member(this.app).init(memberData)
       }
 
-      await this.client.threadMembers.cache.set(memberData.user_id, member, { storage: memberData.id })
+      await this.app.threadMembers.cache.set(memberData.user_id, member, { storage: memberData.id })
       members.set(memberData.user_id, member)
     }
 
@@ -81,7 +81,7 @@ export class ThreadListSyncEvent extends AbstractEvent<ThreadListSyncEventContex
       guildId: data.guild_id,
     }
 
-    this.client.emit(EventNames.THREAD_LIST_SYNC, context)
+    this.app.emit(EventNames.THREAD_LIST_SYNC, context)
     return context
   }
 }

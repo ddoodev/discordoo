@@ -9,7 +9,7 @@ export class ChannelPinsUpdateEvent extends AbstractEvent<ChannelPinsUpdateEvent
   async execute(shardId: number, data: RawChannelPinsUpdateEventData) {
     const timestamp = data.last_pin_timestamp ? new Date(data.last_pin_timestamp) : undefined
 
-    const channel = await this.client.channels.cache.get<AnyWritableChannel>(data.channel_id, {
+    const channel = await this.app.channels.cache.get<AnyWritableChannel>(data.channel_id, {
       storage: data.guild_id ?? 'dm',
     })
 
@@ -26,7 +26,7 @@ export class ChannelPinsUpdateEvent extends AbstractEvent<ChannelPinsUpdateEvent
       lastPinTimestamp: timestamp?.getTime()
     }
 
-    this.client.emit(EventNames.CHANNEL_PINS_UPDATE, context)
+    this.app.emit(EventNames.CHANNEL_PINS_UPDATE, context)
     return context
   }
 }

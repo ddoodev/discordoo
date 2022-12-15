@@ -1,5 +1,5 @@
-import { Client } from '@src/core'
+import { DiscordApplication } from '@src/core'
 
 export interface ReadyEventContext {
-  client: Client
+  app: DiscordApplication
 }

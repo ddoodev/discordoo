@@ -1,4 +1,4 @@
 export { MessageAttachmentResolvable } from '@src/api/entities/attachment/interfaces/MessageAttachmentResolvable'
-export { MessageAttachmentConstructorOptions } from '@src/api/entities/attachment/interfaces/MessageAttachmentConstructorOptions'
+export { MessageAttachmentBuilderOptions } from '@src/api/entities/attachment/interfaces/MessageAttachmentBuilderOptions'
 export { RawMessageAttachmentData } from '@src/api/entities/attachment/interfaces/RawMessageAttachmentData'
-export { MessageAttachmentConstructorData } from '@src/api/entities/attachment/interfaces/MessageAttachmentConstructorData'
+export { MessageAttachmentBuilderData } from '@src/api/entities/attachment/interfaces/MessageAttachmentBuilderData'

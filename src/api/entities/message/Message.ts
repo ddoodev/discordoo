@@ -50,7 +50,7 @@ export class Message extends AbstractEntity {
       const Embed = EntitiesUtil.get('MessageEmbed')
       const embeds: MessageEmbed[] = []
       for await (const emb of data.embeds) {
-        embeds.push(await new Embed(this.client).init(emb as RawMessageEmbedData))
+        embeds.push(await new Embed(this.app).init(emb as RawMessageEmbedData))
       }
       data.embeds = embeds
     }
@@ -65,15 +65,15 @@ export class Message extends AbstractEntity {
       const Attachment = EntitiesUtil.get('MessageAttachment')
       const attachments: MessageAttachment[] = []
       for await (const at of data.attachments) {
-        attachments.push(await new Attachment(this.client).init(at as RawMessageAttachmentData))
+        attachments.push(await new Attachment(this.app).init(at as RawMessageAttachmentData))
       }
       data.attachments = attachments
     }
 
     if ('referenced_message' in data && data.referenced_message) {
       const Message = EntitiesUtil.get('Message')
-      const msg = await new Message(this.client).init(data.referenced_message)
-      await this.client.messages.cache.set(msg.id, msg, { storage: this.channelId });
+      const msg = await new Message(this.app).init(data.referenced_message)
+      await this.app.messages.cache.set(msg.id, msg, { storage: this.channelId });
       (data as any).referencedMessageId = msg.id
     }
 
@@ -110,7 +110,7 @@ export class Message extends AbstractEntity {
     }
 
     if (!this.reactions) {
-      this.reactions = new MessageReactionsManager(this.client, {
+      this.reactions = new MessageReactionsManager(this.app, {
         messageId: this.id,
         channelId: this.channelId
       })
@@ -120,7 +120,7 @@ export class Message extends AbstractEntity {
       await this.reactions.cache.clear()
 
       for await (const reactionData of data.reactions) {
-        const reaction = await resolveMessageReaction(this.client, reactionData)
+        const reaction = await resolveMessageReaction(this.app, reactionData)
         if (reaction) await this.reactions.cache.set(reaction.emojiId, reaction)
       }
     }
@@ -129,7 +129,7 @@ export class Message extends AbstractEntity {
   }
 
   reply(content: MessageContent, options?: MessageCreateOptions) {
-    return this.client.messages.create(this.channelId, content, {
+    return this.app.messages.create(this.channelId, content, {
       ...options,
       messageReference: {
         guild: this.guildId,
@@ -140,7 +140,7 @@ export class Message extends AbstractEntity {
   }
 
   async delete(reason?: string): Promise<this | undefined> {
-    const result = await this.client.messages.deleteOne(this.channelId, this.id, reason)
+    const result = await this.app.messages.deleteOne(this.channelId, this.id, reason)
 
     if (result) {
       this.deleted = true
@@ -159,15 +159,15 @@ export class Message extends AbstractEntity {
   }
 
   author(options?: CacheManagerGetOptions): Promise<User | undefined> {
-    return this.client.users.cache.get(this.authorId, options)
+    return this.app.users.cache.get(this.authorId, options)
   }
 
   async guild(options?: CacheManagerGetOptions): Promise<Guild | undefined> {
-    return this.guildId ? this.client.guilds.cache.get(this.guildId, options) : undefined
+    return this.guildId ? this.app.guilds.cache.get(this.guildId, options) : undefined
   }
 
   async channel(options?: CacheManagerGetOptions): Promise<AnyWritableChannel | undefined> {
-    return this.client.channels.cache.get(this.channelId, {
+    return this.app.channels.cache.get(this.channelId, {
       ...options,
       storage: this.guildId ?? 'dm'
     })
@@ -175,13 +175,13 @@ export class Message extends AbstractEntity {
 
   async member(options?: CacheManagerGetOptions): Promise<GuildMember | undefined> {
     return this.guildId
-      ? this.client.internals.cache.get(Keyspaces.GuildMembers, this.guildId, 'GuildMember', this.authorId, options)
+      ? this.app.internals.cache.get(Keyspaces.GuildMembers, this.guildId, 'GuildMember', this.authorId, options)
       : undefined
   }
 
   async reference(options?: CacheManagerGetOptions): Promise<Message | undefined> {
     return this.referencedMessageId
-      ? this.client.internals.cache.get(Keyspaces.Messages, this.channelId, 'Message', this.referencedMessageId, options)
+      ? this.app.internals.cache.get(Keyspaces.Messages, this.channelId, 'Message', this.referencedMessageId, options)
       : undefined
   }
 

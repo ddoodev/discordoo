@@ -1,6 +1,6 @@
-export { WebhookClientBuilder } from '@src/wrapper/WebhookClientBuilder'
+export { WebhookApplicationBuilder } from '@src/wrapper/WebhookApplicationBuilder'
 export { createWebhookApp } from '@src/wrapper/createWebhookApp'
-export { ClientBuilder } from '@src/wrapper/ClientBuilder'
+export { ApplicationBuilder } from '@src/wrapper/ApplicationBuilder'
 export { createApp } from '@src/wrapper/createApp'
 
 export * from './interfaces'

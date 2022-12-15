@@ -2,7 +2,7 @@ import { CachingPoliciesProcessor } from '@src/cache/CachingPoliciesProcessor'
 import { IpcCacheOpCodes, IpcOpCodes, SerializeModes } from '@src/constants'
 import { CacheProvider, CacheStorageKey } from '@discordoo/providers'
 import { DiscordooError, resolveDiscordooShards } from '@src/utils'
-import { Client, ProviderConstructor } from '@src/core'
+import { ProviderConstructor } from '@src/core'
 import { EntityKey } from '@src/api/entities'
 import {
   IpcCacheClearRequestPacket,
@@ -65,17 +65,18 @@ import {
 import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 import { toJson } from '@src/utils/toJson'
 import { isCachePointer } from '@src/utils/cachePointer'
+import { AnyDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
 
 export class CacheManager<P extends CacheProvider = CacheProvider> {
-  public client: Client
+  public app: AnyDiscordApplication
   public provider: P
 
   private readonly _policiesProcessor: CachingPoliciesProcessor
 
-  constructor(client: Client, Provider: ProviderConstructor<P>, data: CacheManagerData) {
-    this.client = client
-    this.provider = new Provider(this.client, data.cacheOptions, data.providerOptions)
-    this._policiesProcessor = new CachingPoliciesProcessor(this.client)
+  constructor(app: AnyDiscordApplication, Provider: ProviderConstructor<P>, data: CacheManagerData) {
+    this.app = app
+    this.provider = new Provider(this.app, data.cacheOptions, data.providerOptions)
+    this._policiesProcessor = new CachingPoliciesProcessor(this.app)
   }
 
   async get<K = string, V = any>(
@@ -88,13 +89,13 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     let result: any
 
     if (this.isShardedRequest(options)) {
-      const shards = resolveDiscordooShards(this.client, options.shard!)
+      const shards = resolveDiscordooShards(this.app, options.shard!)
 
       const request: IpcCacheGetRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
         d: {
           op: IpcCacheOpCodes.Get,
-          event_id: this.client.internals.ipc.generate(),
+          event_id: this.app.internals.ipc.generate(),
           key,
           keyspace,
           storage: options?.storage ?? storage,
@@ -105,7 +106,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       }
 
       const { d: response } =
-        await this.client.internals.ipc.send<IpcCacheGetResponsePacket>(request, { waitResponse: true })
+        await this.app.internals.ipc.send<IpcCacheGetResponsePacket>(request, { waitResponse: true })
 
       if (response.success) {
         result = response.result
@@ -182,13 +183,13 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     const data = await this._prepareData('in', value, entityKey, this.isShardedRequest(options))
 
     if (this.isShardedRequest(options)) {
-      const shards = resolveDiscordooShards(this.client, options.shard!)
+      const shards = resolveDiscordooShards(this.app, options.shard!)
 
       const request: IpcCacheSetRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
         d: {
           op: IpcCacheOpCodes.Set,
-          event_id: this.client.internals.ipc.generate(),
+          event_id: this.app.internals.ipc.generate(),
           key,
           keyspace,
           storage: options.storage ?? storage,
@@ -201,7 +202,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       }
 
       const { d: response } =
-        await this.client.internals.ipc.send<IpcCacheSetResponsePacket>(request, { waitResponse: true })
+        await this.app.internals.ipc.send<IpcCacheSetResponsePacket>(request, { waitResponse: true })
 
       if (!response.success) {
         throw new DiscordooError(...response.result)
@@ -221,13 +222,13 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     options: CacheManagerDeleteOptions = {}
   ): Promise<boolean> {
     if (this.isShardedRequest(options)) {
-      const shards = resolveDiscordooShards(this.client, options.shard!)
+      const shards = resolveDiscordooShards(this.app, options.shard!)
 
       const request: IpcCacheDeleteRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
         d: {
           op: IpcCacheOpCodes.Delete,
-          event_id: this.client.internals.ipc.generate(),
+          event_id: this.app.internals.ipc.generate(),
           key,
           keyspace,
           storage: options?.storage ?? storage,
@@ -237,7 +238,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       }
 
       const { d: response } =
-        await this.client.internals.ipc.send<IpcCacheDeleteResponsePacket>(request, { waitResponse: true })
+        await this.app.internals.ipc.send<IpcCacheDeleteResponsePacket>(request, { waitResponse: true })
 
       return response.success
 
@@ -254,13 +255,13 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     options: CacheManagerForEachOptions = {}
   ): Promise<void> {
     if (this.isShardedRequest(options)) {
-      const shards = resolveDiscordooShards(this.client, options.shard!)
+      const shards = resolveDiscordooShards(this.app, options.shard!)
 
       const request: IpcCacheForEachRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
         d: {
           op: IpcCacheOpCodes.Foreach,
-          event_id: this.client.internals.ipc.generate(),
+          event_id: this.app.internals.ipc.generate(),
           keyspace,
           storage: options?.storage ?? storage,
           entity_key: entityKey,
@@ -269,7 +270,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
         }
       }
 
-      await this.client.internals.ipc.send<IpcCacheForEachResponsePacket>(request, { waitResponse: true })
+      await this.app.internals.ipc.send<IpcCacheForEachResponsePacket>(request, { waitResponse: true })
 
     } else {
       await this.provider.forEach<K, V, P>(keyspace, options?.storage ?? storage, this._makePredicate(entityKey, predicate))
@@ -286,13 +287,13 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     let result = 0
 
     if (this.isShardedRequest(options)) {
-      const shards = resolveDiscordooShards(this.client, options.shard!)
+      const shards = resolveDiscordooShards(this.app, options.shard!)
 
       const request: IpcCacheSizeRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
         d: {
           op: IpcCacheOpCodes.Size,
-          event_id: this.client.internals.ipc.generate(),
+          event_id: this.app.internals.ipc.generate(),
           keyspace,
           storage: options?.storage ?? storage,
           shards,
@@ -301,7 +302,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       }
 
       const { d: response } =
-        await this.client.internals.ipc.send<IpcCacheSizeResponsePacket>(request, { waitResponse: true })
+        await this.app.internals.ipc.send<IpcCacheSizeResponsePacket>(request, { waitResponse: true })
 
       if (response.success) {
         result = response.result
@@ -329,13 +330,13 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     let result = false
 
     if (this.isShardedRequest(options)) {
-      const shards = resolveDiscordooShards(this.client, options.shard!)
+      const shards = resolveDiscordooShards(this.app, options.shard!)
 
       const request: IpcCacheHasRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
         d: {
           op: IpcCacheOpCodes.Has,
-          event_id: this.client.internals.ipc.generate(),
+          event_id: this.app.internals.ipc.generate(),
           keyspace,
           storage: options?.storage ?? storage,
           key,
@@ -345,7 +346,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       }
 
       const { d: response } =
-        await this.client.internals.ipc.send<IpcCacheHasResponsePacket>(request, { waitResponse: true })
+        await this.app.internals.ipc.send<IpcCacheHasResponsePacket>(request, { waitResponse: true })
 
       if (response.success) {
         result = response.result
@@ -373,13 +374,13 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
   ): Promise<void> {
 
     if (this.isShardedRequest(options)) {
-      const shards = resolveDiscordooShards(this.client, options.shard!)
+      const shards = resolveDiscordooShards(this.app, options.shard!)
 
       const request: IpcCacheSweepRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
         d: {
           op: IpcCacheOpCodes.Sweep,
-          event_id: this.client.internals.ipc.generate(),
+          event_id: this.app.internals.ipc.generate(),
           keyspace,
           storage: options?.storage ?? storage,
           entity_key: entityKey,
@@ -388,7 +389,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
         }
       }
 
-      await this.client.internals.ipc.send<IpcCacheSweepResponsePacket>(request, { waitResponse: true })
+      await this.app.internals.ipc.send<IpcCacheSweepResponsePacket>(request, { waitResponse: true })
 
     } else {
 
@@ -415,13 +416,13 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     let result: [ K, V ][] = []
 
     if (this.isShardedRequest(options)) {
-      const shards = resolveDiscordooShards(this.client, options.shard!)
+      const shards = resolveDiscordooShards(this.app, options.shard!)
 
       const request: IpcCacheFilterRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
         d: {
           op: IpcCacheOpCodes.Filter,
-          event_id: this.client.internals.ipc.generate(),
+          event_id: this.app.internals.ipc.generate(),
           keyspace,
           storage: options?.storage ?? storage,
           entity_key: entityKey,
@@ -432,7 +433,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       }
 
       const { d: response } =
-        await this.client.internals.ipc.send<IpcCacheFilterResponsePacket>(request, { waitResponse: true })
+        await this.app.internals.ipc.send<IpcCacheFilterResponsePacket>(request, { waitResponse: true })
 
       if (response.success) {
         result = await Promise.all(response.result.map(this._makePredicate(entityKey, (v, k) => ([ k, v ]))))
@@ -465,13 +466,13 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     let result: R[] = []
 
     if (this.isShardedRequest(options)) {
-      const shards = resolveDiscordooShards(this.client, options.shard!)
+      const shards = resolveDiscordooShards(this.app, options.shard!)
 
       const request: IpcCacheMapRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
         d: {
           op: IpcCacheOpCodes.Map,
-          event_id: this.client.internals.ipc.generate(),
+          event_id: this.app.internals.ipc.generate(),
           keyspace,
           storage: options?.storage ?? storage,
           entity_key: entityKey,
@@ -482,7 +483,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       }
 
       const { d: response } =
-        await this.client.internals.ipc.send<IpcCacheMapResponsePacket>(request, { waitResponse: true })
+        await this.app.internals.ipc.send<IpcCacheMapResponsePacket>(request, { waitResponse: true })
 
       if (response.success) {
         result = response.result
@@ -515,13 +516,13 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     let result: V | undefined
 
     if (this.isShardedRequest(options)) {
-      const shards = resolveDiscordooShards(this.client, options.shard!)
+      const shards = resolveDiscordooShards(this.app, options.shard!)
 
       const request: IpcCacheFindRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
         d: {
           op: IpcCacheOpCodes.Find,
-          event_id: this.client.internals.ipc.generate(),
+          event_id: this.app.internals.ipc.generate(),
           keyspace,
           storage: options?.storage ?? storage,
           entity_key: entityKey,
@@ -532,7 +533,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       }
 
       const { d: response } =
-        await this.client.internals.ipc.send<IpcCacheFindResponsePacket>(request, { waitResponse: true })
+        await this.app.internals.ipc.send<IpcCacheFindResponsePacket>(request, { waitResponse: true })
 
       if (response.success) {
         result = response.result
@@ -563,13 +564,13 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     options: CacheManagerClearOptions = {}
   ): Promise<boolean> {
     if (this.isShardedRequest(options)) {
-      const shards = resolveDiscordooShards(this.client, options.shard!)
+      const shards = resolveDiscordooShards(this.app, options.shard!)
 
       const request: IpcCacheClearRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
         d: {
           op: IpcCacheOpCodes.Clear,
-          event_id: this.client.internals.ipc.generate(),
+          event_id: this.app.internals.ipc.generate(),
           keyspace,
           storage: options?.storage ?? storage,
           shards,
@@ -578,7 +579,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       }
 
       const { d: response } =
-        await this.client.internals.ipc.send<IpcCacheClearResponsePacket>(request, { waitResponse: true })
+        await this.app.internals.ipc.send<IpcCacheClearResponsePacket>(request, { waitResponse: true })
 
       return response.success
 
@@ -603,13 +604,13 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     let result = 0
 
     if (this.isShardedRequest(options)) {
-      const shards = resolveDiscordooShards(this.client, options.shard!)
+      const shards = resolveDiscordooShards(this.app, options.shard!)
 
       const request: IpcCacheCountRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
         d: {
           op: IpcCacheOpCodes.Count,
-          event_id: this.client.internals.ipc.generate(),
+          event_id: this.app.internals.ipc.generate(),
           keyspace,
           storage: options?.storage ?? storage,
           entity_key: entityKey,
@@ -620,7 +621,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       }
 
       const { d: response } =
-        await this.client.internals.ipc.send<IpcCacheCountResponsePacket>(request, { waitResponse: true })
+        await this.app.internals.ipc.send<IpcCacheCountResponsePacket>(request, { waitResponse: true })
 
       if (response.success) {
         result = response.result
@@ -653,13 +654,13 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     let results: number[] = []
 
     if (this.isShardedRequest(options)) {
-      const shards = resolveDiscordooShards(this.client, options.shard!)
+      const shards = resolveDiscordooShards(this.app, options.shard!)
 
       const request: IpcCacheCountsRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
         d: {
           op: IpcCacheOpCodes.Counts,
-          event_id: this.client.internals.ipc.generate(),
+          event_id: this.app.internals.ipc.generate(),
           keyspace,
           storage: options?.storage ?? storage,
           entity_key: entityKey,
@@ -670,7 +671,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       }
 
       const { d: response } =
-        await this.client.internals.ipc.send<IpcCacheCountsResponsePacket>(request, { waitResponse: true })
+        await this.app.internals.ipc.send<IpcCacheCountsResponsePacket>(request, { waitResponse: true })
 
       if (response.success) {
         results = response.result
@@ -700,13 +701,13 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     options: CacheManagerKeysOptions = {}
   ): Promise<K[]> {
     if (this.isShardedRequest(options)) {
-      const shards = resolveDiscordooShards(this.client, options.shard!)
+      const shards = resolveDiscordooShards(this.app, options.shard!)
 
       const request: IpcCacheKeysRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
         d: {
           op: IpcCacheOpCodes.Keys,
-          event_id: this.client.internals.ipc.generate(),
+          event_id: this.app.internals.ipc.generate(),
           keyspace,
           storage: options?.storage ?? storage,
           shards,
@@ -716,7 +717,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       }
 
       const { d: response } =
-        await this.client.internals.ipc.send<IpcCacheKeysResponsePacket>(request, { waitResponse: true })
+        await this.app.internals.ipc.send<IpcCacheKeysResponsePacket>(request, { waitResponse: true })
 
       return response.result
 
@@ -738,13 +739,13 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     options: CacheManagerValuesOptions = {}
   ): Promise<V[]> {
     if (this.isShardedRequest(options)) {
-      const shards = resolveDiscordooShards(this.client, options.shard!)
+      const shards = resolveDiscordooShards(this.app, options.shard!)
 
       const request: IpcCacheValuesRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
         d: {
           op: IpcCacheOpCodes.Values,
-          event_id: this.client.internals.ipc.generate(),
+          event_id: this.app.internals.ipc.generate(),
           keyspace,
           storage: options?.storage ?? storage,
           shards,
@@ -754,7 +755,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       }
 
       const { d: response } =
-        await this.client.internals.ipc.send<IpcCacheValuesResponsePacket>(request, { waitResponse: true })
+        await this.app.internals.ipc.send<IpcCacheValuesResponsePacket>(request, { waitResponse: true })
 
       return response.result
 
@@ -776,13 +777,13 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
     options: CacheManagerEntriesOptions = {}
   ): Promise<Array<[ K, V ]>> {
     if (this.isShardedRequest(options)) {
-      const shards = resolveDiscordooShards(this.client, options.shard!)
+      const shards = resolveDiscordooShards(this.app, options.shard!)
 
       const request: IpcCacheEntriesRequestPacket = {
         op: IpcOpCodes.CACHE_OPERATE,
         d: {
           op: IpcCacheOpCodes.Entries,
-          event_id: this.client.internals.ipc.generate(),
+          event_id: this.app.internals.ipc.generate(),
           keyspace,
           storage: options?.storage ?? storage,
           shards,
@@ -792,7 +793,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       }
 
       const { d: response } =
-        await this.client.internals.ipc.send<IpcCacheEntriesResponsePacket>(request, { waitResponse: true })
+        await this.app.internals.ipc.send<IpcCacheEntriesResponsePacket>(request, { waitResponse: true })
 
       return response.result
 
@@ -816,7 +817,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
   }
 
   private isShardedRequest(options?: any): boolean {
-    return typeof options.shard !== 'undefined' && this.client.internals.sharding.active && !this.provider.sharedCache
+    return typeof options.shard !== 'undefined' && this.app.internals.sharding.active && !this.provider.sharedCache
   }
 
   private _makePredicate(entityKey: EntityKey, predicate: any): any {
@@ -848,7 +849,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
 
       switch (this.provider.compatible) {
         case 'classes':
-          if (!(data instanceof Entity)) data = await new Entity(this.client).init?.(data)
+          if (!(data instanceof Entity)) data = await new Entity(this.app).init?.(data)
           break
         case 'json':
           data = toJson(data)
@@ -891,7 +892,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
       if (jsonOrEntity) {
         const Entity: any = EntitiesUtil.get(entityKey, jsonOrEntity)
 
-        if (!(jsonOrEntity instanceof Entity)) jsonOrEntity = await new Entity(this.client).init?.(jsonOrEntity)
+        if (!(jsonOrEntity instanceof Entity)) jsonOrEntity = await new Entity(this.app).init?.(jsonOrEntity)
       }
 
       return jsonOrEntity

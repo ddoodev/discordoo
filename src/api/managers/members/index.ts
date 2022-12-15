@@ -1,5 +1,5 @@
-export { ClientGuildMembersManager } from '@src/api/managers/members/ClientGuildMembersManager'
-export { ClientThreadMembersManager } from '@src/api/managers/members/ClientThreadMembersManager'
+export { ApplicationGuildMembersManager } from '@src/api/managers/members/ApplicationGuildMembersManager'
+export { ApplicationThreadMembersManager } from '@src/api/managers/members/ApplicationThreadMembersManager'
 export { GuildMemberAddData } from '@src/api/managers/members/GuildMemberAddData'
 export { GuildMemberRolesManager } from '@src/api/managers/members/GuildMemberRolesManager'
 export { GuildMemberRolesManagerData } from '@src/api/managers/members/GuildMemberRolesManagerData'

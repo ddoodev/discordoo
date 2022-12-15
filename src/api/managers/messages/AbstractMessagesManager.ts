@@ -6,7 +6,7 @@ import {
   MessagesManagerData
 } from '@src/api'
 import { ChannelPinnedMessagesManager } from '@src/api/managers/messages/ChannelPinnedMessagesManager'
-import { Client } from '@src/core'
+import { DiscordApplication } from '@src/core'
 import { DiscordooError, resolveChannelId } from '@src/utils'
 import { Keyspaces } from '@src/constants'
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
@@ -17,8 +17,8 @@ export abstract class AbstractMessagesManager extends EntitiesManager {
   public channelId: string
   public lastMessageId?: string
 
-  constructor(client: Client, data: MessagesManagerData) {
-    super(client)
+  constructor(app: DiscordApplication, data: MessagesManagerData) {
+    super(app)
 
     const id = resolveChannelId(data.channel)
     if (!id) throw new DiscordooError('ChannelMessagesManager', 'Cannot operate without channel id.')
@@ -26,21 +26,21 @@ export abstract class AbstractMessagesManager extends EntitiesManager {
 
     this.lastMessageId = data.lastMessageId
 
-    this.cache = new EntitiesCacheManager<Message>(this.client, {
+    this.cache = new EntitiesCacheManager<Message>(this.app, {
       keyspace: Keyspaces.Messages,
       storage: this.channelId,
       entity: 'Message',
       policy: 'messages'
     })
 
-    this.pinned = new ChannelPinnedMessagesManager(this.client, {
+    this.pinned = new ChannelPinnedMessagesManager(this.app, {
       channel: this.channelId,
       lastPinTimestamp: data.lastPinTimestamp
     })
   }
 
   create(content: MessageContent, options?: MessageCreateOptions): Promise<Message | undefined> {
-    return this.client.messages.create(this.channelId, content, options)
+    return this.app.messages.create(this.channelId, content, options)
   }
 
   async last(): Promise<Message | undefined> {

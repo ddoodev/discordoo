@@ -58,7 +58,7 @@ export class Role extends AbstractEntity { // TODO: positions...
   }
 
   async members(options?: CacheManagerFilterOptions): Promise<Array<[ string, GuildMember ]>> {
-    return this.client.internals.cache.filter<string, GuildMember>(
+    return this.app.internals.cache.filter<string, GuildMember>(
       Keyspaces.GuildMembers,
       this.guildId,
       'GuildMember',
@@ -68,11 +68,11 @@ export class Role extends AbstractEntity { // TODO: positions...
   }
 
   guild(options?: CacheManagerGetOptions): Promise<Guild | undefined> {
-    return this.client.guilds.cache.get(this.guildId, options)
+    return this.app.guilds.cache.get(this.guildId, options)
   }
 
   async delete(reason?: string): Promise<this | undefined> {
-    const response = await this.client.roles.delete(this.guildId, this.id, reason)
+    const response = await this.app.roles.delete(this.guildId, this.id, reason)
 
     if (response) {
       this.deleted = true
@@ -83,7 +83,7 @@ export class Role extends AbstractEntity { // TODO: positions...
   }
 
   edit(data: RoleEditData, reason?: string): Promise<this | undefined> {
-    return this.client.roles.edit<this>(this.guildId, this.id, data, { reason, patchEntity: this })
+    return this.app.roles.edit<this>(this.guildId, this.id, data, { reason, patchEntity: this })
   }
 
   setName(name: string, reason?: string) {
@@ -127,7 +127,7 @@ export class Role extends AbstractEntity { // TODO: positions...
   }
 
   iconUrl(options?: ImageUrlOptions): string | undefined {
-    return this.icon ? this.client.internals.rest.cdn.roleIcon(this.id, this.icon, options) : undefined
+    return this.icon ? this.app.internals.rest.cdn.roleIcon(this.id, this.icon, options) : undefined
   }
 
   toString(): string {

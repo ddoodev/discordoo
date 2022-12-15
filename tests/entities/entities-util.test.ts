@@ -64,7 +64,7 @@ describe('EntitiesUtil', () => {
     EntitiesUtil.clear('Message')
   })
 
-  test('must extend entities using client options', () => {
+  test('must extend entities using app options', () => {
 
     class ExtendedMessage extends RawMessage {}
 

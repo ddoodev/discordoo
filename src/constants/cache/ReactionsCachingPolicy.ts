@@ -4,6 +4,6 @@ export enum ReactionsCachingPolicy {
   All = 'all',
   /** Don't cache reactions */
   None = 'none',
-  /** Cache only client own reactions */
+  /** Cache only app own reactions */
   Own = 'own',
 }

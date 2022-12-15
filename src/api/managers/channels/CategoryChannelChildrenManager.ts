@@ -1,7 +1,7 @@
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
 import { EntitiesCacheManager } from '@src/api'
 import { AnyGuildChannel } from '@src/api/entities/channel/interfaces/AnyGuildChannel'
-import { Client } from '@src/core'
+import { DiscordApplication } from '@src/core'
 import { CategoryChannelChildrenManagerData } from '@src/api/managers/channels/CategoryChannelChildrenManagerData'
 import { DiscordooError, resolveChannelId } from '@src/utils'
 import { Keyspaces } from '@src/constants'
@@ -13,8 +13,8 @@ export class CategoryChannelChildrenManager extends EntitiesManager {
   public categoryId: string
   public guildId: string
 
-  constructor(client: Client, data: CategoryChannelChildrenManagerData) {
-    super(client)
+  constructor(app: DiscordApplication, data: CategoryChannelChildrenManagerData) {
+    super(app)
 
     const channelId = resolveChannelId(data.category)
     if (!channelId) throw new DiscordooError('CategoryChannelChildrenManager', 'Cannot operate without category channel id.')
@@ -24,7 +24,7 @@ export class CategoryChannelChildrenManager extends EntitiesManager {
     if (!guildId) throw new DiscordooError('CategoryChannelChildrenManager', 'Cannot operate without guild id id.')
     this.guildId = guildId
 
-    this.cache = new EntitiesCacheManager<AnyGuildChannel>(this.client, {
+    this.cache = new EntitiesCacheManager<AnyGuildChannel>(this.app, {
       keyspace: Keyspaces.CategoryChannelChildren,
       storage: this.categoryId,
       entity: 'channelEntityKey',
@@ -33,6 +33,6 @@ export class CategoryChannelChildrenManager extends EntitiesManager {
   }
 
   create<R = AnyGuildChannel>(data: GuildChannelCreateData | RawGuildChannelCreateData): Promise<R | undefined> {
-    return this.client.channels.createGuildChannel<R>(this.guildId, { ...data, parentId: this.categoryId })
+    return this.app.channels.createGuildChannel<R>(this.guildId, { ...data, parentId: this.categoryId })
   }
 }

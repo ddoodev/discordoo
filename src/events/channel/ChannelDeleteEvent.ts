@@ -22,19 +22,19 @@ export class ChannelDeleteEvent extends AbstractEvent<ChannelDeleteEventContext 
 
     const Channel: any = EntitiesUtil.get(entityKey)
 
-    let channel = await this.client.channels.cache.get(data.id, { storage: data.guild_id ?? 'dm' })
+    let channel = await this.app.channels.cache.get(data.id, { storage: data.guild_id ?? 'dm' })
 
     if (channel) {
       channel = await channel.init({ ...data, deleted: true } as any)
     } else {
-      channel = await new Channel(this.client).init({ ...data, deleted: true }) as AnyChannel
+      channel = await new Channel(this.app).init({ ...data, deleted: true }) as AnyChannel
     }
 
-    await this.client.channels.cache.delete(channel.id, { storage: data.guild_id ?? 'dm' })
+    await this.app.channels.cache.delete(channel.id, { storage: data.guild_id ?? 'dm' })
 
     if (data.type === ChannelTypes.Dm || data.type === ChannelTypes.GroupDm) {
       for await (const user of (data as RawDirectMessagesChannelData).recipients) {
-        await this.client.dms.cache.delete(user.id)
+        await this.app.dms.cache.delete(user.id)
       }
     }
 
@@ -45,7 +45,7 @@ export class ChannelDeleteEvent extends AbstractEvent<ChannelDeleteEventContext 
       guildId: 'guildId' in channel ? channel.guildId : undefined,
     }
 
-    this.client.emit(EventNames.CHANNEL_DELETE, context)
+    this.app.emit(EventNames.CHANNEL_DELETE, context)
     return context
   }
 }

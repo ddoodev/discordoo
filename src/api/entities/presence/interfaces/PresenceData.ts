@@ -7,5 +7,5 @@ export interface PresenceData {
   guildId: string
   status: PresenceStatus
   activities: PresenceActivityData[]
-  clientStatus: PresenceClientStatusData
+  appStatus: PresenceClientStatusData
 }

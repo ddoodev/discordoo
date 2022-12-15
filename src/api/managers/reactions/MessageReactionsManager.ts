@@ -1,5 +1,5 @@
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
-import { Client } from '@src/core'
+import { DiscordApplication } from '@src/core'
 import { EmojiResolvable, EntitiesCacheManager } from '@src/api'
 import { MessageReaction } from '@src/api/entities/reaction/MessageReaction'
 import { MessageReactionsManagerData } from '@src/api/managers/reactions/MessageReactionsManagerData'
@@ -11,13 +11,13 @@ export class MessageReactionsManager extends EntitiesManager {
   public channelId: string
   public messageId: string
 
-  constructor(client: Client, data: MessageReactionsManagerData) {
-    super(client)
+  constructor(app: DiscordApplication, data: MessageReactionsManagerData) {
+    super(app)
 
     this.channelId = data.channelId
     this.messageId = data.messageId
 
-    this.cache = new EntitiesCacheManager<MessageReaction>(this.client, {
+    this.cache = new EntitiesCacheManager<MessageReaction>(this.app, {
       keyspace: Keyspaces.MessageReactions,
       storage: this.messageId,
       entity: 'MessageReaction',
@@ -26,15 +26,15 @@ export class MessageReactionsManager extends EntitiesManager {
   }
 
   add(reaction: EmojiResolvable | MessageReactionResolvable): Promise<boolean> {
-    return this.client.reactions.add(this.channelId, this.messageId, reaction)
+    return this.app.reactions.add(this.channelId, this.messageId, reaction)
   }
 
   remove(reaction: EmojiResolvable | MessageReactionResolvable): Promise<boolean> {
-    return this.client.reactions.delete(this.channelId, this.messageId, reaction)
+    return this.app.reactions.delete(this.channelId, this.messageId, reaction)
   }
 
   removeAll(): Promise<boolean> {
-    return this.client.reactions.removeAll(this.channelId, this.messageId)
+    return this.app.reactions.removeAll(this.channelId, this.messageId)
   }
 
 }
