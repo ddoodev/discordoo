@@ -1,7 +1,7 @@
 import { CompletedCacheOptions } from '@src/cache'
 import { CompletedLocalIpcOptions } from '@src/sharding'
 
-export interface CompletedAbstractApplicationOptions {
+export interface CompletedCacheApplicationOptions {
   cache: CompletedCacheOptions
   ipc: CompletedLocalIpcOptions
 }

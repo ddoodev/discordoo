@@ -1,13 +1,13 @@
-import { DiscordApplication } from '@src/core'
 import { AbstractEvent } from '@src/events/AbstractEvent'
 import { Collection } from '@discordoo/collection'
 import { AbstractEventContext } from '@src/events/interfaces'
+import { AnyDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
 
 export class ApplicationEvents {
-  public app: DiscordApplication
+  public app: AnyDiscordApplication
   public handlers: Collection<string, AbstractEvent<AbstractEventContext>>
 
-  constructor(app: DiscordApplication) {
+  constructor(app: AnyDiscordApplication) {
     this.app = app
     this.handlers = new Collection<string, AbstractEvent<AbstractEventContext>>()
   }

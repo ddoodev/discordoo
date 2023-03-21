@@ -1,5 +1,5 @@
 import { ColorResolvable, EntitiesCacheManager, GuildResolvable, Role, RoleResolvable } from '@src/api'
-import { DiscordApplication } from '@src/core'
+import { DiscordRestApplication } from '@src/core'
 import { Keyspaces } from '@src/constants'
 import { RoleEditData } from '@src/api/entities/role/interfaces/RoleEditData'
 import { RawRoleEditData } from '@src/api/entities/role/interfaces/RawRoleEditData'
@@ -15,7 +15,7 @@ import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 export class ApplicationRolesManager extends EntitiesManager {
   public cache: EntitiesCacheManager<Role>
 
-  constructor(app: DiscordApplication) {
+  constructor(app: DiscordRestApplication) {
     super(app)
 
     this.cache = new EntitiesCacheManager<Role>(this.app, {

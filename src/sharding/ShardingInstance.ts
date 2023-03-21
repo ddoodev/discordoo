@@ -179,7 +179,10 @@ export class ShardingInstance extends TypedEmitter {
       d: {
         event_id: this.ipc.generate(),
         script: func,
-        shards: resolveDiscordooShards({ shards: this.shards, totalShards: this.totalShards }, options?.instance ?? 'current'),
+        shards: resolveDiscordooShards({
+          shardsInfo: { shards: this.shards, totalShards: this.totalShards },
+          shards: options?.instance ?? 'current'
+        }),
         context,
       }
     }

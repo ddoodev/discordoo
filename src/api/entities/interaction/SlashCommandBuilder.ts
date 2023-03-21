@@ -9,7 +9,7 @@ import { AppCommandEditData } from '@src/api/entities/interaction/interfaces/com
 import { optionToRaw } from '@src/utils/optionToRaw'
 import { AppCommandOptionWithSubcommandsData } from '@src/api/entities/interaction/interfaces/command/common/AppCommandOptionData'
 import { GuildAppCommandEditData, RawGuildAppCommandEditData } from '@src/api/managers/interactions/InteractionSlashCommandGuildData'
-import { DiscordApplication, WebhookClient } from '@src/core'
+import { DiscordApplication, WebhookApplication } from '@src/core'
 
 @mix(MixinNameDescriptionRequired)
 export class SlashCommandBuilder {

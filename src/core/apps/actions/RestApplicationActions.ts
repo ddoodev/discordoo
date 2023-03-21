@@ -1,57 +1,34 @@
-import { DiscordApplication } from '@src/core'
-import { Endpoints } from '@src/constants'
-import { MessageCreateData } from '@src/api/entities/message/interfaces/MessageCreateData'
-import { GatewayOpCodes, RestFinishedResponse } from '@discordoo/providers'
-import { RawMessageData } from '@src/api/entities/message/interfaces/RawMessageData'
-import { RawEmojiEditData } from '@src/api/entities/emoji/interfaces/RawEmojiEditData'
-import { RawGuildEmojiData } from '@src/api/entities/emoji/interfaces/RawGuildEmojiData'
-import { RawStickerData } from '@src/api/entities/sticker/interfaces/RawStickerData'
-import { RawUserData } from '@src/api/entities/user/interfaces/RawUserData'
-import { RawStickerEditData } from '@src/api/entities/sticker/interfaces/RawStickerEditData'
-import { RawStickerCreateData } from '@src/api/entities/sticker/interfaces/RawStickerCreateData'
-import { RawStickerPackData } from '@src/api/entities/sticker'
-import { RawGuildMemberEditData } from '@src/api/entities/member/interfaces/RawGuildMemberEditData'
 import {
   AnyRawGuildChannelData,
-  GuildEmojiData,
-  GuildMember,
-  FetchInviteQuery,
-  RawGuildMemberData,
-  RawInviteCreateData,
-  RawInviteData,
-  RawAppCommandData
+  FetchInviteQuery, FetchManyMessagesQuery, FetchReactionUsersOptions, GuildEmojiData, GuildMember,
+  GuildMembersFetchQuery,
+  MessageCreateData,
+  RawAppCommandData, RawAppCommandEditData,
+  RawEmojiEditData,
+  RawGuildChannelCreateData, RawGuildChannelEditData,
+  RawGuildEmojiData,
+  RawGuildMemberAddData, RawGuildMemberData,
+  RawGuildMemberEditData, RawInviteCreateData, RawInviteData, RawMessageData,
+  RawPermissionOverwriteData, RawRoleCreateData, RawRoleData,
+  RawRoleEditData,
+  RawStickerCreateData,
+  RawStickerData,
+  RawStickerEditData,
+  RawStickerPackData, RawThreadChannelCreateData, RawThreadChannelEditData,
+  RawThreadChannelWithMessageCreateData, RawUserData
 } from '@src/api'
-import { RawRoleEditData } from '@src/api/entities/role/interfaces/RawRoleEditData'
-import { RawRoleData } from '@src/api/entities/role/interfaces/RawRoleData'
-import { RawRoleCreateData } from '@src/api/entities/role/interfaces/RawRoleCreateData'
-import { FetchReactionUsersOptions } from '@src/api/managers/reactions/FetchReactionUsersOptions'
-import { RawGuildChannelEditData } from '@src/api/entities/channel/interfaces/RawGuildChannelEditData'
-import { RawThreadChannelEditData } from '@src/api/entities/channel/interfaces/RawThreadChannelEditData'
-import { RawPermissionOverwriteData } from '@src/api/entities/overwrite/interfaces/RawPermissionOverwriteData'
-import { RawGuildChannelCreateData } from '@src/api/entities/channel/interfaces/RawGuildChannelCreateData'
-import { RawThreadChannelWithMessageCreateData } from '@src/api/entities/channel/interfaces/RawThreadChannelWithMessageCreateData'
-import { RawThreadChannelCreateData } from '@src/api/entities/channel/interfaces/RawThreadChannelCreateData'
-import { FetchManyMessagesQuery } from '@src/api/managers/messages/FetchManyMessagesQuery'
-import { RawGuildMembersFetchOptions } from '@src/api/managers/members/RawGuildMembersFetchOptions'
-import { GuildMembersChunkEventContext } from '@src/events'
-import { DiscordooError, DiscordSnowflake, ValidationError } from '@src/utils'
-import { GuildMembersChunkHandlerContext } from '@src/events/interfaces/GuildMembersChunkHandlerContext'
-import { is } from 'typescript-is'
-import { RawGuildMemberAddData } from '@src/api/managers/members/RawGuildMemberAddData'
-import { RawDirectMessagesChannelData } from '@src/api/entities/channel/interfaces/RawDirectMessagesChannelData'
-import { RawAppCommandEditData } from '@src/api/entities/interaction/interfaces/command/raw/RawAppCommandEditData'
+import { Endpoints } from '@src/constants'
+import { DiscordRestApplication } from '@src/core'
 import { RawInteractionResponse } from '@src/api/entities/interaction/interfaces/RawInteractionResponseData'
+import { RestFinishedResponse } from '@discordoo/providers'
+import { RawDirectMessagesChannelData } from '@src/api/entities/channel/interfaces/RawDirectMessagesChannelData'
 
-export class ApplicationActions {
-  public app: DiscordApplication
-
-  constructor(app: DiscordApplication) {
-    this.app = app
-  }
+export class RestApplicationActions {
+  constructor(public app: DiscordRestApplication) { }
 
   /**
    * Adds guild discovery subcategory
-   * 
+   *
    * @param guildId - guild id
    * @param categoryId - category id
    * @param reason - reason
@@ -577,63 +554,6 @@ export class ApplicationActions {
       .get<RawGuildMemberData>()
   }
 
-  fetchWsGuildMembers(shardId: number, options: RawGuildMembersFetchOptions): Promise<GuildMember[]> {
-    if (!is<RawGuildMembersFetchOptions>(options)) {
-      throw new ValidationError(undefined, 'Invalid members fetch options')._setInvalidOptions(options)
-    }
-
-    if (isNaN(shardId)) {
-      throw new ValidationError(undefined, 'Invalid shardId for fetching members:', shardId)
-    }
-
-    const nonce = options.nonce ?? DiscordSnowflake.generate()
-
-    let context: any
-    return new Promise((resolve, reject) => {
-
-      const handler = (eventContext: GuildMembersChunkEventContext, executionContext: GuildMembersChunkHandlerContext) => {
-        if (eventContext.nonce === executionContext.nonce) {
-          executionContext.fetched.push(eventContext.members)
-          executionContext.timeout.refresh()
-        }
-
-        if (eventContext.last) {
-          clearTimeout(executionContext.timeout)
-          executionContext.resolve(executionContext.fetched.flat())
-          return true
-        }
-
-        return executionContext
-      }
-
-      const timeout = setTimeout(() => {
-        if (this.app.internals.queues.members.has(nonce)) {
-          this.app.internals.queues.members.delete(nonce)
-          const err = new DiscordooError(undefined, 'Guild members fetching stopped due to timeout.')
-          reject(err)
-        }
-      }, 120_000)
-
-      context = {
-        handler,
-        timeout,
-        resolve,
-        reject,
-        nonce,
-        fetched: []
-      }
-
-      this.app.internals.queues.members.set(nonce, context)
-      this.app.internals.gateway.send({
-        op: GatewayOpCodes.REQUEST_GUILD_MEMBERS,
-        d: {
-          ...options,
-          nonce
-        }
-      }, { shards: [ shardId ] })
-    })
-  }
-
   getGuildPreview(guildId: string) {
     return this.app.internals.rest.api()
       .url(Endpoints.GUILD_PREVIEW(guildId))
@@ -696,6 +616,15 @@ export class ApplicationActions {
     return request.get<RawInviteData>()
   }
 
+  getListGuildMembers(guildId: string, query?: GuildMembersFetchQuery) {
+    const request = this.app.internals.rest.api()
+      .url(Endpoints.GUILD_MEMBERS(guildId))
+
+    if (query) request.query(query)
+
+    return request.get<GuildMember[]>()
+  }
+
   getSticker(stickerId: string) {
     return this.app.internals.rest.api()
       .url(Endpoints.STICKER(stickerId))
@@ -724,12 +653,6 @@ export class ApplicationActions {
     return this.app.internals.rest.api()
       .url(Endpoints.USER_GUILD('@me', guildId))
       .delete()
-  }
-
-  listGuildMembers(guildId: string) {
-    return this.app.internals.rest.api()
-      .url(Endpoints.GUILD_MEMBERS(guildId))
-      .get<RawGuildMemberData[]>()
   }
 
   pruneGuildMembers(guildId: string, data: any /* GuildMembersPruneData */ = {}, reason?: string) {

@@ -1,5 +1,5 @@
 import { EntitiesCacheManager } from '@src/api/managers'
-import { DiscordApplication } from '@src/core'
+import { DiscordRestApplication } from '@src/core'
 import { User, UserResolvable } from '@src/api/entities/user'
 import { Keyspaces } from '@src/constants'
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
@@ -9,7 +9,7 @@ import { DirectMessagesChannel, EntitiesUtil } from '@src/api'
 export class UsersManager extends EntitiesManager {
   public cache: EntitiesCacheManager<User>
 
-  constructor(app: DiscordApplication) {
+  constructor(app: DiscordRestApplication) {
     super(app)
 
     this.cache = new EntitiesCacheManager<User>(this.app, {

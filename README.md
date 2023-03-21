@@ -116,25 +116,27 @@ Optimize RAM consumption the way you need it.
 
 #### Caching policies
 For example, just disable the unnecessary cache.
-```ts
-import { createApp, ChannelsCachingPolicy } from 'discordoo'
 
-createApp()
-  .cache({
-    // cache only dm channels
-    channels: {
-      policies: [ ChannelsCachingPolicy.Dm ]
+```ts
+import { DiscordFactory, ChannelsCachingPolicy } from 'discordoo'
+
+DiscordFactory.create('my-token', {
+    cache: {
+      channels: {
+        policies: [ ChannelsCachingPolicy.Dm ]
+      }
     }
-  })
-  .build()
+})
 ```
 
 #### Removing unnecessary properties
 You know that RAM is spent on storing properties, right? 
 Redefine the entities in which you want to delete some properties.
 Don't worry, you won't be able accidentally break the library this way. We took care of it.
+
 ```ts
 import { EntitiesUtil, DirectMessagesChannel, createApp } from 'discordoo'
+import { DiscordFactory } from './DiscordFactory'
 
 // you can do it like this:
 class ExtendedDirectMessagesChannel extends DirectMessagesChannel {
@@ -154,11 +156,11 @@ class ExtendedDirectMessagesChannel extends DirectMessagesChannel {
 EntitiesUtil.extend('DirectMessagesChannel', ExtendedDirectMessagesChannel)
 
 // or you can do it like this:
-createApp()
-  .extenders([
-    { entity: 'DirectMessagesChannel', extender: ExtendedDirectMessagesChannel }
-  ])
-  .build()
+DiscordFactory.create('my-token', {
+    extenders: [
+      { entity: 'DirectMessagesChannel', extender: ExtendedDirectMessagesChannel },
+    ]
+})
 ```
 
 ### Safe

@@ -1,10 +1,10 @@
 import { EntitiesCacheManager } from '@src/api/managers/EntitiesCacheManager'
-import { DiscordApplication } from '@src/core'
+import { DiscordApplication, DiscordRestApplication } from '@src/core'
 import { Keyspaces } from '@src/constants'
 
 export class OtherCacheManager extends EntitiesCacheManager<any> {
 
-  constructor(app: DiscordApplication) {
+  constructor(app: DiscordRestApplication) {
     super(app, {
       keyspace: Keyspaces.Other,
       storage: 'global',

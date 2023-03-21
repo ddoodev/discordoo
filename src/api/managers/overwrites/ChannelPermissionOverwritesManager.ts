@@ -8,12 +8,13 @@ import { PermissionOverwriteResolvable } from '@src/api/entities/overwrite/inter
 import { AnyGuildChannel } from '@src/api/entities/channel/interfaces/AnyGuildChannel'
 import { PermissionOverwriteUpsertOptions } from '@src/api/managers/overwrites/PermissionOverwriteUpsertOptions'
 import { PermissionOverwriteEditOptions } from '@src/api/managers/overwrites/PermissionOverwriteEditOptions'
+import { RestEligibleDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
 
 export class ChannelPermissionOverwritesManager<T extends AnyGuildChannel> extends EntitiesManager {
   public cache: EntitiesCacheManager<PermissionOverwrite>
   public channel: T
 
-  constructor(app: DiscordApplication, data: ChannelPermissionOverwritesManagerData<T>) {
+  constructor(app: RestEligibleDiscordApplication, data: ChannelPermissionOverwritesManagerData<T>) {
     super(app)
 
     this.channel = data.channel

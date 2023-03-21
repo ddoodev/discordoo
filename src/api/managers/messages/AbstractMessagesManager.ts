@@ -6,10 +6,10 @@ import {
   MessagesManagerData
 } from '@src/api'
 import { ChannelPinnedMessagesManager } from '@src/api/managers/messages/ChannelPinnedMessagesManager'
-import { DiscordApplication } from '@src/core'
 import { DiscordooError, resolveChannelId } from '@src/utils'
 import { Keyspaces } from '@src/constants'
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
+import { RestEligibleDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
 
 export abstract class AbstractMessagesManager extends EntitiesManager {
   public cache: EntitiesCacheManager<Message>
@@ -17,7 +17,7 @@ export abstract class AbstractMessagesManager extends EntitiesManager {
   public channelId: string
   public lastMessageId?: string
 
-  constructor(app: DiscordApplication, data: MessagesManagerData) {
+  constructor(app: RestEligibleDiscordApplication, data: MessagesManagerData) {
     super(app)
 
     const id = resolveChannelId(data.channel)

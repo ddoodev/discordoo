@@ -18,7 +18,7 @@ export class GatewayManager<P extends GatewayProvider = GatewayProvider> {
   public app: DiscordApplication
   public options: CompletedGatewayOptions
 
-  constructor(app: DiscordApplication, Provider: ProviderConstructor<P>, data: GatewayManagerData) {
+  constructor(app: DiscordApplication, Provider: ProviderConstructor<P, DiscordApplication>, data: GatewayManagerData) {
     this.app = app
     this.provider = new Provider(this.app, data.gatewayOptions, data.providerOptions)
     this.options = data.gatewayOptions

@@ -1,7 +1,7 @@
 import { CacheProvider } from '@discordoo/providers'
 import { AbstractApplicationEventsHandlers } from '@src/events/apps'
 
-export interface DefaultAbstractApplicationStack {
+export interface DefaultCacheApplicationStack {
   cache: CacheProvider
   events: AbstractApplicationEventsHandlers
 }

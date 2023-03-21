@@ -5,13 +5,14 @@ import { DiscordApplication } from '@src/core'
 import { RestFinishedResponse, RestProvider, RestRequestData, RestRequestOptions } from '@discordoo/providers'
 import { CompletedRestOptions } from '@src/rest'
 import * as process from 'process'
+import { AnyDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
 
 export class DefaultRestProvider implements RestProvider {
-  public readonly app: DiscordApplication
+  public readonly app: AnyDiscordApplication
   public readonly options: CompletedRestOptions
   private readonly undici: Undici
 
-  constructor(app: DiscordApplication, options: CompletedRestOptions) {
+  constructor(app: AnyDiscordApplication, options: CompletedRestOptions) {
     this.app = app
     this.options = options
     this.undici = new Undici(`${this.options.api.scheme}://${this.options.api.domain}/`)

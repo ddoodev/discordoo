@@ -1,4 +1,4 @@
-import { DiscordApplication } from '@src/core'
+import { DiscordApplication, DiscordRestApplication } from '@src/core'
 import { ApplicationInteractionsSlashCommandManager } from '@src/api/managers/interactions/ApplicationInteractionsSlashCommandManager'
 import { InteractionMessageContent } from '@src/api/entities/message/interfaces/MessageContent'
 import { InteractionMessageCreateOptions } from '@src/api/entities/message/interfaces/MessageCreateOptions'
@@ -8,7 +8,7 @@ import { InteractionResponseTypes } from '@src/constants'
 export class ApplicationInteractionsManager extends EntitiesManager {
   public commands: ApplicationInteractionsSlashCommandManager
 
-  constructor(app: DiscordApplication) {
+  constructor(app: DiscordRestApplication) {
     super(app)
     this.commands = new ApplicationInteractionsSlashCommandManager(app)
   }

@@ -1,4 +1,4 @@
-export interface AbstractApplicationShardingMetadata {
+export interface CacheApplicationShardingMetadata {
   instance: number
   active: boolean
   INSTANCE_IPC: string

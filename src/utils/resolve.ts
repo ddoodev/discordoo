@@ -18,7 +18,7 @@ import { DiscordApplication } from '@src/core'
 import { RoleResolvable } from '@src/api/entities/role'
 import { RoleTagsResolvable } from '@src/api/entities/role/interfaces/RoleTagsResolvable'
 import { RoleTagsData } from '@src/api/entities/role/interfaces/RoleTagsData'
-import { ShardListResolvable } from '@src/utils/interfaces'
+import { ResolveDiscordooShardsOptions, ShardListResolvable } from '@src/utils/interfaces'
 import { range } from '@src/utils/range'
 import { EmojiResolvable, GuildChannelResolvable, MessageAttachment, MessageAttachmentBuilder, ThreadChannelResolvable } from '@src/api'
 import { MessageReactionResolvable } from '@src/api/entities/reaction/interfaces/MessageReactionResolvable'
@@ -34,8 +34,7 @@ import { RawMessageReferenceData } from '@src/api/entities/message/interfaces/Ra
 import { ThreadMemberResolvable } from '@src/api/entities/member/interfaces/ThreadMemberResolvable'
 import { GatewayIntentsResolvable } from '@src/gateway/interfaces/GatewayIntentsResolvable'
 import { MessageEmbedBuilder } from '@src/api/entities/embed/MessageEmbedBuilder'
-import { AnyDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
-import { AbstractDiscordApplication } from '@src/core/apps/abstract/AbstractDiscordApplication'
+import { AnyDiscordApplication, RestEligibleDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
 
 export function resolveFiles(resolvable: MessageAttachmentResolvable[]): Promise<RawAttachment[]> {
   return Promise.all(resolvable.map(resolveFile))
@@ -177,7 +176,10 @@ export function resolvePermissionOverwriteToRaw(
   return { ...result, deny: result.deny.toString(), allow: result.allow.toString() }
 }
 
-export async function resolveMessageReaction(app: DiscordApplication, resolvable: MessageReactionResolvable): Promise<MessageReaction | undefined> {
+export async function resolveMessageReaction(
+  app: RestEligibleDiscordApplication,
+  resolvable: MessageReactionResolvable
+): Promise<MessageReaction | undefined> {
   if (!resolvable) return undefined
 
   const MessageReaction = EntitiesUtil.get('MessageReaction')
@@ -321,65 +323,69 @@ type ShardsInfo = {
   totalShards: number
 }
 
-export function resolveDiscordooShards(
-  app: AnyDiscordApplication | ShardsInfo, shards: ShardListResolvable | 'all' | 'current'
-): number[] {
+export function resolveDiscordooShards(options: ResolveDiscordooShardsOptions): number[] {
   const source = 'DiscordooShardListResolver'
   let result: number[] = []
 
-  const info: ShardsInfo = app instanceof AbstractDiscordApplication ? {
-    shards: app.internals.sharding.shards,
-    totalShards: app.internals.sharding.totalShards,
-  } : app as ShardsInfo
+  const info: ShardsInfo | undefined = options.app ? {
+    shards: options.app.internals.sharding.shards,
+    totalShards: options.app.internals.sharding.totalShards
+  } : options.shardsInfo
 
-  switch (typeof shards) {
+  if (!info) {
+    throw new DiscordooError(source, 'cannot resolve shards: incorrect options')
+  }
+
+  switch (typeof options.shards) {
     case 'string': {
       switch (true) {
-        case shards === 'all':
+        case options.shards === 'all':
           result = range(info.totalShards)
           break
 
-        case shards === 'current':
+        case options.shards === 'current':
           result = [ ...info.shards ]
           break
 
-        case !isNaN(parseInt(shards)):
-          result = [ parseInt(shards) ]
+        case !isNaN(parseInt(options.shards)):
+          result = [ parseInt(options.shards) ]
           break
 
         default:
-          throw new DiscordooError(source, 'do not know how to resolve shards from this string:', shards)
+          throw new DiscordooError(source, 'do not know how to resolve shards from this string:', options.shards)
       }
     } break
 
     case 'object':
-      if (Array.isArray(shards)) {
-        if (shards.findIndex(v => typeof v !== 'number'! || isNaN(v)) !== -1) {
-          throw new DiscordooError(source, 'array of shards contains non-number value. array:', shards)
+      if (Array.isArray(options.shards)) {
+        if (options.shards.findIndex(v => typeof v !== 'number'! || isNaN(v)) !== -1) {
+          throw new DiscordooError(source, 'array of shards contains non-number value. array:', options.shards)
         }
 
-        result = shards
+        result = options.shards
       } else {
         const shardsIsNaN = new DiscordooError(source, 'received object as shard list, but shards.from or shards.to is not a number.')
 
-        if (typeof shards.from !== 'number'! || typeof shards.to !== 'number'!) {
+        if (typeof options.shards.from !== 'number'! || typeof options.shards.to !== 'number'!) {
           throw shardsIsNaN
         }
 
-        if (isNaN(shards.from) || isNaN(shards.to)) {
+        if (isNaN(options.shards.from) || isNaN(options.shards.to)) {
           throw shardsIsNaN
         }
 
-        result = range(shards.from, shards.to)
+        result = range(options.shards.from, options.shards.to)
       }
       break
 
     case 'number':
-      result = [ shards ]
+      result = [ options.shards ]
       break
 
     default:
-      throw new DiscordooError(source, 'do not know how to resolve shards from', typeof shards + '.', 'Provided shards:', shards)
+      throw new DiscordooError(
+        source, 'do not know how to resolve shards from', typeof options.shards + '.', 'Provided shards:', options.shards
+      )
   }
 
   return result

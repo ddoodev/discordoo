@@ -1,7 +1,6 @@
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
 import { ChannelResolvable, EntitiesCacheManager, ChannelDeleteOptions } from '@src/api'
 import { AnyGuildChannel } from '@src/api/entities/channel/interfaces/AnyGuildChannel'
-import { DiscordApplication } from '@src/core'
 import { GuildChannelsManagerData } from '@src/api/managers/channels/GuildChannelsManagerData'
 import { DiscordooError, resolveGuildId } from '@src/utils'
 import { Keyspaces } from '@src/constants'
@@ -14,12 +13,13 @@ import { ThreadChannelResolvable } from '@src/api/entities/channel/interfaces/Th
 import { ThreadChannelEditData } from '@src/api/entities/channel/interfaces/ThreadChannelEditData'
 import { RawThreadChannelEditData } from '@src/api/entities/channel/interfaces/RawThreadChannelEditData'
 import { ThreadChannelEditOptions } from '@src/api/entities/channel/interfaces/ThreadChannelEditOptions'
+import { RestEligibleDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
 
 export class GuildChannelsManager extends EntitiesManager {
   public cache: EntitiesCacheManager<AnyGuildChannel>
   public guildId: string
 
-  constructor(app: DiscordApplication, data: GuildChannelsManagerData) {
+  constructor(app: RestEligibleDiscordApplication, data: GuildChannelsManagerData) {
     super(app)
 
     const id = resolveGuildId(data.guild)

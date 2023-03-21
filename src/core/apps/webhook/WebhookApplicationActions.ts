@@ -1,14 +1,12 @@
-import { WebhookClient } from '@src/core/apps/webhook/WebhookClient'
-import { RawExecuteWebhookQuery } from '@src/core/apps/webhook/RawExecuteWebhookQuery'
 import { Endpoints } from '@src/constants'
-import { WebhookMessageCreateData } from '@src/api/entities/message/interfaces/MessageCreateData'
+import { RawMessageData, WebhookMessageCreateData } from '@src/api'
+import { RawExecuteWebhookQuery, WebhookApplication } from '@src/core'
 import { RestFinishedResponse } from '@discordoo/providers'
-import { RawMessageData } from '@src/api'
 
-export class WebhookClientActions {
-  public app: WebhookClient
+export class WebhookApplicationActions {
+  public app: WebhookApplication
 
-  constructor(app: WebhookClient) {
+  constructor(app: WebhookApplication) {
     this.app = app
   }
 

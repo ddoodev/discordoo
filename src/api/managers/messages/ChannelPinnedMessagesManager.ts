@@ -1,15 +1,15 @@
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
 import { EntitiesCacheManager, Message, MessageResolvable, MessagesManagerData } from '@src/api'
-import { DiscordApplication } from '@src/core'
 import { DiscordooError, resolveChannelId } from '@src/utils'
 import { Keyspaces } from '@src/constants'
+import { RestEligibleDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
 
 export class ChannelPinnedMessagesManager extends EntitiesManager {
   public cache: EntitiesCacheManager<Message>
   public channelId: string
   public lastPinTimestamp?: number
 
-  constructor(app: DiscordApplication, data: MessagesManagerData) {
+  constructor(app: RestEligibleDiscordApplication, data: MessagesManagerData) {
     super(app)
 
     const id = resolveChannelId(data.channel)

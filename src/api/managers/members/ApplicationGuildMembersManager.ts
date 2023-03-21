@@ -1,5 +1,4 @@
 import { EntitiesCacheManager, GuildMember, GuildResolvable, RoleResolvable, UserResolvable } from '@src/api'
-import { DiscordApplication } from '@src/core'
 import { IpcEvents, IpcOpCodes, Keyspaces } from '@src/constants'
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
 import { GuildMemberEditData } from '@src/api/entities/member/interfaces/GuildMemberEditData'
@@ -16,11 +15,12 @@ import { RawGuildMembersFetchOptions } from '@src/api/managers/members/RawGuildM
 import { GuildMemberAddData } from '@src/api/managers/members/GuildMemberAddData'
 import { RawGuildMemberAddData } from '@src/api/managers/members/RawGuildMemberAddData'
 import { IpcGuildMembersRequestPacket, IpcGuildMembersResponsePacket } from '@src/sharding/interfaces/ipc/IpcPackets'
+import { RestEligibleDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
 
 export class ApplicationGuildMembersManager extends EntitiesManager {
   public cache: EntitiesCacheManager<GuildMember>
 
-  constructor(app: DiscordApplication) {
+  constructor(app: RestEligibleDiscordApplication) {
     super(app)
 
     this.cache = new EntitiesCacheManager<GuildMember>(this.app, {
@@ -85,6 +85,10 @@ export class ApplicationGuildMembersManager extends EntitiesManager {
   }
 
   async fetchMany(guild: GuildResolvable, options: GuildMembersFetchOptions = {}): Promise<GuildMember[]> {
+    if (!('gateway' in this.app.internals)) {
+      throw new DiscordooError('ApplicationGuildMembersManager#fetchMany', 'not implemented in rest-only application.')
+    }
+
     const guildId = resolveGuildId(guild)
 
     if (!guildId) throw new DiscordooError('ApplicationGuildMembersManager#fetchMany', 'Cannot fetch members without guild id.')

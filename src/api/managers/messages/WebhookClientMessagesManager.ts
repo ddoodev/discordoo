@@ -1,4 +1,4 @@
-import { WebhookClient } from '@src/core/apps/webhook/WebhookClient'
+import { WebhookApplication } from '@src/core/apps/webhook/WebhookApplication'
 import {
   MessageContent,
   MessageResolvable,
@@ -11,9 +11,9 @@ import { MessageFlags } from '@src/constants'
 import { DeleteWebhookMessageOptions } from '@src/api/managers/messages/DeleteWebhookMessageOptions'
 
 export class WebhookClientMessagesManager {
-  public app: WebhookClient
+  public app: WebhookApplication
 
-  constructor(app: WebhookClient) {
+  constructor(app: WebhookApplication) {
     this.app = app
   }
 

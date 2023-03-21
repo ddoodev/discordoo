@@ -1,5 +1,5 @@
 import { RestProvider } from '@discordoo/providers'
 
-export interface DefaultWebhookClientStack {
+export interface DefaultWebhookApplicationStack {
   rest: RestProvider
 }

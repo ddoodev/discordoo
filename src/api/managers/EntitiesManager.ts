@@ -1,9 +1,9 @@
-import { DiscordApplication } from '@src/core'
+import { RestEligibleDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
 
 export abstract class EntitiesManager {
-  public app: DiscordApplication
+  public app: RestEligibleDiscordApplication
 
-  protected constructor(app: DiscordApplication) {
+  protected constructor(app: RestEligibleDiscordApplication) {
     this.app = app
   }
 }

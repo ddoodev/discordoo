@@ -6,13 +6,14 @@ import { resolveGuildId, resolveRoleId, resolveUserId } from '@src/utils/resolve
 import { DiscordooError } from '@src/utils'
 import { Keyspaces } from '@src/constants'
 import { filterAndMap } from '@src/utils/filterAndMap'
+import { RestEligibleDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
 
 export class GuildMemberRolesManager extends EntitiesManager {
   public cache: EntitiesCacheManager<Role>
   public userId: string
   public guildId: string
 
-  constructor(app: DiscordApplication, data: GuildMemberRolesManagerData) {
+  constructor(app: RestEligibleDiscordApplication, data: GuildMemberRolesManagerData) {
     super(app)
 
     const userId = resolveUserId(data.user)

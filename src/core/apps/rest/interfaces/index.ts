@@ -1,0 +1,5 @@
+export { DefaultDiscordRestApplicationStack } from '@src/core/apps/rest/interfaces/DefaultDiscordRestApplicationStack'
+export { CompletedRestApplicationOptions } from '@src/core/apps/rest/interfaces/CompletedRestApplicationOptions'
+export { RestApplicationInternals } from '@src/core/apps/rest/interfaces/RestApplicationInternals'
+export { RestApplicationMetadata } from '@src/core/apps/rest/interfaces/RestApplicationMetadata'
+export { RestApplicationOptions } from '@src/core/apps/rest/interfaces/RestApplicationOptions'

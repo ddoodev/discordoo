@@ -1,4 +1,6 @@
-import { AbstractDiscordApplication } from '@src/core/apps/abstract/AbstractDiscordApplication'
 import { DiscordApplication } from '@src/core'
+import { DiscordRestApplication } from '@src/core/apps/rest/DiscordRestApplication'
+import { DiscordCacheApplication } from '@src/core/apps/cache/DiscordCacheApplication'
 
-export type AnyDiscordApplication = AbstractDiscordApplication | DiscordApplication
+export type RestEligibleDiscordApplication = DiscordApplication | DiscordRestApplication
+export type AnyDiscordApplication = RestEligibleDiscordApplication  | DiscordCacheApplication

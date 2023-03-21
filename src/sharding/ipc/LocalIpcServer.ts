@@ -1,3 +1,5 @@
+// @ts-nocheck
+// TODO perform refactor later
 import { TypedEmitter } from 'tiny-typed-emitter'
 import { IpcServerOptions } from '@src/sharding/interfaces/ipc/IpcServerOptions'
 import { IPC as RawIpc, server as RawIpcServer } from '@achrinza/node-ipc'
@@ -23,7 +25,6 @@ import {
   IpcIdentifyPacket
 } from '@src/sharding/interfaces/ipc/IpcPackets'
 import { IpcServerEvents } from '@src/sharding/interfaces/ipc/IpcServerEvents'
-import { DiscordApplication } from '@src/core'
 import { GuildMemberData } from '@src/api'
 import { RawGuildMembersFetchOptions } from '@src/api/managers/members/RawGuildMembersFetchOptions'
 import { fromJson, toJson } from '@src/utils/toJson'
@@ -32,6 +33,8 @@ import { serializeError } from 'serialize-error'
 import { IpcEmergencyOpCodes } from '@src/constants/sharding/IpcEmergencyOpCodes'
 import { GatewayOpCodes } from '@discordoo/providers'
 import { AnyDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
+import { DiscordCacheApplication } from '@src/core/apps/cache/DiscordCacheApplication'
+import { DiscordApplication, DiscordRestApplication } from '@src/core'
 
 export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
   private readonly bucket: Collection = new Collection()

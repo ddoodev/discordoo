@@ -2,7 +2,6 @@ import { Collection } from '@discordoo/collection'
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
 import { EntitiesCacheManager } from '@src/api/managers/EntitiesCacheManager'
 import { Sticker } from '@src/api/entities/sticker/Sticker'
-import { DiscordApplication } from '@src/core/apps/DiscordApplication'
 import { StickerResolvable } from '@src/api/entities/sticker/interfaces/StickerResolvable'
 import { resolveGuildId, resolveStickerId } from '@src/utils/resolve'
 import { DiscordooError } from '@src/utils/DiscordooError'
@@ -15,11 +14,12 @@ import { StickerCreateData } from '@src/api/entities/sticker/interfaces/StickerC
 import { RawStickerCreateData } from '@src/api/entities/sticker/interfaces/RawStickerCreateData'
 import { Keyspaces } from '@src/constants'
 import { StickersManagerEditOptions } from '@src/api/managers/stickers/StickersManagerEditOptions'
+import { DiscordRestApplication } from '@src/core'
 
 export class ApplicationStickersManager extends EntitiesManager {
   public cache: EntitiesCacheManager<Sticker>
 
-  constructor(app: DiscordApplication) {
+  constructor(app: DiscordRestApplication) {
     super(app)
 
     this.cache = new EntitiesCacheManager<Sticker>(this.app, {
