@@ -1,9 +1,5 @@
 import { AnyDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
 
-export interface ProviderConstructor<Provider> {
-  new (app: AnyDiscordApplication, options: any, providerOptions?: any): Provider
-}
-
-export interface RestProviderConstructor<Provider> {
-  new (app: AnyDiscordApplication, options: any, providerOptions?: any): Provider
+export interface ProviderConstructor<Provider, App = AnyDiscordApplication> {
+  new (app: App, options: any, providerOptions?: any): Provider
 }

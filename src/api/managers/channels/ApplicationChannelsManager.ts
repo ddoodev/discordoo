@@ -1,5 +1,5 @@
 import { ChannelResolvable, EntitiesCacheManager, GuildResolvable } from '@src/api'
-import { DiscordApplication } from '@src/core'
+import { DiscordApplication, DiscordRestApplication } from '@src/core'
 import {
   attach,
   channelEntityKey,
@@ -35,7 +35,7 @@ import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 export class ApplicationChannelsManager extends EntitiesManager {
   public cache: EntitiesCacheManager<AnyChannel>
 
-  constructor(app: DiscordApplication) {
+  constructor(app: DiscordRestApplication) {
     super(app)
 
     this.cache = new EntitiesCacheManager<AnyChannel>(this.app, {

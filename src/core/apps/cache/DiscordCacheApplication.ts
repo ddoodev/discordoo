@@ -1,20 +1,21 @@
 import { TypedEmitter } from 'tiny-typed-emitter'
-import { DefaultAbstractApplicationStack } from './interfaces/DefaultAbstractApplicationStack'
-import { AbstractApplicationInternals } from './interfaces/AbstractApplicationInternals'
-import { AbstractApplicationOptions } from './interfaces/AbstractApplicationOptions'
-import { EntitiesUtil } from '@src/api'
-import { CompletedGatewayOptions, DefaultGatewayProvider, GatewayManager } from '@src/gateway'
-import { CompletedRestOptions, DefaultRestProvider, RestManager } from '@src/rest'
-import { CacheManager, CompletedCacheOptions, DefaultCacheProvider } from '@src/cache'
 import { CompletedLocalIpcOptions, IpcServerOptions, LocalIpcServer } from '@src/sharding'
-import { CompletedClientOptions } from '@src/core/apps/interfaces/ApplicationOptions'
-import { ApplicationShardingMetadata, ProviderConstructor } from '@src/core'
-import { DiscordooError, DiscordooSnowflake } from '@src/utils'
-import { DiscordooProviders } from '@src/constants'
+import {
+  ApplicationShardingMetadata,
+  CacheApplicationInternals,
+  CacheApplicationMetadata,
+  CacheApplicationOptions, CompletedCacheApplicationOptions, DefaultCacheApplicationStack,
+  ProviderConstructor
+} from '@src/core'
 import { LOCAL_IPC_DEFAULT_OPTIONS } from '@src/constants/sharding/IpcDefaultOptions'
-import { AbstractApplicationShardingMetadata } from '@src/core/apps/abstract/interfaces/AbstractApplicationShardingMetadata'
+import { ApplicationEvents } from '@src/events'
+import { DiscordooProviders, GlobalCachingPolicy } from '@src/constants'
+import { EntitiesUtil } from '@src/api'
+import { DiscordooError, DiscordooSnowflake, version } from '@src/utils'
+import { CACHE_OPTIONS_KEYS_LENGTH } from '@src/cache/interfaces/CacheOptions'
+import { CacheManager, CompletedCacheOptions, DefaultCacheProvider } from '@src/cache'
 
-export abstract class AbstractDiscordApplication<Stack extends DefaultAbstractApplicationStack = DefaultAbstractApplicationStack>
+export class DiscordCacheApplication<Stack extends DefaultCacheApplicationStack = DefaultCacheApplicationStack>
   // @ts-ignore because events can be redefined, and the typed emitter library doesn't like it. it works anyway.
   extends TypedEmitter<Stack['events']> {
 
@@ -22,12 +23,14 @@ export abstract class AbstractDiscordApplication<Stack extends DefaultAbstractAp
   public readonly token: string
 
   /** Internal things used by this app */
-  public readonly internals: AbstractApplicationInternals<Stack>
+  public readonly internals: CacheApplicationInternals<Stack>
 
   /** Options passed to this app */
-  public readonly options: AbstractApplicationOptions
+  public readonly options: CacheApplicationOptions
 
-  protected constructor(token: string, options: AbstractApplicationOptions = {}) {
+  protected running = false
+
+  constructor(token: string, options: CacheApplicationOptions = {}) {
     super()
 
     options.extenders?.forEach(e => {
@@ -39,6 +42,11 @@ export abstract class AbstractDiscordApplication<Stack extends DefaultAbstractAp
 
     const cacheOptions: CompletedCacheOptions = this._makeCacheOptions()
     const ipcOptions: CompletedLocalIpcOptions = this._makeLocalIpcOptions()
+
+    const appOptions: CompletedCacheApplicationOptions = {
+      cache: cacheOptions,
+      ipc: ipcOptions
+    }
 
     let cacheProvider: ProviderConstructor<Stack['cache']> = DefaultCacheProvider, cacheProviderOptions
 
@@ -76,6 +84,48 @@ export abstract class AbstractDiscordApplication<Stack extends DefaultAbstractAp
       this,
       this._makeIpcServerOptions(ipcOptions, shardingMetadata)
     )
+
+    const allCacheDisabled = (() => {
+      if (options.cache?.global?.policies.includes(GlobalCachingPolicy.None)) return true
+
+      const opts = Object.entries(this.options.cache ?? {})
+      const total = opts.length, defaultTotal = CACHE_OPTIONS_KEYS_LENGTH
+      if (total === 0 || total < defaultTotal) return false
+
+      let disabled = 0
+
+      for (const [ policy ] of opts) {
+        if (policy.includes('none')) disabled++
+      }
+
+      return defaultTotal === disabled
+    })()
+
+    const events = new ApplicationEvents(this)
+    const appMetadata: CacheApplicationMetadata = {
+      version,
+      shardingUsed: shardingMetadata.active,
+      allCacheDisabled,
+      machinesShardingUsed: false // not supported yet
+    }
+
+    this.internals = {
+      ipc,
+      cache,
+      metadata: appMetadata,
+      sharding: shardingMetadata,
+      events,
+      options: appOptions
+    }
+  }
+
+  public async start(): Promise<DiscordCacheApplication<Stack>>  {
+    if (this.running) throw new DiscordooError('DiscordApplication#start', 'Already running.')
+    this.running = true
+
+    await this.internals.cache.init()
+
+    return this
   }
 
   private _makeCacheOptions(): CompletedCacheOptions {
@@ -97,5 +147,9 @@ export abstract class AbstractDiscordApplication<Stack extends DefaultAbstractAp
       { MANAGER_IPC, INSTANCE_IPC, instance },
       { config: completedOptions }
     )
+  }
+
+  protected get getInternals(): CacheApplicationInternals<Stack> {
+    return this.internals
   }
 }

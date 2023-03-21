@@ -1,17 +1,18 @@
-import { DiscordApplication, ProviderConstructor } from '@src/core'
+import { ProviderConstructor } from '@src/core'
 import { RestRequest, RestManagerData, RestManagerRequestData, RestLimitsManager, makeRequest } from '@src/rest'
 import { RestProvider, RestRequestOptions, RestFinishedResponse } from '@discordoo/providers'
 import { CompletedRestOptions } from '@src/rest'
 import { DiscordCdnLinker } from '@src/rest/DiscordCdnLinker'
+import { RestEligibleDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
 
 export class RestManager<P extends RestProvider = RestProvider> {
-  public app: DiscordApplication
+  public app: RestEligibleDiscordApplication
   public provider: P
   public limiter: RestLimitsManager
   public options: CompletedRestOptions
   public cdn: DiscordCdnLinker
 
-  constructor(app: DiscordApplication, Provider: ProviderConstructor<P>, data: RestManagerData) {
+  constructor(app: RestEligibleDiscordApplication, Provider: ProviderConstructor<P>, data: RestManagerData) {
     this.app = app
     this.provider = new Provider(this.app, data.restOptions, data.providerOptions)
     this.limiter = new RestLimitsManager(this.app)

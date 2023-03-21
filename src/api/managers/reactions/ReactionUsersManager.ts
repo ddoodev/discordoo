@@ -1,10 +1,10 @@
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
 import { EntitiesCacheManager, User, UserResolvable } from '@src/api'
-import { DiscordApplication } from '@src/core'
 import { ReactionUsersManagerData } from '@src/api/managers/reactions/ReactionUsersManagerData'
 import { Keyspaces } from '@src/constants'
 import { Collection } from '@discordoo/collection'
 import { FetchReactionUsersOptions } from '@src/api/managers/reactions/FetchReactionUsersOptions'
+import { RestEligibleDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
 
 export class ReactionUsersManager extends EntitiesManager {
   public cache: EntitiesCacheManager<User>
@@ -12,7 +12,7 @@ export class ReactionUsersManager extends EntitiesManager {
   public channelId: string
   public messageId: string
 
-  constructor(app: DiscordApplication, data: ReactionUsersManagerData) {
+  constructor(app: RestEligibleDiscordApplication, data: ReactionUsersManagerData) {
     super(app)
 
     this.emojiId = data.emojiId

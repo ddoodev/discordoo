@@ -1,9 +1,9 @@
+import { WebhookApplicationActions } from '@src/core'
 import { WebhookRestManager } from '@src/rest/WebhookRestManager'
-import { WebhookClientActions } from '@src/core/apps/webhook/WebhookClientActions'
 
-export interface WebhookClientInternals {
+export interface WebhookApplicationInternals {
   /** RestManager used by this app */
   rest: WebhookRestManager
   /** DiscordApplication Actions */
-  actions: WebhookClientActions
+  actions: WebhookApplicationActions
 }

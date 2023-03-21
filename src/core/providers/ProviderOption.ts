@@ -1,8 +1,8 @@
 import { DiscordooProviders } from '@src/constants'
-import { ProviderConstructor, RestProviderConstructor } from '@src/core/providers/ProviderConstructor'
+import { ProviderConstructor } from '@src/core'
 
 export interface ProviderOption {
   provide: DiscordooProviders
-  useClass: ProviderConstructor<any> | RestProviderConstructor<any>
+  useClass: ProviderConstructor<any>
   useOptions: any
 }

@@ -1,5 +1,5 @@
 import { Message as RawMessage } from '@src/api/entities'
-import { createApp } from '@src/wrapper'
+import { DiscordFactory } from '@src/wrapper'
 import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 
 describe('EntitiesUtil', () => {
@@ -68,11 +68,11 @@ describe('EntitiesUtil', () => {
 
     class ExtendedMessage extends RawMessage {}
 
-    createApp('')
-      .extenders([
+    DiscordFactory.create('', {
+      extenders: [
         { entity: 'Message', extender: ExtendedMessage }
-      ])
-      .build()
+      ]
+    })
 
     expect(
       EntitiesUtil.get('Message').prototype === ExtendedMessage.prototype

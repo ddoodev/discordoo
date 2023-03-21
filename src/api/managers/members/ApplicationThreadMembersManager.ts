@@ -1,5 +1,5 @@
 import { EntitiesCacheManager, UserResolvable } from '@src/api'
-import { DiscordApplication } from '@src/core'
+import { DiscordApplication, DiscordRestApplication } from '@src/core'
 import { Keyspaces } from '@src/constants'
 import { ThreadMember } from '@src/api/entities/member/ThreadMember'
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
@@ -11,7 +11,7 @@ import { DiscordooError, resolveChannelId, resolveUserOrMemberId } from '@src/ut
 export class ApplicationThreadMembersManager extends EntitiesManager {
   public cache: EntitiesCacheManager<ThreadMember>
 
-  constructor(app: DiscordApplication) {
+  constructor(app: DiscordRestApplication) {
     super(app)
 
     this.cache = new EntitiesCacheManager<ThreadMember>(this.app, {

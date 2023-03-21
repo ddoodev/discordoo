@@ -1,9 +1,9 @@
-import { DiscordApplication } from '@src/core'
 import { Collection } from '@discordoo/collection'
 import { RestManagerRequestData } from '@src/rest/interfaces'
 import { RestRateLimitBucket } from '@src/rest/interfaces/RestRateLimitBucket'
 import { RestFinishedResponse, RestRequestOptions } from '@discordoo/providers'
 import { wait } from '@src/utils'
+import { AnyDiscordApplication, RestEligibleDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
 
 /**
  * Used to comply with the Discord rate limits.
@@ -12,7 +12,7 @@ import { wait } from '@src/utils'
  *
  * */
 export class RestLimitsManager {
-  public app: DiscordApplication
+  public app: RestEligibleDiscordApplication
 
   private allowedRequests = 50
   private allowedResetAt = Date.now() + 1000
@@ -42,7 +42,7 @@ export class RestLimitsManager {
 
   public locked = false
 
-  constructor(app: DiscordApplication) {
+  constructor(app: RestEligibleDiscordApplication) {
     this.app = app
   }
 

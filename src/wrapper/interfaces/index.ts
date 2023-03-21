@@ -1,2 +1,2 @@
-export { CreateAppOptions } from '@src/wrapper/interfaces/CreateAppOptions'
-export { CreateWebhookData } from '@src/wrapper/interfaces/CreateWebhookData'
+export { CreateApplicationOptions } from '@src/wrapper/interfaces/CreateApplicationOptions'
+export { CreateWebhookApplicationData } from '@src/wrapper/interfaces/CreateWebhookApplicationData'

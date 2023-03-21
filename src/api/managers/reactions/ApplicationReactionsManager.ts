@@ -1,5 +1,5 @@
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
-import { DiscordApplication } from '@src/core'
+import { DiscordApplication, DiscordRestApplication } from '@src/core'
 import { ChannelResolvable, EmojiResolvable, EntitiesCacheManager, MessageResolvable, User, UserResolvable } from '@src/api'
 import { MessageReaction } from '@src/api/entities/reaction/MessageReaction'
 import { Keyspaces } from '@src/constants'
@@ -13,7 +13,7 @@ import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 export class ApplicationReactionsManager extends EntitiesManager {
   public cache: EntitiesCacheManager<MessageReaction>
 
-  constructor(app: DiscordApplication) {
+  constructor(app: DiscordRestApplication) {
     super(app)
 
     this.cache = new EntitiesCacheManager<MessageReaction>(this.app, {

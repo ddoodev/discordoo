@@ -1,6 +1,6 @@
 {
   "name": "discordoo",
-  "version": "0.11.10",
+  "version": "0.12.0",
   "description": "Discord bots. Simplified and boosted",
   "main": "./dist/src/index.js",
   "module": "./dist/src/index.js",
@@ -63,7 +63,7 @@
     "ts-mixer": "^6.0.2",
     "tslib": "2.3.0",
     "typescript-is": "0.19.0",
-    "undici": "5.19.1",
+    "undici": "^5.21.0",
     "ws": "7.4.6"
   },
   "engines": {

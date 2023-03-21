@@ -1,7 +1,7 @@
 import { RestOptions } from '@src/rest'
 import { ProviderOption } from '@src/core'
 
-export interface WebhookClientOptions {
+export interface WebhookApplicationOptions {
   /** Webhook ID */
   id: string
   /** Webhook token */

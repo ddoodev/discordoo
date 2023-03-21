@@ -1,15 +1,15 @@
 import { EntitiesCacheManager, Presence } from '@src/api'
-import { DiscordApplication } from '@src/core'
 import { Keyspaces } from '@src/constants'
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
 import { GuildPresencesManagerData } from '@src/api/managers/presences/GuildPresencesManagerData'
 import { DiscordooError, resolveGuildId } from '@src/utils'
+import { RestEligibleDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
 
 export class GuildPresencesManager extends EntitiesManager {
   public cache: EntitiesCacheManager<Presence>
   public guildId: string
 
-  constructor(app: DiscordApplication, data: GuildPresencesManagerData) {
+  constructor(app: RestEligibleDiscordApplication, data: GuildPresencesManagerData) {
     super(app)
 
     const guildId = resolveGuildId(data.guild)

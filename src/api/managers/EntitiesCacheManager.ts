@@ -1,5 +1,4 @@
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
-import { DiscordApplication } from '@src/core'
 import { EntityKey } from '@src/api/entities/interfaces'
 import { EntitiesCacheManagerData } from '@src/api/managers/interfaces'
 import {
@@ -22,6 +21,7 @@ import {
   CacheManagerEntriesOptions,
 } from '@src/cache/interfaces'
 import { CacheProvider, CacheStorageKey } from '@discordoo/providers'
+import { RestEligibleDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
 
 export class EntitiesCacheManager<DefaultEntity> extends EntitiesManager {
   private readonly entityKey: EntityKey
@@ -29,7 +29,7 @@ export class EntitiesCacheManager<DefaultEntity> extends EntitiesManager {
   public readonly keyspace: string
   public readonly storage: CacheStorageKey
 
-  constructor(app: DiscordApplication, data: EntitiesCacheManagerData) {
+  constructor(app: RestEligibleDiscordApplication, data: EntitiesCacheManagerData) {
     super(app)
     this.entityKey = data.entity
     this.keyspace = data.keyspace

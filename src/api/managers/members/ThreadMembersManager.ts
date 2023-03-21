@@ -1,5 +1,4 @@
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
-import { DiscordApplication } from '@src/core'
 import { EntitiesCacheManager, UserResolvable } from '@src/api'
 import { ThreadMember } from '@src/api/entities/member/ThreadMember'
 import { DiscordooError, resolveChannelId, resolveGuildId } from '@src/utils'
@@ -7,13 +6,14 @@ import { ThreadMembersManagerData } from '@src/api/managers/members/ThreadMember
 import { Keyspaces } from '@src/constants'
 import { GuildMemberResolvable } from '@src/api/entities/member/interfaces/GuildMemberResolvable'
 import { ThreadMemberResolvable } from '@src/api/entities/member/interfaces/ThreadMemberResolvable'
+import { RestEligibleDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
 
 export class ThreadMembersManager extends EntitiesManager {
   public cache: EntitiesCacheManager<ThreadMember>
   public threadId: string
   public guildId: string
 
-  constructor(app: DiscordApplication, data: ThreadMembersManagerData) {
+  constructor(app: RestEligibleDiscordApplication, data: ThreadMembersManagerData) {
     super(app)
 
     const threadId = resolveChannelId(data.thread)

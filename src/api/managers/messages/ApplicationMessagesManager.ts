@@ -1,5 +1,5 @@
 import { EntitiesCacheManager, Message, MessageEmbedBuilder, MessageResolvable } from '@src/api'
-import { DiscordApplication } from '@src/core'
+import { DiscordApplication, DiscordRestApplication } from '@src/core'
 import { ChannelResolvable } from '@src/api/entities/channel/interfaces/ChannelResolvable'
 import { MessageContent } from '@src/api/entities/message/interfaces/MessageContent'
 import { MessageCreateOptions } from '@src/api/entities/message/interfaces/MessageCreateOptions'
@@ -29,7 +29,7 @@ import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 export class ApplicationMessagesManager extends EntitiesManager {
   public cache: EntitiesCacheManager<Message>
 
-  constructor(app: DiscordApplication) {
+  constructor(app: DiscordRestApplication) {
     super(app)
 
     this.cache = new EntitiesCacheManager<Message>(this.app, {

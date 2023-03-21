@@ -6,7 +6,7 @@ import {
   EntitiesUtil,
   AnyInvitableChannelResolvable, GuildInvitesManager, InviteCreateOptions
 } from '@src/api'
-import { DiscordApplication } from '@src/core'
+import { DiscordApplication, DiscordRestApplication } from '@src/core'
 import { Keyspaces } from '@src/constants'
 import { DiscordooError, resolveChannelId } from '@src/utils'
 
@@ -14,7 +14,7 @@ export class ApplicationInvitesManager extends EntitiesManager {
   public cache: EntitiesCacheManager<Invite>
   public guilds: GuildInvitesManager
 
-  constructor(app: DiscordApplication) {
+  constructor(app: DiscordRestApplication) {
     super(app)
 
     this.cache = new EntitiesCacheManager<Invite>(this.app, {

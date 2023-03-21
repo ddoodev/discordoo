@@ -10,3 +10,4 @@ export { RawGuildMemberAddData } from '@src/api/managers/members/RawGuildMemberA
 export { RawGuildMembersFetchOptions } from '@src/api/managers/members/RawGuildMembersFetchOptions'
 export { ThreadMembersManager } from '@src/api/managers/members/ThreadMembersManager'
 export { ThreadMembersManagerData } from '@src/api/managers/members/ThreadMembersManagerData'
+export { GuildMembersFetchQuery } from '@src/api/managers/members/GuildMembersFetchQuery'

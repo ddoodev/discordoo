@@ -86,7 +86,7 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
 
         this.helloInterval = setInterval(() => {
           this.hello(this.ipc.of[this.INSTANCE_IPC])
-        }, 1000)
+        }, 1000) as any // HELLO JEST!!! THIS IS FOR YOU
       })
     })
   }

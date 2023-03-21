@@ -1,17 +1,17 @@
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
-import { DiscordApplication } from '@src/core'
 import { EmojiResolvable, EntitiesCacheManager } from '@src/api'
 import { MessageReaction } from '@src/api/entities/reaction/MessageReaction'
 import { MessageReactionsManagerData } from '@src/api/managers/reactions/MessageReactionsManagerData'
 import { Keyspaces } from '@src/constants'
 import { MessageReactionResolvable } from '@src/api/entities/reaction/interfaces/MessageReactionResolvable'
+import { RestEligibleDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
 
 export class MessageReactionsManager extends EntitiesManager {
   public cache: EntitiesCacheManager<MessageReaction>
   public channelId: string
   public messageId: string
 
-  constructor(app: DiscordApplication, data: MessageReactionsManagerData) {
+  constructor(app: RestEligibleDiscordApplication, data: MessageReactionsManagerData) {
     super(app)
 
     this.channelId = data.channelId

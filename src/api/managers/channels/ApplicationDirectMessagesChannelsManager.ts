@@ -1,5 +1,5 @@
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
-import { DiscordApplication } from '@src/core'
+import { DiscordRestApplication } from '@src/core'
 import { DirectMessagesChannel, EntitiesCacheManager, EntitiesUtil, UserResolvable } from '@src/api'
 import { Keyspaces } from '@src/constants'
 import { DiscordooError, resolveUserId } from '@src/utils'
@@ -8,7 +8,7 @@ import { makeCachePointer } from '@src/utils/cachePointer'
 export class ApplicationDirectMessagesChannelsManager extends EntitiesManager {
   public cache: EntitiesCacheManager<DirectMessagesChannel>
 
-  constructor(app: DiscordApplication) {
+  constructor(app: DiscordRestApplication) {
     super(app)
 
     this.cache = new EntitiesCacheManager<DirectMessagesChannel>(this.app, {

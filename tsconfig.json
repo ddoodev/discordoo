@@ -33,7 +33,8 @@
       { "transform": "@zerollup/ts-transform-paths" },
       {
         "transform": "typescript-is/lib/transform-inline/transformer",
-        "functionBehavior": "basic"
+        "functionBehavior": "basic",
+        "ignoreClasses": true,
       }
     ]
   },

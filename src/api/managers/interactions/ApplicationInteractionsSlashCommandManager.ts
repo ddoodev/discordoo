@@ -1,5 +1,6 @@
-import { EntitiesCacheManager, EntitiesManager } from '@src/api'
-import { DiscordApplication } from '@src/core'
+import { EntitiesCacheManager } from '@src/api'
+import { EntitiesManager } from '../EntitiesManager'
+import { DiscordApplication, DiscordRestApplication } from '@src/core'
 import { RawAppCommandEditData } from '@src/api/entities/interaction/interfaces/command/raw/RawAppCommandEditData'
 import { GuildAppCommandEditData, RawGuildAppCommandEditData } from '@src/api/managers/interactions/InteractionSlashCommandGuildData'
 import { AppCommandEditData } from '@src/api/entities/interaction/interfaces/command/common/AppCommandEditData'
@@ -10,7 +11,7 @@ import { Keyspaces } from '@src/constants'
 
 export class ApplicationInteractionsSlashCommandManager extends EntitiesManager {
   public cache: EntitiesCacheManager<AppCommand>
-  constructor(app: DiscordApplication) {
+  constructor(app: DiscordRestApplication) {
     super(app)
 
     this.cache = new EntitiesCacheManager(app, {

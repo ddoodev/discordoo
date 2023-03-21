@@ -1,7 +1,7 @@
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
 import { ChannelResolvable, EntitiesCacheManager, RoleResolvable, UserResolvable } from '@src/api'
 import { PermissionOverwrite } from '@src/api/entities/overwrite/PermissionOverwrite'
-import { DiscordApplication } from '@src/core'
+import { DiscordApplication, DiscordRestApplication } from '@src/core'
 import { Keyspaces } from '@src/constants'
 import { PermissionOverwriteResolvable } from '@src/api/entities/overwrite/interfaces/PermissionOverwriteResolvable'
 import { GuildChannelResolvable } from '@src/api/entities/channel/interfaces/GuildChannelResolvable'
@@ -16,7 +16,7 @@ import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 export class ApplicationPermissionOverwritesManager extends EntitiesManager {
   public cache: EntitiesCacheManager<PermissionOverwrite>
 
-  constructor(app: DiscordApplication) {
+  constructor(app: DiscordRestApplication) {
     super(app)
 
     this.cache = new EntitiesCacheManager<PermissionOverwrite>(this.app, {
