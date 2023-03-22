@@ -11,40 +11,52 @@ import { is } from 'typescript-is'
 import { ValidationError } from '@src/utils'
 
 export class DiscordFactory {
-  static create<Stack extends DefaultDiscordApplicationStack = DefaultDiscordApplicationStack>(
+  static create<
+    Stack extends DefaultDiscordApplicationStack = DefaultDiscordApplicationStack,
+    Application extends DiscordApplication<Stack> = DiscordApplication<Stack>
+  >(
     token: string,
     options?: ApplicationOptions & CreateApplicationOptions
-  ): DiscordApplication<Stack> {
+  ): Application {
     if (!is<string>(token)) throw new ValidationError('DiscordFactory#create', 'Invalid token provided:', token)
 
     if (options?.useApp) return new options.useApp(token, options)
-    return new DiscordApplication<Stack>(token, options)
+    return new DiscordApplication<Stack>(token, options) as Application
   }
 
-  static createCacheApplication<Stack extends DefaultCacheApplicationStack = DefaultCacheApplicationStack>(
+  static createCache<
+    Stack extends DefaultCacheApplicationStack = DefaultCacheApplicationStack,
+    Application extends DiscordCacheApplication<Stack> = DiscordCacheApplication<Stack>
+  >(
     token: string,
     options?: CacheApplicationOptions & CreateApplicationOptions
-  ) {
+  ): Application {
     if (!is<string>(token)) throw new ValidationError('DiscordFactory#createCacheApplication', 'Invalid token provided:', token)
 
     if (options?.useApp) return new options.useApp(token, options)
-    return new DiscordCacheApplication<Stack>(token, options)
+    return new DiscordCacheApplication<Stack>(token, options) as Application
   }
 
-  static createRestApplication<Stack extends DefaultDiscordRestApplicationStack = DefaultDiscordRestApplicationStack>(
+  static createRest<
+    Stack extends DefaultDiscordRestApplicationStack = DefaultDiscordRestApplicationStack,
+    Application extends DiscordRestApplication<Stack> = DiscordRestApplication<Stack>
+  >(
     token: string,
     options?: RestApplicationOptions & CreateApplicationOptions
-  ) {
+  ): Application {
     if (!is<string>(token)) throw new ValidationError('DiscordFactory#createRestApplication', 'Invalid token provided:', token)
 
     if (options?.useApp) return new options.useApp(token, options)
-    return new DiscordRestApplication<Stack>(token, options)
+    return new DiscordRestApplication<Stack>(token, options) as Application
   }
 
-  static createWebhookApplication<Stack extends DefaultWebhookApplicationStack = DefaultWebhookApplicationStack>(
+  static createWebhook<
+    Stack extends DefaultWebhookApplicationStack = DefaultWebhookApplicationStack,
+    Application extends WebhookApplication<Stack> = WebhookApplication<Stack>
+  >(
     data: CreateWebhookApplicationData,
-    options: Omit<WebhookApplicationOptions, 'id' | 'token'> & CreateApplicationOptions
-  ) {
+    options?: Omit<WebhookApplicationOptions, 'id' | 'token'> & CreateApplicationOptions
+  ): Application {
     let { id, token } = data
     if (!id || !token) {
       if (!data.url) throw new ValidationError(
@@ -61,11 +73,11 @@ export class DiscordFactory {
     if (!is<string>(id)) throw new ValidationError('DiscordFactory#createWebhookApplication', 'Invalid id provided:', id)
     if (!is<string>(token)) throw new ValidationError('DiscordFactory#createWebhookApplication', 'Invalid token provided:', token)
 
-    if (options?.useApp) return new options.useApp(options)
+    if (options?.useApp) return new options.useApp(data, options)
     return new WebhookApplication<Stack>({
       ...options,
       id,
       token
-    })
+    }) as Application
   }
 }
