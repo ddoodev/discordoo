@@ -1,3 +1,3 @@
-export { MessageReaction } from '@src/api/entities/reaction/MessageReaction'
+export { MessageReaction } from './MessageReaction'
 
 export * from './interfaces'

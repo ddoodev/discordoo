@@ -1,4 +1,4 @@
-export { StickerPack } from '@src/api/entities/sticker/StickerPack'
-export { Sticker } from '@src/api/entities/sticker/Sticker'
+export { StickerPack } from './StickerPack'
+export { Sticker } from './Sticker'
 
 export * from './interfaces'

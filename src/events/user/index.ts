@@ -1,3 +1,3 @@
-export { UserUpdateEvent } from '@src/events/user/UserUpdateEvent'
+export { UserUpdateEvent } from './UserUpdateEvent'
 
 export * from './ctx'

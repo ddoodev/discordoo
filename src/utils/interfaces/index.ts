@@ -1,8 +1,8 @@
-export { ShardListResolvable } from '@src/utils/interfaces/ShardListResolvable'
-export { AllowedImageFormats } from '@src/utils/interfaces/AllowedImageFormats'
-export { AllowedImageSizes } from '@src/utils/interfaces/AllowedImageSizes'
-export { BufferResolvable } from '@src/utils/interfaces/BufferResolvable'
-export { ImageUrlOptions } from '@src/utils/interfaces/ImageUrlOptions'
+export { ShardListResolvable } from './ShardListResolvable'
+export { AllowedImageFormats } from './AllowedImageFormats'
+export { AllowedImageSizes } from './AllowedImageSizes'
+export { BufferResolvable } from './BufferResolvable'
+export { ImageUrlOptions } from './ImageUrlOptions'
 
 export * from './ResolveDiscordooShardsOptions'
 export * from './DeconstructedSnowflake'

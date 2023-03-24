@@ -1,6 +1,6 @@
-export { DefaultRestProvider } from '@src/rest/DefaultRestProvider'
-export { RestLimitsManager } from '@src/rest/RestLimitsManager'
-export { RestManager } from '@src/rest/RestManager'
-export { makeRequest } from '@src/rest/makeRequest'
+export { DefaultRestProvider } from './DefaultRestProvider'
+export { RestLimitsManager } from './RestLimitsManager'
+export { RestManager } from './RestManager'
+export { makeRequest } from './makeRequest'
 
 export * from './interfaces'

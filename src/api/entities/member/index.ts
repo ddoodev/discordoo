@@ -1,4 +1,4 @@
-export { ThreadMember } from '@src/api/entities/member/ThreadMember'
-export { GuildMember } from '@src/api/entities/member/GuildMember'
+export { ThreadMember } from './ThreadMember'
+export { GuildMember } from './GuildMember'
 
 export * from './interfaces'

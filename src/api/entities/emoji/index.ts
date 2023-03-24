@@ -1,7 +1,7 @@
-export { GuildPreviewEmoji } from '@src/api/entities/emoji/GuildPreviewEmoji'
-export { AbstractEmoji } from '@src/api/entities/emoji/AbstractEmoji'
-export { ReactionEmoji } from '@src/api/entities/emoji/ReactionEmoji'
-export { ActivityEmoji } from '@src/api/entities/emoji/ActivityEmoji'
-export { GuildEmoji } from '@src/api/entities/emoji/GuildEmoji'
+export { GuildPreviewEmoji } from './GuildPreviewEmoji'
+export { AbstractEmoji } from './AbstractEmoji'
+export { ReactionEmoji } from './ReactionEmoji'
+export { ActivityEmoji } from './ActivityEmoji'
+export { GuildEmoji } from './GuildEmoji'
 
 export * from './interfaces'

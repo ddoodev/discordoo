@@ -1,5 +1,5 @@
-export { PresenceActivityAssets } from '@src/api/entities/presence/PresenceActivityAssets'
-export { PresenceActivity } from '@src/api/entities/presence/PresenceActivity'
-export { Presence } from '@src/api/entities/presence/Presence'
+export { PresenceActivityAssets } from './PresenceActivityAssets'
+export { PresenceActivity } from './PresenceActivity'
+export { Presence } from './Presence'
 
 export * from './interfaces'

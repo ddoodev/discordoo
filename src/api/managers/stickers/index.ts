@@ -1,2 +1,2 @@
-export { ApplicationStickersManager } from '@src/api/managers/stickers/ApplicationStickersManager'
-export { StickersManagerEditOptions } from '@src/api/managers/stickers/StickersManagerEditOptions'
+export { ApplicationStickersManager } from './ApplicationStickersManager'
+export { StickersManagerEditOptions } from './StickersManagerEditOptions'

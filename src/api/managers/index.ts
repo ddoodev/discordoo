@@ -1,8 +1,8 @@
-export { EntitiesCacheManager } from '@src/api/managers/EntitiesCacheManager'
-export { OtherCacheManager } from '@src/api/managers/OtherCacheManager'
-export { EntitiesManager } from '@src/api/managers/EntitiesManager'
-export { ApplicationGuildsManager } from '@src/api/managers/ApplicationGuildsManager'
-export { UsersManager } from '@src/api/managers/UsersManager'
+export { EntitiesCacheManager } from './EntitiesCacheManager'
+export { OtherCacheManager } from './OtherCacheManager'
+export { EntitiesManager } from './EntitiesManager'
+export { ApplicationGuildsManager } from './ApplicationGuildsManager'
+export { UsersManager } from './UsersManager'
 
 export * from './interactions'
 export * from './interfaces'

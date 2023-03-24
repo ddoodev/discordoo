@@ -1,4 +1,4 @@
-export { NonOptional } from '@src/utils/types/NonOptional'
-export { ReplaceType } from '@src/utils/types/ReplaceType'
-export { Optional } from '@src/utils/types/Optional'
-export { Merge } from '@src/utils/types/Merge'
+export { NonOptional } from './NonOptional'
+export { ReplaceType } from './ReplaceType'
+export { Optional } from './Optional'
+export { Merge } from './Merge'

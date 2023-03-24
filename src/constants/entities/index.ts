@@ -1,4 +1,4 @@
-export { IgnoreAllSymbol } from '@src/constants/entities/IgnoreAllSymbol'
+export { IgnoreAllSymbol } from './IgnoreAllSymbol'
 
 export * from './embed'
 export * from './guild'

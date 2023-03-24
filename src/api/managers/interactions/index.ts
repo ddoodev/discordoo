@@ -1,3 +1,3 @@
-export { InteractionResolvedCacheManagerData } from '@src/api/managers/interactions/InteractionResolvedCacheManagerData'
-export { InteractionResolvedCacheManager } from '@src/api/managers/interactions/InteractionResolvedCacheManager'
-export { ApplicationInteractionsManager } from '@src/api/managers/interactions/ApplicationInteractionsManager'
+export { InteractionResolvedCacheManagerData } from './InteractionResolvedCacheManagerData'
+export { InteractionResolvedCacheManager } from './InteractionResolvedCacheManager'
+export { ApplicationInteractionsManager } from './ApplicationInteractionsManager'

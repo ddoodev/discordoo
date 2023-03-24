@@ -1,6 +1,6 @@
-export { RawInviteCreateEventData } from '@src/events/invite/RawInviteCreateEventData'
-export { RawInviteDeleteEventData } from '@src/events/invite/RawInviteDeleteEventData'
-export { InviteCreateEvent } from '@src/events/invite/InviteCreateEvent'
-export { InviteDeleteEvent } from '@src/events/invite/InviteDeleteEvent'
+export { RawInviteCreateEventData } from './RawInviteCreateEventData'
+export { RawInviteDeleteEventData } from './RawInviteDeleteEventData'
+export { InviteCreateEvent } from './InviteCreateEvent'
+export { InviteDeleteEvent } from './InviteDeleteEvent'
 
 export * from './ctx'

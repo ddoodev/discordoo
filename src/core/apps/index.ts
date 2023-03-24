@@ -1,7 +1,6 @@
-export { ApplicationShardingMetadata } from '@src/core/apps/interfaces/ApplicationShardingMetadata'
 export { RestEligibleDiscordApplication, AnyDiscordApplication } from './AnyDiscordApplication'
-export { ExtendedEntityOption } from '@src/core/apps/ExtendedEntityOption'
-export { DiscordApplication } from '@src/core/apps/DiscordApplication'
+export { ExtendedEntityOption } from './ExtendedEntityOption'
+export { DiscordApplication } from './DiscordApplication'
 
 export * from './interfaces'
 export * from './actions'

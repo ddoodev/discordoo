@@ -1,7 +1,7 @@
-export { DefaultGatewayProvider } from '@src/gateway/DefaultGatewayProvider'
-export { WebSocketManager } from '@src/gateway/WebSocketManager'
-export { WebSocketClient } from '@src/gateway/WebSocketClient'
-export { GatewayManager } from '@src/gateway/GatewayManager'
+export { DefaultGatewayProvider } from './DefaultGatewayProvider'
+export { WebSocketManager } from './WebSocketManager'
+export { WebSocketClient } from './WebSocketClient'
+export { GatewayManager } from './GatewayManager'
 
 export * from './app'
 export * from './interfaces'

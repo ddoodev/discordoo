@@ -1,3 +1,3 @@
-export { UserResolvable } from '@src/api/entities/user/interfaces/UserResolvable'
-export { RawUserData } from '@src/api/entities/user/interfaces/RawUserData'
-export { UserData } from '@src/api/entities/user/interfaces/UserData'
+export { UserResolvable } from './UserResolvable'
+export { RawUserData } from './RawUserData'
+export { UserData } from './UserData'

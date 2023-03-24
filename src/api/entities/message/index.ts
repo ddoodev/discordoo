@@ -1,3 +1,3 @@
-export { Message } from '@src/api/entities/message/Message'
+export { Message } from './Message'
 
 export * from './interfaces'

@@ -1,4 +1,4 @@
-export { MessageAttachment } from '@src/api/entities/attachment/MessageAttachment'
-export { MessageAttachmentBuilder } from '@src/api/entities/attachment/MessageAttachmentBuilder'
+export { MessageAttachment } from './MessageAttachment'
+export { MessageAttachmentBuilder } from './MessageAttachmentBuilder'
 
 export * from './interfaces'

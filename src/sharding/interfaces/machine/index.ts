@@ -1,1 +1,1 @@
-export { ShardingMachineOptions } from '@src/sharding/interfaces/machine/ShardingMachineOptions'
+export { ShardingMachineOptions } from './ShardingMachineOptions'

@@ -1,3 +1,3 @@
-export { Invite } from '@src/api/entities/invite/Invite'
+export { Invite } from './Invite'
 
 export * from './interfaces'

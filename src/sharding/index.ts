@@ -1,5 +1,5 @@
-export { ShardingInstance } from '@src/sharding/ShardingInstance'
-export { ShardingManager } from '@src/sharding/ShardingManager'
+export { ShardingInstance } from './ShardingInstance'
+export { ShardingManager } from './ShardingManager'
 
 export * from './CompletedLocalIpcOptions'
 export * from './interfaces'

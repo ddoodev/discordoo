@@ -1,1 +1,1 @@
-export { EntitiesCacheManagerData } from '@src/api/managers/interfaces/EntitiesCacheManagerData'
+export { EntitiesCacheManagerData } from './EntitiesCacheManagerData'

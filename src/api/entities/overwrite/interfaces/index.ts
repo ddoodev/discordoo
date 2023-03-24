@@ -1,4 +1,4 @@
-export { PermissionOverwriteResolvable } from '@src/api/entities/overwrite/interfaces/PermissionOverwriteResolvable'
-export { RawPermissionOverwriteData } from '@src/api/entities/overwrite/interfaces/RawPermissionOverwriteData'
-export { PermissionOverwriteData } from '@src/api/entities/overwrite/interfaces/PermissionOverwriteData'
-export { OverwrittenPermissions } from '@src/api/entities/overwrite/interfaces/OverwrittenPermissions'
+export { PermissionOverwriteResolvable } from './PermissionOverwriteResolvable'
+export { RawPermissionOverwriteData } from './RawPermissionOverwriteData'
+export { PermissionOverwriteData } from './PermissionOverwriteData'
+export { OverwrittenPermissions } from './OverwrittenPermissions'

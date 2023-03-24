@@ -1,1 +1,1 @@
-export { MessageTypes } from '@src/constants/entities/message/MessageTypes'
+export { MessageTypes } from './MessageTypes'

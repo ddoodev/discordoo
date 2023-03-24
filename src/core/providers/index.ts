@@ -1,2 +1,2 @@
-export { ProviderConstructor } from '@src/core/providers/ProviderConstructor'
-export { ProviderOption } from '@src/core/providers/ProviderOption'
+export { ProviderConstructor } from './ProviderConstructor'
+export { ProviderOption } from './ProviderOption'

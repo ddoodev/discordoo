@@ -1,3 +1,3 @@
-export { DiscordRestApplication } from '@src/core/apps/rest/DiscordRestApplication'
+export { DiscordRestApplication } from './DiscordRestApplication'
 
 export * from './interfaces'

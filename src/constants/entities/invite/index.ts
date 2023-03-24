@@ -1,1 +1,1 @@
-export { InviteTargetTypes } from '@src/constants/entities/invite/InviteTargetTypes'
+export { InviteTargetTypes } from './InviteTargetTypes'

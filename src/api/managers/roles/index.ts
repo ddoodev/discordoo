@@ -1,2 +1,2 @@
-export { ApplicationRolesManager } from '@src/api/managers/roles/ApplicationRolesManager'
-export { RoleEditOptions } from '@src/api/managers/roles/RoleEditOptions'
+export { ApplicationRolesManager } from './ApplicationRolesManager'
+export { RoleEditOptions } from './RoleEditOptions'

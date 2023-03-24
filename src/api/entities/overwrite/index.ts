@@ -1,3 +1,3 @@
-export { PermissionOverwrite } from '@src/api/entities/overwrite/PermissionOverwrite'
+export { PermissionOverwrite } from './PermissionOverwrite'
 
 export * from './interfaces'

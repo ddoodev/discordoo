@@ -1,4 +1,4 @@
-export { ShardingManagerInternals } from '@src/sharding/interfaces/manager/ShardingManagerInternals'
-export { ShardingManagerEvents } from '@src/sharding/interfaces/manager/ShardingManagerEvents'
+export { ShardingManagerInternals } from './ShardingManagerInternals'
+export { ShardingManagerEvents } from './ShardingManagerEvents'
 
 export * from './options'
