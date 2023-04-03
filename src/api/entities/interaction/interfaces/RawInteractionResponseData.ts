@@ -1,7 +1,6 @@
-import { InteractionMessageCreateData } from '@src/api/entities/message/interfaces/MessageCreateData'
-import { RawAppCommandOptionData } from '@src/api'
-import { RawModalInteractionResponse } from '@src/api/entities/interaction/interfaces/modal/RawModalInteractionResponse'
+import { RawAppCommandOptionData, RawModalInteractionResponse } from '@src/api'
 import { InteractionResponseTypes } from '@src/constants'
+import { InteractionMessageCreateData } from '@src/api/entities/message/interfaces/MessageCreateData'
 
 export type RawInteractionResponseData = InteractionMessageCreateData | RawAppCommandOptionData[] | RawModalInteractionResponse
 

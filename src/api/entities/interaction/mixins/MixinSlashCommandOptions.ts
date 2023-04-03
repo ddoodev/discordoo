@@ -1,14 +1,11 @@
-import { AppCommandOptionData } from '@src/api'
 import {
   AppCommandBooleanOptionData,
   AppCommandChannelOptionData,
-  AppCommandIntegerOptionData,
-  AppCommandMentionableOptionData,
+  AppCommandIntegerOptionData, AppCommandMentionableOptionData,
   AppCommandNumberOptionData,
-  AppCommandRoleOptionData,
-  AppCommandStringOptionData,
-  AppCommandUserOptionData,
-} from '@src/api/entities/interaction/interfaces/command/common/AppCommandOptionData'
+  AppCommandOptionData, AppCommandRoleOptionData,
+  AppCommandStringOptionData, AppCommandUserOptionData
+} from '@src/api'
 
 export class MixinSlashCommandOptions {
   public options: AppCommandOptionData[] = []

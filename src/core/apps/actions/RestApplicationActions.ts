@@ -112,6 +112,20 @@ export class RestApplicationActions {
       .post({ reason })
   }
 
+  createGlobalCommand(data: RawAppCommandEditData) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.APPLICATION_COMMANDS(this.app.user.id))
+      .body(data)
+      .post<RawAppCommandData>()
+  }
+
+  createGuildCommand(guildId: string, data: RawAppCommandEditData) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.GUILD_COMMANDS(this.app.user.id, guildId))
+      .body(data)
+      .post<RawAppCommandData>()
+  }
+
   createGuildEmoji(guildId: string, data: GuildEmojiData, reason?: string) {
     return this.app.internals.rest.api()
       .url(Endpoints.GUILD_EMOJIS(guildId))
@@ -296,6 +310,12 @@ export class RestApplicationActions {
     return this.app.internals.rest.api()
       .url(Endpoints.INVITE(inviteCode))
       .delete<RawInviteData>({ reason })
+  }
+
+  editGlobalCommands(commands: RawAppCommandEditData[]) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.APPLICATION_COMMANDS(this.app.user.id))
+      .body(commands)
   }
 
   editGuild(guildId: string, data: any /* TODO: GuildData */, reason?: string) {
@@ -521,6 +541,30 @@ export class RestApplicationActions {
       .get()
   }
 
+  getGlobalCommands() {
+    return this.app.internals.rest.api()
+      .url(Endpoints.APPLICATION_COMMANDS(this.app.user.id))
+      .get<RawAppCommandData[]>()
+  }
+
+  getGlobalCommand(commandId: string) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.APPLICATION_COMMAND(this.app.user.id, commandId))
+      .get<RawAppCommandData>()
+  }
+
+  getGuildCommands(guildId: string) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.GUILD_COMMANDS(this.app.user.id, guildId))
+      .get<RawAppCommandData[]>()
+  }
+
+  getGuildCommand(guildId: string, commandId: string) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.GUILD_COMMAND(this.app.user.id, guildId, commandId))
+      .get<RawAppCommandData>()
+  }
+
   getGuildDiscovery(guildId: string) {
     return this.app.internals.rest.api()
       .url(Endpoints.GUILD_DISCOVERY(guildId))
@@ -728,40 +772,5 @@ export class RestApplicationActions {
     return this.app.internals.rest.api()
       .url(Endpoints.CHANNEL_PIN(channelId, messageId))
       .delete({ reason })
-  }
-  createGlobalCommand(data: RawAppCommandEditData) {
-    return this.app.internals.rest.api()
-      .url(Endpoints.APPLICATION_COMMANDS(this.app.user.id))
-      .body(data)
-      .post<RawAppCommandData>()
-  }
-  getGlobalCommands() {
-    return this.app.internals.rest.api()
-      .url(Endpoints.APPLICATION_COMMANDS(this.app.user.id))
-      .get<RawAppCommandData[]>()
-  }
-  getGlobalCommand(commandId: string) {
-    return this.app.internals.rest.api()
-      .url(Endpoints.APPLICATION_COMMAND(this.app.user.id, commandId))
-      .get<RawAppCommandData>()
-  }
-
-  createGuildCommand(guildId: string, data: RawAppCommandEditData) {
-    return this.app.internals.rest.api()
-      .url(Endpoints.GUILD_COMMANDS(this.app.user.id, guildId))
-      .body(data)
-      .post<RawAppCommandData>()
-  }
-
-  getGuildCommands(guildId: string) {
-    return this.app.internals.rest.api()
-      .url(Endpoints.GUILD_COMMANDS(this.app.user.id, guildId))
-      .get<RawAppCommandData[]>()
-  }
-
-  getGuildCommand(guildId: string, commandId: string) {
-    return this.app.internals.rest.api()
-      .url(Endpoints.GUILD_COMMAND(this.app.user.id, guildId, commandId))
-      .get<RawAppCommandData>()
   }
 }

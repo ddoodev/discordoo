@@ -1,5 +1,6 @@
 import { AppCommandOptionTypes, ChannelTypes, DiscordLocale } from '@src/constants'
-import { RawAppCommandOptionsChoiceData } from '@src/api/entities/interaction/interfaces/command/raw/RawAppCommandOptionsChoiceData'
+import { ReplaceType } from '@src/utils'
+import { RawAppCommandOptionsChoiceData } from '@src/api'
 
 export type RawAppCommandOptionData = RawAppCommandStringOptionData
   | RawAppCommandIntegerOptionData
@@ -43,37 +44,18 @@ export interface RawAppCommandStringOptionData extends RawAppCommandAbstractOpti
   max_length?: number
 }
 
-export interface RawAppCommandIntegerOptionData extends RawAppCommandAbstractOptionData {
-  type: AppCommandOptionTypes.Integer
-  /** choices for `Integer` type for the user to pick from, max 25 */
-  choices?: RawAppCommandOptionsChoiceData[]
-  /**
-   * enable autocomplete interactions for this option.
-   * autocomplete may not be set to true if choices are present.
-   * options using autocomplete are not confined to only use choices given by the application.
-   * */
-  autocomplete?: boolean
+export interface RawAppCommandIntegerOptionData extends ReplaceType<
+  Omit<RawAppCommandStringOptionData, 'min_length' | 'max_length'>,
+  'type',
+  AppCommandOptionTypes.Integer
+> {
   /** minimum value user can write */
   min_value?: number
   /** maximum value user can write */
   max_value?: number
 }
 
-export interface RawAppCommandNumberOptionData extends RawAppCommandAbstractOptionData {
-  type: AppCommandOptionTypes.Number
-  /** choices for `Number` type for the user to pick from, max 25 */
-  choices?: RawAppCommandOptionsChoiceData[]
-  /**
-   * enable autocomplete interactions for this option.
-   * autocomplete may not be set to true if choices are present.
-   * options using autocomplete are not confined to only use choices given by the application.
-   * */
-  autocomplete?: boolean
-  /** minimum value user can write */
-  min_value?: number
-  /** maximum value user can write */
-  max_value?: number
-}
+export type RawAppCommandNumberOptionData = ReplaceType<RawAppCommandIntegerOptionData, 'type', AppCommandOptionTypes.Number>
 
 export interface RawAppCommandBooleanOptionData extends RawAppCommandAbstractOptionData {
   type: AppCommandOptionTypes.Boolean

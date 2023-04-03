@@ -1,6 +1,5 @@
-import { RawAppCommandData } from '@src/api/entities/interaction/interfaces/command/raw/RawAppCommandData'
+import { RawAppCommandData, RawAppCommandOptionData } from '@src/api'
 import { AppCommandTypes } from '@src/constants'
-import { RawAppCommandOptionData } from '@src/api/entities/interaction/interfaces/command/raw/RawAppCommandOptionData'
 
 export interface RawSlashCommandData extends RawAppCommandData {
   /** the type of command */

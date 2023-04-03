@@ -13,7 +13,7 @@ import { MessageEmbedFooterData } from '@src/api/entities/embed/interfaces/Messa
 import { resolveColor } from '@src/utils/resolve'
 import { ColorResolvable } from '@src/api/entities/interfaces/ColorResolvable'
 import { RawMessageEmbedData } from '@src/api/entities/embed/interfaces/RawMessageEmbedData'
-import { MessageEmbed } from '@src/api'
+import { MessageEmbed, MessageEmbedBuilderData } from '@src/api'
 
 export class MessageEmbedBuilder {
   public title?: string
@@ -28,16 +28,13 @@ export class MessageEmbedBuilder {
   public video?: MessageEmbedVideoData
   public footer?: MessageEmbedFooterData
 
-  constructor(data?: MessageEmbedData | RawMessageEmbedData | MessageEmbed) {
+  constructor(data?: MessageEmbedData | RawMessageEmbedData | MessageEmbed | MessageEmbedBuilderData) {
     attach(this, data, {
       props: [
         'title',
         'description',
         'url',
         'author',
-        'thumbnail',
-        'image',
-        'video',
         'footer',
       ]
     })
@@ -48,6 +45,36 @@ export class MessageEmbedBuilder {
 
     if (data && WebSocketUtils.exists<ColorResolvable>(data.color)) {
       this.color = resolveColor(data.color)
+    }
+
+    if (data && WebSocketUtils.exists<MessageEmbedImageData | string>(data.image)) {
+      if (typeof data.image !== 'object') {
+        this.image = {
+          url: data.image
+        }
+      } else {
+        this.image = data.image
+      }
+    }
+
+    if (data && WebSocketUtils.exists<MessageEmbedVideoData | string>(data.video)) {
+      if (typeof data.video !== 'object') {
+        this.video = {
+          url: data.video
+        }
+      } else {
+        this.video = data.video
+      }
+    }
+
+    if (data && WebSocketUtils.exists<MessageEmbedThumbnailData | string>(data.thumbnail)) {
+      if (typeof data.thumbnail !== 'object') {
+        this.thumbnail = {
+          url: data.thumbnail
+        }
+      } else {
+        this.thumbnail = data.thumbnail
+      }
     }
 
     this.fields = data?.fields ? this._fixFields(data.fields) : []

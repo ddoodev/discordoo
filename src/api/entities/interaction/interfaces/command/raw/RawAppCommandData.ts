@@ -1,6 +1,5 @@
-import { AppCommandTypes } from '@src/constants'
+import { AppCommandTypes, DiscordLocale } from '@src/constants'
 import { BigBitFieldResolvable, BitFieldResolvable, RawAppCommandOptionData } from '@src/api'
-import { DiscordLocale } from '@src/constants/common/DiscordLocale'
 
 export interface RawAppCommandData {
   /** unique id of the command */
@@ -30,4 +29,6 @@ export interface RawAppCommandData {
    * by default, commands are visible.
    */
   dm_permission?: boolean
+  /** indicates whether the command is age-restricted, defaults to false */
+  nsfw?: boolean
 }

@@ -8,6 +8,7 @@ import { SlashCommandBuilder } from '@src/api/entities/interaction/SlashCommandB
 import { DiscordooError, resolveGuildId } from '@src/utils'
 import { AppCommand } from '@src/api/entities/interaction/AppCommand'
 import { Keyspaces } from '@src/constants'
+import { AnyAppCommand } from '../../entities'
 
 export class ApplicationInteractionsSlashCommandManager extends EntitiesManager {
   public cache: EntitiesCacheManager<AppCommand>
@@ -44,12 +45,33 @@ export class ApplicationInteractionsSlashCommandManager extends EntitiesManager 
   }
 
   create(
-    data: SlashCommandBuilder
-      | RawGuildAppCommandEditData
-      | RawAppCommandEditData
-      | GuildAppCommandEditData
-      | AppCommandEditData
+    data: AnyAppCommand
   ) {
     return 'guild' in data ? this.createGuild(data) : this.createGlobal(data)
+  }
+
+  async editManyGlobal(commands: Array<SlashCommandBuilder | RawAppCommandEditData | AppCommandEditData>) {
+    const data = commands.map(c => new SlashCommandBuilder(c).toJSON())
+
+    //const response = await this.app.internals.actions.com
+  }
+
+  async editMany(
+    data: AnyAppCommand[]
+  ) {
+    const [ guild, glob ] = data.reduce((acc, curr) => {
+      'guild' in curr ? acc[0].push(curr) : acc[1].push(curr)
+      return acc
+    }, [ [] as AnyAppCommand[], [] as AnyAppCommand[] ])
+
+    if (glob.length && !guild.length) return this.editManyGlobal(glob)
+    //if (!glob.length && guild.length) return this.editManyGuild(guild)
+
+    const globResult = await this.editManyGlobal(glob)
+    //const guildResult = await this.editManyGuild(guild)
+
+    return [
+      //...globResult, ...guildResult
+    ]
   }
 }

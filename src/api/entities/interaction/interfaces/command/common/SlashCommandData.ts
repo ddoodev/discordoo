@@ -1,6 +1,5 @@
-import { AppCommandData } from '@src/api/entities/interaction/interfaces/command/common/AppCommandData'
 import { AppCommandTypes } from '@src/constants'
-import { AppCommandOptionData } from '@src/api/entities/interaction/interfaces/command/common/AppCommandOptionData'
+import { AppCommandData, AppCommandOptionData } from '@src/api'
 
 export interface SlashCommandData extends AppCommandData {
   /** the type of command */

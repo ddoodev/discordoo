@@ -1,4 +1,5 @@
 export { MessageEmbedProviderData } from './MessageEmbedProviderData'
+export { MessageEmbedBuilderData } from './MessageEmbedBuilderData'
 export { MessageEmbedFooterData } from './MessageEmbedFooterData'
 export { MessageEmbedResolvable } from './MessageEmbedResolvable'
 export { MessageEmbedAuthorData } from './MessageEmbedAuthorData'

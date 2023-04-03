@@ -1,13 +1,10 @@
 import {
-  AppCommandData, AppCommandOptionChoiceData, BigBitFieldResolvable,
-  Json, RawAppCommandData, RawAppCommandOptionData,
-  ReadonlyPermissions, ToJsonProperties
+  AppCommandData, AppCommandOption, BigBitFieldResolvable,
+  Json, RawAppCommandData, ReadonlyPermissions, ToJsonProperties
 } from '@src/api'
-import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 import { attach } from '@src/utils'
-import { AppCommandOptionTypes, AppCommandTypes } from '@src/constants'
+import { AppCommandTypes } from '@src/constants'
 import { DiscordLocale } from '@src/constants/common/DiscordLocale'
-import { AppCommandOptionWithSubcommandsData } from '@src/api/entities/interaction/interfaces/command/common/AppCommandOptionData'
 import { AppCommandEntityInitOptions } from '@src/api/entities/interaction/interfaces/command/AppCommandEntityInitOptions'
 import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 
@@ -24,6 +21,7 @@ export class AppCommand extends AbstractEntity {
   public options: AppCommandOption[] = []
   declare defaultMemberPermissions?: ReadonlyPermissions
   declare dmPermission?: boolean
+  declare nsfw?: boolean
 
   async init(data: AppCommandData | RawAppCommandData, options?: AppCommandEntityInitOptions): Promise<this> {
     attach(this, data, {
@@ -38,6 +36,7 @@ export class AppCommand extends AbstractEntity {
         'type',
         [ 'guildId', 'guild_id' ],
         [ 'dmPermission', 'dm_permission' ],
+        'nsfw',
       ],
       disabled: options?.ignore,
       enabled: [ 'id', 'applicationId', 'type', 'guildId' ]
@@ -80,54 +79,5 @@ export class AppCommand extends AbstractEntity {
       defaultMemberPermissions: true,
       dmPermission: true,
     }, obj)
-  }
-}
-
-export class AppCommandOption {
-  declare name: string
-  declare nameLocalizations?: Record<DiscordLocale, string>
-  declare description: string
-  declare descriptionLocalizations?: Record<DiscordLocale, string>
-  declare choices?: AppCommandOptionChoiceData[]
-  declare options?: AppCommandOption[]
-  declare required: boolean
-  declare value:
-      (this['type'] extends AppCommandOptionTypes.String ? string : number)
-    | (this['required'] extends true ? never : undefined)
-  declare type: AppCommandOptionTypes
-
-  constructor(data: AppCommandOptionWithSubcommandsData | RawAppCommandOptionData, options?: EntityInitOptions) {
-    attach(this, data, {
-      props: [
-        'name',
-        [ 'nameLocalizations', 'name_localizations' ],
-        'description',
-        [ 'descriptionLocalizations', 'description_localizations' ],
-        'required',
-        'value',
-        'type',
-      ],
-      disabled: options?.ignore,
-      enabled: [ 'name', 'type' ]
-    })
-
-    if ('choices' in data && data.choices) {
-      this.choices = data.choices.map(choice => ({
-        name: choice.name,
-        value: choice.value,
-        nameLocalizations: choice.nameLocalizations ?? choice.name_localizations
-      }))
-    }
-
-    if ('options' in data && data.options) {
-      this.options = data.options.map(option => new AppCommandOption(option, options))
-    }
-
-    return this
-  }
-
-  toJson(): AppCommandOptionWithSubcommandsData {
-    // @ts-ignore
-    return { ...this }
   }
 }

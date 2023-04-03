@@ -1,6 +1,5 @@
 import { AppCommandOptionData, BigBitFieldResolvable } from '@src/api'
-import { DiscordLocale } from '@src/constants/common/DiscordLocale'
-import { AppCommandTypes } from '@src/constants'
+import { AppCommandTypes, DiscordLocale } from '@src/constants'
 
 export interface AppCommandEditData {
   /** 1-32 character name */

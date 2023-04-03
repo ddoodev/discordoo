@@ -1,3 +1,4 @@
+export * from './modal'
 export * from './command'
 
 export * from './InteractionData'

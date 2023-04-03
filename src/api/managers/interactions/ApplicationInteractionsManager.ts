@@ -5,6 +5,7 @@ import { InteractionMessageCreateOptions } from '@src/api/entities/message/inter
 import { createMessagePayload } from '@src/utils'
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
 import { InteractionResponseTypes } from '@src/constants'
+
 export class ApplicationInteractionsManager extends EntitiesManager {
   public commands: ApplicationInteractionsSlashCommandManager
 

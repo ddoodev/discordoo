@@ -1,3 +1,3 @@
 export type ColorResolvable =
-  'BLACK' | 'WHITE' | 'OLD_BLURPLE' | 'BLURPLE' | 'GREEN' | 'YELLOW' | 'PURPLE' | 'RED' | 'DEFAULT' | 'RANDOM'
+  'Black' | 'White' | 'OldBlurple' | 'Blurple' | 'Green' | 'Yellow' | 'Purple' | 'Red' | 'Default' | 'Random'
   | string | number | [ number, number, number ]

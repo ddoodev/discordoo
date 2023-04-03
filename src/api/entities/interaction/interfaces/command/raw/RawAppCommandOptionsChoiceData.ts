@@ -1,4 +1,4 @@
-import { DiscordLocale } from '@src/constants/common/DiscordLocale'
+import { DiscordLocale } from '@src/constants'
 
 export interface RawAppCommandOptionsChoiceData {
   /** 1-100 character choice name */

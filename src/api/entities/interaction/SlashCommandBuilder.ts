@@ -17,7 +17,7 @@ export class SlashCommandBuilder {
   declare name: string
   /** localization dictionary for `name` field. Values follow the same restrictions as name */
   public nameLocalizations?: Record<DiscordLocale, string>
-  /** 1-100 character description for `ChatInput` commands, empty string for `User` and `MESSAGE` commands */
+  /** 1-100 character description for `ChatInput` commands, empty string for `User` and `Message` commands */
   declare description: string
   /** localization dictionary for `description` field. Values follow the same restrictions as description */
   public descriptionLocalizations?: Record<DiscordLocale, string>

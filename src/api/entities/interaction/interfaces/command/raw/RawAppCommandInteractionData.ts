@@ -1,7 +1,5 @@
 import { AppCommandTypes } from '@src/constants'
-import { RawInteractionResolvedData } from '@src/api/entities/interaction/interfaces/RawInteractionResolvedData'
-import { AppCommandInteractionOptionPayload }
-  from '@src/api/entities/interaction/interfaces/command/AppCommandInteractionOptionPayload'
+import { AppCommandInteractionOptionPayload, RawInteractionResolvedData } from '@src/api'
 
 export interface RawAppCommandInteractionData {
   /** the ID of the invoked command */
