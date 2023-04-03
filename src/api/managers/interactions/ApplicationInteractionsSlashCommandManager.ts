@@ -53,7 +53,7 @@ export class ApplicationInteractionsSlashCommandManager extends EntitiesManager 
   async editManyGlobal(commands: Array<SlashCommandBuilder | RawAppCommandEditData | AppCommandEditData>) {
     const data = commands.map(c => new SlashCommandBuilder(c).toJSON())
 
-    //const response = await this.app.internals.actions.com
+    // const response = await this.app.internals.actions.com
   }
 
   async editMany(
@@ -65,13 +65,13 @@ export class ApplicationInteractionsSlashCommandManager extends EntitiesManager 
     }, [ [] as AnyAppCommand[], [] as AnyAppCommand[] ])
 
     if (glob.length && !guild.length) return this.editManyGlobal(glob)
-    //if (!glob.length && guild.length) return this.editManyGuild(guild)
+    // if (!glob.length && guild.length) return this.editManyGuild(guild)
 
     const globResult = await this.editManyGlobal(glob)
-    //const guildResult = await this.editManyGuild(guild)
+    // const guildResult = await this.editManyGuild(guild)
 
     return [
-      //...globResult, ...guildResult
+      // ...globResult, ...guildResult
     ]
   }
 }
