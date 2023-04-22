@@ -2,9 +2,6 @@
 name: Docgen
 
 on:
-  push:
-    branches:
-      - develop
   workflow_dispatch:
 
 jobs:
