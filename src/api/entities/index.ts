@@ -1,8 +1,10 @@
 export { EntityKeyFunctions } from './EntityKeyFunctions'
-// DO NOT export: { ExtendableEntities } from './ExtendableEntities'. BREAKS RUNTIME.
+// @ddoocs force-export DO NOT EXPORT IN PRODUCTION. BREAKS RUNTIME.
+// export { ExtendableEntities } from './ExtendableEntities'
 export { AbstractEntity } from './AbstractEntity'
 export { EntitiesUtil } from './EntitiesUtil'
-// DO NOT export: { Entities } from './Entities'. BREAKS RUNTIME.
+// @ddoocs force-export DO NOT EXPORT IN PRODUCTION. BREAKS RUNTIME.
+// export { Entities } from './Entities'
 
 export * from './interaction'
 export * from './interfaces'
