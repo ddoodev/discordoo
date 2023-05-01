@@ -36,198 +36,13 @@
 **THIS LIBRARY IS UNDER DEVELOPMENT!** Parts of the stuff described here is not done yet, and we are just planning to implement it.
 You can find out more information about the development in our [Discord](https://ddoo.dev/).
 
-## About
-[Discordoo](https://ddoo.dev/) is a [Discord API](https://discord.com/developers/docs/intro) library interface. 
-It was built from ground-up to provide better and faster APIs, both internal and external, than existing [Node.js](https://nodejs.org/) libraries offer.
+## Philosophy
+At Discordoo, we rethought the concept of a Discord bot and came to the conclusion that a Discord bot does not differ much from an HTTP REST backend in its essence. The key similarity between a backend and a Discord bot is that both respond to requests. The difference is that a backend responds to HTTP requests, while a Discord bot responds to Discord gateway events or even Discord's HTTP requests via Discord's HTTP API. Therefore, we took and brought familiar concepts from backends to the library for Discord like dependency injection, providers, controllers, etc.
 
-## Features
-### Scalable. Too much
-Using providers system, you can change the behavior of the library in ways you never imagined before.
+While there are already projects like [Necord](https://github.com/necordjs/necord), they use libraries created long ago like discord.js and eris under the hood, which due to problems with architecture cannot offer the same as us. Also, such projects are mostly based on NestJS, which is just not designed for such things. We decided to fix it all.
 
-#### Let's imagine that you have Infinity guilds, and you need to save the resources of your hosting servers as much as possible, and also not have a minute of downtime.
-To do this, you need to distribute the bot to a bunch of hosting servers, 
-separate the gateway and the executable part of the bot, 
-and also somehow link the library cache to the executable part of the bot, while you need to comply with the GRL/IRL.
-
-#### How to do this? 
-It's simple, with Discordoo you can do it using less than 100 lines of code without even rewriting the existing codebase.
-1. **You need to connect a gateway provider** that sends events to some messages broker on servers that should receive messages from gateway, and also connect the same gateway provider on servers that should receive messages (executable part). (such a provider should be written by someone else, or you should write it by yourself)
-2. **Then you need to connect the cache provider**, which stores the cache in some scalable cache storage, such as redis. (such a provider should be written by someone else, or you should write it by yourself)
-3. **Then you need to configure the sharding** so that the machines or node.js instances that have the same IP address 
-were connected through our inter-machines sharding managers. (inter-machines sharding manager will be introduced in version 1.0, but you can ignore this point if you have one node.js instance each for one IP address.)
-4. **That is all.** Imagine, in order to expand infinitely and have almost zero downtime, you need to rewrite a hundred lines of code, 80 of which are just configs.
-
-#### Or if you just want to distribute the bot to multiple hosting servers:
-Just use inter-machines sharding manager:
-
-**THIS WILL BE INTRODUCED IN VERSION 1.0 AND THE API MAY CHANGE.**
-```ts
-// index.ts on 10.0.21.3 (this functional planned in 1.0)
-import { MachinesShardingManager, ShardingModes, MachinesShardingManagerTypes } from 'discordoo'
-
-const manager = new MachinesShardingManager({
-  type: MachinesShardingManagerTypes.INFERIOR,
-  file: './dist/bot.js',
-  listen: {
-    host: '0.0.0.0',
-    port: 8379,
-    user: 'root',
-    password: 'hf4reg74c3g',
-    path: 'server'
-  },
-  tls: {
-    cert: './fullchain.pem',
-    key: './privkey.pem'
-  }
-})
-
-manager.start()
-```
-```ts
-// index.ts on 10.0.21.0
-import { MachinesShardingManager, ShardingModes } from 'discordoo'
-
-const manager = new MachinesShardingManager({
-  type: MachinesShardingManagerTypes.SUPERIOR,
-  points: [
-    {
-      destination: 'ddoo+quic://root:hf4reg74c3g@10.0.21.3:8379/server?o=235',
-      options: {
-        shards: { from: 0, to: 127 },
-        mode: ShardingModes.PROCESSES,
-        shardsPerInstance: 4,
-      },
-      tls: {
-        cert: './10.0.21.3-fullchain.pem',
-      }
-    }
-  ]
-})
-
-manager.start()
-```
-That's it. There is no need to rewrite anything other than changing sharding managers.
-
-### Fast
-Why write inefficient code? We don't do that. Tests are coming soon.
-
-### Flexible caching
-Optimize RAM consumption the way you need it.
-
-#### Caching policies
-For example, just disable the unnecessary cache.
-
-```ts
-import { DiscordFactory, ChannelsCachingPolicy } from 'discordoo'
-
-DiscordFactory.create('my-token', {
-    cache: {
-      channels: {
-        policies: [ ChannelsCachingPolicy.Dm ]
-      }
-    }
-})
-```
-
-#### Removing unnecessary properties
-You know that RAM is spent on storing properties, right? 
-Redefine the entities in which you want to delete some properties.
-Don't worry, you won't be able accidentally break the library this way. We took care of it.
-
-```ts
-import { EntitiesUtil, DirectMessagesChannel, createApp } from 'discordoo'
-import { DiscordFactory } from './DiscordFactory'
-
-// you can do it like this:
-class ExtendedDirectMessagesChannel extends DirectMessagesChannel {
-  init(data, options) { // must return Promise<this>
-    return super.init(data, {
-      ...options,
-      ignore: [
-        // do not store 'lastPinTimestamp' property
-        'lastPinTimestamp',
-        // will not work. library uses 'id' property, so you can't delete it
-        'id'
-      ] // or just [ IgnoreAllSymbol ] to not store anything (import it)
-    }) // super.init(data) always is mandatory
-  }
-}
-
-EntitiesUtil.extend('DirectMessagesChannel', ExtendedDirectMessagesChannel)
-
-// or you can do it like this:
-DiscordFactory.create('my-token', {
-    extenders: [
-      { entity: 'DirectMessagesChannel', extender: ExtendedDirectMessagesChannel },
-    ]
-})
-```
-
-### Safe
-for everyone. From bots with 100 servers, to bots with 10,000,000 servers.
-#### Global Rate Limit (GRL) sync
-When your bot gets big, it starts to run into global rate limits, so you have to carefully monitor them. Therefore, we made synchronization of this limit between shards.
-#### Invalid Request limit (IRL) sync
-Sometimes this happens, the bot starts making a lot of invalid requests. If not stop this, discord will block the bot entirely for 1 hour. Therefore, we monitor incorrect requests, and when the limit is almost exhausted, we stop all requests for the time remaining until the limit is reset (max 10 minutes), so that the bot is not blocked for an hour.
-#### Restriction of emitted events
-It happens that discord sends two or three times more events in a few seconds than usual. This may trigger blocking due to GRL or IRL. Therefore, we have made a progressive system to limit the emitted events. We count how many events have been received up to the current moment, and how many have already been emitted now. If the number of emitted events does not match the specified multiplier, the extra events are sent to the queue and will be emitted later. (PLANNED IN VERSION 1.3)
-
-### Know what's going on
-#### Average Rest delay
-(PLANNED IN VERSION 1.0)
-We consider the average delay (TTFB) in executing Rest requests. (the implementation may differ if you use a third-party provider)
-#### Average Gateway latency
-Like all other libraries, information about the WebSocket latency is available. (the implementation may differ if you use a third-party provider)
-#### Number of events received/emitted per second
-(PLANNED IN VERSION 1.3)
-You can track how many events have arrived and how many have been emitted. (the implementation does not depend on provider)
-#### Number of ipc messages per second
-(THIS IS NOT PLANNED, BUT MAY BE INTRODUCED IN VERSION 1.2)
-The number of messages sent received via IPC, per second
-#### These statistics are available from the sharing manager
-Why not.
-
-### Enterprise code level
-#### Good TypeScript support
-The library written in TypeScript, so we naturally support integration with TypeScript well
-#### Decorators, injections, observables, and more
-Just a few examples:
-(the API may change, waifoo is under development)
-```ts
-@Service(createDiscordooClient())
-@EventListener()
-class App {
-  constructor(@Logger private _logger: Logger) {}
-
-  @On('ready')
-  ready(context: ReadyEventContext) {
-    this._logger.log(`DiscordApplication logged in as ${context.app.user.tag}!`)
-  }
-}
-
-createApp(App).start()
-```
-```ts
-reactions({ message, /* author, */ time: 5000 })
-  .subscribe((reaction, observer) => {
-    if (something) observer.skip()
-    else if (another) observer.stop()
-  })
-  .end(results => {
-    console.log(results) // some reactions received
-  })
-```
-### Tested
-Code tested with [N|Solid](https://nodesource.com/products/nsolid).
-
-## Let's start
-Node.js v12.18 or newer required.
-(there was a guide here, but we're in the process of rewriting, so it's empty for now)
-
-## Benchmarks
-While the library is under development, only Discordoo Collection Benchmarks are available.
-### Discord.js collection VS Discordoo collection
-You can find these benchmarks [here](https://github.com/ddoodev/collection#djs-collection-vs-ddoo-collection-speed-tests).
+## Getting Started
+Process to [installation guide](https://docs.ddoo.dev/guide/overview/install) or [API reference](https://docs.ddoo.dev/ref).
 
 ## Planned features
 * **Waifoo** — a framework for creating discord bots based on Discordoo (commands, other features).
@@ -238,12 +53,7 @@ You can find these benchmarks [here](https://github.com/ddoodev/collection#djs-c
 ## Release milestone
 A complete description of everything that must be in Discordoo to be released
 
-Release deadline: When it's ready. 
-I'm tired of trying to cram an unrealistic amount of work into a couple of days and make commits with 1000 lines at once.
-You can blame me for that, I understand this. Sorry.
-
-*please read this*
-![image](https://user-images.githubusercontent.com/44965055/147416937-d10a141c-665c-4321-84d5-256979862ddf.png)
+Release deadline: When it's ready.
 
 ### Sharding
 * [x] Implement sharding
@@ -259,14 +69,14 @@ You can blame me for that, I understand this. Sorry.
   * [x] Shards must be able to send errors to ShardingManager, manager must handle these errors 
 * [x] User-land APIs
   * [x] User must be able to spawn shards
-  * [ ] User must be able to restart specified shard(s)
-  * [ ] User must be able to destroy shard(s)
+  * [x] User must be able to restart specified shard(s)
+  * [x] User must be able to destroy shard(s)
   * [ ] User must be able to get shard(s) statistics
     * [ ] v8 statistics
     * [ ] custom statistics
     * [ ] events per gateway shard per second
     * [ ] common statistics (guilds in cache, users in cache, channels in cache, etc.)
-  * [ ] User-friendly sharding APIs in sharding instances
+  * [x] User-friendly sharding APIs in sharding instances
   
 ### Gateway
 * [x] Implement gateway
@@ -320,7 +130,7 @@ SID - still in development
 ### Entities (discord structures)
 * [x] Must be extendable
 * [x] Anti monkey-patch defence
-* [ ] Implement Guilds
+* [x] Implement Guilds (SID)
 * [x] Implement Messages
 * [x] Implement Channels (SID)
 * [x] Implement Members
@@ -330,6 +140,7 @@ SID - still in development
 * [x] Implement Presences
 * [x] Implement Reactions
 * [x] Implement Users
+* [ ] Implement Interactions (SID)
 
 ### User-land APIs
 * [x] Collection
