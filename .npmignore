@@ -26,7 +26,6 @@ discordoo.json
 docs.md
 jest.config.js
 typedoc.js
-tsconfig.json
 tsconfig.publish.json
 
 # Library about files
