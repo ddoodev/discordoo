@@ -1,4 +1,4 @@
-import { EntitiesCacheManager, Message, MessageEmbedBuilder, MessageResolvable } from '@src/api'
+import { EntitiesCacheManager, Message, MessageEditOptions, MessageEmbedBuilder, MessageResolvable } from '@src/api'
 import { DiscordApplication, DiscordRestApplication } from '@src/core'
 import { ChannelResolvable } from '@src/api/entities/channel/interfaces/ChannelResolvable'
 import { MessageContent } from '@src/api/entities/message/interfaces/MessageContent'
@@ -234,6 +234,27 @@ export class ApplicationMessagesManager extends EntitiesManager {
     } else {
       return this.deleteOne(channel, messages, options as string)
     }
+  }
+
+  async edit(
+    channel: ChannelResolvable, message: MessageResolvable, content: MessageContent = '', options: MessageEditOptions = {}
+  ): Promise<Message | undefined> {
+    const channelId = resolveChannelId(channel),
+      messageId = resolveMessageId(message)
+
+    if (!channelId) throw new DiscordooError('ApplicationMessagesManager#editOne', 'Cannot edit message without channel id.')
+    if (!messageId) throw new DiscordooError('ApplicationMessagesManager#editOne', 'Cannot edit message without message id.')
+
+    const payload = await createMessagePayload(content, options)
+
+    const response = await this.app.internals.actions.editMessage(channelId, messageId, payload)
+    const Message = EntitiesUtil.get('Message')
+
+    if (response.success) {
+      return await new Message(this.app).init(response.result)
+    }
+
+    return undefined
   }
 
 }

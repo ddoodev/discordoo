@@ -2,7 +2,7 @@ import {
   EntitiesCacheManager,
   Message,
   MessageContent,
-  MessageCreateOptions,
+  MessageCreateOptions, MessageResolvable,
   MessagesManagerData
 } from '@src/api'
 import { ChannelPinnedMessagesManager } from '@src/api/managers/messages/ChannelPinnedMessagesManager'
@@ -41,6 +41,10 @@ export abstract class AbstractMessagesManager extends EntitiesManager {
 
   create(content: MessageContent, options?: MessageCreateOptions): Promise<Message | undefined> {
     return this.app.messages.create(this.channelId, content, options)
+  }
+
+  edit(message: MessageResolvable, content: MessageContent): Promise<Message | undefined> {
+    return this.app.messages.edit(this.channelId, message, content)
   }
 
   async last(): Promise<Message | undefined> {

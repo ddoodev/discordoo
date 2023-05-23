@@ -4,10 +4,14 @@ import { Json } from '@src/api/entities/interfaces/Json'
 import {
   Guild,
   GuildMember,
-  MessageAttachment, MessageContent, MessageCreateOptions,
+  MessageAttachment,
+  MessageContent,
+  MessageCreateOptions,
   MessageData,
-  MessageEmbed, RawMessageAttachmentData,
-  RawMessageData, RawMessageEmbedData,
+  MessageEmbed,
+  RawMessageAttachmentData,
+  RawMessageData,
+  RawMessageEmbedData,
   ReadonlyMessageFlagsUtil,
   User
 } from '@src/api'
@@ -148,6 +152,10 @@ export class Message extends AbstractEntity {
     }
 
     return undefined
+  }
+
+  async edit(content: MessageContent, options?: MessageCreateOptions): Promise<Message | undefined> {
+    return await this.app.messages.edit(this.channelId, this.id, content, options)
   }
 
   get createdDate(): Date {

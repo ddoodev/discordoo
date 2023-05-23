@@ -15,7 +15,7 @@ import {
   RawStickerData,
   RawStickerEditData,
   RawStickerPackData, RawThreadChannelCreateData, RawThreadChannelEditData,
-  RawThreadChannelWithMessageCreateData, RawUserData, RawGuildAppCommandEditData
+  RawThreadChannelWithMessageCreateData, RawUserData, RawGuildAppCommandEditData, MessageEditData
 } from '@src/api'
 import { Endpoints } from '@src/constants'
 import { DiscordRestApplication } from '@src/core'
@@ -329,6 +329,13 @@ export class RestApplicationActions {
       .url(Endpoints.APPLICATION_COMMAND(this.app.user.id, commandId))
       .body(data)
       .patch<RawAppCommandData>()
+  }
+
+  editMessage(channelId: string, messageId: string, data: MessageEditData, reason?: string) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.CHANNEL_MESSAGE(channelId, messageId))
+      .body(data)
+      .patch<RawMessageData>({ reason })
   }
 
   editGuild(guildId: string, data: any /* TODO: GuildData */, reason?: string) {
