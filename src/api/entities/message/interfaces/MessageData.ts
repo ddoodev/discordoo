@@ -1,6 +1,6 @@
 import {
   BitFieldResolvable,
-  GuildMemberData, MessageAttachmentResolvable, MessageEmbedResolvable,
+  GuildMemberData, MessageAttachmentResolvable, MessageComponentResolvable, MessageEmbedResolvable, MessageInteractionResolvable,
   RoleResolvable,
   UserData
 } from '@src/api'
@@ -35,8 +35,8 @@ export interface MessageData {
   // TODO messageReference: MessageReferenceData
   flags: BitFieldResolvable
   referencedMessageId?: string
-  // TODO interaction: MessageInteractionData
+  interaction: MessageInteractionResolvable
   // TODO thread: ThreadChannelData
-  // TODO components: MessageComponentData[]
+  components: MessageComponentResolvable[]
   // TODO sticker_items: MessageStickerItemData[]
 }

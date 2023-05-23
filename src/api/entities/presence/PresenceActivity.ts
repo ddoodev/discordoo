@@ -74,8 +74,8 @@ export class PresenceActivity extends AbstractEntity {
     return this.createdTimestamp ? new Date(this.createdTimestamp) : undefined
   }
 
-  toJson(properties: ToJsonProperties = {}, obj?: any): Json {
-    return super.toJson({
+  jsonify(properties: ToJsonProperties = {}, obj?: any): Json {
+    return super.jsonify({
       ...properties,
       applicationId: true,
       assets: true,

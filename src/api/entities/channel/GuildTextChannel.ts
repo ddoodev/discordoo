@@ -27,8 +27,8 @@ export class GuildTextChannel extends AbstractGuildTextChannel {
     return this.edit({ rateLimitPerUser: limit }, reason)
   }
 
-  toJson(properties: ToJsonProperties = {}, obj?: any): Json {
-    return super.toJson({
+  jsonify(properties: ToJsonProperties = {}, obj?: any): Json {
+    return super.jsonify({
       ...properties,
       rateLimitPerUser: true,
     }, obj)

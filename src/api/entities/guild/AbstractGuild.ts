@@ -66,8 +66,8 @@ export abstract class AbstractGuild extends AbstractEntity implements AbstractGu
     return this.name
   }
 
-  toJson(properties: ToJsonProperties = {}, obj?: any): Json {
-    return super.toJson({
+  jsonify(properties: ToJsonProperties = {}, obj?: any): Json {
+    return super.jsonify({
       ...properties,
       features: true,
       icon: true,

@@ -166,8 +166,8 @@ export class Sticker extends AbstractEntity {
     return this.edit({ tags, name: this.name }, options)
   }
 
-  toJson(properties: ToJsonProperties, obj?: any): Json {
-    return super.toJson({
+  jsonify(properties: ToJsonProperties, obj?: any): Json {
+    return super.jsonify({
       ...properties,
       available: true,
       description: true,

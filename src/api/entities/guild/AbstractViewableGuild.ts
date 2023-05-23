@@ -41,8 +41,8 @@ export abstract class AbstractViewableGuild extends AbstractGuild implements Vie
     return this.splash ? this.app.internals.rest.cdn.splash(this.id, this.splash, options) : undefined
   }
 
-  toJson(properties: ToJsonProperties = {}, obj?: any): Json {
-    return super.toJson({
+  jsonify(properties: ToJsonProperties = {}, obj?: any): Json {
+    return super.jsonify({
       ...properties,
       banner: true,
       description: true,

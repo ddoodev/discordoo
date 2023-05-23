@@ -1,4 +1,6 @@
 import {
+  resolveActionRowToRaw,
+  resolveComponentToRaw,
   resolveEmbedToRaw,
   resolveFile,
   resolveFiles,
@@ -110,7 +112,9 @@ export async function createMessagePayload<Interaction extends boolean = false>(
   }
 
   // TODO: allowed mentions
-  // TODO: components
+
+  if (options.component) payload.components.push(resolveActionRowToRaw(options.component))
+  if (options.components?.length) payload.components.push(...options.components.map(resolveActionRowToRaw))
 
   if (options.embed) payload.embeds.push(resolveEmbedToRaw(options.embed))
   if (options.embeds?.length) payload.embeds.push(...options.embeds.map(resolveEmbedToRaw))

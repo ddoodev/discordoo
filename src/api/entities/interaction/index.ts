@@ -1,7 +1,7 @@
-export * from './interfaces'
-
-export * from './AppCommand'
 export { AppCommandOption } from './AppCommandOption'
-export * from './AppCommandInteraction'
-export * from './Interaction'
-export * from './SlashCommandBuilder'
+export { AppCommand } from './AppCommand'
+
+export * from './interactions'
+export * from './interfaces'
+export * from './builders'
+export * from './mixins'

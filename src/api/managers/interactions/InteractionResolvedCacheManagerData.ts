@@ -1,3 +1,3 @@
-import { RawInteractionResolvedData } from '@src/api/entities/interaction/interfaces/RawInteractionResolvedData'
+import { RawInteractionResolvedData } from '@src/api'
 
 export type InteractionResolvedCacheManagerData = { guildId?: string; channelId?: string } & RawInteractionResolvedData

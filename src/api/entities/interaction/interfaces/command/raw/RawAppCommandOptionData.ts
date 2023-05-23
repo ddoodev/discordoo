@@ -1,6 +1,6 @@
 import { AppCommandOptionTypes, ChannelTypes, DiscordLocale } from '@src/constants'
 import { ReplaceType } from '@src/utils'
-import { RawAppCommandOptionsChoiceData } from '@src/api'
+import { RawAppCommandOptionChoiceData } from '@src/api'
 
 export type RawAppCommandOptionData = RawAppCommandStringOptionData
   | RawAppCommandIntegerOptionData
@@ -10,6 +10,10 @@ export type RawAppCommandOptionData = RawAppCommandStringOptionData
   | RawAppCommandChannelOptionData
   | RawAppCommandRoleOptionData
   | RawAppCommandMentionableOptionData
+
+export type RawAppCommandOptionWithSubcommandsData = RawAppCommandOptionData
+  | RawAppCommandSubcommandOptionData
+  | RawAppCommandSubcommandGroupOptionData
 
 export interface RawAppCommandAbstractOptionData {
   /** 1-32 character name */
@@ -27,11 +31,24 @@ export interface RawAppCommandAbstractOptionData {
   required?: boolean
 }
 
+export interface RawAppCommandSubcommandOptionData extends Omit<RawAppCommandAbstractOptionData, 'required'> {
+  /** the type of option: subcommand */
+  type: AppCommandOptionTypes.Subcommand
+  /** parameters for the subcommand, max of 25 */
+  options?: RawAppCommandOptionData[]
+}
+
+export interface RawAppCommandSubcommandGroupOptionData extends Omit<RawAppCommandAbstractOptionData, 'required'> {
+  /** the type of option: subcommand group */
+  type: AppCommandOptionTypes.SubcommandGroup
+  options: RawAppCommandSubcommandOptionData[]
+}
+
 export interface RawAppCommandStringOptionData extends RawAppCommandAbstractOptionData {
-  /** the type of option: string */
+  /** the type of option */
   type: AppCommandOptionTypes.String
-  /** choices for `String` type for the user to pick from, max 25 */
-  choices?: RawAppCommandOptionsChoiceData[]
+  /** choices for the user to pick from, max 25 */
+  choices?: RawAppCommandOptionChoiceData[]
   /**
    * enable autocomplete interactions for this option.
    * autocomplete may not be set to true if choices are present.

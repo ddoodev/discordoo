@@ -63,7 +63,7 @@ import {
   CachePointer,
 } from '@src/cache/interfaces'
 import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
-import { toJson } from '@src/utils/toJson'
+import { jsonify } from '@src/utils/jsonify'
 import { isCachePointer } from '@src/utils/cachePointer'
 import { AnyDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
 
@@ -876,7 +876,7 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
 
   private async _prepareData(direction: 'in' | 'out', data: any, entityKey: EntityKey, forIpcRequest?: boolean): Promise<any> {
 
-    if (forIpcRequest) return toJson(data)
+    if (forIpcRequest) return jsonify(data)
 
     if (direction === 'in') {
       const pointer = isCachePointer(data)
@@ -885,11 +885,11 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
         switch (this.provider.compatible) {
           case 'classes':
           case 'json':
-            return toJson(data)
+            return jsonify(data)
           case 'text':
-            return toJson(data, true)
+            return jsonify(data, true)
           case 'buffer':
-            return Buffer.from(toJson(data, true))
+            return Buffer.from(jsonify(data, true))
         }
       }
 
@@ -900,13 +900,13 @@ export class CacheManager<P extends CacheProvider = CacheProvider> {
           if (!(data instanceof Entity)) data = await new Entity(this.app).init?.(data)
           break
         case 'json':
-          data = toJson(data)
+          data = jsonify(data)
           break
         case 'text':
-          data = toJson(data, true)
+          data = jsonify(data, true)
           break
         case 'buffer':
-          data = Buffer.from(toJson(data, true))
+          data = Buffer.from(jsonify(data, true))
           break
       }
 

@@ -29,8 +29,8 @@ export class GuildPreviewEmoji extends AbstractEmoji implements AbstractGuildEmo
     return this
   }
 
-  toJson(properties: ToJsonProperties, obj?: any): Json {
-    return super.toJson({
+  jsonify(properties: ToJsonProperties, obj?: any): Json {
+    return super.jsonify({
       ...properties,
       available: true,
       guildId: true,

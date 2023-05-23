@@ -27,7 +27,7 @@ import {
 import { IpcServerEvents } from '@src/sharding/interfaces/ipc/IpcServerEvents'
 import { GuildMemberData } from '@src/api'
 import { RawGuildMembersFetchOptions } from '@src/api/managers/members/RawGuildMembersFetchOptions'
-import { fromJson, toJson } from '@src/utils/toJson'
+import { fromJson, jsonify } from '@src/utils/jsonify'
 import { evalWithoutScopeChain } from '@src/utils/evalWithoutScopeChain'
 import { serializeError } from 'serialize-error'
 import { IpcEmergencyOpCodes } from '@src/constants/sharding/IpcEmergencyOpCodes'
@@ -136,7 +136,7 @@ export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
           d: {
             event_id: packet.d.event_id,
             success,
-            result: toJson(result)
+            result: jsonify(result)
           }
         }
 
@@ -241,7 +241,7 @@ export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
             t: IpcEvents.BROADCAST_EVAL,
             d: {
               event_id: packet.d.event_id,
-              result: isError ? serializeError(result) : toJson(result)
+              result: isError ? serializeError(result) : jsonify(result)
             }
           }
         } catch (e) {
@@ -299,7 +299,7 @@ export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
 
     const members = await this.app.internals.actions.fetchWsGuildMembers(data.shard_id, options)
 
-    return members.map(m => m.toJson()) as any
+    return members.map(m => m.jsonify()) as any
   }
 
   private cacheOperate(request: IpcCacheRequestPacket): any {

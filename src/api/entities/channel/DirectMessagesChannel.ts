@@ -66,8 +66,8 @@ export class DirectMessagesChannel extends AbstractChannel implements WritableCh
     return this.lastPinTimestamp ? new Date(this.lastPinTimestamp) : undefined
   }
 
-  toJson(properties: ToJsonProperties = {}, obj?: any): Json {
-    return super.toJson({
+  jsonify(properties: ToJsonProperties = {}, obj?: any): Json {
+    return super.jsonify({
       ...properties,
       lastMessageId: true,
       lastPinTimestamp: true,

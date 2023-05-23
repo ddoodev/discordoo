@@ -1,7 +1,7 @@
 import { MessageAttachmentResolvable } from '@src/api/entities/attachment/interfaces/MessageAttachmentResolvable'
 import { RawAttachment } from '@discordoo/providers'
 import { ColorResolvable } from '@src/api/entities/interfaces/ColorResolvable'
-import { EmptyBigBit, EmptyBit, PermissionFlags, RawColors } from '@src/constants'
+import { ComponentTypes, EmptyBigBit, EmptyBit, PermissionFlags, RawColors } from '@src/constants'
 import { DiscordooError } from '@src/utils/DiscordooError'
 import { is } from 'typescript-is'
 import { ValidationError } from '@src/utils/ValidationError'
@@ -20,7 +20,25 @@ import { RoleTagsResolvable } from '@src/api/entities/role/interfaces/RoleTagsRe
 import { RoleTagsData } from '@src/api/entities/role/interfaces/RoleTagsData'
 import { ResolveDiscordooShardsOptions, ShardListResolvable } from '@src/utils/interfaces'
 import { range } from '@src/utils/range'
-import { EmojiResolvable, GuildChannelResolvable, MessageAttachment, MessageAttachmentBuilder, ThreadChannelResolvable } from '@src/api'
+import {
+  ActionRowBuilder, ActionRowResolvable,
+  AnyComponent,
+  AnyComponentData,
+  ButtonBuilder,
+  ButtonComponentData,
+  CommandResolvable,
+  EmojiResolvable,
+  GuildChannelResolvable,
+  MessageAttachment,
+  MessageAttachmentBuilder,
+  MessageComponentResolvable, RawActionRowData,
+  RawAnyComponentData,
+  RawButtonComponentData, RawTextInputComponentData,
+  SelectMenuBuilder,
+  TextInputBuilder,
+  TextInputComponentData,
+  ThreadChannelResolvable
+} from '@src/api'
 import { MessageReactionResolvable } from '@src/api/entities/reaction/interfaces/MessageReactionResolvable'
 import { PermissionOverwriteResolvable } from '@src/api/entities/overwrite/interfaces/PermissionOverwriteResolvable'
 import { RawPermissionOverwriteData } from '@src/api/entities/overwrite/interfaces/RawPermissionOverwriteData'
@@ -70,6 +88,39 @@ export function resolveColor(resolvable: ColorResolvable): number {
   }
 
   return result
+}
+
+export function resolveActionRowToRaw(resolvable: ActionRowResolvable): RawActionRowData {
+  if (resolvable instanceof ActionRowBuilder) return resolvable.toJSON()
+
+  return new ActionRowBuilder(resolvable.components).toJSON()
+}
+
+export function resolveComponentToRaw(resolvable: MessageComponentResolvable): RawAnyComponentData {
+  switch (true) {
+    case resolvable instanceof ActionRowBuilder:
+    case resolvable instanceof ButtonBuilder:
+    case resolvable instanceof SelectMenuBuilder:
+    case resolvable instanceof TextInputBuilder:
+      return (resolvable as AnyComponent).toJSON()
+    default:
+      resolvable = resolvable as AnyComponentData | RawAnyComponentData // thanks typescript
+  }
+
+  switch (resolvable.type) {
+    case ComponentTypes.Button:
+      return new ButtonBuilder(resolvable).toJSON()
+    case ComponentTypes.ActionRow:
+      return new ActionRowBuilder(resolvable).toJSON()
+    case ComponentTypes.TextInput:
+      return new TextInputBuilder(resolvable).toJSON()
+    case ComponentTypes.ChannelSelect:
+    case ComponentTypes.MentionableSelect:
+    case ComponentTypes.RoleSelect:
+    case ComponentTypes.StringSelect:
+    case ComponentTypes.UserSelect:
+      return new SelectMenuBuilder(resolvable).toJSON()
+  }
 }
 
 const InvalidBitFieldError = (invalid: any) => new DiscordooError(undefined, 'Invalid BitField:', invalid)
@@ -128,9 +179,9 @@ export function resolveBitField(resolvable: BitFieldResolvable, emptyBit: number
 }
 
 export function resolveEmbedToRaw(resolvable: MessageEmbedResolvable): RawMessageEmbedData {
-  if (resolvable instanceof MessageEmbedBuilder) return resolvable.toJson()
+  if (resolvable instanceof MessageEmbedBuilder) return resolvable.jsonify()
 
-  return new MessageEmbedBuilder(resolvable).toJson() // FIXME: low performance
+  return new MessageEmbedBuilder(resolvable).jsonify() // FIXME: low performance
 }
 
 export function resolvePermissionOverwriteToRaw(
@@ -221,6 +272,10 @@ export function resolveMessageId(resolvable: MessageResolvable): string | undefi
 }
 
 export function resolveChannelId(resolvable: ChannelResolvable | ThreadChannelResolvable | GuildChannelResolvable): string | undefined  {
+  return resolveAnythingToId(resolvable)
+}
+
+export function resolveCommandId(resolvable: CommandResolvable): string | undefined {
   return resolveAnythingToId(resolvable)
 }
 

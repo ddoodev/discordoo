@@ -1,5 +1,11 @@
 // based on https://github.com/abalabahaha/eris/blob/fba1f7c6621575778c26a378b4d313febe894a42/lib/rest/Endpoints.js (MIT license)
 export class Endpoints {
+  static readonly APPLICATION_COMMAND
+    = (applicationId, commandId) => [ 'applications', applicationId, 'commands', commandId ]
+  static readonly APPLICATION_COMMANDS
+    = (applicationId) => [ 'applications', applicationId, 'commands' ]
+  static readonly APPLICATION_COMMAND_PERMISSIONS
+    = (applicationId, guildId, commandId) => [ 'applications', applicationId, 'guilds', guildId, 'commands', commandId, 'permissions' ]
   static readonly CHANNEL
     =                          (channelId) => [ 'channels', channelId ]
   static readonly CHANNEL_BULK_DELETE
@@ -60,6 +66,12 @@ export class Endpoints {
     =                            (guildId) => [ 'guilds', guildId, 'bans' ]
   static readonly GUILD_CHANNELS
     =                            (guildId) => [ 'guilds', guildId, 'channels' ]
+  static readonly GUILD_COMMAND
+    = (applicationId, guildId, commandId) => [ 'applications', applicationId, 'guilds', guildId, 'commands', commandId ]
+  static readonly GUILD_COMMANDS
+    = (applicationId, guildId) => [ 'applications', applicationId, 'guilds', guildId, 'commands' ]
+  static readonly GUILD_COMMAND_PERMISSIONS
+    = (applicationId, guildId) => [ 'applications', applicationId, 'guilds', guildId, 'commands', 'permissions' ]
   static readonly GUILD_DISCOVERY
     =                            (guildId) => [ 'guilds', guildId, 'discovery-metadata' ]
   static readonly GUILD_DISCOVERY_CATEGORY
@@ -222,16 +234,4 @@ export class Endpoints {
     =                   (teamId, teamIcon) => [ 'team-icons', teamId, teamIcon ]
   static readonly USER_AVATAR
     =                 (userId, userAvatar) => [ 'avatars', userId, userAvatar ]
-  static readonly APPLICATION_COMMAND
-    = (applicationId, commandId) => [ 'applications', applicationId, 'commands', commandId ]
-  static readonly APPLICATION_COMMANDS
-    = (applicationId) => [ 'applications', applicationId, 'commands' ]
-  static readonly APPLICATION_COMMAND_PERMISSIONS
-    = (applicationId, guildId, commandId) => [ 'applications', applicationId, 'guilds', guildId, 'commands', commandId, 'permissions' ]
-  static readonly GUILD_COMMAND
-    = (applicationId, guildId, commandId) => [ 'applications', applicationId, 'guilds', guildId, 'commands', commandId ]
-  static readonly GUILD_COMMANDS
-    = (applicationId, guildId) => [ 'applications', applicationId, 'guilds', guildId, 'commands' ]
-  static readonly GUILD_COMMAND_PERMISSIONS
-    = (applicationId, guildId) => [ 'applications', applicationId, 'guilds', guildId, 'commands', 'permissions' ]
 }

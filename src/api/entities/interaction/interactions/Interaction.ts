@@ -1,5 +1,14 @@
 import { AbstractEntity } from '@src/api/entities/AbstractEntity'
-import { AnyWritableChannel, Guild, GuildMember, InteractionData, Message, RawInteractionData, User } from '@src/api'
+import {
+  AnyWritableChannel,
+  Guild,
+  GuildMember,
+  InteractionData,
+  InteractionMessageContent, InteractionMessageCreateOptions,
+  Message,
+  RawInteractionData,
+  User
+} from '@src/api'
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 import { attach, idToDate, idToTimestamp } from '@src/utils'
 import { InteractionTypes, Keyspaces } from '@src/constants'
@@ -18,6 +27,7 @@ export class Interaction extends AbstractEntity {
   declare version: number
   declare locale?: string
   declare guildLocale?: string
+  declare appPermissions?: string
 
   async init(data: RawInteractionData | InteractionData, options?: EntityInitOptions): Promise<this> {
     attach(this, data, {
@@ -34,6 +44,7 @@ export class Interaction extends AbstractEntity {
         'version',
         'locale',
         [ 'guildLocale', 'guild_locale' ],
+        [ 'appPermissions', 'app_permissions' ]
       ],
       disabled: options?.ignore,
       enabled: [ 'id', 'applicationId', 'type', 'guildId' ]
@@ -52,6 +63,16 @@ export class Interaction extends AbstractEntity {
 
   get canReply(): boolean {
     return this.type !== InteractionTypes.Ping && this.type !== InteractionTypes.ApplicationCommandAutocomplete
+  }
+
+  async reply(content: InteractionMessageContent, options?: InteractionMessageCreateOptions): Promise<this | undefined> {
+    const result = await this.app.interactions.reply(this.id, this.token, content, options)
+    return result ? this : undefined
+  }
+
+  async defer(): Promise<this | undefined> {
+    const result = await this.app.interactions.defer(this.id, this.token)
+    return result ? this : undefined
   }
 
   async guild(options?: CacheManagerGetOptions): Promise<Guild | undefined> {

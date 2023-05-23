@@ -23,8 +23,10 @@ export interface InteractionData<DataType = any> {
   version: number
   /** the selected language of the invoking user */
   locale?: string
+  /** bitwise set of permissions the app or bot has within the channel the interaction was sent from */
+  appPermissions?: string
   /** the guild's preferred locale, if invoked in a guild */
   guildLocale?: string
   /** the data for the interaction */
-  data: DataType
+  data: DataType extends any ? any | undefined : DataType
 }

@@ -1,5 +1,5 @@
 import { AppCommandTypes, DiscordLocale } from '@src/constants'
-import { BigBitFieldResolvable, BitFieldResolvable, RawAppCommandOptionData } from '@src/api'
+import { BigBitFieldResolvable, RawAppCommandOptionData } from '@src/api'
 
 export interface RawAppCommandData {
   /** unique id of the command */

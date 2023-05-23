@@ -68,12 +68,12 @@ export class Presence extends AbstractEntity {
     return this.app.users.cache.get(this.userId, options)
   }
 
-  toJson(properties: ToJsonProperties = {}, obj?: any): Json {
-    return super.toJson({
+  jsonify(properties: ToJsonProperties = {}, obj?: any): Json {
+    return super.jsonify({
       ...properties,
       activities: {
         override: ToJsonOverrideSymbol,
-        value: this.activities.map(a => a.toJson())
+        value: this.activities.map(a => a.jsonify())
       },
       appStatus: true,
       guildId: true,

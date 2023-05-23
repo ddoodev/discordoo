@@ -1,5 +1,9 @@
 import { AppCommandOptionTypes, DiscordLocale } from '@src/constants'
-import { AppCommandOptionChoiceData, AppCommandOptionWithSubcommandsData, RawAppCommandOptionData } from '@src/api'
+import {
+  AppCommandOptionChoiceData,
+  AppCommandOptionWithSubcommandsData,
+  RawAppCommandOptionWithSubcommandsData
+} from '@src/api'
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 import { attach } from '@src/utils'
 
@@ -16,7 +20,7 @@ export class AppCommandOption {
     | (this['required'] extends true ? never : undefined)
   declare type: AppCommandOptionTypes
 
-  constructor(data: AppCommandOptionWithSubcommandsData | RawAppCommandOptionData, options?: EntityInitOptions) {
+  constructor(data: AppCommandOptionWithSubcommandsData | RawAppCommandOptionWithSubcommandsData, options?: EntityInitOptions) {
     attach(this, data, {
       props: [
         'name',
@@ -42,11 +46,9 @@ export class AppCommandOption {
     if ('options' in data && data.options) {
       this.options = data.options.map(option => new AppCommandOption(option, options))
     }
-
-    return this
   }
 
-  toJson(): AppCommandOptionWithSubcommandsData {
+  jsonify(): AppCommandOptionWithSubcommandsData {
     return { ...this } as AppCommandOptionWithSubcommandsData
   }
 }

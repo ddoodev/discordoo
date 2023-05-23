@@ -1,11 +1,9 @@
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
-import { InteractionResolvedCacheManagerData } from '@src/api/managers/interactions/InteractionResolvedCacheManagerData'
 import { is } from 'typescript-is'
 import { ValidationError } from '@src/utils'
-import { EntitiesCacheManager, GuildMember, Message, Role, User } from '@src/api'
-import { AnyGuildChannel } from '@src/api/entities/channel/interfaces/AnyGuildChannel'
+import { AnyGuildChannel, EntitiesCacheManager, GuildMember, InteractionResolvedCacheManagerData, Message, Role, User } from '@src/api'
 import { KNOWN_CACHE_OPERATE_METHODS, ProxyFilterPointerSymbol } from '@src/constants'
-import { RestEligibleDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
+import { RestEligibleDiscordApplication } from '@src/core'
 
 export class InteractionResolvedCacheManager extends EntitiesManager {
   private readonly _data: InteractionResolvedCacheManagerData
@@ -129,5 +127,4 @@ export class InteractionResolvedCacheManager extends EntitiesManager {
       this.app.users.cache, makeProxyHandler(Object.keys(this._data.users ?? {}), 'global', 'users')
     )
   }
-
 }

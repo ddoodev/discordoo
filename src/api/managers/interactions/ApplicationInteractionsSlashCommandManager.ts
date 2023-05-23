@@ -1,14 +1,17 @@
-import { EntitiesCacheManager } from '@src/api'
-import { EntitiesManager } from '../EntitiesManager'
-import { DiscordApplication, DiscordRestApplication } from '@src/core'
-import { RawAppCommandEditData } from '@src/api/entities/interaction/interfaces/command/raw/RawAppCommandEditData'
-import { GuildAppCommandEditData, RawGuildAppCommandEditData } from '@src/api/managers/interactions/InteractionSlashCommandGuildData'
-import { AppCommandEditData } from '@src/api/entities/interaction/interfaces/command/common/AppCommandEditData'
-import { SlashCommandBuilder } from '@src/api/entities/interaction/SlashCommandBuilder'
-import { DiscordooError, resolveGuildId } from '@src/utils'
-import { AppCommand } from '@src/api/entities/interaction/AppCommand'
+import {
+  AnyAppCommandData, AppCommand,
+  AppCommandCreateData, AppCommandEditData, CommandResolvable, EntitiesCacheManager,
+  EntitiesUtil, FetchCommandOptions, FetchCommandQuery, GuildAppCommandCreateData,
+  GuildAppCommandEditData,
+  GuildResolvable,
+  RawAppCommandCreateData, RawAppCommandEditData, RawGuildAppCommandCreateData,
+  RawGuildAppCommandEditData,
+  SlashCommandBuilder
+} from '@src/api'
+import { EntitiesManager } from '@src/api/managers/EntitiesManager'
+import { DiscordRestApplication } from '@src/core'
+import { DiscordooError, resolveBigBitField, resolveCommandId, resolveGuildId } from '@src/utils'
 import { Keyspaces } from '@src/constants'
-import { AnyAppCommand } from '../../entities'
 
 export class ApplicationInteractionsSlashCommandManager extends EntitiesManager {
   public cache: EntitiesCacheManager<AppCommand>
@@ -23,55 +26,320 @@ export class ApplicationInteractionsSlashCommandManager extends EntitiesManager 
     })
   }
 
-  async createGlobal(command: SlashCommandBuilder | RawAppCommandEditData | AppCommandEditData) {
-    const data = new SlashCommandBuilder(command).toJSON()
-
+  async createGlobal(
+    commandData: SlashCommandBuilder | RawAppCommandCreateData | AppCommandCreateData
+  ): Promise<AppCommand | undefined> {
+    const data = commandData instanceof SlashCommandBuilder ? commandData.toJSON() : new SlashCommandBuilder(commandData).toJSON()
     const response = await this.app.internals.actions.createGlobalCommand(data)
-    return response.result
+
+    if (response.success) {
+      const AppCommand = EntitiesUtil.get('AppCommand')
+
+      const appCommand = await new AppCommand(this.app).init(response.result)
+      await this.cache.set(appCommand.id, appCommand)
+
+      return appCommand
+    }
+
+    return
   }
 
-  async createGuild(command: SlashCommandBuilder | RawGuildAppCommandEditData | GuildAppCommandEditData) {
-    const guildId = resolveGuildId(command.guild!)
+  async createGuild(
+    commandData: SlashCommandBuilder | RawGuildAppCommandCreateData | GuildAppCommandCreateData
+  ): Promise<AppCommand | undefined> {
+    const guildId = resolveGuildId(commandData.guild!)
     if (!guildId) {
       throw new DiscordooError(
-        'ClientInteractionSlashCommandManager#createGuild', 'Cannot create guild command without guild id'
+        'ApplicationInteractionsSlashCommandManager#createGuild', 'Cannot create guild command without guild id'
       )
     }
 
-    const data = new SlashCommandBuilder(command).toJSON()
-
+    const data = commandData instanceof SlashCommandBuilder ? commandData.toJSON() : new SlashCommandBuilder(commandData).toJSON()
     const response = await this.app.internals.actions.createGuildCommand(guildId, data)
-    return response.result
+
+    if (response.success) {
+      const AppCommand = EntitiesUtil.get('AppCommand')
+
+      const appCommand = await new AppCommand(this.app).init(response.result)
+      await this.cache.set(appCommand.id, appCommand, { storage: appCommand.guildId })
+
+      return appCommand
+    }
+
+    return
   }
 
-  create(
-    data: AnyAppCommand
-  ) {
+  create(data: AnyAppCommandData): Promise<AppCommand | undefined> {
     return 'guild' in data ? this.createGuild(data) : this.createGlobal(data)
   }
 
-  async editManyGlobal(commands: Array<SlashCommandBuilder | RawAppCommandEditData | AppCommandEditData>) {
-    const data = commands.map(c => new SlashCommandBuilder(c).toJSON())
+  async deleteGlobal(command: CommandResolvable): Promise<boolean> {
+    const commandId = resolveCommandId(command)
+    if (!commandId) throw new DiscordooError(
+      'ApplicationInteractionsSlashCommandManager#deleteGlobal',
+      'Cannot delete global command without command id.'
+    )
 
-    // const response = await this.app.internals.actions.com
+    const response = await this.app.internals.actions.deleteGlobalCommand(commandId)
+
+    if (response.success) await this.cache.delete(commandId)
+    return response.success
   }
 
-  async editMany(
-    data: AnyAppCommand[]
-  ) {
-    const [ guild, glob ] = data.reduce((acc, curr) => {
+  async deleteGuild(guild: GuildResolvable, command: CommandResolvable): Promise<boolean> {
+    const guildId = resolveGuildId(guild)
+    if (!guildId) throw new DiscordooError(
+      'ApplicationInteractionsSlashCommandManager#deleteGuild',
+      'Cannot delete guild command without guild id.'
+    )
+
+    const commandId = resolveCommandId(command)
+    if (!commandId) throw new DiscordooError(
+      'ApplicationInteractionsSlashCommandManager#deleteGuild',
+      'Cannot delete guild command without command id.'
+    )
+
+    const response = await this.app.internals.actions.deleteGuildCommand(guildId, commandId)
+    if (response.success) await this.cache.delete(commandId, { storage: guildId })
+    return response.success
+  }
+
+  async editGlobal(command: CommandResolvable, data: AppCommandEditData): Promise<AppCommand | undefined> {
+    const commandId = resolveCommandId(command)
+    if (!commandId) throw new DiscordooError(
+      'ApplicationInteractionsSlashCommandManager#editGlobal',
+      'Cannot edit global command without command id.'
+    )
+
+    const payload: RawAppCommandEditData = {
+      ...data,
+      name_localizations: data.nameLocalizations,
+      description_localizations: data.descriptionLocalizations,
+      dm_permission: data.dmPermission,
+      default_member_permissions: data.defaultMemberPermissions
+        ? resolveBigBitField(data.defaultMemberPermissions).toString()
+        : undefined
+    }
+
+    const response = await this.app.internals.actions.editGlobalCommand(commandId, payload)
+    if (response.success) {
+      const AppCommand = EntitiesUtil.get('AppCommand')
+
+      const appCommand = await new AppCommand(this.app).init(response.result)
+      await this.cache.set(appCommand.id, appCommand)
+
+      return appCommand
+    }
+
+    return
+  }
+
+  async editGuild(guild: GuildResolvable, command: CommandResolvable, data: GuildAppCommandEditData): Promise<AppCommand | undefined> {
+    const guildId = resolveGuildId(guild)
+    if (!guildId) throw new DiscordooError(
+      'ApplicationInteractionsSlashCommandManager#editGuild',
+      'Cannot edit guild command without guild id.'
+    )
+
+    const commandId = resolveCommandId(command)
+    if (!commandId) throw new DiscordooError(
+      'ApplicationInteractionsSlashCommandManager#editGuild',
+      'Cannot edit guild command without command id.'
+    )
+
+    const payload: RawGuildAppCommandEditData = {
+      ...data,
+      name_localizations: data.nameLocalizations,
+      description_localizations: data.descriptionLocalizations,
+      default_member_permissions: data.defaultMemberPermissions
+        ? resolveBigBitField(data.defaultMemberPermissions).toString()
+        : undefined
+    }
+
+    const response = await this.app.internals.actions.editGuildCommand(guildId, commandId, payload)
+    if (response.success) {
+      const AppCommand = EntitiesUtil.get('AppCommand')
+
+      const appCommand = await new AppCommand(this.app).init(response.result)
+      await this.cache.set(appCommand.id, appCommand, { storage: appCommand.guildId })
+
+      return appCommand
+    }
+
+    return
+  }
+
+  async fetchGlobalOne(commandId: string): Promise<AppCommand | undefined> {
+    const response = await this.app.internals.actions.getGlobalCommand(commandId)
+
+    if (response.success) {
+      const AppCommand = EntitiesUtil.get('AppCommand')
+
+      const appCommand = await new AppCommand(this.app).init(response.result)
+      await this.cache.set(appCommand.id, appCommand)
+
+      return appCommand
+    }
+
+    return
+  }
+
+  async fetchGuildOne(guild: GuildResolvable, commandId: string): Promise<AppCommand | undefined> {
+    const guildId = resolveGuildId(guild)
+    if (!guildId) throw new DiscordooError(
+      'ApplicationInteractionsSlashCommandManager#fetchGuildOne',
+      'Cannot fetch guild command without guild id.'
+    )
+
+    const response = await this.app.internals.actions.getGuildCommand(guildId, commandId)
+
+    if (response.success) {
+      const AppCommand = EntitiesUtil.get('AppCommand')
+
+      const appCommand = await new AppCommand(this.app).init(response.result)
+      await this.cache.set(appCommand.id, appCommand, { storage: appCommand.guildId })
+
+      return appCommand
+    }
+
+    return
+  }
+
+  async fetchGlobalMany(options: FetchCommandOptions = {}): Promise<AppCommand[] | undefined> {
+    const query: FetchCommandQuery = {
+      with_localizations: options.withLocalizations
+    }
+    const response = await this.app.internals.actions.getGlobalCommands(query)
+
+    if (response.success) {
+      const AppCommand = EntitiesUtil.get('AppCommand')
+      return await Promise.all(
+        response.result.map(async (data) => {
+          const appCommand = await new AppCommand(this.app).init(data)
+          await this.cache.set(appCommand.id, appCommand)
+
+          return appCommand
+        })
+      )
+    }
+
+    return
+  }
+
+  async fetchGuildMany(guild: GuildResolvable, options: FetchCommandOptions = {}): Promise<AppCommand[] | undefined> {
+    const guildId = resolveGuildId(guild)
+    if (!guildId) throw new DiscordooError(
+      'ApplicationInteractionsSlashCommandManager#fetchGuildMany',
+      'Cannot fetch guild commands without guild id.'
+    )
+
+    const query: FetchCommandQuery = {
+      with_localizations: options.withLocalizations
+    }
+    const response = await this.app.internals.actions.getGuildCommands(guildId, query)
+
+    if (response.success) {
+      const AppCommand = EntitiesUtil.get('AppCommand')
+      return await Promise.all(
+        response.result.map(async (data) => {
+          const appCommand = await new AppCommand(this.app).init(data)
+          await this.cache.set(appCommand.id, appCommand, { storage: appCommand.guildId })
+
+          return appCommand
+        })
+      )
+    }
+
+    return
+  }
+
+  async overwriteGlobal(
+    commandsData: Array<SlashCommandBuilder | RawAppCommandCreateData | AppCommandCreateData>
+  ): Promise<AppCommand[] | undefined> {
+    const data = commandsData.map((command) =>
+      command instanceof SlashCommandBuilder
+        ? command.toJSON()
+        : new SlashCommandBuilder(command).toJSON()
+    )
+
+    const response = await this.app.internals.actions.overwriteGlobalCommandsBulk(data)
+    if (response.success) {
+      const AppCommand = EntitiesUtil.get('AppCommand')
+      return await Promise.all(
+        response.result.map(async (data) => {
+          const appCommand = await new AppCommand(this.app).init(data)
+          await this.cache.set(appCommand.id, appCommand)
+
+          return appCommand
+        })
+      )
+    }
+
+    return
+  }
+
+  async overwriteGuild(
+    commandsData: Array<SlashCommandBuilder | RawGuildAppCommandCreateData | GuildAppCommandCreateData>
+  ): Promise<AppCommand[] | undefined> {
+    const commandsByGuild = {}
+    commandsData.forEach((command) => {
+      const guildId = resolveGuildId(command.guild!)
+      if (!guildId) throw new DiscordooError(
+        'ApplicationInteractionsSlashCommandManager#overwriteGuild',
+        'Cannot fetch guild commands without guild id.'
+      )
+
+      if (!commandsByGuild[guildId]) commandsByGuild[guildId] = []
+
+      commandsByGuild[guildId].push(
+        command instanceof SlashCommandBuilder
+        ? command.toJSON()
+        : new SlashCommandBuilder(command).toJSON()
+      )
+    })
+
+    const AppCommand = EntitiesUtil.get('AppCommand')
+    const guilds = Object.keys(commandsByGuild)
+
+    const result: AppCommand[] = await Promise.all(guilds.map(async (guildId) => {
+      const response = await this.app.internals.actions.overwriteGuildCommandsBulk(guildId, commandsByGuild[guildId])
+      if (response.success) {
+        return response.result.map(async (data) => {
+          const appCommand = await new AppCommand(this.app).init(data)
+          await this.cache.set(appCommand.id, appCommand, { storage: appCommand.guildId })
+
+          return appCommand
+        })
+      }
+    }))
+
+    if (result.length > 0) return result
+    return
+  }
+
+  async overwrite(commandsData: AnyAppCommandData[]): Promise<AppCommand[] | undefined> {
+    const [ guild, global ] = commandsData.reduce((acc, curr) => {
       'guild' in curr ? acc[0].push(curr) : acc[1].push(curr)
       return acc
-    }, [ [] as AnyAppCommand[], [] as AnyAppCommand[] ])
+    }, [
+      [] as Array<SlashCommandBuilder | RawGuildAppCommandCreateData | GuildAppCommandCreateData>,
+      [] as Array<SlashCommandBuilder | RawAppCommandCreateData | AppCommandCreateData>
+    ])
 
-    if (glob.length && !guild.length) return this.editManyGlobal(glob)
-    // if (!glob.length && guild.length) return this.editManyGuild(guild)
+    if (global.length && !guild.length) return await this.overwriteGlobal(global)
+    if (!global.length && guild.length) return await this.overwriteGuild(guild)
+    if (!global.length && !guild.length) return
 
-    const globResult = await this.editManyGlobal(glob)
-    // const guildResult = await this.editManyGuild(guild)
+    const result: AppCommand[] = []
 
-    return [
-      // ...globResult, ...guildResult
-    ]
+    const globResult = await this.overwriteGlobal(global)
+    if (globResult) result.concat(globResult)
+
+    const guildResult = await this.overwriteGuild(guild)
+    if (guildResult) result.concat(guildResult)
+
+    return result
   }
+
+  // TODO permissions
 }

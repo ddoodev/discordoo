@@ -16,7 +16,7 @@ import {
   IpcBroadcastEvalRequestPacket, IpcMessagePacket,
 } from '@src/sharding/interfaces'
 import { is } from 'typescript-is'
-import { fromJson, toJson } from '@src/utils/toJson'
+import { fromJson, jsonify } from '@src/utils/jsonify'
 
 export class ShardingInstance extends TypedEmitter {
   public id: number
@@ -160,7 +160,7 @@ export class ShardingInstance extends TypedEmitter {
     options?: BroadcastEvalOptions
   ): Promise<R[]> {
     const context = {
-      ...options?.context ? toJson(options?.context) : {}
+      ...options?.context ? jsonify(options?.context) : {}
     }
 
     const type = typeof script

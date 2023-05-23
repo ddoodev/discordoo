@@ -2,7 +2,7 @@ import { RawUserData } from '@src/api/entities/user/interfaces/RawUserData'
 import { RawMessageAttachmentData } from '@src/api/entities/attachment/interfaces'
 import { RawMessageEmbedData } from '@src/api/entities/embed'
 import { MessageTypes } from '@src/constants/entities/message/MessageTypes'
-import { RawGuildMemberData } from '@src/api'
+import { RawActionRowData, RawGuildMemberData, RawMessageInteractionData } from '@src/api'
 import { RawChannelMentionData } from '@src/api/entities/message/interfaces/RawChannelMentionData'
 import { MessageReactionData } from '@src/api/entities/reaction/interfaces/MessageReactionData'
 
@@ -33,8 +33,8 @@ export interface RawMessageData {
   // TODO message_reference: RawMessageReferenceData
   flags: number
   referenced_message?: RawMessageData
-  // TODO interaction: RawMessageInteractionData
+  interaction: RawMessageInteractionData
   // TODO thread: RawThreadChannelData
-  // TODO components: RawMessageComponentData[]
+  components?: RawActionRowData[]
   // TODO sticker_items: RawMessageStickerItemData[]
 }

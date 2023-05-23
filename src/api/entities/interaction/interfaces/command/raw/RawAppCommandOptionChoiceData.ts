@@ -1,6 +1,6 @@
 import { DiscordLocale } from '@src/constants'
 
-export interface RawAppCommandOptionsChoiceData {
+export interface RawAppCommandOptionChoiceData {
   /** 1-100 character choice name */
   name: string
   /** localization dictionary for the `name` field. values follow the same restrictions as `name` */

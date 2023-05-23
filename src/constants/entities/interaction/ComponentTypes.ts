@@ -1,5 +1,10 @@
 export enum ComponentTypes {
   ActionRow = 1,
   Button,
-  SelectMenu,
+  StringSelect,
+  TextInput,
+  UserSelect,
+  RoleSelect,
+  MentionableSelect,
+  ChannelSelect,
 }

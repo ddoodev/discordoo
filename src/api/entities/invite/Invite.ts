@@ -113,8 +113,8 @@ export class Invite extends AbstractEntity {
     return this._channel ? this._channel : this.channelId ? this.app.channels.cache.get<AnyInvitableChannel>(this.channelId) : undefined
   }
 
-  toJson(properties: ToJsonProperties = {}, obj?: any): Json {
-    return super.toJson({
+  jsonify(properties: ToJsonProperties = {}, obj?: any): Json {
+    return super.jsonify({
       ...properties,
       _channel: true,
       channelId: true,

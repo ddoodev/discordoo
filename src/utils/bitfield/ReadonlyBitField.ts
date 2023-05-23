@@ -56,7 +56,7 @@ export abstract class ReadonlyBitField {
     return this.bitfield.toString()
   }
 
-  toJson(): Json {
+  jsonify(): Json {
     return { bits: this.bitfield }
   }
 }

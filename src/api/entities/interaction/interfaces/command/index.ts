@@ -1,6 +1,7 @@
-export * from './AppCommandInteractionOptionPayload'
-export * from './AppCommandEntityInitOptions'
-export * from './AnyAppCommand'
+export { AppCommandInteractionOptionPayload } from './AppCommandInteractionOptionPayload'
+export { AppCommandEntityInitOptions } from './AppCommandEntityInitOptions'
+export { AnyAppCommandData } from './AnyAppCommandData'
+export { CommandResolvable } from './CommandResolvable'
 
 export * from './common'
 export * from './raw'

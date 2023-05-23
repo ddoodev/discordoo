@@ -14,10 +14,10 @@ export abstract class AbstractEntity {
   abstract init(data: any, options?: EntityInitOptions): Promise<this>
 
   async _clone(): Promise<this> {
-    return await new (this.constructor as any)(this.app).init(this.toJson())
+    return await new (this.constructor as any)(this.app).init(this.jsonify())
   }
 
-  toJson(properties: ToJsonProperties = {}, obj?: any): Json {
+  jsonify(properties: ToJsonProperties = {}, obj?: any): Json {
     const json: Json = {}
 
     const keys = Object.keys(properties)
@@ -48,7 +48,7 @@ export abstract class AbstractEntity {
         return data.toString() + 'n'
       case 'object': {
         if (data === null) return null
-        if (typeof data.toJson === 'function') return data.toJson()
+        if (typeof data.jsonify === 'function') return data.jsonify()
         return JSON.parse(JSON.stringify(data, (k, v) => typeof v === 'bigint' ? v.toString() + 'n' : v))
       }
     }

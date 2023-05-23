@@ -3,25 +3,25 @@ import {
   FetchInviteQuery, FetchManyMessagesQuery, FetchReactionUsersOptions, GuildEmojiData, GuildMember,
   GuildMembersFetchQuery,
   MessageCreateData,
-  RawAppCommandData, RawAppCommandEditData,
+  RawAppCommandData, RawAppCommandCreateData,
   RawEmojiEditData,
   RawGuildChannelCreateData, RawGuildChannelEditData,
   RawGuildEmojiData,
   RawGuildMemberAddData, RawGuildMemberData,
-  RawGuildMemberEditData, RawInviteCreateData, RawInviteData, RawMessageData,
+  RawGuildMemberEditData, RawInteractionResponse, RawInviteCreateData, RawInviteData, RawMessageData,
   RawPermissionOverwriteData, RawRoleCreateData, RawRoleData,
   RawRoleEditData,
   RawStickerCreateData,
   RawStickerData,
   RawStickerEditData,
   RawStickerPackData, RawThreadChannelCreateData, RawThreadChannelEditData,
-  RawThreadChannelWithMessageCreateData, RawUserData
+  RawThreadChannelWithMessageCreateData, RawUserData, RawGuildAppCommandEditData
 } from '@src/api'
 import { Endpoints } from '@src/constants'
 import { DiscordRestApplication } from '@src/core'
-import { RawInteractionResponse } from '@src/api/entities/interaction/interfaces/RawInteractionResponseData'
 import { RestFinishedResponse } from '@discordoo/providers'
 import { RawDirectMessagesChannelData } from '@src/api/entities/channel/interfaces/RawDirectMessagesChannelData'
+import { FetchCommandQuery } from '@src/api/managers/interactions/FetchCommandQuery'
 
 export class RestApplicationActions {
   constructor(public app: DiscordRestApplication) { }
@@ -112,14 +112,14 @@ export class RestApplicationActions {
       .post({ reason })
   }
 
-  createGlobalCommand(data: RawAppCommandEditData) {
+  createGlobalCommand(data: RawAppCommandCreateData) {
     return this.app.internals.rest.api()
       .url(Endpoints.APPLICATION_COMMANDS(this.app.user.id))
       .body(data)
       .post<RawAppCommandData>()
   }
 
-  createGuildCommand(guildId: string, data: RawAppCommandEditData) {
+  createGuildCommand(guildId: string, data: RawAppCommandCreateData) {
     return this.app.internals.rest.api()
       .url(Endpoints.GUILD_COMMANDS(this.app.user.id, guildId))
       .body(data)
@@ -276,6 +276,18 @@ export class RestApplicationActions {
       .post({ reason })
   }
 
+  deleteGlobalCommand(commandId: string) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.APPLICATION_COMMAND(this.app.user.id, commandId))
+      .delete()
+  }
+
+  deleteGuildCommand(guildId: string, commandId: string) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.GUILD_COMMAND(this.app.user.id, guildId, commandId))
+      .delete()
+  }
+
   deleteGuildEmoji(guildId: string, emojiId: string, reason?: string) {
     return this.app.internals.rest.api()
       .url(Endpoints.GUILD_EMOJI(guildId, emojiId))
@@ -312,10 +324,11 @@ export class RestApplicationActions {
       .delete<RawInviteData>({ reason })
   }
 
-  editGlobalCommands(commands: RawAppCommandEditData[]) {
+  editGlobalCommand(commandId: string, data: RawGuildAppCommandEditData) {
     return this.app.internals.rest.api()
-      .url(Endpoints.APPLICATION_COMMANDS(this.app.user.id))
-      .body(commands)
+      .url(Endpoints.APPLICATION_COMMAND(this.app.user.id, commandId))
+      .body(data)
+      .patch<RawAppCommandData>()
   }
 
   editGuild(guildId: string, data: any /* TODO: GuildData */, reason?: string) {
@@ -361,6 +374,13 @@ export class RestApplicationActions {
         type: data.type,
       })
       .put({ reason })
+  }
+
+  editGuildCommand(guildId: string, commandId: string, data: RawGuildAppCommandEditData) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.GUILD_COMMAND(this.app.user.id, guildId, commandId))
+      .body(data)
+      .patch<RawAppCommandData>()
   }
 
   editThreadChannel(channelId: string, data: RawThreadChannelEditData, reason?: string) {
@@ -541,10 +561,13 @@ export class RestApplicationActions {
       .get()
   }
 
-  getGlobalCommands() {
-    return this.app.internals.rest.api()
+  getGlobalCommands(query?: FetchCommandQuery) {
+    const request = this.app.internals.rest.api()
       .url(Endpoints.APPLICATION_COMMANDS(this.app.user.id))
-      .get<RawAppCommandData[]>()
+
+    if (query) request.query(query)
+
+    return request.get<RawAppCommandData[]>()
   }
 
   getGlobalCommand(commandId: string) {
@@ -553,16 +576,19 @@ export class RestApplicationActions {
       .get<RawAppCommandData>()
   }
 
-  getGuildCommands(guildId: string) {
-    return this.app.internals.rest.api()
-      .url(Endpoints.GUILD_COMMANDS(this.app.user.id, guildId))
-      .get<RawAppCommandData[]>()
-  }
-
   getGuildCommand(guildId: string, commandId: string) {
     return this.app.internals.rest.api()
       .url(Endpoints.GUILD_COMMAND(this.app.user.id, guildId, commandId))
       .get<RawAppCommandData>()
+  }
+
+  getGuildCommands(guildId: string, query?: FetchCommandQuery) {
+    const request = this.app.internals.rest.api()
+      .url(Endpoints.GUILD_COMMANDS(this.app.user.id, guildId))
+
+    if (query) request.query(query)
+
+    return request.get<RawAppCommandData[]>()
   }
 
   getGuildDiscovery(guildId: string) {
@@ -697,6 +723,20 @@ export class RestApplicationActions {
     return this.app.internals.rest.api()
       .url(Endpoints.USER_GUILD('@me', guildId))
       .delete()
+  }
+
+  overwriteGlobalCommandsBulk(commands: RawAppCommandCreateData[]) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.APPLICATION_COMMANDS(this.app.user.id))
+      .body(commands)
+      .put<RawAppCommandData[]>()
+  }
+
+  overwriteGuildCommandsBulk(guildId: string, commands: RawAppCommandCreateData[]) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.GUILD_COMMANDS(this.app.user.id, guildId))
+      .body(commands)
+      .put()
   }
 
   pruneGuildMembers(guildId: string, data: any /* GuildMembersPruneData */ = {}, reason?: string) {

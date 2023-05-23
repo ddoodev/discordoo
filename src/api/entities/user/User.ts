@@ -123,8 +123,8 @@ export class User extends AbstractEntity implements UserData {
     return `<@${this.id}>`
   }
 
-  toJson(properties: ToJsonProperties = {}, obj?: any): Json {
-    return super.toJson({
+  jsonify(properties: ToJsonProperties = {}, obj?: any): Json {
+    return super.jsonify({
       ...properties,
       accentColor: true,
       avatar: true,

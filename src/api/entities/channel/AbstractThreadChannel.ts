@@ -197,8 +197,8 @@ export abstract class AbstractThreadChannel extends AbstractChannel implements A
     return parent?.rolePermissions(role, options)
   }
 
-  toJson(properties: ToJsonProperties = {}, obj?: any): Json {
-    return super.toJson({
+  jsonify(properties: ToJsonProperties = {}, obj?: any): Json {
+    return super.jsonify({
       ...properties,
       guildId: true,
       lastMessageId: true,

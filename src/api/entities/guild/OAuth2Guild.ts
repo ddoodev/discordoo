@@ -28,8 +28,8 @@ export class OAuth2Guild extends AbstractGuild implements OAuth2GuildData {
     return this
   }
 
-  toJson(properties: ToJsonProperties = {}, obj?: any): Json {
-    return super.toJson({
+  jsonify(properties: ToJsonProperties = {}, obj?: any): Json {
+    return super.jsonify({
       ...properties,
       owner: true,
       permissions: true,

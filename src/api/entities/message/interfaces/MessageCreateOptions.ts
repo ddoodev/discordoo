@@ -1,6 +1,6 @@
 import { MessageEmbedResolvable } from '@src/api/entities/embed'
 import { MessageAttachmentResolvable } from '@src/api/entities/attachment/interfaces'
-import { StickerResolvable } from '@src/api'
+import { ActionRowResolvable, MessageComponentResolvable, StickerResolvable } from '@src/api'
 import { MessageReferenceResolvable } from '@src/api/entities/message/interfaces/MessageReferenceResolvable'
 
 export interface MessageCreateOptions {
@@ -13,8 +13,8 @@ export interface MessageCreateOptions {
   stickers?: StickerResolvable[]
   sticker?: StickerResolvable
 
-  components?: any[] /* TODO: MessageComponentResolvable[] */
-  component?: any /* TODO: MessageComponentResolvable */
+  components?: ActionRowResolvable[]
+  component?: ActionRowResolvable
 
   allowedMentions?: any /* TODO: AllowedMentionsResolvable */
   messageReference?: MessageReferenceResolvable

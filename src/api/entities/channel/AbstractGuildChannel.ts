@@ -239,8 +239,8 @@ export abstract class AbstractGuildChannel extends AbstractChannel {
       .then(results => results.map(r => r[1])) // FIXME: low performance
   }
 
-  toJson(properties: ToJsonProperties = {}, obj?: any): Json {
-    return super.toJson({
+  jsonify(properties: ToJsonProperties = {}, obj?: any): Json {
+    return super.jsonify({
       ...properties,
       guildId: true,
       name: true,

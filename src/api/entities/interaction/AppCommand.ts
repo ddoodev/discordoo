@@ -1,11 +1,9 @@
 import {
-  AppCommandData, AppCommandOption, BigBitFieldResolvable,
+  AppCommandData, AppCommandEntityInitOptions, AppCommandOption, BigBitFieldResolvable,
   Json, RawAppCommandData, ReadonlyPermissions, ToJsonProperties
 } from '@src/api'
 import { attach } from '@src/utils'
-import { AppCommandTypes } from '@src/constants'
-import { DiscordLocale } from '@src/constants/common/DiscordLocale'
-import { AppCommandEntityInitOptions } from '@src/api/entities/interaction/interfaces/command/AppCommandEntityInitOptions'
+import { AppCommandTypes, DiscordLocale } from '@src/constants'
 import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 
 export class AppCommand extends AbstractEntity {
@@ -63,8 +61,8 @@ export class AppCommand extends AbstractEntity {
     return this
   }
 
-  toJson(properties: ToJsonProperties = {}, obj?: any): Json {
-    return super.toJson({
+  jsonify(properties: ToJsonProperties = {}, obj?: any): Json {
+    return super.jsonify({
       ...properties,
       id: true,
       name: true,

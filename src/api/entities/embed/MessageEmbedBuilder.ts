@@ -277,7 +277,7 @@ export class MessageEmbedBuilder {
       )
   }
 
-  toJson(): RawMessageEmbedData {
+  jsonify(): RawMessageEmbedData {
     const { title, description, url, color, timestamp, author, footer, image, thumbnail } = this
 
     const result = {
@@ -294,7 +294,7 @@ export class MessageEmbedBuilder {
   }
 
   get toJSON() {
-    return this.toJson.bind(this)
+    return this.jsonify.bind(this)
   }
 
 }

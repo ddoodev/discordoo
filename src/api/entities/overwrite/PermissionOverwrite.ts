@@ -57,8 +57,8 @@ export class PermissionOverwrite extends AbstractEntity {
     return result ? this : undefined
   }
 
-  toJson(properties: ToJsonProperties = {}, obj?: any): Json {
-    return super.toJson({
+  jsonify(properties: ToJsonProperties = {}, obj?: any): Json {
+    return super.jsonify({
       ...properties,
       id: true,
       type: true,

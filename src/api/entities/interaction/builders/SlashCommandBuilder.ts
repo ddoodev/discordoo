@@ -1,15 +1,14 @@
-import { DiscordLocale } from '@src/constants/common/DiscordLocale'
-import { AppCommandTypes } from '@src/constants'
-import { BigBitFieldResolvable, GuildResolvable, RawAppCommandOptionData } from '@src/api'
-import { RawAppCommandEditData } from '@src/api/entities/interaction/interfaces/command/raw/RawAppCommandEditData'
-import { attach, resolveBigBitField, resolveGuildId } from '@src/utils'
+import { AppCommandTypes, DiscordLocale } from '@src/constants'
+import {
+  AppCommandCreateData, AppCommandOptionWithSubcommandsData,
+  BigBitFieldResolvable, GuildAppCommandCreateData,
+  GuildResolvable, RawAppCommandCreateData,
+  RawAppCommandOptionWithSubcommandsData, RawGuildAppCommandCreateData
+} from '@src/api'
 import { mix } from 'ts-mixer'
 import { MixinNameDescriptionRequired } from '@src/api/entities/interaction/mixins/MixinNameDescriptionRequired'
-import { AppCommandEditData } from '@src/api/entities/interaction/interfaces/command/common/AppCommandEditData'
-import { optionToRaw } from '@src/utils/optionToRaw'
-import { AppCommandOptionWithSubcommandsData } from '@src/api/entities/interaction/interfaces/command/common/AppCommandOptionData'
-import { GuildAppCommandEditData, RawGuildAppCommandEditData } from '@src/api/managers/interactions/InteractionSlashCommandGuildData'
-import { DiscordApplication, WebhookApplication } from '@src/core'
+import { attach, resolveBigBitField, resolveGuildId } from '@src/utils'
+import { appCommandOptionToRaw } from '@src/utils/appCommandOptionToRaw'
 
 @mix(MixinNameDescriptionRequired)
 export class SlashCommandBuilder {
@@ -24,7 +23,7 @@ export class SlashCommandBuilder {
   /** the type of command, defaults `1` (`ChatInput`) if not set */
   public type?: AppCommandTypes
   /** parameters for the command, max of 25 */
-  public options: RawAppCommandOptionData[] = []
+  public options: RawAppCommandOptionWithSubcommandsData[] = []
   /** set of permissions represented as a bit set */
   public defaultMemberPermissions?: bigint
   /**
@@ -38,12 +37,14 @@ export class SlashCommandBuilder {
   public guild?: string
 
   constructor(
-    data: SlashCommandBuilder |
-      RawAppCommandEditData |
-      AppCommandEditData |
-      GuildAppCommandEditData |
-      RawGuildAppCommandEditData
+    data?: SlashCommandBuilder |
+      RawAppCommandCreateData |
+      AppCommandCreateData |
+      GuildAppCommandCreateData |
+      RawGuildAppCommandCreateData
   ) {
+    if (!data) return this
+
     attach(this, data, {
       props: [
         'name',
@@ -57,7 +58,7 @@ export class SlashCommandBuilder {
     })
 
     if (data.options) {
-      this.options = data.options.map(optionToRaw)
+      this.options = data.options.map(appCommandOptionToRaw)
     }
 
     if ('guild' in data && data.guild) {
@@ -80,19 +81,15 @@ export class SlashCommandBuilder {
     return this
   }
 
-  addOption(option: AppCommandOptionWithSubcommandsData | RawAppCommandOptionData): this {
-    const raw = optionToRaw(option)
-
-    if (this.options.length >= 25) {
-      throw new Error('Cannot add more than 25 options to a slash command')
-    }
+  addOption(option: AppCommandOptionWithSubcommandsData | RawAppCommandOptionWithSubcommandsData): this {
+    const raw = appCommandOptionToRaw(option)
 
     this.options.push(raw)
 
     return this
   }
 
-  addOptions(options: (AppCommandOptionWithSubcommandsData | RawAppCommandOptionData)[]): this {
+  addOptions(options: (AppCommandOptionWithSubcommandsData | RawAppCommandOptionWithSubcommandsData)[]): this {
     options.forEach(option => this.addOption(option))
     return this
   }
@@ -102,7 +99,7 @@ export class SlashCommandBuilder {
     return this
   }
 
-  public toJSON(): RawAppCommandEditData | RawGuildAppCommandEditData {
+  public toJSON(): RawAppCommandCreateData | RawGuildAppCommandCreateData {
     return {
       name: this.name,
       description: this.description,

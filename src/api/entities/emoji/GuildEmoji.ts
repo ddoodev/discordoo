@@ -135,8 +135,8 @@ export class GuildEmoji extends AbstractEmoji implements AbstractGuildEmoji {
       && emoji.roles?.every(r => this.roles?.indexOf(r) || -1 > -1))
   }
 
-  toJson(properties: ToJsonProperties, obj?: any): Json {
-    return super.toJson({
+  jsonify(properties: ToJsonProperties, obj?: any): Json {
+    return super.jsonify({
       ...properties,
       available: true,
       guildId: true,

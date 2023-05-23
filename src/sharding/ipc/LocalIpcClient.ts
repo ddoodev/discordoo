@@ -20,7 +20,7 @@ import { filterAndMap } from '@src/utils/filterAndMap'
 import { IpcEmergencyOpCodes } from '@src/constants/sharding/IpcEmergencyOpCodes'
 import { deserializeError, serializeError } from 'serialize-error'
 import { evalWithoutScopeChain } from '@src/utils/evalWithoutScopeChain'
-import { fromJson, toJson } from '@src/utils/toJson'
+import { fromJson, jsonify } from '@src/utils/jsonify'
 
 
 // SHITCODE
@@ -181,7 +181,7 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
                   t: IpcEvents.BROADCAST_EVAL,
                   d: {
                     event_id: id,
-                    result: toJson(r),
+                    result: jsonify(r),
                   }
                 }
               })

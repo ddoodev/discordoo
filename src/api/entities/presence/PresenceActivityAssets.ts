@@ -65,8 +65,8 @@ export class PresenceActivityAssets extends AbstractEntity implements PresenceAc
     return this.app.internals.rest.cdn.appAsset(this.applicationId, this.smallImage, options)
   }
 
-  toJson(properties: ToJsonProperties, obj?: any): Json {
-    return super.toJson({
+  jsonify(properties: ToJsonProperties, obj?: any): Json {
+    return super.jsonify({
       ...properties,
       largeImage: true,
       largeText: true,

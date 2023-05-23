@@ -93,8 +93,8 @@ export class ThreadMember extends AbstractEntity implements ThreadMemberData {
     return result ? this : undefined
   }
 
-  toJson(properties: ToJsonProperties = {}, obj?: any): Json {
-    return super.toJson({
+  jsonify(properties: ToJsonProperties = {}, obj?: any): Json {
+    return super.jsonify({
       ...properties,
       flags: true,
       threadId: true,

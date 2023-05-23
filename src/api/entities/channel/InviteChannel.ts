@@ -21,8 +21,8 @@ export class InviteChannel extends AbstractChannel  {
     return this.icon ? this.app.internals.rest.cdn.channelIcon(this.id, this.icon, options) : undefined
   }
 
-  toJson(properties: ToJsonProperties = {}, obj?: any): Json {
-    return super.toJson({
+  jsonify(properties: ToJsonProperties = {}, obj?: any): Json {
+    return super.jsonify({
       ...properties,
       name: true,
       icon: true

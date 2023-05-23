@@ -52,7 +52,7 @@ import {
 import { deserializeError, serializeError } from 'serialize-error'
 import { is } from 'typescript-is'
 import { GatewaySendPayloadLike, GatewayShardsInfo, IpcEvents, IpcOpCodes } from '@discordoo/providers'
-import { fromJson, toJson } from '@src/utils/toJson'
+import { fromJson, jsonify } from '@src/utils/jsonify'
 import { inspect } from 'util'
 import { Collection } from '@discordoo/collection'
 import { evalWithoutScopeChain } from '@src/utils/evalWithoutScopeChain'
@@ -262,7 +262,7 @@ export class DiscordApplication<ApplicationStack extends DefaultDiscordApplicati
         script: string | ((context: (C & { app: DiscordApplication })) => any), options?: BroadcastEvalOptions
       ): Promise<R[]> {
         const context = {
-          ...options?.context ? toJson(options.context) : {}
+          ...options?.context ? jsonify(options.context) : {}
         }
 
         const type = typeof script
@@ -280,7 +280,7 @@ export class DiscordApplication<ApplicationStack extends DefaultDiscordApplicati
 
           const result = await evalWithoutScopeChain(context, func)
 
-          return toJson([ result ])
+          return jsonify([ result ])
         } else {
           const request: IpcBroadcastEvalRequestPacket = {
             op: IpcOpCodes.DISPATCH,

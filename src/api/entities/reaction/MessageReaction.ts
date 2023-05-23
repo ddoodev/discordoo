@@ -80,8 +80,8 @@ export class MessageReaction extends AbstractEntity {
     return this.app.messages.cache.get(this.messageId, { ...options, storage: this.channelId })
   }
 
-  toJson(properties: ToJsonProperties = {}, obj?: any): Json {
-    return super.toJson({
+  jsonify(properties: ToJsonProperties = {}, obj?: any): Json {
+    return super.jsonify({
       ...properties,
       count: true,
       me: true,

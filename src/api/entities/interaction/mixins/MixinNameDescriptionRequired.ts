@@ -1,6 +1,6 @@
 import { DiscordLocale } from '@src/constants'
 import { attach } from '@src/utils'
-import { MixinNameDescriptionData, RawMixinNameDescriptionData } from '@src/api/entities/interaction/mixins/'
+import { MixinNameDescriptionData, RawMixinNameDescriptionData } from '@src/api'
 
 export class MixinNameDescriptionRequired {
   declare name: string

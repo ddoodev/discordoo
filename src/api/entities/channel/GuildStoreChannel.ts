@@ -23,8 +23,8 @@ export class GuildStoreChannel extends AbstractGuildChannel {
     return this
   }
 
-  toJson(properties: ToJsonProperties = {}, obj?: any): Json {
-    return super.toJson({
+  jsonify(properties: ToJsonProperties = {}, obj?: any): Json {
+    return super.jsonify({
       ...properties,
       nsfw: true,
     }, obj)

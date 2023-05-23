@@ -135,8 +135,8 @@ export class Role extends AbstractEntity { // TODO: positions...
     return `<@&${this.id}>`
   }
 
-  toJson(properties: ToJsonProperties = {}, obj?: any): Json {
-    return super.toJson({
+  jsonify(properties: ToJsonProperties = {}, obj?: any): Json {
+    return super.jsonify({
       ...properties,
       color: true,
       hoist: true,

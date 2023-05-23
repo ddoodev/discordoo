@@ -52,7 +52,7 @@ export abstract class ReadonlyBigBitField {
     return result
   }
 
-  toJson(): Json {
+  jsonify(): Json {
     return { bits: this.bitfield.toString() + 'n' }
   }
 }

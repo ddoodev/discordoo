@@ -65,7 +65,7 @@ export class DefaultRestProvider implements RestProvider {
       body = JSON.stringify(data.body)
     }
 
-    // console.log('PROVIDER REQUEST:', data)
+    // console.log('PROVIDER REQUEST:', data, data.body)
 
     const before = process.hrtime.bigint()
     const response = await request(

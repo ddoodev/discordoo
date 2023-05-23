@@ -1,11 +1,11 @@
 import { BIG_INT_POINTER } from '@src/constants'
 
-export function toJson(data: any, returnString?: boolean): any {
-  if (Array.isArray(data)) return data.map(d => toJson(d, returnString))
+export function jsonify(data: any, returnString?: boolean): any {
+  if (Array.isArray(data)) return data.map(d => jsonify(d, returnString))
 
   if (data) {
     if (returnString) {
-      if (typeof data.toJson === 'function') return JSON.stringify(data.toJson())
+      if (typeof data.jsonify === 'function') return JSON.stringify(data.jsonify())
       return JSON.stringify(data)
     } else {
 
@@ -17,7 +17,7 @@ export function toJson(data: any, returnString?: boolean): any {
         return v
       }
 
-      if (typeof data.toJson === 'function') return data.toJson()
+      if (typeof data.jsonify === 'function') return data.jsonify()
       return JSON.parse(JSON.stringify(data, stringify))
     }
   }

@@ -38,8 +38,8 @@ export abstract class AbstractChannel extends AbstractEntity {
     return `<#${this.id}>`
   }
 
-  toJson(properties: ToJsonProperties = {}, obj?: any): Json {
-    return super.toJson({ ...properties, id: true, type: true }, obj)
+  jsonify(properties: ToJsonProperties = {}, obj?: any): Json {
+    return super.jsonify({ ...properties, id: true, type: true }, obj)
   }
 
 }

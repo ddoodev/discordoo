@@ -84,8 +84,8 @@ export class Guild extends AbstractViewableGuild {
     return success ? this : undefined
   }
 
-  toJson(properties: ToJsonProperties = {}, obj?: any): Json {
-    return super.toJson({
+  jsonify(properties: ToJsonProperties = {}, obj?: any): Json {
+    return super.jsonify({
       ...properties,
       unavailable: true,
       rulesChannelId: true,

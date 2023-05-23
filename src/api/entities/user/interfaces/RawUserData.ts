@@ -1,6 +1,8 @@
 export interface RawUserData {
   id: string
   username: string
+  global_name?: string
+  /** @deprecated */
   discriminator?: string
   avatar?: string
   bot?: boolean
