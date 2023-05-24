@@ -21,7 +21,7 @@ export class SlashCommandBuilder {
   /** localization dictionary for `description` field. Values follow the same restrictions as description */
   public descriptionLocalizations?: Record<DiscordLocale, string>
   /** the type of command, defaults `1` (`ChatInput`) if not set */
-  public type?: AppCommandTypes
+  public type?: AppCommandTypes.ChatInput
   /** parameters for the command, max of 25 */
   public options: RawAppCommandOptionWithSubcommandsData[] = []
   /** set of permissions represented as a bit set */
@@ -68,11 +68,6 @@ export class SlashCommandBuilder {
 
   setDefaultPermissions(permissions: BigBitFieldResolvable): this {
     this.defaultMemberPermissions = resolveBigBitField(permissions)
-    return this
-  }
-
-  setType(type: AppCommandTypes): this {
-    this.type = type
     return this
   }
 
