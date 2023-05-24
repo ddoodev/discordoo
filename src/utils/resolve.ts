@@ -452,7 +452,8 @@ export function resolveMessageReferenceToRaw(resolvable: MessageReferenceResolva
   return {
     guild_id: data.guildId ?? data.guild_id ?? resolveGuildId(data.guild),
     channel_id: data.channelId ?? data.channel_id ?? resolveChannelId(data.channel),
-    message_id: data.id ?? data.messageId ?? data.message_id ?? resolveMessageId(data.message)
+    message_id: data.id ?? data.messageId ?? data.message_id ?? resolveMessageId(data.message),
+    fail_if_not_exists: data.failIfNotExists ?? data.fail_if_not_exists ?? true
   }
 }
 

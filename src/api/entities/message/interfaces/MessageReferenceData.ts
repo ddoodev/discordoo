@@ -4,4 +4,5 @@ export interface MessageReferenceData {
   guild?: GuildResolvable
   channel?: ChannelResolvable
   message: MessageResolvable
+  failIfNotExists?: boolean
 }
