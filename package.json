@@ -15,8 +15,7 @@
     "build:publish": "npx rimraf dist types && ttsc -p tsconfig.publish.json",
     "build:watch": "ttsc -p tsconfig.json --watch",
     "docs": "npx tapok ./docs/docs.json -c typedoc.js -i",
-    "prepublishOnly": "npm run build:publish",
-    "prepare": "husky install"
+    "prepublishOnly": "npm run build:publish"
   },
   "keywords": [],
   "author": {
