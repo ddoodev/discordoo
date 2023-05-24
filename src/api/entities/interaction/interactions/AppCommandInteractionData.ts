@@ -12,6 +12,7 @@ import { attach } from '@src/utils'
 export class AppCommandInteractionData extends AbstractEntity {
   declare id: string
   declare type: AppCommandTypes
+  declare name: string
   declare resolved?: InteractionResolvedCacheManager
   declare options: AppCommandInteractionOptionPayload[]
   private declare _resolved?: RawInteractionResolvedData
@@ -24,6 +25,7 @@ export class AppCommandInteractionData extends AbstractEntity {
         'id',
         'type',
         'options',
+        'name'
       ],
       disabled: options?.ignore,
       enabled: [ 'id' ]
