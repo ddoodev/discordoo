@@ -12,7 +12,7 @@ export class SelectMenuBuilder {
   public options: SelectMenuOptionData[] = []
   public channelTypes?: ChannelTypes[]
 
-  constructor(data: SelectMenuComponentData | RawSelectMenuComponentData) {
+  constructor(data?: SelectMenuComponentData | RawSelectMenuComponentData) {
     if (!data) return this
 
     attach(this, data, {
