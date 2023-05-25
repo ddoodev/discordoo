@@ -15,7 +15,7 @@ export class MessageAttachmentBuilder {
   private _options?: MessageAttachmentBuilderOptions
 
   constructor(
-    data: MessageAttachmentBuilderData | MessageAttachment | RawMessageAttachmentData,
+    data: MessageAttachmentBuilderData | MessageAttachment | RawMessageAttachmentData = {} as any,
     options?: MessageAttachmentBuilderOptions
   ) {
     attach(this, data, {
