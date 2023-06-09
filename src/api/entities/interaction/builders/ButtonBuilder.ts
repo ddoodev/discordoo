@@ -1,10 +1,10 @@
 import { AbstractEmojiData, ButtonComponentData, RawButtonComponentData } from '@src/api'
 import { ButtonStyles, ComponentTypes } from '@src/constants'
-import { attach, Optional } from '@src/utils'
+import { attach } from '@src/utils'
 
 export class ButtonBuilder {
   declare label: string
-  public emoji?: Required<AbstractEmojiData>
+  public emoji?: AbstractEmojiData
   public disabled?: boolean
   declare style: ButtonStyles
   public customId?: string
@@ -15,7 +15,6 @@ export class ButtonBuilder {
 
     attach(this, data, {
       props: [
-        'emoji',
         'label',
         'disabled',
         'style',
@@ -23,10 +22,12 @@ export class ButtonBuilder {
         [ 'customId', 'custom_id' ]
       ]
     })
+
+    if ('emoji' in data) this.setEmoji(data.emoji!)
   }
 
-  setEmoji(emoji: Required<AbstractEmojiData>) {
-    this.emoji = emoji
+  setEmoji(emoji: AbstractEmojiData | string) {
+    this.emoji = typeof emoji === 'string' ? { name: emoji } : emoji
     return this
   }
 

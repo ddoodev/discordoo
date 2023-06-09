@@ -6,7 +6,7 @@ export type ButtonComponentData = ButtonNonLinkComponentData | ButtonLinkCompone
 export interface AbstractButtonComponentData {
   type: ComponentTypes.Button
   label?: string
-  emoji?: Required<AbstractEmojiData>
+  emoji?: AbstractEmojiData | string
   disabled?: boolean
 }
 

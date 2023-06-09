@@ -6,7 +6,7 @@ export type RawButtonComponentData = RawButtonNonLinkComponentData | RawButtonLi
 export interface RawAbstractButtonComponentData {
   type: ComponentTypes.Button
   label?: string
-  emoji?: Required<AbstractEmojiData>
+  emoji?: AbstractEmojiData
   disabled?: boolean
 }
 
