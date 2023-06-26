@@ -17,13 +17,13 @@ export class DiscordSnowflake {
   ): string {
     if (timestamp instanceof Date) timestamp = timestamp.getTime()
 
-    if (INCREMENT >= 4194302) INCREMENT = 0
+    if (INCREMENT >= 4095) INCREMENT = 0
 
     if (timestamp <= EPOCH) {
       throw new DiscordooError('DiscordSnowflake#generate', 'Timestamp cannot be earlier than discord epoch (1420070400000).')
     }
 
-    if (increment && increment >= 4194302) {
+    if (increment && increment >= 4095) {
       throw new DiscordooError('DiscordSnowflake#generate', 'Increment must be lower than 4194303.')
     }
 
