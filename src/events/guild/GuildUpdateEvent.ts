@@ -18,11 +18,8 @@ export class GuildUpdateEvent extends AbstractEvent<GuildUpdateEventContext> {
       updated = await new Guild(this.app).init(data)
     }
 
-    const ownerId = await this.app[otherCacheSymbol].get(data.id, { storage: 'guild-owners' })
-    if (ownerId) {
-      if (data.owner_id !== ownerId) {
-        await this.app[otherCacheSymbol].set(data.id, { id: data.owner_id }, { storage: 'guild-owners' })
-      }
+    if (data.owner_id) {
+      await this.app[otherCacheSymbol].set(data.id, { id: data.owner_id }, { storage: 'guild-owners' })
     }
 
     const context: GuildUpdateEventContext = {
