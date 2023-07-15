@@ -1,6 +1,7 @@
 export { AppCommandInteractionPayload } from './AppCommandInteractionPayload'
 export { AppCommandOptionChoiceData } from './AppCommandOptionChoiceData'
 export { UiAppCommandPayloadData } from './UiAppCommandPayloadData'
+export { AppCommandOptionData } from './AppCommandOptionData'
 export { AppCommandCreateData } from './AppCommandCreateData'
 export { AppCommandEditData } from './AppCommandEditData'
 export { SlashCommandData } from './SlashCommandData'

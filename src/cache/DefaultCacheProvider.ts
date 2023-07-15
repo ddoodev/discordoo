@@ -1,4 +1,3 @@
-import { DiscordApplication } from '@src/core'
 import { Collection } from '@discordoo/collection'
 import { CacheStorageKey, CacheProvider } from '@discordoo/providers'
 import { AnyDiscordApplication } from '@src/core/apps/AnyDiscordApplication'

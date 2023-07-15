@@ -14,7 +14,6 @@ import { BigBitFieldResolvable, BitFieldResolvable } from '@src/utils/bitfield/i
 import { ReadonlyBigBitField } from '@src/utils/bitfield/ReadonlyBigBitField'
 import { ReadonlyBitField } from '@src/utils/bitfield/ReadonlyBitField'
 import { UserResolvable } from '@src/api/entities/user/interfaces/UserResolvable'
-import { DiscordApplication } from '@src/core'
 import { RoleResolvable } from '@src/api/entities/role'
 import { RoleTagsResolvable } from '@src/api/entities/role/interfaces/RoleTagsResolvable'
 import { RoleTagsData } from '@src/api/entities/role/interfaces/RoleTagsData'
@@ -25,7 +24,6 @@ import {
   AnyComponent,
   AnyComponentData,
   ButtonBuilder,
-  ButtonInteractionData,
   CommandResolvable,
   EmojiResolvable,
   GuildChannelResolvable,
@@ -33,10 +31,8 @@ import {
   MessageAttachmentBuilder,
   MessageComponentResolvable, RawActionRowData,
   RawAnyComponentData,
-  RawButtonComponentData, RawTextInputComponentData,
   SelectMenuBuilder,
   TextInputBuilder,
-  TextInputComponentData,
   ThreadChannelResolvable
 } from '@src/api'
 import { MessageReactionResolvable } from '@src/api/entities/reaction/interfaces/MessageReactionResolvable'
@@ -52,7 +48,7 @@ import { RawMessageReferenceData } from '@src/api/entities/message/interfaces/Ra
 import { ThreadMemberResolvable } from '@src/api/entities/member/interfaces/ThreadMemberResolvable'
 import { GatewayIntentsResolvable } from '@src/gateway/interfaces/GatewayIntentsResolvable'
 import { MessageEmbedBuilder } from '@src/api/entities/embed/MessageEmbedBuilder'
-import { AnyDiscordApplication, RestEligibleDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
+import { RestEligibleDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
 
 export function resolveFiles(resolvable: MessageAttachmentResolvable[]): Promise<RawAttachment[]> {
   return Promise.all(resolvable.map(resolveFile))

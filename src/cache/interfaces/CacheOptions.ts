@@ -31,7 +31,6 @@ import {
   MessageReaction,
   PermissionOverwrite,
   AppCommand,
-  AppCommandOption,
 } from '@src/api'
 import { Entities } from '@src/api/entities/Entities'
 

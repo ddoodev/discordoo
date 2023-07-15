@@ -1,5 +1,4 @@
 import { EntitiesCacheManager, GuildMember, Role, RoleResolvable } from '@src/api'
-import { DiscordApplication } from '@src/core'
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
 import { GuildMemberRolesManagerData } from '@src/api/managers/members/GuildMemberRolesManagerData'
 import { resolveGuildId, resolveRoleId, resolveUserId } from '@src/utils/resolve'

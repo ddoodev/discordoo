@@ -1,4 +1,4 @@
-import { DiscordApplication, ApplicationOptions } from '@src/core'
+import { ApplicationOptions } from '@src/core'
 import { NonOptional } from '@src/utils'
 import {
   ChannelsCachingPolicy,

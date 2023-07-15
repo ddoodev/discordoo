@@ -1,6 +1,6 @@
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
 import { AnyEmoji, EntitiesCacheManager } from '@src/api'
-import { DiscordApplication, DiscordRestApplication } from '@src/core'
+import { DiscordRestApplication } from '@src/core'
 import { Keyspaces } from '@src/constants'
 
 export class ApplicationEmojisManager extends EntitiesManager {

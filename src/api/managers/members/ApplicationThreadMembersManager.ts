@@ -1,5 +1,5 @@
 import { EntitiesCacheManager, UserResolvable } from '@src/api'
-import { DiscordApplication, DiscordRestApplication } from '@src/core'
+import { DiscordRestApplication } from '@src/core'
 import { Keyspaces } from '@src/constants'
 import { ThreadMember } from '@src/api/entities/member/ThreadMember'
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'

@@ -1,5 +1,5 @@
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
-import { DiscordApplication, DiscordRestApplication } from '@src/core'
+import { DiscordRestApplication } from '@src/core'
 import { ChannelResolvable, EmojiResolvable, EntitiesCacheManager, MessageResolvable, User, UserResolvable } from '@src/api'
 import { MessageReaction } from '@src/api/entities/reaction/MessageReaction'
 import { Keyspaces } from '@src/constants'

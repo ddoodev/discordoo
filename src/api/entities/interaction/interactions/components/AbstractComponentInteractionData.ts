@@ -19,7 +19,8 @@ export abstract class AbstractComponentInteractionData extends AbstractEntity {
       props: [
         [ 'customId', 'custom_id' ],
       ],
-      enabled: [ 'customId' ]
+      enabled: [ 'customId' ],
+      disabled: options?.ignore
     })
 
     if ('type' in data && data.type) {

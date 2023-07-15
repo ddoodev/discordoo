@@ -1,6 +1,6 @@
 import {
   ButtonInteractionData,
-  EntitiesUtil, InteractionResolvedCacheManager,
+  EntitiesUtil,
   RawButtonComponentInteractionData,
   RawInteractionData, RawSelectComponentInteractionData, SelectMenuInteractionData
 } from '@src/api'

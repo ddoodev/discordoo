@@ -33,8 +33,6 @@ import { serializeError } from 'serialize-error'
 import { IpcEmergencyOpCodes } from '@src/constants/sharding/IpcEmergencyOpCodes'
 import { GatewayOpCodes } from '@discordoo/providers'
 import { AnyDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
-import { DiscordCacheApplication } from '@src/core/apps/cache/DiscordCacheApplication'
-import { DiscordApplication, DiscordRestApplication } from '@src/core'
 
 export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
   private readonly bucket: Collection = new Collection()

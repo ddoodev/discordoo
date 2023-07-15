@@ -1,4 +1,3 @@
-import { RawMixinNameDescriptionData } from '@src/api/entities/interaction/mixins/interfaces/RawMixinNameDescriptionData'
 import { DiscordLocale } from '@src/constants'
 
 export class MixinSlashCommandOptionBase {

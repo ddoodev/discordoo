@@ -1,5 +1,5 @@
 import { ChannelResolvable, EntitiesCacheManager, GuildResolvable } from '@src/api'
-import { DiscordApplication, DiscordRestApplication } from '@src/core'
+import { DiscordRestApplication } from '@src/core'
 import {
   attach,
   channelEntityKey,
@@ -11,7 +11,7 @@ import {
 } from '@src/utils'
 import { ChannelDeleteOptions } from '@src/api/entities/channel/interfaces/ChannelDeleteOptions'
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
-import { ChannelTypes, Keyspaces } from '@src/constants'
+import { Keyspaces } from '@src/constants'
 import { AnyChannel } from '@src/api/entities/channel/interfaces/AnyChannel'
 import { GuildChannelEditData } from '@src/api/entities/channel/interfaces/GuildChannelEditData'
 import { RawGuildChannelEditData } from '@src/api/entities/channel/interfaces/RawGuildChannelEditData'

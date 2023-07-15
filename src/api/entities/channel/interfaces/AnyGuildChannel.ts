@@ -1,5 +1,5 @@
 import {
-  DirectMessagesChannel, GuildCategoryChannel,
+  GuildCategoryChannel,
   GuildNewsChannel,
   GuildNewsThreadChannel, GuildStoreChannel,
   GuildTextChannel, GuildThreadChannel

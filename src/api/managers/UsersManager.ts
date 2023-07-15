@@ -4,7 +4,7 @@ import { User, UserResolvable } from '@src/api/entities/user'
 import { Keyspaces } from '@src/constants'
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
 import { DiscordooError, resolveUserId } from '@src/utils'
-import { DirectMessagesChannel, EntitiesUtil } from '@src/api'
+import { EntitiesUtil } from '@src/api'
 
 export class UsersManager extends EntitiesManager {
   public cache: EntitiesCacheManager<User>

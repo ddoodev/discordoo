@@ -1,6 +1,5 @@
 import {
   resolveActionRowToRaw,
-  resolveComponentToRaw,
   resolveEmbedToRaw,
   resolveFile,
   resolveFiles,

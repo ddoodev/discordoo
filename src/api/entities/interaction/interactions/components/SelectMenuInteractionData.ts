@@ -1,10 +1,16 @@
 import { AbstractComponentInteractionData } from '@src/api/entities/interaction/interactions/components/AbstractComponentInteractionData'
-import { ComponentTypes } from '@src/constants'
 import { attach } from '@src/utils'
-import { EntityInitOptions, InteractionResolvedCacheManager, Json, RawSelectComponentInteractionData, ToJsonProperties } from '@src/api'
+import {
+  EntityInitOptions,
+  InteractionResolvedCacheManager,
+  Json,
+  RawSelectComponentInteractionData,
+  SelectMenuTypes,
+  ToJsonProperties
+} from '@src/api'
 
 export class SelectMenuInteractionData extends AbstractComponentInteractionData {
-  declare type: Exclude<ComponentTypes, ComponentTypes.Button | ComponentTypes.ActionRow>
+  declare type: SelectMenuTypes
   declare resolved: InteractionResolvedCacheManager
   declare values: string[]
 

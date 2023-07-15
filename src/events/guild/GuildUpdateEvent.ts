@@ -1,6 +1,6 @@
 import { AbstractEvent } from '@src/events'
 import { EventNames, otherCacheSymbol } from '@src/constants'
-import { EntitiesUtil, Guild, RawViewableGuildData } from '@src/api'
+import { EntitiesUtil, Guild } from '@src/api'
 import { GuildUpdateEventContext } from '@src/events/guild/ctx'
 import { RawGuildData } from '@src/api/entities/guild/interfaces/RawGuildData'
 

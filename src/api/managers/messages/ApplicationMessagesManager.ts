@@ -1,22 +1,14 @@
-import { EntitiesCacheManager, Message, MessageEditOptions, MessageEmbedBuilder, MessageResolvable } from '@src/api'
-import { DiscordApplication, DiscordRestApplication } from '@src/core'
+import { EntitiesCacheManager, Message, MessageEditOptions, MessageResolvable } from '@src/api'
+import { DiscordRestApplication } from '@src/core'
 import { ChannelResolvable } from '@src/api/entities/channel/interfaces/ChannelResolvable'
 import { MessageContent } from '@src/api/entities/message/interfaces/MessageContent'
 import { MessageCreateOptions } from '@src/api/entities/message/interfaces/MessageCreateOptions'
 import {
   resolveChannelId,
-  resolveEmbedToRaw,
-  resolveFile,
-  resolveFiles,
-  resolveMessageId, resolveMessageReferenceToRaw,
-  resolveStickerId
+  resolveMessageId,
 } from '@src/utils/resolve'
-import { MessageCreateData } from '@src/api/entities/message/interfaces/MessageCreateData'
-import { StickerResolvable } from '@src/api/entities/sticker'
-import { Keyspaces, MessageEmbedTypes, StickerFormatTypes } from '@src/constants'
+import { Keyspaces } from '@src/constants'
 import { createMessagePayload, DiscordooError, idToTimestamp } from '@src/utils'
-import { DataResolver } from '@src/utils/DataResolver'
-import { inspect } from 'util'
 import { filterAndMap } from '@src/utils/filterAndMap'
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
 import { makeCachePointer } from '@src/utils/cachePointer'

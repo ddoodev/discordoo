@@ -1,4 +1,3 @@
-import { ReplaceType } from '@src/utils'
 import { MessageEmbedData } from '@src/api'
 
 export interface MessageEmbedBuilderData extends Omit<MessageEmbedData, 'thumbnail' | 'video' | 'image'> {

@@ -1,7 +1,7 @@
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
 import { ChannelResolvable, EntitiesCacheManager, RoleResolvable, UserResolvable } from '@src/api'
 import { PermissionOverwrite } from '@src/api/entities/overwrite/PermissionOverwrite'
-import { DiscordApplication, DiscordRestApplication } from '@src/core'
+import { DiscordRestApplication } from '@src/core'
 import { Keyspaces } from '@src/constants'
 import { PermissionOverwriteResolvable } from '@src/api/entities/overwrite/interfaces/PermissionOverwriteResolvable'
 import { GuildChannelResolvable } from '@src/api/entities/channel/interfaces/GuildChannelResolvable'

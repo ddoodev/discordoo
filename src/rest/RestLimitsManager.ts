@@ -3,7 +3,7 @@ import { RestManagerRequestData } from '@src/rest/interfaces'
 import { RestRateLimitBucket } from '@src/rest/interfaces/RestRateLimitBucket'
 import { RestFinishedResponse, RestRequestOptions } from '@discordoo/providers'
 import { wait } from '@src/utils'
-import { AnyDiscordApplication, RestEligibleDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
+import { RestEligibleDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
 
 /**
  * Used to comply with the Discord rate limits.
