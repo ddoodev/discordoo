@@ -1,3 +1,5 @@
+export { InteractionResolvedThreadChannel } from './InteractionResolvedThreadChannel'
+export { InteractionResolvedChannel } from './InteractionResolvedChannel'
 export { AbstractGuildTextChannel } from './AbstractGuildTextChannel'
 export { GuildNewsThreadChannel } from './GuildNewsThreadChannel'
 export { AbstractThreadChannel } from './AbstractThreadChannel'

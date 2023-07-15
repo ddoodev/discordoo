@@ -23,7 +23,7 @@ export class DefaultRestProvider implements RestProvider {
 
   async request<T = any>(data: RestRequestData, options: RestRequestOptions = {}): RestFinishedResponse<T> {
 
-    let headers = this.options.api.headers
+    let headers = this.options.api.headers ?? {}
 
     if (options.useAuth !== false) headers['Authorization'] = options.auth ?? this.options.api.auth
 
@@ -41,19 +41,13 @@ export class DefaultRestProvider implements RestProvider {
 
     let body: string | Buffer | undefined
 
-    if (data.attachments.length) {
+    if (data.attachments?.length) {
       const multipart = new MultipartData()
       headers['Content-Type'] = 'multipart/form-data; boundary=' + multipart.boundary
 
-      if (data.attachments.length === 1) {
-        const attachment = data.attachments[0]
-
-        multipart.attach('file', attachment.data, attachment.name)
-      } else {
-        data.attachments.forEach(attachment => {
-          multipart.attach(attachment.name, attachment.data, attachment.name)
-        })
-      }
+      data.attachments.forEach((attachment, index) => {
+        multipart.attach(`files[${index}]`, attachment.data, attachment.name)
+      })
 
       if (data.body) {
         multipart.attach('payload_json', JSON.stringify(data.body))
@@ -65,7 +59,16 @@ export class DefaultRestProvider implements RestProvider {
       body = JSON.stringify(data.body)
     }
 
-    // console.log('PROVIDER REQUEST:', data, data.body)
+    // console.log('PROVIDER REQUEST:',
+    //   `${this.options.api.scheme}://${this.options.api.domain}${this.options.api.path}${this.options.api.version}/${data.path}`,
+    //   {
+    //     method: data.method,
+    //     body,
+    //     headers,
+    //     headersTimeout: this.options.requestTimeout,
+    //     bodyTimeout: this.options.requestTimeout,
+    //   }
+    //   )
 
     const before = process.hrtime.bigint()
     const response = await request(

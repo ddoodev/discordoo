@@ -1,130 +1,106 @@
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
-import { is } from 'typescript-is'
-import { ValidationError } from '@src/utils'
-import { AnyGuildChannel, EntitiesCacheManager, GuildMember, InteractionResolvedCacheManagerData, Message, Role, User } from '@src/api'
-import { KNOWN_CACHE_OPERATE_METHODS, ProxyFilterPointerSymbol } from '@src/constants'
+import {
+  AnyInteractionResolvedChannel,
+  EntitiesUtil,
+  GuildMember,
+  InteractionResolvedCacheManagerData,
+  InteractionResolvedChannel,
+  InteractionResolvedThreadChannel,
+  Message,
+  MessageAttachment,
+  Role,
+  User
+} from '@src/api'
 import { RestEligibleDiscordApplication } from '@src/core'
+import { Collection } from '@discordoo/collection'
+import { ChannelTypes } from '@src/constants'
 
 export class InteractionResolvedCacheManager extends EntitiesManager {
-  private readonly _data: InteractionResolvedCacheManagerData
+  public channels: Collection<string, AnyInteractionResolvedChannel> = new Collection()
+  public messages: Collection<string, Message> = new Collection()
+  public members: Collection<string, GuildMember> = new Collection()
+  public roles: Collection<string, Role> = new Collection()
+  public users: Collection<string, User> = new Collection()
+  public attachments: Collection<string, MessageAttachment> = new Collection()
 
-  public channels: EntitiesCacheManager<AnyGuildChannel>
-  public messages: EntitiesCacheManager<Message>
-  public members: EntitiesCacheManager<GuildMember>
-  public roles: EntitiesCacheManager<Role>
-  public users: EntitiesCacheManager<User>
-
-  constructor(app: RestEligibleDiscordApplication, data: InteractionResolvedCacheManagerData) {
+  constructor(app: RestEligibleDiscordApplication) {
     super(app)
+  }
 
-    if (!is<InteractionResolvedCacheManagerData>(data)) {
-      throw new ValidationError(
-        'InteractionResolvedManager',
-        'Invalid init data provided. Type InteractionResolvedCacheManagerData is incompatible with the provided data.'
-      )._setInvalidOptions(data)
-    }
+  async init(data: InteractionResolvedCacheManagerData) {
+    // console.log(data)
+    if (data.channels) {
+      for await (const channelData of Object.values(data.channels)) {
+        let Channel: typeof InteractionResolvedThreadChannel | typeof InteractionResolvedChannel
 
-    this._data = data
-
-    const makePredicate = (allowed: string[], predicate: any, isMap?: boolean) => {
-      return (value, key, prov) => {
-        if (allowed.includes(key)) {
-          return predicate(value, key, prov)
-        } else {
-          if (isMap) return ProxyFilterPointerSymbol
-          else return false
+        switch (channelData.type) {
+          case ChannelTypes.GuildPublicThread:
+          case ChannelTypes.GuildPrivateThread:
+          case ChannelTypes.GuildNewsThread:
+            Channel = EntitiesUtil.get('InteractionResolvedThreadChannel')
+            break
+          default:
+            Channel = EntitiesUtil.get('InteractionResolvedChannel')
         }
+
+        const channel = await new Channel(this.app).init(channelData as any)
+
+        await this.app.channels.cache.set(channel.id, channel, { storage: data.guildId ?? 'dm' })
+        this.channels.set(channel.id, channel)
       }
     }
 
-    const clear = (storage: string, name: string) => {
-      if (this._data[name]?.length) {
-        this._data[name] = []
-        this[name] = new Proxy<EntitiesCacheManager<any>>(
-          this.app[name].cache, makeProxyHandler([], storage, name)
-        )
+    if (data.messages) {
+      for await (const messageData of Object.values(data.messages)) {
+        const Message = EntitiesUtil.get('Message')
+        const message = await new Message(this.app).init(messageData)
+
+        await this.app.messages.cache.set(message.id, message, { storage: message.channelId })
+        this.messages.set(message.id, message)
       }
     }
 
-    const allow = (key: string, name: string) => {
-      if (this._data[name]?.length) {
-        this._data[name].push(key)
+    if (data.members) {
+      // need entries for ID because memberData does not contain ID. little performance waste
+      for await (const [ id, memberData ] of Object.entries(data.members)) {
+        const Member = EntitiesUtil.get('GuildMember')
+        const member = await new Member(this.app).init({ ...memberData, userId: id, guildId: data.guildId })
+
+        await this.app.members.cache.set(member.userId, member, { storage: member.guildId })
+        this.members.set(member.userId, member)
       }
     }
 
-    const makeProxyHandler = (allowed: string[], storage: string, name: string) => {
-      return {
-        get(target: EntitiesCacheManager<any>, p: string | symbol): any {
-          if (KNOWN_CACHE_OPERATE_METHODS.includes(p as any)) {
-            return async function (...args: any[]) { // async to return promise
-              switch (p as typeof KNOWN_CACHE_OPERATE_METHODS[number]) {
-                case 'count':
-                  return target.count(makePredicate(allowed, args[0]), { ...args[1], storage })
-                case 'counts':
-                  return target.counts(args[0]?.map(a => makePredicate(allowed, a[0])), { ...args[1], storage })
-                case 'filter':
-                  return target.filter(makePredicate(allowed, args[0]), { ...args[1], storage })
-                case 'find':
-                  return target.find(makePredicate(allowed, args[0]), { ...args[1], storage })
-                case 'forEach':
-                  return target.forEach(makePredicate(allowed, args[0]), { ...args[1], storage })
-                case 'map':
-                  return target.map(makePredicate(allowed, args[0], true), { ...args[1], storage })
-                    .then(r => r.filter(v => v !== ProxyFilterPointerSymbol))
-                case 'sweep':
-                  return target.sweep(makePredicate(allowed, args[0]), { ...args[1], storage })
-                case 'get':
-                  return allowed.includes(args[0]) ? target.get(args[0], { ...args[1], storage }) : undefined
-                case 'has':
-                  return allowed.includes(args[0]) ? target.has(args[0], { ...args[1], storage }) : undefined
-                case 'delete':
-                  return allowed.includes(args[0]) ? target.delete(args[0], { ...args[1], storage }) : undefined
-                case 'set':
-                  return target.set(args[0], args[1], { ...args[2], storage })
-                    .then(() => {
-                      allow(args[0], name); return target
-                    })
-                case 'size':
-                  return target.count(makePredicate(allowed, () => true), { ...args[0], storage })
-                case 'clear':
-                  return clear(storage, name)
-                case 'keys':
-                  return allowed
-                case 'entries':
-                  return target.entries({ ...args[0], storage })
-                    .then(r => r.filter(k => allowed.includes(k[0])))
-                case 'values':
-                  return Promise.all(allowed.map(k => target.get(k, { ...args[0], storage })))
-              }
-            }
-          } else {
-            return target[p]
-          }
-        }
+    if (data.roles) {
+      for await (const roleData of Object.values(data.roles)) {
+        const Role = EntitiesUtil.get('Role')
+        const role = await new Role(this.app).init(roleData)
+
+        await this.app.roles.cache.set(role.id, role, { storage: role.guildId })
+        this.roles.set(role.id, role)
       }
     }
 
-    const guildId = data.guildId,
-      channelId = data.channelId
+    if (data.users) {
+      for await (const userData of Object.values(data.users)) {
+        const User = EntitiesUtil.get('User')
+        const user = await new User(this.app).init(userData)
 
-    this.channels = new Proxy<EntitiesCacheManager<any>>(
-      this.app.channels.cache, makeProxyHandler(Object.keys(this._data.channels ?? {}), guildId ?? 'global', 'channels')
-    )
+        await this.app.users.cache.set(user.id, user)
+        this.users.set(user.id, user)
+      }
+    }
 
-    this.roles = new Proxy<EntitiesCacheManager<any>>(
-      this.app.roles.cache, makeProxyHandler(Object.keys(this._data.roles ?? {}), guildId ?? 'global', 'roles')
-    )
+    if (data.attachments) {
+      for await (const attachmentData of Object.values(data.attachments)) {
+        const MessageAttachment = EntitiesUtil.get('MessageAttachment')
+        const messageAttachment = await new MessageAttachment(this.app).init(attachmentData)
 
-    this.members = new Proxy<EntitiesCacheManager<any>>(
-      this.app.members.cache, makeProxyHandler(Object.keys(this._data.members ?? {}), guildId ?? 'global', 'members')
-    )
+        // not cached in app
+        this.attachments.set(attachmentData.id, messageAttachment)
+      }
+    }
 
-    this.messages = new Proxy<EntitiesCacheManager<any>>(
-      this.app.messages.cache, makeProxyHandler(Object.keys(this._data.messages ?? {}), channelId ?? 'global', 'channels')
-    )
-
-    this.users = new Proxy<EntitiesCacheManager<any>>(
-      this.app.users.cache, makeProxyHandler(Object.keys(this._data.users ?? {}), 'global', 'users')
-    )
+    return this
   }
 }

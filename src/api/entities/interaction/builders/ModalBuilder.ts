@@ -36,7 +36,7 @@ export class ModalBuilder {
 
   addActionRow(component: ActionRowData | RawActionRowData | ActionRowBuilder) {
     if (component instanceof ActionRowBuilder) {
-      this.components.concat(component)
+      this.components.push(component)
     } else {
       const actionRowBuilder = new ActionRowBuilder(component)
       this.components.push(actionRowBuilder)
@@ -50,13 +50,13 @@ export class ModalBuilder {
     return this
   }
 
-  setTitle(title: string) {
-    this.title = title
+  setCustomId(customId: string) {
+    this.customId = customId
     return this
   }
 
-  setCustomId(customId: string) {
-    this.customId = customId
+  setTitle(title: string) {
+    this.title = title
     return this
   }
 

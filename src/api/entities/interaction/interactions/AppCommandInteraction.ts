@@ -1,11 +1,10 @@
-import { Interaction } from '@src/api/entities/interaction/interactions/Interaction'
 import { InteractionTypes } from '@src/constants'
 import {
-  AppCommandInteractionData, EntitiesUtil, Json, RawAppCommandInteractionData, RawInteractionData, ToJsonProperties
+  AppCommandInteractionData, EntitiesUtil, EntityInitOptions, Json, RawAppCommandInteractionData, RawInteractionData, ToJsonProperties
 } from '@src/api'
-import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
+import { WritableModalInteraction } from '@src/api/entities/interaction/interactions/WritableModalInteraction'
 
-export class AppCommandInteraction extends Interaction {
+export class AppCommandInteraction extends WritableModalInteraction {
   declare type: InteractionTypes.ApplicationCommand
   declare data: AppCommandInteractionData
 
@@ -17,7 +16,7 @@ export class AppCommandInteraction extends Interaction {
     const AppCmdIntData = EntitiesUtil.get('AppCommandInteractionData')
 
     this.data = await new AppCmdIntData(this.app).init(
-      { ...data.data as RawAppCommandInteractionData, channelId: this.channelId, guildId: this.guildId },
+      { ...data.data, channelId: this.channelId, guildId: this.guildId },
       options
     )
 

@@ -34,13 +34,8 @@ export class TextInputBuilder {
     return this
   }
 
-  setPlaceholder(placeholder: string) {
-    this.placeholder = placeholder
-    return this
-  }
-
-  setMinLength(minLength: number) {
-    this.minLength = minLength
+  setLabel(label: string) {
+    this.label = label
     return this
   }
 
@@ -49,18 +44,23 @@ export class TextInputBuilder {
     return this
   }
 
-  setStyle(style: TextInputStyles) {
-    this.style = style
+  setMinLength(minLength: number) {
+    this.minLength = minLength
     return this
   }
 
-  setLabel(label: string) {
-    this.label = label
+  setPlaceholder(placeholder: string) {
+    this.placeholder = placeholder
     return this
   }
 
   setRequired(required: boolean) {
     this.required = required
+    return this
+  }
+
+  setStyle(style: TextInputStyles) {
+    this.style = style
     return this
   }
 

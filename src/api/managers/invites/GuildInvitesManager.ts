@@ -1,6 +1,6 @@
 import { EntitiesCacheManager, InviteGuild } from '@src/api'
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
-import { DiscordApplication, DiscordRestApplication } from '@src/core'
+import { DiscordRestApplication } from '@src/core'
 import { Keyspaces } from '@src/constants'
 
 export class GuildInvitesManager extends EntitiesManager {

@@ -12,16 +12,16 @@ import { appCommandOptionToRaw } from '@src/utils/appCommandOptionToRaw'
 
 @mix(MixinNameDescriptionRequired)
 export class SlashCommandBuilder {
-  /** 1-32 character name */
+  /** 1-32 character **required** name */
   declare name: string
   /** localization dictionary for `name` field. Values follow the same restrictions as name */
   public nameLocalizations?: Record<DiscordLocale, string>
-  /** 1-100 character description for `ChatInput` commands, empty string for `User` and `Message` commands */
+  /** 1-100 character description **required** for `ChatInput` commands, empty string for `User` and `Message` commands */
   declare description: string
   /** localization dictionary for `description` field. Values follow the same restrictions as description */
   public descriptionLocalizations?: Record<DiscordLocale, string>
   /** the type of command, defaults `1` (`ChatInput`) if not set */
-  public type?: AppCommandTypes.ChatInput
+  public type?: AppCommandTypes
   /** parameters for the command, max of 25 */
   public options: RawAppCommandOptionWithSubcommandsData[] = []
   /** set of permissions represented as a bit set */
@@ -66,6 +66,17 @@ export class SlashCommandBuilder {
     }
   }
 
+  addOption(option: AppCommandOptionWithSubcommandsData | RawAppCommandOptionWithSubcommandsData): this {
+    const raw = appCommandOptionToRaw(option)
+    this.options.push(raw)
+    return this
+  }
+
+  addOptions(options: (AppCommandOptionWithSubcommandsData | RawAppCommandOptionWithSubcommandsData)[]): this {
+    options.forEach(option => this.addOption(option))
+    return this
+  }
+
   setDefaultPermissions(permissions: BigBitFieldResolvable): this {
     this.defaultMemberPermissions = resolveBigBitField(permissions)
     return this
@@ -76,21 +87,13 @@ export class SlashCommandBuilder {
     return this
   }
 
-  addOption(option: AppCommandOptionWithSubcommandsData | RawAppCommandOptionWithSubcommandsData): this {
-    const raw = appCommandOptionToRaw(option)
-
-    this.options.push(raw)
-
-    return this
-  }
-
-  addOptions(options: (AppCommandOptionWithSubcommandsData | RawAppCommandOptionWithSubcommandsData)[]): this {
-    options.forEach(option => this.addOption(option))
-    return this
-  }
-
   setGuild(guild: GuildResolvable): this {
     this.guild = resolveGuildId(guild)
+    return this
+  }
+
+  setType(type: AppCommandTypes) {
+    this.type = type
     return this
   }
 
@@ -108,3 +111,6 @@ export class SlashCommandBuilder {
     }
   }
 }
+
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface SlashCommandBuilder extends MixinNameDescriptionRequired {}

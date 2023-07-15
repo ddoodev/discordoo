@@ -1,21 +1,24 @@
 import {
   ActionRowContains,
-  ActionRowContainsData, AnyComponent,
+  ActionRowContainsData,
+  AnyComponent,
   AnyComponentData,
   ButtonBuilder,
   RawActionRowContainsData,
   RawActionRowData,
   RawAnyComponentData,
   SelectMenuBuilder,
-  TextInputBuilder
+  TextInputBuilder,
 } from '@src/api'
 import { ComponentTypes } from '@src/constants'
+import { DiscordooError } from '@src/utils'
 
 export class ActionRowBuilder {
   public components: ActionRowContains[] = []
 
   constructor(
-    data?: Array<ActionRowContainsData | RawActionRowContainsData>
+    data?:
+      | Array<AnyComponent | AnyComponentData | RawAnyComponentData>
       | AnyComponent
       | AnyComponentData
       | RawAnyComponentData
@@ -29,54 +32,64 @@ export class ActionRowBuilder {
     }
   }
 
-  private _isActionRowContainsComponent(component: any): component is ActionRowContains {
-    return component instanceof ButtonBuilder
-      || component instanceof SelectMenuBuilder
-      || component instanceof TextInputBuilder
+  addComponent(component: AnyComponent | AnyComponentData | RawAnyComponentData): this {
+    if (component instanceof ActionRowBuilder) {
+      this.components.push(...component.components)
+    } else if (this.isActionRowContainsComponent(component)) {
+      this.components.push(component)
+    } else if (component.type === ComponentTypes.ActionRow) {
+      this.components.push(
+        ...component.components.map((component) =>
+          this.getActionRowContainsComponentInstance(component)
+        )
+      )
+    } else {
+      this.components.push(this.getActionRowContainsComponentInstance(component))
+    }
+
+    return this
   }
 
-  private _getActionRowContainsComponentInstance(componentData: ActionRowContainsData | RawActionRowContainsData): ActionRowContains {
+  addComponents(
+    components: Array<AnyComponent | AnyComponentData | RawAnyComponentData>
+  ) {
+    if (!components.length) return this
+
+    components.forEach((component) => this.addComponent(component))
+    return this
+  }
+
+  private isActionRowContainsComponent(component: any): component is ActionRowContains {
+    return (
+      component instanceof ButtonBuilder ||
+      component instanceof SelectMenuBuilder ||
+      component instanceof TextInputBuilder
+    )
+  }
+
+  private getActionRowContainsComponentInstance(
+    componentData: ActionRowContainsData | RawActionRowContainsData
+  ): ActionRowContains {
     switch (componentData.type) {
       case ComponentTypes.Button:
         return new ButtonBuilder(componentData)
       case ComponentTypes.TextInput:
         return new TextInputBuilder(componentData)
-      default:
+      case ComponentTypes.ChannelSelect:
+      case ComponentTypes.MentionableSelect:
+      case ComponentTypes.RoleSelect:
+      case ComponentTypes.StringSelect:
+      case ComponentTypes.UserSelect:
         return new SelectMenuBuilder(componentData)
+      default:
+        throw new DiscordooError('ActionRowBuilder#getActionRowContainsComponentInstance', 'Unknown component type')
     }
-  }
-
-  addComponent(component: AnyComponent | AnyComponentData | RawAnyComponentData): this {
-    if (component instanceof ActionRowBuilder) {
-      this.components.concat(component.components)
-    } else if (this._isActionRowContainsComponent(component)) {
-      this.components.push(component)
-    } else if (component.type === ComponentTypes.ActionRow) {
-      this.components.concat(component.components.map(this._getActionRowContainsComponentInstance))
-    } else {
-      this.components.push(this._getActionRowContainsComponentInstance(component))
-    }
-
-    return this
-  }
-
-  addComponents(components: Array<ActionRowContains | ActionRowContainsData | RawActionRowContainsData>) {
-    if (!components.length) return this
-
-    const mappedComponents = components.map((component) =>
-      this._isActionRowContainsComponent(component)
-        ? component
-        : this._getActionRowContainsComponentInstance(component)
-    )
-
-    this.components.concat(mappedComponents)
-    return this
   }
 
   toJSON(): RawActionRowData {
     return {
       type: ComponentTypes.ActionRow,
-      components: this.components.map((v) => v.toJSON())
+      components: this.components.map((component) => component.toJSON()),
     } as RawActionRowData
   }
 }

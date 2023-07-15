@@ -18,14 +18,17 @@ export class InteractionCreateEvent extends AbstractEvent<InteractionCreateEvent
     let Interaction
     switch (data.type) {
       case InteractionTypes.ApplicationCommand:
+        // console.log(inspect(data, false, 9))
         Interaction = EntitiesUtil.get('AppCommandInteraction')
         break
       case InteractionTypes.ApplicationCommandAutocomplete:
+        Interaction = EntitiesUtil.get('AutocompleteInteraction')
         break
       case InteractionTypes.MessageComponent:
         Interaction = EntitiesUtil.get('MessageComponentInteraction')
         break
       case InteractionTypes.ModalSubmit:
+        Interaction = EntitiesUtil.get('ModalSubmitInteraction')
         break
       case InteractionTypes.Ping:
         break

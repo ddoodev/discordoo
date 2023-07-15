@@ -25,7 +25,7 @@ import {
   AnyComponent,
   AnyComponentData,
   ButtonBuilder,
-  ButtonComponentData,
+  ButtonInteractionData,
   CommandResolvable,
   EmojiResolvable,
   GuildChannelResolvable,

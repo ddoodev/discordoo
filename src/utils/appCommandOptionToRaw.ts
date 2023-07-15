@@ -1,8 +1,6 @@
 import {
-  AppCommandOptionChoiceData,
   AppCommandOptionWithSubcommandsData,
-  RawAppCommandAbstractOptionData, RawAppCommandOptionChoiceData,
-  RawAppCommandOptionWithSubcommandsData
+  RawAppCommandAbstractOptionData, RawAppCommandOptionWithSubcommandsData
 } from '@src/api'
 import { attach } from '@src/utils/attach'
 

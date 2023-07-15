@@ -45,7 +45,7 @@ export async function createMessagePayload<Interaction extends boolean = false>(
     message_reference: undefined,
     tts: false,
     embeds: [],
-    files: [],
+    attachments: undefined,
     stickers: [],
     components: [],
     flags: undefined,
@@ -71,7 +71,8 @@ export async function createMessagePayload<Interaction extends boolean = false>(
 
     } else { // content = files or unexpected things
       try {
-        payload.files.push(...await resolveFiles(data))
+        payload.attachments = []
+        payload.attachments.push(...await resolveFiles(data))
       } catch (e: any) {
         throw new DiscordooError(
           'MessagesManager#create',
@@ -96,7 +97,8 @@ export async function createMessagePayload<Interaction extends boolean = false>(
       if (id) payload.stickers.push(id)
 
     } else if (typeof data === 'object' && DataResolver.isMessageAttachmentResolvable(data)) {
-      payload.files.push(await resolveFile(data))
+      payload.attachments = []
+      payload.attachments.push(await resolveFile(data))
 
     } else {
       payload.content = content.toString()
@@ -119,8 +121,12 @@ export async function createMessagePayload<Interaction extends boolean = false>(
   if (options.embed) payload.embeds.push(resolveEmbedToRaw(options.embed))
   if (options.embeds?.length) payload.embeds.push(...options.embeds.map(resolveEmbedToRaw))
 
-  if (options.file) payload.files.push(await resolveFile(options.file))
-  if (options.files?.length) payload.files.push(...await resolveFiles(options.files))
+  if (options.file || options.files) {
+    payload.attachments = []
+  }
+
+  if (options.file) payload.attachments!.push(await resolveFile(options.file))
+  if (options.files?.length) payload.attachments!.push(...await resolveFiles(options.files))
 
   if ('sticker' in options) {
     const id = resolveStickerId(data.sticker)
@@ -138,5 +144,6 @@ export async function createMessagePayload<Interaction extends boolean = false>(
 
   if (options.flags) payload.flags = options.flags as any
 
+  // console.log('PAYLOAD', payload)
   return payload
 }

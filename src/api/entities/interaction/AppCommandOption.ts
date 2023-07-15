@@ -19,6 +19,7 @@ export class AppCommandOption {
     (this['type'] extends AppCommandOptionTypes.String ? string : number)
     | (this['required'] extends true ? never : undefined)
   declare type: AppCommandOptionTypes
+  declare autocomplete?: boolean
 
   constructor(data: AppCommandOptionWithSubcommandsData | RawAppCommandOptionWithSubcommandsData, options?: EntityInitOptions) {
     attach(this, data, {
@@ -30,6 +31,7 @@ export class AppCommandOption {
         'required',
         'value',
         'type',
+        'autocomplete'
       ],
       disabled: options?.ignore,
       enabled: [ 'name', 'type' ]

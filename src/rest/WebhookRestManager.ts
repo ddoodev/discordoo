@@ -24,7 +24,7 @@ export class WebhookRestManager<P extends RestProvider = RestProvider> {
     return this.provider.request<T>({
       method: data.method,
       path: data.path,
-      attachments: data.attachments ?? [],
+      attachments: data.attachments,
       headers: data.headers,
       body: data.body,
     }, { ...options, useAuth: false })

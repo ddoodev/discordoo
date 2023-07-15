@@ -15,6 +15,7 @@ import { Keyspaces } from '@src/constants'
 
 export class ApplicationInteractionsSlashCommandManager extends EntitiesManager {
   public cache: EntitiesCacheManager<AppCommand>
+
   constructor(app: DiscordRestApplication) {
     super(app)
 
@@ -40,8 +41,6 @@ export class ApplicationInteractionsSlashCommandManager extends EntitiesManager 
 
       return appCommand
     }
-
-    return
   }
 
   async createGuild(
@@ -65,8 +64,6 @@ export class ApplicationInteractionsSlashCommandManager extends EntitiesManager 
 
       return appCommand
     }
-
-    return
   }
 
   create(data: AnyAppCommandData): Promise<AppCommand | undefined> {
@@ -130,8 +127,6 @@ export class ApplicationInteractionsSlashCommandManager extends EntitiesManager 
 
       return appCommand
     }
-
-    return
   }
 
   async editGuild(guild: GuildResolvable, command: CommandResolvable, data: GuildAppCommandEditData): Promise<AppCommand | undefined> {
@@ -165,11 +160,15 @@ export class ApplicationInteractionsSlashCommandManager extends EntitiesManager 
 
       return appCommand
     }
-
-    return
   }
 
-  async fetchGlobalOne(commandId: string): Promise<AppCommand | undefined> {
+  async fetchGlobalOne(command: CommandResolvable): Promise<AppCommand | undefined> {
+    const commandId = resolveCommandId(command)
+    if (!commandId) throw new DiscordooError(
+      'ApplicationInteractionsSlashCommandManager#fetchGlobalOne',
+      'Cannot fetch global command without command id.'
+    )
+
     const response = await this.app.internals.actions.getGlobalCommand(commandId)
 
     if (response.success) {
@@ -180,15 +179,19 @@ export class ApplicationInteractionsSlashCommandManager extends EntitiesManager 
 
       return appCommand
     }
-
-    return
   }
 
-  async fetchGuildOne(guild: GuildResolvable, commandId: string): Promise<AppCommand | undefined> {
+  async fetchGuildOne(guild: GuildResolvable, command: CommandResolvable): Promise<AppCommand | undefined> {
     const guildId = resolveGuildId(guild)
     if (!guildId) throw new DiscordooError(
       'ApplicationInteractionsSlashCommandManager#fetchGuildOne',
       'Cannot fetch guild command without guild id.'
+    )
+
+    const commandId = resolveCommandId(command)
+    if (!commandId) throw new DiscordooError(
+      'ApplicationInteractionsSlashCommandManager#fetchGuildOne',
+      'Cannot fetch guild command without command id.'
     )
 
     const response = await this.app.internals.actions.getGuildCommand(guildId, commandId)
@@ -201,8 +204,6 @@ export class ApplicationInteractionsSlashCommandManager extends EntitiesManager 
 
       return appCommand
     }
-
-    return
   }
 
   async fetchGlobalMany(options: FetchCommandOptions = {}): Promise<AppCommand[] | undefined> {
@@ -222,8 +223,6 @@ export class ApplicationInteractionsSlashCommandManager extends EntitiesManager 
         })
       )
     }
-
-    return
   }
 
   async fetchGuildMany(guild: GuildResolvable, options: FetchCommandOptions = {}): Promise<AppCommand[] | undefined> {
@@ -249,8 +248,6 @@ export class ApplicationInteractionsSlashCommandManager extends EntitiesManager 
         })
       )
     }
-
-    return
   }
 
   async overwriteGlobal(
@@ -274,8 +271,6 @@ export class ApplicationInteractionsSlashCommandManager extends EntitiesManager 
         })
       )
     }
-
-    return
   }
 
   async overwriteGuild(
@@ -314,7 +309,6 @@ export class ApplicationInteractionsSlashCommandManager extends EntitiesManager 
     }))
 
     if (result.length > 0) return result
-    return
   }
 
   async overwrite(commandsData: AnyAppCommandData[]): Promise<AppCommand[] | undefined> {

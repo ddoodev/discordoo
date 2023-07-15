@@ -21,7 +21,7 @@ export function makeRequest(rest: RestManager<any>): RestRequest {
     requestStack: [],
     requestHeaders: {},
     requestBody: undefined,
-    requestPayload: [],
+    requestPayload: undefined,
 
     get majorParameter() {
       const guilds = this.requestStack.indexOf('guilds'),
@@ -77,6 +77,7 @@ export function makeRequest(rest: RestManager<any>): RestRequest {
     },
 
     attach(...attachments: Array<Buffer | ArrayBuffer | RawAttachment>): RestRequest {
+      if (!this.requestPayload) this.requestPayload = []
       this.requestPayload.push(
         ...attachments.map(file => {
           if (Buffer.isBuffer(file) || file instanceof ArrayBuffer) {

@@ -1,24 +1,26 @@
-import { Interaction } from '@src/api/entities/interaction/interactions/Interaction'
 import {
-  AnyRawComponentInteractionData,
   ButtonInteractionData,
-  EntitiesUtil,
-  RawInteractionData,
-  SelectMenuInteractionData
+  EntitiesUtil, InteractionResolvedCacheManager,
+  RawButtonComponentInteractionData,
+  RawInteractionData, RawSelectComponentInteractionData, SelectMenuInteractionData
 } from '@src/api'
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
+import { WritableComponentInteraction } from '@src/api/entities/interaction/interactions/WritableComponentInteraction'
 import { ComponentTypes } from '@src/constants'
 
-export class MessageComponentInteraction extends Interaction {
+export class MessageComponentInteraction extends WritableComponentInteraction {
   declare data: ButtonInteractionData | SelectMenuInteractionData
 
-  async init(interaction: RawInteractionData<AnyRawComponentInteractionData>, options?: EntityInitOptions): Promise<this> {
+  async init(
+    interaction: RawInteractionData<RawButtonComponentInteractionData | RawSelectComponentInteractionData>,
+    options?: EntityInitOptions): Promise<this>
+  {
     await super.init(interaction, options)
-
-    const { data } = interaction
 
     const ButtonIntData = EntitiesUtil.get('ButtonInteractionData')
     const SelectMenuIntData = EntitiesUtil.get('SelectMenuInteractionData')
+
+    const { data } = interaction
 
     switch (data.component_type) {
       case ComponentTypes.Button:
@@ -29,7 +31,7 @@ export class MessageComponentInteraction extends Interaction {
       case ComponentTypes.RoleSelect:
       case ComponentTypes.MentionableSelect:
       case ComponentTypes.StringSelect:
-        this.data = await new SelectMenuIntData(this.app).init(data, options)
+        this.data = await new SelectMenuIntData(this.app).init({ ...data, guildId: interaction.guild_id }, options)
         break
       default:
         // TODO: log about this

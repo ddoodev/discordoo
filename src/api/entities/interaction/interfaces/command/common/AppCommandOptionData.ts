@@ -9,6 +9,7 @@ export type AppCommandOptionData = AppCommandStringOptionData
   | AppCommandChannelOptionData
   | AppCommandRoleOptionData
   | AppCommandMentionableOptionData
+  | AppCommandAttachmentOptionData
 
 export type AppCommandOptionWithSubcommandsData = AppCommandOptionData
   | AppCommandSubcommandOptionData
@@ -111,4 +112,8 @@ export interface AppCommandRoleOptionData extends AppCommandAbstractOptionData {
 
 export interface AppCommandMentionableOptionData extends AppCommandAbstractOptionData {
   type: AppCommandOptionTypes.Mentionable
+}
+
+export interface AppCommandAttachmentOptionData extends AppCommandAbstractOptionData {
+  type: AppCommandOptionTypes.Attachment
 }

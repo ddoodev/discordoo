@@ -1,7 +1,7 @@
 import {
   ActionRowResolvable,
   MessageAttachmentResolvable,
-  MessageEmbedResolvable,
+  MessageEmbedResolvable, MessageResolvable,
 } from '@src/api'
 
 export interface MessageEditOptions {
@@ -19,4 +19,8 @@ export interface MessageEditOptions {
   content?: string
   /** Suppress embeds for this message or not (use MessageFlags.SuppressEmbeds if you want to do this) */
   flags?: 4 // only MessageFlags.SuppressEmbeds can be set
+}
+
+export interface InteractionMessageEditOptions extends MessageEditOptions {
+  message?: MessageResolvable
 }

@@ -25,7 +25,7 @@ export interface RestRequest {
   requestBody: any
 
   /** Request payload data (attachments) */
-  requestPayload: RawAttachment[]
+  requestPayload?: RawAttachment[]
 
   /** Major parameter of this request, used for rate limits processing */
   majorParameter?: string

@@ -1,25 +1,27 @@
 import {
-  AppCommandInteractionOptionPayload,
-  InteractionResolvedCacheManager, Json,
+  AppCommandInteractionOptionPayload, EntityInitOptions,
+  InteractionResolvedCacheManager,
+  Json,
   RawAppCommandInteractionData,
-  RawInteractionResolvedData, ToJsonProperties
+  RawInteractionResolvedData,
+  ToJsonProperties
 } from '@src/api'
 import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 import { AppCommandTypes, ToJsonOverrideSymbol } from '@src/constants'
-import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 import { attach } from '@src/utils'
 
 export class AppCommandInteractionData extends AbstractEntity {
   declare id: string
   declare type: AppCommandTypes
   declare name: string
-  declare resolved?: InteractionResolvedCacheManager
+  declare resolved: InteractionResolvedCacheManager
   declare options: AppCommandInteractionOptionPayload[]
   private declare _resolved?: RawInteractionResolvedData
 
   async init(
     data: RawAppCommandInteractionData & { guildId?: string; channelId?: string },
-    options?: EntityInitOptions): Promise<this> {
+    options?: EntityInitOptions
+  ): Promise<this> {
     attach(this, data, {
       props: [
         'id',
@@ -33,14 +35,26 @@ export class AppCommandInteractionData extends AbstractEntity {
 
     if (data.resolved) {
       this._resolved = data.resolved
-      this.resolved = new InteractionResolvedCacheManager(this.app, {
-        ...data.resolved,
-        guildId: data.guildId,
-        channelId: data.channelId
-      })
     }
 
+    this.resolved = await new InteractionResolvedCacheManager(this.app).init({
+      ...data.resolved,
+      guildId: data.guildId,
+    })
+
     return this
+  }
+
+  isChatInput(): boolean {
+    return this.type === AppCommandTypes.ChatInput
+  }
+
+  isMessage(): boolean {
+    return this.type === AppCommandTypes.Message
+  }
+
+  isUser(): boolean {
+    return this.type === AppCommandTypes.User
   }
 
   jsonify(properties: ToJsonProperties = {}, obj?: any): Json {

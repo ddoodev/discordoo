@@ -38,7 +38,7 @@ export class RestManager<P extends RestProvider = RestProvider> {
     const response = await this.provider.request<T>({
       method: data.method,
       path: data.path,
-      attachments: data.attachments ?? [],
+      attachments: data.attachments,
       headers: data.headers,
       body: data.body,
     }, options)

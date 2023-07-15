@@ -5,7 +5,7 @@ import {
   GuildNewsThreadChannel,
   GuildStoreChannel,
   GuildTextChannel,
-  GuildThreadChannel
+  GuildThreadChannel, InteractionResolvedChannel, InteractionResolvedThreadChannel
 } from '@src/api'
 
 export type AnyChannel = DirectMessagesChannel |
@@ -15,5 +15,7 @@ export type AnyChannel = DirectMessagesChannel |
   // GuildStageVoiceChannel |
   GuildStoreChannel |
   GuildTextChannel |
-  GuildThreadChannel // |
+  GuildThreadChannel |
   // GuildVoiceChannel
+  InteractionResolvedChannel |
+  InteractionResolvedThreadChannel

@@ -11,6 +11,7 @@ import { RawGuildData } from '@src/api/entities/guild/interfaces/RawGuildData'
 import { DiscordLocale } from '@src/constants/common/DiscordLocale'
 import { AnyGuildWritableChannel } from '@src/api/entities/channel/interfaces/AnyGuildWritableChannel'
 import { GuildMember } from '@src/api/entities/member/GuildMember'
+import { GuildAppCommandsManager } from '@src/api'
 
 export class Guild extends AbstractViewableGuild {
   public unavailable = false
@@ -23,11 +24,12 @@ export class Guild extends AbstractViewableGuild {
   public declare systemChannelId?: string
   public declare ownerId: string
   public declare membersCount: number
+  public declare commands: GuildAppCommandsManager
 
   async init(data: GuildData | RawGuildData, options?: EntityInitOptions): Promise<this> {
     await super.init(data)
 
-    await attach(this, data, {
+    attach(this, data, {
       props: [
         'unavailable',
         [ 'preferredLocale', 'preferred_locale' ],
@@ -55,6 +57,12 @@ export class Guild extends AbstractViewableGuild {
 
     if (!this.presences) {
       this.presences = new GuildPresencesManager(this.app, {
+        guild: this.id,
+      })
+    }
+
+    if (!this.commands) {
+      this.commands = new GuildAppCommandsManager(this.app, {
         guild: this.id,
       })
     }

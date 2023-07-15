@@ -1,11 +1,10 @@
 import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 import {
-  AnyWritableChannel,
+  AnyWritableChannel, AppCommandInteraction, AutocompleteInteraction,
   Guild,
   GuildMember,
-  InteractionData,
-  InteractionMessageContent, InteractionMessageCreateOptions,
-  Message,
+  Message, MessageComponentInteraction,
+  ModalSubmitInteraction,
   RawInteractionData,
   User
 } from '@src/api'
@@ -14,22 +13,22 @@ import { attach, idToDate, idToTimestamp } from '@src/utils'
 import { InteractionTypes, Keyspaces } from '@src/constants'
 import { CacheManagerGetOptions } from '@src/cache'
 
-export class Interaction extends AbstractEntity {
+export abstract class Interaction extends AbstractEntity {
   declare id: string
   declare applicationId: string
   declare type: InteractionTypes
   declare guildId?: string
   declare channelId?: string
-  declare memberId?: string
-  declare userId?: string
+  declare userId: string
   declare token: string
   declare messageId?: string
   declare version: number
   declare locale?: string
   declare guildLocale?: string
   declare appPermissions?: string
+  declare nsfw?: boolean
 
-  async init(data: RawInteractionData | InteractionData, options?: EntityInitOptions): Promise<this> {
+  async init(data: RawInteractionData, options?: EntityInitOptions): Promise<this> {
     attach(this, data, {
       props: [
         'id',
@@ -37,10 +36,7 @@ export class Interaction extends AbstractEntity {
         'type',
         [ 'guildId', 'guild_id' ],
         [ 'channelId', 'channel_id' ],
-        [ 'memberId', 'member_id' ],
-        [ 'userId', 'user_id' ],
         'token',
-        [ 'messageId', 'message_id' ],
         'version',
         'locale',
         [ 'guildLocale', 'guild_locale' ],
@@ -49,6 +45,10 @@ export class Interaction extends AbstractEntity {
       disabled: options?.ignore,
       enabled: [ 'id', 'applicationId', 'type', 'guildId' ]
     })
+
+    this.messageId = data.message?.id
+
+    this.userId = data.member?.user.id ?? data.user!.id
 
     return this
   }
@@ -59,20 +59,6 @@ export class Interaction extends AbstractEntity {
 
   get createdTimestamp(): number {
     return idToTimestamp(this.id)
-  }
-
-  get canReply(): boolean {
-    return this.type !== InteractionTypes.Ping && this.type !== InteractionTypes.ApplicationCommandAutocomplete
-  }
-
-  async reply(content: InteractionMessageContent, options?: InteractionMessageCreateOptions): Promise<this | undefined> {
-    const result = await this.app.interactions.reply(this.id, this.token, content, options)
-    return result ? this : undefined
-  }
-
-  async defer(): Promise<this | undefined> {
-    const result = await this.app.interactions.defer(this.id, this.token)
-    return result ? this : undefined
   }
 
   async guild(options?: CacheManagerGetOptions): Promise<Guild | undefined> {
@@ -88,7 +74,7 @@ export class Interaction extends AbstractEntity {
   }
 
   async member(options?: CacheManagerGetOptions): Promise<GuildMember | undefined> {
-    return this.memberId ? this.app.members.cache.get(this.memberId, { ...options, storage: this.guildId }) : undefined
+    return this.userId ? this.app.members.cache.get(this.userId, { ...options, storage: this.guildId }) : undefined
   }
 
   async user(options?: CacheManagerGetOptions): Promise<User | undefined> {
@@ -96,10 +82,26 @@ export class Interaction extends AbstractEntity {
   }
 
   async author(options?: CacheManagerGetOptions): Promise<User | GuildMember | undefined> {
-    return this.memberId ? this.member(options) : this.user(options)
+    return this.userId ? this.member(options) : this.user(options)
   }
 
   async message(options?: CacheManagerGetOptions): Promise<Message | undefined> {
     return this.messageId ? this.app.messages.cache.get(this.messageId, { ...options, storage: this.channelId }) : undefined
+  }
+
+  isAppCommand(): this is AppCommandInteraction {
+    return this instanceof AppCommandInteraction
+  }
+
+  isModalSubmit(): this is ModalSubmitInteraction {
+    return this instanceof ModalSubmitInteraction
+  }
+
+  isAutocomplete(): this is AutocompleteInteraction {
+    return this instanceof AutocompleteInteraction
+  }
+
+  isMessageComponent(): this is MessageComponentInteraction {
+    return this instanceof MessageComponentInteraction
   }
 }

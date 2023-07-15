@@ -1,6 +1,6 @@
 import { AbstractEventContext } from '@src/events'
-import { AppCommandInteraction, MessageComponentInteraction } from '@src/api'
+import { AppCommandInteraction, AutocompleteInteraction, MessageComponentInteraction, ModalSubmitInteraction } from '@src/api'
 
 export interface InteractionCreateEventContext extends AbstractEventContext {
-  interaction: MessageComponentInteraction | AppCommandInteraction
+  interaction: MessageComponentInteraction | AppCommandInteraction | AutocompleteInteraction | ModalSubmitInteraction
 }

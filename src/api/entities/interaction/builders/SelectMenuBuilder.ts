@@ -29,36 +29,6 @@ export class SelectMenuBuilder {
     })
   }
 
-  setType(type: SelectMenuTypes) {
-    this.type = type
-    return this
-  }
-
-  setCustomId(customId: string) {
-    this.customId = customId
-    return this
-  }
-
-  setPlaceholder(placeholder: string) {
-    this.placeholder = placeholder
-    return this
-  }
-
-  setMinValues(minValues: number) {
-    this.minValues = minValues
-    return this
-  }
-
-  setMaxValues(maxValues: number) {
-    this.maxValues = maxValues
-    return this
-  }
-
-  setDisabled(disabled: boolean) {
-    this.disabled = disabled
-    return this
-  }
-
   addOption(option: SelectMenuOptionData) {
     this.options.push(option)
     return this
@@ -71,6 +41,36 @@ export class SelectMenuBuilder {
 
   setChannelTypes(channelTypes: ChannelTypes[]) {
     this.channelTypes = channelTypes
+    return this
+  }
+
+  setCustomId(customId: string) {
+    this.customId = customId
+    return this
+  }
+
+  setDisabled(disabled: boolean) {
+    this.disabled = disabled
+    return this
+  }
+
+  setMaxValues(maxValues: number) {
+    this.maxValues = maxValues
+    return this
+  }
+
+  setMinValues(minValues: number) {
+    this.minValues = minValues
+    return this
+  }
+
+  setPlaceholder(placeholder: string) {
+    this.placeholder = placeholder
+    return this
+  }
+
+  setType(type: SelectMenuTypes) {
+    this.type = type
     return this
   }
 

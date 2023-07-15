@@ -15,8 +15,8 @@ export class WebhookApplicationActions {
       .url(Endpoints.WEBHOOK_TOKEN(this.app.id, this.app.token))
       .query(query)
 
-    if (data.files?.length) {
-      request.attach(...data.files)
+    if (data.attachments?.length) {
+      request.attach(...data.attachments)
     }
 
     request.body({

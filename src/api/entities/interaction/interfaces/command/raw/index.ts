@@ -5,5 +5,6 @@ export { RawAppCommandCreateData } from './RawAppCommandCreateData'
 export { RawAppCommandEditData } from './RawAppCommandEditData'
 export { RawSlashCommandData } from './RawSlashCommandData'
 export { RawAppCommandData } from './RawAppCommandData'
+export { RawAutocompletePayloadData } from './RawAutocompletePayloadData'
 
 export * from './RawAppCommandOptionData'

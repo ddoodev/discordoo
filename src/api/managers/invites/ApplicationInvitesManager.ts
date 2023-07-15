@@ -6,7 +6,7 @@ import {
   EntitiesUtil,
   AnyInvitableChannelResolvable, GuildInvitesManager, InviteCreateOptions
 } from '@src/api'
-import { DiscordApplication, DiscordRestApplication } from '@src/core'
+import { DiscordRestApplication } from '@src/core'
 import { Keyspaces } from '@src/constants'
 import { DiscordooError, resolveChannelId } from '@src/utils'
 
@@ -42,6 +42,7 @@ export class ApplicationInvitesManager extends EntitiesManager {
     }, options.reason)
 
     if (response.success) {
+      const Invite = EntitiesUtil.get('Invite')
       const invite = await new Invite(this.app).init(response.result)
 
       if (response.result.guild) {
@@ -53,18 +54,15 @@ export class ApplicationInvitesManager extends EntitiesManager {
 
       return invite
     }
-
-    return undefined
   }
 
   async delete(inviteCode: string, reason?: string): Promise<Invite | undefined> {
     const response = await this.app.internals.actions.deleteInvite(inviteCode, reason)
 
     if (response.success) {
+      const Invite = EntitiesUtil.get('Invite')
       return await new Invite(this.app).init(response.result)
     }
-
-    return undefined
   }
 
   async fetch(inviteCode: string, options?: FetchInviteQuery): Promise<Invite | undefined> {
@@ -95,7 +93,5 @@ export class ApplicationInvitesManager extends EntitiesManager {
       await this.cache.set(invite.code, invite, { storage: invite.guildId ? invite.guildId : 'global' })
       return invite
     }
-
-    return undefined
   }
 }

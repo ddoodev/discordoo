@@ -10,6 +10,7 @@ export type RawAppCommandOptionData = RawAppCommandStringOptionData
   | RawAppCommandChannelOptionData
   | RawAppCommandRoleOptionData
   | RawAppCommandMentionableOptionData
+  | RawAppCommandAttachmentOptionData
 
 export type RawAppCommandOptionWithSubcommandsData = RawAppCommandOptionData
   | RawAppCommandSubcommandOptionData
@@ -93,4 +94,8 @@ export interface RawAppCommandRoleOptionData extends RawAppCommandAbstractOption
 
 export interface RawAppCommandMentionableOptionData extends RawAppCommandAbstractOptionData {
   type: AppCommandOptionTypes.Mentionable
+}
+
+export interface RawAppCommandAttachmentOptionData extends RawAppCommandAbstractOptionData {
+  type: AppCommandOptionTypes.Attachment
 }

@@ -1,21 +1,39 @@
 import {
   AnyRawGuildChannelData,
-  FetchInviteQuery, FetchManyMessagesQuery, FetchReactionUsersOptions, GuildEmojiData, GuildMember,
+  FetchInviteQuery,
+  FetchManyMessagesQuery,
+  FetchReactionUsersOptions,
+  GuildEmojiData,
+  GuildMember,
   GuildMembersFetchQuery,
   MessageCreateData,
-  RawAppCommandData, RawAppCommandCreateData,
+  RawAppCommandData,
+  RawAppCommandCreateData,
   RawEmojiEditData,
-  RawGuildChannelCreateData, RawGuildChannelEditData,
+  RawGuildChannelCreateData,
+  RawGuildChannelEditData,
   RawGuildEmojiData,
-  RawGuildMemberAddData, RawGuildMemberData,
-  RawGuildMemberEditData, RawInteractionResponse, RawInviteCreateData, RawInviteData, RawMessageData,
-  RawPermissionOverwriteData, RawRoleCreateData, RawRoleData,
+  RawGuildMemberAddData,
+  RawGuildMemberData,
+  RawGuildMemberEditData,
+  RawInteractionResponse,
+  RawInviteCreateData,
+  RawInviteData,
+  RawMessageData,
+  RawPermissionOverwriteData,
+  RawRoleCreateData,
+  RawRoleData,
   RawRoleEditData,
   RawStickerCreateData,
   RawStickerData,
   RawStickerEditData,
-  RawStickerPackData, RawThreadChannelCreateData, RawThreadChannelEditData,
-  RawThreadChannelWithMessageCreateData, RawUserData, RawGuildAppCommandEditData, MessageEditData
+  RawStickerPackData,
+  RawThreadChannelCreateData,
+  RawThreadChannelEditData,
+  RawThreadChannelWithMessageCreateData,
+  RawUserData,
+  RawGuildAppCommandEditData,
+  MessageEditData, InteractionMessageEditOptions
 } from '@src/api'
 import { Endpoints } from '@src/constants'
 import { DiscordRestApplication } from '@src/core'
@@ -25,6 +43,13 @@ import { FetchCommandQuery } from '@src/api/managers/interactions/FetchCommandQu
 
 export class RestApplicationActions {
   constructor(public app: DiscordRestApplication) { }
+
+  addFollower(senderId: string, followerId: string, reason?: string) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.CHANNEL_FOLLOW(senderId))
+      .body({ webhook_channel_id: followerId })
+      .post({ reason })
+  }
 
   /**
    * Adds guild discovery subcategory
@@ -66,24 +91,25 @@ export class RestApplicationActions {
       .put()
   }
 
-  addFollower(senderId: string, followerId: string, reason?: string) {
-    return this.app.internals.rest.api()
-      .url(Endpoints.CHANNEL_FOLLOW(senderId))
-      .body({ webhook_channel_id: followerId })
-      .post({ reason })
-  }
-
-  removeThreadMember(channelId: string, memberId: string) {
-    return this.app.internals.rest.api()
-      .url(Endpoints.CHANNEL_THREAD_MEMBER(channelId, memberId))
-      .delete()
-  }
-
   banGuildMember(guildId: string, userId: string, deleteMessagesDays = 0, reason?: string) {
     return this.app.internals.rest.api()
       .url(Endpoints.GUILD_BAN(guildId, userId))
       .body({ delete_message_days: deleteMessagesDays })
       .post({ reason })
+  }
+
+  createFollowUpMessage(id: string, token: string, data: MessageCreateData) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.WEBHOOK_TOKEN(id, token))
+      .body(data)
+      .post<RawMessageData>()
+  }
+
+  createGlobalCommand(data: RawAppCommandCreateData) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.APPLICATION_COMMANDS(this.app.user.id))
+      .body(data)
+      .post<RawAppCommandData>()
   }
 
   createGuild(name: string, data: any /* TODO: GuildCreateData */) {
@@ -112,13 +138,6 @@ export class RestApplicationActions {
       .post({ reason })
   }
 
-  createGlobalCommand(data: RawAppCommandCreateData) {
-    return this.app.internals.rest.api()
-      .url(Endpoints.APPLICATION_COMMANDS(this.app.user.id))
-      .body(data)
-      .post<RawAppCommandData>()
-  }
-
   createGuildCommand(guildId: string, data: RawAppCommandCreateData) {
     return this.app.internals.rest.api()
       .url(Endpoints.GUILD_COMMANDS(this.app.user.id, guildId))
@@ -133,13 +152,6 @@ export class RestApplicationActions {
       .post({ reason })
   }
 
-  createGuildRole(guildId: string, data: RawRoleCreateData, reason?: string) {
-    return this.app.internals.rest.api()
-      .url(Endpoints.GUILD_ROLES(guildId))
-      .body(data)
-      .post<RawRoleData>({ reason })
-  }
-
   createGuildFromTemplate(code: string, name: string, icon?: string) {
     return this.app.internals.rest.api()
       .url(Endpoints.GUILD_TEMPLATE(code))
@@ -147,50 +159,11 @@ export class RestApplicationActions {
       .post()
   }
 
-  createGuildTemplate(guildId: string, name: string, description?: string) {
+  createGuildRole(guildId: string, data: RawRoleCreateData, reason?: string) {
     return this.app.internals.rest.api()
-      .url(Endpoints.GUILD_TEMPLATES(guildId))
-      .body({ name, description })
-      .post()
-  }
-
-  createThreadWithMessage(channelId: string, data: RawThreadChannelWithMessageCreateData, reason?: string) {
-    const request = this.app.internals.rest.api()
-      .url(Endpoints.CHANNEL_MESSAGE_THREADS(channelId, data.message_id))
-
-    delete (data as any).message_id
-
-    request.body(data)
-
-    return request.post({ reason })
-  }
-
-  createThread(channelId: string, data: RawThreadChannelCreateData, reason?: string) {
-    return this.app.internals.rest.api()
-      .url(Endpoints.CHANNEL_THREADS(channelId))
+      .url(Endpoints.GUILD_ROLES(guildId))
       .body(data)
-      .post({ reason })
-  }
-
-  createMessage(channelId: string, data: MessageCreateData): RestFinishedResponse<RawMessageData> {
-    const request = this.app.internals.rest.api().url(Endpoints.CHANNEL_MESSAGES(channelId))
-
-    if (data.files.length) {
-      request.attach(...data.files)
-    }
-
-    request.body({
-      content: data.content,
-      tts: data.tts,
-      embeds: data.embeds?.length ? data.embeds : undefined,
-      allowed_mentions: data.allowed_mentions,
-      message_reference: data.message_reference,
-      sticker_ids: data.stickers,
-      components: data.components,
-      flags: data.flags,
-    })
-
-    return request.post()
+      .post<RawRoleData>({ reason })
   }
 
   createGuildSticker(guildId: string, data: RawStickerCreateData, reason?: string) {
@@ -205,14 +178,21 @@ export class RestApplicationActions {
       .post<RawStickerData>({ reason })
   }
 
+  createGuildTemplate(guildId: string, name: string, description?: string) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.GUILD_TEMPLATES(guildId))
+      .body({ name, description })
+      .post()
+  }
+
   createInteractionResponse(interactionId: string, interactionToken: string, data: RawInteractionResponse) {
     const request = this.app.internals.rest.api()
       .url(Endpoints.INTERACTION_RESPONSE(interactionId, interactionToken))
 
     const body = data.data
 
-    if (body && 'files' in body) {
-      if (body.files.length) request.attach(...body.files)
+    if (body && 'attachments' in body) {
+      if (body.attachments) request.attach(...body.attachments)
       request.body({
         type: data.type,
         data: {
@@ -221,7 +201,8 @@ export class RestApplicationActions {
           embeds: body.embeds,
           allowed_mentions: body.allowed_mentions,
           components: body.components,
-          flags: body.flags
+          flags: body.flags,
+          attachments: body.attachments?.length === 0 ? [] : undefined
         }
       })
     } else if (body) {
@@ -236,6 +217,46 @@ export class RestApplicationActions {
       .url(Endpoints.CHANNEL_INVITES(channelId))
       .body(data ? data : { })
       .post<RawInviteData>({ reason })
+  }
+
+  createMessage(channelId: string, data: MessageCreateData): RestFinishedResponse<RawMessageData> {
+    const request = this.app.internals.rest.api().url(Endpoints.CHANNEL_MESSAGES(channelId))
+
+    if (data.attachments) {
+      request.attach(...data.attachments)
+    }
+
+    request.body({
+      content: data.content,
+      tts: data.tts,
+      embeds: data.embeds?.length ? data.embeds : undefined,
+      allowed_mentions: data.allowed_mentions,
+      message_reference: data.message_reference,
+      sticker_ids: data.stickers,
+      components: data.components,
+      flags: data.flags,
+      attachments: data.attachments?.length === 0 ? [] : undefined
+    })
+
+    return request.post()
+  }
+
+  createThread(channelId: string, data: RawThreadChannelCreateData, reason?: string) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.CHANNEL_THREADS(channelId))
+      .body(data)
+      .post({ reason })
+  }
+
+  createThreadWithMessage(channelId: string, data: RawThreadChannelWithMessageCreateData, reason?: string) {
+    const request = this.app.internals.rest.api()
+      .url(Endpoints.CHANNEL_MESSAGE_THREADS(channelId, data.message_id))
+
+    delete (data as any).message_id
+
+    request.body(data)
+
+    return request.post({ reason })
   }
 
   createUserChannel(userId: string) {
@@ -257,28 +278,15 @@ export class RestApplicationActions {
       .delete({ reason })
   }
 
-  deleteGuild(guildId: string) {
-    return this.app.internals.rest.api()
-      .url(Endpoints.GUILD(guildId))
-      .delete()
-  }
-
-  deleteMessage(channelId: string, messageId: string, reason?: string) {
-    return this.app.internals.rest.api()
-      .url(Endpoints.CHANNEL_MESSAGE(channelId, messageId))
-      .delete({ reason })
-  }
-
-  deleteMessagesBulk(channelId: string, messages: string[], reason?: string) {
-    return this.app.internals.rest.api()
-      .url(Endpoints.CHANNEL_BULK_DELETE(channelId))
-      .body({ messages })
-      .post({ reason })
-  }
-
   deleteGlobalCommand(commandId: string) {
     return this.app.internals.rest.api()
       .url(Endpoints.APPLICATION_COMMAND(this.app.user.id, commandId))
+      .delete()
+  }
+
+  deleteGuild(guildId: string) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.GUILD(guildId))
       .delete()
   }
 
@@ -294,22 +302,16 @@ export class RestApplicationActions {
       .delete({ reason })
   }
 
-  deleteGuildRole(guildId: string, roleId: string, reason?: string) {
-    return this.app.internals.rest.api()
-      .url(Endpoints.GUILD_ROLE(guildId, roleId))
-      .delete({ reason })
-  }
-
   deleteGuildIntegration(guildId: string, integrationId: string) { // TODO: check if reason available
     return this.app.internals.rest.api()
       .url(Endpoints.GUILD_INTEGRATION(guildId, integrationId))
       .delete()
   }
 
-  deleteGuildTemplate(guildId: string, code: string) {
+  deleteGuildRole(guildId: string, roleId: string, reason?: string) {
     return this.app.internals.rest.api()
-      .url(Endpoints.GUILD_TEMPLATE_GUILD(guildId, code))
-      .delete()
+      .url(Endpoints.GUILD_ROLE(guildId, roleId))
+      .delete({ reason })
   }
 
   deleteGuildSticker(guildId: string, stickerId: string, reason?: string) {
@@ -318,10 +320,42 @@ export class RestApplicationActions {
       .delete({ reason })
   }
 
+  deleteGuildTemplate(guildId: string, code: string) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.GUILD_TEMPLATE_GUILD(guildId, code))
+      .delete()
+  }
+
   deleteInvite(inviteCode: string, reason?: string) {
     return this.app.internals.rest.api()
       .url(Endpoints.INVITE(inviteCode))
       .delete<RawInviteData>({ reason })
+  }
+
+  deleteMessage(channelId: string, messageId: string, reason?: string) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.CHANNEL_MESSAGE(channelId, messageId))
+      .delete({ reason })
+  }
+
+  deleteMessagesBulk(channelId: string, messages: string[], reason?: string) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.CHANNEL_BULK_DELETE(channelId))
+      .body({ messages })
+      .post({ reason })
+  }
+
+  deleteInteractionResponse(applicationId: string, interactionToken: string, messageId: string) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.WEBHOOK_MESSAGE(applicationId, interactionToken, messageId))
+      .delete()
+  }
+
+  editFollowUpMessage(applicationId: string, interactionToken: string, messageId: string, data: MessageEditData) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.WEBHOOK_MESSAGE(applicationId, interactionToken, messageId))
+      .body(data)
+      .patch()
   }
 
   editGlobalCommand(commandId: string, data: RawGuildAppCommandEditData) {
@@ -329,13 +363,6 @@ export class RestApplicationActions {
       .url(Endpoints.APPLICATION_COMMAND(this.app.user.id, commandId))
       .body(data)
       .patch<RawAppCommandData>()
-  }
-
-  editMessage(channelId: string, messageId: string, data: MessageEditData, reason?: string) {
-    return this.app.internals.rest.api()
-      .url(Endpoints.CHANNEL_MESSAGE(channelId, messageId))
-      .body(data)
-      .patch<RawMessageData>({ reason })
   }
 
   editGuild(guildId: string, data: any /* TODO: GuildData */, reason?: string) {
@@ -390,13 +417,6 @@ export class RestApplicationActions {
       .patch<RawAppCommandData>()
   }
 
-  editThreadChannel(channelId: string, data: RawThreadChannelEditData, reason?: string) {
-    return this.app.internals.rest.api()
-      .url(Endpoints.CHANNEL(channelId))
-      .body(data)
-      .patch({ reason })
-  }
-
   editGuildDiscovery(guildId: string, data: any /* TODO: GuildDiscoveryData */, reason?: string) {
     return this.app.internals.rest.api()
       .url(Endpoints.GUILD_DISCOVERY(guildId))
@@ -439,6 +459,13 @@ export class RestApplicationActions {
       .url(Endpoints.GUILD_ROLE(guildId, roleId))
       .body(data)
       .patch<RawRoleData>({ reason })
+  }
+
+  editGuildSticker(guildId: string, stickerId: string, data: RawStickerEditData, reason?: string) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.GUILD_STICKER(guildId, stickerId))
+      .body(data)
+      .patch<RawStickerData>({ reason })
   }
 
   editGuildTemplate(guildId: string, code: string, data: any /* TODO: GuildTemplateData */) { // TODO: check if reason available
@@ -489,47 +516,58 @@ export class RestApplicationActions {
       .patch({ reason })
   }
 
-  editGuildSticker(guildId: string, stickerId: string, data: RawStickerEditData, reason?: string) {
-    return this.app.internals.rest.api()
-      .url(Endpoints.GUILD_STICKER(guildId, stickerId))
-      .body(data)
-      .patch<RawStickerData>({ reason })
-  }
-
-  getReactionUsers(
-    channelId: string, messageId: string, emojiId: string, options?: FetchReactionUsersOptions
-  ): RestFinishedResponse<RawUserData[]> {
-    const request = this.app.internals.rest.api()
-      .url(Endpoints.CHANNEL_MESSAGE_REACTION(channelId, messageId, emojiId))
-
-    if (typeof options?.limit === 'number') {
-      request.query({ limit: options.limit })
-    }
-
-    if (typeof options?.after === 'string') {
-      request.query({ after: options.after })
-    }
-
-    return request.get<RawUserData[]>()
-  }
-
-  getPinnedMessages(channelId: string) {
-    return this.app.internals.rest.api()
-      .url(Endpoints.CHANNEL_PINS(channelId))
-      .get<RawMessageData[]>()
-  }
-
-  getMessage(channelId: string, messageId: string) {
+  editMessage(channelId: string, messageId: string, data: MessageEditData, reason?: string) {
     return this.app.internals.rest.api()
       .url(Endpoints.CHANNEL_MESSAGE(channelId, messageId))
+      .body(data)
+      .patch<RawMessageData>({ reason })
+  }
+
+  editOriginalInteractionResponse(applicationId: string, interactionToken: string, data: InteractionMessageEditOptions, id: string) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.WEBHOOK_MESSAGE(applicationId, interactionToken, id))
+      .body(data)
+      .patch<RawMessageData>()
+  }
+
+  editThreadChannel(channelId: string, data: RawThreadChannelEditData, reason?: string) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.CHANNEL(channelId))
+      .body(data)
+      .patch({ reason })
+  }
+
+  getChannel(channelId: string) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.CHANNEL(channelId))
+      .get()
+  }
+
+  getFollowUpMessage(applicationId: string, interactionToken: string, messageId: string) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.WEBHOOK_MESSAGE(applicationId, interactionToken, messageId))
       .get<RawMessageData>()
   }
 
-  getMessages(channelId: string, query: FetchManyMessagesQuery) {
+  getChannelInvites(channelId: string) {
     return this.app.internals.rest.api()
-      .url(Endpoints.CHANNEL_MESSAGES(channelId))
-      .query(query)
-      .get<RawMessageData[]>()
+      .url(Endpoints.CHANNEL_INVITES(channelId))
+      .get<RawInviteData[]>()
+  }
+
+  getGlobalCommand(commandId: string) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.APPLICATION_COMMAND(this.app.user.id, commandId))
+      .get<RawAppCommandData>()
+  }
+
+  getGlobalCommands(query?: FetchCommandQuery) {
+    const request = this.app.internals.rest.api()
+      .url(Endpoints.APPLICATION_COMMANDS(this.app.user.id))
+
+    if (query) request.query(query)
+
+    return request.get<RawAppCommandData[]>()
   }
 
   getGuildAuditLog(guildId: string, data: any /* TODO: GetGuildAuditLogData */) {
@@ -544,18 +582,6 @@ export class RestApplicationActions {
       .get()
   }
 
-  getChannel(channelId: string) {
-    return this.app.internals.rest.api()
-      .url(Endpoints.CHANNEL(channelId))
-      .get()
-  }
-
-  getChannelInvites(channelId: string) {
-    return this.app.internals.rest.api()
-      .url(Endpoints.CHANNEL_INVITES(channelId))
-      .get<RawInviteData[]>()
-  }
-
   getGuildBan(guildId: string, memberId: string) {
     return this.app.internals.rest.api()
       .url(Endpoints.GUILD_BAN(guildId, memberId))
@@ -566,21 +592,6 @@ export class RestApplicationActions {
     return this.app.internals.rest.api()
       .url(Endpoints.GUILD_BANS(guildId))
       .get()
-  }
-
-  getGlobalCommands(query?: FetchCommandQuery) {
-    const request = this.app.internals.rest.api()
-      .url(Endpoints.APPLICATION_COMMANDS(this.app.user.id))
-
-    if (query) request.query(query)
-
-    return request.get<RawAppCommandData[]>()
-  }
-
-  getGlobalCommand(commandId: string) {
-    return this.app.internals.rest.api()
-      .url(Endpoints.APPLICATION_COMMAND(this.app.user.id, commandId))
-      .get<RawAppCommandData>()
   }
 
   getGuildCommand(guildId: string, commandId: string) {
@@ -604,10 +615,10 @@ export class RestApplicationActions {
       .get()
   }
 
-  getGuildRoles(guildId: string) {
+  getGuildEmoji(guildId: string, emojiId: string) {
     return this.app.internals.rest.api()
-      .url(Endpoints.GUILD_ROLES(guildId))
-      .get<RawRoleData[]>()
+      .url(Endpoints.GUILD_EMOJI(guildId, emojiId))
+      .get<RawGuildEmojiData>()
   }
 
   getGuildIntegrations(guildId: string, data: any /* TODO: GetGuildIntegrationsData */ = {}) {
@@ -635,6 +646,24 @@ export class RestApplicationActions {
     return this.app.internals.rest.api()
       .url(Endpoints.GUILD_PREVIEW(guildId))
       .get()
+  }
+
+  getGuildRoles(guildId: string) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.GUILD_ROLES(guildId))
+      .get<RawRoleData[]>()
+  }
+
+  getGuildSticker(guildId: string, stickerId: string) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.GUILD_STICKER(guildId, stickerId))
+      .get<RawStickerData>()
+  }
+
+  getGuildStickers(guildId: string) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.GUILD_STICKERS(guildId))
+      .get<RawStickerData[]>()
   }
 
   getGuildTemplate(code: string) {
@@ -667,24 +696,6 @@ export class RestApplicationActions {
       .get()
   }
 
-  getGuildEmoji(guildId: string, emojiId: string) {
-    return this.app.internals.rest.api()
-      .url(Endpoints.GUILD_EMOJI(guildId, emojiId))
-      .get<RawGuildEmojiData>()
-  }
-
-  getGuildSticker(guildId: string, stickerId: string) {
-    return this.app.internals.rest.api()
-      .url(Endpoints.GUILD_STICKER(guildId, stickerId))
-      .get<RawStickerData>()
-  }
-
-  getGuildStickers(guildId: string) {
-    return this.app.internals.rest.api()
-      .url(Endpoints.GUILD_STICKERS(guildId))
-      .get<RawStickerData[]>()
-  }
-
   getInvite(inviteCode: string, query?: FetchInviteQuery) {
     const request = this.app.internals.rest.api().url(Endpoints.INVITE(inviteCode))
 
@@ -702,16 +713,58 @@ export class RestApplicationActions {
     return request.get<GuildMember[]>()
   }
 
-  getSticker(stickerId: string) {
+  getMessage(channelId: string, messageId: string) {
     return this.app.internals.rest.api()
-      .url(Endpoints.STICKER(stickerId))
-      .get<RawStickerData>()
+      .url(Endpoints.CHANNEL_MESSAGE(channelId, messageId))
+      .get<RawMessageData>()
+  }
+
+  getMessages(channelId: string, query: FetchManyMessagesQuery) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.CHANNEL_MESSAGES(channelId))
+      .query(query)
+      .get<RawMessageData[]>()
   }
 
   getNitroStickerPacks() {
     return this.app.internals.rest.api()
       .url(Endpoints.NITRO_STICKERS())
       .get<RawStickerPackData[]>()
+  }
+
+    getOriginalInteractionResponse(applicationId: string, interactionToken: string, messageId: string) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.WEBHOOK_MESSAGE(applicationId, interactionToken, messageId))
+      .get<RawMessageData>()
+  }
+
+  getPinnedMessages(channelId: string) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.CHANNEL_PINS(channelId))
+      .get<RawMessageData[]>()
+  }
+
+  getReactionUsers(
+    channelId: string, messageId: string, emojiId: string, options?: FetchReactionUsersOptions
+  ): RestFinishedResponse<RawUserData[]> {
+    const request = this.app.internals.rest.api()
+      .url(Endpoints.CHANNEL_MESSAGE_REACTION(channelId, messageId, emojiId))
+
+    if (typeof options?.limit === 'number') {
+      request.query({ limit: options.limit })
+    }
+
+    if (typeof options?.after === 'string') {
+      request.query({ after: options.after })
+    }
+
+    return request.get<RawUserData[]>()
+  }
+
+  getSticker(stickerId: string) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.STICKER(stickerId))
+      .get<RawStickerData>()
   }
 
   getUser(userId: string) {
@@ -746,6 +799,12 @@ export class RestApplicationActions {
       .put()
   }
 
+  pinMessage(channelId: string, messageId: string, reason?: string) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.CHANNEL_PIN(channelId, messageId))
+      .put({ reason })
+  }
+
   pruneGuildMembers(guildId: string, data: any /* GuildMembersPruneData */ = {}, reason?: string) {
     return this.app.internals.rest.api()
       .url(Endpoints.GUILD_PRUNE(guildId))
@@ -757,22 +816,10 @@ export class RestApplicationActions {
       .delete({ reason })
   }
 
-  pinMessage(channelId: string, messageId: string, reason?: string) {
-    return this.app.internals.rest.api()
-      .url(Endpoints.CHANNEL_PIN(channelId, messageId))
-      .put({ reason })
-  }
-
   removeGuildMemberRole(guildId: string, memberId: string, roleId: string, reason?: string) {
     return this.app.internals.rest.api()
       .url(Endpoints.GUILD_MEMBER_ROLE(guildId, memberId, roleId))
       .delete({ reason })
-  }
-
-  removeReactionUsers(channelId: string, messageId: string, emojiId: string) {
-    return this.app.internals.rest.api()
-      .url(Endpoints.CHANNEL_MESSAGE_REACTION(channelId, messageId, emojiId))
-      .delete()
   }
 
   removeReactionUser(channelId: string, messageId: string, emojiId: string, userId: string) {
@@ -781,9 +828,21 @@ export class RestApplicationActions {
       .delete()
   }
 
+  removeReactionUsers(channelId: string, messageId: string, emojiId: string) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.CHANNEL_MESSAGE_REACTION(channelId, messageId, emojiId))
+      .delete()
+  }
+
   removeReactions(channelId: string, messageId: string) {
     return this.app.internals.rest.api()
       .url(Endpoints.CHANNEL_MESSAGE_REACTIONS(channelId, messageId))
+      .delete()
+  }
+
+  removeThreadMember(channelId: string, memberId: string) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.CHANNEL_THREAD_MEMBER(channelId, memberId))
       .delete()
   }
 

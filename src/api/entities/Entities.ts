@@ -9,7 +9,7 @@ import {
   GuildNewsThreadChannel,
   GuildStoreChannel,
   GuildTextChannel,
-  GuildThreadChannel
+  GuildThreadChannel, InteractionResolvedChannel
 } from '@src/api/entities/channel'
 import { AbstractEmoji, ActivityEmoji, GuildEmoji, GuildPreviewEmoji, ReactionEmoji } from '@src/api/entities/emoji'
 import { Presence, PresenceActivity, PresenceActivityAssets } from '@src/api/entities/presence'
@@ -28,11 +28,13 @@ import { MessageEmbed } from '@src/api/entities/embed/MessageEmbed'
 import { Invite } from '@src/api/entities/invite/Invite'
 import { AppCommand } from '@src/api/entities/interaction/AppCommand'
 import {
-  AppCommandInteractionData,
+  ActionRowInteractionData,
+  AppCommandInteractionData, AutocompleteInteraction,
   ButtonInteractionData,
-  MessageComponentInteraction,
-  SelectMenuInteractionData
+  MessageComponentInteraction, ModalSubmitInteraction, ModalSubmitInteractionData,
+  SelectMenuInteractionData, TextInputInteractionData, WritableInteraction, WritableModalInteraction
 } from '@src/api/entities/interaction/'
+import { InteractionResolvedThreadChannel } from '@src/api/entities/channel/InteractionResolvedThreadChannel'
 
 export const Entities = {
   Message,
@@ -75,4 +77,13 @@ export const Entities = {
   MessageComponentInteraction,
   SelectMenuInteractionData,
   ButtonInteractionData,
+  AutocompleteInteraction,
+  ModalSubmitInteraction,
+  WritableInteraction,
+  ModalSubmitInteractionData,
+  WritableWithModalInteraction: WritableModalInteraction,
+  TextInputInteractionData,
+  ActionRowInteractionData,
+  InteractionResolvedChannel,
+  InteractionResolvedThreadChannel
 }

@@ -10,7 +10,7 @@ export class ButtonBuilder {
   public customId?: string
   public url?: string
 
-  constructor(data?: Partial<ButtonComponentData | RawButtonComponentData>) {
+  constructor(data?: ButtonComponentData | RawButtonComponentData) {
     if (!data) return this
 
     attach(this, data, {
@@ -26,6 +26,16 @@ export class ButtonBuilder {
     if ('emoji' in data) this.setEmoji(data.emoji!)
   }
 
+  setCustomId(customId: string) {
+    this.customId = customId
+    return this
+  }
+
+  setDisabled(disabled: boolean) {
+    this.disabled = disabled
+    return this
+  }
+
   setEmoji(emoji: AbstractEmojiData | string) {
     this.emoji = typeof emoji === 'string' ? { name: emoji } : emoji
     return this
@@ -36,18 +46,8 @@ export class ButtonBuilder {
     return this
   }
 
-  setDisabled(disabled: boolean) {
-    this.disabled = disabled
-    return this
-  }
-
   setStyle(style: ButtonStyles) {
     this.style = style
-    return this
-  }
-
-  setCustomId(customId: string) {
-    this.customId = customId
     return this
   }
 
