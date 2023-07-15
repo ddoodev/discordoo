@@ -16,10 +16,10 @@ export class AppCommand extends AbstractEntity {
   declare applicationId: string
   declare type: AppCommandTypes
   declare guildId?: string
-  public options: AppCommandOption[] = []
   declare defaultMemberPermissions?: ReadonlyPermissions
   declare dmPermission?: boolean
   declare nsfw?: boolean
+  public options: AppCommandOption[] = []
 
   async init(data: AppCommandData | RawAppCommandData, options?: AppCommandEntityInitOptions): Promise<this> {
     attach(this, data, {
@@ -76,6 +76,7 @@ export class AppCommand extends AbstractEntity {
       options: true,
       defaultMemberPermissions: true,
       dmPermission: true,
+      nsfw: true,
     }, obj)
   }
 }

@@ -4,17 +4,17 @@ import {
   AppCommand, AppCommandCreateData,
   CommandResolvable,
   EntitiesCacheManager,
-  GuildAppCommandsManagerOptions,
+  GuildApplicationCommandsManagerOptions,
   RawAppCommandCreateData,
   SlashCommandBuilder
 } from '@src/api'
 import { RestEligibleDiscordApplication } from '@src/core'
 
-export class GuildAppCommandsManager extends EntitiesManager {
+export class GuildApplicationCommandsManager extends EntitiesManager {
   public cache: EntitiesCacheManager<AppCommand>
-  public options: GuildAppCommandsManagerOptions
+  public options: GuildApplicationCommandsManagerOptions
 
-  constructor(app: RestEligibleDiscordApplication, options: GuildAppCommandsManagerOptions) {
+  constructor(app: RestEligibleDiscordApplication, options: GuildApplicationCommandsManagerOptions) {
     super(app)
 
     this.options = options

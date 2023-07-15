@@ -4,7 +4,7 @@ import { EntitiesManager } from '@src/api/managers/EntitiesManager'
 import { InteractionResponseTypes, MessageFlags } from '@src/constants'
 import {
   AppCommandOptionChoiceData,
-  ApplicationInteractionsSlashCommandManager,
+  ApplicationInteractionsApplicationCommandManager,
   EntitiesUtil, InteractionMessageEditOptions,
   MessageCreateOptions, MessageResolvable,
   ModalBuilder,
@@ -16,11 +16,11 @@ import { InteractionMessageContent } from '@src/api/entities/message/interfaces/
 import { InteractionMessageCreateOptions } from '@src/api/entities/message/interfaces/MessageCreateOptions'
 
 export class ApplicationInteractionsManager extends EntitiesManager {
-  public commands: ApplicationInteractionsSlashCommandManager
+  public commands: ApplicationInteractionsApplicationCommandManager
 
   constructor(app: DiscordRestApplication) {
     super(app)
-    this.commands = new ApplicationInteractionsSlashCommandManager(app)
+    this.commands = new ApplicationInteractionsApplicationCommandManager(app)
   }
 
   async deferReply(interactionId: string, token: string, ephemeral?: boolean): Promise<boolean> {

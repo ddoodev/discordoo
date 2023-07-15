@@ -1,9 +1,9 @@
-export { ApplicationInteractionsSlashCommandManager } from './ApplicationInteractionsSlashCommandManager'
+export { ApplicationInteractionsApplicationCommandManager } from './ApplicationInteractionsApplicationCommandManager'
 export { InteractionResolvedCacheManagerData } from './InteractionResolvedCacheManagerData'
 export { InteractionResolvedCacheManager } from './InteractionResolvedCacheManager'
-export { GuildAppCommandsManagerOptions } from './GuildAppCommandsManagerOptions'
+export { GuildApplicationCommandsManagerOptions } from './GuildApplicationCommandsManagerOptions'
 export { ApplicationInteractionsManager } from './ApplicationInteractionsManager'
-export { GuildAppCommandsManager } from './GuildAppCommandsManager'
+export { GuildApplicationCommandsManager } from './GuildApplicationCommandsManager'
 export { FetchCommandOptions } from './FetchCommandOptions'
 export { FetchCommandQuery } from './FetchCommandQuery'
 

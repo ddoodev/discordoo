@@ -39,17 +39,17 @@ export class DiscordSnowflake {
 
     const segments = [
       // 42 bits timestamp block (22 empty bits, 5 for worker id + 5 for process id + 12 for increment)
-      b(timestamp - EPOCH) << b(22),
+      b(timestamp - EPOCH) << 22n,
       // 5 bits worker id block (17 empty bits, 5 for shard id + 12 for increment)
-      b(workerId) << b(17),
+      b(workerId) << 17n,
       // 5 bits worker id block (12 empty bits, 12 for increment)
-      b(processId) << b(12),
+      b(processId) << 12n,
       // 12 bits increment block (0 empty bits)
       b(increment ?? INCREMENT++)
     ]
 
     // just add up the segments and get valid discord snowflake
-    return segments.reduce((prev, curr) => prev + curr, b(0)).toString()
+    return segments.reduce((prev, curr) => prev + curr, 0n).toString()
   }
 
   static generatePartial(timestamp: Date | number = Date.now()): string {
@@ -57,7 +57,7 @@ export class DiscordSnowflake {
 
     const b = BigInt
 
-    return (b(timestamp - EPOCH) << b(22)).toString()
+    return (b(timestamp - EPOCH) << 22n).toString()
   }
 
   static deconstruct(snowflake: string): DeconstructedDiscordSnowflake {
@@ -66,16 +66,16 @@ export class DiscordSnowflake {
     // https://discord.com/developers/docs/reference#snowflakes-snowflake-id-format-structure-left-to-right
     return {
       // 42 bits timestamp
-      timestamp: n((bigSnowflake >> b(22)) + b(EPOCH)),
+      timestamp: n((bigSnowflake >> 22n) + b(EPOCH)),
 
       // 5 bits worker id
-      workerId: n((bigSnowflake & b(0x3E0000)) >> b(17)),
+      workerId: n((bigSnowflake & 0x3E0000n) >> 17n),
 
       // 5 bits process id
-      processId: n((bigSnowflake & b(0x1F000)) >> b(12)),
+      processId: n((bigSnowflake & 0x1F000n) >> 12n),
 
       // 12 bits increment, 0xFFF is a max 12 bit integer
-      increment: n(bigSnowflake & b(0xFFF)),
+      increment: n(bigSnowflake & 0xFFFn),
 
       get date() {
         return new Date(this.timestamp)

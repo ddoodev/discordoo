@@ -70,17 +70,17 @@ export class DiscordooSnowflake {
 
     const segments = [
       // 42 bits timestamp block (86 empty bits, 32 for worker id + 32 for shard id + 22 for increment)
-      b(timestamp - EPOCH) << b(86),
+      b(timestamp - EPOCH) << 86n,
       // 32 bits worker id block (54 empty bits, 32 for shard id + 22 for increment)
-      b(workerId) << b(54),
+      b(workerId) << 54n,
       // 32 bits worker id block (22 empty bits, 22 for increment)
-      b(shardId) << b(22),
+      b(shardId) << 22n,
       // 22 bits increment block (0 empty bits)
       b(INCREMENT++)
     ]
 
     // just add up the segments and get valid discordoo snowflake
-    return segments.reduce((prev, curr) => prev + curr, b(0)).toString()
+    return segments.reduce((prev, curr) => prev + curr, 0n).toString()
   }
 
   static generatePartial(timestamp: Date | number = Date.now()): string {
@@ -88,7 +88,7 @@ export class DiscordooSnowflake {
 
     const b = BigInt
 
-    return (b(timestamp) - b(EPOCH) << b(86)).toString()
+    return (b(timestamp) - b(EPOCH) << 86n).toString()
   }
 
   static deconstruct(snowflake: string): DeconstructedDiscordooSnowflake {
@@ -96,16 +96,16 @@ export class DiscordooSnowflake {
 
     return {
       // 42 bits timestamp
-      timestamp: n((bigSnowflake >> b(86)) + b(EPOCH)),
+      timestamp: n((bigSnowflake >> 86n) + b(EPOCH)),
 
       // 32 bits workerId, 0x3FFFFFFFC0000000000000 is a 86 bit integer (22 for increment (0) + 32 for shardId (0) + 32 for workerId (1))
-      workerId: n((bigSnowflake & b(0x3FFFFFFFC0000000000000)) >> b(54)),
+      workerId: n((bigSnowflake & 0x3FFFFFFFC0000000000000n) >> 54n),
 
       // 32 bits shardId, 0x3FFFFFFFC00000 is a 54 bit integer (22 for increment (0) + 32 for shardId (1))
-      shardId: n((bigSnowflake & b(0x3FFFFFFFC00000)) >> b(22)),
+      shardId: n((bigSnowflake & 0x3FFFFFFFC00000n) >> 22n),
 
       // 22 bits increment, 0x3FFFFF is a max 22 bit integer
-      increment: n(bigSnowflake & b(0x3FFFFF)),
+      increment: n(bigSnowflake & 0x3FFFFFn),
 
       get date() {
         return new Date(this.timestamp)

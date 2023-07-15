@@ -123,6 +123,9 @@ Release deadline: When it's ready.
   * [x] Cache must handle PresencesCachingPolicy
   * [x] Cache must handle UsersCachingPolicy
   * [x] Cache must handle OverwritesCachingPolicy
+  * [x] Cache must handle InvitesCachingPolicy
+  * [x] Cache must handle StickersCachingPolicy
+  * [x] Cache must handle CommandsCachingPolicy
   * [x] All the policies listed above must be able to handle custom caching functions
 
 SID - still in development
@@ -140,7 +143,9 @@ SID - still in development
 * [x] Implement Presences
 * [x] Implement Reactions
 * [x] Implement Users
-* [ ] Implement Interactions (SID)
+* [x] Implement Interactions
+* [x] Implement Overwrites (SID)
+* [x] Implement Invites (SID)
 
 ### User-land APIs
 * [x] Collection
@@ -159,6 +164,8 @@ SID - still in development
   * [x] ThreadMembersManager/ApplicationThreadMembersManager (SID)
   * [x] MessageReactionsManager/ApplicationReactionsManager
   * [x] UsersManager (SID)
+  * [x] ApplicationInteractionsManager/ApplicationInteractionsApplicationCommandsManager/GuildApplicationCommandsManager
+  * [x] ApplicationInvitesManager/GuildInvitesManager (SID)
 
 ## Contributing
 Feel free to create a PR, but check if there is an existing one.

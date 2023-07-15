@@ -62,7 +62,7 @@
     "ws": "7.4.6"
   },
   "engines": {
-    "node": ">=12.18"
+    "node": ">=16.13"
   },
   "publishConfig": {
     "access": "public"
