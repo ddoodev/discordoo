@@ -10,8 +10,8 @@ export class UserAppCommandInteractionData extends AbstractUiAppCommandInteracti
     const target = this.resolved.members.get(this.targetId)
     if (target) return target
 
-    if (!this._guildId) return undefined
+    if (!this._guildId && typeof options?.storage !== 'string') return undefined
 
-    return this.app.members.cache.get(this.targetId, { ...options, storage: this._guildId })
+    return this.app.members.cache.get(this.targetId, { storage: this._guildId, ...options })
   }
 }

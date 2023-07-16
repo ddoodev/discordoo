@@ -10,8 +10,8 @@ export class MessageAppCommandInteractionData extends AbstractUiAppCommandIntera
     const target = this.resolved.messages.get(this.targetId)
     if (target) return target
 
-    if (!this._channelId) return undefined
+    if (!this._channelId && typeof options?.storage !== 'string') return undefined
 
-    return this.app.messages.cache.get(this.targetId, { ...options, storage: this._channelId })
+    return this.app.messages.cache.get(this.targetId, { storage: this._channelId, ...options })
   }
 }
