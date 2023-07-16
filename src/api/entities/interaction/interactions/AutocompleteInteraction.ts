@@ -1,12 +1,11 @@
 import {
-  AppCommandInteractionData,
   AppCommandInteractionOptionPayload,
   AppCommandOptionChoiceData,
   AutocompleteInteractionQuery,
   EntitiesUtil,
   Json, RawAppCommandInteractionData,
   RawAppCommandOptionChoiceData,
-  RawInteractionData,
+  RawInteractionData, ChatInputInteractionData,
   ToJsonProperties
 } from '@src/api'
 import { Interaction } from '@src/api/entities/interaction/interactions/Interaction'
@@ -16,7 +15,7 @@ import { DiscordooError } from '@src/utils'
 
 export class AutocompleteInteraction extends Interaction {
   declare type: InteractionTypes.ApplicationCommandAutocomplete
-  declare data: AppCommandInteractionData
+  declare data: ChatInputInteractionData
   declare focusedOption: AutocompleteInteractionQuery
 
   async init(
@@ -24,10 +23,10 @@ export class AutocompleteInteraction extends Interaction {
   ): Promise<this> {
     await super.init(data, options)
 
-    const AppCmdIntData = EntitiesUtil.get('AppCommandInteractionData')
+    const AppCmdIntData = EntitiesUtil.get('ChatInputInteractionData')
 
     this.data = await new AppCmdIntData(this.app).init(
-      { ...data.data as RawAppCommandInteractionData, channelId: this.channelId, guildId: this.guildId },
+      { ...data.data, channelId: this.channelId, guildId: this.guildId },
       options
     )
     this.focusedOption = this.findFocusedOption(this.data.options)

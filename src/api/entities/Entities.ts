@@ -29,12 +29,18 @@ import { Invite } from '@src/api/entities/invite/Invite'
 import { AppCommand } from '@src/api/entities/interaction/AppCommand'
 import {
   ActionRowInteractionData,
-  AppCommandInteractionData, AutocompleteInteraction,
+  AutocompleteInteraction,
   ButtonInteractionData,
-  MessageComponentInteraction, ModalSubmitInteraction, ModalSubmitInteractionData,
-  SelectMenuInteractionData, TextInputInteractionData, WritableInteraction, WritableModalInteraction
+  MessageComponentInteraction,
+  ModalSubmitInteraction,
+  ModalSubmitInteractionData,
+  SelectMenuInteractionData,
+  TextInputInteractionData
 } from '@src/api/entities/interaction/'
 import { InteractionResolvedThreadChannel } from '@src/api/entities/channel/InteractionResolvedThreadChannel'
+import { MessageAppCommandInteractionData } from '@src/api/entities/interaction/interactions/MessageAppCommandInteractionData'
+import { ChatInputInteractionData } from '@src/api/entities/interaction/interactions/ChatInputInteractionData'
+import { UserAppCommandInteractionData } from '@src/api/entities/interaction/interactions/UserAppCommandInteractionData'
 
 export const Entities = {
   Message,
@@ -66,7 +72,6 @@ export const Entities = {
   StickerPack,
   ThreadMember,
   Guild,
-  AppCommandInteractionData,
   AppCommandInteraction,
   Interaction,
   MessageEmbed,
@@ -79,11 +84,12 @@ export const Entities = {
   ButtonInteractionData,
   AutocompleteInteraction,
   ModalSubmitInteraction,
-  WritableInteraction,
   ModalSubmitInteractionData,
-  WritableWithModalInteraction: WritableModalInteraction,
   TextInputInteractionData,
   ActionRowInteractionData,
   InteractionResolvedChannel,
-  InteractionResolvedThreadChannel
+  InteractionResolvedThreadChannel,
+  MessageAppCommandInteractionData,
+  ChatInputInteractionData,
+  UserAppCommandInteractionData,
 }

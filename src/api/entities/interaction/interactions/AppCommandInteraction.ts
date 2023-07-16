@@ -1,22 +1,45 @@
-import { InteractionTypes } from '@src/constants'
+import { AppCommandTypes, InteractionTypes } from '@src/constants'
 import {
-  AppCommandInteractionData, EntitiesUtil, EntityInitOptions, Json, RawAppCommandInteractionData, RawInteractionData, ToJsonProperties
+  ChatInputInteractionData,
+  EntitiesUtil,
+  EntityInitOptions,
+  Json, MessageAppCommandInteractionData,
+  RawAppCommandInteractionData,
+  RawInteractionData,
+  ToJsonProperties, UserAppCommandInteractionData
 } from '@src/api'
 import { WritableModalInteraction } from '@src/api/entities/interaction/interactions/WritableModalInteraction'
 
 export class AppCommandInteraction extends WritableModalInteraction {
   declare type: InteractionTypes.ApplicationCommand
-  declare data: AppCommandInteractionData
+  declare data: ChatInputInteractionData | UserAppCommandInteractionData | MessageAppCommandInteractionData
 
   async init(
     data: RawInteractionData<RawAppCommandInteractionData>, options?: EntityInitOptions
   ): Promise<this> {
     await super.init(data, options)
 
-    const AppCmdIntData = EntitiesUtil.get('AppCommandInteractionData')
+    let AppCmdIntData
+
+    switch (data.data.type) {
+      case AppCommandTypes.ChatInput:
+        AppCmdIntData = EntitiesUtil.get('ChatInputInteractionData')
+        break
+      case AppCommandTypes.User:
+        AppCmdIntData = EntitiesUtil.get('UserAppCommandInteractionData')
+        break
+      case AppCommandTypes.Message:
+        AppCmdIntData = EntitiesUtil.get('MessageAppCommandInteractionData')
+        break
+      default: {
+        this.data = data.data as any
+        console.log('AppCommandInteraction#init', 'Unknown interaction data type', data.type)
+        return this
+      }
+    }
 
     this.data = await new AppCmdIntData(this.app).init(
-      { ...data.data, channelId: this.channelId, guildId: this.guildId },
+      { ...data.data, guildId: this.guildId, channelId: this.channelId },
       options
     )
 

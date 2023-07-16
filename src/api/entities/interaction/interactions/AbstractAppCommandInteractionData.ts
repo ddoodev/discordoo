@@ -1,22 +1,24 @@
 import {
   AppCommandInteractionOptionPayload, EntityInitOptions,
   InteractionResolvedCacheManager,
-  Json,
+  Json, MessageAppCommandInteractionData,
   RawAppCommandInteractionData,
-  RawInteractionResolvedData,
-  ToJsonProperties
+  RawInteractionResolvedData, ChatInputInteractionData,
+  ToJsonProperties, UserAppCommandInteractionData
 } from '@src/api'
 import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 import { AppCommandTypes, ToJsonOverrideSymbol } from '@src/constants'
 import { attach } from '@src/utils'
 
-export class AppCommandInteractionData extends AbstractEntity {
+export abstract class AbstractAppCommandInteractionData extends AbstractEntity {
   declare id: string
   declare type: AppCommandTypes
   declare name: string
   declare resolved: InteractionResolvedCacheManager
-  declare options: AppCommandInteractionOptionPayload[]
-  private declare _resolved?: RawInteractionResolvedData
+  public  options: AppCommandInteractionOptionPayload[] = []
+  private _resolved?: RawInteractionResolvedData
+  protected _channelId?: string
+  protected _guildId?: string
 
   async init(
     data: RawAppCommandInteractionData & { guildId?: string; channelId?: string },
@@ -27,10 +29,12 @@ export class AppCommandInteractionData extends AbstractEntity {
         'id',
         'type',
         'options',
-        'name'
+        'name',
+        [ '_channelId', 'channelId' ],
+        [ '_guildId', 'guildId' ],
       ],
       disabled: options?.ignore,
-      enabled: [ 'id' ]
+      enabled: [ 'id', '_guildId', '_channelId' ]
     })
 
     if (data.resolved) {
@@ -39,28 +43,29 @@ export class AppCommandInteractionData extends AbstractEntity {
 
     this.resolved = await new InteractionResolvedCacheManager(this.app).init({
       ...data.resolved,
-      guildId: data.guildId,
+      guildId: this._guildId,
     })
 
     return this
   }
 
-  isChatInput(): boolean {
-    return this.type === AppCommandTypes.ChatInput
+  isChatInput(): this is ChatInputInteractionData {
+    return this instanceof ChatInputInteractionData
   }
 
-  isMessage(): boolean {
-    return this.type === AppCommandTypes.Message
+  isMessage(): this is MessageAppCommandInteractionData {
+    return this instanceof MessageAppCommandInteractionData
   }
 
-  isUser(): boolean {
-    return this.type === AppCommandTypes.User
+  isUser(): this is UserAppCommandInteractionData {
+    return this instanceof UserAppCommandInteractionData
   }
 
   jsonify(properties: ToJsonProperties = {}, obj?: any): Json {
     return super.jsonify({
       ...properties,
       id: true,
+      name: true,
       type: true,
       options: true,
       resolved: {
