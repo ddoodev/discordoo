@@ -1,5 +1,5 @@
 import {
-  ActionRowResolvable,
+  ActionRowResolvable, AllowedMentionsResolvable,
   MessageAttachmentResolvable,
   MessageEmbedResolvable, MessageResolvable,
 } from '@src/api'
@@ -14,7 +14,7 @@ export interface MessageEditOptions {
   components?: ActionRowResolvable[]
   component?: ActionRowResolvable
 
-  allowedMentions?: any /* TODO: AllowedMentionsResolvable */
+  allowedMentions?: AllowedMentionsResolvable
 
   content?: string
   /** Suppress embeds for this message or not (use MessageFlags.SuppressEmbeds if you want to do this) */

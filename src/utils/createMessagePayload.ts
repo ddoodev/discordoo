@@ -1,5 +1,5 @@
 import {
-  resolveActionRowToRaw,
+  resolveActionRowToRaw, resolveAllowedMentionsToRaw,
   resolveEmbedToRaw,
   resolveFile,
   resolveFiles,
@@ -112,7 +112,7 @@ export async function createMessagePayload<Interaction extends boolean = false>(
     payload.message_reference = resolveMessageReferenceToRaw(options.messageReference)
   }
 
-  // TODO: allowed mentions
+  if (options.allowedMentions) payload.allowed_mentions = resolveAllowedMentionsToRaw(options.allowedMentions)
 
   if (options.component) payload.components.push(resolveActionRowToRaw(options.component))
   if (options.components?.length) payload.components.push(...options.components.map(resolveActionRowToRaw))

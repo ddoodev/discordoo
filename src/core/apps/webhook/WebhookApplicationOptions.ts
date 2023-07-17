@@ -1,5 +1,6 @@
 import { RestOptions } from '@src/rest'
 import { ProviderOption } from '@src/core'
+import { AllowedMentionsResolvable } from '@src/api'
 
 export interface WebhookApplicationOptions {
   /** Webhook ID */
@@ -9,7 +10,7 @@ export interface WebhookApplicationOptions {
   /** Webhook Rest options */
   rest?: RestOptions
   /** Allowed mentions options */
-  allowedMentions?: any // TODO: AllowedMentionsResolvable
+  allowedMentions?: AllowedMentionsResolvable
   /** Providers */
   providers?: ProviderOption[]
 }

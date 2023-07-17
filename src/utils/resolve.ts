@@ -20,7 +20,7 @@ import { RoleTagsData } from '@src/api/entities/role/interfaces/RoleTagsData'
 import { ResolveDiscordooShardsOptions, ShardListResolvable } from '@src/utils/interfaces'
 import { range } from '@src/utils/range'
 import {
-  ActionRowBuilder, ActionRowResolvable,
+  ActionRowBuilder, ActionRowResolvable, AllowedMentionsResolvable,
   AnyComponent,
   AnyComponentData,
   ButtonBuilder,
@@ -29,7 +29,7 @@ import {
   GuildChannelResolvable,
   MessageAttachment,
   MessageAttachmentBuilder,
-  MessageComponentResolvable, RawActionRowData,
+  MessageComponentResolvable, RawActionRowData, RawAllowedMentionsData,
   RawAnyComponentData,
   SelectMenuBuilder,
   TextInputBuilder,
@@ -451,6 +451,20 @@ export function resolveMessageReferenceToRaw(resolvable: MessageReferenceResolva
     message_id: data.id ?? data.messageId ?? data.message_id ?? resolveMessageId(data.message),
     fail_if_not_exists: data.failIfNotExists ?? data.fail_if_not_exists ?? true
   }
+}
+
+export function resolveAllowedMentionsToRaw(resolvable: AllowedMentionsResolvable): RawAllowedMentionsData {
+  const result: RawAllowedMentionsData = {
+    parse: resolvable.parse,
+  }
+
+  if (resolvable.roles) result.roles = resolvable.roles.map(resolveRoleId) as string[]
+  if (resolvable.users) result.users = resolvable.users.map(resolveUserId) as string[]
+
+  if ('replied_user' in resolvable) result.replied_user = resolvable.replied_user
+  else if ('repliedUser' in resolvable) result.replied_user = resolvable.repliedUser
+
+  return result
 }
 
 // TODO: resolveComponents

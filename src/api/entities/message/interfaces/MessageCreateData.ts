@@ -1,13 +1,13 @@
 import { RawMessageEmbedData } from '@src/api/entities/embed'
 import { RawAttachment } from '@discordoo/providers'
-import { RawActionRowData } from '@src/api'
+import { RawActionRowData, RawAllowedMentionsData } from '@src/api'
 
 export interface MessageCreateData {
   content?: string
   tts: boolean
   embeds: RawMessageEmbedData[]
   attachments?: RawAttachment[]
-  allowed_mentions: any // TODO: RawAllowedMentionsData
+  allowed_mentions?: RawAllowedMentionsData
   message_reference: any // TODO: RawMessageReferenceData
   components: RawActionRowData[]
   stickers: string[]
