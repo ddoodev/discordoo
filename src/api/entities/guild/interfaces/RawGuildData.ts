@@ -1,5 +1,6 @@
 import { RawViewableGuildData } from '@src/api'
 import { DiscordLocale } from '@src/constants/common/DiscordLocale'
+import { GuildExplicitContentFilterLevels } from '@src/constants'
 
 export interface RawGuildData extends RawViewableGuildData {
   preferred_locale: DiscordLocale
@@ -8,4 +9,5 @@ export interface RawGuildData extends RawViewableGuildData {
   system_channel_id: string | null
   owner_id: string
   members_count: number
+  explicit_content_filter: GuildExplicitContentFilterLevels
 }

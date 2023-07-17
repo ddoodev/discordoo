@@ -12,6 +12,7 @@ import { DiscordLocale } from '@src/constants/common/DiscordLocale'
 import { AnyGuildWritableChannel } from '@src/api/entities/channel/interfaces/AnyGuildWritableChannel'
 import { GuildMember } from '@src/api/entities/member/GuildMember'
 import { GuildApplicationCommandsManager } from '@src/api'
+import { GuildExplicitContentFilterLevels } from '@src/constants'
 
 export class Guild extends AbstractViewableGuild {
   public unavailable = false
@@ -25,6 +26,7 @@ export class Guild extends AbstractViewableGuild {
   public declare ownerId: string
   public declare membersCount: number
   public declare commands: GuildApplicationCommandsManager
+  public declare explicitContentFilter: GuildExplicitContentFilterLevels
 
   async init(data: GuildData | RawGuildData, options?: EntityInitOptions): Promise<this> {
     await super.init(data)
@@ -37,7 +39,8 @@ export class Guild extends AbstractViewableGuild {
         [ 'publicUpdatesChannelId', 'public_updates_channel_id' ],
         [ 'systemChannelId', 'system_channel_id' ],
         [ 'ownerId', 'owner_id' ],
-        [ 'membersCount', 'members_count' ]
+        [ 'membersCount', 'members_count' ],
+        [ 'explicitContentFilter', 'explicit_content_filter' ]
       ],
       disabled: options?.ignore,
       enabled: [ 'unavailable', 'ownerId' ]
