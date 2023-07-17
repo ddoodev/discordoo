@@ -57,6 +57,10 @@ export class DirectMessagesChannel extends AbstractChannel implements WritableCh
     return this.app.messages.create(this.id, content, options)
   }
 
+  sendTyping(): Promise<boolean> {
+    return this.app.channels.startTyping(this.id)
+  }
+
   set lastMsgId(id: string) {
     this.lastMessageId = id
     this.messages.lastMessageId = id

@@ -8,6 +8,7 @@ export interface WritableChannel {
   messages: ChannelMessagesManager | DirectMessagesChannelMessagesManager
 
   send(content: MessageContent, options?: MessageCreateOptions): Promise<Message | undefined>
+  sendTyping(): Promise<boolean>
 
   lastMessageId?: string
   lastPinTimestamp?: number

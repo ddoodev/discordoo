@@ -46,6 +46,54 @@ export class ApplicationChannelsManager extends EntitiesManager {
     })
   }
 
+  async addFollower(sender: ChannelResolvable, follower: ChannelResolvable, reason?: string): Promise<boolean> {
+    const senderId = resolveChannelId(sender),
+      followerId = resolveChannelId(follower)
+
+    if (!senderId) {
+      throw new DiscordooError('ApplicationChannelsManager#addFollower', 'Cannot add channel follower without sender id.')
+    }
+    if (!followerId) {
+      throw new DiscordooError('ApplicationChannelsManager#addFollower', 'Cannot add channel follower without follower id.')
+    }
+
+    const response = await this.app.internals.actions.addFollower(senderId, followerId, reason)
+
+    return response.success
+  }
+
+  create<R = AnyChannel>(
+    type: 'thread' | 'channel',
+    channelOrGuild: ChannelResolvable | GuildResolvable,
+    data: GuildChannelCreateData
+      | RawGuildChannelCreateData
+      | ThreadChannelCreateData
+      | RawThreadChannelCreateData
+      | RawThreadChannelWithMessageCreateData,
+    reason?: string
+  ): Promise<R | undefined> {
+    if (type === 'thread') {
+      return this.createThreadChannel(
+        channelOrGuild as ThreadChannelResolvable,
+        data as ThreadChannelCreateData | RawThreadChannelCreateData | RawThreadChannelWithMessageCreateData,
+        reason
+      )
+    }
+
+    if (type === 'channel') {
+      return this.createGuildChannel(
+        channelOrGuild as GuildResolvable,
+        data as GuildChannelCreateData | RawGuildChannelCreateData,
+        reason
+      )
+    }
+
+    throw new DiscordooError(
+      'ApplicationChannelsManager#create',
+      'Unknown channel type to create. Expected "channel" or "thread", received:', type
+    )
+  }
+
   async createGuildChannel<R = AnyGuildChannel>(
     guild: GuildResolvable, data: GuildChannelCreateData | RawGuildChannelCreateData, reason?: string
   ): Promise<R | undefined> {
@@ -98,22 +146,6 @@ export class ApplicationChannelsManager extends EntitiesManager {
     return undefined
   }
 
-  async addFollower(sender: ChannelResolvable, follower: ChannelResolvable, reason?: string): Promise<boolean> {
-    const senderId = resolveChannelId(sender),
-      followerId = resolveChannelId(follower)
-
-    if (!senderId) {
-      throw new DiscordooError('ApplicationChannelsManager#addFollower', 'Cannot add channel follower without sender id.')
-    }
-    if (!followerId) {
-      throw new DiscordooError('ApplicationChannelsManager#addFollower', 'Cannot add channel follower without follower id.')
-    }
-
-    const response = await this.app.internals.actions.addFollower(senderId, followerId, reason)
-
-    return response.success
-  }
-
   async createThreadChannel<R = AnyThreadChannel>(
     channel: ThreadChannelResolvable,
     data: ThreadChannelCreateData | RawThreadChannelCreateData | RawThreadChannelWithMessageCreateData,
@@ -159,38 +191,6 @@ export class ApplicationChannelsManager extends EntitiesManager {
     return undefined
   }
 
-  create<R = AnyChannel>(
-    type: 'thread' | 'channel',
-    channelOrGuild: ChannelResolvable | GuildResolvable,
-    data: GuildChannelCreateData
-      | RawGuildChannelCreateData
-      | ThreadChannelCreateData
-      | RawThreadChannelCreateData
-      | RawThreadChannelWithMessageCreateData,
-    reason?: string
-  ): Promise<R | undefined> {
-    if (type === 'thread') {
-      return this.createThreadChannel(
-        channelOrGuild as ThreadChannelResolvable,
-        data as ThreadChannelCreateData | RawThreadChannelCreateData | RawThreadChannelWithMessageCreateData,
-        reason
-      )
-    }
-
-    if (type === 'channel') {
-      return this.createGuildChannel(
-        channelOrGuild as GuildResolvable,
-        data as GuildChannelCreateData | RawGuildChannelCreateData,
-        reason
-      )
-    }
-
-    throw new DiscordooError(
-      'ApplicationChannelsManager#create',
-      'Unknown channel type to create. Expected "channel" or "thread", received:', type
-    )
-  }
-
   async delete<R = AnyChannel>(channel: ChannelResolvable, options: ChannelDeleteOptions = {}): Promise<R | undefined> {
     const channelId = resolveChannelId(channel)
 
@@ -211,6 +211,28 @@ export class ApplicationChannelsManager extends EntitiesManager {
     }
 
     return undefined
+  }
+
+  async edit<R = AnyThreadChannel | AnyGuildChannel>(
+    channelOrThread: GuildChannelResolvable | ThreadChannelResolvable,
+    data: ThreadChannelEditData | RawThreadChannelEditData | GuildChannelEditData | RawGuildChannelEditData,
+    options: ThreadChannelEditOptions | GuildChannelEditOptions
+  ): Promise<R | undefined> {
+    const channelId = resolveChannelId(channelOrThread)
+
+    if (!channelId) {
+      throw new DiscordooError('ApplicationChannelsManager#edit', 'Cannot edit channel without id.')
+    }
+
+    if (!data) {
+      throw new DiscordooError('ApplicationChannelsManager#edit', 'Cannot edit channel without edit data.')
+    }
+
+    const isThread = is<ThreadChannelEditData | RawThreadChannelEditData>(data)
+
+    return isThread
+      ? this.editThreadChannel(channelId, data, options as ThreadChannelEditOptions)
+      : this.editGuildChannel(channelId, data, options as GuildChannelEditOptions)
   }
 
   async editGuildChannel<R = AnyGuildChannel>(
@@ -315,26 +337,12 @@ export class ApplicationChannelsManager extends EntitiesManager {
     return undefined
   }
 
-  async edit<R = AnyThreadChannel | AnyGuildChannel>(
-    channelOrThread: GuildChannelResolvable | ThreadChannelResolvable,
-    data: ThreadChannelEditData | RawThreadChannelEditData | GuildChannelEditData | RawGuildChannelEditData,
-    options: ThreadChannelEditOptions | GuildChannelEditOptions
-  ): Promise<R | undefined> {
-    const channelId = resolveChannelId(channelOrThread)
+  async startTyping(channel: ChannelResolvable): Promise<boolean> {
+    const channelId = resolveChannelId(channel)
+    if (!channelId) throw new DiscordooError('ApplicationChannelsManager#startTyping', 'Cannot send typing without channel id.')
 
-    if (!channelId) {
-      throw new DiscordooError('ApplicationChannelsManager#edit', 'Cannot edit channel without id.')
-    }
-
-    if (!data) {
-      throw new DiscordooError('ApplicationChannelsManager#edit', 'Cannot edit channel without edit data.')
-    }
-
-    const isThread = is<ThreadChannelEditData | RawThreadChannelEditData>(data)
-
-    return isThread
-      ? this.editThreadChannel(channelId, data, options as ThreadChannelEditOptions)
-      : this.editGuildChannel(channelId, data, options as GuildChannelEditOptions)
+    const response = await this.app.internals.actions.triggerTyping(channelId)
+    return response.success
   }
 
 }

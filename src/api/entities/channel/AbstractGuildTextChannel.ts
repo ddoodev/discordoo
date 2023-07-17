@@ -65,6 +65,10 @@ export abstract class AbstractGuildTextChannel extends AbstractGuildChannel impl
     return this.messages.create.bind(this.messages)
   }
 
+  sendTyping(): Promise<boolean> {
+    return this.app.channels.startTyping(this.id)
+  }
+
   jsonify(properties: ToJsonProperties = {}, obj?: any): Json {
     return super.jsonify({
       ...properties,

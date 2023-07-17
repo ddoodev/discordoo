@@ -150,6 +150,10 @@ export abstract class AbstractThreadChannel extends AbstractChannel implements A
     return this.messages.create.bind(this.messages)
   }
 
+  sendTyping(): Promise<boolean> {
+    return this.app.channels.startTyping(this.id)
+  }
+
   guild(options?: CacheManagerGetOptions): Promise<Guild | undefined> {
     return this.app.guilds.cache.get(this.guildId, options)
   }

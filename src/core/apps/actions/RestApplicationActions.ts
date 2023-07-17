@@ -326,6 +326,12 @@ export class RestApplicationActions {
       .delete()
   }
 
+  deleteInteractionResponse(applicationId: string, interactionToken: string, messageId: string) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.WEBHOOK_MESSAGE(applicationId, interactionToken, messageId))
+      .delete()
+  }
+
   deleteInvite(inviteCode: string, reason?: string) {
     return this.app.internals.rest.api()
       .url(Endpoints.INVITE(inviteCode))
@@ -343,12 +349,6 @@ export class RestApplicationActions {
       .url(Endpoints.CHANNEL_BULK_DELETE(channelId))
       .body({ messages })
       .post({ reason })
-  }
-
-  deleteInteractionResponse(applicationId: string, interactionToken: string, messageId: string) {
-    return this.app.internals.rest.api()
-      .url(Endpoints.WEBHOOK_MESSAGE(applicationId, interactionToken, messageId))
-      .delete()
   }
 
   editFollowUpMessage(applicationId: string, interactionToken: string, messageId: string, data: MessageEditData) {
@@ -543,16 +543,16 @@ export class RestApplicationActions {
       .get()
   }
 
-  getFollowUpMessage(applicationId: string, interactionToken: string, messageId: string) {
-    return this.app.internals.rest.api()
-      .url(Endpoints.WEBHOOK_MESSAGE(applicationId, interactionToken, messageId))
-      .get<RawMessageData>()
-  }
-
   getChannelInvites(channelId: string) {
     return this.app.internals.rest.api()
       .url(Endpoints.CHANNEL_INVITES(channelId))
       .get<RawInviteData[]>()
+  }
+
+  getFollowUpMessage(applicationId: string, interactionToken: string, messageId: string) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.WEBHOOK_MESSAGE(applicationId, interactionToken, messageId))
+      .get<RawMessageData>()
   }
 
   getGlobalCommand(commandId: string) {
@@ -866,6 +866,12 @@ export class RestApplicationActions {
     return this.app.internals.rest.api()
       .url(Endpoints.GUILD_TEMPLATE_GUILD(guildId, code))
       .put()
+  }
+
+  triggerTyping(channelId: string) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.CHANNEL_TYPING(channelId))
+      .post()
   }
 
   unbanGuildMember(guildId: string, memberId: string, reason?: string) {
