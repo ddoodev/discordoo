@@ -25,6 +25,19 @@ export class MessageCreateEvent extends AbstractEvent<MessageCreateEventContext>
 
     await this.app.users.cache.set(author.id, author)
 
+    if (message.guildId && data.member) {
+      let member = await this.app.members.cache.get(message.authorId, { storage: message.guildId })
+
+      if (member) {
+        member = await member.init(data.member)
+      } else {
+        const Member = EntitiesUtil.get('GuildMember')
+        member = await new Member(this.app).init(data.member)
+      }
+
+      await this.app.members.cache.set(member.userId, member, { storage: message.guildId })
+    }
+
     const channel = await this.app.channels.cache.get<AnyWritableChannel>(message.channelId, {
       storage: message.guildId ?? 'dm'
     })
