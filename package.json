@@ -1,6 +1,6 @@
 {
   "name": "discordoo",
-  "version": "0.12.3",
+  "version": "0.12.4",
   "description": "Discord bots. Simplified and boosted",
   "main": "./dist/src/index.js",
   "module": "./dist/src/index.js",
