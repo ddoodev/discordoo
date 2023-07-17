@@ -33,7 +33,7 @@ export function appCommandOptionToRaw(
     value: choice.value,
   }))
 
-  if ('options' in option) option.options?.map(option => appCommandOptionToRaw(option))
+  if ('options' in option) rawOptions['options'] = option.options?.map(option => appCommandOptionToRaw(option))
 
   return rawOptions as RawAppCommandOptionWithSubcommandsData
 }
