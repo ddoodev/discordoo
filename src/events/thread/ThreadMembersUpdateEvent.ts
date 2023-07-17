@@ -12,6 +12,7 @@ export class ThreadMembersUpdateEvent extends AbstractEvent<ThreadMembersUpdateE
     const thread: AnyThreadChannel | undefined = await this.app.channels.cache.get(data.id, { storage: data.guild_id })
     if (thread) {
       await thread.init({
+        name: thread.name,
         member_count: data.member_count,
         guild_id: data.guild_id,
         id: thread.id,
