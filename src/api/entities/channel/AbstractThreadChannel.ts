@@ -26,6 +26,7 @@ import { ThreadMember } from '@src/api/entities/member/ThreadMember'
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export abstract class AbstractThreadChannel extends AbstractChannel implements AbstractThreadChannelData, WritableChannel {
+  public declare name: string
   public declare messages: ChannelMessagesManager
   public declare members: ThreadMembersManager
   public declare guildId: string
@@ -43,6 +44,7 @@ export abstract class AbstractThreadChannel extends AbstractChannel implements A
 
     attach(this, data, {
       props: [
+        'name',
         [ 'guildId', 'guild_id' ],
         [ 'parentId', 'parent_id' ],
         [ 'ownerId', 'owner_id' ],
@@ -53,7 +55,7 @@ export abstract class AbstractThreadChannel extends AbstractChannel implements A
         [ 'memberCount', 'member_count' ],
       ],
       disabled: options?.ignore,
-      enabled: [ 'guildId' ]
+      enabled: [ 'name', 'guildId' ]
     })
 
     if (typeof this.lastPinTimestamp === 'string'!) { // discord sends timestamp in string

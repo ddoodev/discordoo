@@ -4,6 +4,7 @@ import { ThreadMetadata } from '@src/api/entities/channel/interfaces/ThreadMetad
 import { WritableChannelData } from '@src/api/entities/channel/interfaces/WritableChannelData'
 
 export interface AbstractThreadChannelData extends AbstractChannelData, WritableChannelData {
+  name: string
   guildId: string
   parentId?: string
   ownerId?: string

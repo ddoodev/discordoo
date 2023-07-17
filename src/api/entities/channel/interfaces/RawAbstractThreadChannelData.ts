@@ -4,6 +4,7 @@ import { RawThreadMemberData } from '@src/api/entities/member/interfaces/RawThre
 import { RawWritableChannelData } from '@src/api/entities/channel/interfaces/RawWritableChannelData'
 
 export interface RawAbstractThreadChannelData extends AbstractChannelData, RawWritableChannelData {
+  name: string
   guild_id: string
   parent_id?: string
   owner_id?: string
