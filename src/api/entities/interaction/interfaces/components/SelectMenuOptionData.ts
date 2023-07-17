@@ -4,6 +4,6 @@ export interface SelectMenuOptionData {
   label: string
   value: string
   description?: string
-  emoji?: Required<AbstractEmojiData>
+  emoji?: AbstractEmojiData
   default?: boolean
 }
