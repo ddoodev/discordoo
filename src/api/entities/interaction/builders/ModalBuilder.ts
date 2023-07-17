@@ -3,6 +3,7 @@ import {
   ActionRowData, ModalData,
   RawActionRowData, RawModalData
 } from '@src/api'
+import { attach } from '@src/utils'
 
 export class ModalBuilder {
   declare title: string
@@ -10,26 +11,22 @@ export class ModalBuilder {
   public components: ActionRowBuilder[] = []
 
   constructor(
-    data?: Array<ModalData | ModalBuilder | RawModalData>
-      | ModalData
+    data?: ModalData
       | RawModalData
       | ModalBuilder
   ) {
     if (!data) return this
 
-    if (Array.isArray(data)) {
-      data.forEach((component) => {
-        if (component instanceof ModalBuilder) {
-          this.components.concat(component.components)
-        } else {
-          const modalBuilder = new ModalBuilder(component)
-          this.components.concat(modalBuilder.components)
-        }
-      })
-    } else if (data instanceof ModalBuilder) {
-      this.components.concat(data.components)
+    attach(this, data, {
+      props: [
+        'title',
+        [ 'customId', 'custom_id' ]
+      ]
+    })
+
+    if (data instanceof ModalBuilder) {
+      this.components = this.components.concat(data.components)
     } else {
-      this.title = data.title
       return this.addActionRows(data.components)
     }
   }
@@ -46,7 +43,7 @@ export class ModalBuilder {
   }
 
   addActionRows(components: Array<ActionRowData | RawActionRowData | ActionRowBuilder>) {
-    components.forEach(this.addActionRow)
+    components.forEach((data) => this.addActionRow(data))
     return this
   }
 

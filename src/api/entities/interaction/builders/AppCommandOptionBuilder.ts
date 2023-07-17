@@ -71,7 +71,7 @@ export class AppCommandOptionBuilder {
   }
 
   addChoices(choices: Array<AppCommandOptionChoiceData | RawAppCommandOptionChoiceData>) {
-    choices.forEach(this.addChoice)
+    choices.forEach((data) => this.addChoice(data))
     return this
   }
 
@@ -84,7 +84,7 @@ export class AppCommandOptionBuilder {
   }
 
   addOptions(options: Array<RawAppCommandOptionWithSubcommandsData | AppCommandOptionWithSubcommandsData | AppCommandOption>) {
-    options.forEach(this.addOption)
+    options.forEach((data) => this.addOption(data))
     return this
   }
 
