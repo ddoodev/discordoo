@@ -7,6 +7,7 @@ import { TypedEmitter } from 'tiny-typed-emitter'
 import { DiscordooError, DiscordooSnowflake, resolveDiscordooShards, ValidationError, wait } from '@src/utils'
 import Process, { ChildProcess } from 'child_process'
 import { Worker } from 'worker_threads'
+import { Worker as ClusterWorker } from 'cluster'
 import Cluster from 'cluster'
 import os from 'os'
 import { deserializeError } from 'serialize-error'
@@ -26,7 +27,7 @@ export class ShardingInstance extends TypedEmitter {
   public mode: PartialShardingModes
   public options: ShardingInstanceOptions
   public totalShards: number
-  public rawShard?: Cluster.Worker | Worker | ChildProcess
+  public rawShard?: ClusterWorker | Worker | ChildProcess
   public manager: ShardingManager
 
   #running = false
@@ -73,7 +74,7 @@ export class ShardingInstance extends TypedEmitter {
 
         switch (this.mode) {
           case PartialShardingModes.Clusters:
-            (this.rawShard as Cluster.Worker).kill()
+            (this.rawShard as ClusterWorker).kill()
             break
           case PartialShardingModes.Processes:
             (this.rawShard as ChildProcess).kill()

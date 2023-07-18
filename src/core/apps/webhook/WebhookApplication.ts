@@ -60,6 +60,7 @@ export class WebhookApplication<ClientStack extends DefaultWebhookApplicationSta
       requestTimeout: options.rest?.requestTimeout ?? REST_DEFAULT_OPTIONS.requestTimeout,
       userAgent: options.rest?.userAgent ?? REST_DEFAULT_OPTIONS.userAgent,
       retries: options.rest?.retries ?? REST_DEFAULT_OPTIONS.retries,
+      retryWait: options.rest?.retryWait ?? REST_DEFAULT_OPTIONS.retryWait,
       api: Object.assign({}, REST_DEFAULT_OPTIONS.api, options.rest?.api),
       cdn: Object.assign({}, REST_DEFAULT_OPTIONS.cdn, options.rest?.cdn),
       limits: Object.assign({}, REST_DEFAULT_OPTIONS.limits, options.rest?.limits)
