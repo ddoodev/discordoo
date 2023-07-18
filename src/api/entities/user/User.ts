@@ -16,6 +16,7 @@ export class User extends AbstractEntity implements UserData {
   public declare bot: boolean
   public declare discriminator: string
   public email?: string
+  public globalName?: string
   public declare id: string
   public locale?: string
   public mfaEnabled?: boolean
@@ -41,6 +42,7 @@ export class User extends AbstractEntity implements UserData {
         [ 'mfaEnabled', 'mfa_enabled' ],
         [ 'premiumType', 'premium_type' ],
         [ 'flags', 'public_flags' ],
+        [ 'globalName', 'global_name' ],
         'verified'
       ],
       disabled: options?.ignore,

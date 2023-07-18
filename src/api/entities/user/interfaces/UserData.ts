@@ -4,6 +4,7 @@ export interface UserData {
   id: string
   username: string
   discriminator: string
+  globalName?: string
   avatar?: string
   bot?: boolean
   system?: boolean
