@@ -2,7 +2,7 @@ import { AbstractEvent } from '@src/events/AbstractEvent'
 import { EventNames, Keyspaces, otherCacheSymbol } from '@src/constants'
 import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 import { channelEntityKey } from '@src/utils'
-import { GuildEmoji } from '@src/api'
+import { GuildEmoji, RawAbstractThreadChannelData } from '@src/api'
 import { GuildCreateEventContext } from '@src/events/guild/ctx'
 import { AbstractEventContext } from '@src/events'
 import { RawGuildData } from '@src/api/entities/guild/interfaces/RawGuildData'
@@ -10,7 +10,7 @@ import { RawGuildData } from '@src/api/entities/guild/interfaces/RawGuildData'
 export class GuildCreateEvent extends AbstractEvent<GuildCreateEventContext | AbstractEventContext> {
   public name = EventNames.GUILD_CREATE
 
-  async execute(shardId: number, guild: RawGuildData) {
+  async execute(shardId: number, guild: RawGuildData & { threads?: RawAbstractThreadChannelData[] }) {
 
     let guildCache = await this.app.guilds.cache.get(guild.id)
 
@@ -26,6 +26,20 @@ export class GuildCreateEvent extends AbstractEvent<GuildCreateEventContext | Ab
     }
 
     for await (const channelData of guild.channels) {
+      let cache = await this.app.internals.cache.get(Keyspaces.Channels, guild.id, 'channelEntityKey', channelData.id)
+
+      if (cache) {
+        cache = await cache.init(channelData)
+        await this.app.channels.cache.set(cache.id, cache, { storage: guild.id })
+      } else {
+        const Channel: any = EntitiesUtil.get(channelEntityKey(channelData))
+        const channel = await new Channel(this.app).init(channelData)
+        await this.app.channels.cache.set(channel.id, channel, { storage: guild.id })
+      }
+    }
+
+    for await (const channelData of guild.threads ?? []) {
+      // need to duplicate this code because of the way threads are received
       let cache = await this.app.internals.cache.get(Keyspaces.Channels, guild.id, 'channelEntityKey', channelData.id)
 
       if (cache) {
