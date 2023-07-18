@@ -66,12 +66,14 @@ export interface ContentDeliveryNetworkOptions {
 
 /** Rest options */
 export interface RestOptions {
-  /** The maximum time in which the request should be executed */
+  /** The maximum time in which the request should be executed, in ms */
   requestTimeout?: number
   /** User-Agent header that will be attached in all requests */
   userAgent?: string
   /** How many times retry the request before throw an error */
   retries?: number
+  /** How long to wait before retry the request, in ms */
+  retryWait?: number
   /** Discord CDN options */
   cdn?: ContentDeliveryNetworkOptions
   /** Discord API options */
@@ -84,6 +86,7 @@ export interface CompletedRestOptions {
   requestTimeout: number
   userAgent: string
   retries: number
+  retryWait: number
   cdn: Required<ContentDeliveryNetworkOptions>
   api: Required<ApiOptions>
   limits: Required<RateLimitsOptions>

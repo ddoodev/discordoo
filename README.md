@@ -44,6 +44,41 @@ While there are already projects like [Necord](https://github.com/necordjs/necor
 ## Getting Started
 Process to [installation guide](https://docs.ddoo.dev/guide/overview/install) or [API reference](https://docs.ddoo.dev/ref).
 
+## Features
+* **Smart Caching**
+* * **Policies** — cache policies for guilds, channels, users, etc. disable any cache!
+* * **Sharding Ready** — operate with cache from any sharding instance to any sharding instance
+* * **Any Storage** — use any storage for cache (memory, redis, etc.) via cache providers
+* * **Async Cache** — operate with cache asynchronously, without blocking the event loop
+* * **DB-like Operations** — operate with cache via database like operations (set, get, delete, count, etc.)
+* * **Editable in runtime** — enable and disable caching for different entities in runtime without any breakage
+* **Smart Sharding**
+* * **Process** — spawn shards in separate processes
+* * **Worker** — spawn shards in separate workers
+* * **Cluster** — spawn shards in separate clusters
+* * **Gateway Shards** — spawn multiple gateway shards in one sharding instance (process, worker, cluster) and save host resources
+* * **Fast and Lightweight IPC** — fast and lightweight IPC between sharding instances via Unix/Windows sockets or TCP/UDP
+* * **ShardingManager** — spawn, restart, destroy shards, execute code on shards, get statistics, etc.
+* * **Hello/Identify** — hello/identify algorithm for shards
+* * **Load Balancing** — reconfigure which of the sharing instances should be responsible for which shards with restarting only changed shards (will be implemented in v0.14.0, now it is done by restarting all shards)
+* **Smart Rest**
+* * **Global Rate Limit** — global rate limit for all requests synced between all sharding instances & block protection
+* * **Invalid Request Limit** — invalid request limit for all requests synced between all sharding instances & block protection
+* * **Rest Provider** — rest provider allows you to customize the rest client as you wish, for example, to use a proxy or load balancer
+* * **Load Statistics** — capture how many requests were made to the Discord API every second or less
+* * **Errors Handler** — handle errors from the Discord API in a convenient way, not with .catch everywhere (will be implemented in v0.13.0)
+* **Smart Gateway**
+* * **Custom Events** — create custom events and emit them from anywhere via gateway provider + typings!
+* * **Super Scale** — scale your application with the power of events queues (RabbitMQ, Redis, etc.) via gateway provider
+* * **Zero-Downtime** — zero-downtime restarts of the application via gateway provider
+* **Smart Application**
+* * **Rest-Only** — create a rest-only application without gateway, for example, http interactions!
+* * **Cache-Only** — create a cache-only application without gateway and rest
+* * **Cache Independent** — everything you need to do anything is ID, no cache needed
+* * **Performance** — consumes about [40% less RAM](https://cdn.discordapp.com/attachments/531549268033404928/1130748409830195300/2023-07-18_09-27-43_1689661663.png) on big bots than djs, without any optimizations. Up to [90% less RAM](https://cdn.discordapp.com/attachments/531549268033404928/1130753449173209189/2023-07-18_09-50-15_1689663015.png) with optimizations.
+* * **Extendable Entities** — extend entities with your own methods and properties, with breakage protection
+* * **Editable Entities** — choose which properties of entities you want to cache, with breakage protection
+
 ## Planned features
 * **Waifoo** — a framework for creating discord bots based on Discordoo (commands, other features).
 * **Kawaioo** — a library / nestjs microservice that will allow you to interact with the Discordoo ShardingManager over TCP and UDP, to create your own scalable Rest API for the bot.

@@ -3,7 +3,7 @@ import { ShardingManagerEvents } from '@src/sharding/interfaces/manager/Sharding
 import { ShardingModes } from '@src/constants'
 import { ShardingManagerOptions } from '@src/sharding/interfaces/manager/options/ShardingManagerOptions'
 import { DiscordooError, DiscordooSnowflake, wait } from '@src/utils'
-import { isMaster as isMainCluster } from 'cluster'
+import cluster from 'cluster'
 import { isMainThread } from 'worker_threads'
 import { Collection } from '@discordoo/collection'
 import { ShardingInstance } from '@src/sharding/ShardingInstance'
@@ -15,6 +15,7 @@ import { CompletedLocalIpcOptions } from '@src/sharding/CompletedLocalIpcOptions
 import { LOCAL_IPC_DEFAULT_OPTIONS } from '@src/constants/sharding/IpcDefaultOptions'
 import { inspect } from 'util'
 
+const isMainCluster = cluster.isMaster
 const isMainProcess = process.send === undefined
 
 const spawningLoopError = new DiscordooError(

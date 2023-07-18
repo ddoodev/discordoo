@@ -178,6 +178,7 @@ export class DiscordRestApplication<ApplicationStack extends DefaultDiscordRestA
       requestTimeout: this.options.rest?.requestTimeout ?? REST_DEFAULT_OPTIONS.requestTimeout,
       userAgent: this.options.rest?.userAgent ?? REST_DEFAULT_OPTIONS.userAgent,
       retries: this.options.rest?.retries ?? REST_DEFAULT_OPTIONS.retries,
+      retryWait: this.options.rest?.retryWait ?? REST_DEFAULT_OPTIONS.retryWait,
       api: Object.assign({}, REST_DEFAULT_OPTIONS.api, { auth: `Bot ${this.token}` }, this.options.rest?.api),
       cdn: Object.assign({}, REST_DEFAULT_OPTIONS.cdn, this.options.rest?.cdn),
       limits: Object.assign({}, REST_DEFAULT_OPTIONS.limits, this.options.rest?.limits)

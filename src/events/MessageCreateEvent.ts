@@ -32,7 +32,7 @@ export class MessageCreateEvent extends AbstractEvent<MessageCreateEventContext>
         member = await member.init(data.member)
       } else {
         const Member = EntitiesUtil.get('GuildMember')
-        member = await new Member(this.app).init(data.member)
+        member = await new Member(this.app).init({ ...data.member, userId: message.authorId, guildId: message.guildId })
       }
 
       await this.app.members.cache.set(member.userId, member, { storage: message.guildId })

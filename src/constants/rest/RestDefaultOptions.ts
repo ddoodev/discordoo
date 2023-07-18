@@ -5,6 +5,7 @@ export const REST_DEFAULT_OPTIONS: CompletedRestOptions = {
   requestTimeout: 30_000,
   userAgent: `DiscordBot (https://github.com/ddoodev/discordoo, ${version}) NodeJS/${process.version}`,
   retries: 2,
+  retryWait: 1_000,
   cdn: {
     defaultImgFormat: 'png',
     defaultImgSize: 128,

@@ -34,7 +34,7 @@
   "devDependencies": {
     "@discordoo/tapok": "2.0.24",
     "@types/jest": "26.0.24",
-    "@types/node": "12.12.70",
+    "@types/node": "^16.18.1",
     "@types/node-ipc": "^9.2.0",
     "@types/pako": "1.0.1",
     "@types/ws": "7.4.1",

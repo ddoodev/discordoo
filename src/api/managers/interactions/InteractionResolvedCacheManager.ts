@@ -45,7 +45,8 @@ export class InteractionResolvedCacheManager extends EntitiesManager {
 
         const channel = await new Channel(this.app).init(channelData as any)
 
-        await this.app.channels.cache.set(channel.id, channel, { storage: data.guildId ?? 'dm' })
+        // cannot add partial channel to cache
+        // await this.app.channels.cache.set(channel.id, channel, { storage: data.guildId ?? 'dm' })
         this.channels.set(channel.id, channel)
       }
     }

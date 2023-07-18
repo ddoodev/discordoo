@@ -1,3 +1,3 @@
-import { promisify } from 'util'
+import { setTimeout } from 'timers/promises'
 
-export const wait: { (ms: number): Promise<void> } = promisify(setTimeout)
+export const wait: { (ms: number): Promise<void> } = setTimeout
