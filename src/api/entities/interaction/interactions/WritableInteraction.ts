@@ -1,8 +1,8 @@
 import { Interaction } from '@src/api/entities/interaction/interactions/Interaction'
 import {
   InteractionMessageContent,
-  InteractionMessageCreateOptions, InteractionMessageEditOptions,
-  MessageCreateOptions,
+  InteractionMessageCreateOptions,
+  InteractionMessageEditOptions,
   MessageResolvable
 } from '@src/api'
 
@@ -38,7 +38,7 @@ export abstract class WritableInteraction extends Interaction {
     return result ? this : undefined
   }
 
-  async replyFollowUp(content: InteractionMessageContent, options?: MessageCreateOptions) {
+  async replyFollowUp(content: InteractionMessageContent, options?: InteractionMessageCreateOptions) {
     return await this.app.interactions.replyFollowUp(this.app.user.id, this.token, content, options)
   }
 }

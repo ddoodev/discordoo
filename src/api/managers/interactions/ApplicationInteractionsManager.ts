@@ -155,9 +155,9 @@ export class ApplicationInteractionsManager extends EntitiesManager {
     applicationId: string,
     token: string,
     content: InteractionMessageContent,
-    options?: MessageCreateOptions
+    options?: InteractionMessageCreateOptions
   ) {
-    const message = await createMessagePayload(content, options)
+    const message = await createMessagePayload<true>(content, options)
     const response = await this.app.internals.actions.createFollowUpMessage(applicationId, token, message)
 
     if (response.success) {

@@ -33,7 +33,7 @@ import {
   RawThreadChannelWithMessageCreateData,
   RawUserData,
   RawGuildAppCommandEditData,
-  MessageEditData, InteractionMessageEditOptions
+  MessageEditData, InteractionMessageEditOptions, InteractionMessageCreateData
 } from '@src/api'
 import { Endpoints } from '@src/constants'
 import { DiscordRestApplication } from '@src/core'
@@ -98,7 +98,7 @@ export class RestApplicationActions {
       .post({ reason })
   }
 
-  createFollowUpMessage(id: string, token: string, data: MessageCreateData) {
+  createFollowUpMessage(id: string, token: string, data: InteractionMessageCreateData) {
     return this.app.internals.rest.api()
       .url(Endpoints.WEBHOOK_TOKEN(id, token))
       .body(data)
