@@ -1,5 +1,5 @@
 export { AppCommandOptionBuilder } from './AppCommandOptionBuilder'
-export { SlashCommandBuilder } from './SlashCommandBuilder'
+export { AppCommandBuilder } from './AppCommandBuilder'
 export { SelectMenuBuilder } from './SelectMenuBuilder'
 export { ActionRowBuilder } from './ActionRowBuilder'
 export { TextInputBuilder } from './TextInputBuilder'

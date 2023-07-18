@@ -6,7 +6,7 @@ import {
   EntitiesCacheManager,
   GuildApplicationCommandsManagerOptions,
   RawAppCommandCreateData,
-  SlashCommandBuilder
+  AppCommandBuilder
 } from '@src/api'
 import { RestEligibleDiscordApplication } from '@src/core'
 
@@ -27,7 +27,7 @@ export class GuildApplicationCommandsManager extends EntitiesManager {
     })
   }
 
-  async create(data: SlashCommandBuilder | RawAppCommandCreateData | AppCommandCreateData): Promise<AppCommand | undefined> {
+  async create(data: AppCommandBuilder | RawAppCommandCreateData | AppCommandCreateData): Promise<AppCommand | undefined> {
     return this.app.interactions.commands.createGuild({ ...data, guild: this.options.guild })
   }
 
@@ -36,7 +36,7 @@ export class GuildApplicationCommandsManager extends EntitiesManager {
   }
 
   async edit(
-    command: CommandResolvable, data: SlashCommandBuilder | RawAppCommandCreateData | AppCommandCreateData
+    command: CommandResolvable, data: AppCommandBuilder | RawAppCommandCreateData | AppCommandCreateData
   ): Promise<AppCommand | undefined> {
     return this.app.interactions.commands.editGuild(this.options.guild, command, data)
   }
@@ -56,7 +56,7 @@ export class GuildApplicationCommandsManager extends EntitiesManager {
   }
 
   async overwrite(
-    commands: Array<SlashCommandBuilder | RawAppCommandCreateData | AppCommandCreateData>
+    commands: Array<AppCommandBuilder | RawAppCommandCreateData | AppCommandCreateData>
   ): Promise<AppCommand[] | undefined> {
     return this.app.interactions.commands.overwriteGuild(
       commands.map(c => ({ ...c, guild: this.options.guild }))

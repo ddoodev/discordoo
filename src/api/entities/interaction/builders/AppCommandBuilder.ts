@@ -11,7 +11,7 @@ import { attach, resolveBigBitField, resolveGuildId } from '@src/utils'
 import { appCommandOptionToRaw } from '@src/utils/appCommandOptionToRaw'
 
 @mix(MixinNameDescriptionRequired)
-export class SlashCommandBuilder {
+export class AppCommandBuilder {
   /** 1-32 character **required** name */
   declare name: string
   /** localization dictionary for `name` field. Values follow the same restrictions as name */
@@ -37,7 +37,7 @@ export class SlashCommandBuilder {
   public guild?: string
 
   constructor(
-    data?: SlashCommandBuilder |
+    data?: AppCommandBuilder |
       RawAppCommandCreateData |
       AppCommandCreateData |
       GuildAppCommandCreateData |
@@ -113,4 +113,4 @@ export class SlashCommandBuilder {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface SlashCommandBuilder extends MixinNameDescriptionRequired {}
+export interface AppCommandBuilder extends MixinNameDescriptionRequired {}

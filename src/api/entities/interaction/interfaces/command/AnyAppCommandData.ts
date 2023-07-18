@@ -1,8 +1,8 @@
 import {
-  AppCommandCreateData, RawAppCommandCreateData, SlashCommandBuilder, GuildAppCommandCreateData, RawGuildAppCommandCreateData
+  AppCommandCreateData, RawAppCommandCreateData, AppCommandBuilder, GuildAppCommandCreateData, RawGuildAppCommandCreateData
 } from '@src/api'
 
-export type AnyAppCommandData = SlashCommandBuilder
+export type AnyAppCommandData = AppCommandBuilder
   | RawGuildAppCommandCreateData
   | RawAppCommandCreateData
   | GuildAppCommandCreateData

@@ -6,7 +6,7 @@ import {
   GuildResolvable,
   RawAppCommandCreateData, RawAppCommandEditData, RawGuildAppCommandCreateData,
   RawGuildAppCommandEditData,
-  SlashCommandBuilder
+  AppCommandBuilder
 } from '@src/api'
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
 import { DiscordRestApplication } from '@src/core'
@@ -28,9 +28,9 @@ export class ApplicationInteractionsApplicationCommandManager extends EntitiesMa
   }
 
   async createGlobal(
-    commandData: SlashCommandBuilder | RawAppCommandCreateData | AppCommandCreateData
+    commandData: AppCommandBuilder | RawAppCommandCreateData | AppCommandCreateData
   ): Promise<AppCommand | undefined> {
-    const data = commandData instanceof SlashCommandBuilder ? commandData.toJSON() : new SlashCommandBuilder(commandData).toJSON()
+    const data = commandData instanceof AppCommandBuilder ? commandData.toJSON() : new AppCommandBuilder(commandData).toJSON()
     const response = await this.app.internals.actions.createGlobalCommand(data)
 
     if (response.success) {
@@ -44,7 +44,7 @@ export class ApplicationInteractionsApplicationCommandManager extends EntitiesMa
   }
 
   async createGuild(
-    commandData: SlashCommandBuilder | RawGuildAppCommandCreateData | GuildAppCommandCreateData
+    commandData: AppCommandBuilder | RawGuildAppCommandCreateData | GuildAppCommandCreateData
   ): Promise<AppCommand | undefined> {
     const guildId = resolveGuildId(commandData.guild!)
     if (!guildId) {
@@ -53,7 +53,7 @@ export class ApplicationInteractionsApplicationCommandManager extends EntitiesMa
       )
     }
 
-    const data = commandData instanceof SlashCommandBuilder ? commandData.toJSON() : new SlashCommandBuilder(commandData).toJSON()
+    const data = commandData instanceof AppCommandBuilder ? commandData.toJSON() : new AppCommandBuilder(commandData).toJSON()
     const response = await this.app.internals.actions.createGuildCommand(guildId, data)
 
     if (response.success) {
@@ -251,12 +251,12 @@ export class ApplicationInteractionsApplicationCommandManager extends EntitiesMa
   }
 
   async overwriteGlobal(
-    commandsData: Array<SlashCommandBuilder | RawAppCommandCreateData | AppCommandCreateData>
+    commandsData: Array<AppCommandBuilder | RawAppCommandCreateData | AppCommandCreateData>
   ): Promise<AppCommand[] | undefined> {
     const data = commandsData.map((command) =>
-      command instanceof SlashCommandBuilder
+      command instanceof AppCommandBuilder
         ? command.toJSON()
-        : new SlashCommandBuilder(command).toJSON()
+        : new AppCommandBuilder(command).toJSON()
     )
 
     const response = await this.app.internals.actions.overwriteGlobalCommandsBulk(data)
@@ -274,7 +274,7 @@ export class ApplicationInteractionsApplicationCommandManager extends EntitiesMa
   }
 
   async overwriteGuild(
-    commandsData: Array<SlashCommandBuilder | RawGuildAppCommandCreateData | GuildAppCommandCreateData>
+    commandsData: Array<AppCommandBuilder | RawGuildAppCommandCreateData | GuildAppCommandCreateData>
   ): Promise<AppCommand[] | undefined> {
     const commandsByGuild = {}
     commandsData.forEach((command) => {
@@ -287,9 +287,9 @@ export class ApplicationInteractionsApplicationCommandManager extends EntitiesMa
       if (!commandsByGuild[guildId]) commandsByGuild[guildId] = []
 
       commandsByGuild[guildId].push(
-        command instanceof SlashCommandBuilder
+        command instanceof AppCommandBuilder
         ? command.toJSON()
-        : new SlashCommandBuilder(command).toJSON()
+        : new AppCommandBuilder(command).toJSON()
       )
     })
 
@@ -316,8 +316,8 @@ export class ApplicationInteractionsApplicationCommandManager extends EntitiesMa
       'guild' in curr ? acc[0].push(curr) : acc[1].push(curr)
       return acc
     }, [
-      [] as Array<SlashCommandBuilder | RawGuildAppCommandCreateData | GuildAppCommandCreateData>,
-      [] as Array<SlashCommandBuilder | RawAppCommandCreateData | AppCommandCreateData>
+      [] as Array<AppCommandBuilder | RawGuildAppCommandCreateData | GuildAppCommandCreateData>,
+      [] as Array<AppCommandBuilder | RawAppCommandCreateData | AppCommandCreateData>
     ])
 
     if (global.length && !guild.length) return await this.overwriteGlobal(global)
