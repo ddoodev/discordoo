@@ -6,7 +6,7 @@ import {
   AppCommandOptionChoiceData,
   ApplicationInteractionsApplicationCommandManager,
   EntitiesUtil, InteractionMessageEditOptions,
-  MessageCreateOptions, MessageResolvable,
+  MessageResolvable,
   ModalBuilder,
   ModalData,
   RawAppCommandOptionChoiceData,
@@ -21,6 +21,14 @@ export class ApplicationInteractionsManager extends EntitiesManager {
   constructor(app: DiscordRestApplication) {
     super(app)
     this.commands = new ApplicationInteractionsApplicationCommandManager(app)
+  }
+
+  async deferComponentReply(interactionId: string, token: string) {
+    const response = await this.app.internals.actions.createInteractionResponse(interactionId, token, {
+      type: InteractionResponseTypes.DeferredUpdateMessage,
+    })
+
+    return response.success
   }
 
   async deferReply(interactionId: string, token: string, ephemeral?: boolean): Promise<boolean> {

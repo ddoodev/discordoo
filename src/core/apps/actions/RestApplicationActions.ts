@@ -205,7 +205,7 @@ export class RestApplicationActions {
           attachments: body.attachments?.length === 0 ? [] : undefined
         }
       })
-    } else if (body) {
+    } else {
       request.body(data)
     }
 

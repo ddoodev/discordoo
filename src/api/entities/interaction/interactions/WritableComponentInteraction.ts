@@ -2,6 +2,11 @@ import { WritableModalInteraction } from '@src/api/entities/interaction/interact
 import { InteractionMessageContent, InteractionMessageEditOptions } from '@src/api'
 
 export abstract class WritableComponentInteraction extends WritableModalInteraction {
+  async deferReply(): Promise<this | undefined> {
+    const response = await this.app.interactions.deferComponentReply(this.id, this.token)
+    return response ? this : undefined
+  }
+
   async editComponentReply(
     content: InteractionMessageContent, options?: Omit<InteractionMessageEditOptions, 'message'>
   ): Promise<boolean> {
