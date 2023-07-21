@@ -1,6 +1,6 @@
 import { RawMessageEmbedData } from '@src/api/entities/embed'
 import { RawAttachment } from '@discordoo/providers'
-import { RawActionRowData, RawAllowedMentionsData } from '@src/api'
+import { RawActionRowData, RawAllowedMentionsData, RawMessageReferenceData } from '@src/api'
 
 export interface MessageCreateData {
   content?: string
@@ -8,7 +8,7 @@ export interface MessageCreateData {
   embeds: RawMessageEmbedData[]
   attachments?: RawAttachment[]
   allowed_mentions?: RawAllowedMentionsData
-  message_reference: any // TODO: RawMessageReferenceData
+  message_reference?: RawMessageReferenceData
   components: RawActionRowData[]
   stickers: string[]
   flags?: 4 // only MessageFlags.SuppressEmbeds can be set
