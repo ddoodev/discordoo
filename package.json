@@ -10,6 +10,7 @@
     "lint:fix": "eslint tests src --fix",
     "test": "jest",
     "test:fly": "node dist/on-the-fly/index.js",
+    "test:fly:bun": "wsl ~/.bun/bin/bun run dist/on-the-fly/index.js",
     "test:fly:nsolid": "npx nsolid-quickstart --exec dist/on-the-fly/index.js",
     "build": "ttsc -p tsconfig.json",
     "build:publish": "npx rimraf dist types && ttsc -p tsconfig.publish.json",
