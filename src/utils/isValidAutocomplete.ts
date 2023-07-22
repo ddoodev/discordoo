@@ -1,7 +1,7 @@
-import { AppCommandInteractionOptionPayload } from '../../src/api/entities/interaction/interfaces/command/AppCommandInteractionOptionPayload'
+import { AppCommandInteractionOptionPayload } from '@src/api/entities/interaction/interfaces/command/AppCommandInteractionOptionPayload'
 import { is } from 'typescript-is'
-import { AppCommandOptionTypes } from '../../src/constants'
-import { WebSocketUtils } from '../../src/utils/WebSocketUtils'
+import { AppCommandOptionTypes } from '@src/constants'
+import { WebSocketUtils } from '@src/utils/WebSocketUtils'
 
 export function isValidAutocomplete(data: any): data is AppCommandInteractionOptionPayload {
   // value and options are mutually exclusive

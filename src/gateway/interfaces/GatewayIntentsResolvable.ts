@@ -1,3 +1,3 @@
-import { GatewayIntents } from '../../../src/constants'
+import { GatewayIntents } from '@src/constants'
 
 export type GatewayIntentsResolvable = GatewayIntents | GatewayIntents[] | number | number[]

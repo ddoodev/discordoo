@@ -1,4 +1,4 @@
-import { AbstractEmojiData } from '../../../../../../src/api'
+import { AbstractEmojiData } from '@src/api'
 
 export interface SelectMenuOptionData {
   label: string

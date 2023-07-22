@@ -1,7 +1,7 @@
-import { AbstractUiAppCommandInteractionData } from '../../../../../src/api/entities/interaction/interactions/AbstractUiAppCommandInteractionData'
-import { GuildMember } from '../../../../../src/api'
-import { CacheManagerGetOptions } from '../../../../../src/cache'
-import { AppCommandTypes } from '../../../../../src/constants'
+import { AbstractUiAppCommandInteractionData } from '@src/api/entities/interaction/interactions/AbstractUiAppCommandInteractionData'
+import { GuildMember } from '@src/api'
+import { CacheManagerGetOptions } from '@src/cache'
+import { AppCommandTypes } from '@src/constants'
 
 export class UserAppCommandInteractionData extends AbstractUiAppCommandInteractionData {
   declare type: AppCommandTypes.User

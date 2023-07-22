@@ -1,5 +1,5 @@
-import { RawUserData, RawViewableGuildData, InviteChannelData } from '../../../../../src/api'
-import { InviteTargetTypes } from '../../../../../src/constants'
+import { RawUserData, RawViewableGuildData, InviteChannelData } from '@src/api'
+import { InviteTargetTypes } from '@src/constants'
 
 export interface RawInviteData {
   code: string

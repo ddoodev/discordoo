@@ -9,9 +9,9 @@ import {
   RawAnyComponentData,
   SelectMenuBuilder,
   TextInputBuilder,
-} from '../../../../../src/api'
-import { ComponentTypes } from '../../../../../src/constants'
-import { DiscordooError } from '../../../../../src/utils'
+} from '@src/api'
+import { ComponentTypes } from '@src/constants'
+import { DiscordooError } from '@src/utils'
 
 export class ActionRowBuilder {
   public components: ActionRowContains[] = []

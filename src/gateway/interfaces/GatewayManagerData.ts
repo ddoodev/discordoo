@@ -1,4 +1,4 @@
-import { CompletedGatewayOptions } from '../../../src/gateway/interfaces/GatewayOptions'
+import { CompletedGatewayOptions } from '@src/gateway/interfaces/GatewayOptions'
 
 export interface GatewayManagerData {
   providerOptions?: any

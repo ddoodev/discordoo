@@ -1,11 +1,11 @@
-import { EntitiesCacheManager, GuildMember, Role, RoleResolvable } from '../../../../src/api'
-import { EntitiesManager } from '../../../../src/api/managers/EntitiesManager'
-import { GuildMemberRolesManagerData } from '../../../../src/api/managers/members/GuildMemberRolesManagerData'
-import { resolveGuildId, resolveRoleId, resolveUserId } from '../../../../src/utils/resolve'
-import { DiscordooError } from '../../../../src/utils'
-import { Keyspaces } from '../../../../src/constants'
-import { filterAndMap } from '../../../../src/utils/filterAndMap'
-import { RestEligibleDiscordApplication } from '../../../../src/core/apps/AnyDiscordApplication'
+import { EntitiesCacheManager, GuildMember, Role, RoleResolvable } from '@src/api'
+import { EntitiesManager } from '@src/api/managers/EntitiesManager'
+import { GuildMemberRolesManagerData } from '@src/api/managers/members/GuildMemberRolesManagerData'
+import { resolveGuildId, resolveRoleId, resolveUserId } from '@src/utils/resolve'
+import { DiscordooError } from '@src/utils'
+import { Keyspaces } from '@src/constants'
+import { filterAndMap } from '@src/utils/filterAndMap'
+import { RestEligibleDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
 
 export class GuildMemberRolesManager extends EntitiesManager {
   public cache: EntitiesCacheManager<Role>

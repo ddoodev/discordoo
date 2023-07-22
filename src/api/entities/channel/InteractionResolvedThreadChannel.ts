@@ -1,11 +1,11 @@
-import { AbstractChannel } from '../../../../src/api/entities/channel/AbstractChannel'
+import { AbstractChannel } from '@src/api/entities/channel/AbstractChannel'
 import {
   EntityInitOptions, InteractionResolvedThreadChannelData,
   RawInteractionResolvedThreadChannelData, ReadonlyPermissions, ThreadMetadata
-} from '../../../../src/api'
-import { attach } from '../../../../src/utils'
+} from '@src/api'
+import { attach } from '@src/utils'
 import { is } from 'typescript-is'
-import { ChannelTypes } from '../../../../src/constants'
+import { ChannelTypes } from '@src/constants'
 
 export class InteractionResolvedThreadChannel extends AbstractChannel {
   declare type: ChannelTypes.GuildPublicThread

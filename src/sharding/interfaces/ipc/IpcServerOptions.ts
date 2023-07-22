@@ -1,5 +1,5 @@
-import { IpcServerTlsOptions } from '../../../../src/sharding/interfaces/ipc/IpcServerTlsOptions'
-import { RawIpcConfig } from '../../../../src/sharding/interfaces/ipc/RawIpcConfig'
+import { IpcServerTlsOptions } from '@src/sharding/interfaces/ipc/IpcServerTlsOptions'
+import { RawIpcConfig } from '@src/sharding/interfaces/ipc/RawIpcConfig'
 
 export interface IpcServerOptions {
   tls?: IpcServerTlsOptions

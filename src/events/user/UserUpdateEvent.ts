@@ -1,7 +1,7 @@
-import { AbstractEvent } from '../../../src/events/AbstractEvent'
-import { EventNames } from '../../../src/constants'
-import { RawUserData } from '../../../src/api'
-import { UserUpdateEventContext } from '../../../src/events'
+import { AbstractEvent } from '@src/events/AbstractEvent'
+import { EventNames } from '@src/constants'
+import { RawUserData } from '@src/api'
+import { UserUpdateEventContext } from '@src/events'
 
 export class UserUpdateEvent extends AbstractEvent<UserUpdateEventContext> {
   public name = EventNames.USER_UPDATE

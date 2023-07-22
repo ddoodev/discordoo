@@ -1,5 +1,5 @@
-import { PermissionsResolvable } from '../../../../../src/api'
-import { RoleTagsResolvable } from '../../../../../src/api/entities/role/interfaces/RoleTagsResolvable'
+import { PermissionsResolvable } from '@src/api'
+import { RoleTagsResolvable } from '@src/api/entities/role/interfaces/RoleTagsResolvable'
 
 export interface RoleData {
   id: string

@@ -1,4 +1,4 @@
-import { ShardListResolvable } from '../../../src/utils'
+import { ShardListResolvable } from '@src/utils'
 
 export interface CacheManagerOperationOptions {
   shard?: ShardListResolvable | 'current' | 'all'

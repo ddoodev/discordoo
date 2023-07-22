@@ -1,11 +1,11 @@
-import { AbstractEntity } from '../../../../../../src/api/entities/AbstractEntity'
+import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 import {
   ButtonInteractionData,
   EntitiesUtil,
   RawActionRowData, SelectMenuInteractionData,
   TextInputInteractionData
-} from '../../../../../../src/api'
-import { ComponentTypes } from '../../../../../../src/constants'
+} from '@src/api'
+import { ComponentTypes } from '@src/constants'
 
 export class ActionRowInteractionData extends AbstractEntity {
   declare components: Array<ButtonInteractionData | SelectMenuInteractionData | TextInputInteractionData>

@@ -1,5 +1,5 @@
-import { StickerFormatTypes, StickerTypes } from '../../../../../src/constants'
-import { RawUserData } from '../../../../../src/api/entities/user/interfaces/RawUserData'
+import { StickerFormatTypes, StickerTypes } from '@src/constants'
+import { RawUserData } from '@src/api/entities/user/interfaces/RawUserData'
 
 export interface RawStickerData {
   id: string

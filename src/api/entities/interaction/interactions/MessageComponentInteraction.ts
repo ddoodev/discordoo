@@ -3,10 +3,10 @@ import {
   EntitiesUtil,
   RawButtonComponentInteractionData,
   RawInteractionData, RawSelectComponentInteractionData, SelectMenuInteractionData
-} from '../../../../../src/api'
-import { EntityInitOptions } from '../../../../../src/api/entities/EntityInitOptions'
-import { WritableComponentInteraction } from '../../../../../src/api/entities/interaction/interactions/WritableComponentInteraction'
-import { ComponentTypes } from '../../../../../src/constants'
+} from '@src/api'
+import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
+import { WritableComponentInteraction } from '@src/api/entities/interaction/interactions/WritableComponentInteraction'
+import { ComponentTypes } from '@src/constants'
 
 export class MessageComponentInteraction extends WritableComponentInteraction {
   declare data: ButtonInteractionData | SelectMenuInteractionData

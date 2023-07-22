@@ -1,8 +1,8 @@
-import { GuildIntegrationExpireBehavior } from '../../../../../src/constants/entities/guild/GuildIntegrationExpireBehavior'
-import { GuildIntegrationType } from '../../../../../src/constants/entities/guild/GuildIntegrationType'
-import { UserData } from '../../../../../src/api/entities/user/interfaces/UserData'
-import { GuildIntegrationAccountData } from '../../../../../src/api/entities/guild/interfaces/GuildIntegrationAccountData'
-import { GuildIntegrationApplicationData } from '../../../../../src/api/entities/guild/interfaces/GuildIntergrationApplicationData'
+import { GuildIntegrationExpireBehavior } from '@src/constants/entities/guild/GuildIntegrationExpireBehavior'
+import { GuildIntegrationType } from '@src/constants/entities/guild/GuildIntegrationType'
+import { UserData } from '@src/api/entities/user/interfaces/UserData'
+import { GuildIntegrationAccountData } from '@src/api/entities/guild/interfaces/GuildIntegrationAccountData'
+import { GuildIntegrationApplicationData } from '@src/api/entities/guild/interfaces/GuildIntergrationApplicationData'
 
 export interface GuildIntegrationData {
   id: string

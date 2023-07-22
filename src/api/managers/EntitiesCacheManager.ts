@@ -1,6 +1,6 @@
-import { EntitiesManager } from '../../../src/api/managers/EntitiesManager'
-import { EntityKey } from '../../../src/api/entities/interfaces'
-import { EntitiesCacheManagerData } from '../../../src/api/managers/interfaces'
+import { EntitiesManager } from '@src/api/managers/EntitiesManager'
+import { EntityKey } from '@src/api/entities/interfaces'
+import { EntitiesCacheManagerData } from '@src/api/managers/interfaces'
 import {
   CacheManagerForEachOptions,
   CacheManagerDeleteOptions,
@@ -19,9 +19,9 @@ import {
   CacheManagerKeysOptions,
   CacheManagerValuesOptions,
   CacheManagerEntriesOptions,
-} from '../../../src/cache/interfaces'
-import { CacheProvider, CacheStorageKey } from '../../../../providers/src/_index'
-import { RestEligibleDiscordApplication } from '../../../src/core/apps/AnyDiscordApplication'
+} from '@src/cache/interfaces'
+import { CacheProvider, CacheStorageKey } from '@discordoo/providers'
+import { RestEligibleDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
 
 export class EntitiesCacheManager<DefaultEntity> extends EntitiesManager {
   private readonly entityKey: EntityKey

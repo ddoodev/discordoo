@@ -1,4 +1,4 @@
-import { IgnoreAllSymbol } from '../../../src/constants'
+import { IgnoreAllSymbol } from '@src/constants'
 
 /** Options for attach function */
 export interface AttachOptions {

@@ -1,4 +1,4 @@
-import { BroadcastOptions } from '../../../../src/sharding/interfaces/ipc/BroadcastOptions'
+import { BroadcastOptions } from '@src/sharding/interfaces/ipc/BroadcastOptions'
 
 /** Options for IPC eval */
 export interface BroadcastEvalOptions extends BroadcastOptions {

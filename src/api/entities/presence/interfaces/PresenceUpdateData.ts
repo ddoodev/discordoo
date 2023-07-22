@@ -1,5 +1,5 @@
-import { PresenceStatus } from '../../../../../src/api'
-import { PresenceActivityUpdateData } from '../../../../../src/api/entities/presence/interfaces/PresenceActivityUpdateData'
+import { PresenceStatus } from '@src/api'
+import { PresenceActivityUpdateData } from '@src/api/entities/presence/interfaces/PresenceActivityUpdateData'
 
 export interface PresenceUpdateData {
   /** the user's new status */

@@ -1,10 +1,10 @@
-import { RawMessageAttachmentData } from '../../../../src/api/entities/attachment/interfaces/RawMessageAttachmentData'
-import { attach } from '../../../../src/utils'
-import { SPOILER_PREFIX } from '../../../../src/constants'
-import { AbstractEntity } from '../../../../src/api/entities/AbstractEntity'
-import { RawAttachment } from '../../../../../providers/src/_index'
-import { DataResolver } from '../../../../src/utils/DataResolver'
-import { MessageAttachmentBuilderOptions } from '../../../../src/api'
+import { RawMessageAttachmentData } from '@src/api/entities/attachment/interfaces/RawMessageAttachmentData'
+import { attach } from '@src/utils'
+import { SPOILER_PREFIX } from '@src/constants'
+import { AbstractEntity } from '@src/api/entities/AbstractEntity'
+import { RawAttachment } from '@discordoo/providers'
+import { DataResolver } from '@src/utils/DataResolver'
+import { MessageAttachmentBuilderOptions } from '@src/api'
 
 export class MessageAttachment extends AbstractEntity {
   declare contentType?: string

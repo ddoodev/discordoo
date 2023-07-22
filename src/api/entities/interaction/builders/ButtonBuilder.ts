@@ -1,6 +1,6 @@
-import { AbstractEmojiData, ButtonComponentData, RawButtonComponentData } from '../../../../../src/api'
-import { ButtonStyles, ComponentTypes } from '../../../../../src/constants'
-import { attach } from '../../../../../src/utils'
+import { AbstractEmojiData, ButtonComponentData, RawButtonComponentData } from '@src/api'
+import { ButtonStyles, ComponentTypes } from '@src/constants'
+import { attach } from '@src/utils'
 
 export class ButtonBuilder {
   declare label: string

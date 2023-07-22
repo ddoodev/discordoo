@@ -1,4 +1,4 @@
-import { BIG_INT_POINTER } from '../../src/constants'
+import { BIG_INT_POINTER } from '@src/constants'
 
 export function jsonify(data: any, returnString?: boolean): any {
   if (Array.isArray(data)) return data.map(d => jsonify(d, returnString))

@@ -1,5 +1,5 @@
-import { DiscordApplication } from '../../src/core'
-import { AnyEventContext } from '../../src/events/AnyEventContext'
+import { DiscordApplication } from '@src/core'
+import { AnyEventContext } from '@src/events/AnyEventContext'
 
 export abstract class AbstractEvent<Context extends AnyEventContext> {
   public app: DiscordApplication

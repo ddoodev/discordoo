@@ -1,9 +1,9 @@
-import { AbstractEvent } from '../../src/events/AbstractEvent'
-import { EventNames } from '../../src/constants'
-import { RawShardConnectedEventData } from '../../src/events/interfaces/RawShardConnectedEventData'
-import { DiscordApplication } from '../../src/core'
-import { ShardConnectedHandlerContext } from '../../src/events/interfaces/ShardConnectedHandlerContext'
-import { AbstractEventContext } from '../../src/events/interfaces'
+import { AbstractEvent } from '@src/events/AbstractEvent'
+import { EventNames } from '@src/constants'
+import { RawShardConnectedEventData } from '@src/events/interfaces/RawShardConnectedEventData'
+import { DiscordApplication } from '@src/core'
+import { ShardConnectedHandlerContext } from '@src/events/interfaces/ShardConnectedHandlerContext'
+import { AbstractEventContext } from '@src/events/interfaces'
 
 export class ShardConnectedEvent extends AbstractEvent<AbstractEventContext> {
   public name = EventNames.SHARD_CONNECTED

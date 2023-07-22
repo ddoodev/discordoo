@@ -1,9 +1,9 @@
-import { CachingPoliciesProcessor } from '../../src/cache/CachingPoliciesProcessor'
-import { IpcCacheOpCodes, IpcOpCodes, SerializeModes } from '../../src/constants'
-import { CacheProvider, CacheStorageKey } from '../../../providers/src/_index'
-import { DiscordooError, resolveDiscordooShards } from '../../src/utils'
-import { ProviderConstructor } from '../../src/core'
-import { EntityKey } from '../../src/api/entities'
+import { CachingPoliciesProcessor } from '@src/cache/CachingPoliciesProcessor'
+import { IpcCacheOpCodes, IpcOpCodes, SerializeModes } from '@src/constants'
+import { CacheProvider, CacheStorageKey } from '@discordoo/providers'
+import { DiscordooError, resolveDiscordooShards } from '@src/utils'
+import { ProviderConstructor } from '@src/core'
+import { EntityKey } from '@src/api/entities'
 import {
   IpcCacheClearRequestPacket,
   IpcCacheClearResponsePacket,
@@ -31,7 +31,7 @@ import {
   IpcCacheSizeResponsePacket,
   IpcCacheSweepRequestPacket,
   IpcCacheSweepResponsePacket, IpcCacheValuesRequestPacket, IpcCacheValuesResponsePacket
-} from '../../src/sharding/interfaces/ipc/IpcPackets'
+} from '@src/sharding/interfaces/ipc/IpcPackets'
 import {
   cacheProviderKeysPolyfill,
   cacheProviderClearPolyfill,
@@ -43,7 +43,7 @@ import {
   cacheProviderMapPolyfill,
   cacheProviderSizePolyfill,
   cacheProviderSweepPolyfill, cacheProviderValuesPolyfill, cacheProviderEntriesPolyfill,
-} from '../../src/cache/polyfills'
+} from '@src/cache/polyfills'
 import {
   CacheManagerClearOptions,
   CacheManagerCountOptions,
@@ -61,11 +61,11 @@ import {
   CacheManagerSweepOptions, CacheManagerValuesOptions,
   CacheOptions,
   CachePointer,
-} from '../../src/cache/interfaces'
-import { EntitiesUtil } from '../../src/api/entities/EntitiesUtil'
-import { jsonify } from '../../src/utils/jsonify'
-import { isCachePointer } from '../../src/utils/cachePointer'
-import { AnyDiscordApplication } from '../../src/core/apps/AnyDiscordApplication'
+} from '@src/cache/interfaces'
+import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
+import { jsonify } from '@src/utils/jsonify'
+import { isCachePointer } from '@src/utils/cachePointer'
+import { AnyDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
 
 export class CacheManager<P extends CacheProvider = CacheProvider> {
   public app: AnyDiscordApplication

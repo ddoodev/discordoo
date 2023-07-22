@@ -1,6 +1,6 @@
-import { RawMessageEmbedData } from '../../../../../src/api/entities/embed'
-import { RawAttachment } from '../../../../../../providers/src/_index'
-import { RawActionRowData, RawAllowedMentionsData } from '../../../../../src/api'
+import { RawMessageEmbedData } from '@src/api/entities/embed'
+import { RawAttachment } from '@discordoo/providers'
+import { RawActionRowData, RawAllowedMentionsData } from '@src/api'
 
 export interface MessageCreateData {
   content?: string

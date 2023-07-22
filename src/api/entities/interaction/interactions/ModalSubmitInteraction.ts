@@ -1,6 +1,6 @@
-import { EntitiesUtil, ModalSubmitInteractionData, RawInteractionData, RawModalSubmitData } from '../../../../../src/api'
-import { EntityInitOptions } from '../../../../../src/api/entities/EntityInitOptions'
-import { WritableInteraction } from '../../../../../src/api/entities/interaction/interactions/WritableInteraction'
+import { EntitiesUtil, ModalSubmitInteractionData, RawInteractionData, RawModalSubmitData } from '@src/api'
+import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
+import { WritableInteraction } from '@src/api/entities/interaction/interactions/WritableInteraction'
 
 export class ModalSubmitInteraction extends WritableInteraction {
   declare data: ModalSubmitInteractionData

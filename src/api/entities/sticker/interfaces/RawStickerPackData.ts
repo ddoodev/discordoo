@@ -1,4 +1,4 @@
-import { RawStickerData } from '../../../../../src/api/entities/sticker'
+import { RawStickerData } from '@src/api/entities/sticker'
 
 export interface RawStickerPackData {
   id: string

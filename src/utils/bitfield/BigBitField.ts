@@ -1,6 +1,6 @@
-import { ReadonlyBigBitField } from '../../../src/utils/bitfield/ReadonlyBigBitField'
-import { BigBitFieldResolvable } from '../../../src/api'
-import { resolveBigBitField } from '../../../src/utils/resolve'
+import { ReadonlyBigBitField } from '@src/utils/bitfield/ReadonlyBigBitField'
+import { BigBitFieldResolvable } from '@src/api'
+import { resolveBigBitField } from '@src/utils/resolve'
 
 export abstract class BigBitField extends ReadonlyBigBitField {
   public declare bitfield: bigint

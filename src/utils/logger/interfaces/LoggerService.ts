@@ -1,4 +1,9 @@
-import { LogLevel } from '../../../../src/utils/logger/interfaces/LogLevel'
+/**
+ * based on
+ * https://github.com/nestjs/nest/blob/664f531d2a1b34217ea5e786539f7ee329acffd5/packages/common/services/logger.service.ts#L9
+ * (MIT license)
+ * */
+import { LogLevel } from '@src/utils/logger/interfaces/LogLevel'
 
 export interface LoggerService {
   /**

@@ -3,8 +3,8 @@ import {
   CompletedRestApplicationOptions,
   DefaultDiscordRestApplicationStack, RestApplicationActions,
   RestApplicationMetadata
-} from '../../../../../src/core'
-import { RestManager } from '../../../../../src/rest'
+} from '@src/core'
+import { RestManager } from '@src/rest'
 
 export interface RestApplicationInternals<ApplicationStack extends DefaultDiscordRestApplicationStack = DefaultDiscordRestApplicationStack>
   extends CacheApplicationInternals<ApplicationStack> {

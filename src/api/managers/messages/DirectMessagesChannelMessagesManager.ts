@@ -1,5 +1,5 @@
-import { AbstractMessagesManager } from '../../../../src/api/managers/messages/AbstractMessagesManager'
-import { MessageResolvable } from '../../../../src/api'
+import { AbstractMessagesManager } from '@src/api/managers/messages/AbstractMessagesManager'
+import { MessageResolvable } from '@src/api'
 
 export class DirectMessagesChannelMessagesManager extends AbstractMessagesManager {
 

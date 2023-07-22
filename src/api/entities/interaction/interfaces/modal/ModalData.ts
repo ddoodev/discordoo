@@ -1,4 +1,4 @@
-import { ActionRowData } from '../../../../../../src/api'
+import { ActionRowData } from '@src/api'
 
 export interface ModalData {
   title: string

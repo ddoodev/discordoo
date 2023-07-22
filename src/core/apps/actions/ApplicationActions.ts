@@ -1,9 +1,9 @@
-import { DiscordooError, DiscordSnowflake, ValidationError } from '../../../../src/utils'
-import { GatewayOpCodes } from '../../../../../providers/src/_index'
-import { DiscordApplication } from '../../../../src/core'
-import { RestApplicationActions } from '../../../../src/core/apps/actions/RestApplicationActions'
-import { GuildMember, RawGuildMembersFetchOptions } from '../../../../src/api'
-import { GuildMembersChunkEventContext, GuildMembersChunkHandlerContext } from '../../../../src/events'
+import { DiscordooError, DiscordSnowflake, ValidationError } from '@src/utils'
+import { GatewayOpCodes } from '@discordoo/providers'
+import { DiscordApplication } from '@src/core'
+import { RestApplicationActions } from '@src/core/apps/actions/RestApplicationActions'
+import { GuildMember, RawGuildMembersFetchOptions } from '@src/api'
+import { GuildMembersChunkEventContext, GuildMembersChunkHandlerContext } from '@src/events'
 import { is } from 'typescript-is'
 
 export class ApplicationActions extends RestApplicationActions {

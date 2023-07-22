@@ -1,4 +1,4 @@
-import { RawGuildMemberData, RawPresenceData, RawThreadMemberData } from '../../../src/api'
+import { RawGuildMemberData, RawPresenceData, RawThreadMemberData } from '@src/api'
 
 export interface RawThreadMembersUpdateEventData {
   id: string

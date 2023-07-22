@@ -1,4 +1,4 @@
-import { ChannelTypes } from '../../../../../src/constants'
+import { ChannelTypes } from '@src/constants'
 
 export interface ChannelMentionData {
   id: string

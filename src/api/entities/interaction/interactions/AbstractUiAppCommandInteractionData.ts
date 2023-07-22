@@ -1,9 +1,9 @@
 import {
   EntityInitOptions,
   RawUiAppCommandInteractionData
-} from '../../../../../src/api'
-import { attach } from '../../../../../src/utils'
-import { AbstractAppCommandInteractionData } from '../../../../../src/api/entities/interaction/interactions/AbstractAppCommandInteractionData'
+} from '@src/api'
+import { attach } from '@src/utils'
+import { AbstractAppCommandInteractionData } from '@src/api/entities/interaction/interactions/AbstractAppCommandInteractionData'
 
 export abstract class AbstractUiAppCommandInteractionData extends AbstractAppCommandInteractionData {
   declare targetId: string

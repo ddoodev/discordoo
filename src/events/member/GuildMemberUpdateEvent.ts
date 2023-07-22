@@ -1,6 +1,6 @@
-import { AbstractEvent, GuildMemberUpdateEventContext } from '../../../src/events'
-import { EventNames, otherCacheSymbol } from '../../../src/constants'
-import { EntitiesUtil, GuildMember, RawGuildMemberData } from '../../../src/api'
+import { AbstractEvent, GuildMemberUpdateEventContext } from '@src/events'
+import { EventNames, otherCacheSymbol } from '@src/constants'
+import { EntitiesUtil, GuildMember, RawGuildMemberData } from '@src/api'
 
 export class GuildMemberUpdateEvent extends AbstractEvent<GuildMemberUpdateEventContext> {
   public readonly name = EventNames.GUILD_MEMBER_UPDATE

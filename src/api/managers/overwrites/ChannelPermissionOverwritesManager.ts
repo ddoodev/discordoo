@@ -1,13 +1,13 @@
-import { EntitiesManager } from '../../../../src/api/managers/EntitiesManager'
-import { EntitiesCacheManager, RoleResolvable, UserResolvable } from '../../../../src/api'
-import { PermissionOverwrite } from '../../../../src/api/entities/overwrite/PermissionOverwrite'
-import { ChannelPermissionOverwritesManagerData } from '../../../../src/api/managers/overwrites/ChannelPermissionOverwritesManagerData'
-import { Keyspaces } from '../../../../src/constants'
-import { PermissionOverwriteResolvable } from '../../../../src/api/entities/overwrite/interfaces/PermissionOverwriteResolvable'
-import { AnyGuildChannel } from '../../../../src/api/entities/channel/interfaces/AnyGuildChannel'
-import { PermissionOverwriteUpsertOptions } from '../../../../src/api/managers/overwrites/PermissionOverwriteUpsertOptions'
-import { PermissionOverwriteEditOptions } from '../../../../src/api/managers/overwrites/PermissionOverwriteEditOptions'
-import { RestEligibleDiscordApplication } from '../../../../src/core/apps/AnyDiscordApplication'
+import { EntitiesManager } from '@src/api/managers/EntitiesManager'
+import { EntitiesCacheManager, RoleResolvable, UserResolvable } from '@src/api'
+import { PermissionOverwrite } from '@src/api/entities/overwrite/PermissionOverwrite'
+import { ChannelPermissionOverwritesManagerData } from '@src/api/managers/overwrites/ChannelPermissionOverwritesManagerData'
+import { Keyspaces } from '@src/constants'
+import { PermissionOverwriteResolvable } from '@src/api/entities/overwrite/interfaces/PermissionOverwriteResolvable'
+import { AnyGuildChannel } from '@src/api/entities/channel/interfaces/AnyGuildChannel'
+import { PermissionOverwriteUpsertOptions } from '@src/api/managers/overwrites/PermissionOverwriteUpsertOptions'
+import { PermissionOverwriteEditOptions } from '@src/api/managers/overwrites/PermissionOverwriteEditOptions'
+import { RestEligibleDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
 
 export class ChannelPermissionOverwritesManager<T extends AnyGuildChannel> extends EntitiesManager {
   public cache: EntitiesCacheManager<PermissionOverwrite>

@@ -1,6 +1,6 @@
-import { AppCommandOptionTypes, ChannelTypes, DiscordLocale } from '../../../../../../../src/constants'
-import { ReplaceType } from '../../../../../../../src/utils'
-import { RawAppCommandOptionChoiceData } from '../../../../../../../src/api'
+import { AppCommandOptionTypes, ChannelTypes, DiscordLocale } from '@src/constants'
+import { ReplaceType } from '@src/utils'
+import { RawAppCommandOptionChoiceData } from '@src/api'
 
 export type RawAppCommandOptionData = RawAppCommandStringOptionData
   | RawAppCommandIntegerOptionData

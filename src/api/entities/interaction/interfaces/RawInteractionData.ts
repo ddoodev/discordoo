@@ -1,5 +1,5 @@
-import { InteractionTypes } from '../../../../../src/constants'
-import { AbstractChannelData, RawGuildMemberData, RawMessageData, RawUserData } from '../../../../../src/api'
+import { InteractionTypes } from '@src/constants'
+import { AbstractChannelData, RawGuildMemberData, RawMessageData, RawUserData } from '@src/api'
 
 export interface RawInteractionData<RawDataType = any> {
   /** id of the interaction */

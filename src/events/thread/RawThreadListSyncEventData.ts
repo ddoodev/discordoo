@@ -1,5 +1,5 @@
-import { RawAbstractThreadChannelData } from '../../../src/api/entities/channel/interfaces/RawAbstractThreadChannelData'
-import { RawThreadMemberData } from '../../../src/api/entities/member/interfaces/RawThreadMemberData'
+import { RawAbstractThreadChannelData } from '@src/api/entities/channel/interfaces/RawAbstractThreadChannelData'
+import { RawThreadMemberData } from '@src/api/entities/member/interfaces/RawThreadMemberData'
 
 export interface RawThreadListSyncEventData {
   guild_id: string

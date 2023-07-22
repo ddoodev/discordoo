@@ -1,6 +1,6 @@
-import { RawSelectMenuComponentData, SelectMenuComponentData, SelectMenuOptionData, SelectMenuTypes } from '../../../../../src/api'
-import { ChannelTypes } from '../../../../../src/constants'
-import { attach } from '../../../../../src/utils'
+import { RawSelectMenuComponentData, SelectMenuComponentData, SelectMenuOptionData, SelectMenuTypes } from '@src/api'
+import { ChannelTypes } from '@src/constants'
+import { attach } from '@src/utils'
 
 export class SelectMenuBuilder {
   declare type: SelectMenuTypes

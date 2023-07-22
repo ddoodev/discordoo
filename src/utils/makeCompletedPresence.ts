@@ -1,5 +1,5 @@
-import { Presence, PresenceUpdateData } from '../../src/api'
-import { DiscordApplication } from '../../src/core'
+import { Presence, PresenceUpdateData } from '@src/api'
+import { DiscordApplication } from '@src/core'
 
 export async function makeCompletedPresence(data: PresenceUpdateData, app: DiscordApplication): Promise<Required<PresenceUpdateData>> {
   const currentPresences = await app.user.presences()

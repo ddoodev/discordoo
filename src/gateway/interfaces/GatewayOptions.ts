@@ -1,7 +1,7 @@
-import { ReplaceType, ShardListResolvable } from '../../../src/utils'
-import { GatewayIntentsResolvable } from '../../../src/gateway/interfaces/GatewayIntentsResolvable'
-import { PresenceUpdateData } from '../../../src/api'
-import { GatewayIdentifyProperties } from '../../../src/gateway/interfaces/GatewayIdentifyProperties'
+import { ReplaceType, ShardListResolvable } from '@src/utils'
+import { GatewayIntentsResolvable } from '@src/gateway/interfaces/GatewayIntentsResolvable'
+import { PresenceUpdateData } from '@src/api'
+import { GatewayIdentifyProperties } from '@src/gateway/interfaces/GatewayIdentifyProperties'
 
 /** Options for app's gateway connection */
 export interface GatewayOptions {

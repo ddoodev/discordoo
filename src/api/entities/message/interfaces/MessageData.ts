@@ -3,10 +3,10 @@ import {
   GuildMemberData, MessageAttachmentResolvable, MessageComponentResolvable, MessageEmbedResolvable, MessageInteractionResolvable,
   RoleResolvable,
   UserData
-} from '../../../../../src/api'
-import { MessageTypes } from '../../../../../src/constants'
-import { ChannelMentionData } from '../../../../../src/api/entities/message/interfaces/ChannelMentionData'
-import { MessageReactionResolvable } from '../../../../../src/api/entities/reaction/interfaces/MessageReactionResolvable'
+} from '@src/api'
+import { MessageTypes } from '@src/constants'
+import { ChannelMentionData } from '@src/api/entities/message/interfaces/ChannelMentionData'
+import { MessageReactionResolvable } from '@src/api/entities/reaction/interfaces/MessageReactionResolvable'
 
 export interface MessageData {
   id: string

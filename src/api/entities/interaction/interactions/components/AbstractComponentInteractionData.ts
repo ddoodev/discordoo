@@ -1,4 +1,4 @@
-import { ComponentTypes } from '../../../../../../src/constants'
+import { ComponentTypes } from '@src/constants'
 import {
   Json,
   ToJsonProperties,
@@ -6,9 +6,9 @@ import {
   EntityInitOptions,
   ButtonInteractionData,
   SelectMenuInteractionData, RawTextInputComponentData, TextInputInteractionData
-} from '../../../../../../src/api'
-import { AbstractEntity } from '../../../../../../src/api/entities/AbstractEntity'
-import { attach } from '../../../../../../src/utils'
+} from '@src/api'
+import { AbstractEntity } from '@src/api/entities/AbstractEntity'
+import { attach } from '@src/utils'
 
 export abstract class AbstractComponentInteractionData extends AbstractEntity {
   declare customId: string

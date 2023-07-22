@@ -1,4 +1,4 @@
-import { StickerData } from '../../../../../src/api/entities/sticker'
+import { StickerData } from '@src/api/entities/sticker'
 
 export interface StickerPackData {
   id: string

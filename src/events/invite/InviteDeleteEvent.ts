@@ -1,6 +1,6 @@
-import { AbstractEvent, InviteDeleteEventContext, RawInviteDeleteEventData } from '../../../src/events'
-import { EventNames } from '../../../src/constants'
-import { EntitiesUtil } from '../../../src/api'
+import { AbstractEvent, InviteDeleteEventContext, RawInviteDeleteEventData } from '@src/events'
+import { EventNames } from '@src/constants'
+import { EntitiesUtil } from '@src/api'
 
 export class InviteDeleteEvent extends AbstractEvent<InviteDeleteEventContext> {
   public name = EventNames.INVITE_DELETE

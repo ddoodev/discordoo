@@ -1,6 +1,6 @@
-import { AbstractEventContext } from '../../../../src/events'
-import { Collection } from '../../../../../collection/src/_index'
-import { GuildEmoji } from '../../../../src/api'
+import { AbstractEventContext } from '@src/events'
+import { Collection } from '@discordoo/collection'
+import { GuildEmoji } from '@src/api'
 
 export interface GuildEmojiUpdatedContext {
   stored: GuildEmoji

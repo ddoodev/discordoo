@@ -1,7 +1,7 @@
-import { AbstractEvent } from '../../../src/events'
-import { EventNames, Keyspaces, otherCacheSymbol } from '../../../src/constants'
-import { UnavailableGuildData } from '../../../src/api'
-import { GuildDeleteEventContext } from '../../../src/events/guild/ctx'
+import { AbstractEvent } from '@src/events'
+import { EventNames, Keyspaces, otherCacheSymbol } from '@src/constants'
+import { UnavailableGuildData } from '@src/api'
+import { GuildDeleteEventContext } from '@src/events/guild/ctx'
 
 export class GuildDeleteEvent extends AbstractEvent<GuildDeleteEventContext> {
   public name = EventNames.GUILD_DELETE

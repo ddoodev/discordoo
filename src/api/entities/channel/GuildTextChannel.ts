@@ -1,10 +1,10 @@
-import { AbstractGuildTextChannel } from '../../../../src/api/entities/channel/AbstractGuildTextChannel'
-import { GuildTextChannelData } from '../../../../src/api/entities/channel/interfaces/GuildTextChannelData'
-import { RawGuildTextChannelData } from '../../../../src/api/entities/channel/interfaces/RawGuildTextChannelData'
-import { attach } from '../../../../src/utils'
-import { ChannelTypes } from '../../../../src/constants'
-import { Json, ToJsonProperties } from '../../../../src/api'
-import { EntityInitOptions } from '../../../../src/api/entities/EntityInitOptions'
+import { AbstractGuildTextChannel } from '@src/api/entities/channel/AbstractGuildTextChannel'
+import { GuildTextChannelData } from '@src/api/entities/channel/interfaces/GuildTextChannelData'
+import { RawGuildTextChannelData } from '@src/api/entities/channel/interfaces/RawGuildTextChannelData'
+import { attach } from '@src/utils'
+import { ChannelTypes } from '@src/constants'
+import { Json, ToJsonProperties } from '@src/api'
+import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class GuildTextChannel extends AbstractGuildTextChannel {
   public rateLimitPerUser?: number

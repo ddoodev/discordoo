@@ -1,4 +1,4 @@
-import { AppCommandCreateData, AppCommandEditData, GuildResolvable, RawAppCommandCreateData, RawAppCommandEditData } from '../../../../src/api'
+import { AppCommandCreateData, AppCommandEditData, GuildResolvable, RawAppCommandCreateData, RawAppCommandEditData } from '@src/api'
 
 export interface RawGuildAppCommandCreateData extends RawAppCommandCreateData {
   guild: string

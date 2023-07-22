@@ -6,7 +6,7 @@ import {
   GuildStoreChannel,
   GuildTextChannel,
   GuildThreadChannel, InteractionResolvedChannel, InteractionResolvedThreadChannel
-} from '../../../../../src/api'
+} from '@src/api'
 
 export type AnyChannel = DirectMessagesChannel |
   GuildCategoryChannel |

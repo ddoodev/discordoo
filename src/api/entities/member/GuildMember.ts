@@ -1,4 +1,4 @@
-import { AbstractEntity } from '../../../../src/api/entities/AbstractEntity'
+import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 import {
   DirectMessagesChannel,
   Guild,
@@ -10,18 +10,18 @@ import {
   ReadonlyPermissions,
   ToJsonProperties,
   User
-} from '../../../../src/api'
-import { Keyspaces, PermissionFlags, ToJsonOverrideSymbol } from '../../../../src/constants'
-import { attach, DiscordooError, ImageUrlOptions, WebSocketUtils } from '../../../../src/utils'
-import { filterAndMap } from '../../../../src/utils/filterAndMap'
-import { resolveRoleId, resolveUserId } from '../../../../src/utils/resolve'
-import { CacheManagerGetOptions } from '../../../../src/cache'
-import { GuildMemberRolesManager } from '../../../../src/api/managers/members/GuildMemberRolesManager'
-import { Presence } from '../../../../src/api/entities/presence/Presence'
-import { GuildMemberEditData } from '../../../../src/api/entities/member/interfaces/GuildMemberEditData'
-import { MemberBanOptions } from '../../../../src/api/managers/members/MemberBanOptions'
-import { makeCachePointer } from '../../../../src/utils/cachePointer'
-import { EntityInitOptions } from '../../../../src/api/entities/EntityInitOptions'
+} from '@src/api'
+import { Keyspaces, PermissionFlags, ToJsonOverrideSymbol } from '@src/constants'
+import { attach, DiscordooError, ImageUrlOptions, WebSocketUtils } from '@src/utils'
+import { filterAndMap } from '@src/utils/filterAndMap'
+import { resolveRoleId, resolveUserId } from '@src/utils/resolve'
+import { CacheManagerGetOptions } from '@src/cache'
+import { GuildMemberRolesManager } from '@src/api/managers/members/GuildMemberRolesManager'
+import { Presence } from '@src/api/entities/presence/Presence'
+import { GuildMemberEditData } from '@src/api/entities/member/interfaces/GuildMemberEditData'
+import { MemberBanOptions } from '@src/api/managers/members/MemberBanOptions'
+import { makeCachePointer } from '@src/utils/cachePointer'
+import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class GuildMember extends AbstractEntity {
   public avatar?: string

@@ -1,9 +1,9 @@
-import { AbstractGuild } from '../../../../src/api/entities/guild/AbstractGuild'
-import { OAuth2GuildData } from '../../../../src/api/entities/guild/interfaces/OAuth2GuildData'
-import { Json, ReadonlyPermissions, ToJsonProperties } from '../../../../src/api'
-import { RawOAuth2GuildData } from '../../../../src/api/entities/guild/interfaces/RawOAuth2GuildData'
-import { attach } from '../../../../src/utils'
-import { EntityInitOptions } from '../../../../src/api/entities/EntityInitOptions'
+import { AbstractGuild } from '@src/api/entities/guild/AbstractGuild'
+import { OAuth2GuildData } from '@src/api/entities/guild/interfaces/OAuth2GuildData'
+import { Json, ReadonlyPermissions, ToJsonProperties } from '@src/api'
+import { RawOAuth2GuildData } from '@src/api/entities/guild/interfaces/RawOAuth2GuildData'
+import { attach } from '@src/utils'
+import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class OAuth2Guild extends AbstractGuild implements OAuth2GuildData {
   public declare owner: boolean

@@ -1,4 +1,4 @@
-import { PermissionOverwrite } from '../../../../src/api/entities/overwrite/PermissionOverwrite'
+import { PermissionOverwrite } from '@src/api/entities/overwrite/PermissionOverwrite'
 
 export interface PermissionOverwriteUpsertOptions {
   reason?: string

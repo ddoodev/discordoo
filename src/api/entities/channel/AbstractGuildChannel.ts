@@ -1,26 +1,26 @@
-import { AbstractChannel } from '../../../../src/api/entities/channel/AbstractChannel'
-import { AbstractGuildChannelData } from '../../../../src/api/entities/channel/interfaces/AbstractGuildChannelData'
-import { RawAbstractGuildChannelData } from '../../../../src/api/entities/channel/interfaces/RawAbstractGuildChannelData'
-import { attach, DiscordooError, resolveChannelId, resolveMemberId, resolveRoleId } from '../../../../src/utils'
-import { RawGuildChannelEditData } from '../../../../src/api/entities/channel/interfaces/RawGuildChannelEditData'
-import { GuildChannelEditData } from '../../../../src/api/entities/channel/interfaces/GuildChannelEditData'
-import { ChannelPermissionOverwritesManager } from '../../../../src/api/managers/overwrites/ChannelPermissionOverwritesManager'
-import { PermissionOverwriteResolvable } from '../../../../src/api/entities/overwrite/interfaces/PermissionOverwriteResolvable'
-import { PermissionOverwrite } from '../../../../src/api/entities/overwrite/PermissionOverwrite'
-import { GuildCategoryChannel } from '../../../../src/api/entities/channel/GuildCategoryChannel'
-import { ChannelTypes, Keyspaces, PermissionFlags } from '../../../../src/constants'
-import { CacheManagerGetOptions } from '../../../../src/cache'
+import { AbstractChannel } from '@src/api/entities/channel/AbstractChannel'
+import { AbstractGuildChannelData } from '@src/api/entities/channel/interfaces/AbstractGuildChannelData'
+import { RawAbstractGuildChannelData } from '@src/api/entities/channel/interfaces/RawAbstractGuildChannelData'
+import { attach, DiscordooError, resolveChannelId, resolveMemberId, resolveRoleId } from '@src/utils'
+import { RawGuildChannelEditData } from '@src/api/entities/channel/interfaces/RawGuildChannelEditData'
+import { GuildChannelEditData } from '@src/api/entities/channel/interfaces/GuildChannelEditData'
+import { ChannelPermissionOverwritesManager } from '@src/api/managers/overwrites/ChannelPermissionOverwritesManager'
+import { PermissionOverwriteResolvable } from '@src/api/entities/overwrite/interfaces/PermissionOverwriteResolvable'
+import { PermissionOverwrite } from '@src/api/entities/overwrite/PermissionOverwrite'
+import { GuildCategoryChannel } from '@src/api/entities/channel/GuildCategoryChannel'
+import { ChannelTypes, Keyspaces, PermissionFlags } from '@src/constants'
+import { CacheManagerGetOptions } from '@src/cache'
 import {
   PermissionsCheckOptions,
   RoleResolvable,
   ChannelResolvable,
   ToJsonProperties, Json, AnyGuildChannel
-} from '../../../../src/api'
-import { GuildMemberResolvable } from '../../../../src/api/entities/member/interfaces/GuildMemberResolvable'
-import { EntityInitOptions } from '../../../../src/api/entities/EntityInitOptions'
-import { Permissions, ReadonlyPermissions } from '../../../../src/utils/bitfield'
-import { GuildMember } from '../../../../src/api/entities/member/GuildMember'
-import { Role } from '../../../../src/api/entities/role/Role'
+} from '@src/api'
+import { GuildMemberResolvable } from '@src/api/entities/member/interfaces/GuildMemberResolvable'
+import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
+import { Permissions, ReadonlyPermissions } from '@src/utils/bitfield'
+import { GuildMember } from '@src/api/entities/member/GuildMember'
+import { Role } from '@src/api/entities/role/Role'
 
 export abstract class AbstractGuildChannel extends AbstractChannel {
   public declare type: ChannelTypes.GuildCategory

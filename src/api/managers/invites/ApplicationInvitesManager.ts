@@ -1,14 +1,14 @@
-import { EntitiesManager } from '../../../../src/api/managers/EntitiesManager'
+import { EntitiesManager } from '@src/api/managers/EntitiesManager'
 import {
   Invite,
   EntitiesCacheManager,
   FetchInviteQuery,
   EntitiesUtil,
   AnyInvitableChannelResolvable, GuildInvitesManager, InviteCreateOptions
-} from '../../../../src/api'
-import { DiscordRestApplication } from '../../../../src/core'
-import { Keyspaces } from '../../../../src/constants'
-import { DiscordooError, resolveChannelId } from '../../../../src/utils'
+} from '@src/api'
+import { DiscordRestApplication } from '@src/core'
+import { Keyspaces } from '@src/constants'
+import { DiscordooError, resolveChannelId } from '@src/utils'
 
 export class ApplicationInvitesManager extends EntitiesManager {
   public cache: EntitiesCacheManager<Invite>

@@ -1,22 +1,22 @@
-import { EntitiesCacheManager, Message, MessageEditOptions, MessageResolvable } from '../../../../src/api'
-import { DiscordRestApplication } from '../../../../src/core'
-import { ChannelResolvable } from '../../../../src/api/entities/channel/interfaces/ChannelResolvable'
-import { MessageContent } from '../../../../src/api/entities/message/interfaces/MessageContent'
-import { MessageCreateOptions } from '../../../../src/api/entities/message/interfaces/MessageCreateOptions'
+import { EntitiesCacheManager, Message, MessageEditOptions, MessageResolvable } from '@src/api'
+import { DiscordRestApplication } from '@src/core'
+import { ChannelResolvable } from '@src/api/entities/channel/interfaces/ChannelResolvable'
+import { MessageContent } from '@src/api/entities/message/interfaces/MessageContent'
+import { MessageCreateOptions } from '@src/api/entities/message/interfaces/MessageCreateOptions'
 import {
   resolveChannelId,
   resolveMessageId,
-} from '../../../../src/utils/resolve'
-import { Keyspaces } from '../../../../src/constants'
-import { createMessagePayload, DiscordooError, idToTimestamp } from '../../../../src/utils'
-import { filterAndMap } from '../../../../src/utils/filterAndMap'
-import { EntitiesManager } from '../../../../src/api/managers/EntitiesManager'
-import { makeCachePointer } from '../../../../src/utils/cachePointer'
-import { DeleteManyMessagesOptions } from '../../../../src/api/managers/messages/DeleteManyMessagesOptions'
-import { FetchOneMessageOptions } from '../../../../src/api/managers/messages/FetchOneMessageOptions'
-import { FetchManyMessagesQuery } from '../../../../src/api/managers/messages/FetchManyMessagesQuery'
+} from '@src/utils/resolve'
+import { Keyspaces } from '@src/constants'
+import { createMessagePayload, DiscordooError, idToTimestamp } from '@src/utils'
+import { filterAndMap } from '@src/utils/filterAndMap'
+import { EntitiesManager } from '@src/api/managers/EntitiesManager'
+import { makeCachePointer } from '@src/utils/cachePointer'
+import { DeleteManyMessagesOptions } from '@src/api/managers/messages/DeleteManyMessagesOptions'
+import { FetchOneMessageOptions } from '@src/api/managers/messages/FetchOneMessageOptions'
+import { FetchManyMessagesQuery } from '@src/api/managers/messages/FetchManyMessagesQuery'
 import { is } from 'typescript-is'
-import { EntitiesUtil } from '../../../../src/api/entities/EntitiesUtil'
+import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 
 export class ApplicationMessagesManager extends EntitiesManager {
   public cache: EntitiesCacheManager<Message>

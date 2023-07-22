@@ -1,4 +1,4 @@
-import { MessageEmbedTypes } from '../../../../../src/constants'
+import { MessageEmbedTypes } from '@src/constants'
 
 export interface RawMessageEmbedData {
   type?: MessageEmbedTypes

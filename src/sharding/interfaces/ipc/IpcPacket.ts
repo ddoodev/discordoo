@@ -1,4 +1,4 @@
-import { IpcEvents, IpcOpCodes } from '../../../../src/constants'
+import { IpcEvents, IpcOpCodes } from '@src/constants'
 
 export interface IpcPacket {
   op: IpcOpCodes

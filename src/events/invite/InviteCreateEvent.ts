@@ -1,6 +1,6 @@
-import { AbstractEvent, InviteCreateEventContext, RawInviteCreateEventData } from '../../../src/events'
-import { EventNames } from '../../../src/constants'
-import { EntitiesUtil } from '../../../src/api'
+import { AbstractEvent, InviteCreateEventContext, RawInviteCreateEventData } from '@src/events'
+import { EventNames } from '@src/constants'
+import { EntitiesUtil } from '@src/api'
 
 export class InviteCreateEvent extends AbstractEvent<InviteCreateEventContext> {
   public name = EventNames.INVITE_CREATE

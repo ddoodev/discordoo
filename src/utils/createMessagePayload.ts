@@ -5,16 +5,16 @@ import {
   resolveFiles,
   resolveMessageReferenceToRaw,
   resolveStickerId
-} from '../../src/utils/resolve'
-import { DiscordooError } from '../../src/utils/DiscordooError'
+} from '@src/utils/resolve'
+import { DiscordooError } from '@src/utils/DiscordooError'
 import { inspect } from 'util'
-import { MessageContent, MessageCreateData, MessageCreateOptions, MessageEmbedBuilder, StickerResolvable } from '../../src/api'
-import { MessageEmbedTypes, StickerFormatTypes } from '../../src/constants'
-import { filterAndMap } from '../../src/utils/filterAndMap'
-import { DataResolver } from '../../src/utils/DataResolver'
-import { InteractionMessageContent } from '../../src/api/entities/message/interfaces/MessageContent'
-import { InteractionMessageCreateOptions } from '../../src/api/entities/message/interfaces/MessageCreateOptions'
-import { InteractionMessageCreateData } from '../../src/api/entities/message/interfaces/MessageCreateData'
+import { MessageContent, MessageCreateData, MessageCreateOptions, MessageEmbedBuilder, StickerResolvable } from '@src/api'
+import { MessageEmbedTypes, StickerFormatTypes } from '@src/constants'
+import { filterAndMap } from '@src/utils/filterAndMap'
+import { DataResolver } from '@src/utils/DataResolver'
+import { InteractionMessageContent } from '@src/api/entities/message/interfaces/MessageContent'
+import { InteractionMessageCreateOptions } from '@src/api/entities/message/interfaces/MessageCreateOptions'
+import { InteractionMessageCreateData } from '@src/api/entities/message/interfaces/MessageCreateData'
 
 export async function createMessagePayload<Interaction extends boolean = false>(
   content: Interaction extends true ? InteractionMessageContent : MessageContent = '',

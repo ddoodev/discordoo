@@ -1,4 +1,4 @@
-import { CompletedCacheOptions } from '../../../src/cache/interfaces/CompletedCacheOptions'
+import { CompletedCacheOptions } from '@src/cache/interfaces/CompletedCacheOptions'
 
 export interface CacheManagerData {
   providerOptions?: any

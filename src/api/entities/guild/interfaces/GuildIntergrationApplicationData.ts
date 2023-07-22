@@ -1,4 +1,4 @@
-import { UserData } from '../../../../../src/api/entities/user/interfaces/UserData'
+import { UserData } from '@src/api/entities/user/interfaces/UserData'
 
 export interface GuildIntegrationApplicationData {
   id: string

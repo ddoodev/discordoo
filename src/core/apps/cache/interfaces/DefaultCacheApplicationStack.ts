@@ -1,5 +1,5 @@
-import { CacheProvider } from '../../../../../../providers/src/_index'
-import { AbstractApplicationEventsHandlers } from '../../../../../src/events/apps'
+import { CacheProvider } from '@discordoo/providers'
+import { AbstractApplicationEventsHandlers } from '@src/events/apps'
 
 export interface DefaultCacheApplicationStack {
   cache: CacheProvider

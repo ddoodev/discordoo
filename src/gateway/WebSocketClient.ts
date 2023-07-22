@@ -1,28 +1,29 @@
+// @ts-ignore
 import PakoTypes from '@types/pako'
 import WebSocket from 'ws'
 import { TypedEmitter } from 'tiny-typed-emitter'
 
-import { WebSocketClientDestroyOptions } from '../../src/gateway/interfaces/WebSocketClientDestroyOptions'
-import { WebSocketClientEventsHandlers } from '../../src/gateway/interfaces/WebSocketClientEventsHandlers'
-import { CompletedGatewayOptions } from '../../src/gateway/interfaces/GatewayOptions'
-import { GatewayOpCodes, GatewaySendPayloadLike } from '../../../providers/src/_index'
-import { WebSocketPacket } from '../../src/gateway/interfaces/WebSocketPacket'
+import { WebSocketClientDestroyOptions } from '@src/gateway/interfaces/WebSocketClientDestroyOptions'
+import { WebSocketClientEventsHandlers } from '@src/gateway/interfaces/WebSocketClientEventsHandlers'
+import { CompletedGatewayOptions } from '@src/gateway/interfaces/GatewayOptions'
+import { GatewayOpCodes, GatewaySendPayloadLike } from '@discordoo/providers'
+import { WebSocketPacket } from '@src/gateway/interfaces/WebSocketPacket'
 import {
   WebSocketClientEvents,
   WebSocketClientStates,
   WebSocketStates
-} from '../../src/constants'
+} from '@src/constants'
 
-import { WebSocketManager } from '../../src/gateway/WebSocketManager'
-import { WebSocketUtils } from '../../src/utils/WebSocketUtils'
-import { DiscordooError } from '../../src/utils/DiscordooError'
+import { WebSocketManager } from '@src/gateway/WebSocketManager'
+import { WebSocketUtils } from '@src/utils/WebSocketUtils'
+import { DiscordooError } from '@src/utils/DiscordooError'
 
-import { identify } from '../../src/gateway/app/identify'
-import { message } from '../../src/gateway/app/message'
-import { packet } from '../../src/gateway/app/packet'
-import { error } from '../../src/gateway/app/error'
-import { close } from '../../src/gateway/app/close'
-import { open } from '../../src/gateway/app/open'
+import { identify } from '@src/gateway/app/identify'
+import { message } from '@src/gateway/app/message'
+import { packet } from '@src/gateway/app/packet'
+import { error } from '@src/gateway/app/error'
+import { close } from '@src/gateway/app/close'
+import { open } from '@src/gateway/app/open'
 
 export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers> {
   private socket?: WebSocket

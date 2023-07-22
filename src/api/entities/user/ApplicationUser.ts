@@ -1,11 +1,11 @@
-import { PresenceUpdateData, PresenceUpdateOptions } from '../../../../src/api/entities/presence'
+import { PresenceUpdateData, PresenceUpdateOptions } from '@src/api/entities/presence'
 import { is } from 'typescript-is'
-import { makeCompletedPresence, resolveDiscordShards, ValidationError } from '../../../../src/utils'
-import { GatewayOpCodes } from '../../../../../providers/src/_index'
-import { IpcPresenceUpdatePacket } from '../../../../src/sharding'
-import { IpcEvents, IpcOpCodes } from '../../../../src/constants'
-import { DiscordApplication } from '../../../../src/core'
-import { RestApplicationUser } from '../../../../src/api/entities/user/RestApplicationUser'
+import { makeCompletedPresence, resolveDiscordShards, ValidationError } from '@src/utils'
+import { GatewayOpCodes } from '@discordoo/providers'
+import { IpcPresenceUpdatePacket } from '@src/sharding'
+import { IpcEvents, IpcOpCodes } from '@src/constants'
+import { DiscordApplication } from '@src/core'
+import { RestApplicationUser } from '@src/api/entities/user/RestApplicationUser'
 
 export class ApplicationUser extends RestApplicationUser {
   public declare app: DiscordApplication

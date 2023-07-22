@@ -1,11 +1,11 @@
-import { AbstractEvent, ThreadListSyncEventContext } from '../../../src/events'
-import { ChannelTypes, EventNames, Keyspaces } from '../../../src/constants'
-import { RawThreadListSyncEventData } from '../../../src/events/thread/RawThreadListSyncEventData'
-import { AnyThreadChannel } from '../../../src/api/entities/channel/interfaces/AnyThreadChannel'
-import { EntitiesUtil } from '../../../src/api/entities/EntitiesUtil'
-import { ThreadMember } from '../../../src/api/entities/member/ThreadMember'
-import { Collection } from '../../../../collection/src/_index'
-import { AnyGuildChannel } from '../../../src/api/entities/channel/interfaces/AnyGuildChannel'
+import { AbstractEvent, ThreadListSyncEventContext } from '@src/events'
+import { ChannelTypes, EventNames, Keyspaces } from '@src/constants'
+import { RawThreadListSyncEventData } from '@src/events/thread/RawThreadListSyncEventData'
+import { AnyThreadChannel } from '@src/api/entities/channel/interfaces/AnyThreadChannel'
+import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
+import { ThreadMember } from '@src/api/entities/member/ThreadMember'
+import { Collection } from '@discordoo/collection'
+import { AnyGuildChannel } from '@src/api/entities/channel/interfaces/AnyGuildChannel'
 
 export class ThreadListSyncEvent extends AbstractEvent<ThreadListSyncEventContext> {
   public name = EventNames.THREAD_LIST_SYNC

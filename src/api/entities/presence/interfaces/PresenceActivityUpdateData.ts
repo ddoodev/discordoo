@@ -1,4 +1,4 @@
-import { PresenceActivityTypes } from '../../../../../src/constants'
+import { PresenceActivityTypes } from '@src/constants'
 
 export interface PresenceActivityUpdateData {
   name: string

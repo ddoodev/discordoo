@@ -1,5 +1,5 @@
-import { RawUserData } from '../../../src/api'
-import { InviteTargetTypes } from '../../../src/constants'
+import { RawUserData } from '@src/api'
+import { InviteTargetTypes } from '@src/constants'
 
 export interface RawInviteCreateEventData {
   channel_id: string

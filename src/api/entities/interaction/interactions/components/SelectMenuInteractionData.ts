@@ -1,5 +1,5 @@
-import { AbstractComponentInteractionData } from '../../../../../../src/api/entities/interaction/interactions/components/AbstractComponentInteractionData'
-import { attach } from '../../../../../../src/utils'
+import { AbstractComponentInteractionData } from '@src/api/entities/interaction/interactions/components/AbstractComponentInteractionData'
+import { attach } from '@src/utils'
 import {
   EntityInitOptions,
   InteractionResolvedCacheManager,
@@ -7,7 +7,7 @@ import {
   RawSelectComponentInteractionData,
   SelectMenuTypes,
   ToJsonProperties
-} from '../../../../../../src/api'
+} from '@src/api'
 
 export class SelectMenuInteractionData extends AbstractComponentInteractionData {
   declare type: SelectMenuTypes

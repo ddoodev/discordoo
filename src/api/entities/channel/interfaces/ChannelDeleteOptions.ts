@@ -1,4 +1,4 @@
-import { AnyChannel } from '../../../../../src/api/entities/channel/interfaces/AnyChannel'
+import { AnyChannel } from '@src/api/entities/channel/interfaces/AnyChannel'
 
 export interface ChannelDeleteOptions {
   reason?: string

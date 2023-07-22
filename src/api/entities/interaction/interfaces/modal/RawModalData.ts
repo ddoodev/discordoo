@@ -1,4 +1,4 @@
-import { RawActionRowData } from '../../../../../../src/api'
+import { RawActionRowData } from '@src/api'
 
 export interface RawModalData {
   custom_id: string

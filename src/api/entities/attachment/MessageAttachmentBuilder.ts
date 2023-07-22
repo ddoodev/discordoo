@@ -1,13 +1,13 @@
-import { SPOILER_PREFIX } from '../../../../src/constants'
-import { attach, BufferResolvable, randomString } from '../../../../src/utils'
+import { SPOILER_PREFIX } from '@src/constants'
+import { attach, BufferResolvable, randomString } from '@src/utils'
 import {
   MessageAttachment,
   MessageAttachmentBuilderData,
   MessageAttachmentBuilderOptions,
   RawMessageAttachmentData
-} from '../../../../src/api'
-import { RawAttachment } from '../../../../../providers/src/_index'
-import { DataResolver } from '../../../../src/utils/DataResolver'
+} from '@src/api'
+import { RawAttachment } from '@discordoo/providers'
+import { DataResolver } from '@src/utils/DataResolver'
 
 export class MessageAttachmentBuilder {
   declare file: BufferResolvable

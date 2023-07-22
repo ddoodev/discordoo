@@ -1,9 +1,9 @@
-import { AbstractEntity } from '../../../../src/api/entities/AbstractEntity'
-import { AbstractGuildData } from '../../../../src/api/entities/guild/interfaces/AbstractGuildData'
-import { Json, ToJsonProperties } from '../../../../src/api'
-import { GuildFeatures } from '../../../../src/constants'
-import { attach, idToDate, idToTimestamp, ImageUrlOptions } from '../../../../src/utils'
-import { EntityInitOptions } from '../../../../src/api/entities/EntityInitOptions'
+import { AbstractEntity } from '@src/api/entities/AbstractEntity'
+import { AbstractGuildData } from '@src/api/entities/guild/interfaces/AbstractGuildData'
+import { Json, ToJsonProperties } from '@src/api'
+import { GuildFeatures } from '@src/constants'
+import { attach, idToDate, idToTimestamp, ImageUrlOptions } from '@src/utils'
+import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export abstract class AbstractGuild extends AbstractEntity implements AbstractGuildData {
   public declare features: GuildFeatures[]

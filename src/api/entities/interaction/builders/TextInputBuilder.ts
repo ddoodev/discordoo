@@ -1,6 +1,6 @@
-import { ComponentTypes, TextInputStyles } from '../../../../../src/constants'
-import { RawTextInputComponentData, TextInputComponentData } from '../../../../../src/api'
-import { attach } from '../../../../../src/utils'
+import { ComponentTypes, TextInputStyles } from '@src/constants'
+import { RawTextInputComponentData, TextInputComponentData } from '@src/api'
+import { attach } from '@src/utils'
 
 export class TextInputBuilder {
   declare customId: string

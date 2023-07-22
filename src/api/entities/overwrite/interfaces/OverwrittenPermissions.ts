@@ -1,4 +1,4 @@
-import { PermissionFlags } from '../../../../../src/constants'
+import { PermissionFlags } from '@src/constants'
 
 /**
  * Overwritten permissions data.

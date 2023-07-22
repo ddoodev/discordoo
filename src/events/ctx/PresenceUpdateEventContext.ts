@@ -1,5 +1,5 @@
-import { Presence, User } from '../../../src/api'
-import { AbstractEventContext } from '../../../src/events'
+import { Presence, User } from '@src/api'
+import { AbstractEventContext } from '@src/events'
 
 export interface PresenceUpdateEventContext extends AbstractEventContext {
   updated: Presence

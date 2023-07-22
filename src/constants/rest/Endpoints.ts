@@ -1,3 +1,4 @@
+// based on https://github.com/abalabahaha/eris/blob/fba1f7c6621575778c26a378b4d313febe894a42/lib/rest/Endpoints.js (MIT license)
 export class Endpoints {
   static readonly APPLICATION_COMMAND
     = (applicationId, commandId) => [ 'applications', applicationId, 'commands', commandId ]

@@ -1,11 +1,11 @@
-import { AbstractGuildChannel } from '../../../../src/api/entities/channel/AbstractGuildChannel'
-import { CategoryChannelChildrenManager } from '../../../../src/api/managers/channels/CategoryChannelChildrenManager'
-import { AbstractGuildChannelData } from '../../../../src/api/entities/channel/interfaces/AbstractGuildChannelData'
-import { RawAbstractGuildChannelData } from '../../../../src/api/entities/channel/interfaces/RawAbstractGuildChannelData'
-import { ChannelTypes, Keyspaces } from '../../../../src/constants'
-import { AnyGuildChannel } from '../../../../src/api/entities/channel/interfaces/AnyGuildChannel'
-import { makeCachePointer } from '../../../../src/utils/cachePointer'
-import { EntityInitOptions } from '../../../../src/api/entities/EntityInitOptions'
+import { AbstractGuildChannel } from '@src/api/entities/channel/AbstractGuildChannel'
+import { CategoryChannelChildrenManager } from '@src/api/managers/channels/CategoryChannelChildrenManager'
+import { AbstractGuildChannelData } from '@src/api/entities/channel/interfaces/AbstractGuildChannelData'
+import { RawAbstractGuildChannelData } from '@src/api/entities/channel/interfaces/RawAbstractGuildChannelData'
+import { ChannelTypes, Keyspaces } from '@src/constants'
+import { AnyGuildChannel } from '@src/api/entities/channel/interfaces/AnyGuildChannel'
+import { makeCachePointer } from '@src/utils/cachePointer'
+import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class GuildCategoryChannel extends AbstractGuildChannel {
   public declare children: CategoryChannelChildrenManager

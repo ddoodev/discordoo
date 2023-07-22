@@ -1,9 +1,9 @@
-import { AbstractEvent } from '../../src/events/AbstractEvent'
-import { EventNames, Keyspaces } from '../../src/constants'
-import { RawGuildMembersChunkData } from '../../src/events/interfaces/RawGuildMembersChunkData'
-import { GuildMember, Presence } from '../../src/api'
-import { EntitiesUtil } from '../../src/api/entities/EntitiesUtil'
-import { GuildMembersChunkEventContext } from '../../src/events/ctx'
+import { AbstractEvent } from '@src/events/AbstractEvent'
+import { EventNames, Keyspaces } from '@src/constants'
+import { RawGuildMembersChunkData } from '@src/events/interfaces/RawGuildMembersChunkData'
+import { GuildMember, Presence } from '@src/api'
+import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
+import { GuildMembersChunkEventContext } from '@src/events/ctx'
 
 export class GuildMembersChunkEvent extends AbstractEvent<GuildMembersChunkEventContext> {
   public name = EventNames.GUILD_MEMBERS_CHUNK

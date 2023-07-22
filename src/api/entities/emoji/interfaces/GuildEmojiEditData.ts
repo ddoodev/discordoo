@@ -1,4 +1,4 @@
-import { RoleResolvable } from '../../../../../src/api/entities/role'
+import { RoleResolvable } from '@src/api/entities/role'
 
 export interface GuildEmojiEditData {
   roles?: RoleResolvable[]

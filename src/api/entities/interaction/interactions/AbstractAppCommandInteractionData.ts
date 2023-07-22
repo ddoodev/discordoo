@@ -5,10 +5,10 @@ import {
   RawAppCommandInteractionData,
   RawInteractionResolvedData, ChatInputInteractionData,
   ToJsonProperties, UserAppCommandInteractionData
-} from '../../../../../src/api'
-import { AbstractEntity } from '../../../../../src/api/entities/AbstractEntity'
-import { AppCommandTypes, ToJsonOverrideSymbol } from '../../../../../src/constants'
-import { attach } from '../../../../../src/utils'
+} from '@src/api'
+import { AbstractEntity } from '@src/api/entities/AbstractEntity'
+import { AppCommandTypes, ToJsonOverrideSymbol } from '@src/constants'
+import { attach } from '@src/utils'
 
 export abstract class AbstractAppCommandInteractionData extends AbstractEntity {
   declare id: string

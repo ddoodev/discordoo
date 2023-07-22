@@ -1,5 +1,5 @@
-import { AbstractChannelData } from '../../../../../src/api/entities/channel/interfaces/AbstractChannelData'
-import { PermissionOverwriteResolvable } from '../../../../../src/api/entities/overwrite/interfaces/PermissionOverwriteResolvable'
+import { AbstractChannelData } from '@src/api/entities/channel/interfaces/AbstractChannelData'
+import { PermissionOverwriteResolvable } from '@src/api/entities/overwrite/interfaces/PermissionOverwriteResolvable'
 
 export interface RawAbstractGuildChannelData extends AbstractChannelData {
   name: string

@@ -1,4 +1,4 @@
-import { PermissionOverwriteTypes } from '../../../../../src/constants'
+import { PermissionOverwriteTypes } from '@src/constants'
 
 export interface RawPermissionOverwriteData {
   id: string

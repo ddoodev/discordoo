@@ -1,4 +1,4 @@
-import { RoleTagsResolvable } from '../../../../../src/api/entities/role/interfaces/RoleTagsResolvable'
+import { RoleTagsResolvable } from '@src/api/entities/role/interfaces/RoleTagsResolvable'
 
 export interface RawRoleData {
   id: string

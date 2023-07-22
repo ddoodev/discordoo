@@ -4,7 +4,7 @@ import {
   GuildStoreChannel,
   GuildTextChannel,
   GuildThreadChannel
-} from '../../../../../src/api'
+} from '@src/api'
 
 export type AnyGuildWritableChannel = GuildTextChannel |
   GuildNewsChannel |

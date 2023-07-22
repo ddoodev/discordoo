@@ -1,4 +1,4 @@
-import { CacheProvider, CacheStorageKey } from '../../../../providers/src/_index'
+import { CacheProvider, CacheStorageKey } from '@discordoo/providers'
 
 export async function cacheProviderFilterPolyfill<K = string, V = any, P extends CacheProvider = CacheProvider>(
   provider: P, keyspace: string, storage: CacheStorageKey, predicate: (value: V, key: K, provider: P) => boolean | Promise<boolean>

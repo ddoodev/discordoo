@@ -1,5 +1,5 @@
-import { ButtonStyles, ComponentTypes } from '../../../../../../src/constants'
-import { AbstractEmojiData } from '../../../../../../src/api'
+import { ButtonStyles, ComponentTypes } from '@src/constants'
+import { AbstractEmojiData } from '@src/api'
 
 export type ButtonComponentData = ButtonNonLinkComponentData | ButtonLinkComponentData
 

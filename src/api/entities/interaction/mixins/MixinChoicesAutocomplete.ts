@@ -1,4 +1,4 @@
-import { AppCommandOptionChoiceData } from '../../../../../src/api'
+import { AppCommandOptionChoiceData } from '@src/api'
 
 export class MixinChoicesAutocomplete {
   public choices?: AppCommandOptionChoiceData[]

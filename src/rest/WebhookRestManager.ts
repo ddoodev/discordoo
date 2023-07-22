@@ -1,9 +1,9 @@
-import { WebhookApplication } from '../../src/core/apps/webhook/WebhookApplication'
-import { CompletedRestOptions, RestManagerData, RestManagerRequestData } from '../../src/rest/interfaces'
-import { RestFinishedResponse, RestProvider, RestRequestOptions } from '../../../providers/src/_index'
-import { WebhookRestRequest } from '../../src/rest/interfaces/RestRequest'
-import { makeWebhookRequest } from '../../src/rest/makeRequest'
-import { ProviderConstructor } from '../../src/core'
+import { WebhookApplication } from '@src/core/apps/webhook/WebhookApplication'
+import { CompletedRestOptions, RestManagerData, RestManagerRequestData } from '@src/rest/interfaces'
+import { RestFinishedResponse, RestProvider, RestRequestOptions } from '@discordoo/providers'
+import { WebhookRestRequest } from '@src/rest/interfaces/RestRequest'
+import { makeWebhookRequest } from '@src/rest/makeRequest'
+import { ProviderConstructor } from '@src/core'
 
 export class WebhookRestManager<P extends RestProvider = RestProvider> {
   public app: WebhookApplication

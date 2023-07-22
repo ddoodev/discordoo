@@ -1,5 +1,5 @@
 export enum ThreadTypes {
-    GuildNewsThread = 10,
-    GuildPublicThread = 11,
-    GuildPrivateThread = 12
+  GuildNewsThread = 10,
+  GuildPublicThread,
+  GuildPrivateThread,
 }

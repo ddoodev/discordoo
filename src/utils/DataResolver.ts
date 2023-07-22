@@ -1,12 +1,12 @@
-import { BufferResolvable } from '../../src/utils/interfaces/BufferResolvable'
-import { ResolveBufferOptions } from '../../src/utils/interfaces/ResolveBufferOptions'
+import { BufferResolvable } from '@src/utils/interfaces/BufferResolvable'
+import { ResolveBufferOptions } from '@src/utils/interfaces/ResolveBufferOptions'
 import { request } from 'undici'
-import { DiscordooError } from '../../src/utils/DiscordooError'
+import { DiscordooError } from '@src/utils/DiscordooError'
 import { promisify } from 'util'
 import fs from 'fs'
 import path from 'path'
-import { MessageAttachmentResolvable } from '../../src/api'
-import { Base64Resolvable } from '../../src/utils/interfaces/Base64Resolvable'
+import { MessageAttachmentResolvable } from '@src/api'
+import { Base64Resolvable } from '@src/utils/interfaces/Base64Resolvable'
 
 const read = promisify(fs.readFile)
 

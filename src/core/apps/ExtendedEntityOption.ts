@@ -1,4 +1,4 @@
-import { ExtendableEntities } from '../../../src/api/entities/ExtendableEntities'
+import { ExtendableEntities } from '@src/api/entities/ExtendableEntities'
 
 type Ext = typeof ExtendableEntities
 

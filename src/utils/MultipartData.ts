@@ -1,4 +1,6 @@
-import { WebSocketUtils } from '../../src/utils'
+// based on https://github.com/abalabahaha/eris/blob/fba1f7c6621575778c26a378b4d313febe894a42/lib/util/MultipartData.js (MIT license)
+
+import { WebSocketUtils } from '@src/utils'
 
 /**
  * A utility for combining multiple files and a body for sending to the Discord API

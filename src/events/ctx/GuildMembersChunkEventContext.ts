@@ -1,5 +1,5 @@
-import { GuildMember, Presence } from '../../../src/api'
-import { AbstractEventContext } from '../../../src/events/interfaces/AbstractEventContext'
+import { GuildMember, Presence } from '@src/api'
+import { AbstractEventContext } from '@src/events/interfaces/AbstractEventContext'
 
 export interface GuildMembersChunkEventContext extends AbstractEventContext {
   members: GuildMember[]

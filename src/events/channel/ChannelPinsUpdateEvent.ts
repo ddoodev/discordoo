@@ -1,7 +1,7 @@
-import { AbstractEvent, ChannelPinsUpdateEventContext } from '../../../src/events'
-import { EventNames } from '../../../src/constants'
-import { RawChannelPinsUpdateEventData } from '../../../src/events/channel/RawChannelPinsUpdateEventData'
-import { AnyWritableChannel } from '../../../src/api'
+import { AbstractEvent, ChannelPinsUpdateEventContext } from '@src/events'
+import { EventNames } from '@src/constants'
+import { RawChannelPinsUpdateEventData } from '@src/events/channel/RawChannelPinsUpdateEventData'
+import { AnyWritableChannel } from '@src/api'
 
 export class ChannelPinsUpdateEvent extends AbstractEvent<ChannelPinsUpdateEventContext> {
   public name = EventNames.CHANNEL_PINS_UPDATE

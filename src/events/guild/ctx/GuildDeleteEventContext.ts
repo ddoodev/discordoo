@@ -1,5 +1,5 @@
-import { Guild } from '../../../../src/api'
-import { AbstractEventContext } from '../../../../src/events'
+import { Guild } from '@src/api'
+import { AbstractEventContext } from '@src/events'
 
 export interface GuildDeleteEventContext extends AbstractEventContext {
   guild?: Guild

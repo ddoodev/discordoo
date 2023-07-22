@@ -1,5 +1,5 @@
-import { ChannelTypes, ComponentTypes } from '../../../../../../../src/constants'
-import { SelectMenuOptionData } from '../../../../../../../src/api'
+import { ChannelTypes, ComponentTypes } from '@src/constants'
+import { SelectMenuOptionData } from '@src/api'
 
 export type RawSelectMenuComponentData = RawSelectUserMenuComponentData
   | RawSelectRoleMenuComponentData

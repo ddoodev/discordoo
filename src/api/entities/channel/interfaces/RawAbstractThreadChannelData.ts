@@ -1,7 +1,7 @@
-import { AbstractChannelData } from '../../../../../src/api/entities/channel/interfaces/AbstractChannelData'
-import { RawThreadMetadata } from '../../../../../src/api/entities/channel/interfaces/RawThreadMetadata'
-import { RawThreadMemberData } from '../../../../../src/api/entities/member/interfaces/RawThreadMemberData'
-import { RawWritableChannelData } from '../../../../../src/api/entities/channel/interfaces/RawWritableChannelData'
+import { AbstractChannelData } from '@src/api/entities/channel/interfaces/AbstractChannelData'
+import { RawThreadMetadata } from '@src/api/entities/channel/interfaces/RawThreadMetadata'
+import { RawThreadMemberData } from '@src/api/entities/member/interfaces/RawThreadMemberData'
+import { RawWritableChannelData } from '@src/api/entities/channel/interfaces/RawWritableChannelData'
 
 export interface RawAbstractThreadChannelData extends AbstractChannelData, RawWritableChannelData {
   name: string

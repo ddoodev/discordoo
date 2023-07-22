@@ -1,4 +1,4 @@
-import { DiscordLocale } from '../../../../../../src/constants'
+import { DiscordLocale } from '@src/constants'
 
 export interface RawMixinNameDescriptionData {
   name: string

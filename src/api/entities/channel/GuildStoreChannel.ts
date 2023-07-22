@@ -1,10 +1,10 @@
-import { AbstractGuildChannel } from '../../../../src/api/entities/channel/AbstractGuildChannel'
-import { ChannelTypes } from '../../../../src/constants'
-import { GuildStoreChannelData } from '../../../../src/api/entities/channel/interfaces/GuildStoreChannelData'
-import { RawGuildStoreChannelData } from '../../../../src/api/entities/channel/interfaces/RawGuildStoreChannelData'
-import { Json, ToJsonProperties } from '../../../../src/api'
-import { EntityInitOptions } from '../../../../src/api/entities/EntityInitOptions'
-import { attach } from '../../../../src/utils'
+import { AbstractGuildChannel } from '@src/api/entities/channel/AbstractGuildChannel'
+import { ChannelTypes } from '@src/constants'
+import { GuildStoreChannelData } from '@src/api/entities/channel/interfaces/GuildStoreChannelData'
+import { RawGuildStoreChannelData } from '@src/api/entities/channel/interfaces/RawGuildStoreChannelData'
+import { Json, ToJsonProperties } from '@src/api'
+import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
+import { attach } from '@src/utils'
 
 export class GuildStoreChannel extends AbstractGuildChannel {
   public declare type: ChannelTypes.GuildStore

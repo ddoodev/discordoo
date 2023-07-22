@@ -2,7 +2,7 @@ import {
   GuildNewsChannel,
   GuildStoreChannel,
   GuildTextChannel
-} from '../../../../../src/api'
+} from '@src/api'
 
 export type AnyInvitableChannel =
   // TODO add dm group channel

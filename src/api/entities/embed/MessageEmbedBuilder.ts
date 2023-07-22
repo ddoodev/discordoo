@@ -1,19 +1,19 @@
-import { MessageEmbedData } from '../../../../src/api/entities/embed/interfaces/MessageEmbedData'
+import { MessageEmbedData } from '@src/api/entities/embed/interfaces/MessageEmbedData'
 import { is } from 'typescript-is'
-import { attach, ValidationError, WebSocketUtils } from '../../../../src/utils'
-import { MessageEmbedTypes } from '../../../../src/constants'
-import { MessageEmbedFieldData } from '../../../../src/api/entities/embed/interfaces/MessageEmbedFieldData'
-import { MessageEmbedAuthorData } from '../../../../src/api/entities/embed/interfaces/MessageEmbedAuthorData'
+import { attach, ValidationError, WebSocketUtils } from '@src/utils'
+import { MessageEmbedTypes } from '@src/constants'
+import { MessageEmbedFieldData } from '@src/api/entities/embed/interfaces/MessageEmbedFieldData'
+import { MessageEmbedAuthorData } from '@src/api/entities/embed/interfaces/MessageEmbedAuthorData'
 import {
   MessageEmbedImageData,
   MessageEmbedThumbnailData,
   MessageEmbedVideoData
-} from '../../../../src/api/entities/embed/interfaces/MessageEmbedAttachmentData'
-import { MessageEmbedFooterData } from '../../../../src/api/entities/embed/interfaces/MessageEmbedFooterData'
-import { resolveColor } from '../../../../src/utils/resolve'
-import { ColorResolvable } from '../../../../src/api/entities/interfaces/ColorResolvable'
-import { RawMessageEmbedData } from '../../../../src/api/entities/embed/interfaces/RawMessageEmbedData'
-import { MessageEmbed, MessageEmbedBuilderData } from '../../../../src/api'
+} from '@src/api/entities/embed/interfaces/MessageEmbedAttachmentData'
+import { MessageEmbedFooterData } from '@src/api/entities/embed/interfaces/MessageEmbedFooterData'
+import { resolveColor } from '@src/utils/resolve'
+import { ColorResolvable } from '@src/api/entities/interfaces/ColorResolvable'
+import { RawMessageEmbedData } from '@src/api/entities/embed/interfaces/RawMessageEmbedData'
+import { MessageEmbed, MessageEmbedBuilderData } from '@src/api'
 
 export class MessageEmbedBuilder {
   public title?: string

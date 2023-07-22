@@ -1,4 +1,4 @@
-import { BufferResolvable } from '../../../../../src/utils/interfaces/BufferResolvable'
+import { BufferResolvable } from '@src/utils/interfaces/BufferResolvable'
 
 export interface MessageAttachmentBuilderData {
   file: BufferResolvable

@@ -1,4 +1,4 @@
-import { CacheApplicationMetadata } from '../../../../../src/core'
+import { CacheApplicationMetadata } from '@src/core'
 
 export interface RestApplicationMetadata extends CacheApplicationMetadata {
   /** Whether built-in rate-limiter disabled or not */

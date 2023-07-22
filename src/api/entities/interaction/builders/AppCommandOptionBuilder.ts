@@ -1,13 +1,13 @@
-import { AppCommandOptionTypes, ChannelTypes, DiscordLocale } from '../../../../../src/constants'
+import { AppCommandOptionTypes, ChannelTypes, DiscordLocale } from '@src/constants'
 import {
   AppCommandOption,
   AppCommandOptionChoiceData,
   AppCommandOptionWithSubcommandsData,
   RawAppCommandOptionChoiceData,
   RawAppCommandOptionWithSubcommandsData
-} from '../../../../../src/api'
-import { appCommandOptionToRaw } from '../../../../../src/utils/appCommandOptionToRaw'
-import { attach } from '../../../../../src/utils'
+} from '@src/api'
+import { appCommandOptionToRaw } from '@src/utils/appCommandOptionToRaw'
+import { attach } from '@src/utils'
 
 export class AppCommandOptionBuilder {
   declare name: string

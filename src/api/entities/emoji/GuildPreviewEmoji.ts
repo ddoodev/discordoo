@@ -1,11 +1,11 @@
-import { AbstractEmoji } from '../../../../src/api/entities/emoji/AbstractEmoji'
-import { AbstractGuildEmoji } from '../../../../src/api/entities/emoji/interfaces/AbstractGuildEmoji'
-import { GuildPreviewEmojiData } from '../../../../src/api/entities/emoji/interfaces/GuildPreviewEmojiData'
-import { RawGuildPreviewEmojiData } from '../../../../src/api/entities/emoji/interfaces/RawGuildPreviewEmojiData'
-import { attach } from '../../../../src/utils'
-import { ToJsonProperties } from '../../../../src/api/entities/interfaces/ToJsonProperties'
-import { Json } from '../../../../src/api/entities/interfaces/Json'
-import { EntityInitOptions } from '../../../../src/api/entities/EntityInitOptions'
+import { AbstractEmoji } from '@src/api/entities/emoji/AbstractEmoji'
+import { AbstractGuildEmoji } from '@src/api/entities/emoji/interfaces/AbstractGuildEmoji'
+import { GuildPreviewEmojiData } from '@src/api/entities/emoji/interfaces/GuildPreviewEmojiData'
+import { RawGuildPreviewEmojiData } from '@src/api/entities/emoji/interfaces/RawGuildPreviewEmojiData'
+import { attach } from '@src/utils'
+import { ToJsonProperties } from '@src/api/entities/interfaces/ToJsonProperties'
+import { Json } from '@src/api/entities/interfaces/Json'
+import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
 
 export class GuildPreviewEmoji extends AbstractEmoji implements AbstractGuildEmoji {
   public declare available: boolean

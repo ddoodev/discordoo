@@ -34,12 +34,12 @@ import {
   RawUserData,
   RawGuildAppCommandEditData,
   MessageEditData, InteractionMessageEditOptions, InteractionMessageCreateData
-} from '../../../../src/api'
-import { Endpoints } from '../../../../src/constants'
-import { DiscordRestApplication } from '../../../../src/core'
-import { RestFinishedResponse } from '../../../../../providers/src/_index'
-import { RawDirectMessagesChannelData } from '../../../../src/api/entities/channel/interfaces/RawDirectMessagesChannelData'
-import { FetchCommandQuery } from '../../../../src/api/managers/interactions/FetchCommandQuery'
+} from '@src/api'
+import { Endpoints } from '@src/constants'
+import { DiscordRestApplication } from '@src/core'
+import { RestFinishedResponse } from '@discordoo/providers'
+import { RawDirectMessagesChannelData } from '@src/api/entities/channel/interfaces/RawDirectMessagesChannelData'
+import { FetchCommandQuery } from '@src/api/managers/interactions/FetchCommandQuery'
 
 export class RestApplicationActions {
   constructor(public app: DiscordRestApplication) { }

@@ -1,14 +1,14 @@
-import { WebhookApplication } from '../../../../src/core/apps/webhook/WebhookApplication'
+import { WebhookApplication } from '@src/core/apps/webhook/WebhookApplication'
 import {
   MessageContent,
   MessageResolvable,
   RawMessageData,
   ThreadChannelResolvable,
   WebhookMessageCreateOptions
-} from '../../../../src/api'
-import { createMessagePayload, DiscordooError, resolveChannelId, resolveMessageId } from '../../../../src/utils'
-import { MessageFlags } from '../../../../src/constants'
-import { DeleteWebhookMessageOptions } from '../../../../src/api/managers/messages/DeleteWebhookMessageOptions'
+} from '@src/api'
+import { createMessagePayload, DiscordooError, resolveChannelId, resolveMessageId } from '@src/utils'
+import { MessageFlags } from '@src/constants'
+import { DeleteWebhookMessageOptions } from '@src/api/managers/messages/DeleteWebhookMessageOptions'
 
 export class WebhookClientMessagesManager {
   public app: WebhookApplication

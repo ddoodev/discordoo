@@ -1,6 +1,6 @@
-import { AbstractEvent, GuildMemberAddEventContext } from '../../../src/events'
-import { EventNames } from '../../../src/constants'
-import { EntitiesUtil, RawGuildMemberData } from '../../../src/api'
+import { AbstractEvent, GuildMemberAddEventContext } from '@src/events'
+import { EventNames } from '@src/constants'
+import { EntitiesUtil, RawGuildMemberData } from '@src/api'
 
 export class GuildMemberAddEvent extends AbstractEvent<GuildMemberAddEventContext> {
   public readonly name = EventNames.GUILD_MEMBER_ADD

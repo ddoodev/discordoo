@@ -1,5 +1,5 @@
-import { RoleResolvable, UserResolvable } from '../../../../../src/api'
-import { AllowedMentionTypes } from '../../../../../src/constants'
+import { RoleResolvable, UserResolvable } from '@src/api'
+import { AllowedMentionTypes } from '@src/constants'
 
 export interface AllowedMentionsData {
   parse?: AllowedMentionTypes[]

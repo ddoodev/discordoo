@@ -1,5 +1,5 @@
-import { AppCommandTypes, DiscordLocale } from '../../../../../../../src/constants'
-import { AppCommandOptionData, BigBitFieldResolvable, GuildResolvable } from '../../../../../../../src/api'
+import { AppCommandTypes, DiscordLocale } from '@src/constants'
+import { AppCommandOptionData, BigBitFieldResolvable, GuildResolvable } from '@src/api'
 
 export interface AppCommandData {
   /** unique id of the command */

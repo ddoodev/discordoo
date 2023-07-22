@@ -1,9 +1,9 @@
-import { AbstractEvent, AbstractEventContext } from '../../../src/events'
-import { EventNames } from '../../../src/constants'
-import { AnyRawChannelData } from '../../../src/api/entities/channel/interfaces/AnyRawGuildChannelData'
-import { channelEntityKey } from '../../../src/utils'
-import { EntitiesUtil } from '../../../src/api/entities/EntitiesUtil'
-import { ChannelUpdateEventContext } from '../../../src/events/channel/ctx/ChannelUpdateEventContext'
+import { AbstractEvent, AbstractEventContext } from '@src/events'
+import { EventNames } from '@src/constants'
+import { AnyRawChannelData } from '@src/api/entities/channel/interfaces/AnyRawGuildChannelData'
+import { channelEntityKey } from '@src/utils'
+import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
+import { ChannelUpdateEventContext } from '@src/events/channel/ctx/ChannelUpdateEventContext'
 
 export class ChannelUpdateEvent extends AbstractEvent<ChannelUpdateEventContext | AbstractEventContext> {
   public name = EventNames.CHANNEL_UPDATE

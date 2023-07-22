@@ -1,4 +1,4 @@
-import { AllowedImageFormats, AllowedImageSizes } from '../../../src/utils'
+import { AllowedImageFormats, AllowedImageSizes } from '@src/utils'
 
 export interface ImageUrlOptions {
   format?: AllowedImageFormats

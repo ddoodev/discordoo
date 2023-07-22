@@ -1,8 +1,8 @@
 import {
   AppCommandOptionWithSubcommandsData,
   RawAppCommandAbstractOptionData, RawAppCommandOptionWithSubcommandsData
-} from '../../src/api'
-import { attach } from '../../src/utils/attach'
+} from '@src/api'
+import { attach } from '@src/utils/attach'
 
 export function appCommandOptionToRaw(
   option: AppCommandOptionWithSubcommandsData | RawAppCommandOptionWithSubcommandsData

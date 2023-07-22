@@ -1,11 +1,11 @@
-import { AbstractEvent, AbstractEventContext } from '../../../src/events'
-import { ChannelTypes, EventNames } from '../../../src/constants'
-import { AnyRawChannelData } from '../../../src/api/entities/channel/interfaces/AnyRawGuildChannelData'
-import { channelEntityKey } from '../../../src/utils'
-import { EntitiesUtil } from '../../../src/api/entities/EntitiesUtil'
-import { ChannelDeleteEventContext } from '../../../src/events/channel/ctx/ChannelDeleteEventContext'
-import { RawDirectMessagesChannelData } from '../../../src/api/entities/channel/interfaces/RawDirectMessagesChannelData'
-import { AnyChannel } from '../../../src/api'
+import { AbstractEvent, AbstractEventContext } from '@src/events'
+import { ChannelTypes, EventNames } from '@src/constants'
+import { AnyRawChannelData } from '@src/api/entities/channel/interfaces/AnyRawGuildChannelData'
+import { channelEntityKey } from '@src/utils'
+import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
+import { ChannelDeleteEventContext } from '@src/events/channel/ctx/ChannelDeleteEventContext'
+import { RawDirectMessagesChannelData } from '@src/api/entities/channel/interfaces/RawDirectMessagesChannelData'
+import { AnyChannel } from '@src/api'
 
 export class ChannelDeleteEvent extends AbstractEvent<ChannelDeleteEventContext | AbstractEventContext> {
   public name = EventNames.CHANNEL_DELETE

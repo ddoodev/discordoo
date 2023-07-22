@@ -4,8 +4,8 @@ import {
   ApplicationQueues, ApplicationShardingMetadata, CompletedApplicationOptions,
   DefaultDiscordApplicationStack,
   RestApplicationInternals
-} from '../../../../src/core'
-import { GatewayManager } from '../../../../src/gateway'
+} from '@src/core'
+import { GatewayManager } from '@src/gateway'
 
 export interface ApplicationInternals<ApplicationStack extends DefaultDiscordApplicationStack = DefaultDiscordApplicationStack>
   extends RestApplicationInternals<ApplicationStack> {

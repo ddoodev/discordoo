@@ -1,5 +1,5 @@
-import { ColorResolvable, PermissionsResolvable } from '../../../../../src/api'
-import { Base64Resolvable } from '../../../../../src/utils/interfaces/Base64Resolvable'
+import { ColorResolvable, PermissionsResolvable } from '@src/api'
+import { Base64Resolvable } from '@src/utils/interfaces/Base64Resolvable'
 
 export interface RoleEditData {
   name?: string

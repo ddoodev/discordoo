@@ -1,4 +1,4 @@
-import { Sticker } from '../../../../src/api'
+import { Sticker } from '@src/api'
 
 export interface StickersManagerEditOptions {
   reason?: string

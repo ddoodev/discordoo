@@ -1,4 +1,4 @@
-import { IgnoreAllSymbol } from '../../../src/constants'
+import { IgnoreAllSymbol } from '@src/constants'
 
 export interface EntityInitOptions {
   ignore?: Array<string | typeof IgnoreAllSymbol>

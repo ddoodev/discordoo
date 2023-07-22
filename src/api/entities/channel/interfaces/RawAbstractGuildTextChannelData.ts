@@ -1,5 +1,5 @@
-import { RawAbstractGuildChannelData } from '../../../../../src/api/entities/channel/interfaces/RawAbstractGuildChannelData'
-import { RawWritableChannelData } from '../../../../../src/api/entities/channel/interfaces/RawWritableChannelData'
+import { RawAbstractGuildChannelData } from '@src/api/entities/channel/interfaces/RawAbstractGuildChannelData'
+import { RawWritableChannelData } from '@src/api/entities/channel/interfaces/RawWritableChannelData'
 
 export interface RawAbstractGuildTextChannelData extends RawAbstractGuildChannelData, RawWritableChannelData {
   topic?: string

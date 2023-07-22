@@ -1,8 +1,8 @@
-import { AbstractEvent } from '../../src/events/AbstractEvent'
-import { EventNames, Keyspaces } from '../../src/constants'
-import { EntitiesUtil } from '../../src/api/entities/EntitiesUtil'
-import { Presence, RawPresenceData } from '../../src/api'
-import { PresenceUpdateEventContext } from '../../src/events/ctx'
+import { AbstractEvent } from '@src/events/AbstractEvent'
+import { EventNames, Keyspaces } from '@src/constants'
+import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
+import { Presence, RawPresenceData } from '@src/api'
+import { PresenceUpdateEventContext } from '@src/events/ctx'
 
 export class PresenceUpdateEvent extends AbstractEvent<PresenceUpdateEventContext> {
   public name = EventNames.PRESENCE_UPDATE

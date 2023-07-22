@@ -1,10 +1,10 @@
-import { AbstractEvent, AbstractEventContext } from '../../../src/events'
-import { ChannelTypes, EventNames } from '../../../src/constants'
-import { channelEntityKey } from '../../../src/utils'
-import { EntitiesUtil } from '../../../src/api/entities/EntitiesUtil'
-import { ChannelCreateEventContext } from '../../../src/events/channel/ctx/ChannelCreateEventContext'
-import { AnyRawChannelData } from '../../../src/api/entities/channel/interfaces/AnyRawGuildChannelData'
-import { AnyChannel } from '../../../src/api'
+import { AbstractEvent, AbstractEventContext } from '@src/events'
+import { ChannelTypes, EventNames } from '@src/constants'
+import { channelEntityKey } from '@src/utils'
+import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
+import { ChannelCreateEventContext } from '@src/events/channel/ctx/ChannelCreateEventContext'
+import { AnyRawChannelData } from '@src/api/entities/channel/interfaces/AnyRawGuildChannelData'
+import { AnyChannel } from '@src/api'
 
 export class ChannelCreateEvent extends AbstractEvent<ChannelCreateEventContext | AbstractEventContext> {
   public name = EventNames.CHANNEL_CREATE

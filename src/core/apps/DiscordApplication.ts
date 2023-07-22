@@ -1,4 +1,4 @@
-import { Final } from '../../../src/utils/FinalDecorator'
+import { Final } from '@src/utils/FinalDecorator'
 import {
   ApplicationActions,
   ApplicationGateway, ApplicationGatewaySendOptions,
@@ -7,11 +7,11 @@ import {
   CompletedApplicationOptions,
   DefaultDiscordApplicationStack,
   ProviderConstructor
-} from '../../../src/core'
-import { DiscordRestApplication } from '../../../src/core/apps/rest/DiscordRestApplication'
-import { ApplicationUser } from '../../../src/api/entities/user/ApplicationUser'
-import { DiscordooProviders, EventNames, otherCacheSymbol, WS_DEFAULT_OPTIONS } from '../../../src/constants'
-import { CompletedGatewayOptions, DefaultGatewayProvider, GatewayManager } from '../../../src/gateway'
+} from '@src/core'
+import { DiscordRestApplication } from '@src/core/apps/rest/DiscordRestApplication'
+import { ApplicationUser } from '@src/api/entities/user/ApplicationUser'
+import { DiscordooProviders, EventNames, otherCacheSymbol, WS_DEFAULT_OPTIONS } from '@src/constants'
+import { CompletedGatewayOptions, DefaultGatewayProvider, GatewayManager } from '@src/gateway'
 import {
   DiscordooError,
   resolveDiscordooShards,
@@ -19,7 +19,7 @@ import {
   resolveGatewayIntents,
   ShardListResolvable,
   ValidationError
-} from '../../../src/utils'
+} from '@src/utils'
 import {
   ApplicationEvents,
   ChannelCreateEvent,
@@ -42,20 +42,20 @@ import {
   ThreadListSyncEvent,
   ThreadMembersUpdateEvent, ThreadMemberUpdateEvent,
   ThreadUpdateEvent, UserUpdateEvent
-} from '../../../src/events'
+} from '@src/events'
 import {
   BroadcastEvalOptions, BroadcastOptions,
   IpcBroadcastEvalRequestPacket,
   IpcBroadcastEvalResponsePacket,
   IpcBroadcastMessagePacket
-} from '../../../src/sharding'
+} from '@src/sharding'
 import { deserializeError, serializeError } from 'serialize-error'
 import { is } from 'typescript-is'
-import { GatewaySendPayloadLike, GatewayShardsInfo, IpcEvents, IpcOpCodes } from '../../../../providers/src/_index'
-import { fromJson, jsonify } from '../../../src/utils/jsonify'
+import { GatewaySendPayloadLike, GatewayShardsInfo, IpcEvents, IpcOpCodes } from '@discordoo/providers'
+import { fromJson, jsonify } from '@src/utils/jsonify'
 import { inspect } from 'util'
-import { Collection } from '../../../../collection/src/_index'
-import { evalWithoutScopeChain } from '../../../src/utils/evalWithoutScopeChain'
+import { Collection } from '@discordoo/collection'
+import { evalWithoutScopeChain } from '@src/utils/evalWithoutScopeChain'
 
 @Final(
   'start',

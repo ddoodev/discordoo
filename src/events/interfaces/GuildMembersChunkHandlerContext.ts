@@ -1,5 +1,5 @@
-import { GuildMembersChunkEventContext } from '../../../src/events'
-import { GuildMember } from '../../../src/api'
+import { GuildMembersChunkEventContext } from '@src/events'
+import { GuildMember } from '@src/api'
 
 export interface GuildMembersChunkHandlerContext {
   handler: (

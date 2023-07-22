@@ -1,4 +1,4 @@
 export enum StickerTypes {
-    Standard = 1,
-    Guild = 2
+  Standard = 1,
+  Guild
 }

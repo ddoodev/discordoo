@@ -1,12 +1,12 @@
-import { EntitiesManager } from '../../../../src/api/managers/EntitiesManager'
-import { EntitiesCacheManager } from '../../../../src/api'
-import { AnyGuildChannel } from '../../../../src/api/entities/channel/interfaces/AnyGuildChannel'
-import { CategoryChannelChildrenManagerData } from '../../../../src/api/managers/channels/CategoryChannelChildrenManagerData'
-import { DiscordooError, resolveChannelId } from '../../../../src/utils'
-import { Keyspaces } from '../../../../src/constants'
-import { GuildChannelCreateData } from '../../../../src/api/entities/channel/interfaces/GuildChannelCreateData'
-import { RawGuildChannelCreateData } from '../../../../src/api/entities/channel/interfaces/RawGuildChannelCreateData'
-import { RestEligibleDiscordApplication } from '../../../../src/core/apps/AnyDiscordApplication'
+import { EntitiesManager } from '@src/api/managers/EntitiesManager'
+import { EntitiesCacheManager } from '@src/api'
+import { AnyGuildChannel } from '@src/api/entities/channel/interfaces/AnyGuildChannel'
+import { CategoryChannelChildrenManagerData } from '@src/api/managers/channels/CategoryChannelChildrenManagerData'
+import { DiscordooError, resolveChannelId } from '@src/utils'
+import { Keyspaces } from '@src/constants'
+import { GuildChannelCreateData } from '@src/api/entities/channel/interfaces/GuildChannelCreateData'
+import { RawGuildChannelCreateData } from '@src/api/entities/channel/interfaces/RawGuildChannelCreateData'
+import { RestEligibleDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
 
 export class CategoryChannelChildrenManager extends EntitiesManager {
   public cache: EntitiesCacheManager<AnyGuildChannel>

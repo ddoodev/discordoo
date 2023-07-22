@@ -1,3 +1,4 @@
+/** Splits array into several arrays */
 export function intoChunks<T = unknown>(array: T[], chunkSize = 1): T[][] {
   const chunks: T[][] = []
 

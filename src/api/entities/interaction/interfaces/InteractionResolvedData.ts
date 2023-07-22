@@ -1,4 +1,4 @@
-import { ChannelResolvable, GuildMemberResolvable, MessageResolvable, RoleResolvable, UserResolvable } from '../../../../../src/api'
+import { ChannelResolvable, GuildMemberResolvable, MessageResolvable, RoleResolvable, UserResolvable } from '@src/api'
 
 export interface InteractionResolvedData {
   users?: UserResolvable[]

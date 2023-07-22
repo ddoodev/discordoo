@@ -1,10 +1,10 @@
-import { EntitiesManager } from '../../../../src/api/managers/EntitiesManager'
-import { EntitiesCacheManager, User, UserResolvable } from '../../../../src/api'
-import { ReactionUsersManagerData } from '../../../../src/api/managers/reactions/ReactionUsersManagerData'
-import { Keyspaces } from '../../../../src/constants'
-import { Collection } from '../../../../../collection/src/_index'
-import { FetchReactionUsersOptions } from '../../../../src/api/managers/reactions/FetchReactionUsersOptions'
-import { RestEligibleDiscordApplication } from '../../../../src/core/apps/AnyDiscordApplication'
+import { EntitiesManager } from '@src/api/managers/EntitiesManager'
+import { EntitiesCacheManager, User, UserResolvable } from '@src/api'
+import { ReactionUsersManagerData } from '@src/api/managers/reactions/ReactionUsersManagerData'
+import { Keyspaces } from '@src/constants'
+import { Collection } from '@discordoo/collection'
+import { FetchReactionUsersOptions } from '@src/api/managers/reactions/FetchReactionUsersOptions'
+import { RestEligibleDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
 
 export class ReactionUsersManager extends EntitiesManager {
   public cache: EntitiesCacheManager<User>

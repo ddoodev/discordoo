@@ -1,9 +1,9 @@
-import { ProviderConstructor } from '../../src/core'
-import { RestRequest, RestManagerData, RestManagerRequestData, RestLimitsManager, makeRequest } from '../../src/rest'
-import { RestProvider, RestRequestOptions, RestFinishedResponse } from '../../../providers/src/_index'
-import { CompletedRestOptions } from '../../src/rest'
-import { DiscordCdnLinker } from '../../src/rest/DiscordCdnLinker'
-import { RestEligibleDiscordApplication } from '../../src/core/apps/AnyDiscordApplication'
+import { ProviderConstructor } from '@src/core'
+import { RestRequest, RestManagerData, RestManagerRequestData, RestLimitsManager, makeRequest } from '@src/rest'
+import { RestProvider, RestRequestOptions, RestFinishedResponse } from '@discordoo/providers'
+import { CompletedRestOptions } from '@src/rest'
+import { DiscordCdnLinker } from '@src/rest/DiscordCdnLinker'
+import { RestEligibleDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
 
 export class RestManager<P extends RestProvider = RestProvider> {
   public app: RestEligibleDiscordApplication

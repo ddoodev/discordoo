@@ -1,6 +1,6 @@
-import { WebSocketClient } from '../../../src/gateway/WebSocketClient'
+import { WebSocketClient } from '@src/gateway/WebSocketClient'
 import WebSocket from 'ws'
-import { WebSocketClientEvents } from '../../../src/constants'
+import { WebSocketClientEvents } from '@src/constants'
 
 // handles websocket error event
 export function error(app: WebSocketClient, event: WebSocket.ErrorEvent) {

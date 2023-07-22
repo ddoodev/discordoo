@@ -1,4 +1,4 @@
-import { AbstractChannelData } from '../../../../../src/api'
+import { AbstractChannelData } from '@src/api'
 
 export interface InviteChannelData extends AbstractChannelData {
   icon?: string

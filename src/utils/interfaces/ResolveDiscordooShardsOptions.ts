@@ -1,5 +1,5 @@
-import { ShardListResolvable } from '../../../src/utils'
-import { DiscordCacheApplication } from '../../../src/core/apps/cache/DiscordCacheApplication'
+import { ShardListResolvable } from '@src/utils'
+import { DiscordCacheApplication } from '@src/core/apps/cache/DiscordCacheApplication'
 
 export interface ShardsInfo {
   shards: number[]

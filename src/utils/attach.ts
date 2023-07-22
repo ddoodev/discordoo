@@ -1,5 +1,5 @@
-import { AttachOptions } from '../../src/utils/interfaces/AttachOptions'
-import { IgnoreAllSymbol } from '../../src/constants/entities/IgnoreAllSymbol'
+import { AttachOptions } from '@src/utils/interfaces/AttachOptions'
+import { IgnoreAllSymbol } from '@src/constants/entities/IgnoreAllSymbol'
 
 /**
  * Inserts properties from one object into another.

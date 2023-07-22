@@ -1,5 +1,5 @@
-import { MessageResolvable } from '../../../../../src/api'
-import { ThreadTypes } from '../../../../../src/constants'
+import { MessageResolvable } from '@src/api'
+import { ThreadTypes } from '@src/constants'
 
 export interface ThreadChannelCreateData {
   name: string

@@ -1,6 +1,6 @@
-import { CachePointer } from '../../src/cache'
-import { CACHE_POINTER_PREFIX, Keyspaces } from '../../src/constants'
-import { CacheStorageKey } from '../../../providers/src/_index'
+import { CachePointer } from '@src/cache'
+import { CACHE_POINTER_PREFIX, Keyspaces } from '@src/constants'
+import { CacheStorageKey } from '@discordoo/providers'
 
 export function makeCachePointer(keyspace: Keyspaces, storage: CacheStorageKey, key: string): CachePointer {
   return `${CACHE_POINTER_PREFIX}:${keyspace}:${storage}:${key}`

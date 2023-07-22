@@ -1,4 +1,4 @@
-import { Role } from '../../../../src/api'
+import { Role } from '@src/api'
 
 export interface RoleEditOptions {
   reason?: string

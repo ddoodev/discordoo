@@ -1,6 +1,6 @@
-import { Collection } from '../../../collection/src/_index'
-import { CacheStorageKey, CacheProvider } from '../../../providers/src/_index'
-import { AnyDiscordApplication } from '../../src/core/apps/AnyDiscordApplication'
+import { Collection } from '@discordoo/collection'
+import { CacheStorageKey, CacheProvider } from '@discordoo/providers'
+import { AnyDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
 
 export class DefaultCacheProvider implements CacheProvider {
   private keyspaces: Collection<string, Collection<string, Collection>>

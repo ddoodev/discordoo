@@ -1,4 +1,4 @@
 export enum VideoQualityModes {
-    Auto = 1,
-    Full = 2
+  Auto = 1,
+  Full,
 }

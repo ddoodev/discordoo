@@ -1,4 +1,4 @@
-import { RestManagerRequestData } from '../../../src/rest'
+import { RestManagerRequestData } from '@src/rest'
 
 export interface RestRateLimitBucket {
   /** Bucket hash (unique id) */

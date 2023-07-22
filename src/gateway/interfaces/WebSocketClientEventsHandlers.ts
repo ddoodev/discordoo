@@ -1,5 +1,5 @@
 import WebSocket from 'ws'
-import { GatewaySendPayloadLike } from '../../../../providers/src/_index'
+import { GatewaySendPayloadLike } from '@discordoo/providers'
 
 export interface WebSocketClientEventsHandlers {
   WsSendError: (error: Error, data: GatewaySendPayloadLike) => unknown

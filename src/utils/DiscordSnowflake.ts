@@ -1,6 +1,6 @@
-import { DeconstructedDiscordSnowflake } from '../../src/utils/interfaces/DeconstructedSnowflake'
-import { DISCORD_EPOCH } from '../../src/constants/common'
-import { DiscordooError } from '../../src/utils/DiscordooError'
+import { DeconstructedDiscordSnowflake } from '@src/utils/interfaces/DeconstructedSnowflake'
+import { DISCORD_EPOCH } from '@src/constants/common'
+import { DiscordooError } from '@src/utils/DiscordooError'
 
 const EPOCH = DISCORD_EPOCH
 let INCREMENT = 0

@@ -1,4 +1,4 @@
-import { AppCommandOptionTypes } from '../../../../../../src/constants'
+import { AppCommandOptionTypes } from '@src/constants'
 
 export interface AppCommandInteractionOptionPayload {
   /** the name of the parameter */

@@ -1,5 +1,5 @@
-import { AbstractEventContext } from '../../../../src/events'
-import { Invite, User } from '../../../../src/api'
+import { AbstractEventContext } from '@src/events'
+import { Invite, User } from '@src/api'
 
 export interface InviteCreateEventContext extends AbstractEventContext {
   invite: Invite

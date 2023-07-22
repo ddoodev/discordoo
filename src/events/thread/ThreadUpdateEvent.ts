@@ -1,11 +1,11 @@
-import { AbstractEvent, AbstractEventContext } from '../../../src/events'
-import { EventNames, Keyspaces } from '../../../src/constants'
-import { RawAbstractThreadChannelData } from '../../../src/api/entities/channel/interfaces/RawAbstractThreadChannelData'
-import { channelEntityKey } from '../../../src/utils'
-import { EntitiesUtil } from '../../../src/api/entities/EntitiesUtil'
-import { AnyThreadChannel } from '../../../src/api/entities/channel/interfaces/AnyThreadChannel'
-import { ThreadUpdateEventContext } from '../../../src/events/thread/ctx/ThreadUpdateEventContext'
-import { ThreadMember } from '../../../src/api/entities/member/ThreadMember'
+import { AbstractEvent, AbstractEventContext } from '@src/events'
+import { EventNames, Keyspaces } from '@src/constants'
+import { RawAbstractThreadChannelData } from '@src/api/entities/channel/interfaces/RawAbstractThreadChannelData'
+import { channelEntityKey } from '@src/utils'
+import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
+import { AnyThreadChannel } from '@src/api/entities/channel/interfaces/AnyThreadChannel'
+import { ThreadUpdateEventContext } from '@src/events/thread/ctx/ThreadUpdateEventContext'
+import { ThreadMember } from '@src/api/entities/member/ThreadMember'
 
 export class ThreadUpdateEvent extends AbstractEvent<ThreadUpdateEventContext | AbstractEventContext> {
   public name = EventNames.THREAD_UPDATE
