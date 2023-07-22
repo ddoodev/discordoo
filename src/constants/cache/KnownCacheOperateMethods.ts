@@ -1,7 +1,3 @@
-/**
- * List of cache operate methods that user can perform.
- * Used in proxies for cache managers
- * */
 export const KNOWN_CACHE_OPERATE_METHODS = [
   'get',
   'set',

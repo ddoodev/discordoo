@@ -1,6 +1,6 @@
-import { AbstractEntity } from '@src/api/entities/AbstractEntity'
-import { ActionRowInteractionData, EntitiesUtil, EntityInitOptions, RawModalSubmitData } from '@src/api'
-import { attach } from '@src/utils'
+import { AbstractEntity } from '../../../../../src/api/entities/AbstractEntity'
+import { ActionRowInteractionData, EntitiesUtil, EntityInitOptions, RawModalSubmitData } from '../../../../../src/api'
+import { attach } from '../../../../../src/utils'
 
 export class ModalSubmitInteractionData extends AbstractEntity {
   declare customId: string

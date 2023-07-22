@@ -1,9 +1,9 @@
-import { AbstractEntity } from '@src/api/entities/AbstractEntity'
-import { AbstractEmojiData } from '@src/api/entities/emoji/interfaces/AbstractEmojiData'
-import { idToDate, idToTimestamp, attach } from '@src/utils'
-import { ToJsonProperties } from '@src/api/entities/interfaces/ToJsonProperties'
-import { Json } from '@src/api/entities/interfaces/Json'
-import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
+import { AbstractEntity } from '../../../../src/api/entities/AbstractEntity'
+import { AbstractEmojiData } from '../../../../src/api/entities/emoji/interfaces/AbstractEmojiData'
+import { idToDate, idToTimestamp, attach } from '../../../../src/utils'
+import { ToJsonProperties } from '../../../../src/api/entities/interfaces/ToJsonProperties'
+import { Json } from '../../../../src/api/entities/interfaces/Json'
+import { EntityInitOptions } from '../../../../src/api/entities/EntityInitOptions'
 
 export abstract class AbstractEmoji extends AbstractEntity implements AbstractEmojiData {
   public animated?: boolean

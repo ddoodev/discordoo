@@ -1,4 +1,4 @@
-import { RawUserData } from '@src/api/entities/user'
+import { RawUserData } from '../../../../../src/api/entities/user'
 
 export interface RawGuildMemberData {
   user: RawUserData

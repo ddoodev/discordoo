@@ -1,8 +1,8 @@
-import { ToJsonProperties } from '@src/api/entities/interfaces/ToJsonProperties'
-import { Json, JsonProperties } from '@src/api/entities/interfaces/Json'
-import { ToJsonOverrideSymbol } from '@src/constants'
-import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
-import { RestEligibleDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
+import { ToJsonProperties } from '../../../src/api/entities/interfaces/ToJsonProperties'
+import { Json, JsonProperties } from '../../../src/api/entities/interfaces/Json'
+import { ToJsonOverrideSymbol } from '../../../src/constants'
+import { EntityInitOptions } from '../../../src/api/entities/EntityInitOptions'
+import { RestEligibleDiscordApplication } from '../../../src/core/apps/AnyDiscordApplication'
 
 export abstract class AbstractEntity {
   public app: RestEligibleDiscordApplication

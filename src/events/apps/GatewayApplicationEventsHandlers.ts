@@ -1,5 +1,5 @@
-import { AbstractApplicationEventsHandlers } from '@src/events/apps/AbstractApplicationEventsHandlers'
-import { GatewayReceivePayloadLike } from '@discordoo/providers'
+import { AbstractApplicationEventsHandlers } from '../../../src/events/apps/AbstractApplicationEventsHandlers'
+import { GatewayReceivePayloadLike } from '../../../../providers/src/_index'
 import {
   ChannelCreateEventContext,
   ChannelDeleteEventContext,
@@ -27,7 +27,7 @@ import {
   GuildDeleteEventContext,
   GuildUpdateEventContext,
   InteractionCreateEventContext,
-} from '@src/events'
+} from '../../../src/events'
 
 export interface GatewayApplicationEventsHandlers extends AbstractApplicationEventsHandlers {
   /** All raw WebSocket events */

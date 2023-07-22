@@ -1,6 +1,6 @@
-import { MessageEmbedResolvable } from '@src/api/entities/embed'
-import { StickerResolvable } from '@src/api/entities/sticker'
-import { MessageAttachmentResolvable } from '@src/api'
+import { MessageEmbedResolvable } from '../../../../../src/api/entities/embed'
+import { StickerResolvable } from '../../../../../src/api/entities/sticker'
+import { MessageAttachmentResolvable } from '../../../../../src/api'
 
 export type MessageContent = MessageEmbedResolvable
   | MessageEmbedResolvable[]

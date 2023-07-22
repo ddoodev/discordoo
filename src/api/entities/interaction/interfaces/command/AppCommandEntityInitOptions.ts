@@ -1,4 +1,4 @@
-import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
+import { EntityInitOptions } from '../../../../../../src/api/entities/EntityInitOptions'
 
 export interface AppCommandEntityInitOptions extends EntityInitOptions {
   /**

@@ -4,12 +4,12 @@ import {
   MessageContent,
   MessageCreateOptions, MessageResolvable,
   MessagesManagerData
-} from '@src/api'
-import { ChannelPinnedMessagesManager } from '@src/api/managers/messages/ChannelPinnedMessagesManager'
-import { DiscordooError, resolveChannelId } from '@src/utils'
-import { Keyspaces } from '@src/constants'
-import { EntitiesManager } from '@src/api/managers/EntitiesManager'
-import { RestEligibleDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
+} from '../../../../src/api'
+import { ChannelPinnedMessagesManager } from '../../../../src/api/managers/messages/ChannelPinnedMessagesManager'
+import { DiscordooError, resolveChannelId } from '../../../../src/utils'
+import { Keyspaces } from '../../../../src/constants'
+import { EntitiesManager } from '../../../../src/api/managers/EntitiesManager'
+import { RestEligibleDiscordApplication } from '../../../../src/core/apps/AnyDiscordApplication'
 
 export abstract class AbstractMessagesManager extends EntitiesManager {
   public cache: EntitiesCacheManager<Message>

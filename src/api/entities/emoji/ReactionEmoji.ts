@@ -1,10 +1,10 @@
-import { AbstractEmoji } from '@src/api/entities/emoji/AbstractEmoji'
-import { ReactionEmojiData } from '@src/api/entities/emoji/interfaces/ReactionEmojiData'
-import { Json, ToJsonProperties } from '@src/api'
-import { MessageReaction } from '@src/api/entities/reaction/MessageReaction'
-import { Keyspaces } from '@src/constants'
-import { CacheManagerGetOptions } from '@src/cache'
-import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
+import { AbstractEmoji } from '../../../../src/api/entities/emoji/AbstractEmoji'
+import { ReactionEmojiData } from '../../../../src/api/entities/emoji/interfaces/ReactionEmojiData'
+import { Json, ToJsonProperties } from '../../../../src/api'
+import { MessageReaction } from '../../../../src/api/entities/reaction/MessageReaction'
+import { Keyspaces } from '../../../../src/constants'
+import { CacheManagerGetOptions } from '../../../../src/cache'
+import { EntityInitOptions } from '../../../../src/api/entities/EntityInitOptions'
 
 export class ReactionEmoji extends AbstractEmoji {
   public declare reactionMessageId: string

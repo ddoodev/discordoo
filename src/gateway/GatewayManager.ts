@@ -5,13 +5,13 @@ import {
   GatewaySendOptions,
   GatewaySendPayloadLike,
   GatewayShardsInfo
-} from '@discordoo/providers'
-import { GatewayManagerData } from '@src/gateway/interfaces'
-import { DiscordApplication, ProviderConstructor } from '@src/core'
-import { DiscordooError, ValidationError, wait } from '@src/utils'
-import { Endpoints, WebSocketClientEvents } from '@src/constants'
-import { CompletedGatewayOptions } from '@src/gateway/interfaces/GatewayOptions'
-import { rawToDiscordoo } from '@src/utils/rawToDiscordoo'
+} from '../../../providers/src/_index'
+import { GatewayManagerData } from '../../src/gateway/interfaces'
+import { DiscordApplication, ProviderConstructor } from '../../src/core'
+import { DiscordooError, ValidationError, wait } from '../../src/utils'
+import { Endpoints, WebSocketClientEvents } from '../../src/constants'
+import { CompletedGatewayOptions } from '../../src/gateway/interfaces/GatewayOptions'
+import { rawToDiscordoo } from '../../src/utils/rawToDiscordoo'
 
 export class GatewayManager<P extends GatewayProvider = GatewayProvider> {
   public provider: P

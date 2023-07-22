@@ -3,9 +3,9 @@ import {
   RestRequestOptions,
   RestFinishedResponse,
   RestRequestMethods
-} from '@discordoo/providers'
-import { RestManager } from '@src/rest/RestManager'
-import { WebhookRestManager } from '@src/rest/WebhookRestManager'
+} from '../../../../providers/src/_index'
+import { RestManager } from '../../../src/rest/RestManager'
+import { WebhookRestManager } from '../../../src/rest/WebhookRestManager'
 
 /** Constructor used to build and perform requests to discord rest api */
 export interface RestRequest {

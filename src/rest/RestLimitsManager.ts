@@ -1,9 +1,9 @@
-import { Collection } from '@discordoo/collection'
-import { RestManagerRequestData } from '@src/rest/interfaces'
-import { RestRateLimitBucket } from '@src/rest/interfaces/RestRateLimitBucket'
-import { RestFinishedResponse, RestRequestOptions } from '@discordoo/providers'
-import { wait } from '@src/utils'
-import { RestEligibleDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
+import { Collection } from '../../../collection/src/_index'
+import { RestManagerRequestData } from '../../src/rest/interfaces'
+import { RestRateLimitBucket } from '../../src/rest/interfaces/RestRateLimitBucket'
+import { RestFinishedResponse, RestRequestOptions } from '../../../providers/src/_index'
+import { wait } from '../../src/utils'
+import { RestEligibleDiscordApplication } from '../../src/core/apps/AnyDiscordApplication'
 
 /**
  * Used to comply with the Discord rate limits.

@@ -1,10 +1,10 @@
-import { ShardingInstanceCreateOptions } from '@src/sharding/interfaces/app/ShardingInstanceCreateOptions'
-import { ShardingInstanceOptions } from '@src/sharding/interfaces/app/ShardingInstanceOptions'
-import { CLUSTERS_SHARDING_UNSUPPORTED_PLATFORMS, IpcConnectionState, IpcEvents, IpcOpCodes, PartialShardingModes } from '@src/constants'
-import { ShardingManager } from '@src/sharding/ShardingManager'
-import { LocalIpcClient } from '@src/sharding/ipc/LocalIpcClient'
+import { ShardingInstanceCreateOptions } from '../../src/sharding/interfaces/app/ShardingInstanceCreateOptions'
+import { ShardingInstanceOptions } from '../../src/sharding/interfaces/app/ShardingInstanceOptions'
+import { CLUSTERS_SHARDING_UNSUPPORTED_PLATFORMS, IpcConnectionState, IpcEvents, IpcOpCodes, PartialShardingModes } from '../../src/constants'
+import { ShardingManager } from '../../src/sharding/ShardingManager'
+import { LocalIpcClient } from '../../src/sharding/ipc/LocalIpcClient'
 import { TypedEmitter } from 'tiny-typed-emitter'
-import { DiscordooError, DiscordooSnowflake, resolveDiscordooShards, ValidationError, wait } from '@src/utils'
+import { DiscordooError, DiscordooSnowflake, resolveDiscordooShards, ValidationError, wait } from '../../src/utils'
 import Process, { ChildProcess } from 'child_process'
 import { Worker } from 'worker_threads'
 import { Worker as ClusterWorker } from 'cluster'
@@ -15,9 +15,9 @@ import {
   BroadcastEvalContext,
   BroadcastEvalOptions,
   IpcBroadcastEvalRequestPacket, IpcMessagePacket,
-} from '@src/sharding/interfaces'
+} from '../../src/sharding/interfaces'
 import { is } from 'typescript-is'
-import { fromJson, jsonify } from '@src/utils/jsonify'
+import { fromJson, jsonify } from '../../src/utils/jsonify'
 
 export class ShardingInstance extends TypedEmitter {
   public id: number

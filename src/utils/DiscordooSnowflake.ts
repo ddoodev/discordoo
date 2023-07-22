@@ -1,9 +1,9 @@
-import { DeconstructedDiscordooSnowflake } from '@src/utils/interfaces/DeconstructedSnowflake'
-import { DiscordooError } from '@src/utils/DiscordooError'
-import { DISCORDOO_EPOCH } from '@src/constants/common'
+import { DeconstructedDiscordooSnowflake } from '../../src/utils/interfaces/DeconstructedSnowflake'
+import { DiscordooError } from '../../src/utils/DiscordooError'
+import { DISCORDOO_EPOCH } from '../../src/constants/common'
 import { is } from 'typescript-is'
-import { ValidationError } from '@src/utils/ValidationError'
-import { SHARDING_MANAGER_ID } from '@src/constants'
+import { ValidationError } from '../../src/utils/ValidationError'
+import { SHARDING_MANAGER_ID } from '../../src/constants'
 
 const EPOCH = DISCORDOO_EPOCH
 let INCREMENT = 0

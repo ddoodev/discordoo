@@ -1,11 +1,11 @@
-import { AbstractEvent, InteractionCreateEventContext } from '@src/events'
-import { EventNames, InteractionTypes } from '@src/constants'
+import { AbstractEvent, InteractionCreateEventContext } from '../../../src/events'
+import { EventNames, InteractionTypes } from '../../../src/constants'
 import {
   EntitiesUtil,
   RawAppCommandInteractionData,
   RawInteractionData, RawModalSubmitData,
   RawUiAppCommandInteractionData
-} from '@src/api'
+} from '../../../src/api'
 
 export class InteractionCreateEvent extends AbstractEvent<InteractionCreateEventContext> {
   public name = EventNames.INTERACTION_CREATE

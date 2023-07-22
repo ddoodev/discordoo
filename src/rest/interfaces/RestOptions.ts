@@ -1,5 +1,5 @@
-import { AuthLike } from '@discordoo/providers'
-import { AllowedImageFormats, AllowedImageSizes } from '@src/utils'
+import { AuthLike } from '../../../../providers/src/_index'
+import { AllowedImageFormats, AllowedImageSizes } from '../../../src/utils'
 
 /** Discord API options */
 export interface ApiOptions {

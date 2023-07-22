@@ -1,8 +1,8 @@
-import { ExtendableEntities as DefaultExtendableEntities } from '@src/api/entities/ExtendableEntities'
-import { Entities } from '@src/api/entities/Entities'
-import { DiscordooError } from '@src/utils/DiscordooError'
-import { EntityKeyFunctions } from '@src/api/entities/EntityKeyFunctions'
-import { Def, Enf, Ent, Ext, ExtendableEntitiesUtil } from '@src/api/entities/EntitiesUtilTypings'
+import { ExtendableEntities as DefaultExtendableEntities } from '../../../src/api/entities/ExtendableEntities'
+import { Entities } from '../../../src/api/entities/Entities'
+import { DiscordooError } from '../../../src/utils/DiscordooError'
+import { EntityKeyFunctions } from '../../../src/api/entities/EntityKeyFunctions'
+import { Def, Enf, Ent, Ext, ExtendableEntitiesUtil } from '../../../src/api/entities/EntitiesUtilTypings'
 
 const source = 'EntitiesUtil#'
 

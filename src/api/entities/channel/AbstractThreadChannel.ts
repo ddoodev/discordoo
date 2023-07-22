@@ -1,6 +1,6 @@
-import { AbstractChannel } from '@src/api/entities/channel/AbstractChannel'
-import { AbstractThreadChannelData } from '@src/api/entities/channel/interfaces/AbstractThreadChannelData'
-import { RawAbstractThreadChannelData } from '@src/api/entities/channel/interfaces/RawAbstractThreadChannelData'
+import { AbstractChannel } from '../../../../src/api/entities/channel/AbstractChannel'
+import { AbstractThreadChannelData } from '../../../../src/api/entities/channel/interfaces/AbstractThreadChannelData'
+import { RawAbstractThreadChannelData } from '../../../../src/api/entities/channel/interfaces/RawAbstractThreadChannelData'
 import {
   ChannelMessagesManager, Guild,
   GuildMember,
@@ -10,20 +10,20 @@ import {
   RoleResolvable,
   ToJsonProperties,
   User
-} from '@src/api'
-import { ThreadMetadata } from '@src/api/entities/channel/interfaces/ThreadMetadata'
-import { attach } from '@src/utils'
-import { WritableChannel } from '@src/api/entities/channel/interfaces/WritableChannel'
+} from '../../../../src/api'
+import { ThreadMetadata } from '../../../../src/api/entities/channel/interfaces/ThreadMetadata'
+import { attach } from '../../../../src/utils'
+import { WritableChannel } from '../../../../src/api/entities/channel/interfaces/WritableChannel'
 import { is } from 'typescript-is'
-import { ThreadChannelEditData } from '@src/api/entities/channel/interfaces/ThreadChannelEditData'
-import { RawThreadChannelEditData } from '@src/api/entities/channel/interfaces/RawThreadChannelEditData'
-import { CacheManagerGetOptions } from '@src/cache'
-import { Keyspaces } from '@src/constants'
-import { AnyGuildChannel } from '@src/api/entities/channel/interfaces/AnyGuildChannel'
-import { GuildMemberResolvable } from '@src/api/entities/member/interfaces/GuildMemberResolvable'
-import { ThreadMembersManager } from '@src/api/managers/members/ThreadMembersManager'
-import { ThreadMember } from '@src/api/entities/member/ThreadMember'
-import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
+import { ThreadChannelEditData } from '../../../../src/api/entities/channel/interfaces/ThreadChannelEditData'
+import { RawThreadChannelEditData } from '../../../../src/api/entities/channel/interfaces/RawThreadChannelEditData'
+import { CacheManagerGetOptions } from '../../../../src/cache'
+import { Keyspaces } from '../../../../src/constants'
+import { AnyGuildChannel } from '../../../../src/api/entities/channel/interfaces/AnyGuildChannel'
+import { GuildMemberResolvable } from '../../../../src/api/entities/member/interfaces/GuildMemberResolvable'
+import { ThreadMembersManager } from '../../../../src/api/managers/members/ThreadMembersManager'
+import { ThreadMember } from '../../../../src/api/entities/member/ThreadMember'
+import { EntityInitOptions } from '../../../../src/api/entities/EntityInitOptions'
 
 export abstract class AbstractThreadChannel extends AbstractChannel implements AbstractThreadChannelData, WritableChannel {
   public declare name: string

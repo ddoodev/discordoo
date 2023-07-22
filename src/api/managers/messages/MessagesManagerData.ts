@@ -1,4 +1,4 @@
-import { ChannelResolvable } from '@src/api'
+import { ChannelResolvable } from '../../../../src/api'
 
 export interface MessagesManagerData {
   channel: ChannelResolvable

@@ -1,14 +1,14 @@
-import { AppCommandTypes, DiscordLocale } from '@src/constants'
+import { AppCommandTypes, DiscordLocale } from '../../../../../src/constants'
 import {
   AppCommandCreateData, AppCommandOptionWithSubcommandsData,
   BigBitFieldResolvable, GuildAppCommandCreateData,
   GuildResolvable, RawAppCommandCreateData,
   RawAppCommandOptionWithSubcommandsData, RawGuildAppCommandCreateData
-} from '@src/api'
+} from '../../../../../src/api'
 import { mix } from 'ts-mixer'
-import { MixinNameDescriptionRequired } from '@src/api/entities/interaction/mixins/MixinNameDescriptionRequired'
-import { attach, resolveBigBitField, resolveGuildId } from '@src/utils'
-import { appCommandOptionToRaw } from '@src/utils/appCommandOptionToRaw'
+import { MixinNameDescriptionRequired } from '../../../../../src/api/entities/interaction/mixins/MixinNameDescriptionRequired'
+import { attach, resolveBigBitField, resolveGuildId } from '../../../../../src/utils'
+import { appCommandOptionToRaw } from '../../../../../src/utils/appCommandOptionToRaw'
 
 @mix(MixinNameDescriptionRequired)
 export class AppCommandBuilder {

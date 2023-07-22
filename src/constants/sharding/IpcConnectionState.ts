@@ -1,5 +1,5 @@
 export enum IpcConnectionState {
-  Connected,
-  Connecting,
-  Disconnected,
+    Connected = 0,
+    Connecting = 1,
+    Disconnected = 2
 }

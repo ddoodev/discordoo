@@ -1,4 +1,4 @@
-import { CacheProvider, CacheStorageKey } from '@discordoo/providers'
+import { CacheProvider, CacheStorageKey } from '../../../../providers/src/_index'
 
 export async function cacheProviderCountsPolyfill<K = string, V = any, P extends CacheProvider = CacheProvider>(
   provider: P,

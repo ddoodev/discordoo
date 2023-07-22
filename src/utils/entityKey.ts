@@ -1,5 +1,5 @@
-import { ChannelTypes } from '@src/constants'
-import { Entities } from '@src/api/entities/Entities'
+import { ChannelTypes } from '../../src/constants'
+import { Entities } from '../../src/api/entities/Entities'
 
 type EntityKeys = keyof typeof Entities
 

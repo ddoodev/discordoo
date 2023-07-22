@@ -1,11 +1,11 @@
-import { Collection } from '@discordoo/collection'
-import { WebSocketClient } from '@src/gateway/WebSocketClient'
-import { WebSocketClientEvents, WebSocketClientStates, WebSocketCloseCodes, WebSocketManagerStates } from '@src/constants'
-import { DiscordooError } from '@src/utils'
-import { GatewayProvider, GatewayShardsInfo } from '@discordoo/providers'
-import { CompletedGatewayOptions } from '@src/gateway/interfaces/GatewayOptions'
+import { Collection } from '../../../collection/src/_index'
+import { WebSocketClient } from '../../src/gateway/WebSocketClient'
+import { WebSocketClientEvents, WebSocketClientStates, WebSocketCloseCodes, WebSocketManagerStates } from '../../src/constants'
+import { DiscordooError } from '../../src/utils'
+import { GatewayProvider, GatewayShardsInfo } from '../../../providers/src/_index'
+import { CompletedGatewayOptions } from '../../src/gateway/interfaces/GatewayOptions'
 import { inspect } from 'util'
-import { makeConnectionUrl } from '@src/gateway/makeConnectionUrl'
+import { makeConnectionUrl } from '../../src/gateway/makeConnectionUrl'
 
 export class WebSocketManager {
   public readonly options: CompletedGatewayOptions

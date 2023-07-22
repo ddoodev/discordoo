@@ -1,8 +1,8 @@
-import { GatewayBotInfo, GatewayProvider, GatewayReceivePayloadLike, GatewaySendOptions, GatewayShardsInfo } from '@discordoo/providers'
-import { DiscordApplication } from '@src/core'
-import { WebSocketManager } from '@src/gateway/WebSocketManager'
-import { CompletedGatewayOptions } from '@src/gateway/interfaces/GatewayOptions'
-import { GatewaySendPayloadLike } from '@discordoo/providers'
+import { GatewayBotInfo, GatewayProvider, GatewayReceivePayloadLike, GatewaySendOptions, GatewayShardsInfo } from '../../../providers/src/_index'
+import { DiscordApplication } from '../../src/core'
+import { WebSocketManager } from '../../src/gateway/WebSocketManager'
+import { CompletedGatewayOptions } from '../../src/gateway/interfaces/GatewayOptions'
+import { GatewaySendPayloadLike } from '../../../providers/src/_index'
 
 export class DefaultGatewayProvider implements GatewayProvider {
   public app: DiscordApplication

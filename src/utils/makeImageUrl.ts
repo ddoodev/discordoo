@@ -1,6 +1,6 @@
 import { is } from 'typescript-is'
-import { ValidationError } from '@src/utils/ValidationError'
-import { AllowedImageFormats, AllowedImageSizes, ImageUrlOptions } from '@src/utils'
+import { ValidationError } from '../../src/utils/ValidationError'
+import { AllowedImageFormats, AllowedImageSizes, ImageUrlOptions } from '../../src/utils'
 
 export function makeImageUrl(url: string, defaultFormat: AllowedImageFormats, options: ImageUrlOptions): string {
   if (!is<AllowedImageFormats | undefined>(options.format)) {

@@ -1,4 +1,4 @@
-import { ComponentTypes, TextInputStyles } from '@src/constants'
+import { ComponentTypes, TextInputStyles } from '../../../../../../src/constants'
 
 export interface TextInputComponentData {
   type: ComponentTypes.TextInput

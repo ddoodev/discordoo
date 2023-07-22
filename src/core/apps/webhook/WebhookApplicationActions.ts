@@ -1,7 +1,7 @@
-import { Endpoints } from '@src/constants'
-import { RawMessageData, WebhookMessageCreateData } from '@src/api'
-import { RawExecuteWebhookQuery, WebhookApplication } from '@src/core'
-import { RestFinishedResponse } from '@discordoo/providers'
+import { Endpoints } from '../../../../src/constants'
+import { RawMessageData, WebhookMessageCreateData } from '../../../../src/api'
+import { RawExecuteWebhookQuery, WebhookApplication } from '../../../../src/core'
+import { RestFinishedResponse } from '../../../../../providers/src/_index'
 
 export class WebhookApplicationActions {
   public app: WebhookApplication

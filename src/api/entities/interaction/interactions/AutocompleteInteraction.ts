@@ -7,11 +7,11 @@ import {
   RawAppCommandOptionChoiceData,
   RawInteractionData, ChatInputInteractionData,
   ToJsonProperties
-} from '@src/api'
-import { Interaction } from '@src/api/entities/interaction/interactions/Interaction'
-import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
-import { InteractionTypes } from '@src/constants'
-import { DiscordooError } from '@src/utils'
+} from '../../../../../src/api'
+import { Interaction } from '../../../../../src/api/entities/interaction/interactions/Interaction'
+import { EntityInitOptions } from '../../../../../src/api/entities/EntityInitOptions'
+import { InteractionTypes } from '../../../../../src/constants'
+import { DiscordooError } from '../../../../../src/utils'
 
 export class AutocompleteInteraction extends Interaction {
   declare type: InteractionTypes.ApplicationCommandAutocomplete

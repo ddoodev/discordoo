@@ -1,13 +1,13 @@
-import { AbstractEntity } from '@src/api/entities/AbstractEntity'
-import { StickerPackData } from '@src/api/entities/sticker/interfaces/StickerPackData'
-import { Sticker } from '@src/api/entities/sticker/Sticker'
-import { ToJsonProperties } from '@src/api/entities/interfaces/ToJsonProperties'
-import { Json } from '@src/api/entities/interfaces/Json'
-import { idToDate, idToTimestamp, ImageUrlOptions, attach } from '@src/utils'
-import { RawStickerPackData } from '@src/api/entities/sticker/interfaces/RawStickerPackData'
-import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
-import { Collection } from '@discordoo/collection'
-import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
+import { AbstractEntity } from '../../../../src/api/entities/AbstractEntity'
+import { StickerPackData } from '../../../../src/api/entities/sticker/interfaces/StickerPackData'
+import { Sticker } from '../../../../src/api/entities/sticker/Sticker'
+import { ToJsonProperties } from '../../../../src/api/entities/interfaces/ToJsonProperties'
+import { Json } from '../../../../src/api/entities/interfaces/Json'
+import { idToDate, idToTimestamp, ImageUrlOptions, attach } from '../../../../src/utils'
+import { RawStickerPackData } from '../../../../src/api/entities/sticker/interfaces/RawStickerPackData'
+import { EntitiesUtil } from '../../../../src/api/entities/EntitiesUtil'
+import { Collection } from '../../../../../collection/src/_index'
+import { EntityInitOptions } from '../../../../src/api/entities/EntityInitOptions'
 
 export class StickerPack extends AbstractEntity {
   public declare bannerAssetId: string

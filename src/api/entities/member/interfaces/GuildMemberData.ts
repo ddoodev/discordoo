@@ -1,6 +1,6 @@
-import { UserResolvable } from '@src/api/entities/user'
-import { RoleResolvable } from '@src/api/entities/role'
-import { PermissionsResolvable } from '@src/utils/bitfield'
+import { UserResolvable } from '../../../../../src/api/entities/user'
+import { RoleResolvable } from '../../../../../src/api/entities/role'
+import { PermissionsResolvable } from '../../../../../src/utils/bitfield'
 
 export interface GuildMemberData {
   user?: UserResolvable

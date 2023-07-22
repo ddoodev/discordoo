@@ -1,4 +1,4 @@
-import { DISCORD_EPOCH } from '@src/constants/common'
+import { DISCORD_EPOCH } from '../../src/constants/common'
 
 /** Converts snowflake to timestamp */
 export function idToTimestamp(id: string): number {

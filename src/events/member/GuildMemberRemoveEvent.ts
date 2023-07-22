@@ -1,6 +1,6 @@
-import { AbstractEvent, GuildMemberRemoveEventContext } from '@src/events'
-import { EventNames } from '@src/constants'
-import { GuildMemberRemoveEventData } from '@src/events/member/GuildMemberRemoveEventData'
+import { AbstractEvent, GuildMemberRemoveEventContext } from '../../../src/events'
+import { EventNames } from '../../../src/constants'
+import { GuildMemberRemoveEventData } from '../../../src/events/member/GuildMemberRemoveEventData'
 
 export class GuildMemberRemoveEvent extends AbstractEvent<GuildMemberRemoveEventContext> {
   public readonly name = EventNames.GUILD_MEMBER_REMOVE

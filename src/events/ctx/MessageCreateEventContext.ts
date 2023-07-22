@@ -1,5 +1,5 @@
-import { Message, User } from '@src/api'
-import { AnyWritableChannel } from '@src/api/entities/channel/interfaces/AnyWritableChannel'
+import { Message, User } from '../../../src/api'
+import { AnyWritableChannel } from '../../../src/api/entities/channel/interfaces/AnyWritableChannel'
 
 export interface MessageCreateEventContext {
   messageId: string

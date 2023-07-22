@@ -1,10 +1,10 @@
-import { AbstractEntity } from '@src/api/entities/AbstractEntity'
-import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
-import { attach, resolveGuildId, resolveUserId } from '@src/utils'
-import { InviteData, RawInviteData } from '@src/api/entities/invite/interfaces'
-import { InviteTargetTypes } from '@src/constants'
-import { AnyInvitableChannel, InviteChannel, InviteGuild, Json, ToJsonProperties, User } from '@src/api'
-import { CacheManagerGetOptions } from '@src/cache'
+import { AbstractEntity } from '../../../../src/api/entities/AbstractEntity'
+import { EntityInitOptions } from '../../../../src/api/entities/EntityInitOptions'
+import { attach, resolveGuildId, resolveUserId } from '../../../../src/utils'
+import { InviteData, RawInviteData } from '../../../../src/api/entities/invite/interfaces'
+import { InviteTargetTypes } from '../../../../src/constants'
+import { AnyInvitableChannel, InviteChannel, InviteGuild, Json, ToJsonProperties, User } from '../../../../src/api'
+import { CacheManagerGetOptions } from '../../../../src/cache'
 
 export class Invite extends AbstractEntity {
   public declare code: string

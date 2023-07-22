@@ -1,4 +1,4 @@
 export enum GuildDefaultMessageNotificationLevel {
-  AllMessages,
-  OnlyMentions
+    AllMessages = 0,
+    OnlyMentions = 1
 }

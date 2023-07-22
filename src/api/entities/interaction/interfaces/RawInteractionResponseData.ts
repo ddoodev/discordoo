@@ -1,5 +1,5 @@
-import { DeferPayloadData, InteractionMessageCreateData, RawAppCommandOptionData, RawAutocompletePayloadData, RawModalData } from '@src/api'
-import { InteractionResponseTypes } from '@src/constants'
+import { DeferPayloadData, InteractionMessageCreateData, RawAppCommandOptionData, RawAutocompletePayloadData, RawModalData } from '../../../../../src/api'
+import { InteractionResponseTypes } from '../../../../../src/constants'
 
 export type RawInteractionResponseData = InteractionMessageCreateData
   | RawAppCommandOptionData[]

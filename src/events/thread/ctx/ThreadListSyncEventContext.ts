@@ -1,7 +1,7 @@
-import { AbstractEventContext } from '@src/events/interfaces/AbstractEventContext'
-import { Collection } from '@discordoo/collection'
-import { AnyThreadChannel } from '@src/api/entities/channel/interfaces/AnyThreadChannel'
-import { ThreadMember } from '@src/api/entities/member/ThreadMember'
+import { AbstractEventContext } from '../../../../src/events/interfaces/AbstractEventContext'
+import { Collection } from '../../../../../collection/src/_index'
+import { AnyThreadChannel } from '../../../../src/api/entities/channel/interfaces/AnyThreadChannel'
+import { ThreadMember } from '../../../../src/api/entities/member/ThreadMember'
 
 export interface ThreadListSyncEventContext extends AbstractEventContext {
   threads: Collection<string, AnyThreadChannel>

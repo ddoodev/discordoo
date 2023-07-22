@@ -1,5 +1,5 @@
 export enum AllowedMentionTypes {
-  Roles = 'roles',
-  Users = 'users',
-  Everyone = 'everyone'
+    Roles = "roles",
+    Users = "users",
+    Everyone = "everyone"
 }

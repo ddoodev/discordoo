@@ -1,5 +1,5 @@
-import { AppCommandOptionWithSubcommandsData, BigBitFieldResolvable } from '@src/api'
-import { AppCommandTypes, DiscordLocale } from '@src/constants'
+import { AppCommandOptionWithSubcommandsData, BigBitFieldResolvable } from '../../../../../../../src/api'
+import { AppCommandTypes, DiscordLocale } from '../../../../../../../src/constants'
 
 export interface AppCommandCreateData {
   /** 1-32 character name */

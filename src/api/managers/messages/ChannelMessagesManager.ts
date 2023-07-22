@@ -1,6 +1,6 @@
-import { AbstractMessagesManager } from '@src/api/managers/messages/AbstractMessagesManager'
-import { MessageResolvable } from '@src/api'
-import { DeleteManyMessagesOptions } from '@src/api/managers/messages/DeleteManyMessagesOptions'
+import { AbstractMessagesManager } from '../../../../src/api/managers/messages/AbstractMessagesManager'
+import { MessageResolvable } from '../../../../src/api'
+import { DeleteManyMessagesOptions } from '../../../../src/api/managers/messages/DeleteManyMessagesOptions'
 
 export class ChannelMessagesManager extends AbstractMessagesManager {
 

@@ -1,4 +1,4 @@
-import { BitFieldResolvable } from '@src/utils/bitfield'
+import { BitFieldResolvable } from '../../../../../src/utils/bitfield'
 
 export interface UserData {
   id: string

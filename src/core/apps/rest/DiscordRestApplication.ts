@@ -15,20 +15,20 @@ import {
   ApplicationInteractionsManager,
   OtherCacheManager,
   UsersManager
-} from '@src/api'
-import { RestApplicationUser } from '@src/api/entities/user/RestApplicationUser'
-import { ApplicationEvents } from '@src/events'
-import { DiscordooProviders, otherCacheSymbol, REST_DEFAULT_OPTIONS } from '@src/constants'
+} from '../../../../src/api'
+import { RestApplicationUser } from '../../../../src/api/entities/user/RestApplicationUser'
+import { ApplicationEvents } from '../../../../src/events'
+import { DiscordooProviders, otherCacheSymbol, REST_DEFAULT_OPTIONS } from '../../../../src/constants'
 import {
   CompletedRestApplicationOptions, DefaultDiscordRestApplicationStack,
   ProviderConstructor,
   RestApplicationActions,
   RestApplicationInternals,
   RestApplicationMetadata, RestApplicationOptions
-} from '@src/core'
-import { DiscordCacheApplication } from '@src/core/apps/cache/DiscordCacheApplication'
-import { DiscordooError } from '@src/utils'
-import { CompletedRestOptions, DefaultRestProvider, RestManager } from '@src/rest'
+} from '../../../../src/core'
+import { DiscordCacheApplication } from '../../../../src/core/apps/cache/DiscordCacheApplication'
+import { DiscordooError } from '../../../../src/utils'
+import { CompletedRestOptions, DefaultRestProvider, RestManager } from '../../../../src/rest'
 
 export class DiscordRestApplication<ApplicationStack extends DefaultDiscordRestApplicationStack = DefaultDiscordRestApplicationStack>
   extends DiscordCacheApplication<ApplicationStack> {

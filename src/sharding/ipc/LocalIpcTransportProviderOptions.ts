@@ -1,4 +1,3 @@
-/** Default options for any local ipc provider. */
 export interface LocalIpcTransportProviderOptions {
   /** The maximum waiting time for a single packet response. If the time is exceeded, the provider should throw an error. */
   responseTimeout: number

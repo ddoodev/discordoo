@@ -5,7 +5,7 @@ import {
   RawMessageData,
   RawRoleData,
   RawUserData
-} from '@src/api'
+} from '../../../../../src/api'
 
 export interface RawInteractionResolvedData {
   users?: Record<string, RawUserData>

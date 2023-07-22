@@ -1,5 +1,5 @@
-import { RawUserData } from '@src/api'
-import { UnavailableGuildData } from '@src/api/entities/guild/interfaces/UnavailableGuildData'
+import { RawUserData } from '../../../src/api'
+import { UnavailableGuildData } from '../../../src/api/entities/guild/interfaces/UnavailableGuildData'
 
 export interface RawShardConnectedEventData {
   v: number

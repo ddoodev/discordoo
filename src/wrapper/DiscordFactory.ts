@@ -5,10 +5,10 @@ import {
   DefaultDiscordRestApplicationStack, DefaultWebhookApplicationStack,
   DiscordApplication, DiscordCacheApplication, DiscordRestApplication,
   WebhookApplication, RestApplicationOptions, ApplicationOptions, WebhookApplicationOptions
-} from '@src/core'
-import { CreateApplicationOptions, CreateWebhookApplicationData } from '@src/wrapper/interfaces'
+} from '../../src/core'
+import { CreateApplicationOptions, CreateWebhookApplicationData } from '../../src/wrapper/interfaces'
 import { is } from 'typescript-is'
-import { ValidationError } from '@src/utils'
+import { ValidationError } from '../../src/utils'
 
 export class DiscordFactory {
   static create<

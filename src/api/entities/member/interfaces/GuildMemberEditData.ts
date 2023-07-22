@@ -1,4 +1,4 @@
-import { RoleResolvable } from '@src/api'
+import { RoleResolvable } from '../../../../../src/api'
 
 export interface GuildMemberEditData {
   nick?: string | null

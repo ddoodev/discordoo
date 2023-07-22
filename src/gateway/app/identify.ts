@@ -1,7 +1,7 @@
-import { WebSocketClient } from '@src/gateway/WebSocketClient'
-import { WebSocketClientStates } from '@src/constants'
-import { GatewayOpCodes } from '@discordoo/providers'
-import { CompletedGatewayOptions } from '@src/gateway/interfaces/GatewayOptions'
+import { WebSocketClient } from '../../../src/gateway/WebSocketClient'
+import { WebSocketClientStates } from '../../../src/constants'
+import { GatewayOpCodes } from '../../../../providers/src/_index'
+import { CompletedGatewayOptions } from '../../../src/gateway/interfaces/GatewayOptions'
 
 // creates discord api identify payload
 export function identify(

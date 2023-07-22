@@ -1,6 +1,6 @@
 export enum WebSocketStates {
-  Connecting,
-  Open,
-  Closing,
-  Closed,
+    Connecting = 0,
+    Open = 1,
+    Closing = 2,
+    Closed = 3
 }

@@ -1,6 +1,5 @@
-/** Providers that can be used in Discordoo */
 export enum DiscordooProviders {
-  Rest,
-  Gateway,
-  Cache,
+    Rest = 0,
+    Gateway = 1,
+    Cache = 2
 }

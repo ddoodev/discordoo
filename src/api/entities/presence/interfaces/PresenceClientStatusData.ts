@@ -1,4 +1,4 @@
-import { PresenceStatus } from '@src/api/entities/presence/interfaces/PresenceStatus'
+import { PresenceStatus } from '../../../../../src/api/entities/presence/interfaces/PresenceStatus'
 
 export interface PresenceClientStatusData {
   desktop?: PresenceStatus

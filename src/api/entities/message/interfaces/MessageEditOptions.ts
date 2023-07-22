@@ -2,7 +2,7 @@ import {
   ActionRowResolvable, AllowedMentionsResolvable,
   MessageAttachmentResolvable,
   MessageEmbedResolvable, MessageResolvable,
-} from '@src/api'
+} from '../../../../../src/api'
 
 export interface MessageEditOptions {
   files?: MessageAttachmentResolvable[]

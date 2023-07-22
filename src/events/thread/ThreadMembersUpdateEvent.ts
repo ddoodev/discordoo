@@ -1,8 +1,8 @@
-import { AbstractEvent, ThreadMembersUpdateEventContext } from '@src/events'
-import { EventNames } from '@src/constants'
-import { RawThreadMembersUpdateEventData } from '@src/events/thread/RawThreadMembersUpdateEventData'
-import { AnyThreadChannel, EntitiesUtil, GuildMember, ThreadMember } from '@src/api'
-import { Collection } from '@discordoo/collection'
+import { AbstractEvent, ThreadMembersUpdateEventContext } from '../../../src/events'
+import { EventNames } from '../../../src/constants'
+import { RawThreadMembersUpdateEventData } from '../../../src/events/thread/RawThreadMembersUpdateEventData'
+import { AnyThreadChannel, EntitiesUtil, GuildMember, ThreadMember } from '../../../src/api'
+import { Collection } from '../../../../collection/src/_index'
 
 export class ThreadMembersUpdateEvent extends AbstractEvent<ThreadMembersUpdateEventContext> {
   public name = EventNames.THREAD_MEMBERS_UPDATE

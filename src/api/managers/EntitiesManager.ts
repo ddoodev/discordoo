@@ -1,4 +1,4 @@
-import { RestEligibleDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
+import { RestEligibleDiscordApplication } from '../../../src/core/apps/AnyDiscordApplication'
 
 export abstract class EntitiesManager {
   public app: RestEligibleDiscordApplication

@@ -1,11 +1,11 @@
 export { EntityKeyFunctions } from './EntityKeyFunctions'
 export { EntityInitOptions } from './EntityInitOptions'
 // @ddoocs force-export DO NOT EXPORT IN PRODUCTION. BREAKS RUNTIME.
-// export { ExtendableEntities } from './ExtendableEntities'
+export { ExtendableEntities } from './ExtendableEntities'
 export { AbstractEntity } from './AbstractEntity'
 export { EntitiesUtil } from './EntitiesUtil'
 // @ddoocs force-export DO NOT EXPORT IN PRODUCTION. BREAKS RUNTIME.
-// export { Entities } from './Entities'
+export { Entities } from './Entities'
 
 export * from './interaction'
 export * from './interfaces'

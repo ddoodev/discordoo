@@ -1,4 +1,3 @@
-/** Delay in execution of Rest requests (TTFB) (the implementation may vary depending on the provider) */
 export interface ApplicationRestLatency {
   /** average delay in 5 minutes */
   fiveMinAvg: number

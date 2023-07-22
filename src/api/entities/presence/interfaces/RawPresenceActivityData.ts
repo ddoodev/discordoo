@@ -1,10 +1,10 @@
-import { PresenceActivityTypes } from '@src/constants'
-import { PresenceActivityTimestampsData } from '@src/api/entities/presence/interfaces/PresenceActivityTimestampsData'
-import { ActivityEmojiData } from '@src/api/entities/emoji'
-import { PresenceActivityPartyData } from '@src/api/entities/presence/interfaces/PresenceActivityPartyData'
-import { RawPresenceActivityAssetsData } from '@src/api/entities/presence/interfaces/RawPresenceActivityAssetsData'
-import { PresenceActivitySecretsData } from '@src/api/entities/presence/interfaces/PresenceActivitySecretsData'
-import { PresenceActivityButtonData } from '@src/api/entities/presence/interfaces/PresenceActivityButtonData'
+import { PresenceActivityTypes } from '../../../../../src/constants'
+import { PresenceActivityTimestampsData } from '../../../../../src/api/entities/presence/interfaces/PresenceActivityTimestampsData'
+import { ActivityEmojiData } from '../../../../../src/api/entities/emoji'
+import { PresenceActivityPartyData } from '../../../../../src/api/entities/presence/interfaces/PresenceActivityPartyData'
+import { RawPresenceActivityAssetsData } from '../../../../../src/api/entities/presence/interfaces/RawPresenceActivityAssetsData'
+import { PresenceActivitySecretsData } from '../../../../../src/api/entities/presence/interfaces/PresenceActivitySecretsData'
+import { PresenceActivityButtonData } from '../../../../../src/api/entities/presence/interfaces/PresenceActivityButtonData'
 
 export interface RawPresenceActivityData {
   name: string

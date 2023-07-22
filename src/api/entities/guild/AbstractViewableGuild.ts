@@ -1,11 +1,11 @@
-import { AbstractGuild } from '@src/api/entities/guild/AbstractGuild'
-import { ViewableGuild } from '@src/api/entities/guild/interfaces/ViewableGuild'
-import { attach, ImageUrlOptions } from '@src/utils'
-import { GuildNsfwLevels, GuildVerificationLevels } from '@src/constants'
-import { ViewableGuildData } from '@src/api/entities/guild/interfaces/ViewableGuildData'
-import { RawViewableGuildData } from '@src/api/entities/guild/interfaces/RawViewableGuildData'
-import { Json, ToJsonProperties } from '@src/api/entities/interfaces'
-import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
+import { AbstractGuild } from '../../../../src/api/entities/guild/AbstractGuild'
+import { ViewableGuild } from '../../../../src/api/entities/guild/interfaces/ViewableGuild'
+import { attach, ImageUrlOptions } from '../../../../src/utils'
+import { GuildNsfwLevels, GuildVerificationLevels } from '../../../../src/constants'
+import { ViewableGuildData } from '../../../../src/api/entities/guild/interfaces/ViewableGuildData'
+import { RawViewableGuildData } from '../../../../src/api/entities/guild/interfaces/RawViewableGuildData'
+import { Json, ToJsonProperties } from '../../../../src/api/entities/interfaces'
+import { EntityInitOptions } from '../../../../src/api/entities/EntityInitOptions'
 
 export abstract class AbstractViewableGuild extends AbstractGuild implements ViewableGuild {
   public banner?: string

@@ -1,4 +1,3 @@
-/** Gateway connection properties */
 export interface GatewayIdentifyProperties {
   /**
    * Operating system

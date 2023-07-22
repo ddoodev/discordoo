@@ -1,8 +1,8 @@
-import { Message } from '@src/api'
-import { MessageContent } from '@src/api/entities/message/interfaces/MessageContent'
-import { MessageCreateOptions } from '@src/api/entities/message/interfaces/MessageCreateOptions'
-import { ChannelMessagesManager } from '@src/api/managers/messages/ChannelMessagesManager'
-import { DirectMessagesChannelMessagesManager } from '@src/api/managers/messages/DirectMessagesChannelMessagesManager'
+import { Message } from '../../../../../src/api'
+import { MessageContent } from '../../../../../src/api/entities/message/interfaces/MessageContent'
+import { MessageCreateOptions } from '../../../../../src/api/entities/message/interfaces/MessageCreateOptions'
+import { ChannelMessagesManager } from '../../../../../src/api/managers/messages/ChannelMessagesManager'
+import { DirectMessagesChannelMessagesManager } from '../../../../../src/api/managers/messages/DirectMessagesChannelMessagesManager'
 
 export interface WritableChannel {
   messages: ChannelMessagesManager | DirectMessagesChannelMessagesManager

@@ -1,4 +1,4 @@
-import { GuildResolvable } from '@src/api'
+import { GuildResolvable } from '../../../../src/api'
 
 export interface GuildMembersManagerData {
   guild: GuildResolvable

@@ -1,10 +1,10 @@
-import { RawUserData } from '@src/api/entities/user/interfaces/RawUserData'
-import { RawMessageAttachmentData } from '@src/api/entities/attachment/interfaces'
-import { RawMessageEmbedData } from '@src/api/entities/embed'
-import { MessageTypes } from '@src/constants/entities/message/MessageTypes'
-import { RawActionRowData, RawGuildMemberData, RawMessageInteractionData } from '@src/api'
-import { RawChannelMentionData } from '@src/api/entities/message/interfaces/RawChannelMentionData'
-import { MessageReactionData } from '@src/api/entities/reaction/interfaces/MessageReactionData'
+import { RawUserData } from '../../../../../src/api/entities/user/interfaces/RawUserData'
+import { RawMessageAttachmentData } from '../../../../../src/api/entities/attachment/interfaces'
+import { RawMessageEmbedData } from '../../../../../src/api/entities/embed'
+import { MessageTypes } from '../../../../../src/constants/entities/message/MessageTypes'
+import { RawActionRowData, RawGuildMemberData, RawMessageInteractionData } from '../../../../../src/api'
+import { RawChannelMentionData } from '../../../../../src/api/entities/message/interfaces/RawChannelMentionData'
+import { MessageReactionData } from '../../../../../src/api/entities/reaction/interfaces/MessageReactionData'
 
 export interface RawMessageData {
   id: string

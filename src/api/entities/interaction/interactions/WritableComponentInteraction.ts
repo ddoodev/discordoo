@@ -1,5 +1,5 @@
-import { WritableModalInteraction } from '@src/api/entities/interaction/interactions/WritableModalInteraction'
-import { InteractionMessageContent, InteractionMessageEditOptions } from '@src/api'
+import { WritableModalInteraction } from '../../../../../src/api/entities/interaction/interactions/WritableModalInteraction'
+import { InteractionMessageContent, InteractionMessageEditOptions } from '../../../../../src/api'
 
 export abstract class WritableComponentInteraction extends WritableModalInteraction {
   async deferReply(): Promise<this | undefined> {

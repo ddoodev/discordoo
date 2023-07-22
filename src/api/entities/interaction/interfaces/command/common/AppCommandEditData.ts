@@ -1,3 +1,3 @@
-import { AppCommandCreateData } from '@src/api'
+import { AppCommandCreateData } from '../../../../../../../src/api'
 
 export type AppCommandEditData = Partial<Omit<AppCommandCreateData, 'type'>>

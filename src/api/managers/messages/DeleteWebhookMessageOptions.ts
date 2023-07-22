@@ -1,4 +1,4 @@
-import { ThreadChannelResolvable } from '@src/api'
+import { ThreadChannelResolvable } from '../../../../src/api'
 
 export interface DeleteWebhookMessageOptions {
   /** The reason for deleting the message */

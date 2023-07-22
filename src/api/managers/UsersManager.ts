@@ -1,10 +1,10 @@
-import { EntitiesCacheManager } from '@src/api/managers'
-import { DiscordRestApplication } from '@src/core'
-import { User, UserResolvable } from '@src/api/entities/user'
-import { Keyspaces } from '@src/constants'
-import { EntitiesManager } from '@src/api/managers/EntitiesManager'
-import { DiscordooError, resolveUserId } from '@src/utils'
-import { EntitiesUtil } from '@src/api'
+import { EntitiesCacheManager } from '../../../src/api/managers'
+import { DiscordRestApplication } from '../../../src/core'
+import { User, UserResolvable } from '../../../src/api/entities/user'
+import { Keyspaces } from '../../../src/constants'
+import { EntitiesManager } from '../../../src/api/managers/EntitiesManager'
+import { DiscordooError, resolveUserId } from '../../../src/utils'
+import { EntitiesUtil } from '../../../src/api'
 
 export class UsersManager extends EntitiesManager {
   public cache: EntitiesCacheManager<User>

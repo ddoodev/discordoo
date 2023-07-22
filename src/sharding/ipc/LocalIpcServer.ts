@@ -1,10 +1,8 @@
-// @ts-nocheck
-// TODO perform refactor later
 import { TypedEmitter } from 'tiny-typed-emitter'
-import { IpcServerOptions } from '@src/sharding/interfaces/ipc/IpcServerOptions'
+import { IpcServerOptions } from '../../../src/sharding/interfaces/ipc/IpcServerOptions'
 import { IPC as RawIpc, server as RawIpcServer } from '@achrinza/node-ipc'
-import { Collection } from '@discordoo/collection'
-import { IpcCacheOpCodes, IpcEvents, IpcOpCodes, RAW_IPC_EVENT } from '@src/constants'
+import { Collection } from '../../../../collection/src/_index'
+import { IpcCacheOpCodes, IpcEvents, IpcOpCodes, RAW_IPC_EVENT } from '../../../src/constants'
 import {
   IpcDestroyingPacket,
   IpcDispatchRequestPackets,
@@ -12,9 +10,9 @@ import {
   IpcPacket,
   IpcPresenceUpdatePacket,
   IpcRestructuringResponsePacket
-} from '@src/sharding'
-import { DiscordooError, DiscordooSnowflake, makeCompletedPresence } from '@src/utils'
-import { IpcServerSendOptions } from '@src/sharding/interfaces/ipc/IpcServerSendOptions'
+} from '../../../src/sharding'
+import { DiscordooError, DiscordooSnowflake, makeCompletedPresence } from '../../../src/utils'
+import { IpcServerSendOptions } from '../../../src/sharding/interfaces/ipc/IpcServerSendOptions'
 import {
   IpcCacheRequestPacket,
   IpcCacheResponsePacket,
@@ -23,16 +21,16 @@ import {
   IpcGuildMembersResponsePacket,
   IpcHelloPacket,
   IpcIdentifyPacket
-} from '@src/sharding/interfaces/ipc/IpcPackets'
-import { IpcServerEvents } from '@src/sharding/interfaces/ipc/IpcServerEvents'
-import { GuildMemberData } from '@src/api'
-import { RawGuildMembersFetchOptions } from '@src/api/managers/members/RawGuildMembersFetchOptions'
-import { fromJson, jsonify } from '@src/utils/jsonify'
-import { evalWithoutScopeChain } from '@src/utils/evalWithoutScopeChain'
+} from '../../../src/sharding/interfaces/ipc/IpcPackets'
+import { IpcServerEvents } from '../../../src/sharding/interfaces/ipc/IpcServerEvents'
+import { GuildMemberData } from '../../../src/api'
+import { RawGuildMembersFetchOptions } from '../../../src/api/managers/members/RawGuildMembersFetchOptions'
+import { fromJson, jsonify } from '../../../src/utils/jsonify'
+import { evalWithoutScopeChain } from '../../../src/utils/evalWithoutScopeChain'
 import { serializeError } from 'serialize-error'
-import { IpcEmergencyOpCodes } from '@src/constants/sharding/IpcEmergencyOpCodes'
-import { GatewayOpCodes } from '@discordoo/providers'
-import { AnyDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
+import { IpcEmergencyOpCodes } from '../../../src/constants/sharding/IpcEmergencyOpCodes'
+import { GatewayOpCodes } from '../../../../providers/src/_index'
+import { AnyDiscordApplication } from '../../../src/core/apps/AnyDiscordApplication'
 
 export class LocalIpcServer extends TypedEmitter<IpcServerEvents> {
   private readonly bucket: Collection = new Collection()

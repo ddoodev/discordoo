@@ -1,12 +1,12 @@
-import { AbstractEntity } from '@src/api/entities/AbstractEntity'
-import { PermissionOverwriteTypes, ToJsonOverrideSymbol } from '@src/constants'
-import { ChannelResolvable, Json, ReadonlyPermissions, ToJsonProperties } from '@src/api'
-import { PermissionOverwriteResolvable } from '@src/api/entities/overwrite/interfaces/PermissionOverwriteResolvable'
-import { DiscordooError, resolveChannelId, resolvePermissionOverwriteToRaw } from '@src/utils'
-import { CacheManagerGetOptions } from '@src/cache'
-import { AnyGuildChannel } from '@src/api/entities/channel/interfaces/AnyGuildChannel'
-import { PermissionOverwriteEditOptions } from '@src/api/managers/overwrites/PermissionOverwriteEditOptions'
-import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
+import { AbstractEntity } from '../../../../src/api/entities/AbstractEntity'
+import { PermissionOverwriteTypes, ToJsonOverrideSymbol } from '../../../../src/constants'
+import { ChannelResolvable, Json, ReadonlyPermissions, ToJsonProperties } from '../../../../src/api'
+import { PermissionOverwriteResolvable } from '../../../../src/api/entities/overwrite/interfaces/PermissionOverwriteResolvable'
+import { DiscordooError, resolveChannelId, resolvePermissionOverwriteToRaw } from '../../../../src/utils'
+import { CacheManagerGetOptions } from '../../../../src/cache'
+import { AnyGuildChannel } from '../../../../src/api/entities/channel/interfaces/AnyGuildChannel'
+import { PermissionOverwriteEditOptions } from '../../../../src/api/managers/overwrites/PermissionOverwriteEditOptions'
+import { EntityInitOptions } from '../../../../src/api/entities/EntityInitOptions'
 
 export class PermissionOverwrite extends AbstractEntity {
   public declare id: string

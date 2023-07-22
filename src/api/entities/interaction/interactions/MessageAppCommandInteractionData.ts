@@ -1,7 +1,7 @@
-import { AbstractUiAppCommandInteractionData } from '@src/api/entities/interaction/interactions/AbstractUiAppCommandInteractionData'
-import { Message } from '@src/api'
-import { CacheManagerGetOptions } from '@src/cache'
-import { AppCommandTypes } from '@src/constants'
+import { AbstractUiAppCommandInteractionData } from '../../../../../src/api/entities/interaction/interactions/AbstractUiAppCommandInteractionData'
+import { Message } from '../../../../../src/api'
+import { CacheManagerGetOptions } from '../../../../../src/cache'
+import { AppCommandTypes } from '../../../../../src/constants'
 
 export class MessageAppCommandInteractionData extends AbstractUiAppCommandInteractionData {
   declare type: AppCommandTypes.Message

@@ -1,4 +1,4 @@
-import { GuildFeatures } from '@src/constants'
+import { GuildFeatures } from '../../../../../src/constants'
 
 export interface AbstractGuildData {
   id: string

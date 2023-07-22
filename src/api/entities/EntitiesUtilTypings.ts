@@ -1,6 +1,6 @@
-import { ExtendableEntities as DefaultExtendableEntities } from '@src/api/entities/ExtendableEntities'
-import { Entities } from '@src/api/entities/Entities'
-import { EntityKeyFunctions } from '@src/api'
+import { ExtendableEntities as DefaultExtendableEntities } from '../../../src/api/entities/ExtendableEntities'
+import { Entities } from '../../../src/api/entities/Entities'
+import { EntityKeyFunctions } from '../../../src/api'
 
 export const ExtendableEntitiesUtil = Object.create(DefaultExtendableEntities ?? null) as typeof DefaultExtendableEntities
 

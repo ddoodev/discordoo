@@ -1,4 +1,4 @@
-import { Message } from '@src/api'
+import { Message } from '../../../../src/api'
 
 export interface FetchOneMessageOptions {
   patchEntity?: Message

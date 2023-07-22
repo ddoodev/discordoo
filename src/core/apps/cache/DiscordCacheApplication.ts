@@ -1,19 +1,19 @@
 import { TypedEmitter } from 'tiny-typed-emitter'
-import { CompletedLocalIpcOptions, IpcServerOptions, LocalIpcServer } from '@src/sharding'
+import { CompletedLocalIpcOptions, IpcServerOptions, LocalIpcServer } from '../../../../src/sharding'
 import {
   ApplicationShardingMetadata,
   CacheApplicationInternals,
   CacheApplicationMetadata,
   CacheApplicationOptions, CompletedCacheApplicationOptions, DefaultCacheApplicationStack,
   ProviderConstructor
-} from '@src/core'
-import { LOCAL_IPC_DEFAULT_OPTIONS } from '@src/constants/sharding/IpcDefaultOptions'
-import { ApplicationEvents } from '@src/events'
-import { DiscordooProviders, GlobalCachingPolicy } from '@src/constants'
-import { EntitiesUtil } from '@src/api'
-import { DiscordooError, DiscordooSnowflake, version } from '@src/utils'
-import { CACHE_OPTIONS_KEYS_LENGTH } from '@src/cache/interfaces/CacheOptions'
-import { CacheManager, CompletedCacheOptions, DefaultCacheProvider } from '@src/cache'
+} from '../../../../src/core'
+import { LOCAL_IPC_DEFAULT_OPTIONS } from '../../../../src/constants/sharding/IpcDefaultOptions'
+import { ApplicationEvents } from '../../../../src/events'
+import { DiscordooProviders, GlobalCachingPolicy } from '../../../../src/constants'
+import { EntitiesUtil } from '../../../../src/api'
+import { DiscordooError, DiscordooSnowflake, version } from '../../../../src/utils'
+import { CACHE_OPTIONS_KEYS_LENGTH } from '../../../../src/cache/interfaces/CacheOptions'
+import { CacheManager, CompletedCacheOptions, DefaultCacheProvider } from '../../../../src/cache'
 
 export class DiscordCacheApplication<Stack extends DefaultCacheApplicationStack = DefaultCacheApplicationStack>
   // @ts-ignore because events can be redefined, and the typed emitter library doesn't like it. it works anyway.

@@ -1,11 +1,11 @@
-import { AppCommandOptionTypes, DiscordLocale } from '@src/constants'
+import { AppCommandOptionTypes, DiscordLocale } from '../../../../src/constants'
 import {
   AppCommandOptionChoiceData,
   AppCommandOptionWithSubcommandsData,
   RawAppCommandOptionWithSubcommandsData
-} from '@src/api'
-import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
-import { attach } from '@src/utils'
+} from '../../../../src/api'
+import { EntityInitOptions } from '../../../../src/api/entities/EntityInitOptions'
+import { attach } from '../../../../src/utils'
 
 export class AppCommandOption {
   declare name: string

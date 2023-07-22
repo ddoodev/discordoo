@@ -1,13 +1,13 @@
-import { AbstractEntity } from '@src/api/entities/AbstractEntity'
-import { UserData } from '@src/api/entities/user/interfaces'
-import { idToDate, idToTimestamp, ImageUrlOptions, attach, resolveGuildId, DiscordooError } from '@src/utils'
-import { RawUserData } from '@src/api/entities/user/interfaces/RawUserData'
-import { Json } from '@src/api/entities/interfaces/Json'
-import { ToJsonProperties } from '@src/api/entities/interfaces/ToJsonProperties'
-import { UserFlagsUtil } from '@src/utils/bitfield'
-import { DirectMessagesChannel, GuildResolvable, Message, MessageContent, MessageCreateOptions, Presence } from '@src/api'
-import { CacheManagerFilterOptions, CacheManagerGetOptions } from '@src/cache'
-import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
+import { AbstractEntity } from '../../../../src/api/entities/AbstractEntity'
+import { UserData } from '../../../../src/api/entities/user/interfaces'
+import { idToDate, idToTimestamp, ImageUrlOptions, attach, resolveGuildId, DiscordooError } from '../../../../src/utils'
+import { RawUserData } from '../../../../src/api/entities/user/interfaces/RawUserData'
+import { Json } from '../../../../src/api/entities/interfaces/Json'
+import { ToJsonProperties } from '../../../../src/api/entities/interfaces/ToJsonProperties'
+import { UserFlagsUtil } from '../../../../src/utils/bitfield'
+import { DirectMessagesChannel, GuildResolvable, Message, MessageContent, MessageCreateOptions, Presence } from '../../../../src/api'
+import { CacheManagerFilterOptions, CacheManagerGetOptions } from '../../../../src/cache'
+import { EntityInitOptions } from '../../../../src/api/entities/EntityInitOptions'
 
 export class User extends AbstractEntity implements UserData {
   public accentColor?: number

@@ -1,5 +1,5 @@
-import { AllowedImageFormats, AllowedImageSizes, ImageUrlOptions, makeImageUrl } from '@src/utils'
-import { StickerFormatTypes } from '@src/constants'
+import { AllowedImageFormats, AllowedImageSizes, ImageUrlOptions, makeImageUrl } from '../../src/utils'
+import { StickerFormatTypes } from '../../src/constants'
 
 export class DiscordCdnLinker {
   constructor(

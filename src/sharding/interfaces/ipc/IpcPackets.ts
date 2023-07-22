@@ -1,11 +1,11 @@
-import { IpcPacket } from '@src/sharding'
-import { IpcCacheOpCodes, IpcEvents, IpcOpCodes, SerializeModes } from '@src/constants'
-import { CacheStorageKey } from '@discordoo/providers'
-import { EntityKey } from '@src/api/entities/interfaces'
-import { CacheOptions } from '@src/cache'
-import { RawGuildMembersFetchOptions } from '@src/api/managers/members/RawGuildMembersFetchOptions'
-import { GuildMemberData, PresenceUpdateData } from '@src/api'
-import { IpcEmergencyOpCodes } from '@src/constants/sharding/IpcEmergencyOpCodes'
+import { IpcPacket } from '../../../../src/sharding'
+import { IpcCacheOpCodes, IpcEvents, IpcOpCodes, SerializeModes } from '../../../../src/constants'
+import { CacheStorageKey } from '../../../../../providers/src/_index'
+import { EntityKey } from '../../../../src/api/entities/interfaces'
+import { CacheOptions } from '../../../../src/cache'
+import { RawGuildMembersFetchOptions } from '../../../../src/api/managers/members/RawGuildMembersFetchOptions'
+import { GuildMemberData, PresenceUpdateData } from '../../../../src/api'
+import { IpcEmergencyOpCodes } from '../../../../src/constants/sharding/IpcEmergencyOpCodes'
 
 export interface IpcHelloPacket extends IpcPacket {
   op: IpcOpCodes.HELLO

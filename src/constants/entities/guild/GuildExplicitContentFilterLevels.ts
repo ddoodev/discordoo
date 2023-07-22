@@ -1,5 +1,5 @@
 export enum GuildExplicitContentFilterLevels {
-  Disabled,
-  MembersWithoutRoles,
-  AllMembers
+    Disabled = 0,
+    MembersWithoutRoles = 1,
+    AllMembers = 2
 }

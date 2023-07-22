@@ -14,7 +14,7 @@ import {
   UsersCachingPolicy,
   InvitesCachingPolicy,
   AppCommandsCachingPolicy
-} from '@src/constants'
+} from '../../../src/constants'
 import {
   AnyEmoji,
   AnyChannel,
@@ -31,8 +31,8 @@ import {
   MessageReaction,
   PermissionOverwrite,
   AppCommand,
-} from '@src/api'
-import { Entities } from '@src/api/entities/Entities'
+} from '../../../src/api'
+import { Entities } from '../../../src/api/entities/Entities'
 
 export const CACHE_OPTIONS_KEYS_LENGTH = 15 // all cache options expect 'global'
 

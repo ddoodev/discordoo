@@ -1,6 +1,6 @@
-import { AbstractEntity } from '@src/api/entities/AbstractEntity'
-import { ToJsonProperties } from '@src/api/entities/interfaces/ToJsonProperties'
-import { Json } from '@src/api/entities/interfaces/Json'
+import { AbstractEntity } from '../../../../src/api/entities/AbstractEntity'
+import { ToJsonProperties } from '../../../../src/api/entities/interfaces/ToJsonProperties'
+import { Json } from '../../../../src/api/entities/interfaces/Json'
 import {
   Guild,
   GuildMember,
@@ -14,14 +14,14 @@ import {
   RawMessageEmbedData,
   ReadonlyMessageFlagsUtil,
   User
-} from '@src/api'
-import { MessageReactionsManager } from '@src/api/managers/reactions'
-import { Keyspaces, MessageTypes } from '@src/constants'
-import { attach, resolveMessageReaction } from '@src/utils'
-import { AnyWritableChannel } from '@src/api/entities/channel/interfaces/AnyWritableChannel'
-import { CacheManagerGetOptions } from '@src/cache'
-import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
-import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
+} from '../../../../src/api'
+import { MessageReactionsManager } from '../../../../src/api/managers/reactions'
+import { Keyspaces, MessageTypes } from '../../../../src/constants'
+import { attach, resolveMessageReaction } from '../../../../src/utils'
+import { AnyWritableChannel } from '../../../../src/api/entities/channel/interfaces/AnyWritableChannel'
+import { CacheManagerGetOptions } from '../../../../src/cache'
+import { EntitiesUtil } from '../../../../src/api/entities/EntitiesUtil'
+import { EntityInitOptions } from '../../../../src/api/entities/EntityInitOptions'
 
 export class Message extends AbstractEntity {
   public attachments: MessageAttachment[] = []

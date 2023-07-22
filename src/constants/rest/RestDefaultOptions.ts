@@ -1,5 +1,5 @@
-import { version } from '@src/utils/version'
-import { CompletedRestOptions } from '@src/rest'
+import { version } from '../../../src/utils/version'
+import { CompletedRestOptions } from '../../../src/rest'
 
 export const REST_DEFAULT_OPTIONS: CompletedRestOptions = {
   requestTimeout: 30_000,

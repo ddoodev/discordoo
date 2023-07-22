@@ -1,5 +1,5 @@
-import { AbstractEventContext } from '@src/events/interfaces/AbstractEventContext'
-import { AnyWritableChannel } from '@src/api/entities/channel/interfaces/AnyWritableChannel'
+import { AbstractEventContext } from '../../../../src/events/interfaces/AbstractEventContext'
+import { AnyWritableChannel } from '../../../../src/api/entities/channel/interfaces/AnyWritableChannel'
 
 export interface ChannelPinsUpdateEventContext extends AbstractEventContext {
   channelId: string

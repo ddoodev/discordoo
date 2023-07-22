@@ -1,11 +1,11 @@
-import { AbstractEntity } from '@src/api/entities/AbstractEntity'
-import { ChannelTypes } from '@src/constants'
-import { attach, idToDate, idToTimestamp } from '@src/utils'
-import { AbstractChannelData } from '@src/api/entities/channel/interfaces/AbstractChannelData'
-import { ToJsonProperties } from '@src/api/entities/interfaces/ToJsonProperties'
-import { Json } from '@src/api/entities/interfaces/Json'
-import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
-import { AnyChannel } from '@src/api'
+import { AbstractEntity } from '../../../../src/api/entities/AbstractEntity'
+import { ChannelTypes } from '../../../../src/constants'
+import { attach, idToDate, idToTimestamp } from '../../../../src/utils'
+import { AbstractChannelData } from '../../../../src/api/entities/channel/interfaces/AbstractChannelData'
+import { ToJsonProperties } from '../../../../src/api/entities/interfaces/ToJsonProperties'
+import { Json } from '../../../../src/api/entities/interfaces/Json'
+import { EntityInitOptions } from '../../../../src/api/entities/EntityInitOptions'
+import { AnyChannel } from '../../../../src/api'
 
 export abstract class AbstractChannel extends AbstractEntity {
   public declare id: string

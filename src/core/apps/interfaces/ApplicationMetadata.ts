@@ -1,4 +1,4 @@
-import { RestApplicationMetadata } from '@src/core'
+import { RestApplicationMetadata } from '../../../../src/core'
 
 /** DiscordApplication metadata for custom providers and libraries */
 export interface ApplicationMetadata extends RestApplicationMetadata {

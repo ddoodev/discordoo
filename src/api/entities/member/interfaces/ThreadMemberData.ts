@@ -1,4 +1,4 @@
-import { BitFieldResolvable } from '@src/api'
+import { BitFieldResolvable } from '../../../../../src/api'
 
 export interface ThreadMemberData {
   threadId: string

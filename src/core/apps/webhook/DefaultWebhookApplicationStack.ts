@@ -1,4 +1,4 @@
-import { RestProvider } from '@discordoo/providers'
+import { RestProvider } from '../../../../../providers/src/_index'
 
 export interface DefaultWebhookApplicationStack {
   rest: RestProvider

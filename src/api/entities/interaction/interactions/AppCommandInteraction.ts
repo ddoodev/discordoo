@@ -1,4 +1,4 @@
-import { AppCommandTypes, InteractionTypes } from '@src/constants'
+import { AppCommandTypes, InteractionTypes } from '../../../../../src/constants'
 import {
   ChatInputInteractionData,
   EntitiesUtil,
@@ -7,8 +7,8 @@ import {
   RawAppCommandInteractionData,
   RawInteractionData,
   ToJsonProperties, UserAppCommandInteractionData
-} from '@src/api'
-import { WritableModalInteraction } from '@src/api/entities/interaction/interactions/WritableModalInteraction'
+} from '../../../../../src/api'
+import { WritableModalInteraction } from '../../../../../src/api/entities/interaction/interactions/WritableModalInteraction'
 
 export class AppCommandInteraction extends WritableModalInteraction {
   declare type: InteractionTypes.ApplicationCommand

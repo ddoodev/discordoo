@@ -8,12 +8,12 @@ import {
   MessageEmbedThumbnailData,
   MessageEmbedVideoData,
   RawMessageEmbedData
-} from '@src/api'
-import { attach } from '@src/utils'
+} from '../../../../src/api'
+import { attach } from '../../../../src/utils'
 import { is } from 'typescript-is'
-import { MessageEmbedTypes } from '@src/constants'
-import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
-import { AbstractEntity } from '@src/api/entities/AbstractEntity'
+import { MessageEmbedTypes } from '../../../../src/constants'
+import { EntityInitOptions } from '../../../../src/api/entities/EntityInitOptions'
+import { AbstractEntity } from '../../../../src/api/entities/AbstractEntity'
 
 export class MessageEmbed extends AbstractEntity implements MessageEmbedData {
   public type = MessageEmbedTypes.Rich

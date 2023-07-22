@@ -1,4 +1,4 @@
-import { CacheProvider, CacheStorageKey } from '@discordoo/providers'
+import { CacheProvider, CacheStorageKey } from '../../../../providers/src/_index'
 
 export async function cacheProviderKeysPolyfill<K = string, P extends CacheProvider = CacheProvider>(
   provider: P, keyspace: string, storage: CacheStorageKey

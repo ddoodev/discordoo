@@ -1,5 +1,5 @@
-import { StickerFormatTypes, StickerTypes } from '@src/constants'
-import { UserResolvable } from '@src/api/entities/user/interfaces/UserResolvable'
+import { StickerFormatTypes, StickerTypes } from '../../../../../src/constants'
+import { UserResolvable } from '../../../../../src/api/entities/user/interfaces/UserResolvable'
 
 export interface StickerData {
   id: string

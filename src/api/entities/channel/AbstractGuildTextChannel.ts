@@ -1,10 +1,10 @@
-import { AbstractGuildChannel } from '@src/api/entities/channel/AbstractGuildChannel'
-import { WritableChannel } from '@src/api/entities/channel/interfaces/WritableChannel'
-import { ChannelMessagesManager, Json, ToJsonProperties } from '@src/api'
-import { AbstractGuildTextChannelData } from '@src/api/entities/channel/interfaces/AbstractGuildTextChannelData'
-import { RawAbstractGuildTextChannelData } from '@src/api/entities/channel/interfaces/RawAbstractGuildTextChannelData'
-import { attach } from '@src/utils'
-import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
+import { AbstractGuildChannel } from '../../../../src/api/entities/channel/AbstractGuildChannel'
+import { WritableChannel } from '../../../../src/api/entities/channel/interfaces/WritableChannel'
+import { ChannelMessagesManager, Json, ToJsonProperties } from '../../../../src/api'
+import { AbstractGuildTextChannelData } from '../../../../src/api/entities/channel/interfaces/AbstractGuildTextChannelData'
+import { RawAbstractGuildTextChannelData } from '../../../../src/api/entities/channel/interfaces/RawAbstractGuildTextChannelData'
+import { attach } from '../../../../src/utils'
+import { EntityInitOptions } from '../../../../src/api/entities/EntityInitOptions'
 
 export abstract class AbstractGuildTextChannel extends AbstractGuildChannel implements WritableChannel {
   public declare messages: ChannelMessagesManager

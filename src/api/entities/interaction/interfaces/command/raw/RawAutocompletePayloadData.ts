@@ -1,4 +1,4 @@
-import { RawAppCommandOptionChoiceData } from '@src/api'
+import { RawAppCommandOptionChoiceData } from '../../../../../../../src/api'
 
 export interface RawAutocompletePayloadData {
   choices: RawAppCommandOptionChoiceData[]

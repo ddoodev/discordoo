@@ -1,4 +1,4 @@
-import { RawGuildMemberData, RawPresenceData } from '@src/api'
+import { RawGuildMemberData, RawPresenceData } from '../../../src/api'
 
 export interface RawGuildMembersChunkData {
   guild_id: string

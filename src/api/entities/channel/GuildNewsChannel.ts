@@ -1,6 +1,6 @@
-import { ChannelTypes } from '@src/constants'
-import { ChannelResolvable } from '@src/api'
-import { AbstractGuildTextChannel } from '@src/api/entities/channel/AbstractGuildTextChannel'
+import { ChannelTypes } from '../../../../src/constants'
+import { ChannelResolvable } from '../../../../src/api'
+import { AbstractGuildTextChannel } from '../../../../src/api/entities/channel/AbstractGuildTextChannel'
 
 export class GuildNewsChannel extends AbstractGuildTextChannel {
   public declare type: ChannelTypes.GuildNews

@@ -1,5 +1,5 @@
-import { GuildResolvable, InviteChannelData, UserResolvable } from '@src/api'
-import { InviteTargetTypes } from '@src/constants'
+import { GuildResolvable, InviteChannelData, UserResolvable } from '../../../../../src/api'
+import { InviteTargetTypes } from '../../../../../src/constants'
 
 export interface InviteData {
   code: string

@@ -1,7 +1,7 @@
-import { CompletedGatewayOptions } from '@src/gateway'
-import { ApplicationGatewaySendOptions, DiscordApplication } from '@src/core'
-import { GatewaySendPayloadLike } from '@discordoo/providers'
-import { ShardListResolvable } from '@src/utils'
+import { CompletedGatewayOptions } from '../../../../src/gateway'
+import { ApplicationGatewaySendOptions, DiscordApplication } from '../../../../src/core'
+import { GatewaySendPayloadLike } from '../../../../../providers/src/_index'
+import { ShardListResolvable } from '../../../../src/utils'
 
 /** Gateway application that contains useful info/methods */
 export interface ApplicationGateway {

@@ -1,7 +1,7 @@
-import { DiscordRestApplication } from '@src/core'
-import { createMessagePayload, DiscordooError, resolveMessageId } from '@src/utils'
-import { EntitiesManager } from '@src/api/managers/EntitiesManager'
-import { InteractionResponseTypes, MessageFlags } from '@src/constants'
+import { DiscordRestApplication } from '../../../../src/core'
+import { createMessagePayload, DiscordooError, resolveMessageId } from '../../../../src/utils'
+import { EntitiesManager } from '../../../../src/api/managers/EntitiesManager'
+import { InteractionResponseTypes, MessageFlags } from '../../../../src/constants'
 import {
   AppCommandOptionChoiceData,
   ApplicationInteractionsApplicationCommandManager,
@@ -11,9 +11,9 @@ import {
   ModalData,
   RawAppCommandOptionChoiceData,
   RawModalData
-} from '@src/api'
-import { InteractionMessageContent } from '@src/api/entities/message/interfaces/MessageContent'
-import { InteractionMessageCreateOptions } from '@src/api/entities/message/interfaces/MessageCreateOptions'
+} from '../../../../src/api'
+import { InteractionMessageContent } from '../../../../src/api/entities/message/interfaces/MessageContent'
+import { InteractionMessageCreateOptions } from '../../../../src/api/entities/message/interfaces/MessageCreateOptions'
 
 export class ApplicationInteractionsManager extends EntitiesManager {
   public commands: ApplicationInteractionsApplicationCommandManager

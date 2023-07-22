@@ -2,8 +2,8 @@ import {
   ActionRowBuilder,
   ActionRowData, ModalData,
   RawActionRowData, RawModalData
-} from '@src/api'
-import { attach } from '@src/utils'
+} from '../../../../../src/api'
+import { attach } from '../../../../../src/utils'
 
 export class ModalBuilder {
   declare title: string

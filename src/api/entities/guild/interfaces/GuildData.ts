@@ -1,6 +1,6 @@
-import { ViewableGuildData } from '@src/api'
-import { DiscordLocale } from '@src/constants/common/DiscordLocale'
-import { GuildExplicitContentFilterLevels } from '@src/constants'
+import { ViewableGuildData } from '../../../../../src/api'
+import { DiscordLocale } from '../../../../../src/constants/common/DiscordLocale'
+import { GuildExplicitContentFilterLevels } from '../../../../../src/constants'
 
 export interface GuildData extends ViewableGuildData {
   preferredLocale: DiscordLocale

@@ -1,4 +1,4 @@
-import { ShardListResolvable } from '@src/utils'
+import { ShardListResolvable } from '../../../../src/utils'
 
 export interface ShardingInstanceRestructureOptions {
   /** The shards that this sharding instance should serve */

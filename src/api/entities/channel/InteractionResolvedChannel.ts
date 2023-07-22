@@ -1,7 +1,7 @@
-import { AbstractChannel } from '@src/api/entities/channel/AbstractChannel'
-import { EntityInitOptions, InteractionResolvedChannelData, ReadonlyPermissions } from '@src/api'
-import { ChannelTypes } from '@src/constants'
-import { attach } from '@src/utils'
+import { AbstractChannel } from '../../../../src/api/entities/channel/AbstractChannel'
+import { EntityInitOptions, InteractionResolvedChannelData, ReadonlyPermissions } from '../../../../src/api'
+import { ChannelTypes } from '../../../../src/constants'
+import { attach } from '../../../../src/utils'
 
 export class InteractionResolvedChannel extends AbstractChannel {
   declare type: Exclude<ChannelTypes,

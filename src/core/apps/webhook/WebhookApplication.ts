@@ -4,12 +4,12 @@ import {
   WebhookApplicationActions,
   WebhookApplicationInternals,
   WebhookApplicationOptions
-} from '@src/core'
-import { DiscordooError } from '@src/utils'
-import { DiscordooProviders, REST_DEFAULT_OPTIONS } from '@src/constants'
-import { CompletedRestOptions, DefaultRestProvider } from '@src/rest'
-import { WebhookClientMessagesManager } from '@src/api'
-import { WebhookRestManager } from '@src/rest/WebhookRestManager'
+} from '../../../../src/core'
+import { DiscordooError } from '../../../../src/utils'
+import { DiscordooProviders, REST_DEFAULT_OPTIONS } from '../../../../src/constants'
+import { CompletedRestOptions, DefaultRestProvider } from '../../../../src/rest'
+import { WebhookClientMessagesManager } from '../../../../src/api'
+import { WebhookRestManager } from '../../../../src/rest/WebhookRestManager'
 
 export class WebhookApplication<ClientStack extends DefaultWebhookApplicationStack = DefaultWebhookApplicationStack> {
   public readonly id: string

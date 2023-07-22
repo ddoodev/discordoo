@@ -1,9 +1,9 @@
-import { ShardingModes } from '@src/constants'
-import { MachinesShardingOptions } from '@src/sharding/interfaces/manager/options/MachinesShardingOptions'
-import { ProcessesShardingOptions } from '@src/sharding/interfaces/manager/options/ProcessesShardingOptions'
-import { WorkersShardingOptions } from '@src/sharding/interfaces/manager/options/WorkersShardingOptions'
-import { ClustersShardingOptions } from '@src/sharding/interfaces/manager/options/ClustersShardingOptions'
-import { ShardListResolvable } from '@src/utils/interfaces/ShardListResolvable'
+import { ShardingModes } from '../../../../../src/constants'
+import { MachinesShardingOptions } from '../../../../../src/sharding/interfaces/manager/options/MachinesShardingOptions'
+import { ProcessesShardingOptions } from '../../../../../src/sharding/interfaces/manager/options/ProcessesShardingOptions'
+import { WorkersShardingOptions } from '../../../../../src/sharding/interfaces/manager/options/WorkersShardingOptions'
+import { ClustersShardingOptions } from '../../../../../src/sharding/interfaces/manager/options/ClustersShardingOptions'
+import { ShardListResolvable } from '../../../../../src/utils/interfaces/ShardListResolvable'
 
 export interface ShardingManagerOptions {
   mode: ShardingModes

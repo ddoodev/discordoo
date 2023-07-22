@@ -1,6 +1,6 @@
-import { RestOptions } from '@src/rest'
-import { ProviderOption } from '@src/core'
-import { AllowedMentionsResolvable } from '@src/api'
+import { RestOptions } from '../../../../src/rest'
+import { ProviderOption } from '../../../../src/core'
+import { AllowedMentionsResolvable } from '../../../../src/api'
 
 export interface WebhookApplicationOptions {
   /** Webhook ID */

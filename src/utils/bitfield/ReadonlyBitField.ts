@@ -1,7 +1,7 @@
-import { BitFieldResolvable } from '@src/utils/bitfield/interfaces'
-import { resolveBitField } from '@src/utils/resolve'
-import { EmptyBit } from '@src/constants'
-import { Json } from '@src/api/entities/interfaces/Json'
+import { BitFieldResolvable } from '../../../src/utils/bitfield/interfaces'
+import { resolveBitField } from '../../../src/utils/resolve'
+import { EmptyBit } from '../../../src/constants'
+import { Json } from '../../../src/api/entities/interfaces/Json'
 
 export abstract class ReadonlyBitField {
   public static FLAGS: Readonly<Record<string, number>>

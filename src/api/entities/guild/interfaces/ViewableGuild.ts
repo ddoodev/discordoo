@@ -1,5 +1,5 @@
-import { ImageUrlOptions } from '@src/utils'
-import { GuildNsfwLevels, GuildVerificationLevels } from '@src/constants'
+import { ImageUrlOptions } from '../../../../../src/utils'
+import { GuildNsfwLevels, GuildVerificationLevels } from '../../../../../src/constants'
 
 export interface ViewableGuild {
   splash?: string

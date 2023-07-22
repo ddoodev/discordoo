@@ -1,4 +1,4 @@
-import { ThreadTypes } from '@src/constants'
+import { ThreadTypes } from '../../../../../src/constants'
 
 export interface RawThreadChannelCreateData {
   name: string

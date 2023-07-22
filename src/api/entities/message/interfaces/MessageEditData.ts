@@ -1,5 +1,5 @@
-import { RawActionRowData, RawAllowedMentionsData, RawMessageEmbedData } from '@src/api'
-import { RawAttachment } from '@discordoo/providers'
+import { RawActionRowData, RawAllowedMentionsData, RawMessageEmbedData } from '../../../../../src/api'
+import { RawAttachment } from '../../../../../../providers/src/_index'
 
 export interface MessageEditData {
   content?: string

@@ -1,7 +1,7 @@
-import { AbstractComponentInteractionData } from '@src/api/entities/interaction/interactions/components/AbstractComponentInteractionData'
-import { EntityInitOptions, RawTextInputComponentData } from '@src/api'
-import { ComponentTypes } from '@src/constants'
-import { attach } from '@src/utils'
+import { AbstractComponentInteractionData } from '../../../../../../src/api/entities/interaction/interactions/components/AbstractComponentInteractionData'
+import { EntityInitOptions, RawTextInputComponentData } from '../../../../../../src/api'
+import { ComponentTypes } from '../../../../../../src/constants'
+import { attach } from '../../../../../../src/utils'
 
 export class TextInputInteractionData extends AbstractComponentInteractionData {
   declare customId: string

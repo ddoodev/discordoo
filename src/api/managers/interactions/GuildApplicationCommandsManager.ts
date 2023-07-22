@@ -1,5 +1,5 @@
-import { EntitiesManager } from '@src/api/managers/EntitiesManager'
-import { Keyspaces } from '@src/constants'
+import { EntitiesManager } from '../../../../src/api/managers/EntitiesManager'
+import { Keyspaces } from '../../../../src/constants'
 import {
   AppCommand, AppCommandCreateData,
   CommandResolvable,
@@ -7,8 +7,8 @@ import {
   GuildApplicationCommandsManagerOptions,
   RawAppCommandCreateData,
   AppCommandBuilder
-} from '@src/api'
-import { RestEligibleDiscordApplication } from '@src/core'
+} from '../../../../src/api'
+import { RestEligibleDiscordApplication } from '../../../../src/core'
 
 export class GuildApplicationCommandsManager extends EntitiesManager {
   public cache: EntitiesCacheManager<AppCommand>

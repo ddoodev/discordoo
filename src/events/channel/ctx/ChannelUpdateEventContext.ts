@@ -1,5 +1,5 @@
-import { AbstractEventContext } from '@src/events/interfaces/AbstractEventContext'
-import { AnyChannel } from '@src/api'
+import { AbstractEventContext } from '../../../../src/events/interfaces/AbstractEventContext'
+import { AnyChannel } from '../../../../src/api'
 
 export interface ChannelUpdateEventContext extends AbstractEventContext {
   stored?: AnyChannel

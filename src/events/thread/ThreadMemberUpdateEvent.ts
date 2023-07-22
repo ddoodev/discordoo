@@ -1,7 +1,7 @@
-import { AbstractEvent } from '@src/events'
-import { EventNames } from '@src/constants'
-import { EntitiesUtil, RawThreadMemberData } from '@src/api'
-import { ThreadMemberUpdateEventContext } from '@src/events/thread/ctx/ThreadMemberUpdateEventContext'
+import { AbstractEvent } from '../../../src/events'
+import { EventNames } from '../../../src/constants'
+import { EntitiesUtil, RawThreadMemberData } from '../../../src/api'
+import { ThreadMemberUpdateEventContext } from '../../../src/events/thread/ctx/ThreadMemberUpdateEventContext'
 
 export class ThreadMemberUpdateEvent extends AbstractEvent<ThreadMemberUpdateEventContext> {
   public name = EventNames.THREAD_MEMBER_UPDATE

@@ -3,7 +3,7 @@ import {
   ChannelDeleteEventContext,
   ChannelPinsUpdateEventContext,
   ChannelUpdateEventContext
-} from '@src/events/channel'
+} from '../../src/events/channel'
 import {
   GuildMembersChunkEventContext,
   IpcMessageEventContext,
@@ -11,12 +11,12 @@ import {
   PresenceUpdateEventContext,
   ReadyEventContext,
   ShardConnectedEventContext
-} from '@src/events/ctx'
+} from '../../src/events/ctx'
 import {
   AbstractEventContext,
   ExitingEventContext,
   RestructuringEventContext
-} from '@src/events/interfaces'
+} from '../../src/events/interfaces'
 import {
   ThreadCreateEventContext,
   ThreadDeleteEventContext,
@@ -24,9 +24,9 @@ import {
   ThreadUpdateEventContext,
   ThreadMemberUpdateEventContext,
   ThreadMembersUpdateEventContext
-} from '@src/events/thread'
-import { GuildEmojisUpdatedEventContext } from '@src/events/emoji'
-import { UserUpdateEventContext } from '@src/events/user'
+} from '../../src/events/thread'
+import { GuildEmojisUpdatedEventContext } from '../../src/events/emoji'
+import { UserUpdateEventContext } from '../../src/events/user'
 
 export type AnyEventContext =
   AbstractEventContext |

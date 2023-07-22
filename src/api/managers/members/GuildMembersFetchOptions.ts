@@ -1,4 +1,4 @@
-import { UserResolvable } from '@src/api'
+import { UserResolvable } from '../../../../src/api'
 
 export interface GuildMembersFetchOptions {
   // String that username starts with.

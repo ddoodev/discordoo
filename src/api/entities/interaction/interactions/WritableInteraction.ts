@@ -1,10 +1,10 @@
-import { Interaction } from '@src/api/entities/interaction/interactions/Interaction'
+import { Interaction } from '../../../../../src/api/entities/interaction/interactions/Interaction'
 import {
   InteractionMessageContent,
   InteractionMessageCreateOptions,
   InteractionMessageEditOptions,
   MessageResolvable
-} from '@src/api'
+} from '../../../../../src/api'
 
 export abstract class WritableInteraction extends Interaction {
   async deferReply(ephemeral?: boolean): Promise<this | undefined> {

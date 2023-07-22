@@ -1,7 +1,7 @@
-import { AbstractEvent } from '@src/events/AbstractEvent'
-import { Collection } from '@discordoo/collection'
-import { AbstractEventContext } from '@src/events/interfaces'
-import { AnyDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
+import { AbstractEvent } from '../../src/events/AbstractEvent'
+import { Collection } from '../../../collection/src/_index'
+import { AbstractEventContext } from '../../src/events/interfaces'
+import { AnyDiscordApplication } from '../../src/core/apps/AnyDiscordApplication'
 
 export class ApplicationEvents {
   public app: AnyDiscordApplication

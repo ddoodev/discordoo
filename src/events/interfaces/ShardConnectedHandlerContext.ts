@@ -1,5 +1,5 @@
-import { DiscordApplication } from '@src/core'
-import { RawUserData } from '@src/api'
+import { DiscordApplication } from '../../../src/core'
+import { RawUserData } from '../../../src/api'
 
 export interface ShardConnectedHandlerContext {
   handler: (app: DiscordApplication, context: ShardConnectedHandlerContext) => void

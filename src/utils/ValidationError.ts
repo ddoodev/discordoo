@@ -1,4 +1,4 @@
-import { DiscordooError } from '@src/utils/DiscordooError'
+import { DiscordooError } from '../../src/utils/DiscordooError'
 
 export class ValidationError extends DiscordooError {
   public name = 'ValidationError'

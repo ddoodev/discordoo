@@ -1,9 +1,9 @@
 import { TypedEmitter } from 'tiny-typed-emitter'
 import { IPC as RawIpc } from '@achrinza/node-ipc'
-import { IpcClientOptions, IpcClientSendOptions, IpcPacket, IpcPresenceUpdatePacket, ShardingInstance } from '@src/sharding'
-import { Collection } from '@discordoo/collection'
-import { IpcConnectionState, IpcEvents, IpcOpCodes, RAW_IPC_EVENT, SerializeModes, SHARDING_MANAGER_ID } from '@src/constants'
-import { DiscordooError, DiscordooSnowflake } from '@src/utils'
+import { IpcClientOptions, IpcClientSendOptions, IpcPacket, IpcPresenceUpdatePacket, ShardingInstance } from '../../../src/sharding'
+import { Collection } from '../../../../collection/src/_index'
+import { IpcConnectionState, IpcEvents, IpcOpCodes, RAW_IPC_EVENT, SerializeModes, SHARDING_MANAGER_ID } from '../../../src/constants'
+import { DiscordooError, DiscordooSnowflake } from '../../../src/utils'
 import {
   IpcBroadcastEvalRequestPacket,
   IpcBroadcastEvalResponsePacket,
@@ -14,13 +14,13 @@ import {
   IpcEmergencyRestBlockPacket,
   IpcGuildMembersRequestPacket,
   IpcHelloPacket
-} from '@src/sharding/interfaces/ipc/IpcPackets'
-import { IpcClientEvents } from '@src/sharding/interfaces/ipc/IpcClientEvents'
-import { filterAndMap } from '@src/utils/filterAndMap'
-import { IpcEmergencyOpCodes } from '@src/constants/sharding/IpcEmergencyOpCodes'
+} from '../../../src/sharding/interfaces/ipc/IpcPackets'
+import { IpcClientEvents } from '../../../src/sharding/interfaces/ipc/IpcClientEvents'
+import { filterAndMap } from '../../../src/utils/filterAndMap'
+import { IpcEmergencyOpCodes } from '../../../src/constants/sharding/IpcEmergencyOpCodes'
 import { deserializeError, serializeError } from 'serialize-error'
-import { evalWithoutScopeChain } from '@src/utils/evalWithoutScopeChain'
-import { fromJson, jsonify } from '@src/utils/jsonify'
+import { evalWithoutScopeChain } from '../../../src/utils/evalWithoutScopeChain'
+import { fromJson, jsonify } from '../../../src/utils/jsonify'
 
 
 // SHITCODE

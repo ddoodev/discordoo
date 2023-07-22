@@ -1,4 +1,3 @@
-/** Abstract application metadata for custom providers and libraries */
 export interface CacheApplicationMetadata {
   /** Version of the library */
   version: string

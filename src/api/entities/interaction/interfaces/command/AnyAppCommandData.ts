@@ -1,6 +1,6 @@
 import {
   AppCommandCreateData, RawAppCommandCreateData, AppCommandBuilder, GuildAppCommandCreateData, RawGuildAppCommandCreateData
-} from '@src/api'
+} from '../../../../../../src/api'
 
 export type AnyAppCommandData = AppCommandBuilder
   | RawGuildAppCommandCreateData

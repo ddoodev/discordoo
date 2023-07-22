@@ -1,9 +1,9 @@
-import { AbstractEvent } from '@src/events/AbstractEvent'
-import { EventNames } from '@src/constants'
-import { RawMessageData } from '@src/api/entities/message/interfaces/RawMessageData'
-import { MessageCreateEventContext } from '@src/events/ctx/MessageCreateEventContext'
-import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
-import { AnyWritableChannel } from '@src/api/entities/channel/interfaces/AnyWritableChannel'
+import { AbstractEvent } from '../../src/events/AbstractEvent'
+import { EventNames } from '../../src/constants'
+import { RawMessageData } from '../../src/api/entities/message/interfaces/RawMessageData'
+import { MessageCreateEventContext } from '../../src/events/ctx/MessageCreateEventContext'
+import { EntitiesUtil } from '../../src/api/entities/EntitiesUtil'
+import { AnyWritableChannel } from '../../src/api/entities/channel/interfaces/AnyWritableChannel'
 
 export class MessageCreateEvent extends AbstractEvent<MessageCreateEventContext> {
   public name = EventNames.MESSAGE_CREATE

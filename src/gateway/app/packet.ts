@@ -1,9 +1,9 @@
-import { WebSocketUtils } from '@src/utils/WebSocketUtils'
-import { WebSocketClient } from '@src/gateway/WebSocketClient'
-import { WebSocketClientEvents, WebSocketClientStates } from '@src/constants'
-import { GatewayOpCodes } from '@discordoo/providers'
-import { WebSocketPacket } from '@src/gateway/interfaces/WebSocketPacket'
-import { makeConnectionUrl } from '@src/gateway/makeConnectionUrl'
+import { WebSocketUtils } from '../../../src/utils/WebSocketUtils'
+import { WebSocketClient } from '../../../src/gateway/WebSocketClient'
+import { WebSocketClientEvents, WebSocketClientStates } from '../../../src/constants'
+import { GatewayOpCodes } from '../../../../providers/src/_index'
+import { WebSocketPacket } from '../../../src/gateway/interfaces/WebSocketPacket'
+import { makeConnectionUrl } from '../../../src/gateway/makeConnectionUrl'
 
 export function packet(app: WebSocketClient, packet: WebSocketPacket) {
 

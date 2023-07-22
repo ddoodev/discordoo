@@ -3,7 +3,7 @@ import {
   GuildNewsChannel,
   GuildNewsThreadChannel, GuildStoreChannel,
   GuildTextChannel, GuildThreadChannel
-} from '@src/api'
+} from '../../../../../src/api'
 
 export type AnyGuildChannel = GuildTextChannel |
   GuildNewsChannel |

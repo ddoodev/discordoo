@@ -1,11 +1,11 @@
-import { AbstractEntity } from '@src/api/entities/AbstractEntity'
-import { GuildEmoji, Json, Message, ReactionEmoji, ToJsonProperties } from '@src/api'
-import { attach, DiscordooError, resolveChannelId, resolveEmojiId, resolveMessageId } from '@src/utils'
-import { MessageReactionData } from '@src/api/entities/reaction/interfaces/MessageReactionData'
-import { ToJsonOverrideSymbol } from '@src/constants'
-import { CacheManagerGetOptions } from '@src/cache'
-import { ReactionUsersManager } from '@src/api/managers/reactions/ReactionUsersManager'
-import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
+import { AbstractEntity } from '../../../../src/api/entities/AbstractEntity'
+import { GuildEmoji, Json, Message, ReactionEmoji, ToJsonProperties } from '../../../../src/api'
+import { attach, DiscordooError, resolveChannelId, resolveEmojiId, resolveMessageId } from '../../../../src/utils'
+import { MessageReactionData } from '../../../../src/api/entities/reaction/interfaces/MessageReactionData'
+import { ToJsonOverrideSymbol } from '../../../../src/constants'
+import { CacheManagerGetOptions } from '../../../../src/cache'
+import { ReactionUsersManager } from '../../../../src/api/managers/reactions/ReactionUsersManager'
+import { EntityInitOptions } from '../../../../src/api/entities/EntityInitOptions'
 
 export class MessageReaction extends AbstractEntity {
   public declare count: number

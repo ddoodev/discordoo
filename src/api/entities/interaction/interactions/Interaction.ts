@@ -1,4 +1,4 @@
-import { AbstractEntity } from '@src/api/entities/AbstractEntity'
+import { AbstractEntity } from '../../../../../src/api/entities/AbstractEntity'
 import {
   AnyWritableChannel, AppCommandInteraction, AutocompleteInteraction,
   Guild,
@@ -7,11 +7,11 @@ import {
   ModalSubmitInteraction,
   RawInteractionData,
   User
-} from '@src/api'
-import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
-import { attach, idToDate, idToTimestamp } from '@src/utils'
-import { InteractionTypes, Keyspaces } from '@src/constants'
-import { CacheManagerGetOptions } from '@src/cache'
+} from '../../../../../src/api'
+import { EntityInitOptions } from '../../../../../src/api/entities/EntityInitOptions'
+import { attach, idToDate, idToTimestamp } from '../../../../../src/utils'
+import { InteractionTypes, Keyspaces } from '../../../../../src/constants'
+import { CacheManagerGetOptions } from '../../../../../src/cache'
 
 export abstract class Interaction extends AbstractEntity {
   declare id: string

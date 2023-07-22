@@ -1,10 +1,10 @@
-import { EntitiesManager } from '@src/api/managers/EntitiesManager'
-import { EmojiResolvable, EntitiesCacheManager } from '@src/api'
-import { MessageReaction } from '@src/api/entities/reaction/MessageReaction'
-import { MessageReactionsManagerData } from '@src/api/managers/reactions/MessageReactionsManagerData'
-import { Keyspaces } from '@src/constants'
-import { MessageReactionResolvable } from '@src/api/entities/reaction/interfaces/MessageReactionResolvable'
-import { RestEligibleDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
+import { EntitiesManager } from '../../../../src/api/managers/EntitiesManager'
+import { EmojiResolvable, EntitiesCacheManager } from '../../../../src/api'
+import { MessageReaction } from '../../../../src/api/entities/reaction/MessageReaction'
+import { MessageReactionsManagerData } from '../../../../src/api/managers/reactions/MessageReactionsManagerData'
+import { Keyspaces } from '../../../../src/constants'
+import { MessageReactionResolvable } from '../../../../src/api/entities/reaction/interfaces/MessageReactionResolvable'
+import { RestEligibleDiscordApplication } from '../../../../src/core/apps/AnyDiscordApplication'
 
 export class MessageReactionsManager extends EntitiesManager {
   public cache: EntitiesCacheManager<MessageReaction>

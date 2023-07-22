@@ -5,12 +5,12 @@ import {
   GuildMembersFetchOptions, MemberBanOptions,
   RawGuildMemberAddData,
   UserResolvable
-} from '@src/api'
-import { Keyspaces } from '@src/constants/cache/Keyspaces'
-import { GuildMembersManagerData } from '@src/api/managers/members/GuildMembersManagerData'
-import { EntitiesManager } from '@src/api/managers/EntitiesManager'
-import { DiscordooError, resolveGuildId } from '@src/utils'
-import { RestEligibleDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
+} from '../../../../src/api'
+import { Keyspaces } from '../../../../src/constants/cache/Keyspaces'
+import { GuildMembersManagerData } from '../../../../src/api/managers/members/GuildMembersManagerData'
+import { EntitiesManager } from '../../../../src/api/managers/EntitiesManager'
+import { DiscordooError, resolveGuildId } from '../../../../src/utils'
+import { RestEligibleDiscordApplication } from '../../../../src/core/apps/AnyDiscordApplication'
 
 export class GuildMembersManager extends EntitiesManager {
   public cache: EntitiesCacheManager<GuildMember>

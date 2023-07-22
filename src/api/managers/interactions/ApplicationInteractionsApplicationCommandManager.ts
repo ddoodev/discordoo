@@ -7,11 +7,11 @@ import {
   RawAppCommandCreateData, RawAppCommandEditData, RawGuildAppCommandCreateData,
   RawGuildAppCommandEditData,
   AppCommandBuilder
-} from '@src/api'
-import { EntitiesManager } from '@src/api/managers/EntitiesManager'
-import { DiscordRestApplication } from '@src/core'
-import { DiscordooError, resolveBigBitField, resolveCommandId, resolveGuildId } from '@src/utils'
-import { Keyspaces } from '@src/constants'
+} from '../../../../src/api'
+import { EntitiesManager } from '../../../../src/api/managers/EntitiesManager'
+import { DiscordRestApplication } from '../../../../src/core'
+import { DiscordooError, resolveBigBitField, resolveCommandId, resolveGuildId } from '../../../../src/utils'
+import { Keyspaces } from '../../../../src/constants'
 
 export class ApplicationInteractionsApplicationCommandManager extends EntitiesManager {
   public cache: EntitiesCacheManager<AppCommand>

@@ -1,4 +1,4 @@
 export enum GuildIntegrationExpireBehavior {
-  RemoveRole = 0,
-  Kick = 1
+    RemoveRole = 0,
+    Kick = 1
 }

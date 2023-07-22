@@ -1,4 +1,4 @@
 export enum InviteTargetTypes {
-  Stream = 1,
-  EmbeddedApplication,
+    Stream = 1,
+    EmbeddedApplication = 2
 }

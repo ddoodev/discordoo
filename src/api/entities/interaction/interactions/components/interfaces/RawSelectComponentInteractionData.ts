@@ -2,7 +2,7 @@ import {
   RawAbstractComponentInteractionData,
   RawInteractionResolvedData,
   SelectMenuTypes
-} from '@src/api'
+} from '../../../../../../../src/api'
 
 export interface RawSelectComponentInteractionData extends RawAbstractComponentInteractionData {
   component_type: SelectMenuTypes

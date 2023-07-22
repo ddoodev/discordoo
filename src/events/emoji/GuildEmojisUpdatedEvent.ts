@@ -1,9 +1,9 @@
-import { AbstractEvent } from '@src/events'
-import { EventNames } from '@src/constants'
-import { RawGuildEmojisUpdatedEventData } from '@src/events/emoji/RawGuildEmojisUpdatedEventData'
-import { EntitiesUtil, GuildEmoji } from '@src/api'
-import { Collection } from '@discordoo/collection'
-import { GuildEmojisUpdatedEventContext, GuildEmojiUpdatedContext } from '@src/events/emoji/ctx/GuildEmojisUpdatedEventContext'
+import { AbstractEvent } from '../../../src/events'
+import { EventNames } from '../../../src/constants'
+import { RawGuildEmojisUpdatedEventData } from '../../../src/events/emoji/RawGuildEmojisUpdatedEventData'
+import { EntitiesUtil, GuildEmoji } from '../../../src/api'
+import { Collection } from '../../../../collection/src/_index'
+import { GuildEmojisUpdatedEventContext, GuildEmojiUpdatedContext } from '../../../src/events/emoji/ctx/GuildEmojisUpdatedEventContext'
 
 export class GuildEmojisUpdatedEvent extends AbstractEvent<GuildEmojisUpdatedEventContext> {
   public name = EventNames.GUILD_EMOJIS_UPDATE

@@ -4,5 +4,5 @@ export { WebSocketClient } from './WebSocketClient'
 export { GatewayManager } from './GatewayManager'
 
 // @ddoocs ignore
-export * from './app'
+// export * from './app'
 export * from './interfaces'

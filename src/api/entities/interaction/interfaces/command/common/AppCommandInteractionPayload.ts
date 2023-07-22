@@ -1,5 +1,5 @@
-import { AppCommandTypes } from '@src/constants'
-import { AppCommandInteractionOptionPayload, InteractionResolvedData } from '@src/api'
+import { AppCommandTypes } from '../../../../../../../src/constants'
+import { AppCommandInteractionOptionPayload, InteractionResolvedData } from '../../../../../../../src/api'
 
 export interface AppCommandInteractionPayload {
   /** the ID of the invoked command */

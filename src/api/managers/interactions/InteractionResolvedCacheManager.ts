@@ -1,4 +1,4 @@
-import { EntitiesManager } from '@src/api/managers/EntitiesManager'
+import { EntitiesManager } from '../../../../src/api/managers/EntitiesManager'
 import {
   AnyInteractionResolvedChannel,
   EntitiesUtil,
@@ -10,10 +10,10 @@ import {
   MessageAttachment,
   Role,
   User
-} from '@src/api'
-import { RestEligibleDiscordApplication } from '@src/core'
-import { Collection } from '@discordoo/collection'
-import { ChannelTypes } from '@src/constants'
+} from '../../../../src/api'
+import { RestEligibleDiscordApplication } from '../../../../src/core'
+import { Collection } from '../../../../../collection/src/_index'
+import { ChannelTypes } from '../../../../src/constants'
 
 export class InteractionResolvedCacheManager extends EntitiesManager {
   public channels: Collection<string, AnyInteractionResolvedChannel> = new Collection()

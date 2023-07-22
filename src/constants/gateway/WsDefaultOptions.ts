@@ -1,6 +1,6 @@
-import { CompletedGatewayOptions } from '@src/gateway/interfaces/GatewayOptions'
-import { WebSocketUtils } from '@src/utils/WebSocketUtils'
-import { IntentsUtil } from '@src/utils/IntentsUtil'
+import { CompletedGatewayOptions } from '../../../src/gateway/interfaces/GatewayOptions'
+import { WebSocketUtils } from '../../../src/utils/WebSocketUtils'
+import { IntentsUtil } from '../../../src/utils/IntentsUtil'
 
 export const WS_DEFAULT_OPTIONS: CompletedGatewayOptions = {
   token: '',

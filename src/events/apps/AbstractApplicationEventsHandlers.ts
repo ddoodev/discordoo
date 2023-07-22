@@ -1,4 +1,4 @@
-import { ExitingEventContext, IpcMessageEventContext, ReadyEventContext } from '@src/events'
+import { ExitingEventContext, IpcMessageEventContext, ReadyEventContext } from '../../../src/events'
 
 export interface AbstractApplicationEventsHandlers {
   /** Emitted once when the app is ready */

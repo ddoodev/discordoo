@@ -1,7 +1,7 @@
 import {
   RestRequestMethods,
   RawAttachment
-} from '@discordoo/providers'
+} from '../../../../providers/src/_index'
 
 export interface RestManagerRequestData {
   method: RestRequestMethods

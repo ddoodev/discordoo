@@ -1,10 +1,10 @@
-import { MultipartData } from '@src/utils/MultipartData'
+import { MultipartData } from '../../src/utils/MultipartData'
 import { Client as Undici, request } from 'undici'
-import { DiscordooError } from '@src/utils'
-import { RestFinishedResponse, RestProvider, RestRequestData, RestRequestOptions } from '@discordoo/providers'
-import { CompletedRestOptions } from '@src/rest'
+import { DiscordooError } from '../../src/utils'
+import { RestFinishedResponse, RestProvider, RestRequestData, RestRequestOptions } from '../../../providers/src/_index'
+import { CompletedRestOptions } from '../../src/rest'
 import * as process from 'process'
-import { AnyDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
+import { AnyDiscordApplication } from '../../src/core/apps/AnyDiscordApplication'
 
 export class DefaultRestProvider implements RestProvider {
   public readonly app: AnyDiscordApplication

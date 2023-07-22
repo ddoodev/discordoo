@@ -1,4 +1,4 @@
 export enum GuildMFALevel {
-  None,
-  Elevated
+    None = 0,
+    Elevated = 1
 }

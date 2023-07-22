@@ -1,4 +1,4 @@
-import { ComponentTypes } from '@src/constants'
+import { ComponentTypes } from '../../../../../../src/constants'
 
 export type SelectMenuTypes = ComponentTypes.UserSelect
   | ComponentTypes.RoleSelect

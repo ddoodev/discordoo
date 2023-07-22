@@ -1,5 +1,5 @@
-import { ApplicationOptions } from '@src/core'
-import { NonOptional } from '@src/utils'
+import { ApplicationOptions } from '../../src/core'
+import { NonOptional } from '../../src/utils'
 import {
   ChannelsCachingPolicy,
   EmojisCachingPolicy,
@@ -17,7 +17,7 @@ import {
   UsersCachingPolicy,
   ThreadMembersCachingPolicy,
   ReactionsCachingPolicy, InvitesCachingPolicy, AppCommandsCachingPolicy
-} from '@src/constants'
+} from '../../src/constants'
 import {
   ActivityEmoji,
   AnyEmoji,
@@ -32,8 +32,8 @@ import {
   ThreadMember,
   User,
   PermissionOverwrite, Invite, InviteGuild, AppCommand
-} from '@src/api'
-import { AnyDiscordApplication } from '@src/core/apps/AnyDiscordApplication'
+} from '../../src/api'
+import { AnyDiscordApplication } from '../../src/core/apps/AnyDiscordApplication'
 
 export class CachingPoliciesProcessor {
   public app: AnyDiscordApplication

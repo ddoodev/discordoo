@@ -1,5 +1,5 @@
-import { AppCommandOptionTypes, ChannelTypes, DiscordLocale } from '@src/constants'
-import { AppCommandOptionChoiceData } from '@src/api'
+import { AppCommandOptionTypes, ChannelTypes, DiscordLocale } from '../../../../../../../src/constants'
+import { AppCommandOptionChoiceData } from '../../../../../../../src/api'
 
 export type AppCommandOptionData = AppCommandStringOptionData
   | AppCommandIntegerOptionData

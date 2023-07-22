@@ -1,9 +1,9 @@
-import { EntitiesManager } from '@src/api/managers/EntitiesManager'
-import { DiscordRestApplication } from '@src/core'
-import { DirectMessagesChannel, EntitiesCacheManager, EntitiesUtil, UserResolvable } from '@src/api'
-import { Keyspaces } from '@src/constants'
-import { DiscordooError, resolveUserId } from '@src/utils'
-import { makeCachePointer } from '@src/utils/cachePointer'
+import { EntitiesManager } from '../../../../src/api/managers/EntitiesManager'
+import { DiscordRestApplication } from '../../../../src/core'
+import { DirectMessagesChannel, EntitiesCacheManager, EntitiesUtil, UserResolvable } from '../../../../src/api'
+import { Keyspaces } from '../../../../src/constants'
+import { DiscordooError, resolveUserId } from '../../../../src/utils'
+import { makeCachePointer } from '../../../../src/utils/cachePointer'
 
 export class ApplicationDirectMessagesChannelsManager extends EntitiesManager {
   public cache: EntitiesCacheManager<DirectMessagesChannel>

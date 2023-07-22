@@ -1,5 +1,5 @@
-import { AbstractEntity } from '@src/api/entities/AbstractEntity'
-import { ThreadMemberData } from '@src/api/entities/member/interfaces/ThreadMemberData'
+import { AbstractEntity } from '../../../../src/api/entities/AbstractEntity'
+import { ThreadMemberData } from '../../../../src/api/entities/member/interfaces/ThreadMemberData'
 import {
   DirectMessagesChannel,
   Guild,
@@ -10,12 +10,12 @@ import {
   ReadonlyThreadMemberFlagsUtil,
   ToJsonProperties,
   User
-} from '@src/api'
-import { RawThreadMemberData } from '@src/api/entities/member/interfaces/RawThreadMemberData'
-import { attach } from '@src/utils'
-import { CacheManagerGetOptions } from '@src/cache'
-import { Keyspaces } from '@src/constants'
-import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
+} from '../../../../src/api'
+import { RawThreadMemberData } from '../../../../src/api/entities/member/interfaces/RawThreadMemberData'
+import { attach } from '../../../../src/utils'
+import { CacheManagerGetOptions } from '../../../../src/cache'
+import { Keyspaces } from '../../../../src/constants'
+import { EntityInitOptions } from '../../../../src/api/entities/EntityInitOptions'
 
 export class ThreadMember extends AbstractEntity implements ThreadMemberData {
   public declare flags: ReadonlyThreadMemberFlagsUtil

@@ -1,6 +1,6 @@
-import { AbstractGuildData } from '@src/api/entities/guild/interfaces/AbstractGuildData'
-import { GuildNsfwLevels, GuildVerificationLevels } from '@src/constants'
-import { AnyRawGuildChannelData, RawGuildEmojiData, RawGuildMemberData, RawPresenceData } from '@src/api'
+import { AbstractGuildData } from '../../../../../src/api/entities/guild/interfaces/AbstractGuildData'
+import { GuildNsfwLevels, GuildVerificationLevels } from '../../../../../src/constants'
+import { AnyRawGuildChannelData, RawGuildEmojiData, RawGuildMemberData, RawPresenceData } from '../../../../../src/api'
 
 export interface RawViewableGuildData extends AbstractGuildData {
   banner?: string

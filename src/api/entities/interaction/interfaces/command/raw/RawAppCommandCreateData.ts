@@ -1,5 +1,5 @@
-import { AppCommandTypes, DiscordLocale } from '@src/constants'
-import { RawAppCommandOptionWithSubcommandsData } from '@src/api'
+import { AppCommandTypes, DiscordLocale } from '../../../../../../../src/constants'
+import { RawAppCommandOptionWithSubcommandsData } from '../../../../../../../src/api'
 
 export interface RawAppCommandCreateData {
   /** 1-32 character name */

@@ -1,7 +1,7 @@
-import { BigBitFieldResolvable } from '@src/utils/bitfield/interfaces'
-import { EmptyBigBit } from '@src/constants'
-import { Json } from '@src/api/entities/interfaces/Json'
-import { resolveBigBitField } from '@src/utils/resolve'
+import { BigBitFieldResolvable } from '../../../src/utils/bitfield/interfaces'
+import { EmptyBigBit } from '../../../src/constants'
+import { Json } from '../../../src/api/entities/interfaces/Json'
+import { resolveBigBitField } from '../../../src/utils/resolve'
 
 export abstract class ReadonlyBigBitField {
   public static FLAGS: Readonly<Record<string, bigint>>

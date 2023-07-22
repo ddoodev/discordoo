@@ -1,13 +1,13 @@
-import { RestRequest, RestManager } from '@src/rest'
+import { RestRequest, RestManager } from '../../src/rest'
 import {
   RawAttachment,
   RestFinishedResponse,
   RestRequestOptions,
   RestRequestMethods
-} from '@discordoo/providers'
-import { randomString } from '@src/utils'
-import { WebhookRestManager } from '@src/rest/WebhookRestManager'
-import { WebhookRestRequest } from '@src/rest/interfaces/RestRequest'
+} from '../../../providers/src/_index'
+import { randomString } from '../../src/utils'
+import { WebhookRestManager } from '../../src/rest/WebhookRestManager'
+import { WebhookRestRequest } from '../../src/rest/interfaces/RestRequest'
 
 /**
  * Creates a new rest request. We do not use classes here, because function+object is about 9x faster than new Class()

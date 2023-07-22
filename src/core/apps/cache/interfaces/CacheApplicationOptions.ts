@@ -1,6 +1,6 @@
-import { CacheOptions } from '@src/cache'
-import { CompletedLocalIpcOptions } from '@src/sharding'
-import { ExtendedEntityOption, ProviderOption } from '@src/core'
+import { CacheOptions } from '../../../../../src/cache'
+import { CompletedLocalIpcOptions } from '../../../../../src/sharding'
+import { ExtendedEntityOption, ProviderOption } from '../../../../../src/core'
 
 export interface CacheApplicationOptions<CustomOptions = any> {
   providers?: ProviderOption[]

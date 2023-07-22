@@ -1,4 +1,4 @@
-import { ChannelResolvable, EmojiResolvable, MessageResolvable } from '@src/api'
+import { ChannelResolvable, EmojiResolvable, MessageResolvable } from '../../../../../src/api'
 
 export interface MessageReactionData {
   me: boolean

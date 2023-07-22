@@ -1,9 +1,9 @@
-import { AbstractEvent, AbstractEventContext } from '@src/events'
-import { EventNames, Keyspaces } from '@src/constants'
-import { RawAbstractThreadChannelData } from '@src/api/entities/channel/interfaces/RawAbstractThreadChannelData'
-import { channelEntityKey } from '@src/utils'
-import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
-import { ThreadDeleteEventContext } from '@src/events/thread/ctx/ThreadDeleteEventContext'
+import { AbstractEvent, AbstractEventContext } from '../../../src/events'
+import { EventNames, Keyspaces } from '../../../src/constants'
+import { RawAbstractThreadChannelData } from '../../../src/api/entities/channel/interfaces/RawAbstractThreadChannelData'
+import { channelEntityKey } from '../../../src/utils'
+import { EntitiesUtil } from '../../../src/api/entities/EntitiesUtil'
+import { ThreadDeleteEventContext } from '../../../src/events/thread/ctx/ThreadDeleteEventContext'
 
 export class ThreadDeleteEvent extends AbstractEvent<ThreadDeleteEventContext | AbstractEventContext> {
   public name = EventNames.THREAD_DELETE

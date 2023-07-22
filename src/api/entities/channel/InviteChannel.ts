@@ -1,7 +1,7 @@
-import { AbstractChannel } from '@src/api/entities/channel/AbstractChannel'
-import { InviteChannelData, Json, ToJsonProperties } from '@src/api'
-import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
-import { attach, ImageUrlOptions } from '@src/utils'
+import { AbstractChannel } from '../../../../src/api/entities/channel/AbstractChannel'
+import { InviteChannelData, Json, ToJsonProperties } from '../../../../src/api'
+import { EntityInitOptions } from '../../../../src/api/entities/EntityInitOptions'
+import { attach, ImageUrlOptions } from '../../../../src/utils'
 
 export class InviteChannel extends AbstractChannel  {
   public name?: string

@@ -1,4 +1,4 @@
-import { GuildMember } from '@src/api'
+import { GuildMember } from '../../../../src/api'
 
 export interface MemberEditOptions {
   reason?: string
