@@ -36,13 +36,8 @@
 **THIS LIBRARY IS UNDER DEVELOPMENT!** Parts of the stuff described here is not done yet, and we are just planning to implement it.
 You can find out more information about the development in our [Discord](https://ddoo.dev/).
 
-## Philosophy
-At Discordoo, we rethought the concept of a Discord bot and came to the conclusion that a Discord bot does not differ much from an HTTP REST backend in its essence. The key similarity between a backend and a Discord bot is that both respond to requests. The difference is that a backend responds to HTTP requests, while a Discord bot responds to Discord gateway events or even Discord's HTTP requests via Discord's HTTP API. Therefore, we took and brought familiar concepts from backends to the library for Discord like dependency injection, providers, controllers, etc.
-
-While there are already projects like [Necord](https://github.com/necordjs/necord), they use libraries created long ago like discord.js and eris under the hood, which due to problems with architecture cannot offer the same as us. Also, such projects are mostly based on NestJS, which is just not designed for such things. We decided to fix it all.
-
 ## Getting Started
-Process to [installation guide](https://docs.ddoo.dev/guide/overview/install) or [API reference](https://docs.ddoo.dev/ref).
+See [installation guide](https://docs.ddoo.dev/guide/overview/install) or [API reference](https://docs.ddoo.dev/ref).
 
 ## Features
 * **Smart Caching**
