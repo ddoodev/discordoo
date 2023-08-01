@@ -133,9 +133,15 @@ export abstract class AbstractGuildChannel extends AbstractChannel {
     const roleOverwrites: PermissionOverwrite[] = [], permissions = new Permissions(), rolesIds: string[] = []
     let memberOverwrite: PermissionOverwrite | undefined, everyoneOverwrite: PermissionOverwrite | undefined
 
+    const everyoneRole = await this.app.roles.cache.get(this.guildId, { storage: this.guildId })
+
+    if (everyoneRole) {
+      permissions.add(everyoneRole.permissions)
+    }
+
     await this.app.internals.cache.forEach(
       Keyspaces.GuildMemberRoles,
-      id,
+      this.guildId + id,
       'Role',
       (role: Role) => (permissions.add(role.permissions) && rolesIds.push(id))
     )
