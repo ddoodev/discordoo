@@ -5,4 +5,7 @@ export const ActivityFlags = {
   JoinRequest: 1 << 3,
   Sync: 1 << 4,
   Play: 1 << 5,
+  PartyPrivacyFriends: 1 << 6,
+  PartyPrivacyVoiceChannel: 1 << 7,
+  Embedded: 1 << 8,
 } as const

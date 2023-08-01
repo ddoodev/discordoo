@@ -7,4 +7,7 @@ export const MessageFlags = {
   HasThread: 1 << 5 as 32,
   Ephemeral: 1 << 6 as 64,
   Loading: 1 << 7 as 128,
-}
+  FailedToMentionSomeRolesInThread: 1 << 8 as 256,
+  SuppressNotifications: 1 << 12 as 4096,
+  IsVoiceMessage: 1 << 13 as 8192,
+} as const
