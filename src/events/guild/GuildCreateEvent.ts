@@ -104,6 +104,19 @@ export class GuildCreateEvent extends AbstractEvent<GuildCreateEventContext | Ab
       await this.app.emojis.cache.set(cache.id, cache, { storage: guild.id })
     }
 
+    for (const roleData of guild.roles) {
+      let cache = await this.app.roles.cache.get(roleData.id, { storage: guild.id })
+
+      if (cache) {
+        cache = await cache.init(roleData)
+      } else {
+        const Role = EntitiesUtil.get('Role')
+        cache = await new Role(this.app).init({ ...roleData, guild_id: guild.id })
+      }
+
+      await this.app.roles.cache.set(cache.id, cache, { storage: guild.id })
+    }
+
     await this.app[otherCacheSymbol].set(guild.id, { id: guild.owner_id }, { storage: 'guild-owners' })
 
     const queue = this.app.internals.queues.ready.get(shardId)
