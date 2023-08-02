@@ -12,4 +12,6 @@ export const UserFlags = {
   VerifiedBot: 1 << 16,
   EarlyVerifiedBotDeveloper: 1 << 17,
   DiscordCertifiedModerator: 1 << 18,
+  BotHttpInteractions: 1 << 19,
+  ActiveDeveloper: 1 << 22
 } as const
