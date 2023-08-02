@@ -33,7 +33,7 @@ export class GuildCreateEvent extends AbstractEvent<GuildCreateEventContext | Ab
         await this.app.channels.cache.set(cache.id, cache, { storage: guild.id })
       } else {
         const Channel: any = EntitiesUtil.get(channelEntityKey(channelData))
-        const channel = await new Channel(this.app).init(channelData)
+        const channel = await new Channel(this.app).init({ ...channelData, guild_id: guild.id })
         await this.app.channels.cache.set(channel.id, channel, { storage: guild.id })
       }
     }
