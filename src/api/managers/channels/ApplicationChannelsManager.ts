@@ -147,7 +147,7 @@ export class ApplicationChannelsManager extends EntitiesManager {
   }
 
   async createThreadChannel<R = AnyThreadChannel>(
-    channel: ThreadChannelResolvable,
+    channel: GuildChannelResolvable,
     data: ThreadChannelCreateData | RawThreadChannelCreateData | RawThreadChannelWithMessageCreateData,
     reason?: string
   ): Promise<R | undefined> {

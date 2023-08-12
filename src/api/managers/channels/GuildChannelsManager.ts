@@ -1,5 +1,12 @@
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
-import { ChannelResolvable, EntitiesCacheManager, ChannelDeleteOptions } from '@src/api'
+import {
+  ChannelResolvable,
+  EntitiesCacheManager,
+  ChannelDeleteOptions,
+  GuildChannelCreateData,
+  RawGuildChannelCreateData,
+  ThreadChannelCreateData, RawThreadChannelCreateData, RawThreadChannelWithMessageCreateData
+} from '@src/api'
 import { AnyGuildChannel } from '@src/api/entities/channel/interfaces/AnyGuildChannel'
 import { GuildChannelsManagerData } from '@src/api/managers/channels/GuildChannelsManagerData'
 import { DiscordooError, resolveGuildId } from '@src/utils'
@@ -34,8 +41,66 @@ export class GuildChannelsManager extends EntitiesManager {
     })
   }
 
+  async create<R = AnyGuildChannel>(
+    data: GuildChannelCreateData | RawGuildChannelCreateData,
+    options?: { reason?: string }
+  ): Promise<R | undefined>
+  async create<R = AnyThreadChannel>(
+    data: ThreadChannelCreateData
+      | RawThreadChannelCreateData
+      | RawThreadChannelWithMessageCreateData,
+    options: { channel: GuildChannelResolvable; reason?: string }
+  ): Promise<R | undefined>
+  async create<R = AnyThreadChannel | AnyGuildChannel>(
+    data: GuildChannelCreateData
+      | RawGuildChannelCreateData
+      | ThreadChannelCreateData
+      | RawThreadChannelCreateData
+      | RawThreadChannelWithMessageCreateData,
+    options?: { channel?: GuildChannelResolvable; reason?: string }
+  ): Promise<R | undefined> {
+    if (options && 'channel' in options && options.channel) {
+      return this.createThreadChannel(options.channel, data as any, options.reason)
+    }
+
+    return this.createChannel(data as any, options?.reason)
+  }
+
+  async createChannel<R = AnyGuildChannel>(
+    data: GuildChannelCreateData | RawGuildChannelCreateData,
+    reason?: string
+  ): Promise<R | undefined> {
+    return this.app.channels.createGuildChannel(this.guildId, data, reason)
+  }
+
+  async createThreadChannel<R = AnyThreadChannel>(
+    channel: GuildChannelResolvable,
+    data: ThreadChannelCreateData | RawThreadChannelCreateData | RawThreadChannelWithMessageCreateData,
+    reason?: string
+  ): Promise<R | undefined> {
+    return this.app.channels.createThreadChannel(channel, data, reason)
+  }
+
   async delete<R = AnyGuildChannel>(channel: ChannelResolvable, options: ChannelDeleteOptions = {}): Promise<R | undefined> {
     return this.app.channels.delete<R>(channel, options)
+  }
+
+  async edit<R = AnyGuildChannel>(
+    channel: GuildChannelResolvable,
+    data: GuildChannelEditData | RawGuildChannelEditData,
+    options: GuildChannelEditOptions
+  ): Promise<R | undefined>
+  async edit<R = AnyThreadChannel>(
+    channel: ThreadChannelResolvable,
+    data: ThreadChannelEditData | RawThreadChannelEditData,
+    options: ThreadChannelEditOptions
+  ): Promise<R | undefined>
+  async edit<R = AnyThreadChannel | AnyGuildChannel>(
+    channel: GuildChannelResolvable | ThreadChannelResolvable,
+    data: ThreadChannelEditData | RawThreadChannelEditData | GuildChannelEditData | RawGuildChannelEditData,
+    options: ThreadChannelEditOptions | GuildChannelEditOptions
+  ): Promise<R | undefined> {
+    return this.app.channels.edit<R>(channel, data, options)
   }
 
   async editGuildChannel<R = AnyGuildChannel>(
@@ -50,13 +115,9 @@ export class GuildChannelsManager extends EntitiesManager {
     return this.app.channels.editThreadChannel<R>(thread, data, options)
   }
 
-  async edit<R = AnyThreadChannel | AnyGuildChannel>(
-    channelOrThread: GuildChannelResolvable | ThreadChannelResolvable,
-    data: ThreadChannelEditData | RawThreadChannelEditData | GuildChannelEditData | RawGuildChannelEditData,
-    options: ThreadChannelEditOptions | GuildChannelEditOptions
+  async fetch<R = AnyThreadChannel | AnyGuildChannel>(
+    channel: GuildChannelResolvable | ThreadChannelResolvable
   ): Promise<R | undefined> {
-    return this.app.channels.edit<R>(channelOrThread, data, options)
+    return this.app.channels.fetch<R>(channel)
   }
-
-
 }
