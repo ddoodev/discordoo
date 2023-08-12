@@ -14,7 +14,7 @@ import {
   PermissionsCheckOptions,
   RoleResolvable,
   ChannelResolvable,
-  ToJsonProperties, Json, AnyGuildChannel
+  ToJsonProperties, Json, AnyGuildChannel, Guild
 } from '@src/api'
 import { GuildMemberResolvable } from '@src/api/entities/member/interfaces/GuildMemberResolvable'
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
@@ -80,6 +80,12 @@ export abstract class AbstractGuildChannel extends AbstractChannel {
       this.parentId,
       options
     )
+  }
+
+  async guild(options?: CacheManagerGetOptions): Promise<Guild | undefined> {
+    if (!this.guildId) return undefined
+
+    return this.app.guilds.cache.get(this.guildId, options)
   }
 
   async edit(data: RawGuildChannelEditData | GuildChannelEditData, reason?: string): Promise<this | undefined> {

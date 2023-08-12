@@ -6,7 +6,7 @@ export interface PresenceUpdateData {
   status?: PresenceStatus
   /** the user's activities */
   activities?: PresenceActivityUpdateData[]
-  /** whether or not the app is afk */
+  /** whether the app is afk */
   afk?: boolean
   /** unix time (in milliseconds) of when the app went idle, or null if the app is not idle */
   since?: number | null
