@@ -337,6 +337,24 @@ export class ApplicationChannelsManager extends EntitiesManager {
     return undefined
   }
 
+  async fetch<R = AnyChannel>(channel: ChannelResolvable): Promise<R | undefined> {
+    const channelId = resolveChannelId(channel)
+    if (!channelId) throw new DiscordooError('ApplicationChannelsManager#fetch', 'Cannot fetch channel without channel id.')
+
+    const response = await this.app.internals.actions.getChannel(channelId)
+
+    if (response.success) {
+      const Channel: any = EntitiesUtil.get(channelEntityKey(response.result))
+      const channel = await new Channel(this.app).init(response.result)
+
+      await this.cache.set(channel.id, channel, { storage: 'guildId' in channel ? channel.guildId : 'dm' })
+
+      return channel
+    }
+
+    return
+  }
+
   async startTyping(channel: ChannelResolvable): Promise<boolean> {
     const channelId = resolveChannelId(channel)
     if (!channelId) throw new DiscordooError('ApplicationChannelsManager#startTyping', 'Cannot send typing without channel id.')
@@ -344,6 +362,4 @@ export class ApplicationChannelsManager extends EntitiesManager {
     const response = await this.app.internals.actions.triggerTyping(channelId)
     return response.success
   }
-
 }
-
