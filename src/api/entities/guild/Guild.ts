@@ -14,6 +14,7 @@ import { GuildMember } from '@src/api/entities/member/GuildMember'
 import { GuildApplicationCommandsManager } from '@src/api'
 import { GuildExplicitContentFilterLevels } from '@src/constants'
 import { GuildRolesManager } from '@src/api/managers/roles/GuildRolesManager'
+import { InviteGuildsManager } from '@src/api/managers/invites/InviteGuildsManager'
 
 export class Guild extends AbstractViewableGuild {
   public unavailable = false
@@ -21,6 +22,7 @@ export class Guild extends AbstractViewableGuild {
   public declare roles: GuildRolesManager
   public declare channels: GuildChannelsManager
   public declare presences: GuildPresencesManager
+  public declare invites: InviteGuildsManager
   public declare preferredLocale: DiscordLocale
   public declare rulesChannelId?: string
   public declare publicUpdatesChannelId?: string
@@ -68,6 +70,12 @@ export class Guild extends AbstractViewableGuild {
 
     if (!this.presences) {
       this.presences = new GuildPresencesManager(this.app, {
+        guild: this.id,
+      })
+    }
+
+    if (!this.invites) {
+      this.invites = new InviteGuildsManager(this.app, {
         guild: this.id,
       })
     }
