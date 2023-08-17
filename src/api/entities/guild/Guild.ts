@@ -89,8 +89,20 @@ export class Guild extends AbstractViewableGuild {
     return this.systemChannelId ? this.channels.cache.get<AnyGuildWritableChannel>(this.systemChannelId, options) : undefined
   }
 
+  async edit(data: Partial<RawGuildData>): Promise<this | undefined> {
+    const success = await this.app.internals.actions.editGuild(this.id, data)
+
+    return success ? this : undefined
+  }
+
   async leave(): Promise<this | undefined> {
     const success = await this.app.guilds.leave(this.id)
+
+    return success ? this : undefined
+  }
+
+  async delete(): Promise<this | undefined> {
+    const success = await this.app.internals.actions.deleteGuild(this.id)
 
     return success ? this : undefined
   }
