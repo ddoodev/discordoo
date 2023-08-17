@@ -40,6 +40,7 @@ import { DiscordRestApplication } from '@src/core'
 import { RestFinishedResponse } from '@discordoo/providers'
 import { RawDirectMessagesChannelData } from '@src/api/entities/channel/interfaces/RawDirectMessagesChannelData'
 import { FetchCommandQuery } from '@src/api/managers/interactions/FetchCommandQuery'
+import { RawGuildCreateData } from '@src/api/entities/guild/interfaces/RawGuildCreateData'
 
 export class RestApplicationActions {
   constructor(public app: DiscordRestApplication) { }
@@ -112,11 +113,11 @@ export class RestApplicationActions {
       .post<RawAppCommandData>()
   }
 
-  createGuild(name: string, data: any /* TODO: GuildCreateData */) {
+  createGuild(data: RawGuildCreateData) {
     return this.app.internals.rest.api()
       .url(Endpoints.GUILDS())
       .body({
-        name,
+        name: data.name,
         region: data.region,
         icon: data.icon,
         verification_level: data.verificationLevel,
@@ -648,6 +649,12 @@ export class RestApplicationActions {
       .get()
   }
 
+  getGuildRole(guildId: string, roleId: string) {
+    return this.app.internals.rest.api()
+      .url(Endpoints.GUILD_ROLE(guildId, roleId))
+      .get<RawRoleData>()
+  }
+
   getGuildRoles(guildId: string) {
     return this.app.internals.rest.api()
       .url(Endpoints.GUILD_ROLES(guildId))
@@ -732,7 +739,7 @@ export class RestApplicationActions {
       .get<RawStickerPackData[]>()
   }
 
-    getOriginalInteractionResponse(applicationId: string, interactionToken: string, messageId: string) {
+  getOriginalInteractionResponse(applicationId: string, interactionToken: string, messageId: string) {
     return this.app.internals.rest.api()
       .url(Endpoints.WEBHOOK_MESSAGE(applicationId, interactionToken, messageId))
       .get<RawMessageData>()
