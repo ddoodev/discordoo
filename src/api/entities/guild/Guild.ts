@@ -13,10 +13,12 @@ import { AnyGuildWritableChannel } from '@src/api/entities/channel/interfaces/An
 import { GuildMember } from '@src/api/entities/member/GuildMember'
 import { GuildApplicationCommandsManager } from '@src/api'
 import { GuildExplicitContentFilterLevels } from '@src/constants'
+import { GuildRolesManager } from '@src/api/managers/roles/GuildRolesManager'
 
 export class Guild extends AbstractViewableGuild {
   public unavailable = false
   public declare members: GuildMembersManager
+  public declare roles: GuildRolesManager
   public declare channels: GuildChannelsManager
   public declare presences: GuildPresencesManager
   public declare preferredLocale: DiscordLocale
@@ -48,6 +50,12 @@ export class Guild extends AbstractViewableGuild {
 
     if (!this.members) {
       this.members = new GuildMembersManager(this.app, {
+        guild: this.id,
+      })
+    }
+
+    if (!this.roles) {
+      this.roles = new GuildRolesManager(this.app, {
         guild: this.id,
       })
     }
