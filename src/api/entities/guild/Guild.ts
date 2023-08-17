@@ -11,7 +11,7 @@ import { RawGuildData } from '@src/api/entities/guild/interfaces/RawGuildData'
 import { DiscordLocale } from '@src/constants/common/DiscordLocale'
 import { AnyGuildWritableChannel } from '@src/api/entities/channel/interfaces/AnyGuildWritableChannel'
 import { GuildMember } from '@src/api/entities/member/GuildMember'
-import { GuildApplicationCommandsManager } from '@src/api'
+import { GuildApplicationCommandsManager, GuildEditData } from '@src/api'
 import { GuildExplicitContentFilterLevels } from '@src/constants'
 import { GuildRolesManager } from '@src/api/managers/roles/GuildRolesManager'
 import { InviteGuildsManager } from '@src/api/managers/invites/InviteGuildsManager'
@@ -105,8 +105,8 @@ export class Guild extends AbstractViewableGuild {
     return this.systemChannelId ? this.channels.cache.get<AnyGuildWritableChannel>(this.systemChannelId, options) : undefined
   }
 
-  async edit(data: Partial<RawGuildData>): Promise<this | undefined> {
-    const success = await this.app.internals.actions.editGuild(this.id, data)
+  async edit(data: GuildEditData): Promise<this | undefined> {
+    const success = await this.app.guilds.edit(this.id, data)
 
     return success ? this : undefined
   }
@@ -118,7 +118,7 @@ export class Guild extends AbstractViewableGuild {
   }
 
   async delete(): Promise<this | undefined> {
-    const success = await this.app.internals.actions.deleteGuild(this.id)
+    const success = await this.app.guilds.delete(this.id)
 
     return success ? this : undefined
   }

@@ -51,27 +51,6 @@ export class ApplicationRolesManager extends EntitiesManager {
     return undefined
   }
 
-  async fetchOne(guild: GuildResolvable, role: RoleResolvable): Promise<Role | undefined> {
-    const roleId = resolveRoleId(role),
-      guildId = resolveGuildId(guild)
-
-    if (!roleId) throw new DiscordooError('ApplicationRolesManager#fetchOne', 'Cannot fetch role without id.')
-    if (!guildId) throw new DiscordooError('ApplicationRolesManager#fetchOne', 'Cannot fetch role without guild id.')
-
-    const response = await this.app.internals.actions.getGuildRole(guildId, roleId)
-    const Role = EntitiesUtil.get('Role')
-
-    if (response.success) {
-      const role = await new Role(this.app).init(response.result)
-      await this.cache.set(role.id, role, {
-        storage: guildId
-      })
-      return role
-    }
-
-    return undefined
-  }
-
   async create(
     guild: GuildResolvable, data: RoleCreateData | RawRoleCreateData, reason?: string
   ): Promise<Role | undefined> {

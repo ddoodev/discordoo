@@ -41,6 +41,7 @@ import { RestFinishedResponse } from '@discordoo/providers'
 import { RawDirectMessagesChannelData } from '@src/api/entities/channel/interfaces/RawDirectMessagesChannelData'
 import { FetchCommandQuery } from '@src/api/managers/interactions/FetchCommandQuery'
 import { RawGuildCreateData } from '@src/api/entities/guild/interfaces/RawGuildCreateData'
+import { RawGuildData } from '@src/api/entities/guild/interfaces/RawGuildData'
 
 export class RestApplicationActions {
   constructor(public app: DiscordRestApplication) { }
@@ -116,20 +117,8 @@ export class RestApplicationActions {
   createGuild(data: RawGuildCreateData) {
     return this.app.internals.rest.api()
       .url(Endpoints.GUILDS())
-      .body({
-        name: data.name,
-        region: data.region,
-        icon: data.icon,
-        verification_level: data.verificationLevel,
-        default_message_notifications: data.defaultNotifications,
-        explicit_content_filter: data.explicitContentFilter,
-        system_channel_id: data.systemChannelId,
-        afk_channel_id: data.afkChannelId,
-        afk_timeout: data.afkTimeout,
-        roles: data.roles,
-        channels: data.channels,
-      })
-      .post()
+      .body(data)
+      .post<RawGuildData>()
   }
 
   createGuildChannel(guildId: string, data: RawGuildChannelCreateData, reason?: string) {
@@ -649,12 +638,6 @@ export class RestApplicationActions {
       .get()
   }
 
-  getGuildRole(guildId: string, roleId: string) {
-    return this.app.internals.rest.api()
-      .url(Endpoints.GUILD_ROLE(guildId, roleId))
-      .get<RawRoleData>()
-  }
-
   getGuildRoles(guildId: string) {
     return this.app.internals.rest.api()
       .url(Endpoints.GUILD_ROLES(guildId))
@@ -739,7 +722,7 @@ export class RestApplicationActions {
       .get<RawStickerPackData[]>()
   }
 
-  getOriginalInteractionResponse(applicationId: string, interactionToken: string, messageId: string) {
+    getOriginalInteractionResponse(applicationId: string, interactionToken: string, messageId: string) {
     return this.app.internals.rest.api()
       .url(Endpoints.WEBHOOK_MESSAGE(applicationId, interactionToken, messageId))
       .get<RawMessageData>()

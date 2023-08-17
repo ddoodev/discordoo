@@ -28,25 +28,19 @@ export class GuildRolesManager extends EntitiesManager {
     })
   }
 
-  async fetch(id: string): Promise<Role | undefined> {
-    return await this.app.roles.fetchOne(this.guildId, id)
+  async fetch(): Promise<Role[] | undefined> {
+    return this.app.roles.fetch(this.guildId)
   }
 
   async create(data: RoleCreateData | RawRoleCreateData, reason?: string): Promise<Role | undefined> {
-    const role = await this.app.roles.create(this.guildId, data, reason)
-    if (role) await this.cache.set(role.id, role)
-    return role
+    return this.app.roles.create(this.guildId, data, reason)
   }
 
   async edit(id: string, data: RoleCreateData | RawRoleCreateData): Promise<Role | undefined> {
-    const updated = await this.app.roles.edit(this.guildId, id, data)
-    if (updated) await this.cache.set(updated.id, updated)
-    return updated
+    return this.app.roles.edit(this.guildId, id, data)
   }
 
   async delete(id: string, reason?: string): Promise<boolean> {
-    const result = await this.app.roles.delete(this.guildId, id, reason)
-    if (result) await this.cache.delete(id)
-    return result
+    return this.app.roles.delete(this.guildId, id, reason)
   }
 }

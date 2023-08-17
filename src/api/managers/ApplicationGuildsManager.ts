@@ -6,6 +6,7 @@ import { EntitiesUtil, Guild, GuildResolvable } from '@src/api'
 import { attach, DiscordooError, resolveGuildId } from '@src/utils'
 import { GuildCreateData } from '@src/api/entities/guild/interfaces/GuildCreateData'
 import { RawGuildCreateData } from '@src/api/entities/guild/interfaces/RawGuildCreateData'
+import { GuildEditData } from '@src/api/entities/guild/interfaces/GuildEditData'
 
 export class ApplicationGuildsManager extends EntitiesManager {
   public cache: EntitiesCacheManager<Guild>
@@ -21,7 +22,7 @@ export class ApplicationGuildsManager extends EntitiesManager {
     })
   }
 
-  async create(data: GuildCreateData): Promise<Guild | undefined> {
+  async create(data: GuildCreateData | RawGuildCreateData): Promise<Guild | undefined> {
     if (!data) {
       throw new DiscordooError('ApplicationGuildsManager#create', 'Cannot create guild without create data.')
     }
@@ -56,7 +57,7 @@ export class ApplicationGuildsManager extends EntitiesManager {
 
   async edit(
     guild: GuildResolvable,
-    data: Omit<GuildCreateData, 'roles' | 'channels'>
+    data: GuildEditData
   ): Promise<Guild | undefined> {
     const id = resolveGuildId(guild)
     if (!id) throw new DiscordooError('ApplicationGuildsManager#edit', 'Cannot edit guild without guild id.')
@@ -85,6 +86,15 @@ export class ApplicationGuildsManager extends EntitiesManager {
     }
 
     return undefined
+  }
+
+  async delete(guild: GuildResolvable): Promise<boolean> {
+    const id = resolveGuildId(guild)
+    if (!id) throw new DiscordooError('ApplicationGuildsManager#delete', 'Cannot delete guild without guild id.')
+
+    const response = await this.app.internals.actions.deleteGuild(id)
+
+    return response.success
   }
 
   async leave(guild: GuildResolvable): Promise<boolean> {
