@@ -146,14 +146,14 @@ export class Guild extends AbstractViewableGuild {
 
   async setOwner(owner: GuildMemberResolvable, reason?: string): Promise<this | undefined> {
     const ownerId = resolveMemberId(owner)
-    if (!ownerId) throw new DiscordooError('Guild#setOwner', 'Cannot set owner to unknown member.')
+    if (!ownerId) throw new DiscordooError('Guild#setOwner', 'Cannot set owner without id.')
 
     return this.edit({ ownerId }, reason)
   }
 
   async setAfkChannel(afkChannel: GuildChannelResolvable, reason?: string): Promise<this | undefined> {
     const afkChannelId = resolveChannelId(afkChannel)
-    if (!afkChannelId) throw new DiscordooError('Guild#setAfkChannel', 'Cannot set afk channel to unknown channel.')
+    if (!afkChannelId) throw new DiscordooError('Guild#setAfkChannel', 'Cannot set afk channel without id.')
 
     return this.edit({ afkChannelId }, reason)
   }
@@ -164,14 +164,14 @@ export class Guild extends AbstractViewableGuild {
 
   async setSystemChannel(systemChannel: GuildChannelResolvable, reason?: string): Promise<this | undefined> {
     const systemChannelId = resolveChannelId(systemChannel)
-    if (!systemChannelId) throw new DiscordooError('Guild#setSystemChannel', 'Cannot set system channel to unknown channel.')
+    if (!systemChannelId) throw new DiscordooError('Guild#setSystemChannel', 'Cannot set system channel without id.')
 
     return this.edit({ systemChannelId }, reason)
   }
 
   async setRulesChannel(rulesChannel: GuildChannelResolvable, reason?: string): Promise<this | undefined> {
     const rulesChannelId = resolveChannelId(rulesChannel)
-    if (!rulesChannelId) throw new DiscordooError('Guild#setRulesChannel', 'Cannot set rules channel to unknown channel.')
+    if (!rulesChannelId) throw new DiscordooError('Guild#setRulesChannel', 'Cannot set rules channel without id.')
 
     return this.edit({ rulesChannelId }, reason)
   }
@@ -179,7 +179,7 @@ export class Guild extends AbstractViewableGuild {
   async setPublicUpdatesChannel(publicUpdatesChannel: GuildChannelResolvable, reason?: string): Promise<this | undefined> {
     const publicUpdatesChannelId = resolveChannelId(publicUpdatesChannel)
     if (!publicUpdatesChannelId) {
-      throw new DiscordooError('Guild#setPublicUpdatesChannel', 'Cannot set public updates channel to unknown channel.')
+      throw new DiscordooError('Guild#setPublicUpdatesChannel', 'Cannot set public updates channel without id.')
     }
 
     return this.edit({ publicUpdatesChannelId }, reason)
@@ -188,7 +188,7 @@ export class Guild extends AbstractViewableGuild {
   async setSafetyAlertsChannel(safetyAlertsChannel: GuildChannelResolvable, reason?: string): Promise<this | undefined> {
     const safetyAlertsChannelId = resolveChannelId(safetyAlertsChannel)
     if (!safetyAlertsChannelId) {
-      throw new DiscordooError('Guild#setSafetyAlertChannel', 'Cannot set safety alert channel to unknown channel.')
+      throw new DiscordooError('Guild#setSafetyAlertChannel', 'Cannot set safety alert channel without id.')
     }
 
     return this.edit({ safetyAlertsChannelId }, reason)
@@ -228,7 +228,7 @@ export class Guild extends AbstractViewableGuild {
 
   async setWidgetChannel(widgetChannel: GuildChannelResolvable, reason?: string): Promise<this | undefined> {
     const widgetChannelId = resolveChannelId(widgetChannel)
-    if (!widgetChannelId) throw new DiscordooError('Guild#setWidgetChannel', 'Cannot set widget channel to unknown channel.')
+    if (!widgetChannelId) throw new DiscordooError('Guild#setWidgetChannel', 'Cannot set widget channel without id.')
 
     return this.edit({ widgetChannelId }, reason)
   }
