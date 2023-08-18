@@ -4,7 +4,7 @@ import { DiscordRestApplication } from '@src/core'
 import { Keyspaces } from '@src/constants'
 
 export class InviteGuildsManager extends EntitiesManager {
-  cache: EntitiesCacheManager<InviteGuild>
+  public cache: EntitiesCacheManager<InviteGuild>
 
   constructor(app: DiscordRestApplication) {
     super(app)
