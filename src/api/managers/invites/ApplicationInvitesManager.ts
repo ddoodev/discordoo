@@ -4,7 +4,7 @@ import {
   EntitiesCacheManager,
   FetchInviteQuery,
   EntitiesUtil,
-  AnyInvitableChannelResolvable, GuildInvitesManager, InviteCreateOptions
+  AnyInvitableChannelResolvable, InviteGuildsManager, InviteCreateOptions
 } from '@src/api'
 import { DiscordRestApplication } from '@src/core'
 import { Keyspaces } from '@src/constants'
@@ -12,7 +12,7 @@ import { DiscordooError, resolveChannelId } from '@src/utils'
 
 export class ApplicationInvitesManager extends EntitiesManager {
   public cache: EntitiesCacheManager<Invite>
-  public guilds: GuildInvitesManager
+  public guilds: InviteGuildsManager
 
   constructor(app: DiscordRestApplication) {
     super(app)
@@ -23,7 +23,7 @@ export class ApplicationInvitesManager extends EntitiesManager {
       entity: 'Invite',
       policy: 'invites'
     })
-    this.guilds = new GuildInvitesManager(this.app)
+    this.guilds = new InviteGuildsManager(this.app)
   }
 
   async create(channel: AnyInvitableChannelResolvable, options: InviteCreateOptions = {}): Promise<Invite | undefined> {

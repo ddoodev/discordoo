@@ -1,5 +1,5 @@
 import { Json, ToJsonProperties } from '@src/api/entities/interfaces'
-import { attach } from '@src/utils'
+import { attach, BufferResolvable, DiscordooError, resolveChannelId, resolveMemberId } from '@src/utils'
 import { AbstractViewableGuild } from '@src/api/entities/guild/AbstractViewableGuild'
 import { GuildMembersManager } from '@src/api/managers/members/GuildMembersManager'
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
@@ -11,10 +11,15 @@ import { RawGuildData } from '@src/api/entities/guild/interfaces/RawGuildData'
 import { DiscordLocale } from '@src/constants/common/DiscordLocale'
 import { AnyGuildWritableChannel } from '@src/api/entities/channel/interfaces/AnyGuildWritableChannel'
 import { GuildMember } from '@src/api/entities/member/GuildMember'
-import { GuildApplicationCommandsManager, GuildEditData } from '@src/api'
-import { GuildExplicitContentFilterLevels } from '@src/constants'
+import { GuildApplicationCommandsManager, GuildChannelResolvable, GuildEditData, GuildMemberResolvable } from '@src/api'
+import {
+  GuildDefaultMessageNotificationLevel,
+  GuildExplicitContentFilterLevels,
+  GuildFeatures,
+  GuildVerificationLevels
+} from '@src/constants'
 import { GuildRolesManager } from '@src/api/managers/roles/GuildRolesManager'
-import { InviteGuildsManager } from '@src/api/managers/invites/InviteGuildsManager'
+import { GuildInvitesManager } from '@src/api/managers/invites/GuildInvitesManager'
 
 export class Guild extends AbstractViewableGuild {
   public unavailable = false
@@ -22,7 +27,7 @@ export class Guild extends AbstractViewableGuild {
   public declare roles: GuildRolesManager
   public declare channels: GuildChannelsManager
   public declare presences: GuildPresencesManager
-  public declare invites: InviteGuildsManager
+  public declare invites: GuildInvitesManager
   public declare preferredLocale: DiscordLocale
   public declare rulesChannelId?: string
   public declare publicUpdatesChannelId?: string
@@ -75,7 +80,7 @@ export class Guild extends AbstractViewableGuild {
     }
 
     if (!this.invites) {
-      this.invites = new InviteGuildsManager(this.app, {
+      this.invites = new GuildInvitesManager(this.app, {
         guild: this.id,
       })
     }
@@ -105,8 +110,8 @@ export class Guild extends AbstractViewableGuild {
     return this.systemChannelId ? this.channels.cache.get<AnyGuildWritableChannel>(this.systemChannelId, options) : undefined
   }
 
-  async edit(data: GuildEditData): Promise<this | undefined> {
-    const success = await this.app.guilds.edit(this.id, data)
+  async edit(data: GuildEditData, reason?: string): Promise<this | undefined> {
+    const success = await this.app.guilds.edit(this.id, data, { reason, patchEntity: this })
 
     return success ? this : undefined
   }
@@ -121,6 +126,111 @@ export class Guild extends AbstractViewableGuild {
     const success = await this.app.guilds.delete(this.id)
 
     return success ? this : undefined
+  }
+
+  async setName(name: string, reason?: string): Promise<this | undefined> {
+    return this.edit({ name }, reason)
+  }
+
+  async setDescription(description: string, reason?: string): Promise<this | undefined> {
+    return this.edit({ description }, reason)
+  }
+
+  async setPreferredLocale(preferredLocale: DiscordLocale, reason?: string): Promise<this | undefined> {
+    return this.edit({ preferredLocale }, reason)
+  }
+
+  async setFeatures(features: GuildFeatures[], reason?: string): Promise<this | undefined> {
+    return this.edit({ features }, reason)
+  }
+
+  async setOwner(owner: GuildMemberResolvable, reason?: string): Promise<this | undefined> {
+    const ownerId = resolveMemberId(owner)
+    if (!ownerId) throw new DiscordooError('Guild#setOwner', 'Cannot set owner to unknown member.')
+
+    return this.edit({ ownerId }, reason)
+  }
+
+  async setAfkChannel(afkChannel: GuildChannelResolvable, reason?: string): Promise<this | undefined> {
+    const afkChannelId = resolveChannelId(afkChannel)
+    if (!afkChannelId) throw new DiscordooError('Guild#setAfkChannel', 'Cannot set afk channel to unknown channel.')
+
+    return this.edit({ afkChannelId }, reason)
+  }
+
+  async setAfkTimeout(afkTimeout: number, reason?: string): Promise<this | undefined> {
+    return this.edit({ afkTimeout }, reason)
+  }
+
+  async setSystemChannel(systemChannel: GuildChannelResolvable, reason?: string): Promise<this | undefined> {
+    const systemChannelId = resolveChannelId(systemChannel)
+    if (!systemChannelId) throw new DiscordooError('Guild#setSystemChannel', 'Cannot set system channel to unknown channel.')
+
+    return this.edit({ systemChannelId }, reason)
+  }
+
+  async setRulesChannel(rulesChannel: GuildChannelResolvable, reason?: string): Promise<this | undefined> {
+    const rulesChannelId = resolveChannelId(rulesChannel)
+    if (!rulesChannelId) throw new DiscordooError('Guild#setRulesChannel', 'Cannot set rules channel to unknown channel.')
+
+    return this.edit({ rulesChannelId }, reason)
+  }
+
+  async setPublicUpdatesChannel(publicUpdatesChannel: GuildChannelResolvable, reason?: string): Promise<this | undefined> {
+    const publicUpdatesChannelId = resolveChannelId(publicUpdatesChannel)
+    if (!publicUpdatesChannelId) {
+      throw new DiscordooError('Guild#setPublicUpdatesChannel', 'Cannot set public updates channel to unknown channel.')
+    }
+
+    return this.edit({ publicUpdatesChannelId }, reason)
+  }
+
+  async setSafetyAlertsChannel(safetyAlertsChannel: GuildChannelResolvable, reason?: string): Promise<this | undefined> {
+    const safetyAlertsChannelId = resolveChannelId(safetyAlertsChannel)
+    if (!safetyAlertsChannelId) {
+      throw new DiscordooError('Guild#setSafetyAlertChannel', 'Cannot set safety alert channel to unknown channel.')
+    }
+
+    return this.edit({ safetyAlertsChannelId }, reason)
+  }
+
+  async setVerificationLevel(verificationLevel: GuildVerificationLevels, reason?: string): Promise<this | undefined> {
+    return this.edit({ verificationLevel }, reason)
+  }
+
+  async setDefaultNotifications(defaultNotifications: GuildDefaultMessageNotificationLevel, reason?: string): Promise<this | undefined> {
+    return this.edit({ defaultNotifications }, reason)
+  }
+
+  async setExplicitContentFilter(explicitContentFilter: GuildExplicitContentFilterLevels, reason?: string): Promise<this | undefined> {
+    return this.edit({ explicitContentFilter }, reason)
+  }
+
+  async setPremiumProgressBarEnabled(enabled: boolean, reason?: string): Promise<this | undefined> {
+    return this.edit({ premiumProgressEnabled: enabled }, reason)
+  }
+
+  async setIcon(icon: BufferResolvable, reason?: string): Promise<this | undefined> {
+    return this.edit({ icon }, reason)
+  }
+
+  async setSplash(splash: BufferResolvable, reason?: string): Promise<this | undefined> {
+    return this.edit({ splash }, reason)
+  }
+
+  async setBanner(banner: BufferResolvable, reason?: string): Promise<this | undefined> {
+    return this.edit({ banner }, reason)
+  }
+
+  async setWidgetEnabled(enabled: boolean, reason?: string): Promise<this | undefined> {
+    return this.edit({ widgetEnabled: enabled }, reason)
+  }
+
+  async setWidgetChannel(widgetChannel: GuildChannelResolvable, reason?: string): Promise<this | undefined> {
+    const widgetChannelId = resolveChannelId(widgetChannel)
+    if (!widgetChannelId) throw new DiscordooError('Guild#setWidgetChannel', 'Cannot set widget channel to unknown channel.')
+
+    return this.edit({ widgetChannelId }, reason)
   }
 
   jsonify(properties: ToJsonProperties = {}, obj?: any): Json {

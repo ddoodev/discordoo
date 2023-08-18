@@ -2,8 +2,8 @@ import { EntitiesCacheManager } from '@src/api/managers'
 import { DiscordRestApplication } from '@src/core'
 import { Keyspaces } from '@src/constants'
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
-import { EntitiesUtil, Guild, GuildResolvable } from '@src/api'
-import { attach, DiscordooError, resolveGuildId } from '@src/utils'
+import { EntitiesUtil, Guild, GuildEditOptions, GuildResolvable } from '@src/api'
+import { attach, DiscordooError, guildChannelCreateDataToRaw, resolveGuildId, roleToRaw } from '@src/utils'
 import { GuildCreateData } from '@src/api/entities/guild/interfaces/GuildCreateData'
 import { RawGuildCreateData } from '@src/api/entities/guild/interfaces/RawGuildCreateData'
 import { GuildEditData } from '@src/api/entities/guild/interfaces/GuildEditData'
@@ -29,6 +29,8 @@ export class ApplicationGuildsManager extends EntitiesManager {
 
     const payload: RawGuildCreateData = {
       name: data.name,
+      roles: data.roles?.map(roleToRaw),
+      channels: data.channels?.map(guildChannelCreateDataToRaw)
     }
 
     attach(payload, data, {
@@ -37,8 +39,6 @@ export class ApplicationGuildsManager extends EntitiesManager {
         [ 'verificationLevel', 'verification_level' ],
         [ 'defaultNotifications', 'default_message_notifications' ],
         [ 'explicitContentFilter', 'explicit_content_filter' ],
-        'roles',
-        'channels',
         [ 'afkChannelId', 'afk_channel_id' ],
         [ 'afkTimeout', 'afk_timeout' ],
         [ 'systemChannelId', 'system_channel_id' ]
@@ -57,32 +57,51 @@ export class ApplicationGuildsManager extends EntitiesManager {
 
   async edit(
     guild: GuildResolvable,
-    data: GuildEditData
+    data: GuildEditData,
+    options: GuildEditOptions
   ): Promise<Guild | undefined> {
     const id = resolveGuildId(guild)
     if (!id) throw new DiscordooError('ApplicationGuildsManager#edit', 'Cannot edit guild without guild id.')
 
-    const payload: RawGuildCreateData = {
-      name: data.name,
-    }
+    const payload = {}
 
     attach(payload, data, {
       props: [
+        'name',
         'icon',
         [ 'verificationLevel', 'verification_level' ],
         [ 'defaultNotifications', 'default_message_notifications' ],
         [ 'explicitContentFilter', 'explicit_content_filter' ],
         [ 'afkChannelId', 'afk_channel_id' ],
         [ 'afkTimeout', 'afk_timeout' ],
-        [ 'systemChannelId', 'system_channel_id' ]
+        [ 'systemChannelId', 'system_channel_id' ],
+        [ 'systemChannelFlags', 'system_channel_flags' ],
+        [ 'rulesChannelId', 'rules_channel_id' ],
+        [ 'publicUpdatesChannelId', 'public_updates_channel_id' ],
+        [ 'preferredLocale', 'preferred_locale' ],
+        'features',
+        'description',
+        'banner',
+        'splash',
+        'discoverySplash',
+        [ 'ownerId', 'owner_id' ],
+        [ 'widgetEnabled', 'widget_enabled' ],
+        [ 'widgetChannelId', 'widget_channel_id' ],
+        [ 'premiumProgressEnabled', 'premium_progress_bar_enabled' ],
+        [ 'safetyAlertsChannelId', 'safety_alerts_channel_id' ]
       ]
     })
 
-    const response = await this.app.internals.actions.editGuild(id, payload)
+    const response = await this.app.internals.actions.editGuild(id, payload, options.reason)
 
     if (response.success) {
       const Guild = EntitiesUtil.get('Guild')
-      return await new Guild(this.app).init(response.result)
+
+      if (options.patchEntity) {
+        return await options.patchEntity.init(response.result)
+      } else {
+        return await new Guild(this.app).init(response.result)
+      }
     }
 
     return undefined
