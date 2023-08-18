@@ -1,4 +1,6 @@
 export { ApplicationInvitesManager } from './ApplicationInvitesManager'
+export { InviteGuildsManagerData } from './InviteGuildsManagerData'
+export { GuildInvitesManager } from './GuildInvitesManager'
 export { InviteCreateOptions } from './InviteCreateOptions'
 export { InviteGuildsManager } from './InviteGuildsManager'
 export { FetchInviteQuery } from './FetchInviteQuery'

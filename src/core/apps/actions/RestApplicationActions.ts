@@ -33,7 +33,7 @@ import {
   RawThreadChannelWithMessageCreateData,
   RawUserData,
   RawGuildAppCommandEditData,
-  MessageEditData, InteractionMessageEditOptions, InteractionMessageCreateData
+  MessageEditData, InteractionMessageEditOptions, InteractionMessageCreateData, RawGuildEditData
 } from '@src/api'
 import { Endpoints } from '@src/constants'
 import { DiscordRestApplication } from '@src/core'
@@ -355,30 +355,10 @@ export class RestApplicationActions {
       .patch<RawAppCommandData>()
   }
 
-  editGuild(guildId: string, data: any /* TODO: GuildData */, reason?: string) {
+  editGuild(guildId: string, data: RawGuildEditData, reason?: string) {
     return this.app.internals.rest.api()
       .url(Endpoints.GUILD(guildId))
-      .body({
-        name: data.name,
-        region: data.region,
-        icon: data.icon,
-        verification_level: data.verificationLevel,
-        default_message_notifications: data.defaultNotifications,
-        explicit_content_filter: data.explicitContentFilter,
-        system_channel_id: data.systemChannelId,
-        system_channel_flags: data.systemChannelFlags,
-        rules_channel_id: data.rulesChannelId,
-        public_updates_channel_id: data.publicUpdatesChannelId,
-        preferred_locale: data.preferredLocale,
-        afk_channel_id: data.afkChannelId,
-        afk_timeout: data.afkTimeout,
-        owner_id: data.ownerId,
-        splash: data.splash,
-        banner: data.banner,
-        description: data.description,
-        discovery_splash: data.discoverySplash,
-        features: data.features,
-      })
+      .body(data)
       .patch({ reason })
   }
 

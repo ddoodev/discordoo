@@ -2,7 +2,7 @@ import { EntitiesCacheManager } from '@src/api/managers'
 import { DiscordRestApplication } from '@src/core'
 import { Keyspaces } from '@src/constants'
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
-import { EntitiesUtil, Guild, GuildEditOptions, GuildResolvable } from '@src/api'
+import { EntitiesUtil, Guild, GuildEditOptions, GuildResolvable, RawGuildEditData } from '@src/api'
 import { attach, DiscordooError, guildChannelCreateDataToRaw, resolveGuildId, roleToRaw } from '@src/utils'
 import { GuildCreateData } from '@src/api/entities/guild/interfaces/GuildCreateData'
 import { RawGuildCreateData } from '@src/api/entities/guild/interfaces/RawGuildCreateData'
@@ -57,8 +57,8 @@ export class ApplicationGuildsManager extends EntitiesManager {
 
   async edit(
     guild: GuildResolvable,
-    data: GuildEditData,
-    options: GuildEditOptions
+    data: GuildEditData | RawGuildEditData,
+    options?: GuildEditOptions
   ): Promise<Guild | undefined> {
     const id = resolveGuildId(guild)
     if (!id) throw new DiscordooError('ApplicationGuildsManager#edit', 'Cannot edit guild without guild id.')
@@ -92,12 +92,12 @@ export class ApplicationGuildsManager extends EntitiesManager {
       ]
     })
 
-    const response = await this.app.internals.actions.editGuild(id, payload, options.reason)
+    const response = await this.app.internals.actions.editGuild(id, payload, options?.reason)
 
     if (response.success) {
       const Guild = EntitiesUtil.get('Guild')
 
-      if (options.patchEntity) {
+      if (options?.patchEntity) {
         return await options.patchEntity.init(response.result)
       } else {
         return await new Guild(this.app).init(response.result)

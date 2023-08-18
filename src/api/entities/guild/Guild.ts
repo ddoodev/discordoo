@@ -11,7 +11,7 @@ import { RawGuildData } from '@src/api/entities/guild/interfaces/RawGuildData'
 import { DiscordLocale } from '@src/constants/common/DiscordLocale'
 import { AnyGuildWritableChannel } from '@src/api/entities/channel/interfaces/AnyGuildWritableChannel'
 import { GuildMember } from '@src/api/entities/member/GuildMember'
-import { GuildApplicationCommandsManager, GuildChannelResolvable, GuildEditData, GuildMemberResolvable } from '@src/api'
+import { GuildApplicationCommandsManager, GuildChannelResolvable, GuildEditData, GuildMemberResolvable, RawGuildEditData } from '@src/api'
 import {
   GuildDefaultMessageNotificationLevel,
   GuildExplicitContentFilterLevels,
@@ -110,7 +110,7 @@ export class Guild extends AbstractViewableGuild {
     return this.systemChannelId ? this.channels.cache.get<AnyGuildWritableChannel>(this.systemChannelId, options) : undefined
   }
 
-  async edit(data: GuildEditData, reason?: string): Promise<this | undefined> {
+  async edit(data: GuildEditData | RawGuildEditData, reason?: string): Promise<this | undefined> {
     const success = await this.app.guilds.edit(this.id, data, { reason, patchEntity: this })
 
     return success ? this : undefined
