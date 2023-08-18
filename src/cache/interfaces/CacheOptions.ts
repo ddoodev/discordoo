@@ -38,85 +38,104 @@ export const CACHE_OPTIONS_KEYS_LENGTH = 15 // all cache options expect 'global'
 
 export type AnyEntity = typeof Entities[keyof typeof Entities]
 
+/**
+ * The CacheOptionsCell interface represents the options for caching a specific entity type with a specific caching policy.
+ * @template Entity - Entity to cache.
+ * @template Policy - Caching policy.
+ */
+export interface CacheOptionsCell<Entity, Policy> {
+  /**
+   * The custom function to determine whether to cache the entity.
+   * @param entity
+   */
+  custom?: (entity: Entity) => boolean | Promise<boolean>
+  /**
+   * The caching policy for this type of entity.
+   */
+  policies: Policy[]
+}
+
+/**
+ * Represents the options for managing caching of different entity types.
+ */
 export interface CacheOptions {
-  channels?: {
-    custom?: (channel: AnyChannel) => boolean | Promise<boolean>
-    policies: ChannelsCachingPolicy[]
-  }
+  /**
+   * The caching options for channels.
+   */
+  channels?: CacheOptionsCell<AnyChannel, ChannelsCachingPolicy>
 
-  emojis?: {
-    custom?: (emoji: AnyEmoji) => boolean | Promise<boolean>
-    policies: EmojisCachingPolicy[]
-  }
+  /**
+   * The caching options for commands.
+   */
+  commands?: CacheOptionsCell<AppCommand, AppCommandsCachingPolicy>
 
-  global?: {
-    custom?: (entity: AnyEntity) => boolean | Promise<boolean>
-    policies: GlobalCachingPolicy[]
-  }
+  /**
+   * The caching options for emojis.
+   */
+  emojis?: CacheOptionsCell<AnyEmoji, EmojisCachingPolicy>
 
-  invites?: {
-    custom?: (invite: Invite) => boolean | Promise<boolean>
-    policies: InvitesCachingPolicy[]
-  }
+  /**
+   * The caching options for global entities.
+   */
+  global?: CacheOptionsCell<AnyEntity, GlobalCachingPolicy>
 
-  inviteGuilds?: {
-    custom?: (inviteGuild: InviteGuild) => boolean | Promise<boolean>
-    policies: InvitesCachingPolicy[]
-  }
+  /**
+   * The caching options for guilds.
+   */
+  guilds?: CacheOptionsCell<Guild, GuildsCachingPolicy>
 
-  guilds?: {
-    custom?: (guild: Guild) => boolean | Promise<boolean>
-    policies: GuildsCachingPolicy[]
-  }
+  /**
+   * The caching options for invite guilds.
+   */
+  inviteGuilds?: CacheOptionsCell<InviteGuild, InvitesCachingPolicy>
 
-  members?: {
-    custom?: (member: GuildMember) => boolean | Promise<boolean>
-    policies: GuildMembersCachingPolicy[]
-  }
+  /**
+   * The caching options for invites.
+   */
+  invites?: CacheOptionsCell<Invite, InvitesCachingPolicy>
 
-  messages?: {
-    custom?: (message: Message) => boolean | Promise<boolean>
-    lifetime?: number
-    policies: MessagesCachingPolicy[]
-  }
+  /**
+   * The caching options for guild members.
+   */
+  members?: CacheOptionsCell<GuildMember, GuildMembersCachingPolicy>
 
-  presences?: {
-    custom?: (presence: Presence) => boolean | Promise<boolean>
-    policies: PresencesCachingPolicy[]
-  }
+  /**
+   * The caching options for messages.
+   */
+  messages?: CacheOptionsCell<Message, MessagesCachingPolicy>
 
-  roles?: {
-    custom?: (role: Role) => boolean | Promise<boolean>
-    policies: RolesCachingPolicy[]
-  }
+  /**
+   * The caching options for permission overwrites.
+   */
+  overwrites?: CacheOptionsCell<PermissionOverwrite, OverwritesCachingPolicy>
 
-  users?: {
-    custom?: (user: User) => boolean | Promise<boolean>
-    policies: UsersCachingPolicy[]
-  }
+  /**
+   * The caching options for presences.
+   */
+  presences?: CacheOptionsCell<Presence, PresencesCachingPolicy>
 
-  stickers?: {
-    custom?: (sticker: Sticker) => boolean | Promise<boolean>
-    policies: StickersCachingPolicy[]
-  }
+  /**
+   * The caching options for reactions.
+   */
+  reactions?: CacheOptionsCell<MessageReaction, ReactionsCachingPolicy>
 
-  reactions?: {
-    custom?: (reaction: MessageReaction) => boolean | Promise<boolean>
-    policies: ReactionsCachingPolicy[]
-  }
+  /**
+   * The caching options for roles.
+   */
+  roles?: CacheOptionsCell<Role, RolesCachingPolicy>
 
-  overwrites?: {
-    custom?: (overwrite: PermissionOverwrite) => boolean | Promise<boolean>
-    policies: OverwritesCachingPolicy[]
-  }
+  /**
+   * The caching options for stickers.
+   */
+  stickers?: CacheOptionsCell<Sticker, StickersCachingPolicy>
 
-  threadMembers?: {
-    custom?: (threadMember: ThreadMember) => boolean | Promise<boolean>
-    policies: ThreadMembersCachingPolicy[]
-  }
+  /**
+   * The caching options for thread members.
+   */
+  threadMembers?: CacheOptionsCell<ThreadMember, ThreadMembersCachingPolicy>
 
-  commands?: {
-    custom?: (command: AppCommand) => boolean | Promise<boolean>
-    policies: AppCommandsCachingPolicy[]
-  }
+  /**
+   * The caching options for users.
+   */
+  users?: CacheOptionsCell<User, UsersCachingPolicy>
 }
