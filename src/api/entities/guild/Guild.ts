@@ -49,7 +49,9 @@ export class Guild extends AbstractViewableGuild {
         [ 'systemChannelId', 'system_channel_id' ],
         [ 'ownerId', 'owner_id' ],
         [ 'membersCount', 'members_count' ],
-        [ 'explicitContentFilter', 'explicit_content_filter' ]
+        [ 'explicitContentFilter', 'explicit_content_filter' ],
+        [ 'premiumTier', 'premium_tier' ],
+        [ 'premiumSubscriptionCount', 'premium_subscription_count' ]
       ],
       disabled: options?.ignore,
       enabled: [ 'unavailable', 'ownerId' ]
