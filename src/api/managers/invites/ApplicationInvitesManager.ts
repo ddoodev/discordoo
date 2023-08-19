@@ -84,8 +84,13 @@ export class ApplicationInvitesManager extends EntitiesManager {
       return Promise.all(response.result.map(async invite => {
         const inviteEntity = await new Invite(this.app).init(invite)
 
-        if (invite.inviter || invite.target_user) {
-          const user = await new User(this.app).init(invite.inviter ?? invite.target_user)
+        if (invite.inviter) {
+          const user = await new User(this.app).init(invite.inviter)
+          await this.app.users.cache.set(user.id, user)
+        }
+
+        if (invite.target_user) {
+          const user = await new User(this.app).init(invite.target_user)
           await this.app.users.cache.set(user.id, user)
         }
 
