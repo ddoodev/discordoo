@@ -36,6 +36,8 @@ export class Guild extends AbstractViewableGuild {
   public declare membersCount: number
   public declare commands: GuildApplicationCommandsManager
   public declare explicitContentFilter: GuildExplicitContentFilterLevels
+  public declare premiumTier: number
+  public declare premiumSubscriptionCount: number
 
   async init(data: GuildData | RawGuildData, options?: EntityInitOptions): Promise<this> {
     await super.init(data)
