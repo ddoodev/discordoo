@@ -36,6 +36,8 @@ export class Guild extends AbstractViewableGuild {
   public declare membersCount: number
   public declare commands: GuildApplicationCommandsManager
   public declare explicitContentFilter: GuildExplicitContentFilterLevels
+  public declare premiumTier: number
+  public declare premiumSubscriptionCount: number
 
   async init(data: GuildData | RawGuildData, options?: EntityInitOptions): Promise<this> {
     await super.init(data)
@@ -49,7 +51,9 @@ export class Guild extends AbstractViewableGuild {
         [ 'systemChannelId', 'system_channel_id' ],
         [ 'ownerId', 'owner_id' ],
         [ 'membersCount', 'members_count' ],
-        [ 'explicitContentFilter', 'explicit_content_filter' ]
+        [ 'explicitContentFilter', 'explicit_content_filter' ],
+        [ 'premiumTier', 'premium_tier' ],
+        [ 'premiumSubscriptionCount', 'premium_subscription_count' ]
       ],
       disabled: options?.ignore,
       enabled: [ 'unavailable', 'ownerId' ]
