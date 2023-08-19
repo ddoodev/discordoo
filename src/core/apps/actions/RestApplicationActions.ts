@@ -603,7 +603,7 @@ export class RestApplicationActions {
   getGuildInvites(guildId: string) {
     return this.app.internals.rest.api()
       .url(Endpoints.GUILD_INVITES(guildId))
-      .get()
+      .get<RawInviteData[]>()
   }
 
   getGuildMember(guildId: string, memberId: string) {
