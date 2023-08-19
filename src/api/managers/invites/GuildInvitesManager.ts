@@ -1,4 +1,10 @@
-import { AnyInvitableChannelResolvable, EntitiesCacheManager, Invite, InviteCreateOptions } from '@src/api'
+import {
+  AnyInvitableChannelResolvable,
+  EntitiesCacheManager,
+  FetchInviteData,
+  Invite,
+  InviteCreateOptions
+} from '@src/api'
 import { EntitiesManager } from '@src/api/managers/EntitiesManager'
 import { DiscordRestApplication } from '@src/core'
 import { Keyspaces } from '@src/constants'
@@ -22,6 +28,21 @@ export class GuildInvitesManager extends EntitiesManager {
       entity: 'Invite',
       policy: 'invites'
     })
+  }
+
+  async fetch(): Promise<Invite[] | undefined>
+  async fetch(data: FetchInviteData): Promise<Invite | undefined>
+  async fetch(data?: FetchInviteData): Promise<Invite[] | Invite | undefined> {
+    if (!data) return this.fetchMany()
+    else return this.fetchOne(data)
+  }
+
+  async fetchMany(): Promise<Invite[] | undefined> {
+    return this.app.invites.fetchMany(this.guildId)
+  }
+
+  async fetchOne(data: FetchInviteData): Promise<Invite | undefined> {
+    return this.app.invites.fetchOne(data)
   }
 
   async create(
