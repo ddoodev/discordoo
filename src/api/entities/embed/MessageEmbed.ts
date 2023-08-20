@@ -74,9 +74,7 @@ export class MessageEmbed extends AbstractEntity implements MessageEmbedData {
 
   private _fixFields(...fields: any[]): any[] {
     return fields.flat(2)
-      .map(field =>
-        this._fixFields(field.name, field.value, is<boolean>(field.inline) ? field.inline : false)
-      )
+      .map(field => ({ ...field, inline: is<boolean>(field.inline) ? field.inline : false }))
   }
 
   private static _resolveJson(data: RawMessageEmbedData): MessageEmbedData {
