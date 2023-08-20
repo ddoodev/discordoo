@@ -15,7 +15,7 @@ import { GuildApplicationCommandsManager, GuildChannelResolvable, GuildEditData,
 import {
   GuildDefaultMessageNotificationLevel,
   GuildExplicitContentFilterLevels,
-  GuildFeatures,
+  GuildFeatures, GuildPremiumTier,
   GuildVerificationLevels
 } from '@src/constants'
 import { GuildRolesManager } from '@src/api/managers/roles/GuildRolesManager'
@@ -36,7 +36,7 @@ export class Guild extends AbstractViewableGuild {
   public declare membersCount: number
   public declare commands: GuildApplicationCommandsManager
   public declare explicitContentFilter: GuildExplicitContentFilterLevels
-  public declare premiumTier: number
+  public declare premiumTier: GuildPremiumTier
   public declare premiumSubscriptionCount: number
 
   async init(data: GuildData | RawGuildData, options?: EntityInitOptions): Promise<this> {
