@@ -200,3 +200,9 @@ SID - still in development
 ## Contributing
 Feel free to create a PR, but check if there is an existing one.
 See [Contributing Guide](https://github.com/ddoodev/discordoo/blob/develop/CONTRIBUTING.md).
+
+## JetBrains Open Source Support
+Many thanks to the JetBrains team for supporting licenses for their IDE! JetBrains make the best IDEs, seriously, you should try!
+<p>
+  <a href="https://jb.gg/OpenSourceSupport?from=discordoo"><img width="128" src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg" alt=""></a>
+</p>
