@@ -1,3 +1,5 @@
+import { PremiumTypes } from '@src/constants'
+
 export interface RawUserData {
   id: string
   username: string
@@ -14,6 +16,6 @@ export interface RawUserData {
   verified?: boolean
   email?: string
   flags?: number
-  premium_type?: number
+  premium_type?: PremiumTypes
   public_flags?: number
 }

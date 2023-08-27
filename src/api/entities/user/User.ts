@@ -8,6 +8,7 @@ import { UserFlagsUtil } from '@src/utils/bitfield'
 import { DirectMessagesChannel, GuildResolvable, Message, MessageContent, MessageCreateOptions, Presence } from '@src/api'
 import { CacheManagerFilterOptions, CacheManagerGetOptions } from '@src/cache'
 import { EntityInitOptions } from '@src/api/entities/EntityInitOptions'
+import { PremiumTypes } from '@src/constants'
 
 export class User extends AbstractEntity implements UserData {
   public accentColor?: number
@@ -20,7 +21,7 @@ export class User extends AbstractEntity implements UserData {
   public declare id: string
   public locale?: string
   public mfaEnabled?: boolean
-  public premiumType?: number
+  public premiumType?: PremiumTypes
   public flags?: UserFlagsUtil
   public declare system: boolean
   public declare username: string

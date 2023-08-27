@@ -1,4 +1,5 @@
 import { BitFieldResolvable } from '@src/utils/bitfield'
+import { PremiumTypes } from '@src/constants'
 
 export interface UserData {
   id: string
@@ -15,5 +16,5 @@ export interface UserData {
   verified?: boolean
   email?: string
   flags?: BitFieldResolvable
-  premiumType?: number
+  premiumType?: PremiumTypes
 }
