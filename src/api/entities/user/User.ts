@@ -98,6 +98,10 @@ export class User extends AbstractEntity implements UserData {
   }
 
   get tag(): string {
+    if (this.discriminator === '0') {
+      return this.username
+    }
+    
     return `${this.username ?? 'unknown'}#${this.discriminator ?? '0000'}`
   }
 
