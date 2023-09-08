@@ -12,4 +12,5 @@ export enum ChannelTypes {
   GuildStageVoice,
   GuildDirectory,
   GuildForum,
+  GuildMedia,
 }
