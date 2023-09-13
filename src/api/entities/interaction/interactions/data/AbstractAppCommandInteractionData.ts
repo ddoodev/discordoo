@@ -2,9 +2,8 @@ import {
   AppCommandInteractionOptionPayload, EntityInitOptions,
   InteractionResolvedCacheManager,
   Json, MessageAppCommandInteractionData,
-  RawAppCommandInteractionData,
   RawInteractionResolvedData, ChatInputInteractionData,
-  ToJsonProperties, UserAppCommandInteractionData
+  ToJsonProperties, UserAppCommandInteractionData, RawAbstractAppCommandInteractionInitData
 } from '@src/api'
 import { AbstractEntity } from '@src/api/entities/AbstractEntity'
 import { AppCommandTypes, ToJsonOverrideSymbol } from '@src/constants'
@@ -20,10 +19,7 @@ export abstract class AbstractAppCommandInteractionData extends AbstractEntity {
   protected _channelId?: string
   protected _guildId?: string
 
-  async init(
-    data: RawAppCommandInteractionData & { guildId?: string; channelId?: string },
-    options?: EntityInitOptions
-  ): Promise<this> {
+  async init(data: RawAbstractAppCommandInteractionInitData, options?: EntityInitOptions): Promise<this> {
     attach(this, data, {
       props: [
         'id',

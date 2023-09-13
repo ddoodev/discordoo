@@ -1,4 +1,4 @@
-import { AbstractUiAppCommandInteractionData } from '@src/api/entities/interaction/interactions/AbstractUiAppCommandInteractionData'
+import { AbstractUiAppCommandInteractionData } from '@src/api/entities/interaction/interactions/data/AbstractUiAppCommandInteractionData'
 import { Message } from '@src/api'
 import { CacheManagerGetOptions } from '@src/cache'
 import { AppCommandTypes } from '@src/constants'

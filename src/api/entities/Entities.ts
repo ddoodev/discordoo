@@ -38,9 +38,9 @@ import {
   TextInputInteractionData
 } from '@src/api/entities/interaction/'
 import { InteractionResolvedThreadChannel } from '@src/api/entities/channel/InteractionResolvedThreadChannel'
-import { MessageAppCommandInteractionData } from '@src/api/entities/interaction/interactions/MessageAppCommandInteractionData'
-import { ChatInputInteractionData } from '@src/api/entities/interaction/interactions/ChatInputInteractionData'
-import { UserAppCommandInteractionData } from '@src/api/entities/interaction/interactions/UserAppCommandInteractionData'
+import { MessageAppCommandInteractionData } from '@src/api/entities/interaction/interactions/data/MessageAppCommandInteractionData'
+import { ChatInputInteractionData } from '@src/api/entities/interaction/interactions/data/ChatInputInteractionData'
+import { UserAppCommandInteractionData } from '@src/api/entities/interaction/interactions/data/UserAppCommandInteractionData'
 
 export const Entities = {
   Message,
