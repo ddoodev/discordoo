@@ -1,3 +1,4 @@
+export { RawSelectMenuDefaultValueData } from './RawSelectMenuDefaultValueData'
 export { RawTextInputComponentData } from './RawTextInputComponentData'
 export { RawMessageComponentData } from './RawMessageComponentData'
 export { RawActionRowData } from './RawActionRowData'

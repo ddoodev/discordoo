@@ -1,3 +1,4 @@
+export { SelectMenuDefaultValueData, SelectMenuDefaultValueDataIdResolvable } from './SelectMenuDefaultValueData'
 export { MessageComponentResolvable } from './MessageComponentResolvable'
 export { TextInputComponentData } from './TextInputComponentData'
 export { SelectMenuOptionData } from './SelectMenuOptionData'

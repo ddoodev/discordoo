@@ -1,3 +1,4 @@
+export { SelectMenuDefaultValueType } from './SelectMenuDefaultValueType'
 export { InteractionResponseTypes } from './InteractionResponseTypes'
 export { AppCommandOptionTypes } from './AppCommandOptionTypes'
 export { InteractionTypes } from './InteractionTypes'

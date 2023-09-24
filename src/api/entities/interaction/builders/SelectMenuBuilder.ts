@@ -1,6 +1,12 @@
-import { RawSelectMenuComponentData, SelectMenuComponentData, SelectMenuOptionData, SelectMenuTypes } from '@src/api'
+import {
+  RawSelectMenuComponentData,
+  RawSelectMenuDefaultValueData,
+  SelectMenuComponentData, SelectMenuDefaultValueData,
+  SelectMenuOptionData,
+  SelectMenuTypes
+} from '@src/api'
 import { ChannelTypes } from '@src/constants'
-import { attach } from '@src/utils'
+import { attach, DiscordooError, resolveSelectMenuDefaultValueId } from '@src/utils'
 
 export class SelectMenuBuilder {
   declare type: SelectMenuTypes
@@ -11,6 +17,7 @@ export class SelectMenuBuilder {
   public disabled?: boolean
   public options: SelectMenuOptionData[] = []
   public channelTypes?: ChannelTypes[]
+  public defaultValues: RawSelectMenuDefaultValueData[] = []
 
   constructor(data?: SelectMenuComponentData | RawSelectMenuComponentData) {
     if (!data) return this
@@ -27,6 +34,26 @@ export class SelectMenuBuilder {
         [ 'channelTypes', 'channel_types' ]
       ]
     })
+  }
+
+  addDefaultValue(defaultValue: SelectMenuDefaultValueData | RawSelectMenuDefaultValueData) {
+    const id = resolveSelectMenuDefaultValueId(defaultValue.id)
+    if (!id) {
+      throw new DiscordooError('SelectMenuBuilder#addDefaultValue', 'Cannot add default value without id.')
+    }
+
+    const defaultValueData: RawSelectMenuDefaultValueData = {
+      id: id,
+      type: defaultValue.type
+    }
+
+    this.defaultValues.push(defaultValueData)
+    return this
+  }
+
+  addDefaultValues(defaultValues: Array<SelectMenuDefaultValueData | RawSelectMenuDefaultValueData>) {
+    defaultValues.forEach((defaultValue) => this.addDefaultValue(defaultValue))
+    return this
   }
 
   addOption(option: SelectMenuOptionData) {
@@ -78,12 +105,13 @@ export class SelectMenuBuilder {
     return {
       channel_types: this.channelTypes,
       custom_id: this.customId,
+      default_values: this.defaultValues,
       disabled: this.disabled,
       max_values: this.maxValues,
       min_values: this.minValues,
-      options: this.options!,
+      options: this.options,
       placeholder: this.placeholder,
-      type: this.type
+      type: this.type,
     }
   }
 }

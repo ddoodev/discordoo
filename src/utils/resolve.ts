@@ -31,7 +31,7 @@ import {
   MessageAttachmentBuilder,
   MessageComponentResolvable, RawActionRowData, RawAllowedMentionsData,
   RawAnyComponentData,
-  SelectMenuBuilder,
+  SelectMenuBuilder, SelectMenuDefaultValueData, SelectMenuDefaultValueDataIdResolvable,
   TextInputBuilder,
   ThreadChannelResolvable
 } from '@src/api'
@@ -465,6 +465,10 @@ export function resolveAllowedMentionsToRaw(resolvable: AllowedMentionsResolvabl
   else if ('repliedUser' in resolvable) result.replied_user = resolvable.repliedUser
 
   return result
+}
+
+export function resolveSelectMenuDefaultValueId(resolvable: SelectMenuDefaultValueDataIdResolvable): string | undefined {
+  return resolveAnythingToId(resolvable)
 }
 
 // TODO: resolveComponents
