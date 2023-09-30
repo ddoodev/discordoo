@@ -63,7 +63,9 @@ export class WebhookApplication<ClientStack extends DefaultWebhookApplicationSta
       retryWait: options.rest?.retryWait ?? REST_DEFAULT_OPTIONS.retryWait,
       api: Object.assign({}, REST_DEFAULT_OPTIONS.api, options.rest?.api),
       cdn: Object.assign({}, REST_DEFAULT_OPTIONS.cdn, options.rest?.cdn),
-      limits: Object.assign({}, REST_DEFAULT_OPTIONS.limits, options.rest?.limits)
+      limits: Object.assign({}, REST_DEFAULT_OPTIONS.limits, options.rest?.limits),
+      invites: Object.assign({}, REST_DEFAULT_OPTIONS.invites, options.rest?.invites),
+      gifts: Object.assign({}, REST_DEFAULT_OPTIONS.gifts, options.rest?.gifts)
     }
   }
 }

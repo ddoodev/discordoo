@@ -181,7 +181,9 @@ export class DiscordRestApplication<ApplicationStack extends DefaultDiscordRestA
       retryWait: this.options.rest?.retryWait ?? REST_DEFAULT_OPTIONS.retryWait,
       api: Object.assign({}, REST_DEFAULT_OPTIONS.api, { auth: `Bot ${this.token}` }, this.options.rest?.api),
       cdn: Object.assign({}, REST_DEFAULT_OPTIONS.cdn, this.options.rest?.cdn),
-      limits: Object.assign({}, REST_DEFAULT_OPTIONS.limits, this.options.rest?.limits)
+      limits: Object.assign({}, REST_DEFAULT_OPTIONS.limits, this.options.rest?.limits),
+      invites: Object.assign({}, REST_DEFAULT_OPTIONS.invites, this.options.rest?.invites),
+      gifts: Object.assign({}, REST_DEFAULT_OPTIONS.gifts, this.options.rest?.gifts)
     }
   }
 
