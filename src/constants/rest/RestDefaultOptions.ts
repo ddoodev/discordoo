@@ -24,4 +24,11 @@ export const REST_DEFAULT_OPTIONS: CompletedRestOptions = {
     globalLimit: 50,
     invalidLimit: 10_000,
   },
+  invites: {
+    domain: 'discord.gg',
+    path: '/'
+  },
+  gifts: {
+    domain: 'discord.gift',
+  }
 }

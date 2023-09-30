@@ -64,6 +64,29 @@ export interface ContentDeliveryNetworkOptions {
   domain?: string
 }
 
+/** Discord Invites options */
+export interface InvitesOptions {
+  /**
+   * Invite domain
+   * @default discord.gg
+   */
+  domain?: string
+  /**
+   * Invite path
+   * @default /
+   */
+  path?: string
+}
+
+/** Discord Gifts options */
+export interface GiftsOptions {
+  /**
+   * Gift domain
+   * @default discord.gift
+   */
+  domain?: string
+}
+
 /** Rest options */
 export interface RestOptions {
   /** The maximum time in which the request should be executed, in ms */
@@ -80,6 +103,10 @@ export interface RestOptions {
   api?: ApiOptions
   /** Discord API Rate Limits options */
   limits?: RateLimitsOptions
+  /** Discord Invites options */
+  invites?: InvitesOptions
+  /** Discord Gifts options */
+  gifts?: GiftsOptions
 }
 
 export interface CompletedRestOptions {
@@ -90,4 +117,6 @@ export interface CompletedRestOptions {
   cdn: Required<ContentDeliveryNetworkOptions>
   api: Required<ApiOptions>
   limits: Required<RateLimitsOptions>
+  invites: Required<InvitesOptions>
+  gifts: Required<GiftsOptions>
 }

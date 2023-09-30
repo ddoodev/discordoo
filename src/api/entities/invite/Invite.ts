@@ -113,6 +113,11 @@ export class Invite extends AbstractEntity {
     return this._channel ? this._channel : this.channelId ? this.app.channels.cache.get<AnyInvitableChannel>(this.channelId) : undefined
   }
 
+  toString(): string {
+    const options = this.app.internals.rest.options
+    return `${options.api.scheme}://${options.invites.domain}${options.invites.path}${this.code}`
+  }
+
   jsonify(properties: ToJsonProperties = {}, obj?: any): Json {
     return super.jsonify({
       ...properties,
