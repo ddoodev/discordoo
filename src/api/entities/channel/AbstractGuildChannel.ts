@@ -8,7 +8,7 @@ import { ChannelPermissionOverwritesManager } from '@src/api/managers/overwrites
 import { PermissionOverwriteResolvable } from '@src/api/entities/overwrite/interfaces/PermissionOverwriteResolvable'
 import { PermissionOverwrite } from '@src/api/entities/overwrite/PermissionOverwrite'
 import { GuildCategoryChannel } from '@src/api/entities/channel/GuildCategoryChannel'
-import { ChannelTypes, Keyspaces, PermissionFlags } from '@src/constants'
+import { ChannelTypes, Keyspaces, otherCacheSymbol, PermissionFlags } from '@src/constants'
 import { CacheManagerGetOptions } from '@src/cache'
 import {
   PermissionsCheckOptions,
@@ -114,25 +114,16 @@ export abstract class AbstractGuildChannel extends AbstractChannel {
     if (!id) throw new DiscordooError('Channel#memberPermissions', 'Cannot check member permissions without member')
 
     if (options?.checkAdmin) {
-      const memberExists = await this.app.internals.cache.has(Keyspaces.GuildMembers, this.guildId, id)
+      const guildOwner = await this.app[otherCacheSymbol].get(this.guildId, { storage: 'guild-owners' })
 
-      if (memberExists) {
-        const member = await this.app.internals.cache.get<string, GuildMember>(
-          Keyspaces.GuildMembers,
-          this.guildId,
-          'GuildMember',
-          id
-        )
+      if (guildOwner?.id === id) return new ReadonlyPermissions(Permissions.ALL)
 
-        if (member?.guildOwner) return new ReadonlyPermissions(Permissions.ALL)
-      } else {
-        const guildExists = await this.app.guilds.cache.has(this.guildId)
+      const guildExists = await this.app.guilds.cache.has(this.guildId)
 
-        if (guildExists) {
-          const guild = await this.app.guilds.cache.get(this.guildId)
+      if (guildExists) {
+        const guild = await this.app.guilds.cache.get(this.guildId)
 
-          if (guild!.ownerId === id) return new ReadonlyPermissions(Permissions.ALL)
-        }
+        if (guild!.ownerId === id) return new ReadonlyPermissions(Permissions.ALL)
       }
     }
 
