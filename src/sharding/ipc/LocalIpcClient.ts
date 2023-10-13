@@ -1,5 +1,5 @@
 import { TypedEmitter } from 'tiny-typed-emitter'
-import { IPC as RawIpc } from '@achrinza/node-ipc'
+import { IPC as RawIpc } from '@node-ipc/compat'
 import { IpcClientOptions, IpcClientSendOptions, IpcPacket, IpcPresenceUpdatePacket, ShardingInstance } from '@src/sharding'
 import { Collection } from '@discordoo/collection'
 import { IpcConnectionState, IpcEvents, IpcOpCodes, RAW_IPC_EVENT, SerializeModes, SHARDING_MANAGER_ID } from '@src/constants'
