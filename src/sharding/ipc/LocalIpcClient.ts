@@ -77,7 +77,7 @@ export class LocalIpcClient extends TypedEmitter<IpcClientEvents> {
         )
         this.state = IpcConnectionState.Disconnected
         promise.rej(err)
-      }, this.shards.length * 30000)
+      }, this.shards.length * 300_000)
 
       this.bucket.set(this.INSTANCE_IPC, promise)
 

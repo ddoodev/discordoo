@@ -140,7 +140,7 @@ export class ShardingInstance extends TypedEmitter {
     }
 
     // TODO: should be in LocalIpcClient
-    await this.ipc.send(request, { responseTimeout: shards.length * 30000, waitResponse: true })
+    await this.ipc.send(request, { responseTimeout: shards.length * 300_000, waitResponse: true })
       .catch(e => {
         throw e?.d?.result ? deserializeError(e.d.result) : e
       })
@@ -212,7 +212,7 @@ export class ShardingInstance extends TypedEmitter {
     if (this.#running) throw new DiscordooError('ShardingInstance#create', 'Sharding instance', this.id, 'already running.')
     this.#running = true
     // TODO: timeout does not affect
-    if (!options.timeout) options.timeout = this.options.shards.length * 30000
+    if (!options.timeout) options.timeout = this.options.shards.length * 300_000
 
     const env: any = {
       ...process.env,
