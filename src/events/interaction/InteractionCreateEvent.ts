@@ -80,6 +80,19 @@ export class InteractionCreateEvent extends AbstractEvent<InteractionCreateEvent
       }
 
       await this.app.members.cache.set(member.userId, member, { storage: member.guildId })
+
+      if (data.member.user) {
+        let user = await this.app.users.cache.get(data.member.user.id)
+
+        if (user) {
+          user = await user.init(data.member.user)
+        } else {
+          const User = EntitiesUtil.get('User')
+          user = await new User(this.app).init(data.member.user)
+        }
+
+        await this.app.users.cache.set(user.id, user)
+      }
     }
 
     if (data.user) {
