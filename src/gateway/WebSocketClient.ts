@@ -165,6 +165,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
       clearTimeout(this._handshakeTimeout)
     } else if (create) {
       this._handshakeTimeout = setTimeout(() => {
+        console.log('shard', this.id, 'handshake timeout')
         this.destroy({ reconnect: true })
       }, 15000 /* TODO: this.options.handshakeTimeout */)
     }
