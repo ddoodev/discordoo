@@ -97,8 +97,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
 
       const ready   = () => { cleanup(); resolve() },
             resumed = () => { cleanup(); resolve() },
-            invalid = () => { cleanup(); reject({ code: 1000, reason: 'Invalid session' })
-            },
+            invalid = () => { cleanup(); reject({ code: 1000, reason: 'Invalid session' }) },
             closed  = (e: WebSocket.CloseEvent) => { cleanup(); reject({ code: e?.code, reason: e?.reason }) }
 
       /**
@@ -135,7 +134,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
         console.log('shard', this.id, 'creating websocket', this.resumeUrl ?? this.options.connection.url)
         this.socket = new WebSocket(this.resumeUrl ?? this.options.connection.url)
 
-        this.handshakeTimeout()
+        this.handshakeTimeout(true, reject)
         console.log('shard', this.id, 'subscribe')
         this.socket.onopen = this.onOpen.bind(this)
         this.socket.onclose = this.onClose.bind(this)
@@ -160,14 +159,14 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
    * when handshake did not occur at the specified time,
    * it reconnects the app
    * */
-  public handshakeTimeout(create = true) {
+  public handshakeTimeout(create = true, reject?: (...params: any[]) => any) {
     if (this._handshakeTimeout) {
       clearTimeout(this._handshakeTimeout)
     } else if (create) {
       this._handshakeTimeout = setTimeout(() => {
         console.log('shard', this.id, 'handshake timeout')
-        this.destroy({ reconnect: true })
-        throw new Error('Handshake timeout') // will be caught by .connect()
+        this.destroy({ reconnect: !reject }) // reconnect when no reject callback
+        if (reject) reject({ code: -1, reason: 'Handshake timeout' })
       }, 15000 /* TODO: this.options.handshakeTimeout */)
     }
   }
