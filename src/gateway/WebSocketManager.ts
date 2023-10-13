@@ -24,7 +24,7 @@ export class WebSocketManager {
   }
 
   async connect(options?: GatewayShardsInfo) {
-    // console.log('connecting')
+    console.log('connecting')
     this.status = WebSocketManagerStates.Connecting
 
     if (options) {
@@ -36,7 +36,7 @@ export class WebSocketManager {
 
     // console.log('ws manager options:', options)
     // console.log('shards:', this.options.sharding.shards)
-    // console.log('totalShards:', this.options.sharding.totalShards)
+    console.log('totalShards:', this.options.sharding.totalShards)
 
     this.shardQueue = new Set(this.options.sharding.shards.map(id => new WebSocketClient(this, id)))
     // console.log('queue:', this.shardQueue)
@@ -117,6 +117,7 @@ export class WebSocketManager {
           case 1000:
           case WebSocketCloseCodes.AlreadyAuthenticated:
           case WebSocketCloseCodes.InvalidSequence:
+            console.log('shard', shard.id, 'received close code', e.code, 'with reason', e.reason ?? 'Unknown error')
             // TODO: debug...
             shard.destroy({ reconnect: false })
             shard.emit(WebSocketClientEvents.ReconnectMe, true)
