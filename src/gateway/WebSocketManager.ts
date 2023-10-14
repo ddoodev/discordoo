@@ -115,15 +115,18 @@ export class WebSocketManager {
             )
 
           case 1000:
-          case WebSocketCloseCodes.AlreadyAuthenticated:
           case WebSocketCloseCodes.InvalidSequence:
             console.log('shard', shard.id, 'received close code', e.code, 'with reason', e.reason ?? 'Unknown error')
-            // TODO: debug...
+            shard.destroy({ reconnect: true })
+            break
+
+          case WebSocketCloseCodes.AlreadyAuthenticated:
+            console.log('shard', shard.id, 'received close code', e.code, 'with reason', e.reason ?? 'Unknown error')
             shard.destroy({ reconnect: false })
-            shard.emit(WebSocketClientEvents.ReconnectMe, true)
             break
 
           default:
+            console.log('shard', shard.id, 'received close code', e.code, 'with reason', e.reason ?? 'Unknown error')
             // TODO: debug...
             shard.emit(WebSocketClientEvents.ReconnectMe)
         }
