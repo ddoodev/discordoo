@@ -77,7 +77,7 @@ export class GatewayManager<P extends GatewayProvider = GatewayProvider> {
 
   // @ts-ignore
   async waitShardSpawnTurn(shardId: number): Promise<unknown> { // TODO
-    await wait(6000)
+    await wait(15000)
   }
 
   async init() {
