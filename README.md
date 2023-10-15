@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://ddoo.dev/"><img width="520" src="https://cdn.discordapp.com/attachments/531549268033404928/924729757583700020/ddoologo_v2_banner.svg" alt=""></a>
+  <a href="https://ddoo.dev/"><img width="520" src="https://cdn.ddoo.dev/github/ddoologo_v2_banner.svg" alt=""></a>
 </p>
 
 
@@ -70,7 +70,7 @@ See [installation guide](https://docs.ddoo.dev/guide/overview/install) or [API r
 * * **Rest-Only** — create a rest-only application without gateway, for example, http interactions!
 * * **Cache-Only** — create a cache-only application without gateway and rest
 * * **Cache Independent** — everything you need to do anything is ID, no cache needed
-* * **Performance** — consumes about [40% less RAM](https://cdn.discordapp.com/attachments/531549268033404928/1130748409830195300/2023-07-18_09-27-43_1689661663.png) on big bots than djs, without any optimizations. Up to [90% less RAM](https://cdn.discordapp.com/attachments/531549268033404928/1130753449173209189/2023-07-18_09-50-15_1689663015.png) with optimizations.
+* * **Performance** — consumes about [40% less RAM](https://cdn.ddoo.dev/github/2d6565d46dc2.png) on big bots than djs, without any optimizations. Up to [90% less RAM](https://cdn.ddoo.dev/github/b470db08e1df.png) with optimizations.
 * * **Extendable Entities** — extend entities with your own methods and properties, with breakage protection
 * * **Editable Entities** — choose which properties of entities you want to cache, with breakage protection
 

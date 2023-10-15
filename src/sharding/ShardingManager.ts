@@ -148,6 +148,7 @@ export class ShardingManager extends TypedEmitter<ShardingManagerEvents> {
       index++
     }
 
+    this.emit('ready')
     return this
   }
 
