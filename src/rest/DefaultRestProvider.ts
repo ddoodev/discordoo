@@ -45,12 +45,23 @@ export class DefaultRestProvider implements RestProvider {
       const multipart = new MultipartData()
       headers['Content-Type'] = 'multipart/form-data; boundary=' + multipart.boundary
 
-      data.attachments.forEach((attachment, index) => {
-        multipart.attach(`files[${index}]`, attachment.data, attachment.name)
-      })
+      if (data.attachments.length === 1) {
+        const [ attachment ] = data.attachments
+        multipart.attach('file', attachment.data, attachment.name)
+      } else {
+        data.attachments.forEach((attachment, index) => {
+          multipart.attach(`files[${index}]`, attachment.data, attachment.name)
+        })
+      }
 
       if (data.body) {
-        multipart.attach('payload_json', JSON.stringify(data.body))
+        if (options.bodyAsMultipart) {
+          for (const key in data.body) {
+            multipart.attach(key, data.body[key])
+          }
+        } else {
+          multipart.attach('payload_json', JSON.stringify(data.body))
+        }
       }
 
       body = multipart.finish()

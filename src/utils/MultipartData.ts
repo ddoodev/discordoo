@@ -18,19 +18,47 @@ export class MultipartData {
     if (!WebSocketUtils.exists(data)) return
 
     let str = '\r\n--' + this.boundary + '\r\nContent-Disposition: form-data; name="' + fieldName + '"'
+    let contentType: string | undefined
 
     if (fileName) {
       str += '; filename="' + fileName + '"'
+
+      const extension = fileName.match(/\.(png|apng|gif|jpg|jpeg|webp|svg|json)$/i)
+      if (extension) {
+        let ext = extension[1].toLowerCase()
+        switch (ext) {
+          case 'png':
+          case 'apng':
+          case 'gif':
+          case 'jpg':
+          case 'jpeg':
+          case 'webp':
+          case 'svg': {
+            if (ext === 'svg') {
+              ext = 'svg+xml'
+            }
+            contentType = 'image/'
+            break
+          }
+          case 'json': {
+            contentType = 'application/'
+            break
+          }
+        }
+        contentType += ext
+      }
     }
 
-    if (ArrayBuffer.isView(data)) {
-      str +='\r\nContent-Type: application/octet-stream'
+    if (contentType) {
+      str += `\r\nContent-Type: ${contentType}`
+    } else if (ArrayBuffer.isView(data)) {
+      str += '\r\nContent-Type: application/octet-stream'
 
       if (!(data instanceof Uint8Array)) {
         data = new Uint8Array(data.buffer, data.byteOffset, data.byteLength)
       }
     } else if (typeof data === 'object') {
-      str +='\r\nContent-Type: application/json'
+      str += '\r\nContent-Type: application/json'
       data = Buffer.from(JSON.stringify(data))
     } else {
       data = Buffer.from('' + data)

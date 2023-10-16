@@ -165,7 +165,7 @@ export class RestApplicationActions {
         tags: data.tags
       })
       .attach(data.file)
-      .post<RawStickerData>({ reason })
+      .post<RawStickerData>({ reason, bodyAsMultipart: true })
   }
 
   createGuildTemplate(guildId: string, name: string, description?: string) {

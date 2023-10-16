@@ -15,6 +15,7 @@ import { RawStickerCreateData } from '@src/api/entities/sticker/interfaces/RawSt
 import { Keyspaces } from '@src/constants'
 import { StickersManagerEditOptions } from '@src/api/managers/stickers/StickersManagerEditOptions'
 import { DiscordRestApplication } from '@src/core'
+import { DataResolver } from '@src/utils/DataResolver'
 
 export class ApplicationStickersManager extends EntitiesManager {
   public cache: EntitiesCacheManager<Sticker>
