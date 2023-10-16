@@ -33,6 +33,7 @@ export class AppCommandInteraction extends WritableModalInteraction {
         break
       default: {
         this.data = data.data as any
+        // TODO: logger
         console.log('AppCommandInteraction#init', 'Unknown interaction data type', data.type)
         return this
       }
