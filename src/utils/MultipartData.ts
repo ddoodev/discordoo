@@ -70,6 +70,9 @@ export class MultipartData {
 
   finish(): Buffer {
     this.buffs.push(Buffer.from('\r\n--' + this.boundary + '--'))
-    return Buffer.concat(this.buffs)
+    const buffs = this.buffs.map(b => {
+      return Buffer.isBuffer(b) ? b : Buffer.from(b)
+    })
+    return Buffer.concat(buffs)
   }
 }

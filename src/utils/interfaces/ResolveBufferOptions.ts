@@ -1,5 +1,3 @@
-import { Dispatcher } from 'undici'
-
 export interface ResolveBufferOptions {
   /**
    * DANGEROUS: AUTOMATICALLY DOWNLOADS THE FILE FROM THE SPECIFIED Link.
@@ -8,8 +6,6 @@ export interface ResolveBufferOptions {
   fetch?: boolean
   /**
    * Options to use when downloading the file.
-   * @see https://undici.nodejs.org/#/./docs/api/Dispatcher?id=parameter-dispatchoptions
-   * @see https://undici.nodejs.org/#/./docs/api/Dispatcher?id=parameter-requestoptions
    * */
-  fetchOptions?: { dispatcher?: Dispatcher | undefined } & Omit<Dispatcher.RequestOptions, 'origin' | 'path'>
+  fetchOptions?: RequestInit
 }
