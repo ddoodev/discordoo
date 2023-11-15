@@ -26,7 +26,7 @@ jobs:
           fetch-depth: 0
       - uses: actions/setup-node@v1
         with:
-          node-version: 16.13
+          node-version: 18.18.2
           registry-url: https://registry.npmjs.org/
       - name: Install required packages
         run: npm ci
