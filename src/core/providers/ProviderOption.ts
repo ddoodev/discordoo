@@ -4,5 +4,5 @@ import { ProviderConstructor } from '@src/core'
 export interface ProviderOption {
   provide: DiscordooProviders
   useClass: ProviderConstructor<any>
-  useOptions: any
+  useOptions?: any
 }
