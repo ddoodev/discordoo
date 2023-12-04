@@ -13,7 +13,7 @@ import { WebhookRestManager } from '@src/rest/WebhookRestManager'
 
 export class WebhookApplication<ClientStack extends DefaultWebhookApplicationStack = DefaultWebhookApplicationStack> {
   public readonly id: string
-  public readonly token: string
+  readonly #token: string
   public readonly internals: WebhookApplicationInternals
   public readonly options: WebhookApplicationOptions
 
@@ -21,7 +21,7 @@ export class WebhookApplication<ClientStack extends DefaultWebhookApplicationSta
 
   constructor(options: WebhookApplicationOptions) {
     this.id = options.id
-    this.token = options.token
+    this.#token = options.token
 
     this.options = options
 
@@ -53,6 +53,10 @@ export class WebhookApplication<ClientStack extends DefaultWebhookApplicationSta
       rest,
       actions: new WebhookApplicationActions(this)
     }
+  }
+
+  get token(): string {
+    return this.#token
   }
 
   private _makeRestOptions(options: WebhookApplicationOptions): CompletedRestOptions {

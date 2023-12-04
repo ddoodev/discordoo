@@ -31,6 +31,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
   private inflate?: PakoTypes.Inflate
   private _heartbeatInterval?: ReturnType<typeof setInterval>
   private _handshakeTimeout?: ReturnType<typeof setTimeout>
+  private _stopHeartbeat = false
 
   public manager: WebSocketManager
   public status: WebSocketClientStates
@@ -167,7 +168,7 @@ export class WebSocketClient extends TypedEmitter<WebSocketClientEventsHandlers>
         // console.log('shard', this.id, 'handshake timeout')
         this.destroy({ reconnect: !reject }) // reconnect when no reject callback
         if (reject) reject({ code: -1, reason: 'Handshake timeout' })
-      }, 15000 /* TODO: this.options.handshakeTimeout */)
+      }, this.options.connection.handshakeTimeout)
     }
   }
 

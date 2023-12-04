@@ -19,8 +19,7 @@ export class DiscordCacheApplication<Stack extends DefaultCacheApplicationStack 
   // @ts-ignore because events can be redefined, and the typed emitter library doesn't like it. it works anyway.
   extends TypedEmitter<Stack['events']> {
 
-  /** Token used by this app */
-  public readonly token: string
+  readonly #token: string
 
   /** Internal things used by this app */
   public readonly internals: CacheApplicationInternals<Stack>
@@ -28,7 +27,7 @@ export class DiscordCacheApplication<Stack extends DefaultCacheApplicationStack 
   /** Options passed to this app */
   public readonly options: CacheApplicationOptions
 
-  protected running = false
+  #running = false
 
   constructor(token: string, options: CacheApplicationOptions = {}) {
     super()
@@ -37,7 +36,7 @@ export class DiscordCacheApplication<Stack extends DefaultCacheApplicationStack 
       EntitiesUtil.extend(e.entity, e.extender)
     })
 
-    this.token = token
+    this.#token = token
     this.options = options
 
     const cacheOptions: CompletedCacheOptions = this._makeCacheOptions()
@@ -119,9 +118,14 @@ export class DiscordCacheApplication<Stack extends DefaultCacheApplicationStack 
     }
   }
 
+  /** Token used by this app */
+  get token(): string {
+    return this.#token
+  }
+
   public async start(): Promise<DiscordCacheApplication<Stack>>  {
-    if (this.running) throw new DiscordooError('DiscordApplication#start', 'Already running.')
-    this.running = true
+    if (this.#running) throw new DiscordooError('DiscordApplication#start', 'Already running.')
+    this.#running = true
 
     await this.internals.cache.init()
 
