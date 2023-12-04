@@ -238,12 +238,9 @@ export class DiscordApplication<ApplicationStack extends DefaultDiscordApplicati
   }
 
   async destroy(): Promise<void> {
-    if (!this.running) throw new DiscordooError('DiscordApplication#destroy', 'Not running.')
-    this.running = false
+    super.destroy()
 
     await this.internals.gateway.disconnect()
-    // TODO: clear all cache
-    // await this.internals.cache.clear()
 
     // should we destroy ipc?
     // await this.internals.ipc.destroy()

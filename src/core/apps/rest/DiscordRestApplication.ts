@@ -173,6 +173,11 @@ export class DiscordRestApplication<ApplicationStack extends DefaultDiscordRestA
     return this
   }
 
+  public destroy() {
+    return super.destroy()
+    // TODO: destroy rest
+  }
+
   private _makeRestOptions(): CompletedRestOptions {
     return {
       requestTimeout: this.options.rest?.requestTimeout ?? REST_DEFAULT_OPTIONS.requestTimeout,

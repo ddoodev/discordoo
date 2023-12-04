@@ -132,6 +132,13 @@ export class DiscordCacheApplication<Stack extends DefaultCacheApplicationStack 
     return this
   }
 
+  public destroy(): void {
+    if (!this.#running) throw new DiscordooError('DiscordApplication#destroy', 'Not running.')
+    this.#running = false
+
+    // TODO clear all caches
+  }
+
   private _makeCacheOptions(): CompletedCacheOptions {
     return this.options.cache ?? {}
   }
