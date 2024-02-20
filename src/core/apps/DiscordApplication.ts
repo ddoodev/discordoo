@@ -57,6 +57,7 @@ import { inspect } from 'util'
 import { Collection } from '@discordoo/collection'
 import { evalWithoutScopeChain } from '@src/utils/evalWithoutScopeChain'
 import { MessageUpdateEvent } from '@src/events/message/MessageUpdateEvent'
+import { MessageDeleteEvent } from '@src/events/message/MessageDeleteEvent'
 
 @Final(
   'start',
@@ -162,13 +163,17 @@ export class DiscordApplication<ApplicationStack extends DefaultDiscordApplicati
     }
 
     this.internals.events.register([
-      MessageCreateEvent, MessageUpdateEvent, GuildCreateEvent, GuildDeleteEvent,
-      PresenceUpdateEvent, ShardConnectedEvent, ChannelCreateEvent, ChannelUpdateEvent,
-      ChannelDeleteEvent, ChannelPinsUpdateEvent, ThreadCreateEvent, ThreadUpdateEvent,
-      ThreadDeleteEvent, ThreadListSyncEvent, GuildMembersChunkEvent, ThreadMemberUpdateEvent,
-      ThreadMembersUpdateEvent, GuildEmojisUpdatedEvent, GuildUpdateEvent, UserUpdateEvent,
-      GuildMemberUpdateEvent, GuildMemberAddEvent, GuildMemberRemoveEvent, InviteCreateEvent,
-      InviteDeleteEvent, InteractionCreateEvent
+      MessageCreateEvent, MessageUpdateEvent, MessageDeleteEvent,
+      GuildCreateEvent, GuildDeleteEvent, GuildUpdateEvent,
+      PresenceUpdateEvent,
+      ShardConnectedEvent,
+      ChannelCreateEvent, ChannelUpdateEvent, ChannelDeleteEvent, ChannelPinsUpdateEvent,
+      ThreadCreateEvent, ThreadUpdateEvent, ThreadDeleteEvent, ThreadListSyncEvent, ThreadMemberUpdateEvent, ThreadMembersUpdateEvent,
+      GuildEmojisUpdatedEvent,
+      UserUpdateEvent,
+      GuildMemberUpdateEvent, GuildMemberAddEvent, GuildMemberRemoveEvent, GuildMembersChunkEvent,
+      InviteCreateEvent, InviteDeleteEvent,
+      InteractionCreateEvent
     ]) // TODO
 
     this.user = new ApplicationUser(this)
