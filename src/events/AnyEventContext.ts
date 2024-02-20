@@ -29,7 +29,8 @@ import { UserUpdateEventContext } from '@src/events/user'
 import {
   MessageCreateEventContext,
   MessageUpdateEventContext,
-  MessageDeleteEventContext
+  MessageDeleteEventContext,
+  MessageDeleteBulkEventContext
 } from '@src/events/message'
 
 export type AnyEventContext =
@@ -43,6 +44,7 @@ export type AnyEventContext =
   MessageCreateEventContext |
   MessageUpdateEventContext |
   MessageDeleteEventContext |
+  MessageDeleteBulkEventContext |
   PresenceUpdateEventContext |
   ReadyEventContext |
   ShardConnectedEventContext |
