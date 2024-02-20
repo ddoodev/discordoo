@@ -50,6 +50,7 @@ export class MessageCreateEvent extends AbstractEvent<MessageCreateEventContext>
     }
 
     const context: MessageCreateEventContext = {
+      shardId,
       message,
       author,
       channel,
