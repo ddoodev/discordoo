@@ -28,7 +28,8 @@ import {
   GuildUpdateEventContext,
   InteractionCreateEventContext,
   MessageUpdateEventContext,
-  MessageDeleteEventContext
+  MessageDeleteEventContext,
+  MessageDeleteBulkEventContext
 } from '@src/events'
 
 export interface GatewayApplicationEventsHandlers extends AbstractApplicationEventsHandlers {
@@ -143,7 +144,7 @@ export interface GatewayApplicationEventsHandlers extends AbstractApplicationEve
   messageDelete: (context: MessageDeleteEventContext) => any
 
   /** Multiple messages were deleted at once */
-  // messageDeleteBulk: (context: MessageCreateEventContext) => any
+  messageDeleteBulk: (context: MessageDeleteBulkEventContext) => any
 
   /** User reacted to a message */
   // messageReactionAdd: (context: MessageCreateEventContext) => any

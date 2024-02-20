@@ -41,7 +41,9 @@ import {
   ThreadCreateEvent, ThreadDeleteEvent,
   ThreadListSyncEvent,
   ThreadMembersUpdateEvent, ThreadMemberUpdateEvent,
-  ThreadUpdateEvent, UserUpdateEvent
+  ThreadUpdateEvent, UserUpdateEvent,
+  MessageUpdateEvent, MessageDeleteEvent,
+  MessageDeleteBulkEvent
 } from '@src/events'
 import {
   BroadcastEvalOptions, BroadcastOptions,
@@ -56,8 +58,6 @@ import { fromJson, jsonify } from '@src/utils/jsonify'
 import { inspect } from 'util'
 import { Collection } from '@discordoo/collection'
 import { evalWithoutScopeChain } from '@src/utils/evalWithoutScopeChain'
-import { MessageUpdateEvent } from '@src/events/message/MessageUpdateEvent'
-import { MessageDeleteEvent } from '@src/events/message/MessageDeleteEvent'
 
 @Final(
   'start',
@@ -163,7 +163,7 @@ export class DiscordApplication<ApplicationStack extends DefaultDiscordApplicati
     }
 
     this.internals.events.register([
-      MessageCreateEvent, MessageUpdateEvent, MessageDeleteEvent,
+      MessageCreateEvent, MessageUpdateEvent, MessageDeleteEvent, MessageDeleteBulkEvent,
       GuildCreateEvent, GuildDeleteEvent, GuildUpdateEvent,
       PresenceUpdateEvent,
       ShardConnectedEvent,
