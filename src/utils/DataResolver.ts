@@ -1,6 +1,5 @@
 import { BufferResolvable } from '@src/utils/interfaces/BufferResolvable'
 import { ResolveBufferOptions } from '@src/utils/interfaces/ResolveBufferOptions'
-import { request } from 'undici'
 import { DiscordooError } from '@src/utils/DiscordooError'
 import { promisify } from 'util'
 import fs from 'fs'
@@ -31,7 +30,7 @@ export class DataResolver {
     if (typeof buffer === 'string') {
       if (options?.fetch) {
         if (buffer.startsWith('https://') || buffer.startsWith('http://')) {
-          return request(buffer, options.fetchOptions).then(r => r.body.arrayBuffer())
+          return fetch(buffer, options.fetchOptions).then(r => r.arrayBuffer())
         }
       }
 
