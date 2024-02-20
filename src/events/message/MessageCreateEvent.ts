@@ -47,11 +47,6 @@ export class MessageCreateEvent extends AbstractEvent<MessageCreateEventContext>
       await this.app.channels.cache.set(message.channelId, channel, {
         storage: message.guildId ?? 'dm'
       })
-      if (!message.guildId) {
-        await this.app.channels.cache.set(message.authorId, channel, {
-          storage: 'dm'
-        })
-      }
     }
 
     const context: MessageCreateEventContext = {
