@@ -56,6 +56,7 @@ import { fromJson, jsonify } from '@src/utils/jsonify'
 import { inspect } from 'util'
 import { Collection } from '@discordoo/collection'
 import { evalWithoutScopeChain } from '@src/utils/evalWithoutScopeChain'
+import { MessageUpdateEvent } from '@src/events/message/MessageUpdateEvent'
 
 @Final(
   'start',
@@ -161,11 +162,11 @@ export class DiscordApplication<ApplicationStack extends DefaultDiscordApplicati
     }
 
     this.internals.events.register([
-      MessageCreateEvent, GuildCreateEvent, GuildDeleteEvent, PresenceUpdateEvent,
-      ShardConnectedEvent, ChannelCreateEvent, ChannelUpdateEvent, ChannelDeleteEvent,
-      ChannelPinsUpdateEvent, ThreadCreateEvent, ThreadUpdateEvent, ThreadDeleteEvent,
-      ThreadListSyncEvent, GuildMembersChunkEvent, ThreadMemberUpdateEvent, ThreadMembersUpdateEvent,
-      GuildEmojisUpdatedEvent, GuildUpdateEvent, UserUpdateEvent,
+      MessageCreateEvent, MessageUpdateEvent, GuildCreateEvent, GuildDeleteEvent,
+      PresenceUpdateEvent, ShardConnectedEvent, ChannelCreateEvent, ChannelUpdateEvent,
+      ChannelDeleteEvent, ChannelPinsUpdateEvent, ThreadCreateEvent, ThreadUpdateEvent,
+      ThreadDeleteEvent, ThreadListSyncEvent, GuildMembersChunkEvent, ThreadMemberUpdateEvent,
+      ThreadMembersUpdateEvent, GuildEmojisUpdatedEvent, GuildUpdateEvent, UserUpdateEvent,
       GuildMemberUpdateEvent, GuildMemberAddEvent, GuildMemberRemoveEvent, InviteCreateEvent,
       InviteDeleteEvent, InteractionCreateEvent
     ]) // TODO
