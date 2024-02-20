@@ -7,7 +7,8 @@ export class MessageDeleteBulkEvent extends AbstractEvent<MessageDeleteBulkEvent
   async execute(shardId: number, data: RawMessageDeleteBulkEventData) {
     const storedMessagesMap = await this.app.messages.cache.filter((message) => data.ids.includes(message.id))
 
-    await this.app.messages.cache.delete(storedMessagesMap.map(([ messageId ]) => messageId))
+    if (storedMessagesMap.length)
+      await this.app.messages.cache.delete(storedMessagesMap.map(([ messageId ]) => messageId))
 
     const context: MessageDeleteBulkEventContext = {
       shardId,
