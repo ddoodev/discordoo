@@ -10,7 +10,7 @@ export class MessageDeleteEvent extends AbstractEvent<MessageDeleteEventContext>
     const message = await this.app.messages.cache.get(data.id, { storage: data.channel_id })
 
     if (message) {
-      await this.app.messages.cache.delete(data.id)
+      await this.app.messages.cache.delete(data.id, { storage: data.channel_id })
     }
 
     const context: MessageDeleteEventContext = {
