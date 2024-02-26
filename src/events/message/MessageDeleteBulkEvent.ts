@@ -5,10 +5,13 @@ import { RawMessageDeleteBulkEventData } from '@src/events/message/RawMessageDel
 export class MessageDeleteBulkEvent extends AbstractEvent<MessageDeleteBulkEventContext> {
   public name = EventNames.MESSAGE_DELETE_BULK
   async execute(shardId: number, data: RawMessageDeleteBulkEventData) {
-    const storedMessagesMap = await this.app.messages.cache.filter((message) => data.ids.includes(message.id))
+    const storedMessagesMap = await this.app.messages.cache.filter(
+      (message) => data.ids.includes(message.id),
+      { storage: data.channel_id }
+    )
 
     if (storedMessagesMap.length)
-      await this.app.messages.cache.delete(storedMessagesMap.map(([ messageId ]) => messageId))
+      await this.app.messages.cache.delete(storedMessagesMap.map(([ messageId ]) => messageId), { storage: data.channel_id })
 
     const context: MessageDeleteBulkEventContext = {
       shardId,
