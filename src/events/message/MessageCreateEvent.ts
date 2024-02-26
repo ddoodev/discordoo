@@ -1,7 +1,7 @@
 import { AbstractEvent } from '@src/events/AbstractEvent'
 import { EventNames } from '@src/constants'
 import { RawMessageData } from '@src/api/entities/message/interfaces/RawMessageData'
-import { MessageCreateEventContext } from '@src/events/ctx/MessageCreateEventContext'
+import { MessageCreateEventContext } from '@src/events/message/ctx/MessageCreateEventContext'
 import { EntitiesUtil } from '@src/api/entities/EntitiesUtil'
 import { AnyWritableChannel } from '@src/api/entities/channel/interfaces/AnyWritableChannel'
 
@@ -47,14 +47,10 @@ export class MessageCreateEvent extends AbstractEvent<MessageCreateEventContext>
       await this.app.channels.cache.set(message.channelId, channel, {
         storage: message.guildId ?? 'dm'
       })
-      if (!message.guildId) {
-        await this.app.channels.cache.set(message.authorId, channel, {
-          storage: 'dm'
-        })
-      }
     }
 
     const context: MessageCreateEventContext = {
+      shardId,
       message,
       author,
       channel,

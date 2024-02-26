@@ -41,7 +41,9 @@ import {
   ThreadCreateEvent, ThreadDeleteEvent,
   ThreadListSyncEvent,
   ThreadMembersUpdateEvent, ThreadMemberUpdateEvent,
-  ThreadUpdateEvent, UserUpdateEvent
+  ThreadUpdateEvent, UserUpdateEvent,
+  MessageUpdateEvent, MessageDeleteEvent,
+  MessageDeleteBulkEvent
 } from '@src/events'
 import {
   BroadcastEvalOptions, BroadcastOptions,
@@ -161,13 +163,17 @@ export class DiscordApplication<ApplicationStack extends DefaultDiscordApplicati
     }
 
     this.internals.events.register([
-      MessageCreateEvent, GuildCreateEvent, GuildDeleteEvent, PresenceUpdateEvent,
-      ShardConnectedEvent, ChannelCreateEvent, ChannelUpdateEvent, ChannelDeleteEvent,
-      ChannelPinsUpdateEvent, ThreadCreateEvent, ThreadUpdateEvent, ThreadDeleteEvent,
-      ThreadListSyncEvent, GuildMembersChunkEvent, ThreadMemberUpdateEvent, ThreadMembersUpdateEvent,
-      GuildEmojisUpdatedEvent, GuildUpdateEvent, UserUpdateEvent,
-      GuildMemberUpdateEvent, GuildMemberAddEvent, GuildMemberRemoveEvent, InviteCreateEvent,
-      InviteDeleteEvent, InteractionCreateEvent
+      MessageCreateEvent, MessageUpdateEvent, MessageDeleteEvent, MessageDeleteBulkEvent,
+      GuildCreateEvent, GuildDeleteEvent, GuildUpdateEvent,
+      PresenceUpdateEvent,
+      ShardConnectedEvent,
+      ChannelCreateEvent, ChannelUpdateEvent, ChannelDeleteEvent, ChannelPinsUpdateEvent,
+      ThreadCreateEvent, ThreadUpdateEvent, ThreadDeleteEvent, ThreadListSyncEvent, ThreadMemberUpdateEvent, ThreadMembersUpdateEvent,
+      GuildEmojisUpdatedEvent,
+      UserUpdateEvent,
+      GuildMemberUpdateEvent, GuildMemberAddEvent, GuildMemberRemoveEvent, GuildMembersChunkEvent,
+      InviteCreateEvent, InviteDeleteEvent,
+      InteractionCreateEvent
     ]) // TODO
 
     this.user = new ApplicationUser(this)

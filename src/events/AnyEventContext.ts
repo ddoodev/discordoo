@@ -7,7 +7,6 @@ import {
 import {
   GuildMembersChunkEventContext,
   IpcMessageEventContext,
-  MessageCreateEventContext,
   PresenceUpdateEventContext,
   ReadyEventContext,
   ShardConnectedEventContext
@@ -27,6 +26,12 @@ import {
 } from '@src/events/thread'
 import { GuildEmojisUpdatedEventContext } from '@src/events/emoji'
 import { UserUpdateEventContext } from '@src/events/user'
+import {
+  MessageCreateEventContext,
+  MessageUpdateEventContext,
+  MessageDeleteEventContext,
+  MessageDeleteBulkEventContext
+} from '@src/events/message'
 
 export type AnyEventContext =
   AbstractEventContext |
@@ -37,6 +42,9 @@ export type AnyEventContext =
   GuildMembersChunkEventContext |
   IpcMessageEventContext |
   MessageCreateEventContext |
+  MessageUpdateEventContext |
+  MessageDeleteEventContext |
+  MessageDeleteBulkEventContext |
   PresenceUpdateEventContext |
   ReadyEventContext |
   ShardConnectedEventContext |
